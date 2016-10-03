@@ -7,6 +7,16 @@ Reversing the Genie-Engine involves:
  - Renaming vast amounts of procedures, identifying variables, and eliminating libraries.
  - Mapping memory allocated structures, and backtracing entire programming interfaces.
  - Performing trial-error testing, and verifying whether properties match playability.
+Many individuals over the past years have been involved in reversing the Genie-Engine.
+
+## At a glance
+The Genie-Engine is reasonably well architectured:
+ - It holds various database files (DAT) to load all data corresponding to the scheme of the game.
+ - It uses external files, mostly organized in file-mapping (DRS) storage.
+These aspects allow customized modifications, however, there are certain issues:
+ - The engine contains hard-coded data converged to the database, for example:
+    - Fixed number of terrains and borders.
+    - Many IDs of structures related to the database are left embeded.
 
 ## Engines Analyzed
 The following executables ticked have been decompiled, however, their source code is not available due to copyright laws.
