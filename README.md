@@ -1,7 +1,15 @@
 # Genie-Reverse
 A project to reverse engineer the Genie-Engine.
 
+## Introduction
+Reversing the Genie-Engine involves:
+ - Daunting research with timely analysis, by observing huge amounts of pseudocode.
+ - Renaming vast amounts of procedures, identifying variables, and eliminating libraries.
+ - Mapping memory allocated structures, and backtracing entire programming interfaces.
+ - Performing trial-error testing, and verifying whether properties match playability.
+
 ## Engines Analyzed
+The following executables ticked have been decompiled, however, their source code is not available due to copyright laws.
  - [ ] Tribes, Beta 1. *00.04.03.0113 (??/01/1997).*
  - [ ] Tribes, Beta 2. *00.04.04.0125 (??/01/1997).*
  - [ ] Tribes, Beta 3. *00.04.05.0130 (??/01/1997).*
