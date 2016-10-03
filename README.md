@@ -1,2 +1,54 @@
 # Genie-Reverse
 A project to reverse engineer the Genie-Engine.
+
+## Engines Analyzed
+ - [] Tribes, Beta 1. *00.04.03.0113 (??/01/1997).*
+ - [] Tribes, Beta 2. *00.04.04.0125 (??/01/1997).*
+ - [] Tribes, Beta 3. *00.04.05.0130 (??/01/1997).*
+ - [] Tribes, Beta 4. *00.04.05.0202 (??/02/1997).*
+ - [] Tribes, Beta 5. *00.05.01.0203 (??/02/1997).*
+ - [] Tribes, Beta 6. *00.05.01.0204 (??/02/1997).*
+ - [] Age of Empires, 1.0 Beta. *00.08.09.0716 (16/07/1997).*
+ - [] Age of Empires, 1.0. *00.08.68.0917 (17/09/1997).*
+ - [] Age of Empires, 1.0a. *00.09.12.1215 (03/12/1997).*
+ - [] Age of Empires, 1.0b. *00.09.13.0409 (23/04/1998).*
+ - [] Age of Empires, 1.0b Demo. *00.09.13.0490 (23/04/1998).*
+ - [#] Age of Empires, 1.0c (Gold Edition). *00.09.13.1115 (01/12/1999).*
+ - [] Rise Of Rome, 1.0 (Gold Edition). *00.04.02.0901 (01/09/1998).*
+ - [#] Rise Of Rome, 1.0a. *00.01.06.1115 (01/12/1999).*
+ - [] Rise Of Rome, 1.1 Beta. *00.01.06.1117 (01/12/1999).*
+ - [] Rise Of Rome, 1.1 (Gold Edition). *00.01.06.1120 (01/12/1999).*
+ - [] Rise Of Rome, 1.0 Beta. *00.02.02.0703 (??/07/1999).*
+ - [#] Age of Kings, 1.0 Beta 1. *00.09.07.0222 (22/02/1999).*
+ - [] Age of Kings, 1.0 Beta 2. *00.11.23.0622 (22/06/1999).*
+ - [] Age of Kings, 1.0 Beta 3. *00.11.26.0701 (01/07/1999).*
+ - [] Age of Kings, 2.0. *00.14.14.0914 (14/09/1999 & 24/08/2001).*
+ - [] Age of Kings, 2.0 Computer Gaming World Magazine. *00.1?.??.???? (??/??/1999).*
+ - [#] Age of Kings, 2.0 Trial. *00.14.19.1018 (18/10/1999).*
+ - [] Age of Kings, 2.0a. *00.14.22.0712 (28/07/2000 & 25/01/2001).*
+ - [] Conquerors, 2.1a. *00.07.22.0627 (27/06/2000).*
+ - [] Conquerors, 2.1b. *00.07.25.0614 (07/07/2000).*
+ - [#] Conquerors, 2.1 Demo. *00.07.22.0627 (20/07/2000).*
+ - [#] Conquerors, 2.1c (Patch 1.0c). *00.07.26.0809 (09/08/2001).*
+ - [] Conquerors, User-Patch 1.0.
+ - [] Conquerors, User-Patch 1.1.
+ - [] Conquerors, User-Patch 1.2.
+ - [] Conquerors, User-Patch 1.3.
+ - [] Conquerors, User-Patch 1.4.
+ - [] HD Edition, Patch 3.0. *03.00.1521.00 (??/??/2013).*
+ - [] HD Edition, Patch 3.1. *03.01.????.00 (??/??/2013).*
+ - [] HD Edition, Patch 3.2. *03.02.1686.00 (??/??/2013).*
+ - [] HD Edition, Patch 3.3. *03.03.????.00 (??/??/2013).*
+ - [] HD Edition, Patch 3.4. *03.04.????.00 (??/??/????).*
+ - [] HD Edition, Patch 3.5. *03.05.2209.00 (??/??/????).*
+ - [] HD Edition, Patch 3.6. *03.06.2435.00 (??/??/2014).*
+ - [] HD Edition, Patch 3.7. *03.07.????.00 (??/07/2014).*
+ - [] HD Edition, Patch 3.8. *03.08.????.00 (??/09/2014).*
+ - [] HD Edition, Patch 3.9. *03.09.2684.00 (02/04/2015).*
+ - [] HD Edition, Patch 4.0.
+ - [] HD Edition, Patch 4.1.
+ - [] HD Edition, Patch 4.2. *04.02.1748.4400 & 04.02.1748.4401 (??/??/????)*
+ - [#] HD Edition, Patch 4.3. *04.03.00.00 (18/08/2015).*
+ - [#] Star Wars, Gallactic Battlegrounds.
+ - [#] Star Wars, Clones Campaigns.
+ - [#] Star Wars, Clones Campaigns, Demo.
