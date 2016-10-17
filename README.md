@@ -11,20 +11,21 @@ Reversing the Genie-Engine involves:
 ## Acknowledgements
 Many individuals across communities over the past years have been involved in reversing the Genie-Engine. This particular repository contains the involvements of the following individuals:
  - **Yvan Burrie** *Author of Genie-Studio, researched the scenario format and other structures.*
- - **JustTesting1234** *Daniel, special thanks to him, researching the database, scenario triggers, and many other structures.*
+ - **JustTesting1234** *Special thanks to him for researching; the database, scenario triggers, and many other structures.*
 
 ## At a glance
 The Genie-Engine is reasonably well architectured:
  - It holds various database files (DAT) to load all data corresponding to the scheme of the game.
- - It uses external files, mostly organized in file-mapping (DRS) storage.
-These aspects allow customized modifications, however, there are certain issues:
+ - It uses external files, mostly organized in file-mapping (DRS) storage, allowing customized modifications.
+
+However, the Genie-Engine obtained certain issues:
  - The engine contains certain bugs, such as the red text color used in instructions, or the multiplayer panel.
  - The engine contains hard-coded data converged to the database, for example:
     - Fixed number of terrains and borders.
     - Many IDs of structures related to the database are left embeded.
 
 ## Engines Analyzed
-The following executables ticked have been decompiled, however, their source code is not available due to copyright laws.
+The following executables ticked have been decompiled:
  - [ ] Tribes, Beta 1. *00.04.03.0113 (??/01/1997).*
  - [ ] Tribes, Beta 2. *00.04.04.0125 (??/01/1997).*
  - [ ] Tribes, Beta 3. *00.04.05.0130 (??/01/1997).*
