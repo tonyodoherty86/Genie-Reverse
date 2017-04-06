@@ -15,7 +15,7 @@ RGE_Task_list
 	40	VOID	Settings
 	44	VOID	HWND (WindowHandle)
 	48	DWORD	WindowStatus
-	56	DWORD	
+	56	void	PaletteResourceHandle
 	72	DWORD	RoomTime
 	76	DWORD	
 	80	DWORD	???
@@ -41,7 +41,7 @@ DIRECT_DRAW (1208)
 
 \Game\Settings ()
 	1040	DWORD	
-	1646	DWORD
+	1646	const char	PaletteFileName[];
 	2196	DWORD	FullScreenEnabled
 	2204	DWORD	DirectDrawEnabled
 	2208	DWORD	SystemMemoryEnabled
