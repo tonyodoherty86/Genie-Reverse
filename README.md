@@ -39,20 +39,20 @@ The following prototypes (ticked) have been decompiled:
  - [x] Age of Empires, 1.0 (Alpha 4). *00.04.05.0202 (??/02/1997).*
  - [x] Age of Empires, 1.0 (Alpha 5). *00.05.01.0203 (??/02/1997).*
  - [x] Age of Empires, 1.0 (Alpha 6). *00.05.01.0204 (??/02/1997).*
- - [x] Age of Empires, 1.0 (Beta 1). *00.07.14.0604 (04/06/1997).*
+ - [ ] Age of Empires, 1.0 (Beta 1). *00.07.14.0604 (04/06/1997).*
  - [ ] Age of Empires, 1.0 (Beta 2). *00.08.04.0703 (03/07/1997).*
  - [x] Age of Empires, 1.0 (Official Beta). *00.08.09.0716 (16/07/1997).*
  - [ ] Age of Empires, 1.0 (Trial CGWM). *00.08.29.0811 (1997/08/11).*
  - [x] Age of Empires, 1.0 (Retail). *00.08.68.0917 (17/09/1997).*
- - [x] Age of Empires, 1.0a. *00.09.12.1215 (03/12/1997).*
- - [x] Age of Empires, 1.0b. *00.09.13.0409 (23/04/1998).*
- - [x] Age of Empires, 1.0b Demo. *00.09.13.0490 (23/04/1998).*
- - [x] Age of Empires, 1.0c. *00.09.13.1115 (01/12/1999).*
- - [ ] Rise Of Rome, 1.0. *00.04.02.0901 (01/09/1998).*
- - [x] Rise Of Rome, 1.0a. *00.01.06.1115 (01/12/1999).*
- - [ ] Rise Of Rome, 1.1 Beta. *00.01.06.1117 (01/12/1999).*
- - [ ] Rise Of Rome, 1.1. *00.01.06.1120 (01/12/1999).*
- - [ ] Rise Of Rome, 1.0 Beta. *00.02.02.0703 (??/07/1999).*
+ - [x] Age of Empires, 1.0 (Trial). *00.08.69.0922 (22/09/1997).*
+ - [x] Age of Empires, 1.0a (Retail). *00.09.12.1215 (03/12/1997).*
+ - [x] Age of Empires, 1.0b (Retail). *00.09.13.0409 (23/04/1998).*
+ - [x] Age of Empires, 1.0c (Retail). *00.09.13.1115 (01/12/1999).*
+ - [ ] Rise of Rome, 1.0 (Alpha). *00.02.02.0703 (03/07/1998).*
+ - [x] Rise of Rome, 1.0 (Beta). *00.03.05.0803 (03/08/1998).*
+ - [ ] Rise of Rome, 1.0 (Unused). *00.04.01.0828. (28/08/1998)*
+ - [ ] Rise Of Rome, 1.0 (Retail). *00.04.02.0901 (01/09/1998).*
+ - [x] Rise Of Rome, 1.0a (Retail). *00.01.06.1115 (01/12/1999).*
  - [x] Age of Kings, 1.0 Beta 1. *00.09.07.0222 (22/02/1999).*
  - [ ] Age of Kings, 1.0 Beta 2. *00.11.23.0622 (22/06/1999).*
  - [ ] Age of Kings, 1.0 Beta 3. *00.11.26.0701 (01/07/1999).*
