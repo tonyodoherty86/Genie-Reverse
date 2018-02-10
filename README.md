@@ -31,58 +31,72 @@ However, the Genie-Engine obtained certain issues:
  * By early 1997, the engine was nicely refined, and the *Age of Empires* prototype was finally used.
  * In 2001, *Lucas Art* licensed the engine for *Star Wars Gallactic Battlegrounds*.
 
-## Engines Analyzed
-The following prototypes (ticked) have been decompiled:
- - [x] Age of Empires, 1.0 (Alpha 1). *00.04.03.0113 (??/01/1997).*
- - [x] Age of Empires, 1.0 (Alpha 2). *00.04.04.0125 (??/01/1997).*
- - [x] Age of Empires, 1.0 (Alpha 3). *00.04.05.0130 (??/01/1997).*
- - [x] Age of Empires, 1.0 (Alpha 4). *00.04.05.0202 (??/02/1997).*
- - [x] Age of Empires, 1.0 (Alpha 5). *00.05.01.0203 (??/02/1997).*
- - [x] Age of Empires, 1.0 (Alpha 6). *00.05.01.0204 (??/02/1997).*
- - [ ] Age of Empires, 1.0 (Beta 1). *00.07.14.0604 (04/06/1997).*
- - [ ] Age of Empires, 1.0 (Beta 2). *00.08.04.0703 (03/07/1997).*
- - [x] Age of Empires, 1.0 (Official Beta). *00.08.09.0716 (16/07/1997).*
- - [ ] Age of Empires, 1.0 (Trial CGWM). *00.08.29.0811 (1997/08/11).*
- - [x] Age of Empires, 1.0 (Retail). *00.08.68.0917 (17/09/1997).*
- - [x] Age of Empires, 1.0 (Trial). *00.08.69.0922 (22/09/1997).*
- - [x] Age of Empires, 1.0a (Retail). *00.09.12.1215 (03/12/1997).*
- - [x] Age of Empires, 1.0b (Retail). *00.09.13.0409 (23/04/1998).*
- - [x] Age of Empires, 1.0c (Retail). *00.09.13.1115 (01/12/1999).*
- - [ ] Rise of Rome, 1.0 (Alpha). *00.02.02.0703 (03/07/1998).*
- - [x] Rise of Rome, 1.0 (Beta). *00.03.05.0803 (03/08/1998).*
- - [ ] Rise of Rome, 1.0 (Unused). *00.04.01.0828. (28/08/1998)*
- - [ ] Rise Of Rome, 1.0 (Retail). *00.04.02.0901 (01/09/1998).*
- - [x] Rise Of Rome, 1.0a (Retail). *00.01.06.1115 (01/12/1999).*
- - [x] Age of Kings, 1.0 Beta 1. *00.09.07.0222 (22/02/1999).*
- - [ ] Age of Kings, 1.0 Beta 2. *00.11.23.0622 (22/06/1999).*
- - [ ] Age of Kings, 1.0 Beta 3. *00.11.26.0701 (01/07/1999).*
- - [ ] Age of Kings, 2.0. *00.14.14.0914 (14/09/1999 & 24/08/2001).*
- - [ ] Age of Kings, 2.0 Computer Gaming World Magazine. *00.1?.??.???? (??/??/1999).*
- - [x] Age of Kings, 2.0 Trial. *00.14.19.1018 (18/10/1999).*
- - [ ] Age of Kings, 2.0a. *00.14.22.0712 (28/07/2000 & 25/01/2001).*
- - [ ] Conquerors, 2.1a. *00.07.22.0627 (27/06/2000).*
- - [ ] Conquerors, 2.1b. *00.07.25.0614 (07/07/2000).*
- - [x] Conquerors, 2.1 Demo. *00.07.22.0627 (20/07/2000).*
- - [x] Conquerors, 2.1c (Patch 1.0c). *00.07.26.0809 (09/08/2001).*
- - [ ] Conquerors, User-Patch 1.0.
- - [ ] Conquerors, User-Patch 1.1.
- - [ ] Conquerors, User-Patch 1.2.
- - [ ] Conquerors, User-Patch 1.3.
- - [ ] Conquerors, User-Patch 1.4.
- - [ ] HD Edition, Patch 3.0. *03.00.1521.00 (??/??/2013).*
- - [ ] HD Edition, Patch 3.1. *03.01.????.00 (??/??/2013).*
- - [ ] HD Edition, Patch 3.2. *03.02.1686.00 (??/??/2013).*
- - [ ] HD Edition, Patch 3.3. *03.03.????.00 (??/??/2013).*
- - [ ] HD Edition, Patch 3.4. *03.04.????.00 (??/??/????).*
- - [ ] HD Edition, Patch 3.5. *03.05.2209.00 (??/??/????).*
- - [ ] HD Edition, Patch 3.6. *03.06.2435.00 (??/??/2014).*
- - [ ] HD Edition, Patch 3.7. *03.07.????.00 (??/07/2014).*
- - [ ] HD Edition, Patch 3.8. *03.08.????.00 (??/09/2014).*
- - [ ] HD Edition, Patch 3.9. *03.09.2684.00 (02/04/2015).*
- - [ ] HD Edition, Patch 4.0.
- - [ ] HD Edition, Patch 4.1.
- - [ ] HD Edition, Patch 4.2. *04.02.1748.4400 & 04.02.1748.4401 (??/??/????)*
- - [x] HD Edition, Patch 4.3. *04.03.00.00 (18/08/2015).*
- - [x] Star Wars, Gallactic Battlegrounds.
- - [x] Star Wars, Clones Campaigns.
- - [x] Star Wars, Clones Campaigns, Demo.
+## Executables
+Below is a list of variants, some are EXE files we analyzed, others are only known to exist. 
+
+| File-Name        | Build Version       | Build Date    | Prototype              | Description
+|------------------|---------------------|---------------|------------------------|---------------
+| etribemp._xe     | 00.04.03.0113       | 1997/01/13    | `AOE0004030113`        | *Age of Empires I: (Alpha)*
+| ptribe.exe       | 00.04.04.0125       | 1997/01/25    | `AOE0004040113`        | *Age of Empires I: (Alpha)*
+| dcptribe.exe     | 00.04.05.0130       | 1997/01/30    | `AOE0004050130`        | *Age of Empires I: (Alpha)*
+| tribe2.exe       | 00.04.05.0202       | 1997/02/02    | `AOE0004050202`        | *Age of Empires I: (Alpha)*
+| etribemp.exe     | 00.05.01.0203       | 1997/02/03    | `AOE0005010203`        | *Age of Empires I: (Alpha)*
+| tribed.exe       | 00.05.01.0204       | 1997/02/04    | `AOE0005010204`        | *Age of Empires I: (Alpha)*
+| empires.exe      | 00.07.14.0604       | 1997/06/04    | `AOE0007140604`        | *Age of Empires I: (Alpha)*
+| empires.exe      | 00.08.04.0703       | 1997/07/03    | `AOE0008040703`        | *Age of Empires I: (Alpha)*
+| empires.exe      | 00.08.09.0716       | 1997/07/16    | `AOE0008090716`        | *Age of Empires I: (Patch 1.0 Beta)*
+| empires.exe      | 00.08.29.0811       | 1997/08/11    | `AOE0008290811`        | *Age of Empires I: (Patch 1.0 CGWM)*
+| empires.exe      | 00.08.68.0917       | 1997/09/17    | `AOE0008680917`        | *Age of Empires I: (Patch 1.0 Retail)*
+| empires.exe      | 00.08.69.0922       | 1997/09/02    | `AOE0008690922`        | *Age of Empires I: (Patch 1.0 Trial)*
+| empires.exe      | 00.08.69.1002       | 1997/10/02    | `AOE0008691022`        | *Age of Empires I: (Patch 1.0 Trial)*
+| empires.exe      | 00.09.12.1215       | 1997/12/15    | `AOE0009121215`        | *Age of Empires I: (Patch 1.0a Retail)*
+| empires.exe      | 00.09.13.0409       | 1998/04/23    | `AOE0009130409`        | *Age of Empires I: (Patch 1.0b Retail)*
+| empires.exe      | 00.09.13.1115       | 1999/12/01    | `AOE0009131115`        | *Age of Empires I: (Patch 1.0c Retail Gold)*
+| ???              | 00.02.02.0703       | 1998/07/??    | `ROR0002020703`        | *Age of Empires I: ???*
+| empiresx.exe     | 00.03.01.0717       | 1998/07/17    | `ROR0003010717`        | *Age of Empires I: Roman Expansion (Alpha)*
+| ???              | 00.03.05.0803       | 1998/08/??    | `ROR0003050803`        | *Age of Empires I: The Rise of Rome ???*
+| ???              | 00.04.01.0828       | 1998/08/??    | `ROR0004010828`        | *Age of Empires I: The Rise of Rome ???*
+| empiresx.exe     | 00.04.02.0901       | 1998/09/01    | `ROR0004020901`        | *Age of Empires I: The Rise of Rome (Patch 1.0 Retail)*
+| empiresx.exe     | 00.01.06.1006       | 1998/10/06    | `ROR0001061006DEMO`    | *Age of Empires I: The Rise of Rome (Patch 1.0 Trial)*
+| empiresx.exe     | 00.01.06.1115       | 1999/12/01    | `ROR0001061006`        | *Age of Empires I: The Rise of Rome (Patch 1.0a Retail)*
+| empiresx.exe     | 00.01.06.1116       | ???           | `ROR0001061115`        | *Age of Empires I: The Rise of Rome (Patch 1.0a Retail Gold)*
+| empiresx.exe     | 00.01.06.1116       | ???           | `ROR0001061116`        | *Age of Empires I: The Rise of Rome (User-Patch 1.1 Beta 1)*
+| empiresx.exe     | 00.01.06.1117       | ???           | `ROR0001061117`        | *Age of Empires I: The Rise of Rome (User-Patch 1.1 Beta 2)*
+| empiresx.exe     | 00.01.06.1118       | ???           | `ROR0001061118`        | *Age of Empires I: The Rise of Rome (User-Patch 1.1 Release 1)*
+| empiresx.exe     | 00.01.06.1119       | ???           | `ROR0001061119`        | *Age of Empires I: The Rise of Rome (User-Patch 1.1 Release 1a)*
+| empiresx.exe     | 00.01.06.1120       | ???           | `ROR0001061120`        | *Age of Empires I: The Rise of Rome (User-Patch 1.1 Release 2)*
+| empiresx.exe     | 00.01.06.1121       | ???           | `ROR0001061121`        | *Age of Empires I: The Rise of Rome (User-Patch 1.1 Release 3)*
+| ???              | 00.04.03.0521       | 1999/05/21    | `AOK0004030521`        | *Age of Empires II:*
+| ???              | 00.05.03.0706       | 2001/08/09    | `AOK0005030706`        | *Age of Empires II: The Age of Kings*
+| empires2.exe     | 00.06.01.0717       | 1998/07/17    | `AOK0006010717`        | *Age of Empires II, The Age of Kings (E3 1998)*
+| empires2.exe     | 00.09.07.0215       | 1999/02/15    | `AOK0009070215`        | *Age of Empires II, The Age of Kings (known build)*
+| empires2.exe     | 00.09.07.0222       | 1999/02/02    | `AOK0009070222`        | *Age of Empires II, The Age of Kings (Patch 1.0 Beta 1)*
+| empires2.exe     | 00.11.20.0614       | 1999/06/14    | `AOK0011200614`        | *Age of Empires II, The Age of Kings (Patch 1.0 Beta 1)*
+| empires2.exe     | 00.11.23.0622       | 1999/02/02    | `AOK0011230622`        | *Age of Empires II, The Age of Kings (Official Beta 2)*
+| empires2.exe     | 00.11.26.0701       | 1999/07/01    | `AOK0011260701`        | *Age of Empires II, The Age of Kings (Official Beta 3)*
+| empires2.exe     | 00.14.11.0909       | 1999/09/09    | `AOK0014110909`        | *Age of Empires II, The Age of Kings (???)*
+| empires2.exe     | 00.14.14.0914       | 1999/09/14    | `AOK0014140914`        | *Age of Empires II, The Age of Kings (???)*
+| empires2.exe     | 00.14.18.1014       | 1999/10/14    | `AOK0014181014`        | *Age of Empires II, The Age of Kings (???)*
+| empires2.exe     | 00.14.19.1018       | 1999/10/18    | `AOK0014191018`        | *Age of Empires II, The Age of Kings (Patch 2.0 Trial)*
+| empires2.exe     | 00.14.22.0712       | 2000/07/12    | `AOK0014220712`        | *Age of Empires II, The Age of Kings (Patch 2.0a)*
+| ???              | 00.07.10.0612       | 2000/06/12    | `AOC0007100612`        | *Age of Empires II: The Conquerors ???*
+| age2_x1.exe      | 00.07.22.0627       | 2000/06/27    | `AOC0007220627`        | *Age of Empires II: The Conquerors (Patch 1.0a)*
+| age2_x1.exe      | 00.07.25.0614       | 2001/06/14    | `AOC0007250614`        | *Age of Empires II: The Conquerors (Patch 1.0b)*
+| age2_x1.exe      | 00.07.26.0809       | 2001/08/09    | `AOC0007260809`        | *Age of Empires II: The Conquerors (Patch 1.0c)*
+| AoK HD.exe       | 02.06.0000.00       | 2013/07/27    | `HDE0206`              | *Age of Empires II: HD Edition (Patch 2.6)*
+| AoK HD.exe       | 02.07.0000.00       | 2013/??/??    | `HDE0207`              | *Age of Empires II: HD Edition (Patch 2.7)*
+| AoK HD.exe       | 02.08.0000.00       | 2013/09/22    | `HDE0208`              | *Age of Empires II: HD Edition (Patch 2.8)*
+| AoK HD.exe       | 03.00.1521.00       | 2013/??/??    | `HDE0300152100`        | *Age of Empires II: HD Edition (Patch 3.0)*
+| AoK HD.exe       | 03.00.1536.00       | 2013/11/08    | `HDE0300153600`        | *Age of Empires II: HD Edition (Patch 3.0)*
+| AoK HD.exe       | 03.00.1570.00       | 2013/??/??    | `HDE0300157000`        | *Age of Empires II: HD Edition (Patch 3.0)*
+| AoK HD.exe       | 03.01.1630.00       | 2013/12/06    | `HDE0301163000`        | *Age of Empires II: HD Edition (Patch 3.1)*
+| AoK HD.exe       | 03.01.1645.00       | 2013/??/??    | `HDE0301164500`        | *Age of Empires II: HD Edition (Patch 3.1)*
+| AoK HD.exe       | 03.02.1686.00       | 2014/??/??    | `HDE0302168600`        | *Age of Empires II: HD Edition (Patch 3.2)*
+| AoK HD.exe       | 03.02.1692.00       | 2014/??/??    | `HDE0302169200`        | *Age of Empires II: HD Edition (Patch 3.2)*
+| AoK HD.exe       | 03.03.1769.00       | 2014/??/??    | `HDE0303176900`        | *Age of Empires II: HD Edition (Patch 3.3)*
+| AoK HD.exe       | 03.04.2058.00       | 2014/??/??    | `HDE0304205800`        | *Age of Empires II: HD Edition (Patch 3.4)*
+| AoK HD.exe       | 03.04.2069.00       | 2014/??/??    | `HDE0304206900`        | *Age of Empires II: HD Edition (Patch 3.4)*
+| AoK HD.exe       | 03.05.2209.00       | 2014/??/??    | `HDE0305220900`        | *Age of Empires II: HD Edition (Patch 3.5)*
+| AoK HD.exe       | 03.06.2435.00       | 2014/??/??    | `HDE0306243500`        | *Age of Empires II: HD Edition (Patch 3.6)*
+| AoK HD.exe       | 03.07.2608.00       | 2014/??/??    | `HDE0307260800`        | *Age of Empires II: HD Edition (Patch 3.7)*
+| AoK HD.exe       | 03.08.2662.00       | 2014/??/??    | `HDE0308266200`        | *Age of Empires II: HD Edition (Patch 3.8)*
