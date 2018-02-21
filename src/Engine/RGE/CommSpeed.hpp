@@ -77,6 +77,6 @@ public:
     unsigned int GetAvgFrameRate();
     unsigned int GetRecommendedBufferGranularity();
     int AnalyzeGameSpeed(unsigned int *NewGranularity, unsigned int *NewBufferFrames, int ChangeAlso);
-    static void RGE_Communications_Speed::SetV1(unsigned int v1);
-    static void RGE_Communications_Speed::SetV2(unsigned int v2);
+    static void SetV1(unsigned int v1);
+    static void SetV2(unsigned int v2);
 };

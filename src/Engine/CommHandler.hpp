@@ -127,7 +127,7 @@ public:
 
     unsigned int TimeSinceLastCall;
 
-    TChat *Chat;
+    class TChat *Chat;
 
     int MeHost;
     int HaveHostInit;
@@ -144,12 +144,12 @@ public:
     int OutOfSyncFlag;
     unsigned int dwStopTime;
 
-    float lastRXDataRate;
-    float lastTXDataRate;
+    float lastRXDataRate,
+          lastTXDataRate;
 
-    char MyFriendlyName[129];
-    char MyFormalName[129];
-    char MyGameTitle[129];
+    char MyFriendlyName[129],
+         MyFormalName[129],
+         MyGameTitle[129];
 
     unsigned int CurrentPlayers;
 
@@ -161,6 +161,7 @@ public:
     unsigned int turnstart;
     unsigned int lastcalltick;
     unsigned int mselapsed;
+
     int AvgTurnTime;
     int SkipFrames;
     int PauseChangePending;
@@ -174,8 +175,8 @@ public:
     unsigned int TXPacketLength;
     unsigned int TXPacketLengthHigh;
 
-    struct NAME *FriendlyName;
-    struct NAME *FormalName;
+    struct NAME *FriendlyName,
+                *FormalName;
 
     unsigned int LastTimeoutMessageTime;
 
@@ -183,9 +184,9 @@ public:
 
     unsigned short MaxGamePlayers;
 
-    GUID ServiceGUID;
-    GUID ApplicationGUID;
-    GUID SessionGUID;
+    GUID ServiceGUID,
+         ApplicationGUID,
+         SessionGUID;
 
     HWND *HostHWND;
 
@@ -215,8 +216,8 @@ public:
     unsigned int dwLatency;
     int Kicked[10];
 
-    class RGE_Communications_Queue *InQ;
-    class RGE_Communications_Queue *OutQ;
+    class RGE_Communications_Queue *InQ,
+                                   *OutQ;
     class RGE_Lobby *Lobby;
     class RGE_TimeSinceLastCall *tslc;
     class RGE_Communications_Speed *Speed;

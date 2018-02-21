@@ -38,6 +38,9 @@ public:
 	int ModeAvail800;
 	int ModeAvail1024;
 	int ModeAvail1280;
+#ifdef DRAW_SYSTEM_RESOLUTION_1920
+	int ModeAvail1920;
+#endif
 	int ModeAvail320_200;
 	int ModeAvail320_240;
 	int ModeAvail320_200_16;
@@ -71,9 +74,9 @@ public:
 	void DeleteSurfaces();
 	void CreateSurfaces();
 
-	LRESULT HandleSize(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT HandlePaletteChanged(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT HandleQueryNewPalette(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	bool HandleSize(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	bool HandlePaletteChanged(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	bool HandleQueryNewPalette(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void Paint(RECT *rect);
 

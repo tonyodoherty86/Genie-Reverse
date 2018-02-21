@@ -18,12 +18,15 @@
 #include "dxsdk\Include\dsound.h"
 #include "dxsdk\Include\ddraw.h"
 #include "dxsdk\Include\dplay.h"
+#include "dxsdk\Include\dplobby.h"
 
 #include "ida.h"
 
 #define ENGINE_ROR 1
 #define ENGINE_AOK 1
 #define ENGINE_AOC 1
+
+class RGE_Base_Game *rge_base_game;
 
 /* Inlcude core essential components: */
 #include "Engine\ResFile.h"
@@ -51,11 +54,22 @@
 #include "Engine\Registry.hpp"
 #include "Engine\ManagedArray.hpp"
 
+#include "Engine\Picture.hpp"
 #include "Engine\ClipInfo.hpp"
 #include "Engine\Panel.hpp"
 #include "Engine\PicturePanel.hpp"
 #include "Engine\MessagePanel.hpp"
+#include "Engine\ScrollBarPanel.hpp"
+#include "Engine\TextPanel.hpp"
+#include "Engine\ButtonPanel.hpp"
+#include "Engine\InputPanel.hpp"
+#include "Engine\EditPanel.hpp"
+#include "Engine\ListPanel.hpp"
+#include "Engine\PanelDropDown.hpp"
+#include "Engine\PanelSlider.hpp"
 #include "Engine\EasyPanel.hpp"
+
+//typedef TDropDownPanel::ActionType TListPanel::ActionType;
 
 #include "Engine\RGE\FileIO.h"
 #include "Engine\RGE\BaseGame.hpp"
@@ -107,8 +121,12 @@ class RGE_Missile_Object;
 #include "Engine\RGE\Scenario.hpp"
 #include "Engine\RGE\Command.hpp"
 
+#include "Engine\RGE\AiPlay.hpp"
+
 #include "Engine\RGE\ObjectList.hpp"
+class UnitAIModule;
 #include "Engine\RGE\StaticObject.hpp"
+#include "Engine\RGE\AiUnitModule.hpp"
 #include "Engine\RGE\ActiveSpriteList.hpp"
 #include "Engine\RGE\ActiveSprite.hpp"
 #include "Engine\RGE\AnimatedObject.hpp"
@@ -123,11 +141,12 @@ class RGE_Missile_Object;
 #include "Engine\RGE\MissileObject.hpp"
 
 #include "Engine\RGE\InfluenceMap.hpp"
-#include "Engine\RGE\AiUnitModule.hpp"
 
 #include "Engine\RGE\View.hpp"
 #include "Engine\RGE\DiamondMap.hpp"
 #include "Engine\RGE\DiamondMapView.hpp"
+
+#ifdef ENGINE_TRB
 
 #include "Engine\TRB\Game.hpp"
 
@@ -146,12 +165,16 @@ class RGE_Missile_Object;
 #include "Engine\TRB\Triggers.hpp"
 #endif
 #include "Engine\TRB\Player.hpp"
-#include "Engine\TRB\PlayerTech.hpp"
 #include "Engine\TRB\History.hpp"
 #include "Engine\TRB\VictoryConditions.hpp"
 #include "Engine\TRB\TreeObject.hpp"
 #include "Engine\TRB\CombatObject.hpp"
 #include "Engine\TRB\BuildingObject.hpp"
+
+#include "Engine\TRB\DiamondMap.hpp"
+#include "Engine\TRB\DiamondMapView.hpp"
+
+#endif
 
 #include "Engine\AsmDraw.c"
 #include "Engine\DrawSystem.cpp"

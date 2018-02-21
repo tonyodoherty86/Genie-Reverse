@@ -2,7 +2,7 @@
 /**
  * @file    Engine\EasyPanel.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/02/21
  * @version 1.0
  */
 
@@ -60,11 +60,15 @@ public:
     ~TEasy_Panel();
 
     void prepare_for_close();
+
     void setup_shadow_area(int force_redraw);
+
     void draw_setup(int clear);
     void draw();
     void draw_background(int use_background2);
+
     int handle_mouse_down(int mouse_button_in, int x, int y, int ctrl_key, int shift_key);
+
     void set_info_file(char *file_name, int resource_file_id);
     void set_ideal_size(int width, int height);
     int set_background(char *file_name, int resource_id);
@@ -82,6 +86,7 @@ public:
     void set_button_pics(char *file_name, int resource_file_id);
     void set_shadow_amount(int val);
     void set_enable_ime(int enable_ime_in);
+
     char *get_info_file();
     int get_info_id();
     TShape *get_background();
@@ -100,6 +105,7 @@ public:
     TShape *get_button_pics();
     RGE_Color_Table *get_shadow_color_table();
     int get_enable_ime();
+
     int create_button(TPanel *parent, TButtonPanel **button, int text_id1, int text_id2, int x, int y, int width, int height, int font_num, int sound_num, int action_id);
     int create_button(TPanel *parent, TButtonPanel **button, char *text1, char *text2, int x, int y, int width, int height, int font_num, int sound_num, int action_id);
     int create_check_box(TPanel *parent, TButtonPanel **button, int x, int y, int width, int height, int sound_num, int action_id);
@@ -107,8 +113,8 @@ public:
     int create_text(TPanel *parent, TTextPanel **text_panel, int text_id, int x, int y, int width, int height, int font_num, int horz_center, int vert_center, int word_wrap);
     int create_text(TPanel *parent, TTextPanel **text_panel, char *text, int x, int y, int width, int height, int font_num, int horz_center, int vert_center, int word_wrap);
     int create_text(TPanel *parent, TTextPanel **text_panel, char **text, int line_num, int x, int y, int width, int height, int font_num, int horz_center, int vert_center);
-    int create_input(TPanel *parent, TInputPanel **input_panel, char *value, __int16 max_len, TInputPanel::FormatType format_type, int x, int y, int width, int height, int font_num);
-    int create_edit(TPanel *parent, TEditPanel **edit_panel, char *value, __int16 max_len, TEditPanel::FormatType format_type, int x, int y, int width, int height, int font_num, int enable_ime, int turn_ime_on);
+    int create_input(TPanel *parent, TInputPanel **input_panel, char *value, short max_len, TInputPanel::FormatType format_type, int x, int y, int width, int height, int font_num);
+    int create_edit(TPanel *parent, TEditPanel **edit_panel, char *value, short max_len, TEditPanel::FormatType format_type, int x, int y, int width, int height, int font_num, int enable_ime, int turn_ime_on);
     char *create_drop_down(TPanel *parent, TDropDownPanel **drop_panel, int list_width, int list_height, int x, int y, int width, int height, int font_num);
     char *create_list(TPanel *parent, TListPanel **list_panel, int x, int y, int width, int height, int font_num);
     int create_scrollbar(TPanel *parent, TScrollBarPanel **scrollbar_panel, TTextPanel *list_panel, int list_size, int x, int y, int width, int height);

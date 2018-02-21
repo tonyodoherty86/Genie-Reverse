@@ -62,7 +62,7 @@ public:
     ManagedArray pathingGroupMembers,
                  groupMembers;
 
-    class UnitAIModule *unitAIValue;
+    UnitAIModule *unitAIValue;
 
     int groupCommanderValue;
     int zoneMapIndex;

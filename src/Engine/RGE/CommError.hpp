@@ -18,7 +18,7 @@ public:
 
     void NotifyWindowParam(COMMMESSAGES msg, LPARAM lparam);
 
-    ~RGE_Comm_Error(RGE_Comm_Error *this);
+    ~RGE_Comm_Error();
 
     void ShowReturn(int hr, char *Text);
 };

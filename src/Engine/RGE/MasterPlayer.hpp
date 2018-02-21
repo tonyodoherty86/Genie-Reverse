@@ -9,6 +9,7 @@
 class RGE_Master_Player
 {
 public:
+
     char name[20];
 
     short master_object_num;

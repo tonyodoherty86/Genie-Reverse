@@ -1242,7 +1242,7 @@ BITMAPINFOHEADER *DibOpenFile(char *szFile)
     int v1; // esi@1
     HMODULE v2; // eax@2
     HRSRC v3; // eax@2
-    void *v4; // ST08_4@3
+    HRSRC *v4; // ST08_4@3
     HMODULE v5; // eax@3
     HGLOBAL v6; // eax@3
     BITMAPINFOHEADER *result; // eax@3
@@ -1271,9 +1271,9 @@ BITMAPINFOHEADER *DibOpenFile(char *szFile)
         v3 = FindResourceA(v2, szFile, (LPCSTR)2);
         if( v3 )
         {
-            v4 = v3;
+            *v4 = v3;
             v5 = GetModuleHandleA(0);
-            v6 = LoadResource(v5, v4);
+            v6 = LoadResource(v5, *v4);
             result = (BITMAPINFOHEADER *)LockResource(v6);
         }
         else
@@ -1356,13 +1356,12 @@ char *ReadDibBits(char *szFile)
                 _hread(hFile, v10, BitMapInfo1->biSizeImage);
         }
         _lclose(hFile);
-        result = v1;
+        return v1;
     }
     else
     {
-        result = 0;
+        return 0;
     }
-    return result;
 }
 
 BITMAPINFOHEADER *DibWriteClipped(BITMAPINFOHEADER *pDIB, char *szFile, int x, int y, int w, int h)
@@ -1456,8 +1455,8 @@ void *DibCreatePalette(BITMAPINFOHEADER *pdib)
     signed int v2; // edi@3
     unsigned __int16 v3; // cx@4
     char *v4; // esi@10
-    const LOGPALETTE *v5; // eax@10
-    const LOGPALETTE *v6; // ebp@10
+    LOGPALETTE *v5; // eax@10
+    LOGPALETTE *v6; // ebp@10
     int v7; // eax@12
     char v8; // cl@13
     HPALETTE v9; // ST18_4@14
@@ -1484,7 +1483,7 @@ void *DibCreatePalette(BITMAPINFOHEADER *pdib)
         return hpal;
     }
     v4 = (char *)pdib + pdib->biSize;
-    v5 = (const LOGPALETTE *)LocalAlloc(0x40u, 4 * v2 + 8);
+    v5 = (LOGPALETTE *)LocalAlloc(0x40u, 4 * v2 + 8);
     v6 = v5;
     if( !v5 )
         return hpal;
@@ -1588,7 +1587,7 @@ BITMAPINFOHEADER *DibReadBitmapInfo(int fh)
                 pdib = result;
                 if( result )
                 {
-                    qmemcpy(result, &bi, sizeof(BITMAPINFOHEADER));
+                    memcpy(result, &bi, sizeof(BITMAPINFOHEADER));
                     v10 = (char *)result + result->biSize;
                     if( v8 )
                     {
@@ -1607,14 +1606,15 @@ BITMAPINFOHEADER *DibReadBitmapInfo(int fh)
                                 {
                                     v16 = *(_BYTE *)(v15 + 1);
                                     v15 -= 3;
+                                    /*
                                     BYTE2(fhb) = v16;
                                     LOBYTE(fhb) = *(_BYTE *)(v15 + 2);
                                     BYTE1(fhb) = *(_BYTE *)(v15 + 3);
+                                    */
                                     *v13 = fhb;
                                     --v13;
-                                    --v14;
                                 }
-                                while ( v14 );
+                                while ( --v14 );
                             }
                         }
                         else

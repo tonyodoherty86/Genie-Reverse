@@ -1,6 +1,4 @@
 
-#include "Picture.hpp"
-
 void TPicture::TPicture(char *FileName, int res_id, int UseTrans, void *MapToPal, int ZeroIsTrans)
 {
 	this->Load(FileName, res_id, UseTrans, MapToPal, ZeroIsTrans);

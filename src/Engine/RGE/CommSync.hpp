@@ -25,7 +25,7 @@ public:
     unsigned int LastWorldRandom;
     unsigned int GameWorldChecksum;
 
-    struct RGE_Communications_Synchronize::CHECKSUMARRAY
+    struct CHECKSUMARRAY
     {
         unsigned int PlayerNo;
         unsigned int WTime;

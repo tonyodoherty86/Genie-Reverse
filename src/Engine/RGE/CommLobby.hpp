@@ -11,11 +11,13 @@ class RGE_Lobby
 public:
 
     HWND *HostHWND;
+
     IDirectPlayLobby *glpDPL;
     IDirectPlayLobby2 *glpDPL2;
     IDirectPlay2 *glpDP;
     DPLCONNECTION *glpdplConnection;
     char lobby_game;
+
     RGE_Comm_Error *Err;
 
     RGE_Lobby(void *Host);

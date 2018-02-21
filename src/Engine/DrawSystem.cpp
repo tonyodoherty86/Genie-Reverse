@@ -108,9 +108,8 @@ void TDrawSystem::CheckAvailModes(int full_screen)
 		if( HDC DeviceCaps = CreateICA(pszDriver, 0, 0, 0) )
 		{
 			int HorzRes = GetDeviceCaps(DeviceCaps, HORZRES);
-			/*
 			int VertRes = GetDeviceCaps(DeviceCaps, VERTRES);
-            */
+
 			DeleteDC(DeviceCaps);
 
 			if( HorzRes >= 800 )
@@ -222,6 +221,11 @@ int TDrawSystem::IsModeAvail(int wid_in, int hgt_in, int color_bits)
 		case 8:
 			switch( wid_in )
 			{
+#ifdef DRAW_SYSTEM_RESOLUTION_1920
+				case 1920:
+					return this->ModeAvail1920;
+#endif
+
 				case 1280:
 					return this->ModeAvail1280;
 
@@ -532,7 +536,6 @@ bool TDrawSystem::SetDisplaySize(int wid_in, int hgt_in, int color_bits)
 
 void TDrawSystem::ClearPrimarySurface()
 {
-    HRESULT DDResult;
 	DDBLTFX ddbltfx;
 
 	if( this->PrimarySurface &&
@@ -541,7 +544,7 @@ void TDrawSystem::ClearPrimarySurface()
 		ddbltfx.dwSize = 100;
 		ddbltfx.dwFillColor = 0;
 
-		DDResult = this->PrimarySurface->Blt(
+		this->PrimarySurface->Blt(
 			NULL,
 			NULL,
 			NULL,
@@ -605,7 +608,8 @@ char TDrawSystem::CheckSurfaces()
         v11 = this->DrawAreaList;
         if( !v11 )
             return v5;
-        while( v11->DrawArea == this->PrimaryArea || v11->DrawArea->CheckSurface() != 3 )
+        while( v11->DrawArea == this->PrimaryArea ||
+               v11->DrawArea->CheckSurface() != 3 )
         {
             v11 = v11->NextNode;
             if( !v11 )
@@ -648,7 +652,7 @@ void TDrawSystem::CreateSurfaces()
 
 	if( this->DrawType != 2 )
 	{
-LABEL_18:
+        LABEL_18:
 		if( !this->DrawArea )
 		{
 			this->DrawArea = new TDrawArea("Back Buffer", 0);
@@ -697,7 +701,7 @@ LABEL_18:
         this->PrimarySurface->SetPalette(this->DirDrawPal) == DD_OK) &&
         this->PrimarySurface->SetClipper(this->Clipper)    == DD_OK )
     {
-LABEL_29:
+        LABEL_29:
         if( !this->PrimaryArea )
         {
             this->PrimaryArea = new TDrawArea("Primary Surface", 0);
@@ -720,35 +724,39 @@ LABEL_29:
     }
 }
 
-LRESULT TDrawSystem::HandleSize(HWND *hwnd, unsigned int msg, WPARAM wParam, LPARAM lParam)
+bool TDrawSystem::HandleSize(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	RECT wnd_rect;
 
 	if( this->DrawArea )
 	{
-		if( this->DrawType == 1 || this->ScreenMode == 1 )
+		if( this->DrawType == 1 ||
+            this->ScreenMode == 1 )
 		{
 			GetClientRect(*this->Wnd, &wnd_rect);
 
-			this->ScreenWidth = wnd_rect.right;
+			this->ScreenWidth  = wnd_rect.right;
 			this->ScreenHeight = wnd_rect.bottom;
 		}
 		if( this->PrimaryArea )
+        {
 			this->PrimaryArea->SetSize(this->ScreenWidth, this->ScreenHeight, 0);
-
+        }
 		this->DrawArea->SetSize(this->ScreenWidth, this->ScreenHeight, 0);
 	}
+	return true;
 }
 
-LRESULT TDrawSystem::HandlePaletteChanged(HWND *hwnd, unsigned int msg, WPARAM wParam, LPARAM lParam)
+bool TDrawSystem::HandlePaletteChanged(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if( hwnd != this->Wnd )
     {
 		this->HandleQueryNewPalette(hwnd, msg, wParam, lParam);
     }
+    return true;
 }
 
-LRESULT TDrawSystem::HandleQueryNewPalette(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+bool TDrawSystem::HandleQueryNewPalette(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     char v8;
 	HDC v6;
@@ -817,52 +825,40 @@ void TDrawSystem::Paint(RECT *rect)
 		if( rect )
 		{
 			int v7 = rect->left;
-			int v8 = rect->top;
-			int v9 = rect->right;
-			int v10 = rect->bottom;
-
-			r1.left = v7;
-			r1.top = v8;
-			if( rect->left < 0 )
-			{
-				v7 = 0;
+			if( v7 < 0 )
 				r1.left = 0;
-			}
+			r1.left = v7;
+
+			int v8 = rect->top;
 			if( v8 < 0 )
-			{
-				v8 = 0;
-				r1.top = 0;
-			}
+                v8 = 0;
+			r1.top = v8;
+
+			int v9 = rect->right;
 			if( v9 >= this->ScreenWidth )
 				v9 = this->ScreenWidth - 1;
 
+			int v10 = rect->bottom;
 			if( v10 >= this->ScreenHeight )
 				v10 = this->ScreenHeight - 1;
 
-			int v14 = v7 + r2.left;
-			r2.left = v14;
-			int v15 = v9 + v14 - v7;
+			r2.left += v7;
+			int v15 = v9 + r2.left - v7;
 			int v16 = v10 + v8 + r2.top - v8;
 			r2.top += v8;
 
-			r1.right = v9 + 1;
+			r1.right  = v9 + 1;
 			r1.bottom = v10 + 1;
 
-			r2.right = v15 + 1;
+			r2.right  = v15 + 1;
 			r2.bottom = v16 + 1;
 		}
-		/*
-		TODO: The following call is either the below functions:
-        IDirectDrawSurface::UpdateOverlay
-        IDirectDrawSurface::Blt
-        IDirectDrawSurface::AlphaBlt
-		*/
-		this->PrimarySurface->UpdateOverlay(
+		this->PrimarySurface->Blt(
 			&r2,
 			this->DrawArea->DrawSurface,
 			&r1,
-			0x1000000,
-			0);
+			DDBLT_PRESENTATION,
+			NULL);
 	}
 }
 
@@ -1315,17 +1311,15 @@ void TDrawSystem::ModifyPalette(int start_entry, int num_entries, PALETTEENTRY *
 
 	if( start_entry < num_entries + start_entry )
 	{
-		char *v6 = (char *)&this->palette[start_entry];
-		int v7 = 4 * start_entry;
-		int v8 = num_entries;
+		char *v6 = (char*)&this->palette[start_entry];
+		int v7 = start_entry;
+		int i = num_entries;
 		do
 		{
-			int v9 = v7;
-			v7 += 4;
 			v6 += 4;
-			*((PALETTEENTRY *)v6 - 1) = *(PALETTEENTRY *)((char *)pal_entries + v9 - 4 * start_entry);
+			*((PALETTEENTRY *)v6 - 1) = *(PALETTEENTRY *)((char *)pal_entries)[++v7 - start_entry];
 		}
-		while ( --v8 );
+		while( --i );
 	}
 	if( this->DrawType != 1 &&
         this->DirDrawPal )
@@ -1333,7 +1327,7 @@ void TDrawSystem::ModifyPalette(int start_entry, int num_entries, PALETTEENTRY *
 		if( num_entries == 7 )
 			AniPalSets++;
 
-		this->DirDrawPal->SetEntries(// todo: check if this is correct function
+		this->DirDrawPal->SetEntries(
 			0,
 			start_entry,
 			num_entries,
