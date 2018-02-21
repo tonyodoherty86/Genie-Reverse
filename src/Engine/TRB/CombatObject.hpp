@@ -2,16 +2,20 @@
 /**
  * @file    Engine\TRB\CombatObject.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/02/21
  * @version 1.0
  */
 
-class TRIBE_Combat_Object : RGE_Combat_Object
+/**
+ * Size: 452 (ROR)
+ */
+class TRIBE_Combat_Object : public RGE_Combat_Object
 {
 public:
 
-    // 108
-    //RGE_UnitAiModule UnitAi;
+#ifdef ENGINE_AOK
+    // 108 (TODO)
+    UnitAiModule *UnitAi;
     // 332
 
     // 336
@@ -34,16 +38,20 @@ public:
     int TownBellAiActionType;
     // 364
     int TownBellSecondTargetId;
-    // 368
-    float TownBellTargetX;
-    // 372
-    float TownBellTargetY;
-    // 376
-    char BuilderCount;
-    // 377
-    char HealerCount;
-    // 378
-    char OwnMaster;
+    // 368, 372
+    float TownBellTargetX,
+          TownBellTargetY;
+    // 376, 377
+    char BuilderCount,
+         HealerCount;
+#endif
+    /*
+     * @brief   Determines whether this object was derived from an non-standard master-object.
+     * Offset: 378 (AOC).
+     * Offset: 452 (ROR).
+     */
+    char own_master;
+#ifdef ENGINE_AOK
     // 380
     float MissileAmounts;
     // 384
@@ -55,20 +63,21 @@ public:
 
     // 396
     int BeserkerTimer;
+#endif
 
     TRIBE_Combat_Object(TRIBE_Master_Combat_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int do_setup);
     TRIBE_Combat_Object(int infile, RGE_Game_World *gworld, int do_setup);
 
-    ~TRIBE_Combat_Object;
+    ~TRIBE_Combat_Object();
 
     int setup(TRIBE_Master_Combat_Object *tobj, RGE_Player *obj_owner, float x, float y, float z);
     int setup(int infile, RGE_Game_World *gworld);
 
-    void create_action_list;
+    void create_action_list();
 
     void save(int outfile);
 
-    char update;
+    char update();
 
     void modify(float amount, char flag);
     void transform(RGE_Master_Static_Object *obj);
@@ -94,7 +103,7 @@ public:
 
     bool keepGatheringWhenObjectIsOut(int oType);
     bool produceWhenKilledBy(int oGroup);
-    bool useSameZoneDropsite;
+    bool useSameZoneDropsite();
 
     void initUnitAI();
 
