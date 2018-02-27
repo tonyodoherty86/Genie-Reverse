@@ -40,6 +40,28 @@ struct TRIBE_FealtyOffer
 	char Status;
 };
 
+struct Item_Avail
+{
+    char *name;
+    short id;
+    short pict;
+    short inventory_item_1;
+    float inventory_cost_1;
+    short inventory_item_2;
+    float inventory_cost_2;
+    short inventory_item_3;
+    float inventory_cost_3;
+    int help_string_id;
+    int help_page_id;
+};
+
+struct Trade_Avail
+{
+    RGE_Player *player;
+    RGE_Static_Object *dock;
+    float inventory;
+};
+
 class TRIBE_Player : public RGE_Player
 {
 public:
@@ -226,7 +248,7 @@ public:
     char *aiStatus(int sNum);
     void kickAI(int m);
     int strategicNumber(int sN);
-    void TRIBE_Player::logMessage(char *textIn, ...);
+    void logMessage(char *textIn, ...);
     int sendAICommand(int caller, int mType, int p1, int p2, int p3);
     RGE_Object_Node *addObject(RGE_Static_Object *obj, int sleepFlag, int dopple_flag);
     void removeObject(RGE_Static_Object *obj, int sleepFlag, int dopple_flag, RGE_Object_Node *node);
@@ -245,7 +267,7 @@ public:
     void loadAIInformation(char *bL, char *cP, char *rS, int mood, int mapType);
     void notify(int caller, int recipient, int mType, int p1, int p2, int p3);
     void notifyAI(int callerID, int recipientID, int mType, int p1, int p2, int p3);
-    static int TRIBE_Player::intelligentCivSelection(int mapType, int gameType, int mapSize);
+    static int intelligentCivSelection(int mapType, int gameType, int mapSize);
     void intelligentBuildListAndRulesSelection(char *b, char *r, int mapType, int gameType, int mapSize);
 
     void setupEgyptian(int *b, int mapType, int gameType, int mapSize);

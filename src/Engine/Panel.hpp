@@ -13,10 +13,10 @@ public:
     TPanel *previousPanelValue;
     TPanel *previousModalPanelValue;
 
-    int pnl_x;
-    int pnl_y;
-    int pnl_wid;
-    int pnl_hgt;
+    int pnl_x,
+        pnl_y,
+        pnl_wid,
+        pnl_hgt;
 
     char *panelNameValue;
 

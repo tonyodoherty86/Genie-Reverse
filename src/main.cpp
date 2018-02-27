@@ -26,6 +26,8 @@
 #define ENGINE_AOK 1
 #define ENGINE_AOC 1
 
+#define ENGINE_TRB 1
+
 class RGE_Base_Game *rge_base_game;
 
 /* Inlcude core essential components: */
@@ -56,9 +58,9 @@ class RGE_Base_Game *rge_base_game;
 
 #include "Engine\Picture.hpp"
 #include "Engine\ClipInfo.hpp"
+
+/* Include core panel components: */
 #include "Engine\Panel.hpp"
-#include "Engine\PicturePanel.hpp"
-#include "Engine\MessagePanel.hpp"
 #include "Engine\ScrollBarPanel.hpp"
 #include "Engine\TextPanel.hpp"
 #include "Engine\ButtonPanel.hpp"
@@ -69,6 +71,9 @@ class RGE_Base_Game *rge_base_game;
 #include "Engine\PanelSlider.hpp"
 #include "Engine\EasyPanel.hpp"
 
+#include "Engine\PicturePanel.hpp"
+#include "Engine\MessagePanel.hpp"
+
 //typedef TDropDownPanel::ActionType TListPanel::ActionType;
 
 #include "Engine\RGE\FileIO.h"
@@ -76,6 +81,7 @@ class RGE_Base_Game *rge_base_game;
 #include "Engine\RGE\GameInfo.hpp"
 #include "Engine\RGE\Campaign.hpp"
 
+/* Include RGE communications components: */
 #include "Engine\RGE\CommQueue.hpp"
 #include "Engine\RGE\CommLobby.hpp"
 #include "Engine\RGE\TimeSinceLastCall.hpp"
@@ -113,20 +119,19 @@ class RGE_Missile_Object;
 
 #include "Engine\RGE\Path.hpp"
 #include "Engine\RGE\Player.hpp"
+#include "Engine\RGE\VisibleMap.hpp"
+#include "Engine\RGE\AiResourceItem.hpp"
+#include "Engine\RGE\AiPlay.hpp"
+#include "Engine\RGE\AiUnitModule.hpp"
 #include "Engine\RGE\Effects.hpp"
 #include "Engine\RGE\VictoryConditions.hpp"
-#include "Engine\RGE\VisibleMap.hpp"
 
 #include "Engine\RGE\Timeline.hpp"
 #include "Engine\RGE\Scenario.hpp"
 #include "Engine\RGE\Command.hpp"
 
-#include "Engine\RGE\AiPlay.hpp"
-
 #include "Engine\RGE\ObjectList.hpp"
-class UnitAIModule;
 #include "Engine\RGE\StaticObject.hpp"
-#include "Engine\RGE\AiUnitModule.hpp"
 #include "Engine\RGE\ActiveSpriteList.hpp"
 #include "Engine\RGE\ActiveSprite.hpp"
 #include "Engine\RGE\AnimatedObject.hpp"
@@ -146,32 +151,37 @@ class UnitAIModule;
 #include "Engine\RGE\DiamondMap.hpp"
 #include "Engine\RGE\DiamondMapView.hpp"
 
-#ifdef ENGINE_TRB
+#if ENGINE_TRB
 
 #include "Engine\TRB\Game.hpp"
 
-#include "Engine\TRB\ScreenGame.hpp"
+//#include "Engine\TRB\ScreenGame.hpp"
 
 #include "Engine\TRB\World.hpp"
 #include "Engine\TRB\Map.hpp"
 #include "Engine\TRB\MasterPlayer.hpp"
+#include "Engine\TRB\TaskList.hpp"
 #include "Engine\TRB\MasterTreeObject.hpp"
 #include "Engine\TRB\MasterCombatObject.hpp"
 #include "Engine\TRB\MasterBuildingObject.hpp"
 #include "Engine\TRB\Effects.hpp"
 #include "Engine\TRB\Technology.hpp"
+class TRIBE_Tree_Object;
+class TRIBE_Combat_Object;
+class TRIBE_Building_Object;
+#include "Engine\TRB\Player.hpp"
 #include "Engine\TRB\Scenario.hpp"
 #ifdef ENGINE_TRIGGERS_SYSTEM_EXISTS
 #include "Engine\TRB\Triggers.hpp"
 #endif
-#include "Engine\TRB\Player.hpp"
 #include "Engine\TRB\History.hpp"
 #include "Engine\TRB\VictoryConditions.hpp"
+#include "Engine\TRB\ObjectList.hpp"
+#include "Engine\TRB\ActionList.hpp"
 #include "Engine\TRB\TreeObject.hpp"
 #include "Engine\TRB\CombatObject.hpp"
 #include "Engine\TRB\BuildingObject.hpp"
 
-#include "Engine\TRB\DiamondMap.hpp"
 #include "Engine\TRB\DiamondMapView.hpp"
 
 #endif
@@ -183,6 +193,10 @@ class UnitAIModule;
 #include "Engine\Picture.cpp"
 
 #include "Engine\RGE\FileIO.c"
+
+#include "Engine\RGE\BaseGame.cpp"
+#include "Engine\RGE\GameWorld.cpp"
+#include "Engine\RGE\Map.cpp"
 
 using namespace std;
 

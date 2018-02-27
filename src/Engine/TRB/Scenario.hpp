@@ -172,48 +172,6 @@ public:
     void set_player_tech(TRIBE_Player *player);
 };
 
-struct Player_Start_Info
-{
-    int Gold;
-    int Wood;
-    int Food;
-    int Stone;
-};
-
-struct Victory_StartInfo
-{
-    int MP_Conquest;
-    int MP_Ruins;
-    int MP_Artifacts;
-    int MP_Discoveries;
-    int MP_Exploration;
-    int MP_Gold;
-};
-
-struct SP_Victory_Info
-{
-    int ObjType;
-    int AllFlag;
-    int PlayerID;
-    int DestObjID;
-    float x1;
-    float y1;
-    float x2;
-    float y2;
-    int VictoryType;
-    int Amount;
-    int AttribType;
-    int obj_ID;
-    int dest_obj_ID;
-    RGE_Static_Object *obj;
-    RGE_Static_Object *dest_obj;
-};
-
-struct Friendliness
-{
-    int Attitude[RGE_SCN_PROFILE_COUNT];
-};
-
 class TRIBE_Scenario_Header : public RGE_Scenario_Header
 {
 public:
@@ -221,8 +179,8 @@ public:
     int any_sp_victory,
         active_player_count;
 
-    void TRIBE_Scenario_Header(T_Scenario *scenario_info);
-    void TRIBE_Scenario_Header(int infile);
+    TRIBE_Scenario_Header(T_Scenario *scenario_info);
+    TRIBE_Scenario_Header(int infile);
 
     unsigned int get_size();
 

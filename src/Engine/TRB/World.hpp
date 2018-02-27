@@ -49,20 +49,27 @@ struct TRIBE_Zone_Info
 {
     char number_of_players;
     char number_of_computer_players;
+
     char scenario_name[32];
+
     unsigned int game_time;
-    TRIBE_Zone_High_Score_Info total_score;
-    TRIBE_Zone_High_Score_Info religion_score;
-    TRIBE_Zone_High_Score_Info economy_score;
-    TRIBE_Zone_High_Score_Info combat_score;
-    TRIBE_Zone_High_Score_Info research_score;
-    TRIBE_Zone_Player_Info player_info[8];
+
+    TRIBE_Zone_High_Score_Info total_score,
+                               religion_score,
+                               economy_score,
+                               combat_score,
+                               research_score;
+
+    TRIBE_Zone_Player_Info player_info[RGE_PLAYERS_COUNT - 1];
+
     TRIBE_Zone_Map_Info map_info;
+
     char cheats_enabled;
     char game_end_condition_code;
-    unsigned int database_checksum;
-    unsigned int code_checksum;
-    unsigned int program_version;
+
+    unsigned int database_checksum,
+                 code_checksum,
+                 program_version;
 };
 
 class TRIBE_World : public RGE_Game_World
@@ -87,19 +94,30 @@ public:
     void data_load_players_type(short id, short type, _iobuf *infile);
     void data_load_map(char *border_file, char *overlay_file, char *terrain_file, char *map_file, short tile_width, short tile_height, short elev_height, RGE_Sound **sounds, char *terr_obj_file);
     char data_load_world(_iobuf *infile);
+
     char init_player_type(int infile, short index, char type);
+
     void map_init(int infile, TSound_Driver *sound_dvr);
+
     void command_init(int infile, TCommunications_Handler *com_hand);
+
     void scenario_init(int infile, RGE_Game_World *world);
     void scenario_init(RGE_Game_World *world);
+
     void effects_init(int infile);
+
     void world_init(int infile, TSound_Driver *sound_dvr, TCommunications_Handler *com_hand);
+
     char init(char *base_name, TSound_Driver *sound_dvr, TCommunications_Handler *com_hand);
+
     void base_save(int outfile);
     void save(int outfile);
+
     void load_player(int infile, char type, short index);
+
     void setup_gaia();
     void setup_players(RGE_Player_Info *info);
+
     void check_destructables(short player_id, short obj_id, float col, float row, char delete_flag);
     void scenario_make_player(short index, char player_type, char info_type, char master_player_id, char *name);
     char load_world(int infile1);

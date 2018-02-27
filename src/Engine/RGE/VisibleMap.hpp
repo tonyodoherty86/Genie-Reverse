@@ -146,6 +146,7 @@ class Visible_Resource_Manager
 public:
 
     struct VISIBLE_RESOURCE_REC **VR_List;
+
     int *VR_ListSize;
     int *VR_ListUsed;
 
@@ -170,8 +171,11 @@ public:
 struct VISIBLE_RESOURCE_REC
 {
     int object_id;
+
     char distance;
+
     char zone;
-    char pos_x;
-    char pos_y;
+
+    char pos_x,
+         pos_y;
 };

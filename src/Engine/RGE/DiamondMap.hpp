@@ -6,9 +6,10 @@
  * @version 1.0
  */
 
-class RGE_Diamond_Map : TPanel
+class RGE_Diamond_Map : public TPanel
 {
 public:
+
     class RGE_Game_World *world;
     class RGE_Player *player;
     class RGE_Map *map;

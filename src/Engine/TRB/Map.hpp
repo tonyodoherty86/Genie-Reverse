@@ -20,8 +20,8 @@ struct TRIBE_Master_Cliff_Info
     int id2;
     int facet2;
     TRIBE_Cliff_Info info;
-    float offset_x;
-    float offset_y;
+    float offset_x,
+          offset_y;
 };
 
 class TRIBE_Map : public RGE_Map

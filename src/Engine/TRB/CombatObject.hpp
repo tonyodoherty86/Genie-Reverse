@@ -15,7 +15,7 @@ public:
 
 #ifdef ENGINE_AOK
     // 108 (TODO)
-    UnitAiModule *UnitAi;
+    UnitAIModule *UnitAi;
     // 332
 
     // 336
