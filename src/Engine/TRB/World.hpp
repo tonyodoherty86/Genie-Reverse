@@ -2,12 +2,73 @@
 /**
  * @file    Engine\TRB\World.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/02/27
  * @version 1.0
  */
 
-class TRIBE_World : RGE_Game_World
+class TRIBE_World;
+
+struct TRIBE_Zone_High_Score_Info
 {
+    int score;
+    char civ;
+    char player_name[16];
+    char num_allies;
+};
+
+struct TRIBE_Zone_Player_Info
+{
+    char name[16];
+    int score;
+    char winner;
+    char civ_played;
+    char civ_random;
+    char player_no;
+    char team_no;
+    char game_outcome;
+    int tool_time;
+    int bronze_time;
+    int iron_time;
+};
+
+struct TRIBE_Zone_Map_Info
+{
+    char Map_Size;
+    char Map_Type;
+    short Pop_Limit;
+    char Victory_Condition;
+    char Start_Age;
+    char Resources;
+    char Full_Tech;
+    char Fixed_Pos;
+    char Reveal_Map;
+    char Death_Match;
+};
+
+struct TRIBE_Zone_Info
+{
+    char number_of_players;
+    char number_of_computer_players;
+    char scenario_name[32];
+    unsigned int game_time;
+    TRIBE_Zone_High_Score_Info total_score;
+    TRIBE_Zone_High_Score_Info religion_score;
+    TRIBE_Zone_High_Score_Info economy_score;
+    TRIBE_Zone_High_Score_Info combat_score;
+    TRIBE_Zone_High_Score_Info research_score;
+    TRIBE_Zone_Player_Info player_info[8];
+    TRIBE_Zone_Map_Info map_info;
+    char cheats_enabled;
+    char game_end_condition_code;
+    unsigned int database_checksum;
+    unsigned int code_checksum;
+    unsigned int program_version;
+};
+
+class TRIBE_World : public RGE_Game_World
+{
+public:
+
     class TRIBE_Tech *tech;
 
     int victory_type;

@@ -2,12 +2,14 @@
 /**
  * @file    Engine\RGE\Player.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/02/27
  * @version 1.0
  */
 
 class RGE_Player;
 
+#define RGE_PLAYER_MASTER_CATEGORIES_COUNTER 900
+#define RGE_PLAYER_MASTER_GROUPS_COUNTER 100
 class RGE_Tile_List
 {
 public:
@@ -62,9 +64,9 @@ public:
     short master_object_num;
     class RGE_Master_Static_Object **master_objects;
 
-    class RGE_Object_List *objects;
-    class RGE_Object_List *sleeping_objects;
-    class RGE_Object_List *doppleganger_objects;
+    class RGE_Object_List *objects,
+                          *sleeping_objects,
+                          *doppleganger_objects;
 
     /* Offset: 132 */
     class RGE_Victory_Conditions *victory_conditions;
@@ -94,13 +96,13 @@ public:
     int unk2;/* TODO */
 
     char *relations;
-    int unitDiplomacy[9];
-    int mutualAlly[9];
+    int unitDiplomacy[RGE_PLAYERS_COUNT];
+    int mutualAlly[RGE_PLAYERS_COUNT];
 
-    unsigned int mutualExploredMask;
-    unsigned int mutualVisibleMask;
-    unsigned int nonMutualVisibleMask;
-    unsigned int RemoveVisibleBits[9];
+    unsigned int mutualExploredMask,
+                 mutualVisibleMask,
+                 nonMutualVisibleMask,
+                 RemoveVisibleBits[RGE_PLAYERS_COUNT];
 
     int allied_LOS_Enable;
     char allied_victory;
@@ -117,27 +119,28 @@ public:
 
     class Visible_Resource_Manager *VR_List;
 
-    float view_x;
-    float view_y;
-    short map_x;
-    short map_y;
+    float view_x,
+          view_y;
+    short map_x,
+          map_y;
     struct XYFloatPoint *last_view;
-
     short last_view_num;
-    short selected_start_col;
-    short selected_start_row;
-    short selected_end_col;
-    short selected_end_row;
+
+    short selected_start_col,
+          selected_start_row,
+          selected_end_col,
+          selected_end_row;
+
     short replacement_terrain;
 
-    float scroll_vector_x;
-    float scroll_vector_y;
-    float scroll_end_x;
-    float scroll_end_y;
-    float scroll_start_x;
-    float scroll_start_y;
-    float scroll_total_distance;
-    float scroll_distance;
+    float scroll_vector_x,
+          scroll_vector_y,
+          scroll_end_x,
+          scroll_end_y,
+          scroll_start_x,
+          scroll_start_y,
+          scroll_total_distance,
+          scroll_distance;
 
     int gap1[4];/* TODO */
 
@@ -147,18 +150,18 @@ public:
     int sel_count;
     char groups_used[127];
 
-    short master_categories_count[900];
-    short master_groups_count[100];
-    short built_master_categories_count[900];
-    short built_master_groups_count[100];
+    short master_categories_count[RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
+          master_groups_count[RGE_PLAYER_MASTER_GROUPS_COUNTER],
+          built_master_categories_count[RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
+          built_master_groups_count[RGE_PLAYER_MASTER_GROUPS_COUNTER];
 
-    short total_units_count;
-    short total_buildings_ount;
-    short trained_units_count;
-    short built_buildings_count;
+    short total_units_count,
+          total_buildings_ount,
+          trained_units_count,
+          built_buildings_count;
 
-    int easiest_reaction_percent;
-    int easier_reaction_percent;
+    int easiest_reaction_percent,
+        easier_reaction_percent;
 
     char task_ungrouped_soldiers;
 

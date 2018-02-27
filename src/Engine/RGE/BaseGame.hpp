@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\BaseGame.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/02/22
  * @version 1.0
  */
 
@@ -10,8 +10,16 @@ class RGE_Base_Game;
 
 /**
  * This defines the hard-coded number of players.
+ * Many people have been enthusiastic on having more than 9 players.
+ * Modders claim it would be very difficult to do so because the number is hard-coded frequently throughout the build.
+ * Finally, this definition will override the traditional 9 player limit!
  */
 #define RGE_PLAYERS_COUNT 9
+
+/**
+ * This defines the hard-coded number of timings used by the game.
+ */
+#define RGE_GAME_TIMINGS_COUNTER 30
 
 struct RGE_Timing_Info
 {
@@ -28,6 +36,7 @@ struct RGE_Timing_Info
 class RGE_Base_Game
 {
 public:
+
     class RGE_Game_Info *player_game_info;
     class RGE_Scenario_File_Info *scenario_info;
 
@@ -39,10 +48,10 @@ public:
     void *prog_mutex;
     int window_style;
 
-    int random_game_seed;
-    int random_map_seed;
-    int save_random_game_seed;
-    int save_random_map_seed;
+    int random_game_seed      = -1,
+        random_map_seed       = -1,
+        save_random_game_seed = -1,
+        save_random_map_seed  = -1;
 
     int screen_saver_enabled;
     int low_power_enabled;
@@ -129,7 +138,7 @@ public:
     unsigned int world_update_fps;
     unsigned int view_update_fps;
 
-    RGE_Timing_Info timings[30];
+    RGE_Timing_Info timings[RGE_GAME_TIMINGS_COUNTER];
     int do_show_timings;
     int do_show_comm;
     int do_show_ai;
@@ -175,7 +184,8 @@ public:
     int save_paused;
     int non_user_pause;
     int rollover;
-    float game_speed;
+
+    float game_speed = -1.0;
 
     int single_player_difficulty;
 
@@ -228,17 +238,19 @@ public:
     unsigned int get_last_view_update_count();
     unsigned int get_world_update_count();
     unsigned int get_view_update_count();
+
     int get_error_code();
-    char *get_string(int text_id);
-    static char *get_string(int string_id, char *str, int max_len);
+
+    static char *get_string(int text_id);/* TODO: check if this should static */
+    char *get_string(int string_id, char *str, int max_len);
     char *get_string(int string_type, int id, char *str, int max_len);
     char *get_string2(int string_type, int id, int id2, char *str, int max_len);
 
     class RGE_Scenario *get_scenario_info(char *scenario_file, int from_campaign);
     class RGE_Scenario_Header *get_scenario_header(char *scenario_file, int from_campaign);
     void write_scenario_header(int outfile);
-    static void new_scenario_header(int infile);
-    static void new_scenario_header(RGE_Scenario *scenario_info);
+    void new_scenario_header(int infile);
+    void new_scenario_header(RGE_Scenario *scenario_info);
     void new_scenario_info(int infile);
     void get_campaign_info(int *campaign, int *campaign_player, int *campaign_scenario);
     bool set_campaign_info(int campaign, int campaign_player, int campaign_scenario);
@@ -275,10 +287,10 @@ public:
     int check_multi_copies();
     int check_paint();
     void clear_window();
-    static void create_world();
+    void create_world();
     void close();
-    static int create_dialog(TPanel **dialog_ptr, TPanel *new_dialog);
-    static void delete_dialog(TPanel **dialog_ptr);
+    bool create_dialog(TPanel **dialog_ptr, TPanel *new_dialog);
+    void delete_dialog(TPanel **dialog_ptr);
     void set_game_mode(int new_mode, int new_sub_mode);
     void set_player(__int16 new_player_id);
     int get_paused();
@@ -287,7 +299,7 @@ public:
     TDigital **get_sound(int sound_id);
     void request_pause();
     void set_paused(int paused_in, int non_user_pause_in);
-    static void get_mouse_info(WPARAM wParam, LPARAM lParam, POINT *point, int *left_btn, int *right_btn, int *ctrl_key, int *shift_key);
+    void get_mouse_info(WPARAM wParam, LPARAM lParam, POINT *point, int *left_btn, int *right_btn, int *ctrl_key, int *shift_key);
     void get_mouse_pos(POINT *point);
     RGE_Game_World *get_player();
     void draw_window();
@@ -409,8 +421,11 @@ public:
     void set_countdown_timer(int in_countdown_player_id, int in_countdown_timer);
     void get_countdown_timer(int out_countdown_player_id, int *out_countdown_timer);
 
-    static int play_video(char *file_name);
-    unsigned int *play_sound(int sound_id);
+    bool play_video(char *file_name);
+    bool play_sound(int sound_id);
+#if ENGINE_AOC
+    bool play_sound(int sound_id, int sound_in, __int16 loop_count);
+#endif // ENGINE_AOC
     double get_game_speed();
     void set_game_speed(float val);
     int get_single_player_difficulty();
@@ -453,8 +468,8 @@ struct RGE_Prog_Info
     int verify_cd;
     int max_players_per_cd;
 
-    HINSTANCE *instance;
-    HINSTANCE *prev_instance;
+    HINSTANCE *instance,
+              *prev_instance;
 
     char registry_key[256];
     char cmd_line[256];
@@ -467,27 +482,25 @@ struct RGE_Prog_Info
     int max_players;
 
     int check_expiration;
-    short expire_month;
-    short expire_day;
-    short expire_year;
+    short expire_month,
+          expire_day,
+          expire_year;
 
     unsigned int update_interval;
 
     int check_multi_copies;
-
     int skip_startup;
-
     int full_screen;
     int fixed_window_size;
 
-    int use_dir_draw;
-    int use_sys_mem;
-    int use_music;
-    int use_sound;
-    int use_cd_audio;
-    int use_ima;
-    int use_midi;
-    int use_wave_music;
+    int use_dir_draw,
+        use_sys_mem,
+        use_music,
+        use_sound,
+        use_cd_audio,
+        use_ima,
+        use_midi,
+        use_wave_music;
 
     int fast_view;
     int auto_scroll;
@@ -496,8 +509,8 @@ struct RGE_Prog_Info
     unsigned int mouse_scroll_interval;
     float mouse_scroll_max_dist;
     unsigned int key_scroll_interval;
-    float key_scroll_max_dist;
-    float key_scroll_object_move;
+    float key_scroll_max_dist,
+         key_scroll_object_move;
 
     short interface_style;
     int unk1;/* TODO */
@@ -508,16 +521,16 @@ struct RGE_Prog_Info
     int unk5;/* TODO */
     int main_hgt;
 
-    GUID game_guid;
-    GUID zone_guid;
+    GUID game_guid,
+         zone_guid;
 
-    char data_dir[261];
-    char graphics_dir[261];
-    char save_dir[261];
-    char scenario_dir[261];
-    char campaign_dir[261];
-    char sounds_dir[261];
-    char resource_dir[261];
-    char ai_dir[261];
-    char avi_dir[261];
+    char data_dir[261],
+         graphics_dir[261],
+         save_dir[261],
+         scenario_dir[261],
+         campaign_dir[261],
+         sounds_dir[261],
+         resource_dir[261],
+         ai_dir[261],
+         avi_dir[261];
 };

@@ -2,15 +2,15 @@
 /**
  * @file    Engine\TRB\Game.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/02/22
  * @version 1.0
  */
 
-class TRIBE_Game: RGE_Base_Game
+class TRIBE_Game: public RGE_Base_Game
 {
 public:
 
-    enum TRIBE_Game::MapSize
+    enum MapSize
     {
         Tiny      = 0x00,
         Small     = 0x01,
@@ -19,7 +19,7 @@ public:
         Huge      = 0x04,
         Humongous = 0x05,
     };
-    enum TRIBE_Game::MapType
+    enum MapType
     {
         AllWater     = 0x00,
         MostlyWater  = 0x01,
@@ -31,7 +31,7 @@ public:
         Hilly        = 0x07,
         Isthmas      = 0x08,
     };
-    enum TRIBE_Game::VictoryType
+    enum VictoryType
     {
         VictoryDefault     = 0x00,
         VictoryConquest    = 0x01,
@@ -44,7 +44,7 @@ public:
         VictoryScore       = 0x08,
         VictoryStandard    = 0x09,
     };
-    enum TRIBE_Game::ResourceLevel
+    enum ResourceLevel
     {
         DefaultResources  = 0x00,
         LowResource       = 0x01,
@@ -52,7 +52,7 @@ public:
         HighResources     = 0x03,
         VeryHighResources = 0x04,
     };
-    enum TRIBE_Game::Age
+    enum Age
     {
         DefaultAge = 0x00,
         NomadAge   = 0x01,
@@ -71,8 +71,9 @@ public:
 
     struct TRIBE_Game_Options
     {
-        TRIBE_Game::MapSize mapSizeValue;
-        TRIBE_Game::MapType mapTypeValue;
+        TRIBE_Game::MapSize mapSizeValue,
+                            mapTypeValue;
+
         int animalsValue;
         int predatorsValue;
         TRIBE_Game::VictoryType victoryTypeValue;
@@ -85,8 +86,11 @@ public:
         char longCombatValue;
         char randomizePositionsValue;
         char fullTechTreeValue;
+
         TRIBE_Game::ResourceLevel resourceLevelValue;
+
         TRIBE_Game::Age startingAgeValue;
+
         char startingUnitsValue;
         char deathMatchValue;
         char popLimitValue;
@@ -94,8 +98,9 @@ public:
     tribe_game_options;
 
     char testing_scenario[260];
-    void *video_window;
-    int cur_video;
+
+    HWND *video_window;
+    int cur_video = -1;
     int (__stdcall *old_video_wnd_proc)();
     int video_paused;
     unsigned int last_video_time;
@@ -109,8 +114,8 @@ public:
     int started_menu_music;
     int show_object_id;
     class TRIBE_Screen_Game *game_screen;
-    int notification_loc_x[5];
-    int notification_loc_y[5];
+    int notification_loc_x[5],
+        notification_loc_y[5];
     int current_notification_loc;
     int current_notification_recalled;
     char startup_scenario[260];
@@ -248,6 +253,7 @@ public:
 
 int video_sub_wnd_proc(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
+/*
 struct TRIBE_Game::receive_game_options::combined_options
 {
     RGE_Base_Game::RGE_Game_Options rge_options;
@@ -259,3 +265,4 @@ struct TRIBE_Game::send_game_options::combined_options
     RGE_Base_Game::RGE_Game_Options rge_options;
     TRIBE_Game::TRIBE_Game_Options tribe_options;
 };
+*/

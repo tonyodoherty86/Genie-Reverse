@@ -85,7 +85,7 @@ DrawAreaNode *TDrawArea::Init(TDrawSystem *draw_system_in, int wid_in, int hgt_i
 	this->DrawSystem = draw_system_in;
 	this->IsPrimarySurface = isPrimary_in;
 
-	if( !draw_system_in )
+	if( draw_system_in == NULL )
 		goto LABEL_14;
 
 	this->Wnd = draw_system_in->Wnd;
@@ -245,7 +245,7 @@ char *TDrawArea::Lock(char *caller_name, int wait)
 
 void TDrawArea::Unlock(char *caller_name)
 {
-	if( !this->DrawSystem || this->DrawSystem->DrawType != 1 && this->DrawSurface && this->Bits )
+	if( this->DrawSystem == NULL || this->DrawSystem->DrawType != 1 && this->DrawSurface && this->Bits )
 	{
 		((void (__stdcall *)(IDirectDrawSurface *, char *))this->DrawSurface->vfptr[10].Release)(this->DrawSurface, this->Bits);
 

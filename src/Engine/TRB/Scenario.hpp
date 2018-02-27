@@ -2,11 +2,55 @@
 /**
  * @file    Engine\TRB\Scenario.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/02/27
  * @version 1.0
  */
 
+class T_Scenario;
+
 #define TRIBE_SCENARIO_SP_VICTORY_COUNT 12
+
+struct Player_Start_Info
+{
+    int Gold;
+    int Wood;
+    int Food;
+    int Stone;
+};
+
+struct Victory_StartInfo
+{
+    int MP_Conquest;
+    int MP_Ruins;
+    int MP_Artifacts;
+    int MP_Discoveries;
+    int MP_Exploration;
+    int MP_Gold;
+};
+
+struct SP_Victory_Info
+{
+    int ObjType;
+    int AllFlag;
+    int PlayerID;
+    int DestObjID;
+    float x1;
+    float y1;
+    float x2;
+    float y2;
+    int VictoryType;
+    int Amount;
+    int AttribType;
+    int obj_ID;
+    int dest_obj_ID;
+    RGE_Static_Object *obj;
+    RGE_Static_Object *dest_obj;
+};
+
+struct Friendliness
+{
+    int Attitude[16];
+};
 
 class T_Scenario : public RGE_Scenario
 {
@@ -36,11 +80,11 @@ public:
         victory_score,
         victory_time;
 
-    void T_Scenario(RGE_Game_World *w);
+    T_Scenario(RGE_Game_World *w);
 
-    void ~T_Scenario();
+    ~T_Scenario();
 
-    void T_Scenario(int infile, RGE_Game_World *w);
+    T_Scenario(int infile, RGE_Game_World *w);
 
     void save(int outfile);
 
@@ -114,7 +158,7 @@ public:
     int GetScenarioOption(int option);
     int GetPlayerAge(int which);
 
-    void T_Scenario::update();
+    void update();
 
     void SaveAttributesIntoPlayers();
     void Save_victory_conditions_into_players(int SaveAttributes);

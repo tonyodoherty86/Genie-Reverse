@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Effects.hpp
  * @author  Yvan Burrie
- * @date    2018/02/18
+ * @date    2018/02/22
  * @version 1.0
  */
 
@@ -35,8 +35,8 @@ struct RGE_Effect
 struct RGE_Effect_Command
 {
     char command;
-    short change_num1;
-    short change_num2;
-    short change_num3;
+    short change_num1,
+          change_num2,
+          change_num3;
     float change_amount;
 };

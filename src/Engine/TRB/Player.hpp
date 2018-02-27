@@ -6,6 +6,40 @@
  * @version 1.0
  */
 
+class TRIBE_Player;
+
+struct TRIBE_FealtyOffer
+{
+	// 0
+	char Sequence;
+	// 1
+	char StartedBy;
+	// 8
+	int GameTime;
+	// 12
+	char Declare;
+	// 13
+	char OldDiplomacy;
+	// 14
+	char NewDiplomacy;
+	// 15
+	char OldIntelligence;
+	// 16
+	char NewIntelligence;
+	// 17
+	char OldTrade;
+	// 18
+	char NewTrade;
+	// 19
+	char Demand;
+	// 20
+	char Gold;
+	// 24
+	char Message[100];
+	// 124
+	char Status;
+};
+
 class TRIBE_Player : public RGE_Player
 {
 public:
@@ -79,7 +113,7 @@ public:
     // 6416
     int oldPlayerKills[9];
     // 6452
-    TRIBE_TechTree *TechTree
+    class TRIBE_TechTree *TechTree;
     // 6456
     char chanceToDodgeMissiles;
     // 6457

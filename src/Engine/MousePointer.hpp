@@ -2,7 +2,7 @@
 /**
  * @file    Engine\MousePointer.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/02/22
  * @version 1.0
  */
 
@@ -97,4 +97,19 @@ public:
     void Poll();
 
     static int GetDDBltError(int theError);
+};
+
+struct MouseClickInfo
+{
+    int object_group;
+    int self_action;
+    int self_text_id;
+    int gaia_action;
+    int gaia_text_id;
+    int ally_action;
+    int ally_text_id;
+    int neutral_action;
+    int neutral_text_id;
+    int enemy_action;
+    int enemy_text_id;
 };
