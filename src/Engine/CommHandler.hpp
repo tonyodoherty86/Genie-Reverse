@@ -2,7 +2,7 @@
 /**
  * @file    Engine\CommHandler.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/27
  * @version 1.0
  */
 
@@ -50,27 +50,35 @@ enum PLAYERHUMANITY
 struct COMMPLAYEROPTIONS
 {
     char NeedsToBeSent;
+
     unsigned int LastSentTime;
 
     COMMSTATES ProgramState;
 
     unsigned int CurrentTurn;
+
     char TurnSpeedMsec;
-    unsigned int dcoID[10];
+
+    unsigned int dcoID[PLAYERS_ITERATIONS + 1];
+
     unsigned int AcknowledgeAfterMsec;
+
     char CommandTurnIncrement;
-    int PlayerReady[10];
-    unsigned int User1[10];
-    unsigned int User2[10];
-    unsigned int User3[10];
-    unsigned int User4[10];
-    unsigned int User5[10];
-    unsigned int User6[10];
-    unsigned int User7[10];
 
-    PLAYERHUMANITY Humanity[10];
+    int PlayerReady[PLAYERS_ITERATIONS + 1];
 
-    char InvalidPlayer[10];
+    unsigned int User1[PLAYERS_ITERATIONS + 1];
+    unsigned int User2[PLAYERS_ITERATIONS + 1];
+    unsigned int User3[PLAYERS_ITERATIONS + 1];
+    unsigned int User4[PLAYERS_ITERATIONS + 1];
+    unsigned int User5[PLAYERS_ITERATIONS + 1];
+    unsigned int User6[PLAYERS_ITERATIONS + 1];
+    unsigned int User7[PLAYERS_ITERATIONS + 1];
+
+    PLAYERHUMANITY Humanity[PLAYERS_ITERATIONS + 1];
+
+    char InvalidPlayer[PLAYERS_ITERATIONS + 1];
+
     unsigned int Initialized;
     unsigned int RandomSeed;
     unsigned short HighPlayerNumber;
@@ -118,12 +126,13 @@ class TCommunications_Handler
 public:
 
     int OptionsChanged;
+
     char *OptionsData;
 
     int Steps;
 
-    unsigned int TickStart;
-    unsigned int TickCount;
+    unsigned int TickStart,
+                 TickCount;
 
     unsigned int TimeSinceLastCall;
 
@@ -153,8 +162,8 @@ public:
 
     unsigned int CurrentPlayers;
 
-    int previous_last_world_random;
-    int last_world_random;
+    int previous_last_world_random,
+        last_world_random;
 
     int StepMode;
 
@@ -167,6 +176,7 @@ public:
     int PauseChangePending;
     unsigned int CommunicationsVersionCode;
     int ShuttingDown;
+
     unsigned int ReturnElapsed;
     unsigned int ReturnRXPacketSize;
     unsigned int ReturnTXPacketSize;
@@ -200,21 +210,22 @@ public:
     unsigned int TXPackets;
     int IAmLagging;
     unsigned int ServiceTimeout;
-    unsigned int LastPlayerCommunication[10];
-    unsigned int LastPlayerWarning[10];
-    unsigned int LastTXPing[10];
-    unsigned int PlayerStopTurn[10];
-    unsigned int LastSerialRequestedTX[10];
-    unsigned int LastRequestHonoredTX[10];
-    unsigned int LastSerialRepliedTX[10];
-    unsigned int LastRequestRepliedTX[10];
+    unsigned int LastPlayerCommunication[PLAYERS_ITERATIONS + 1];
+    unsigned int LastPlayerWarning[PLAYERS_ITERATIONS + 1];
+    unsigned int LastTXPing[PLAYERS_ITERATIONS + 1];
+    unsigned int PlayerStopTurn[PLAYERS_ITERATIONS + 1];
+    unsigned int LastSerialRequestedTX[PLAYERS_ITERATIONS + 1];
+    unsigned int LastRequestHonoredTX[PLAYERS_ITERATIONS + 1];
+    unsigned int LastSerialRepliedTX[PLAYERS_ITERATIONS + 1];
+    unsigned int LastRequestRepliedTX[PLAYERS_ITERATIONS + 1];
     unsigned int dwFlags;
     unsigned int dwMaxBufferSize;
     unsigned int dwMaxQueueSize;
     unsigned int dwMaxPlayers;
     unsigned int dwHundredBaud;
     unsigned int dwLatency;
-    int Kicked[10];
+
+    int Kicked[PLAYERS_ITERATIONS + 1];
 
     class RGE_Communications_Queue *InQ,
                                    *OutQ;
@@ -227,19 +238,19 @@ public:
 
     unsigned int GTDSerialNo;
     unsigned int HighResendStore;
-    unsigned int DestMap[10];
+    unsigned int DestMap[PLAYERS_ITERATIONS + 1];
     char RGE_Guaranteed_Delivery;
     int IntentionallyDropPackets;
     unsigned int WaitingForAck;
     struct RESENDER *Resend;
     struct HOLDER *OnHold;
-    unsigned int PlayerHighSerialNumber[10];
+    unsigned int PlayerHighSerialNumber[PLAYERS_ITERATIONS + 1];
 
     COMMPLAYEROPTIONS PlayerOptions;
 
-    unsigned int LastTurnAck[10];
+    unsigned int LastTurnAck[PLAYERS_ITERATIONS + 1];
     unsigned int HoldCount;
-    int WasKicked[10];
+    int WasKicked[PLAYERS_ITERATIONS + 1];
 
     void GameOver();
 
@@ -255,6 +266,7 @@ public:
     void Step(int Numsteps);
 
     TCommunications_Handler(HWND *WinHandle, char MaxPlayers, TChat *ChatHandle, GUID AppGuid);
+
     ~TCommunications_Handler();
 
     void KillAnyMissingPlayers();
@@ -400,20 +412,24 @@ struct NAME
     char Text[128];
 };
 
-struct RESENDER
+class RESENDER
 {
+public:
+
     unsigned int TimeSent;
     unsigned int Serial;
     char *ResendMsg;
     unsigned int Length;
-    unsigned int DestMap[10];
+    unsigned int DestMap[PLAYERS_ITERATIONS + 1];
 
     RESENDER();
     ~RESENDER();
 };
 
-struct HOLDER
+class HOLDER
 {
+public:
+
     char *HoldMsg;
     unsigned int Serial;
     unsigned int Length;
