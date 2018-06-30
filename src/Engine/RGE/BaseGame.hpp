@@ -2,19 +2,9 @@
 /**
  * @file    Engine\RGE\BaseGame.hpp
  * @author  Yvan Burrie
- * @date    2018/02/22
+ * @date    2018/06/29
  * @version 1.0
  */
-
-class RGE_Base_Game;
-
-/**
- * This defines the hard-coded number of players.
- * Many people have been enthusiastic on having more than 9 players.
- * Modders claim it would be very difficult to do so because the number is hard-coded frequently throughout the build.
- * Finally, this definition will override the traditional 9 player limit!
- */
-#define RGE_PLAYERS_COUNT 9
 
 /**
  * This defines the hard-coded number of timings used by the game.
@@ -23,14 +13,17 @@ class RGE_Base_Game;
 
 struct RGE_Timing_Info
 {
-    unsigned int accum_time;
-    unsigned int last_time;
-    unsigned int start_time;
+    time_t accum_time,
+           last_time,
+           start_time;
+
     int include_in_total;
+
     int is_summary;
-    unsigned int last_single_time;
-    unsigned int max_time;
-    unsigned int last_max_time;
+
+    time_t last_single_time,
+           max_time,
+           last_max_time;
 };
 
 class RGE_Base_Game
@@ -40,10 +33,22 @@ public:
     class RGE_Game_Info *player_game_info;
     class RGE_Scenario_File_Info *scenario_info;
 
+    /**
+     * Offset: 40.
+     */
     struct RGE_Prog_Info *prog_info;
+
+    /**
+     * Offset: 44.
+     */
     HWND *prog_window;
-    int prog_ready;
-    int prog_active;
+
+    /**
+     * Offset: 48, 52.
+     */
+    int prog_ready,
+        prog_active = 1;
+
     void *prog_palette;
     void *prog_mutex;
     int window_style;
@@ -55,7 +60,17 @@ public:
 
     int screen_saver_enabled;
     int low_power_enabled;
-    int error_code;
+
+    enum ErrorCode
+    {
+        None               = 0,
+        SetupFailed        = 1,
+        RegistryFailed     = 14,
+        DebugLogFailed     = 15,
+    };
+
+    int error_code = RGE_Base_Game::ErrorCode::None;
+
     int is_timer;
 
     TDrawSystem *draw_system;
@@ -68,6 +83,7 @@ public:
     TShape **shapes;
 
     TSound_Driver *sound_system;
+
     TMusic_System *music_system;
     short sound_num;
     TDigital **sounds;
@@ -86,7 +102,7 @@ public:
     int comm_droppackets;
     int comm_syncmsg;
     int comm_stepmode;
-    int comm_speed;
+    int comm_speed = 1;
 
     TDebuggingLog *debugLog;
     int log_comm;
@@ -103,8 +119,8 @@ public:
     TMousePointer *mouse_pointer;
     int erase_mouse;
     int mouse_blit_sync;
-    int is_mouse_on;
-    int windows_mouse;
+    int is_mouse_on = 1;
+    int windows_mouse = 1;
     void *mouse_cursor;
 
     int input_enabled;
@@ -116,15 +132,18 @@ public:
     char work_dir[261];
     char string_dll_name[261];
 
+    /**
+     * Offset: 1060.
+     */
     class RGE_Game_World *world;
 
-    int render_all;
+    int render_all = 1;
 
-    short master_obj_id;
-    short terrain_id;
-    short elevation_height;
+    short master_obj_id    = -1,
+          terrain_id       = -1,
+          elevation_height = -1;
 
-    short brush_size;
+    short brush_size = 1;
 
     char timing_text[256];
 
@@ -134,6 +153,7 @@ public:
     unsigned int last_frame_count;
     unsigned int last_world_update_count;
     unsigned int last_view_update_count;
+
     unsigned int fps;
     unsigned int world_update_fps;
     unsigned int view_update_fps;
@@ -152,9 +172,11 @@ public:
         char scenarioNameValue[128];
         char singlePlayerGameValue;
         char multiplayerGameValue;
-        char mapXSizeValue;
-        char mapYSizeValue;
-        char mapZSizeValue;
+
+        char mapXSizeValue,
+             mapYSizeValue,
+             mapZSizeValue;
+
         char allowCheatCodesValue;
         char mpPathFindingValue;
         char cheatNotificationValue;
@@ -174,20 +196,22 @@ public:
 
     int quick_build;
 
-    int save_check_for_cd;
+    int save_check_for_cd = 1;
 
     int playerIDValue[RGE_PLAYERS_COUNT];
+
     int display_selected_ids;
 
     int countdown_timer[RGE_PLAYERS_COUNT];
+
     int auto_paused;
     int save_paused;
     int non_user_pause;
-    int rollover;
+    int rollover = 1;
 
     float game_speed = -1.0;
 
-    int single_player_difficulty;
+    int single_player_difficulty = 2; // this is 3 in AOC
 
     char pathFindingValue;
 
@@ -195,17 +219,15 @@ public:
 
     TDrawArea *map_save_area;
 
-    /* Contructor */
-    RGE_Base_Game(RGE_Prog_Info *prog_info_in, int do_setup);
+    RGE_Base_Game(RGE_Prog_Info *prog_info_in, bool do_setup);
 
-    int setup();
+    bool setup();
 
     void set_prog_mode(int new_mode);
 
     static TPanel *get_view_panel();
     static TPanel *get_map_panel();
 
-    /* Destructor */
     ~RGE_Base_Game();
 
     static int processCheatCode(int __formal, char *a3);
@@ -241,7 +263,7 @@ public:
 
     int get_error_code();
 
-    static char *get_string(int text_id);/* TODO: check if this should static */
+    char *get_string(int text_id);
     char *get_string(int string_id, char *str, int max_len);
     char *get_string(int string_type, int id, char *str, int max_len);
     char *get_string2(int string_type, int id, int id2, char *str, int max_len);
@@ -254,22 +276,23 @@ public:
     void new_scenario_info(int infile);
     void get_campaign_info(int *campaign, int *campaign_player, int *campaign_scenario);
     bool set_campaign_info(int campaign, int campaign_player, int campaign_scenario);
-
     void set_campaign_win();
+
     unsigned int run();
-    int setup_cmd_options();
-    int setup_class();
+
+    bool setup_cmd_options();
+    bool setup_class();
     HWND setup_main_window();
-    void setup_graphics_system();
-    int setup_palette();
-    void setup_mouse();
-    int setup_chat();
-    int setup_registry();
-    void setup_debugging_log();
-    void setup_comm();
+    bool setup_graphics_system();
+    bool setup_palette();
+    bool setup_mouse();
+    bool setup_chat();
+    bool setup_registry();
+    bool setup_debugging_log();
+    bool setup_comm();
     int reset_comm();
-    int setup_sound_system();
-    int setup_music_system();
+    bool setup_sound_system();
+    bool setup_music_system();
     TShape **setup_shapes();
     TDigital **setup_sounds();
     RGE_Font *setup_fonts();
@@ -309,23 +332,23 @@ public:
     void set_mouse_cursor(void *val);
     void set_mouse_facet(int facet);
 
-    static RGE_Base_Game *wnd_proc(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    RGE_Base_Game *wnd_proc(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     int handle_idle();
-    int handle_mouse_move(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_key_down(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_user_command(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_command(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_music_done(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_paint(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_activate(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_init_menu(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_exit_menu(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    unsigned int handle_size(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_palette_changed(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_query_new_palette(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_close(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int handle_destroy(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_mouse_move(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_key_down(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_user_command(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_command(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_music_done(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_paint(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_activate(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_init_menu(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_exit_menu(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    unsigned int handle_size(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_palette_changed(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_query_new_palette(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_close(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_destroy(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     void calc_timings();
     void calc_timing_text();
@@ -393,6 +416,12 @@ public:
     void setMpPathFinding(char val);
     void set_map_visible(char flag);
     void set_map_fog(char flag);
+#if ENGINE_AOC
+    void setGameSpeed(float v);
+    void setMPGameSpeed(float v);
+    void lockSpeedOff();
+    void lockTeamsOff();
+#endif
 
     void turn_world_sound_off();
 
@@ -424,8 +453,9 @@ public:
     bool play_video(char *file_name);
     bool play_sound(int sound_id);
 #if ENGINE_AOC
-    bool play_sound(int sound_id, int sound_in, __int16 loop_count);
-#endif // ENGINE_AOC
+    bool play_sound(int sound_id, int sound_in, short loop_count);
+#endif
+
     double get_game_speed();
     void set_game_speed(float val);
     int get_single_player_difficulty();
@@ -435,13 +465,13 @@ public:
     void set_render_all();
 };
 
-int rge_base_game_wnd_proc(HWND *wnd, UINT msg, WPARAM wParam, LPARAM lParam);
+int rge_base_game_wnd_proc(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-int enum_wnd_proc(HWND *hwnd, LPARAM lParam);
-int enum_child_proc(HWND *hwnd, LPARAM lParam);
-int enum_thread_proc(HWND *hwnd, LPARAM lParam);
-int close_thread_windows(HWND *hwnd, LPARAM lParam);
-int close_child_windows(HWND *hwnd, LPARAM lParam);
+int enum_wnd_proc(HWND *hWnd, LPARAM lParam);
+int enum_child_proc(HWND *hWnd, LPARAM lParam);
+int enum_thread_proc(HWND *hWnd, LPARAM lParam);
+int close_thread_windows(HWND *hWnd, LPARAM lParam);
+int close_child_windows(HWND *hWnd, LPARAM lParam);
 
 void debug_random_reset();
 void debug_random_write();
@@ -490,9 +520,20 @@ struct RGE_Prog_Info
 
     int check_multi_copies;
     int skip_startup;
+
+    /**
+     * Offset: 2196.
+     */
     int full_screen;
+
+    /**
+     * Offset: 2200.
+     */
     int fixed_window_size;
 
+    /**
+     * Offset: 2204.
+     */
     int use_dir_draw,
         use_sys_mem,
         use_music,
@@ -509,8 +550,9 @@ struct RGE_Prog_Info
     unsigned int mouse_scroll_interval;
     float mouse_scroll_max_dist;
     unsigned int key_scroll_interval;
+
     float key_scroll_max_dist,
-         key_scroll_object_move;
+          key_scroll_object_move;
 
     short interface_style;
     int unk1;/* TODO */
@@ -524,6 +566,9 @@ struct RGE_Prog_Info
     GUID game_guid,
          zone_guid;
 
+    /**
+     * Offset: 3396.
+     */
     char data_dir[261],
          graphics_dir[261],
          save_dir[261],

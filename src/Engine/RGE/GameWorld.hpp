@@ -2,79 +2,150 @@
 /**
  * @file    Engine\RGE\GameWorld.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/28
  * @version 1.0
  */
+
+#define RGE_WORLD_DIFFICULTY_LEVEL_EXISTS TRUE
 
 class RGE_Game_World
 {
 public:
-    /* TODO */
+	/**
+	 * Offset: 0
+	 */
+	//struct vfptr{
+		/**
+		 * Offset: 164.
+		 */
+		//void *load_unit_groups;
+	//}
+	//*table;
+
+    /* TODO: unknown structures */
+
+	/**
+	 * Offset: 4
+	 */
     void *unk4;
+
+	/**
+	 * Offset: 8
+	 */
     void *unk8;
+
+	/**
+	 * Offset: 12
+	 */
     void *unk12;
 
+	/* Timers and conditions */
+
+	/**
+	 * Offset: 16
+	 */
     unsigned int world_time;
+
+	/**
+	 * Offset: 20
+	 */
     unsigned int old_world_time;
+
+	/**
+	 * Offset: 24
+	 */
     unsigned int world_time_delta;
+
+	/**
+	 * Offset: 28
+	 */
     float timer;
-    unsigned int old_time;
-    float game_speed;
-    char temp_pause;
-    char game_state;
-    char game_end_condition;
 
-    int sound_update_index;
-    int sprite_update_index;
+    unsigned int old_time;// 32 (saved_time)
+    float game_speed;// 36
+    char temp_pause;// 40
+    char game_state;// 41
+    char game_end_condition;// 42
 
+	/* Update indexes */
+    int sound_update_index,
+        sprite_update_index;
+
+	/* World Map */
     class RGE_Map *map;
 
+	/* World Sounds */
     short sound_num;
     class RGE_Sound **sounds;
 
+	/* World Sprites */
     short sprite_num;
     class RGE_Sprite **sprites;
 
+	/* World Players */
     short player_num;
     class RGE_Player **players;
 
+	/* World Master-Players */
     int master_player_num;
     class RGE_Master_Player **master_players;
 
+	/* World Effects */
     class RGE_Effects *effects;
 
+	/* World Terrains */
     int terrain_num;
     int terrain_size;
     float **terrains;
 
+	/* World Commands */
     class RGE_Command *commands;
 
+	/* World Scenario */
     class RGE_Scenario *scenario;
 
-    /* TODO */
+    /* TODO: ?? */
     void *unk112;
     int unk116;
 
+    // 118
+    // unit_groups ???
+	/* World Color-Tables */
     int color_table_num;
     class RGE_Color_Table **color_tables;
 
+	/* World incremental object-IDs */
     int next_object_id;
-    int next_reusable_object_id;
 
+    /**
+     * Offset: 132 (AOC).
+     */
+    int next_reusable_object_id = -1;
+
+	/* World Scenario properties */
     int scenario_object_id;
     char scenario_object_flag;
 
-    unsigned int random_seed;
+    unsigned int random_seed;// 144 ???
 
+    /**
+     * Offset: 148 (AOC).
+     */
     int curr_player;
 
-    float map_view_x;
-    float map_view_y;
+    /**
+     * Offset: 152, 156 (AOC).
+     */
+    float map_view_x,
+          map_view_y;
 
     float unk160;/* TODO */
 
     TSound_Driver *sound_driver;
 
+    /**
+     * Offset: 168 (AOC).
+     */
     float world_time_delta_seconds;
 
     class RGE_Static_Object **objectsValue;
@@ -84,28 +155,62 @@ public:
     int numberNegativeObjectsValue;
     int maxNumberNegativeObjectsValue;
 
-    /* TODO: This field was removed in AOK. */
+#if RGE_WORLD_PLAY_BOOK_EXISTS
+    /**
+     * TODO: This field was removed in AOK.
+     */
     class AIPlayBook *playbook;
+#endif
 
-    int campaign;
-    int campaign_player;
-    int campaign_scenario;
+    /**
+     * Index of Campaign, Campaign-Player, Campaign-Scenario.
+     * Offset (AOC): 196, 200, 204.
+     */
+    int campaign,
+        campaign_player,
+        campaign_scenario;
 
+    /**
+     * Offset: 208 (AOC).
+     */
     int player_turn;
+
+    /**
+     * Offset: 212 (AOC).
+     */
     unsigned int player_time_delta[RGE_PLAYERS_COUNT];
 
-    /* Below are objects-lists that provide the recyclage and reusability of each type of object for memory-management purposes. */
-    class RGE_Object_List *reusable_static_objects;
-    class RGE_Object_List *reusable_animated_objects;
-    class RGE_Object_List *reusable_moving_objects;
-    class RGE_Object_List *reusable_action_objects;
-    class RGE_Object_List *reusable_combat_objects;
-    class RGE_Object_List *reusable_missile_objects;
-    class RGE_Object_List *reusable_doppleganger_objects;
+    /**
+     * Below are objects-lists that provide the recyclage and reusability of each type of object for memory-management purposes.
+     */
+    class RGE_Object_List
+        *reusable_static_objects,
+        *reusable_animated_objects,
+        *reusable_moving_objects,
+        *reusable_action_objects,
+        *reusable_combat_objects,
+        *reusable_missile_objects;
 
-    unsigned int maximumComputerPlayerUpdateTime;
-    unsigned int availableComputerPlayerUpdateTime;
-    int currentUpdateComputerPlayer;
+#if RGE_DOPPLEGANGER_OBJECT_EXISTS
+    class RGE_Object_List
+        *reusable_doppleganger_objects;
+#endif
+
+    /**
+     *
+     */
+    unsigned int maximumComputerPlayerUpdateTime,
+                 availableComputerPlayerUpdateTime;
+
+	/**
+	 * Offset: 284.
+	 */
+    int currentUpdateComputerPlayer = -1;
+
+    // 476
+    // int unitGroups_count
+    // 480
+    // unitGroupsUsage // unit groups counter
 
     /* TODO */
     int unk_aok_01;
@@ -138,14 +243,25 @@ public:
     int unk_aok_28;
 
     /* TODO: Added in AOK.
-     * Used when reading RGE_Action_Object structures. */
+     * Used when reading RGE_Action_Object structures.
+	 */
     class RGE_Task_List **actors;
     int actors_num;
 
-    int difficultyLevelValue;
+#if RGE_WORLD_DIFFICULTY_LEVEL_EXISTS
+    /**
+     * Offset: 404.
+     */
+    int difficultyLevelValue = -1;
+#endif
+
+    /**
+     * Offset: 408.
+     */
     int teamsLock;
 
     RGE_Game_World();
+
     ~RGE_Game_World();
 
     void reset_object_count();
@@ -157,13 +273,13 @@ public:
     char data_load_terrain_tables(char *file_name);
     char data_load_color_tables(char *file_name);
     char data_load_sprites(char *file_name);
-    void data_load_players_type(short id, short type, _iobuf *infile);
+    void data_load_players_type(short id, short type, FILE *infile);
     char data_load_players(char *file_name);
     char data_load_objects(char *file_name);
     void data_load_effects(char *effects_file);
     void data_load_map(char *border_file, char *overlay_file, char *terrain_file, char *map_file, short tile_width, short tile_height, short elev_height, RGE_Sound **sounds, char *terr_obj_file);
     void data_load_random_map(char *rmm_map_file, char *rmm_land_file, char *rmm_terr_file, char *rmm_obj_file);
-    char data_load_world(_iobuf *infile);
+    char data_load_world(FILE *infile);
     char data_load(char *base_name, char *world_info);
 
     char init_player_type(int infile, short index, char type);
