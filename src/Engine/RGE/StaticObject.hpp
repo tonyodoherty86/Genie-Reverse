@@ -2,22 +2,47 @@
 /**
  * @file    Engine\RGE\StaticObject.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/07/01
  * @version 1.0
  */
+
+#ifndef RGE_STATIC_OBJECT_TYPE
+    #define RGE_STATIC_OBJECT_TYPE 10
+#endif
+
+class RGE_Check_List;
 
 class RGE_Static_Object
 {
 public:
 
-    int id;
+    /**
+     * The Identity of this Static-Object for its list.
+     * Offset: 4.
+     */
+    int id = 0;
 
+    /**
+     * The Master-Object which this Object derived from.
+     * Offset: 8.
+     */
     RGE_Master_Static_Object *master_obj;
 
+    /**
+     * The Player which this Object belongs to.
+     * Offset: 8.
+     */
     RGE_Player *owner;
 
-    RGE_Sprite *sprite,
-               *old_sprite;
+    /**
+     * The idle or standing Sprite this Object will draw.
+     */
+    RGE_Sprite *sprite;
+
+    /**
+     * The backup Sprite this Object will draw.
+     */
+    RGE_Sprite *old_sprite;
 
     class RGE_Active_Sprite_List *sprite_list;
 
@@ -27,24 +52,64 @@ public:
 
     RGE_Object_List *objects;
 
+    /**
+     * The coordinates this Object is drawn on the screen.
+     */
     short screen_x_offset,
           screen_y_offset,
           shadow_x_offset,
           shadow_y_offset;
 
-    float hp;
-    char curr_damage_percent;
-    char facet;
-    char selected;
+    /**
+     * The Hit-Points this Object currently has.
+     */
+    float hp = 0.0;
+
+    /**
+     * The current percent of damage this Object should have.
+     */
+    char curr_damage_percent = 0;
+
+    /**
+     * The current Facet of this Object's Sprite.
+     */
+    char facet = -1;
+
+    /**
+     * Determines whether this Object is currently selected.
+     */
+    bool selected = false;
+
+    /**
+     * Determines the current Unit-Group this Object belongs to.
+     */
     char selected_group;
 
-    float world_x,
-          world_y,
-          world_z;
+    /**
+     * The coordinates this Object is located on the map.
+     * Offset for AOC0007260809: 64, 68, 72.
+     */
+    float world_x = -1.0,
+          world_y = -1.0,
+          world_z = -1.0;
 
+    /**
+     * The current amount of whatever attribute.
+     */
     float attribute_amount_held;
 
-    char object_state;
+    enum State
+    {
+        Ready   = 0,
+        Founded = 1,
+        Alive   = 2,
+        Dying   = 3,
+    };
+
+    /**
+     * Specifies whether the Object is existing, alive, dead, etc.
+     */
+    char object_state = State::Ready;
 
     char sleep_flag,
          dopple_flag,
@@ -52,7 +117,7 @@ public:
 
     short attribute_type_held;
 
-    char type;
+    char type = RGE_STATIC_OBJECT_TYPE;
 
     char worker_num;
 
@@ -70,6 +135,153 @@ public:
     char inObstructionMapValue;
     char lastInObstructionMapValue;
     char underAttackValue;
+
+    // int GroupId; // Offset (AOC): 120 ??????
+
+    /**
+     * Offset (AOC): 124.
+     */
+    bool alreadyCollided;
+
+    RGE_Static_Object(
+        RGE_Master_Static_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z,
+        bool do_setup);
+
+    RGE_Static_Object(
+        int infile,
+        RGE_Game_World *gworld,
+        bool do_setup);
+
+    ~RGE_Static_Object();
+
+    void recycle_in_to_game(
+        RGE_Master_Static_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z);
+    
+    void recycle_out_of_game();
+
+    bool setup(
+        RGE_Master_Static_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z);
+    
+    bool setup(
+        int infile,
+        RGE_Game_World *gworld);
+
+    double getSpeed();
+    void change_unique_id();
+    void create_object_list();
+    void create_sprite_list();
+    void get_starting_attribute();
+    void give_attribute_to_owner();
+    void take_attribute_from_owner();
+    void draw(TDrawArea *render_area, short x, short y, RGE_Color_Table *draw_color);
+    void shadow_draw(TDrawArea *render_area, short x, short y, int flag);
+    void normal_draw(TDrawArea *render_area, int x, int y);
+    void draw_front_frame(TDrawArea *render_area, int x, int y);
+    void draw_back_frame(TDrawArea *render_area, short x, short y);
+    void capture_frame(TDrawArea *render_area, short x, short y);
+    void capture_square_frame(TDrawArea *render_area, short x, short y);
+    void capture_frame_3d_cube(TDrawArea *render_area, short x, short y);
+    void capture_frame_3d_square(TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_square_back(TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_square_front(TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_cube_back(TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_cube_front(TDrawArea *render_area, short x, short y);
+    void draw_frame(TDrawArea *render_area, short x, short y);
+    bool update();
+    void check_damage_sprites();
+    RGE_Static_Object *spawn_death_obj();
+    void rehook();
+    RGE_Static_Object *get_object_pointer(int obj_id);
+    RGE_Sprite *get_sprite_pointer(short sprite_id);
+    void save(int outfile);
+    double teleport(float x, float y, float z);
+    void new_sprite(RGE_Sprite *nsprite);
+    void add_overlay_sprite(RGE_Sprite *nsprite, char order);
+    void remove_overlay_sprite(RGE_Sprite *nsprite);
+    void change_ownership(RGE_Player *new_owner);
+    void modify(float amount, char flag);
+    void modify_delta(float amount, char flag);
+    void modify_percent(float amount, char flag);
+    void transform(RGE_Master_Static_Object *obj);
+    void copy_obj(RGE_Master_Static_Object *source);
+    void destroy_obj();
+    void die_die_die();
+    void remove_visible_resource();
+    void create_doppleganger_when_dying();
+    void set_object_state(char new_object_state);
+    RGE_Static_Object *check_object_bounds();
+    double get_terrain_speed(char terrain);
+    char is_moving();
+    bool is_dying();
+    int get_frame(short *min_x, short *min_y, short *max_x, short *max_y);
+    bool more_room();
+    void enter_obj(RGE_Static_Object *target);
+    void exit_obj();
+    LOSTBL **get_los_table();
+    int explore_terrain(RGE_Player *whos, char explore_type, int Override_LOS);
+    void unexplore_terrain(RGE_Player *whos, char explore_type, int Override_LOS);
+    void damage(int weapon_num, RGE_Armor_Weapon_Info *damage, float attack_modifier, RGE_Player *attacking_player, RGE_Static_Object *attackingObject);
+    double calculateDamage(int weapon_num, RGE_Armor_Weapon_Info *damage, float attack_modifier, RGE_Player *attacking_player, RGE_Static_Object *attackingObject);
+    void rotate(int amount);
+    void set_attribute(short attr_type, float attr_amount);
+    void set_attribute_amount(float attr_amount, char delta, char check_max);
+    char heal(float healing);
+    void set_being_worked_on(RGE_Action_Object *work_obj, short action_type, char attack_flag);
+    void release_being_worked_on(RGE_Static_Object *caller);
+    int inRange(RGE_Static_Object *obj, float range);
+    long double distance_to_object(RGE_Static_Object *obj);
+    long double distance_to_position(float x, float y, float z);
+    char hit_test(int draw_x, int draw_y, short mouse_x, short mouse_y, int check_radius);
+    char box_hit_test(int draw_x, int draw_y, short start_x, short start_y, short end_x, short end_y);
+    void set_location(float x, float y, float z);
+    char drop_held_objects(int dropZone);
+    char find_drop_location(int dropZone, float *x, float *y, RGE_Master_Static_Object *m_obj, RGE_Static_Object *obj, float drop_x, float drop_y, float radius_x, float radius_y);
+    RGE_Check_List *make_object_bounds_list(float delta);
+    int boundToFacet(float tX, float tY, int numberBindingFacets);
+    int numberFacets();
+    char underAttack();
+    void setUnderAttack(char v);
+    int addToObstructionMap(int obMapCode);
+    int removeFromObstructionMap(int obMapCode);
+    void changeInfluenceMap(InfluenceMap *iMap, int increment, int usePercentCoverage, int useLOS);
+    RGE_Check_List *objectCollisionList(float delta);
+    void logDebug(char *textIn, ...);
+    UnitAIModule *unitAI();
+    char lookupZone(XYPoint p);
+    char lookupZone(int x, int y);
+    char currentZone();
+    int withinRangeOfZoneAtPoint(char zone, float range, XYPoint *point);
+    int withinRangeOfZone(char zone, float range);
+    int findClosestPointInTerrainType(XYPoint p, XYPoint *rVal, int type1, int type2, int range);
+    int isGroupCommander();
+    bool inGroup();
+    int unitIsInGroup(int uID);
+    int createGroup(int *units, int count, int commander, float range);
+    int commanderCreateGroup(int *units, int count, int commander, float range);
+    int addToGroup(int unit, float range);
+    RGE_Static_Object *commanderAddToGroup(int unit, float range);
+    int removeFromGroup(int unit);
+    int commanderRemoveFromGroup(int uID);
+    int destroyGroup();
+    int commanderDestroyGroup();
+    void addToPathingGroup(int uID);
+    void removeAllFromPathingGroup();
+    void remove_shadows();
+    void set_sleep_flag(char flag_in);
+    int get_action_checksum();
+    int get_waypoint_checksum();
 
     RGE_Master_Static_Object *get_command_master(RGE_Static_Object *a2, float a3, float a4, float a5);
     RGE_Static_Object *get_target_obj();
@@ -91,15 +303,15 @@ public:
     XYZBYTEPoint *userDefinedWaypoint(int a2);
     int addUserDefinedWaypoint(XYZBYTEPoint *a2, int a3);
     int numberUserDefinedWaypoints();
-    Path *findAvoidancePath(XYZPoint *a2, float a3, int a4);
+    Path *findAvoidancePath(XYZPoint *avoid, float a3, int a4);
 
-    char can_attack();
-    int canRepair();
-    int inAttackRange(RGE_Static_Object *a2);
-    double calc_attack_modifier(RGE_Static_Object *a2);
+    virtual bool can_attack();
+    virtual int canRepair();
+    virtual int inAttackRange(RGE_Static_Object *obj);
+    double calc_attack_modifier(RGE_Static_Object *obj);
     double rateOfFire();
-    double damageCapability();
-    double damageCapability(RGE_Static_Object *a2);
+    virtual double damageCapability();
+    double damageCapability(RGE_Static_Object *obj);
     double weaponRange();
     double minimumWeaponRange();
     int currentTargetID();
@@ -133,16 +345,45 @@ public:
     int pause();
 };
 
-struct RGE_Check_List
+class RGE_Check_List
 {
+public:
+
+    RGE_Check_List();
+
+    ~RGE_Check_List();
+
+    void add_node(RGE_Static_Object *obj, float dx, float dy, char flag1);
+
+    /**
+     * Offset: 0.
+     */
     struct RGE_Check_Node *list;
 };
 
+/**
+ * Size: 20.
+ * Align: 4.
+ */
 struct RGE_Check_Node
 {
+    /**
+     * Offset: 0.
+     */
     RGE_Static_Object *node;
-    float dx;
-    float dy;
+
+    /**
+     * Offset: 4, 8.
+     */
+    float dx, dy;
+
+    /**
+     * Offset: 12.
+     */
     char flag;
+
+    /**
+     * Offset: 16.
+     */
     RGE_Check_Node *next;
 };

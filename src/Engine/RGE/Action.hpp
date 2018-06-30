@@ -2,59 +2,134 @@
 /**
  * @file    Engine\RGE\Action.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/06/30
  * @version 1.0
  */
+
+#ifndef RGE_ACTION_TYPE
+    #define RGE_ACTION_TYPE 0
+#endif
 
 class RGE_Action
 {
 public:
 
-	// 4
-	short action_type;
-	// 8
-	RGE_Action_Object *obj;
-	// 12
-	char state;
-	// 16
-    RGE_Static_Object *target_obj;
-	// 20
-    RGE_Static_Object *target_obj2;
-	// 24
-	int targetID = -1;
-	// 28
-	int target2ID = -1;
-	// 32, 36, 40
-	float target_x,
-	      target_y,
-	      target_z;
-	// 44
-	float timer;
-	// 48
-	RGE_Task *task; // short TaskId = -1;
-	// 52
-	void *sub_actions;
-	// 56
-	RGE_Sprite *sprite; // short SpriteId = -1;
-	// 60
-	char subActionValue;
-	// 61
-	char target_moved;
-	// 64
+    /**
+     * Offset: 4.
+     */
+    short action_type = RGE_ACTION_TYPE;
 
-    RGE_Action(int infile, RGE_Action_Object *obj_in, int do_setup);
-    RGE_Action(RGE_Action_Object *obj_in, int do_setup);
+    /**
+     * Offset: 8.
+     */
+    RGE_Action_Object *obj;
+
+    enum State
+    {
+        None         = 0,
+        Done         = 1,
+        Wait         = 2,
+        Search       = 3,
+        Goto         = 4,
+        Goto2        = 5, /* follow */
+        Work         = 6, /* fetch */
+        Work2        = 7, /* deposit */
+        Return       = 8,
+        Turn         = 9,
+        Delay        = 10,
+        Move         = 11,
+        Attack       = 12,
+        Failed       = 13,
+        Invalidated  = 14,
+        MoveNoSearch = 15,
+    };
+
+    /**
+     * Offset: 12.
+     */
+    char state = State::None;
+
+    /**
+     * Offset: 16.
+     */
+    RGE_Static_Object *target_obj;
+
+    /**
+     * Offset: 20.
+     */
+    RGE_Static_Object *target_obj2;
+
+    /**
+     * Offset: 24.
+     */
+    int targetID = -1;
+
+    /**
+     * Offset: 28.
+     */
+    int target2ID = -1;
+
+    /**
+     * Offset: 32, 36, 40.
+     */
+    float target_x = -1.0,
+          target_y = -1.0,
+          target_z = -1.0;
+
+    /**
+     * Offset: 44.
+     */
+    float timer = 0.0;
+
+    /**
+     * Offset: 48.
+     */
+    RGE_Task *task;
+
+    /**
+     * Offset: 52.
+     */
+    RGE_Action_List *sub_actions;
+
+    /**
+     * Offset: 56.
+     */
+    RGE_Sprite *sprite;
+
+    /**
+     * Offset: 60.
+     */
+    char sub_action_value;
+
+    /**
+     * Offset: 61.
+     */
+    bool target_moved;
+
+    RGE_Action(
+        int infile,
+        RGE_Action_Object *obj_in,
+        bool do_setup);
+
+    RGE_Action(
+        RGE_Action_Object *obj_in,
+        bool do_setup);
 
     ~RGE_Action();
 
-    int setup(int infile, RGE_Action_Object *obj_in);
-    int setup(RGE_Action_Object *obj_in);
+    bool setup(
+        int infile,
+        RGE_Action_Object *obj_in);
+
+    bool setup(
+        RGE_Action_Object *obj_in);
 
     void create_action_list(RGE_Action_Object *obj_in);
 
     void rehook();
 
-    void save(int outfile);
+    void save(
+        int outfile);
 
     short type();
 
@@ -66,9 +141,9 @@ public:
 
     void set_state(char new_state);
 
-    char inside_obj_update();
-    char idle_update();
-    char update();
+    bool inside_obj_update();
+    bool idle_update();
+    bool update();
 
     void set_target_obj(RGE_Static_Object *new_obj);
     void set_target_obj2(RGE_Static_Object *new_obj);

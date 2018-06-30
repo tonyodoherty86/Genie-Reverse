@@ -1,8 +1,8 @@
 
 /**
- * @file    Engine\InfluenceMap.hpp
+ * @file    Engine\RGE\InfluenceMap.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/06/24
  * @version 1.0
  */
 
@@ -10,11 +10,11 @@ class InfluenceMap
 {
 public:
 
-    int xSizeValue;
-    int ySizeValue;
+    int xSizeValue,
+        ySizeValue;
 
-    int xReferencePointValue;
-    int yReferencePointValue;
+    int xReferencePointValue,
+        yReferencePointValue;
 
     char *valueValue;
     char **rowValue;
@@ -26,6 +26,7 @@ public:
 
     InfluenceMap(int x, int y, char initialValue);
     InfluenceMap(int infile);
+
     ~InfluenceMap();
 
     int initialize(char initialValue);

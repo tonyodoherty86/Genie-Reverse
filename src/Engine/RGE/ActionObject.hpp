@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\ActionObject.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/06/30
  * @version 1.0
  */
 
@@ -12,23 +12,52 @@ class RGE_Action_Object : public RGE_Moving_Object
 {
 public:
 
-    char waiting;
+    RGE_Master_Action_Object *master_obj;
 
+    /**
+     * Offset (AOC): 268.
+     */
+    bool waiting;
+
+    /**
+     * Offset (AOC): 264.
+     */
     class RGE_Action_List *actions;
 
+    /**
+     * Offset (AOC): 269.
+     */
     char command_flag;
 
+    /**
+     * TODO: when was this added?
+     * Offset (AOC): 270.
+     */
+	short selected_group_info;
+
     int lastActionValue;
+
     int lastActionStateValue;
 
-    RGE_Action_Object(int infile, RGE_Game_World *gworld, int do_setup);
+    RGE_Action_Object(
+        int infile,
+        RGE_Game_World *gworld,
+        bool do_setup);
 
     ~RGE_Action_Object();
 
     void recycle_out_of_game();
 
-    int setup(RGE_Master_Action_Object *tobj, RGE_Player *obj_owner, float x, float y, float z);
-    int setup(int infile, RGE_Game_World *gworld);
+    bool setup(
+        RGE_Master_Action_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z);
+
+    bool setup(
+        int infile,
+        RGE_Game_World *gworld);
 
     void create_action_list();
 
@@ -55,7 +84,7 @@ public:
 
     void stop();
 
-    char update();
+    bool update();
 
     void change_ownership(RGE_Player *new_owner);
 
@@ -68,6 +97,7 @@ public:
     RGE_Task *getTask(RGE_Static_Object *target, float targetX, float targetY, float targetZ);
 
     char actionState();
+
     int get_action_checksum();
 
     RGE_Action_Object(RGE_Master_Action_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int do_setup);

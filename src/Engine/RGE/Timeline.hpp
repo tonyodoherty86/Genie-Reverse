@@ -46,9 +46,7 @@ struct RGE_Time_Entry
     char command;
     short obj_type;
     char player;
-    float x;
-    float y;
-    float z;
+    float x, y, z;
     short task;
     class RGE_Static_Object *this_obj;
     short this_obj_id;

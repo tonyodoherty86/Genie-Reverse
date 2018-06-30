@@ -2,14 +2,19 @@
 /**
  * @file    Engine\RGE\Player.hpp
  * @author  Yvan Burrie
- * @date    2018/02/27
+ * @date    2018/06/27
  * @version 1.0
  */
+
+#ifndef RGE_PLAYER_TYPE
+    #define RGE_PLAYER_TYPE 0
+#endif
 
 class RGE_Player;
 
 #define RGE_PLAYER_MASTER_CATEGORIES_COUNTER 900
 #define RGE_PLAYER_MASTER_GROUPS_COUNTER 100
+
 class RGE_Tile_List
 {
 public:
@@ -21,6 +26,7 @@ public:
     struct RGE_Tile_List_Node *list;
 
     RGE_Tile_List(int Initial_Size);
+
     ~RGE_Tile_List();
 
     void add_node(int col, int row);
@@ -31,14 +37,17 @@ public:
 
 struct RGE_Tile_List_Node
 {
-    int col;
-    int row;
+    int col,
+        row;
 };
 
 class RGE_Player
 {
 public:
 
+    /**
+     * Offset: 4.
+     */
     int computerPlayerValue;
     int pathingAttemptCapValue;
     int pathingDelayCapValue;
@@ -61,30 +70,70 @@ public:
           escrow_amounts[4],
           escrow_percents[4];
 
+    /**
+     * Offset: 112.
+     */
     short master_object_num;
+
+    /**
+     * Offset: 116.
+     */
     class RGE_Master_Static_Object **master_objects;
 
+    /**
+     * Offset: 120, 124, 128.
+     */
     class RGE_Object_List *objects,
                           *sleeping_objects,
                           *doppleganger_objects;
 
-    /* Offset: 132 */
+    /**
+     * Offset: 132.
+     */
     class RGE_Victory_Conditions *victory_conditions;
 
-    /* Offset: 136 */
+    /**
+     * Offset: 136.
+     */
     class RGE_Visible_Map *visible;
 
+    /**
+     * Offset: 140.
+     */
     class RGE_Game_World *world;
 
+    /**
+     * Offset: 144.
+     */
     class RGE_Doppleganger_Creator *doppleganger_creator;
 
-    void *unkown_structure;/* TODO */
+    /**
+     * Offset: 148.
+     */
+    void *unkown_structure;
 
+    /**
+     * Offset: 152.
+     */
     char *name;
+
+    /**
+     * Offset: 156.
+     */
     int id;
-    char type;
+
+    /**
+     * Offset: 160.
+     */
+    char type = RGE_PLAYER_TYPE;
+
+    /**
+     * Offset: 161.
+     */
     char culture;
+
     char game_status;
+
     char resigned;
 
     unsigned int attribute_num;
@@ -95,6 +144,9 @@ public:
     RGE_Tile_List diam_tile_list;
     int unk2;/* TODO */
 
+    /**
+     * Offset: 220.
+     */
     char *relations;
     int unitDiplomacy[RGE_PLAYERS_COUNT];
     int mutualAlly[RGE_PLAYERS_COUNT];
@@ -105,25 +157,50 @@ public:
                  RemoveVisibleBits[RGE_PLAYERS_COUNT];
 
     int allied_LOS_Enable;
+
+    /**
+     * Offset: 348.
+     */
     char allied_victory;
 
+    /**
+     * Offset: 349.
+     */
     char master_player_id;
 
-    int unk3;/* TODO */
+    /**
+     * Offset: 352.
+     */
+    int unk3;
 
+    /**
+     * Offset: 356.
+     */
     RGE_Color_Table *color_table;
 
+    /**
+     * Offset: 360.
+     */
     int tribe_effect;
 
-    int unk4;/* TODO */
+    /**
+     * Offset: 364.
+     */
+    int unk4;
 
+    /**
+     * Offset: 368.
+     */
     class Visible_Resource_Manager *VR_List;
 
-    float view_x,
-          view_y;
-    short map_x,
-          map_y;
-    struct XYFloatPoint *last_view;
+    float view_x = -1.0,
+          view_y = -1.0;
+
+    short map_x = -1,
+          map_y = -1;
+
+    XYFloatPoint *last_view;
+
     short last_view_num;
 
     short selected_start_col,
@@ -142,7 +219,7 @@ public:
           scroll_total_distance,
           scroll_distance;
 
-    int gap1[4];/* TODO */
+    int gap1[4];
 
     class RGE_Static_Object *selected_obj;
     class RGE_Static_Object *sel_list[40];
@@ -150,6 +227,9 @@ public:
     int sel_count;
     char groups_used[127];
 
+    /**
+     * Offset: 748, 2548, 2748, 4548.
+     */
     short master_categories_count[RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
           master_groups_count[RGE_PLAYER_MASTER_GROUPS_COUNTER],
           built_master_categories_count[RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
@@ -165,8 +245,18 @@ public:
 
     char task_ungrouped_soldiers;
 
-    RGE_Player(int infile, RGE_Game_World *gworld, char this_id);
-    RGE_Player(RGE_Game_World *gworld, RGE_Master_Player *prototype, char this_id, char *new_name, char m_player_id, char flag);
+    RGE_Player(
+        int infile,
+        RGE_Game_World *gworld,
+        char this_id);
+
+    RGE_Player(
+        RGE_Game_World *gworld,
+        RGE_Master_Player *prototype,
+        char this_id,
+        char *new_name,
+        char m_player_id,
+        char flag);
 
     ~RGE_Player();
 
@@ -184,8 +274,34 @@ public:
     int isNeutral(int playerNum);
     int isAllNeutral();
 
-    void sendUnitAIOrder(int issuer, int recipient, int orderType, int target, int targetOwner, float targetX, float targetY, float targetZ, float range, int immediate, int inFront, int priority);
-    void processAIOrder(int issuer, int recipient, int orderType, int target, int targetOwner, float targetX, float targetY, float targetZ, float range, int immediate, int inFront, int priority);
+    void sendUnitAIOrder(
+        int issuer,
+        int recipient,
+        int orderType,
+        int target,
+        int targetOwner,
+        float targetX,
+        float targetY,
+        float targetZ,
+        float range,
+        int immediate,
+        int inFront,
+        int priority);
+
+    void processAIOrder(
+        int issuer,
+        int recipient,
+        int orderType,
+        int target,
+        int targetOwner,
+        float targetX,
+        float targetY,
+        float targetZ,
+        float range,
+        int immediate,
+        int inFront,
+        int priority);
+
     void sendGameOrder(RGE_Static_Object *unit, RGE_Static_Object *target, float targetX, float targetY);
 
     void sendAddWaypointCommand(int recipient, XYZBYTEPoint *waypoint, int numWaypoints);
@@ -203,7 +319,14 @@ public:
 
     void sendChatMessage(int playerID, int copySelf, char *textIn, ...);
 
-    RGE_Static_Object *make_scenario_obj(float world_x, float world_y, float world_z, short master_id, char state, float new_angle);
+    RGE_Static_Object *make_scenario_obj(
+        float world_x,
+        float world_y,
+        float world_z,
+        short master_id,
+        char state,
+        float new_angle);
+
     void scenario_save(int outfile);
     void scenario_load(int infile, int *player_id_hash, float version);
     void scenario_postsave(int outfile);

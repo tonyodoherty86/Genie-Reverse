@@ -2,11 +2,9 @@
 /**
  * @file    Engine\RGE\Scenario.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/06/26
  * @version 1.0
  */
-
-class RGE_Scenario;
 
 #define RGE_SCN_PROFILE_COUNT 16
 #define RGE_SCN_TEXT_LENGTH 224
@@ -121,8 +119,11 @@ public:
     void Set_message(char *str, int message);
     char *Get_message(int message);
 };
+
 class RGE_Scenario_Header
 {
+public:
+
     int error_code;
     int version;
     unsigned int checksum;

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Sound.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/25
  * @version 1.0
  */
 
@@ -13,14 +13,12 @@ public:
     short play_at_update_count;
 
     short sound_num;
-
     struct RGE_Sound_Info *sounds;
 
     unsigned int cache_time = 30000;
 
     short id;
 
-    RGE_Sound(_iobuf *infile, short in_id);
     RGE_Sound(int infile, TSound_Driver *sound);
 
     ~RGE_Sound();
@@ -46,9 +44,11 @@ public:
     int is_playing();
 };
 
+#define RGE_SOUND_INFO_NAME_LENGTH 13
+
 struct RGE_Sound_Info
 {
-    char name[13];
+    char name[RGE_SOUND_INFO_NAME_LENGTH];
 
     int resource_id;
 

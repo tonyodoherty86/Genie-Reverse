@@ -2,34 +2,58 @@
 /**
  * @file    Engine\RGE\Map.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/28
  * @version 1.0
  */
 
-class RGE_Map;
+#ifndef RGE_MAP_CONTOUR_Y_DELTA_EXISTS
+    #define RGE_MAP_CONTOUR_Y_DELTA_EXISTS TRUE
+#endif
+
+#define RGE_MAP_CONTOURS_COUNT 19
+
+#define RGE_MAP_TERRAINS_COUNT 42
+
+#define RGE_MAP_OVERLAYS_COUNT 16
+
+#define RGE_MAP_BORDERS_COUNT 32
+
+#define RGE_MAP_OVERLAY_TYPES_EXIST false
+
+#ifndef RGE_MAP_TERRAINS_COUNT
+    #define RGE_MAP_TERRAINS_COUNT 16
+#endif
+
+#define RGE_MAP_TILE_SET_NAME_LENGTH 13
 
 struct RGE_Tile
 {
-    short screen_xpos;
-    short screen_ypos;
+    short screen_xpos,
+          screen_ypos;
+
     char tile_type;
-    __int8 terrain_type : 5;
-    __int8 height : 3;
-    __int8 border_type : 4;
-    __int8 border_shape : 4;
+
+    unsigned char terrain_type : 5;
+    unsigned char height : 3;
+    unsigned char border_type : 4;
+    unsigned char border_shape : 4;
+
     char last_drawn_as;
     char last_drawn_shape;
     char draw_as;
     char draw_attribute;
     char last_drawn_shape2;
+
     int objects;
 };
 
 struct RGE_Tile_Size
 {
-    short width;
-    short height;
+    short width,
+          height;
+#if RGE_MAP_CONTOUR_Y_DELTA_EXISTS
     short y_delta;
+#endif
 };
 
 struct RGE_TOB_Picts
@@ -42,17 +66,23 @@ struct RGE_TOB_Picts
 struct RGE_Tile_Set
 {
     char loaded;
+
     char random;
-    char name[13];
-    char pict_name[13];
+
+    char name[RGE_MAP_TILE_SET_NAME_LENGTH];
+    char pict_name[RGE_MAP_TILE_SET_NAME_LENGTH];
+
     int resource_id;
     TShape *shape;
+
     RGE_Sound *sound;
+
     char map_hi_color;
     char map_med_color;
     char map_low_color;
     char map_lt_cliff_color;
     char map_rt_cliff_color;
+
     char passable_terrain;
     char impassable_terrain;
     char is_animated;
@@ -65,23 +95,31 @@ struct RGE_Tile_Set
     float animate_last;
     char frame_changed;
     char drawn;
-    RGE_TOB_Picts tiles[19];
+
+    RGE_TOB_Picts tiles[RGE_MAP_CONTOURS_COUNT];
+
     short terrain_to_draw;
     short rows;
     short cols;
-    short borders[32];
+    short borders[RGE_MAP_BORDERS_COUNT];
+
     short obj_types[30];
     short obj_density[30];
     char obj_placement_flag[30];
     short num_obj_type;
 };
 
+struct RGE_Overlay_Set : RGE_Tile_Set /* TODO */
+{
+
+};
+
 struct RGE_Border_Set
 {
     char loaded;
     char random;
-    char name[13];
-    char pict_name[13];
+    char name[RGE_MAP_TILE_SET_NAME_LENGTH];
+    char pict_name[RGE_MAP_TILE_SET_NAME_LENGTH];
     int resource_id;
     TShape *shape;
     RGE_Sound *sound;
@@ -98,36 +136,32 @@ struct RGE_Border_Set
     float animate_last;
     char frame_changed;
     char drawn;
-    RGE_TOB_Picts borders[19][12];
+    RGE_TOB_Picts borders[RGE_MAP_CONTOURS_COUNT][12];
     char draw_tile;
     short underlay_terrain;
     short border_style;
 };
 
-struct RGE_Overlay_Set : RGE_Border_Set/* TODO */
-{
-
-};
-
-#define RGE_MAP_OVERLAY_TYPES_EXIST false
-
 class RGE_Map
 {
 public:
+
     RGE_Tile *map;
 
-    int map_width;
-    int map_height;
+    int map_width  = 0,
+        map_height = 0;
 
-    int world_width;
-    int world_height;
+    int world_width  = 0,
+        world_height = 0;
 
-    RGE_Tile_Size tilesizes[19];
-    RGE_Tile_Set terrain_types[42];
-    RGE_Border_Set border_types[16];
+    RGE_Tile_Size tilesizes[RGE_MAP_CONTOURS_COUNT];
+
+    RGE_Tile_Set terrain_types[RGE_MAP_TERRAINS_COUNT];
 #if RGE_MAP_OVERLAY_TYPES_EXIST
-    RGE_Overlay_Set overlay_types[16];
+    RGE_Overlay_Set overlay_types[RGE_MAP_OVERLAYS_COUNT];
 #endif
+    RGE_Border_Set border_types[RGE_MAP_BORDERS_COUNT];
+
     RGE_Tile **map_row_offset;
 
     short num_terrain;
@@ -137,26 +171,27 @@ public:
     short max_overlay;
 #endif
 
-    short tile_width;
-    short tile_height;
-    short tile_half_height;
-    short tile_half_width;
-    short elev_height;
+    short tile_width       = 64,
+          tile_height      = 32,
+          tile_half_height = 16,
+          tile_half_width  = 32,
+          elev_height      = 16;
 
-    short cur_row;
-    short cur_col;
+    short cur_row = 0,
+          cur_col = 0;
 
-    short block_beg_row;
-    short block_end_row;
-    short block_beg_col;
-    short block_end_col;
+    short block_beg_row = 0,
+          block_end_row = 0,
+          block_beg_col = 0,
+          block_end_col = 0;
 
-    char any_frame_change;
-
+#if RGE_SEARCH_MAP_EXISTS
     char *search_map;
     char **search_map_rows;
+#endif
 
-    char map_visible_flag;
+    char any_frame_change = 0;
+    char map_visible_flag = 0;
     char fog_flag;
 
     class RGE_RMM_Database_Controller *random_map;
@@ -169,30 +204,59 @@ public:
 
     class Visible_Unit_Manager *unit_manager;
 
-    RGE_Map(int infile, RGE_Sound **sounds, char setup);
-    RGE_Map(char *border_tbl, char *terrain_tbl, char *map_tbl, short TileWid, short TileHgt, short ElevHgt, RGE_Sound **sounds);
+    RGE_Map(
+        int infile,
+        RGE_Sound **sounds,
+        bool setup);
+
+    RGE_Map(
+        char *border_tbl,
+        char *terrain_tbl,
+        char *map_tbl,
+        short TileWid,
+        short TileHgt,
+        short ElevHgt,
+        RGE_Sound **sounds);
+
     ~RGE_Map();
 
     void init_tile_sizes();
 
-    void data_load_random_map(int infile);
+    void data_load_random_map(
+        int infile);
 
-    void load_random_map(char *rmm_map_file, char *rmm_land_file, char *rmm_terr_file, char *rmm_obj_file);
+    void load_random_map(
+        char *rmm_map_file,
+        char *rmm_land_file,
+        char *rmm_terr_file,
+        char *rmm_obj_file);
 
     void set_map_visible(char flag);
     void set_map_fog(char flag);
 
-    void clear_map(RGE_Player *player, RGE_Game_World *world, char new_terrain, int width, int height);
+    void clear_map(
+        char terrain,
+        char elev);
+
+    void clear_map(
+        RGE_Player *player,
+        RGE_Game_World *world,
+        char new_terrain,
+        int width,
+        int height);
+
+    void clear_map_view_info();
+
     void new_map(int width, int height);
-    void clear_map(char terrain, char elev);
 
     void request_redraw(int x1, int y1, int x2, int y2, char attribute);
 
-    void clear_map_view_info();
     void coordinate_map();
+
     void set_map_screen_pos(int x1, int y1, int x2, int y2);
 
     void scenario_save(int outfile);
+
     void scenario_load(int infile, char *zone_terrain);
 
     RGE_Tile **give_up_map_offsets();
@@ -204,16 +268,17 @@ public:
     void preclean_elevation(int x1, int y1, int x2, int y2, char elevation_height);
     void clean_elevation(int x1, int y1, int x2, int y2, int elevation_height);
     void clean_terrain(int x1, int y1, int x2, int y2, char replacement_terrain);
-    static int clean_border_tile(int this_terrain, int other_terrain, int (*matrix)[32]);
+    int clean_border_tile(int this_terrain, int other_terrain, int (*matrix)[32]);
     char do_terrain_brush(int x, int y, int brush_size, char terrain_id);
     char do_terrain_brush_stroke(int x1, int y1, int x2, int y2, int brush_size, int terrain_id);
     char do_elevation_brush(int x, int y, int brush_size, char elevation_height);
     char do_elevation_brush_stroke(int x1, int y1, int x2, int y2, int brush_size, int elevation_height);
-    static char do_cliff_brush(int x, int y, char cliff_id, char delete_cliff);
+    char do_cliff_brush(int x, int y, char cliff_id, char delete_cliff);
     char do_cliff_brush_stroke(int x1, int y1, int x2, int y2, int cliff_id, int delete_cliff);
     void map_generate2(RGE_Game_World *gworld, int new_width, int new_height, int type, int player_num);
 
     void load_map(int infile);
+
     void save_map(int outfile);
 
     void save(int outfile);

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\VictoryConditions.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/26
  * @version 1.0
  */
 
@@ -39,12 +39,12 @@ public:
     void handle_capture(RGE_Victory_Entry *node);
     void handle_create(RGE_Victory_Entry *node);
     void handle_create_in_area(RGE_Victory_Entry *node);
-    static void handle_destroy(RGE_Victory_Entry *node);
+    void handle_destroy(RGE_Victory_Entry *node);
     void handle_destroy_multiple(RGE_Victory_Entry *node);
     void handle_destroy_all(RGE_Victory_Entry *node);
-    static void handle_destroy_player(RGE_Victory_Entry *node);
-    static void handle_bring_area(RGE_Victory_Entry *node);
-    static void handle_bring_object(RGE_Victory_Entry *node);
+    void handle_destroy_player(RGE_Victory_Entry *node);
+    void handle_bring_area(RGE_Victory_Entry *node);
+    void handle_bring_object(RGE_Victory_Entry *node);
     void handle_attribute(RGE_Victory_Entry *node);
     void handle_explore(RGE_Victory_Entry *node);
     void handle_victory_points(RGE_Victory_Entry *node);
@@ -94,35 +94,55 @@ public:
     int get_victory_points_id(char id);
     int get_attribute_id(char id);
 };
+
 struct RGE_Victory_Entry
 {
     char command;
+
     int obj_type;
-    class RGE_Player *target_player;
-    float x0;
-    float y0;
-    float x1;
-    float y1;
+
+    RGE_Player *target_player;
+
+    float x0, y0, x1, y1;
+
     int number;
+
     int count;
-    class RGE_Static_Object *this_obj;
-    class RGE_Static_Object *target_obj;
+
+    RGE_Static_Object *this_obj;
+
+    RGE_Static_Object *target_obj;
+
     char victory_group;
+
     char ally_flag;
+
     char state;
+
     char checked_flag;
-    struct RGE_Victory_Entry *next;
+
+    RGE_Victory_Entry *next;
 };
+
 struct RGE_Victory_Point_Entry
 {
     char command;
+
     char state;
+
     char id;
+
     char group;
+
     int attribute;
+
     int amount;
+
     int points;
+
     int curr_points;
+
     float curr_attribute_amount;
-    struct RGE_Victory_Point_Entry *next;
+
+    RGE_Victory_Point_Entry *next;
 };

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\ActionList.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/06/27
  * @version 1.0
  */
 
@@ -11,6 +11,7 @@ class RGE_Action_List
 public:
 
     RGE_Action_Object *obj;
+
     struct RGE_Action_Node *list;
 
     RGE_Action_List(RGE_Action_Object *obj_in);
@@ -27,16 +28,20 @@ public:
 
     void create_action(int infile, short action_type);
 
-    void create_task_action(RGE_Task *task, RGE_Static_Object *target_obj, float target_x, float target_y, float target_z);
+    void create_task_action(
+        RGE_Task *task,
+        RGE_Static_Object *target_obj,
+        float target_x, float target_y, float target_z);
 
-    char inside_obj_update();
+    bool inside_obj_update();
 
-    char update();
+    bool update();
 
     void add_action(RGE_Action *action);
     void add_action_at_end(RGE_Action *action);
     void add_action_at_end_of_action_queue(RGE_Action *action);
     void remove_action();
+
     bool have_action();
 
     int action_stop();
@@ -46,6 +51,7 @@ public:
     int relation_response(int player_id, int relation);
 
     RGE_Action *get_action();
+
     RGE_Task *get_task();
 
     void copy_obj(RGE_Master_Action_Object *source);
@@ -57,5 +63,6 @@ public:
 struct RGE_Action_Node
 {
     RGE_Action *action;
+
     RGE_Action_Node *next;
 };

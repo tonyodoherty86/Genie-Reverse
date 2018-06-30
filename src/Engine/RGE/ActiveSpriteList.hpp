@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\ActiveSpriteList.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/06/27
  * @version 1.0
  */
 
@@ -50,7 +50,10 @@ public:
 struct RGE_Active_Sprite_Node
 {
     class RGE_Active_Sprite *node;
+
     char order;
+
     char count;
-    struct RGE_Active_Sprite_Node *next;
+
+    RGE_Active_Sprite_Node *next;
 };

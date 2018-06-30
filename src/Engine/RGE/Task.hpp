@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Task.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/07/01
  * @version 1.0
  */
 
@@ -19,12 +19,14 @@ public:
     short action_type;
 
     short object_group;
+    
     short object_id;
 
     char combat_level;
+
     char combat_level_flag;
 
-    short terrain_id;
+    short terrain_id = -1;
 
     char owner_type;
 
@@ -32,37 +34,44 @@ public:
 
     char state_building;
 
-    short attribute_type,
-          attribute_type2,
-          attribute_type3,
-          attribute_type4;
+    short attribute_type = -1,
+          attribute_type2 = -1,
+          attribute_type3 = -1,
+          attribute_type4 = -1;
 
-    float work_val1;
-    float work_val2;
+    float work_val1,
+          work_val2;
+
     float work_range;
 
     char search_flag;
+
     float search_wait_time;
 
-    short work_flag;
-    short work_flag2;
+    short work_flag,
+          work_flag2;
 
-    RGE_Sprite *move_sprite;
-    RGE_Sprite *work_sprite;
-    RGE_Sprite *work_sprite2;
-    RGE_Sprite *carry_sprite;
+    RGE_Sprite *move_sprite,
+               *work_sprite,
+               *work_sprite2,
+               *carry_sprite;
 
-    RGE_Sound *work_sound;
-    RGE_Sound *work_sound2;
+    RGE_Sound *work_sound,
+              *work_sound2;
 
-    RGE_Task(short id_in);
+    RGE_Task(
+        short id_in);
 
     ~RGE_Task();
 
-    void copy(RGE_Task *other_task);
+    void copy(
+        RGE_Task *other_task);
 
-    void load(int infile, RGE_Sprite **sprites, RGE_Sound **sounds);
-    void load(_iobuf *infile, RGE_Sprite **sprites, RGE_Sound **sounds);
+    void load(
+        int infile,
+        RGE_Sprite **sprites,
+        RGE_Sound **sounds);
 
-    void save(int outfile);
+    void save(
+        int outfile);
 };

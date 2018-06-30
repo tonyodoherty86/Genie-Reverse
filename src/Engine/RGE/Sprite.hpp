@@ -2,20 +2,24 @@
 /**
  * @file    Engine\RGE\Sprite.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/25
  * @version 1.0
  */
 
-#define RGE_SPRITE_EDITOR_FLAG_EXISTS 1
+#define RGE_SPRITE_PICT_NAME_LENGTH 13
+#define RGE_SPRITE_NAME_LENGTH 21
+#define RGE_SPRITE_HIGHEST_DRAW_LEVEL 20
+#define RGE_SPRITE_EDITOR_FLAG_EXISTS TRUE
 
 class RGE_Sprite
 {
 public:
-    char pict_name[13];
+
+    char pict_name[RGE_SPRITE_PICT_NAME_LENGTH];
 
     int resource_id;
 
-    char loaded;
+    bool loaded;
 
     RGE_Color_Table **color_tables;
 
@@ -31,10 +35,10 @@ public:
 
     char transparent_picking_flag;
 
-    short box_x1;
-    short box_y1;
-    short box_x2;
-    short box_y2;
+    short box_x1,
+          box_y1,
+          box_x2,
+          box_y2;
 
     short draw_list_num;
     struct RGE_Picture_List *draw_list;
@@ -45,14 +49,14 @@ public:
 
     struct RGE_Sound_List *sound_list;
 
-    char name[21];
+    char name[RGE_SPRITE_NAME_LENGTH];
 
-    short frame_num;
-    short facet_num;
+    short frame_num,
+          facet_num;
 
-    float base_speed;
-    float duration;
-    float pause_between_loops;
+    float base_speed,
+          duration,
+          pause_between_loops;
 
     char flag;
 
@@ -104,8 +108,8 @@ struct RGE_Picture_List
 
     RGE_Sprite *sprite;
 
-    short offset_x;
-    short offset_y;
+    short offset_x,
+          offset_y;
 
     short facet;
 };

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\DiamondMap.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/26
  * @version 1.0
  */
 
@@ -10,9 +10,9 @@ class RGE_Diamond_Map : public TPanel
 {
 public:
 
-    class RGE_Game_World *world;
-    class RGE_Player *player;
-    class RGE_Map *map;
+    RGE_Game_World *world;
+    RGE_Player *player;
+    RGE_Map *map;
 
     int all_visible;
     int render_all;
@@ -22,12 +22,15 @@ public:
 
     RECT view_rect;
 
-    class RGE_Player *last_player;
-    class RGE_Map_Image_Line *map_image_lines;
-    class RGE_Map_Tile_Row *map_tile_rows;
+    RGE_Player *last_player;
 
-    short map_wid;
-    short map_hgt;
+    struct RGE_Map_Image_Line *map_image_lines;
+
+    struct RGE_Map_Tile_Row *map_tile_rows;
+
+    short map_wid,
+          map_hgt;
+
     short map_image_start_y;
     short map_image_wid;
     short map_image_hgt;
@@ -37,13 +40,13 @@ public:
     float map_col_ratio;
     float map_row_ratio;
 
-    short map_tile_draw_hgt;
-    short map_tile_draw_wid;
+    short map_tile_draw_hgt,
+          map_tile_draw_wid;
 
-    short view_col;
-    short view_row;
+    short view_col,
+          view_row;
 
-    class RGE_View *main_view;
+    RGE_View *main_view;
 
     int scrolling;
     char fog_color;
@@ -51,12 +54,21 @@ public:
     unsigned int cur_player_bit;
 
     int own_save_area;
-    class TDrawArea *save_area;
+    TDrawArea *save_area;
 
     RGE_Diamond_Map();
+
     ~RGE_Diamond_Map();
 
-    int setup(TDrawArea *render_area_in, TPanel *parent_panel_in, int x_in, int y_in, int wid_in, int hgt_in, int color_in, int all_visible_in, TDrawArea *save_area_in);
+    int setup(TDrawArea *render_area_in,
+              TPanel *parent_panel_in,
+              int x_in,
+              int y_in,
+              int wid_in,
+              int hgt_in,
+              int color_in,
+              int all_visible_in,
+              TDrawArea *save_area_in);
 
     int set_bitmap(char *map_bmp, int res_id);
     void set_world(RGE_Game_World *world_in);
@@ -89,4 +101,26 @@ public:
     void handle_scroll_view(int x, int y);
     void end_scroll_view();
     int is_inside(int x, int y);
+};
+
+struct RGE_Map_Image_Line
+{
+    short tile_row;
+    short start_x;
+    short line_len;
+};
+
+struct RGE_Map_Tile_Row
+{
+    short image_line;
+    char draw;
+    short row_len;
+    float col_step;
+    float col_extra;
+    short map_col;
+    short map_row;
+    short draw_wid;
+    float draw_step;
+    short num_tiles;
+    float ratio;
 };

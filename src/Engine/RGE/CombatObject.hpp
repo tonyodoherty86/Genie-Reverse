@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\CombatObject.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/03/06
  * @version 1.0
  */
 
@@ -10,7 +10,7 @@ class RGE_Combat_Object : public RGE_Action_Object
 {
 public:
 
-    VISIBLE_UNIT_REC *VUR_Ptrs[9];
+    VISIBLE_UNIT_REC *VUR_Ptrs[RGE_PLAYERS_COUNT];
     unsigned int Unified_Map_Value;
 
     float attack_timer;
@@ -29,7 +29,7 @@ public:
 
     void stop();
 
-    static double calc_attack_modifier(RGE_Static_Object *target);
+    double calc_attack_modifier(RGE_Static_Object *target);
     char area_attack(float x, float y, float z, RGE_Combat_Object *attacker, RGE_Static_Object *ignore_object);
     char attack(RGE_Static_Object *target, RGE_Combat_Object *attacker);
     char attack(float target_x, float target_y, float target_z, RGE_Combat_Object *attacker);

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Command.hpp
  * @author  Yvan Burrie
- * @date    2018/02/22
+ * @date    2018/03/09
  * @version 1.0
  */
 
@@ -24,9 +24,9 @@ public:
 	// 48
 	int commandedSpawnIds[40];
 	// 208
-	char lastTimeCommandedSpawnsCount[9];
+	char lastTimeCommandedSpawnsCount[RGE_PLAYERS_COUNT];
 	// 220
-	int lastTimeCommandedSpawnIds[9][40];
+	int lastTimeCommandedSpawnIds[RGE_PLAYERS_COUNT][40];
     // 1660
 #endif
 	// 9664

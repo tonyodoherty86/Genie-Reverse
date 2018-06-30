@@ -2,9 +2,11 @@
 /**
  * @file    Engine\RGE\ActiveSprite.hpp
  * @author  Yvan Burrie
- * @date    2018/02/20
+ * @date    2018/06/25
  * @version 1.0
  */
+
+#define RGE_ACTIVE_SPRITE_TYPE 1
 
 class RGE_Active_Sprite
 {
@@ -12,15 +14,13 @@ public:
 
     RGE_Sprite *sprite;
 
-    char type;
+    char type = RGE_ACTIVE_SPRITE_TYPE;
 
-    int offset_x;
-    int offset_y;
+    int offset_x = 0,
+        offset_y = 0;
 
     RGE_Active_Sprite(RGE_Sprite *new_sprite);
     RGE_Active_Sprite(int infile, RGE_Sprite **sprites);
-
-    ~RGE_Active_Sprite();
 
     void set_offset(int x, int y);
 
@@ -41,22 +41,28 @@ public:
     int check_for_shadows();
 };
 
+#define RGE_ACTIVE_ANIMATED_SPRITE_TYPE 2
+
 class RGE_Active_Animated_Sprite : public RGE_Active_Sprite
 {
 public:
 
-    short frame;
+    char type = RGE_ACTIVE_ANIMATED_SPRITE_TYPE;
+
+    short frame = 0;
+
     float animate_interval;
     float animate_last;
+
     short last_frame;
-    char frame_changed;
-    char frame_looped;
-    char animate_flag;
+
+    bool frame_changed = false,
+         frame_looped = false;
+
+    char animate_flag = 0;
 
     RGE_Active_Animated_Sprite(RGE_Sprite *new_sprite);
     RGE_Active_Animated_Sprite(int infile, RGE_Sprite **sprites);
-
-    ~RGE_Active_Animated_Sprite();
 
     void save(int outfile);
 

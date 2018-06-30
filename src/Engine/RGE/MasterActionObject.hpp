@@ -2,13 +2,21 @@
 /**
  * @file    Engine\RGE\MasterActionObject.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/30
  * @version 1.0
  */
+
+#ifndef RGE_MASTER_ACTION_OBJECT_TYPE
+    #define RGE_MASTER_ACTION_OBJECT_TYPE 40
+#endif
+
+class RGE_Task;
 
 class RGE_Master_Action_Object : public RGE_Master_Moving_Object
 {
 public:
+
+    char master_type = RGE_MASTER_ACTION_OBJECT_TYPE;
 
     class RGE_Task_List *tasks;
     short default_task;
@@ -19,31 +27,41 @@ public:
     short backup_drop_site;
     char task_by_group;
 
-    RGE_Sound *command_sound;
-    RGE_Sound *move_sound;
+    RGE_Sound *command_sound,
+              *move_sound;
 
     char run_pattern;
 
-    RGE_Master_Action_Object(RGE_Master_Action_Object *other_object, int do_setup);
-    RGE_Master_Action_Object(int infile, RGE_Sprite **sprites, RGE_Sound **sounds, int do_setup);
-    RGE_Master_Action_Object(_iobuf *infile, RGE_Sprite **sprites, RGE_Sound **sounds, short in_id, int do_setup);
+    RGE_Master_Action_Object(
+        RGE_Master_Action_Object *other_object,
+        bool do_setup);
 
-    int setup(RGE_Master_Action_Object *other_object);
-    int setup(int infile, RGE_Sprite **sprites, RGE_Sound **sounds);
-    int setup(_iobuf *infile, RGE_Sprite **sprites, RGE_Sound **sounds, short in_id);
+    RGE_Master_Action_Object(
+        int infile,
+        RGE_Sprite **sprites,
+        RGE_Sound **sounds,
+        bool do_setup);
+
+    bool setup(
+        RGE_Master_Action_Object *other_object);
+
+    bool setup(
+        int infile,
+        RGE_Sprite **sprites,
+        RGE_Sound **sounds);
 
     ~RGE_Master_Action_Object();
 
     void make_new_obj(RGE_Player *owner, float x, float y, float z);
     void make_new_master();
 
-    class RGE_Task *get_task(short task_id);
-    class RGE_Task *getTaskByTaskID(int t);
+    RGE_Task *get_task(short task_id);
+    RGE_Task *getTaskByTaskID(int t);
 
     void copy_obj(RGE_Master_Static_Object *source);
 
-    void modify(float amount, char flag);
-    void modify_delta(float amount, char flag);
+    void modify(        float amount, char flag);
+    void modify_delta(  float amount, char flag);
     void modify_percent(float amount, char flag);
 
     void save(int outfile);

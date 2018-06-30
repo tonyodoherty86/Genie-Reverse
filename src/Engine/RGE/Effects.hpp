@@ -23,11 +23,16 @@ public:
     void do_effect(short current_effect, RGE_Player *player);
 };
 
+#define RGE_EFFECT_NAME_LENGTH 31
+
 struct RGE_Effect
 {
     short id;
-    char name[31];
+
+    char name[RGE_EFFECT_NAME_LENGTH];
+
     short string_table_id;
+
     short effect_list_num;
     struct RGE_Effect_Command *effect_list;
 };
@@ -35,8 +40,10 @@ struct RGE_Effect
 struct RGE_Effect_Command
 {
     char command;
+
     short change_num1,
           change_num2,
           change_num3;
+
     float change_amount;
 };
