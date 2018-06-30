@@ -2,7 +2,7 @@
 /**
  * @file    Engine\DrawSystem.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/24
  * @version 1.0
  */
 
@@ -16,6 +16,7 @@ public:
 
 	class TDrawArea *DrawArea;
 	class TDrawArea *PrimaryArea;
+
 	struct DrawAreaNode *DrawAreaList;
 
 	IDirectDraw *DirDraw;
@@ -64,7 +65,15 @@ public:
 
 	int IsModeAvail(int wid_in, int hgt_in, int color_bits);
 
-	void Init(HINSTANCE *inst_in, HWND *wnd_in, HPALETTE *pal_in, char type_in, char mode_in, int wid_in, int hgt_in, unsigned int flags_in);
+	void Init(
+        HINSTANCE *inst_in,
+        HWND *wnd_in,
+        HPALETTE *pal_in,
+        char type_in,
+        char mode_in,
+        int wid_in,
+        int hgt_in,
+        unsigned int flags_in);
 
 	bool SetDisplaySize(int wid_in, int hgt_in, int color_bits);
 

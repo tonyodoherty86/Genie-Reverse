@@ -1,8 +1,19 @@
 
+/**
+ * @file    Engine\DrawArea.cpp
+ * @author  Yvan Burrie
+ * @date    2018/06/23
+ * @version 1.0
+ */
+
 int err;
 int ddrval;
 
-void TDrawArea::TDrawArea(const char *SurfaceName, int ForceSystemMem)
+bool DDSys_CanColorFill = true;
+
+TDrawArea::TDrawArea(
+    const char *SurfaceName,
+    int ForceSystemMem)
 {
 	this->SystemMemOnly = ForceSystemMem;
 
@@ -11,53 +22,44 @@ void TDrawArea::TDrawArea(const char *SurfaceName, int ForceSystemMem)
 	this->BitmapInfo = new BITMAPINFO256;
 
 	size_t nameLen = strlen(SurfaceName);
-	if( nameLen > 0 )
-	{
+	if( nameLen > 0 ){
 		char *newName = new char[++nameLen];
 		this->Name = newName;
 		strcpy(newName, SurfaceName);
-	}
-	else
-	{
-		this->Name = NULL;
+	}else{
+		this->Name = nullptr;
 	}
 }
 
-void TDrawArea::~TDrawArea()
+TDrawArea::~TDrawArea()
 {
-	if( this->Node )
-	{
-		if( this->DrawSystem && this->Node == this->DrawSystem->DrawAreaList )
-			this->DrawSystem->DrawAreaList = this->Node->NextNode;
-
-		if( this->Node->PrevNode )
-			this->Node->PrevNode->NextNode = this->Node->NextNode;
-
-		if( this->Node->NextNode )
-			this->Node->NextNode->PrevNode = this->Node->PrevNode;
-
+	if( this->Node ){
+		if( this->DrawSystem && this->Node == this->DrawSystem->DrawAreaList ){
+            this->DrawSystem->DrawAreaList = this->Node->NextNode;
+		}
+		if( this->Node->PrevNode ){
+            this->Node->PrevNode->NextNode = this->Node->NextNode;
+		}
+		if( this->Node->NextNode ){
+            this->Node->NextNode->PrevNode = this->Node->PrevNode;
+		}
 		delete this->Node;
 	}
-	if( this->DrawSystem && this->DrawSystem->DrawType == 1 )
-	{
-		if( this->DrawDc )
-		{
-			if( this->Bitmap )
-			{
-				if( this->OldBitmap )
-                {
-                    this->DrawDc->SelectObject(this->OldBitmap);
+	if( this->DrawSystem &&
+        this->DrawSystem->DrawType == 1 ){
+		if( this->DrawDc ){
+			if( this->Bitmap ){
+				if( this->OldBitmap ){
+                    SelectObject(*this->DrawDc, *this->OldBitmap);
                 }
-				this->Bitmap->DeleteObject();
+				DeleteObject(*this->Bitmap);
 			}
-			this->DrawDc->DeleteDC();
+			DeleteDC(*this->DrawDc);
 		}
-	}
-	else
-	{
-		if( this->DrawSurface && !this->IsPrimarySurface )
-		{
-			this->DrawSurface->Release((IUnknown *)this->DrawSurface);
+	}else{
+		if( this->DrawSurface &&
+            this->IsPrimarySurface == 0 ){
+			this->DrawSurface->Release();
 			this->DrawSurface = 0;
 		}
 	}
@@ -77,44 +79,42 @@ void TDrawArea::~TDrawArea()
 		delete this->Name;
 }
 
-DrawAreaNode *TDrawArea::Init(TDrawSystem *draw_system_in, int wid_in, int hgt_in, int Extend, int isPrimary_in)
+DrawAreaNode *TDrawArea::Init(
+    TDrawSystem *draw_system_in,
+    int wid_in,
+    int hgt_in,
+    int Extend,
+    int isPrimary_in)
 {
-    DrawAreaNode *v9;
-	DrawAreaNode *i;
-
 	this->DrawSystem = draw_system_in;
 	this->IsPrimarySurface = isPrimary_in;
 
-	if( draw_system_in == NULL )
-		goto LABEL_14;
-
+	if( draw_system_in == nullptr ){
+        goto LABEL_14;
+	}
 	this->Wnd = draw_system_in->Wnd;
-	if( this->Node == NULL )
-	{
+
+	if( this->Node == nullptr ){
 		this->Node = new DrawAreaNode;
-		if( this->Node == NULL )
+		if( this->Node == nullptr ){
 			return this->Node;
+		}
 		this->Node->DrawArea = this;
-		this->Node->PrevNode = 0;
-		this->Node->NextNode = 0;
-		if( v9 = this->DrawSystem->DrawAreaList )
-		{
-			for ( i = v9->NextNode; i; i = i->NextNode )
+		this->Node->PrevNode = nullptr;
+		this->Node->NextNode = nullptr;
+		if( DrawAreaNode *v9 = this->DrawSystem->DrawAreaList ){
+			for( DrawAreaNode *i = v9->NextNode; i != nullptr; i = i->NextNode ){
 				v9 = i;
+			}
 			v9->NextNode = this->Node;
 			this->Node->PrevNode = v9;
-		}
-		else
-		{
+		}else{
 			this->DrawSystem->DrawAreaList = this->Node;
 		}
 	}
-	if( this->DrawSystem->DrawType == 1 )
-	{
-		return NULL;
-	}
-	else
-	{
+	if( this->DrawSystem->DrawType == 1 ){
+		return nullptr;
+	}else{
         LABEL_14:
 		this->SetSize(wid_in, hgt_in, Extend);
 		return (DrawAreaNode *)1;
@@ -123,330 +123,255 @@ DrawAreaNode *TDrawArea::Init(TDrawSystem *draw_system_in, int wid_in, int hgt_i
 
 char TDrawArea::CheckSurface()
 {
-	TDrawArea *v1; // esi@1
-	IDirectDrawSurface *v2; // eax@3
-	char result; // al@4
-	int v4; // eax@5
-	TDrawSystem *v5; // ecx@6
-	TDrawSystem *v6; // eax@6
-	int v7; // eax@11
-	int v8; // edi@11
-	int v9; // ST10_4@14
-	int v10; // ST0C_4@14
-	TDrawSystem *v11; // ecx@16
-	IUnknownVtbl *v12; // edx@17
-	IDirectDrawSurface *v13; // ST00_4@17
-	DDSURFACEDESC ddsd; // [sp+8h] [bp-D0h]@6
-	DDBLTFX ddbltfx; // [sp+74h] [bp-64h]@17
+	HRESULT ddres;
 
-	v1 = this;
-	if( !this->DrawSystem || this->DrawSystem->DrawType != 2 )
-		goto LABEL_21;
-	v2 = this->DrawSurface;
-	if( !v2 )
-		return 3;
-	v4 = ((int (__stdcall *)(IDirectDrawSurface *))v2->vfptr[8].QueryInterface)(this->DrawSurface);
-	if( v4 )
-	{
-		v5 = this->DrawSystem;
-		TDrawSystem::GetIsLostErrorNum(v4);
-		memset(&ddsd, 0, 0x6Cu);
-		v6 = this->DrawSystem;
-		ddsd.dwSize = 108;
-		if( ((int (__stdcall *)(IDirectDraw *, DDSURFACEDESC *))v6->DirDraw->vfptr[4].QueryInterface)(v6->DirDraw, &ddsd)
-			|| ddsd.dwWidth == this->DrawSystem->ScreenWidth
-			&& ddsd.dwHeight == this->DrawSystem->ScreenHeight
-			&& ddsd.ddpfPixelFormat.dwRGBBitCount == 8 )
-		{
-			v7 = ((int (__stdcall *)(IDirectDrawSurface *))this->DrawSurface->vfptr[9].QueryInterface)(this->DrawSurface);
-			v8 = v7;
-			if( v7 )
-			{
-				if( (v7 == -2005532085 || v7 == -2147024882)
-					&& (this->DrawSurface->vfptr->Release((IUnknown *)this->DrawSurface),
-							this->Height,
-							this->Width,
-							this->DrawSurface = 0,
-							this->SetSize(this->Width, this->Height, 0),
-							this->DrawSurface) )
-				{
-					result = 2;
-				}
-				else
-				{
-					v11 = this->DrawSystem;
-					TDrawSystem::GetRestoreErrorNum(v8);
-					result = 3;
-				}
-			}
-			else
-			{
-				v12 = this->DrawSurface->vfptr;
-				v13 = this->DrawSurface;
-				ddbltfx.dwSize = 100;
-				ddbltfx.dwFillColor = 0;
-				((void (__stdcall *)(IDirectDrawSurface *, _DWORD, _DWORD, _DWORD, signed int, DDBLTFX *))v12[1].Release)(
-					v13,
-					0,
-					0,
-					0,
-					16778240,
-					&ddbltfx);
-				this->Restored = 1;
-				result = 2;
-			}
-		}
-		else
-		{
-			result = 1;
-		}
+	if( this->DrawSystem == nullptr ||
+        this->DrawSystem->DrawType != 2 ){
+        return 0;
+    }
+	if( this->DrawSurface == nullptr ){
+        return 3;
 	}
-	else
-	{
-LABEL_21:
-		result = 0;
+	ddres = this->DrawSurface->IsLost();
+	if( ddres == DD_OK ){
+        return 0;
 	}
-	return result;
+    this->DrawSystem->GetIsLostErrorNum(ddres);
+
+    DDSURFACEDESC ddsd;
+    memset(&ddsd, 0, sizeof(DDSURFACEDESC));
+    ddsd.dwSize = sizeof(DDSURFACEDESC);
+
+    if( this->DrawSystem->DirDraw->GetDisplayMode(&ddsd) ||
+        this->DrawSystem->ScreenWidth == ddsd.dwWidth &&
+        this->DrawSystem->ScreenHeight == ddsd.dwHeight &&
+        ddsd.ddpfPixelFormat.dwRGBBitCount == 8 ){
+
+        ddres = this->DrawSurface->Restore();
+        if( ddres ){
+            if( (ddres == -2005532085 || ddres == -2147024882) && (this->DrawSurface->Release(),
+                this->Height,
+                this->Width,
+                this->DrawSurface = 0,
+                this->SetSize(this->Width, this->Height, 0),
+                this->DrawSurface) ){
+
+                return 2;
+            }else{
+                this->DrawSystem->GetRestoreErrorNum(ddres);
+
+                return 3;
+            }
+        }else{
+            DDBLTFX ddbltfx;
+            ddbltfx.dwSize = 100;
+            ddbltfx.dwFillColor = 0;
+
+            this->DrawSurface->Blt(
+                nullptr,
+                nullptr,
+                nullptr,
+                DDBLT_COLORFILL|DDBLT_WAIT,
+                &ddbltfx);
+
+            this->Restored = 1;
+
+            return 2;
+        }
+    }else{
+        return 1;
+    }
 }
 
 char *TDrawArea::Lock(char *caller_name, int wait)
 {
-	if( this->DrawSystem && this->DrawSystem->DrawType == 1 )
+	if( this->DrawSystem &&
+        this->DrawSystem->DrawType == 1 ){
 		return this->Bits;
-
-	if( !this->DrawSurface )
+    }
+	if( this->DrawSurface == nullptr ){
 		return 0;
-
-	if( !this->Bits )
-	{
-		if( this->DrawDc )
+    }
+	if( this->Bits == 0 ){
+		if( this->DrawDc ){
 			return 0;
-
-		if( ((int (__stdcall *)(IDirectDrawSurface *, _DWORD, int, _DWORD, _DWORD))this->DrawSurface->vfptr[8].AddRef)(
-			this->DrawSurface,
-			0,
-			(int)&this->SurfaceDesc,
+		}
+		if( this->DrawSurface->Lock(
+			nullptr,
+			&this->SurfaceDesc,
 			wait != 0,
-			0) )
-		{
+			nullptr) ){
 			return 0;
 		}
 		this->Bits = (char *)this->SurfaceDesc.lpSurface;
 
 		this->SetInfo();
 
-		if( this->Bits != this->LastBits )
+		if( this->Bits != this->LastBits ){
 			this->SetAccessOffsets();
-
-		return this->Bits;
+		}
 	}
 	return this->Bits;
 }
 
 void TDrawArea::Unlock(char *caller_name)
 {
-	if( this->DrawSystem == NULL || this->DrawSystem->DrawType != 1 && this->DrawSurface && this->Bits )
-	{
-		((void (__stdcall *)(IDirectDrawSurface *, char *))this->DrawSurface->vfptr[10].Release)(this->DrawSurface, this->Bits);
+	if( this->DrawSystem == NULL ||
+        this->DrawSystem->DrawType != 1 &&
+        this->DrawSurface &&
+        this->Bits ){
+
+		this->DrawSurface->Unlock(this->Bits);
 
 		this->Bits = 0;
 	}
 }
 
-void * TDrawArea::GetDc(char *caller_name)
+HDC *TDrawArea::GetDc(char *caller_name)
 {
-	void *result;
-	void **v4;
-
-	if( this->DrawSystem && this->DrawSystem->DrawType == 1 )
-	{
-		result = this->DrawDc;
-	}
-	else
-	{
-		if( this->DrawSurface )
-		{
-			result = this->DrawDc;
-			v4 = &this->DrawDc;
-			if( !result )
-			{
-				if( this->Bits )
-				{
-					result = 0;
-				}
-				else
-				{
-					((void (__stdcall *)(IDirectDrawSurface *, void **))this->DrawSurface->vfptr[5].Release)(this->DrawSurface, &this->DrawDc);
-					result = *v4;
+	if( this->DrawSystem &&
+        this->DrawSystem->DrawType == 1 ){
+		return this->DrawDc;
+	}else{
+		if( this->DrawSurface ){
+			if( this->DrawDc == nullptr ){
+				if( this->Bits ){
+					return nullptr;
+				}else{
+					this->DrawSurface->GetDC(this->DrawDc);
+					return this->DrawDc;
 				}
 			}
-		}
-		else
-		{
-			result = 0;
+			return this->DrawDc;
+		}else{
+			return nullptr;
 		}
 	}
-	return result;
 }
 
 void TDrawArea::ReleaseDc(char *caller_name)
 {
-	if( this->DrawSystem == NULL ||
+	if( this->DrawSystem == nullptr ||
         this->DrawSystem->DrawType != 1 &&
-        this->DrawSurface &&
-        this->DrawDc )
-	{
-	    this->DrawSurface->ReleaseDC(this->DrawDc);
+        this->DrawSurface != nullptr &&
+        this->DrawDc != nullptr ){
 
-		this->DrawDc = 0;
+	    this->DrawSurface->ReleaseDC(*this->DrawDc);
+
+		this->DrawDc = nullptr;
 	}
 }
 
 void TDrawArea::SetSize(int wid_in, int hgt_in, int ExtendSurface)
 {
-	TDrawArea *v4; // esi@1
-	TDrawSystem *v5; // eax@1
-	int v6; // ebx@5
-	signed int v7; // ebp@5
-	int v8; // ebx@14
-	BITMAPINFO256 *v9; // edx@16
-	int v10; // eax@19
-	IDirectDrawSurface *v11; // eax@20
-	char *v12; // edi@20
-	TDrawSystem *v13; // eax@22
-	int v14; // ecx@24
-	unsigned int v15; // edx@26
-	int *v16; // ST10_4@27
-	int v17; // edx@27
-	int v18; // eax@27
-	int *v19; // edi@28
-	int v20; // eax@28
-	TDrawSystem *v21; // ecx@29
-	TSpan_List_Manager *v22; // edi@34
-	TSpan_List_Manager *v23; // eax@36
-	int v24; // edi@36
-	TSpan_List_Manager *v25; // eax@37
-	int v26; // ebx@40
-	DDSURFACEDESC ddsd; // [sp+14h] [bp-DCh]@22
-	DDBLTFX ddbltfx; // [sp+80h] [bp-70h]@28
-	int v29; // [sp+ECh] [bp-4h]@36
+	int v6;
+	int v7;
+	int v8;
+	char *v12;
+	int v14;
+	int *v16;
 
-	v4 = this;
-	v5 = this->DrawSystem;
-	if( !this->DrawSystem || v5->DrawType == 1 || !v5 || !v5->DirDraw )
-	{
-		v7 = hgt_in;
-LABEL_33:
-		v6 = wid_in;
-		goto LABEL_34;
-	}
+	HRESULT ddres;
+	DDBLTFX ddbltfx;
+	DDSURFACEDESC ddsd;
+
 	v6 = wid_in;
 	v7 = hgt_in;
-	if( wid_in && hgt_in && (wid_in != this->Width || hgt_in != this->Height || !this->DrawSurface) )
-	{
-		if( wid_in < 1 )
+
+	if( this->DrawSystem == nullptr ||
+        this->DrawSystem->DrawType == 1 ||
+        this->DrawSystem->DirDraw == nullptr ){
+		goto LABEL_34;
+	}
+	if( (wid_in && hgt_in &&
+        (wid_in != this->Width || hgt_in != this->Height || this->DrawSurface == nullptr)) ){
+
+		if( wid_in < 1 ){
 			wid_in = 1;
-		if( hgt_in < 1 )
-			v7 = 1;
-		v8 = v7 + 10;
-		if( !ExtendSurface )
-			v8 = v7;
-		v9 = this->BitmapInfo;
-		this->ExtendedLines = ExtendSurface;
-		v9->bmiHeader.biWidth = wid_in;
-		if( this->Orien == 1 )
-			this->BitmapInfo->bmiHeader.biHeight = -v8;
-		else
-			this->BitmapInfo->bmiHeader.biHeight = v8;
-		this->Width = wid_in;
-		v10 = this->IsPrimarySurface;
-		this->Height = v7;
-		if( v10 )
-		{
-			this->DrawSurface = this->DrawSystem->PrimarySurface;
 		}
-		else
-		{
-			v11 = this->DrawSurface;
+		if( hgt_in < 1 ){
+			v7 = 1;
+		}
+		v8 = v7 + 10;
+		if( ExtendSurface == 0 ){
+			v8 = v7;
+		}
+		this->ExtendedLines = ExtendSurface;
+
+		this->BitmapInfo->bmiHeader.biWidth = wid_in;
+
+		if( this->Orien == 1 ){
+			this->BitmapInfo->bmiHeader.biHeight = -v8;
+		}else{
+			this->BitmapInfo->bmiHeader.biHeight = v8;
+		}
+		this->Width = wid_in;
+		this->Height = v7;
+
+		if( this->IsPrimarySurface ){
+			this->DrawSurface = this->DrawSystem->PrimarySurface;
+		}else{
 			v12 = (char *)&this->DrawSurface;
-			if( v11 )
-			{
-				v11->vfptr->Release((IUnknown *)this->DrawSurface);
+			if( this->DrawSurface ){
+				this->DrawSurface->Release();
 				*(_DWORD *)v12 = 0;
-				memset(&v4->SurfaceDesc, 0, 0x6Cu);
-				v4->Pitch = 0;
-				v4->UsingVidMem = 0;
+				memset(&this->SurfaceDesc, 0, sizeof(DDSURFACEDESC));
+				this->Pitch = 0;
+				this->UsingVidMem = 0;
 			}
-			memset(&ddsd, 0, 0x6Cu);
-			v13 = v4->DrawSystem;
-			ddsd.dwSize = 108;
+			memset(&ddsd, 0, sizeof(DDSURFACEDESC));
+			ddsd.dwSize = sizeof(DDSURFACEDESC);
 			ddsd.dwFlags = 7;
-			if( v13->Flags & 1 || ExtendSurface || (v14 = v4->SystemMemOnly, ddsd.ddsCaps.dwCaps = 64, v14) )
+			if( this->DrawSystem->Flags & 1 || ExtendSurface || (v14 = this->SystemMemOnly, ddsd.ddsCaps.dwCaps = 64, v14) ){
 				ddsd.ddsCaps.dwCaps = 2112;
-			v15 = v4->Width;
+			}
 			ddsd.dwHeight = v8;
-			ddsd.dwWidth = v15;
-			if( !((int (__stdcall *)(IDirectDraw *, DDSURFACEDESC *, int, _DWORD))v13->DirDraw->vfptr[2].QueryInterface)(
-							v13->DirDraw,
-							&ddsd,
-							(int)&v4->DrawSurface,
-							0) )
-			{
+			ddsd.dwWidth = this->Width;
+
+			ddres = this->DrawSystem->DirDraw->CreateSurface(
+                &ddsd,
+                &this->DrawSurface,
+                nullptr);
+			if( ddres == DD_OK ){
+
 				v16 = *(int **)v12;
-				v17 = **(_DWORD **)v12;
-				v4->SurfaceDesc.dwSize = 108;
-				v18 = (*(int (__stdcall **)(int *, int))(v17 + 88))(v16, (int)&v4->SurfaceDesc);
-				if( v18 )
-				{
-					v21 = v4->DrawSystem;
-					TDrawSystem::GetCreateErrorNum(v18);
-				}
-				else
-				{
-					TDrawArea::SetInfo(v4);
-					TDrawArea::SetAccessOffsets(v4);
-					v19 = *(int **)v12;
-					v20 = *v19;
+				this->SurfaceDesc.dwSize = sizeof(DDSURFACEDESC);
+
+				ddres = this->DrawSurface->GetSurfaceDesc(&this->SurfaceDesc);
+				if( ddres == DD_OK ){
+
+					this->SetInfo();
+					this->SetAccessOffsets();
+
 					ddbltfx.dwSize = 100;
 					ddbltfx.dwFillColor = 0;
-					(*(void (__stdcall **)(int *, _DWORD, _DWORD, _DWORD, signed int, DDBLTFX *))(v20 + 20))(
-						v19,
-						0,
-						0,
-						0,
+
+					this->DrawSurface->Blt(
+						nullptr,
+                        nullptr,
+						nullptr,
 						16778240,
 						&ddbltfx);
+				}else{
+					this->DrawSystem->GetCreateErrorNum(ddres);
 				}
 			}
 		}
-		TDrawArea::SetClipRect(v4, 0);
-		TDrawArea::Clear(v4, 0, 0);
-		goto LABEL_33;
+		this->SetClipRect(nullptr);
+		this->Clear(nullptr, 0);
+
+		v6 = wid_in;
 	}
-LABEL_34:
-	v22 = v4->SpanList;
-	if( v22 )
-	{
-		TSpan_List_Manager::~TSpan_List_Manager(v4->SpanList);
-		operator delete(v22);
+    LABEL_34:
+	if( this->SpanList ){
+		delete this->SpanList;
 	}
-	v23 = (TSpan_List_Manager *)operator new(0x68u);
-	v24 = 0;
-	v29 = 0;
-	if( v23 )
-		TSpan_List_Manager::TSpan_List_Manager(v23, v6, v7);
-	else
-		v25 = 0;
-	v29 = -1;
-	v4->SpanList = v25;
-	if( v7 > 0 )
-	{
-		v26 = v6 - 1;
-		do
-			TSpan_List_Manager::AddSpan(v4->SpanList, 0, v26, v24++);
-		while ( v24 < v7 );
+	this->SpanList = new TSpan_List_Manager(v6, v7);
+
+	for( int i = 0; i < v7; i++ ){
+        this->SpanList->AddSpan(0, v6 - 1, i);
 	}
-	v4->CurSpanList = v4->SpanList;
+	this->CurSpanList = this->SpanList;
 }
 
 void TDrawArea::Clear(RECT *rect, int color)
@@ -459,71 +384,50 @@ void TDrawArea::Clear(RECT *rect, int color)
 
 	DDBLTFX ddbltfx;
 
-	if( DDSys_CanColorFill )
-	{
-		if( this->DrawSystem && this->DrawSystem->DrawType == 1 )
-		{
-			if( this->Bits )
-			{
-				if( rect )
-				{
+	if( DDSys_CanColorFill ){
+		if( this->DrawSystem && this->DrawSystem->DrawType == 1 ){
+			if( this->Bits ){
+				if( rect ){
 					int v4 = rect->left;
 					int v5 = rect->top;
 					int v6 = rect->right;
 					int v7 = rect->bottom;
 
-					if( rect->left >= 0 )
-					{
+					if( rect->left >= 0 ){
 						if( v4 >= this->Width )
 							v4 = this->Width - 1;
-					}
-					else
-					{
+					}else{
 						v4 = 0;
 					}
-					if( v5 >= 0 )
-					{
+					if( v5 >= 0 ){
 						if( v5 >= this->Height )
 							v5 = this->Height - 1;
-					}
-					else
-					{
+					}else{
 						v5 = 0;
 					}
-					if( v6 >= 0 )
-					{
+					if( v6 >= 0 ){
 						if( v6 >= this->Width )
 							v6 = this->Width - 1;
-					}
-					else
-					{
+					}else{
 						v6 = 0;
 					}
-					if( v7 >= 0 )
-					{
+					if( v7 >= 0 ){
 						if( v7 >= this->Height )
 							v7 = this->Height - 1;
-					}
-					else
-					{
+					}else{
 						v7 = 0;
 					}
-					if( v6 > v4 && v7 > v5 )
-					{
+					if( v6 > v4 && v7 > v5 ){
 						int wid = v6 - v4 + 1;
-						if( this->Orien == 1 )
-						{
+						if( this->Orien == 1 ){
 							v13 = &this->Bits[v4] + this->Pitch * v5;
 							v14 = this->Pitch;
-						}
-						else
-						{
+						}else{
 							v15 = this->Pitch;
 							v13 = &this->Bits[v4] + v15 * (this->Height - v5 - 1);
 							v14 = -v15;
 						}
-						if( v5 <= v7 )
-						{
+						if( v5 <= v7 ){
 							int v16 = v7 - v5 + 1;
 							do
 							{
@@ -533,50 +437,40 @@ void TDrawArea::Clear(RECT *rect, int color)
 							while ( --v16 );
 						}
 					}
-				}
-				else
-				{
+				}else{
 					memset(this->Bits, color, this->Pitch * this->Height);
 				}
 			}
-		}
-		else
-		{
-			if( this->DrawSurface )
-			{
-				ddbltfx.dwSize = 100;
+		}else{
+			if( this->DrawSurface ){
+
+				ddbltfx.dwSize      = 100;
 				ddbltfx.dwFillColor = color;
 
-				if( rect )
-				{
-					dest.left = rect->left;
-					dest.top = rect->top;
-					dest.right = rect->right + 1;
+				if( rect ){
+
+					dest.left   = rect->left;
+					dest.top    = rect->top;
+					dest.right  = rect->right + 1;
 					dest.bottom = rect->bottom + 1;
 
-					((void (__stdcall *)(IDirectDrawSurface *, RECT *, _DWORD, _DWORD, signed int, DDBLTFX *))this->DrawSurface->vfptr[1].Release)(
-						this->DrawSurface,
+					this->DrawSurface->Blt(
 						&dest,
-						0,
-						0,
+						nullptr,
+						nullptr,
 						0x01000400,
 						&ddbltfx);
-				}
-				else
-				{
-					((void (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))this->DrawSurface->vfptr[1].Release)(
-						this->DrawSurface,
-						0,
-						0,
-						0,
+				}else{
+					this->DrawSurface->Blt(
+						nullptr,
+						nullptr,
+						nullptr,
 						0x01000400,
 						&ddbltfx);
 				}
 			}
 		}
-	}
-	else
-	{
+	}else{
 		this->PtrClear(rect, color);
 	}
 }
@@ -634,22 +528,20 @@ void TDrawArea::PtrClear(RECT *rect, int color)
 		nLines = v7 - v5 + 1;
 		nWidth = v6 - v4 + 1;
 
-		if( !this->DrawSystem || this->DrawSystem->DrawType != 2 || this->Lock(aPtrclear, 1) )
-		{
+		if( !this->DrawSystem || this->DrawSystem->DrawType != 2 || this->Lock("PtrClear", 1) ){
+
 			void **v10 = this->CurDisplayOffsets;
 			SrcP = this->CurDisplayOffsets;
-			LOBYTE(v10) = color;
-			BYTE1(v10) = color;
+			//LOBYTE(v10) = color;
+			//BYTE1(v10) = color;
 			int v11 = (_DWORD)v10 << 0x10;
-			LOBYTE(v11) = color;
-			BYTE1(v11) = color;
-			do
-			{
+			//LOBYTE(v11) = color;
+			//BYTE1(v11) = color;
+			do{
 				char *v12 = (char *)SrcP[y1++] + x1;
-				int v13 = ((_BYTE)nWidth - (_BYTE)v12 - (_BYTE)nWidth) & 0x03;
+				int v13 = ((char)nWidth - *v12 - (char)nWidth) & 0x03;
 				int v14 = nWidth - v13;
-				if( nWidth > v13 )
-				{
+				if( nWidth > v13 ){
 					memset(v12, v11, v13);
 					char *v15 = &v12[v13];
 					v14 &= 0x03;
@@ -660,61 +552,56 @@ void TDrawArea::PtrClear(RECT *rect, int color)
 				}
 				memset(v12, color, v14 + v13);
 			}
-			while ( --nLines );
+			while( --nLines );
 
-			if( this->DrawSystem && this->DrawSystem->DrawType == 2 )
-				this->Unlock(aPtrclear);
+			if( this->DrawSystem &&
+                this->DrawSystem->DrawType == 2 ){
+				this->Unlock("PtrClear");
+            }
 		}
 	}
 }
 
 void TDrawArea::SetAccessOffsets()
 {
-	TDrawArea *v1; // esi@1
-	size_t v2; // edi@1
-	void **v3; // eax@4
-	int v4; // edx@7
-	int v5; // eax@7
-	int v6; // edx@7
-	int v7; // ecx@8
-	int i; // ecx@13
+	size_t v2 = 4 * this->Height;
+	if( v2 != this->DisplayOffsetsSz ){
 
-	v1 = this;
-	v2 = 4 * this->Height;
-	if( v2 != this->DisplayOffsetsSz )
-	{
-		if( this->DisplayOffsets )
-			free(this->DisplayOffsets);
-		v3 = (void **)malloc(v2);
-		v1->DisplayOffsets = v3;
-		v1->DisplayOffsetsSz = v2;
-		v1->CurDisplayOffsets = v3;
+		if( this->DisplayOffsets ){
+			delete this->DisplayOffsets;
+		}
+		void **v3 = (void **)malloc(v2);
+		this->DisplayOffsets = v3;
+		this->DisplayOffsetsSz = v2;
+		this->CurDisplayOffsets = v3;
 	}
-	if( v1->Orien == 1 || v1->ExtendedLines )
-	{
-		v7 = v1->ExtendedLines;
-		if( v7 )
-			v5 = (int)&v1->Bits[5 * v1->Pitch];
-		else
-			v5 = (int)v1->Bits;
-		v6 = v1->Pitch;
-		if( v7 )
-			v6 = v1->Width;
+	int v5, v6;
+	if( this->Orien == 1 ||
+        this->ExtendedLines ){
+
+		if( this->ExtendedLines ){
+			v5 = (int)&this->Bits[5 * this->Pitch];
+		}else{
+			v5 = (int)this->Bits;
+		}
+		v6 = this->Pitch;
+		if( this->ExtendedLines ){
+			v6 = this->Width;
+        }
+	}else{
+		v5 = (int)&this->Bits[this->Pitch * (this->Height - 1)];
+		v6 = -this->Pitch;
 	}
-	else
-	{
-		v4 = v1->Pitch;
-		v5 = (int)&v1->Bits[v4 * (v1->Height - 1)];
-		v6 = -v4;
-	}
-	for ( i = 0; i < v1->Height; ++i )
-	{
-		v1->DisplayOffsets[i] = (void *)v5;
+	for( int i = 0; i < this->Height; i++ ){
+		this->DisplayOffsets[i] = (void *)v5;
 		v5 += v6;
 	}
-	if( v1->FloatOffsets )
-		TDrawArea::SetFloatOffsets(v1, v1->Float_X_Delta, v1->Float_Y_Delta);
-	v1->LastBits = v1->Bits;
+	if( this->FloatOffsets ){
+		this->SetFloatOffsets(
+            this->Float_X_Delta,
+            this->Float_Y_Delta);
+    }
+	this->LastBits = this->Bits;
 }
 
 void TDrawArea::SetFloatOffsets(int X_Delta, int Y_Delta)
@@ -768,10 +655,11 @@ void TDrawArea::SetInfo()
 
 	unsigned int v3 = this->SurfaceDesc.ddsCaps.dwCaps;
 
-	if( BYTE1(v3) & 8 )
+	if( BYTE1(v3) & 8 ){
 		this->UsingVidMem = 0;
-	else
+	}else{
 		this->UsingVidMem = 1;
+    }
 }
 
 int TDrawArea::AlignedWidth()
@@ -796,122 +684,94 @@ void TDrawArea::SetClipRect(RECT *rect)
 	int v14; // edx@22
 	int v15; // eax@22
 
-	if( rect )
-	{
+	if( rect ){
 		this->ClipRect = *rect;
 		v2 = this->ClipRect.left;
-		if( v2 >= 0 )
-		{
+		if( v2 >= 0 ){
 			v3 = this->Width - 1;
 			if( v2 > v3 )
 				this->ClipRect.left = v3;
-		}
-		else
-		{
+		}else{
 			this->ClipRect.left = 0;
 		}
 		v4 = this->ClipRect.right;
-		if( v4 >= 0 )
-		{
+		if( v4 >= 0 ){
 			v5 = this->Width - 1;
 			if( v4 > v5 )
 				this->ClipRect.right = v5;
-		}
-		else
-		{
+		}else{
 			this->ClipRect.right = 0;
 		}
 		v6 = this->ClipRect.top;
-		if( v6 >= 0 )
-		{
+		if( v6 >= 0 ){
 			v7 = this->Height - 1;
 			if( v6 > v7 )
 				this->ClipRect.top = v7;
-		}
-		else
-		{
+		}else{
 			this->ClipRect.top = 0;
 		}
 		v8 = this->ClipRect.bottom;
-		if( v8 >= 0 )
-		{
+		if( v8 >= 0 ){
 			v9 = this->Height - 1;
 			if( v8 > v9 )
 				this->ClipRect.bottom = v9;
-		}
-		else
-		{
+		}else{
 			this->ClipRect.bottom = 0;
 		}
-		v10 = this->ClipRect.right;
-		v11 = this->ClipRect.left;
-		if( v10 < v11 )
-		{
-			this->ClipRect.right = v11;
-			this->ClipRect.left = v10;
+		if( this->ClipRect.right < this->ClipRect.left ){
+			this->ClipRect.right = this->ClipRect.left;
+			this->ClipRect.left  = this->ClipRect.right;
 		}
-		v12 = this->ClipRect.bottom;
-		v13 = this->ClipRect.top;
-		if( v12 < v13 )
-		{
-			this->ClipRect.bottom = v13;
-			this->ClipRect.top = v12;
+		if( this->ClipRect.bottom < this->ClipRect.top ){
+			this->ClipRect.bottom = this->ClipRect.top;
+			this->ClipRect.top    = this->ClipRect.bottom;
 		}
+	}else{
+		this->ClipRect.left   = 0;
+		this->ClipRect.top    = 0;
+		this->ClipRect.right  = this->Width - 1;
+		this->ClipRect.bottom = this->Height - 1;
 	}
-	else
-	{
-		v14 = this->Width - 1;
-		v15 = this->Height - 1;
-		this->ClipRect.left = 0;
-		this->ClipRect.top = 0;
-		this->ClipRect.right = v14;
-		this->ClipRect.bottom = v15;
-	}
-	TDrawArea::SetClipRect(this, this->ClipRect.left, this->ClipRect.top, this->ClipRect.right, this->ClipRect.bottom);
+	this->SetClipRect(
+        this->ClipRect.left,
+        this->ClipRect.top,
+        this->ClipRect.right,
+        this->ClipRect.bottom);
 }
 
 void TDrawArea::SetClipRect(int x1, int y1, int x2, int y2)
 {
-	TDrawArea *v5; // esi@1
-	TSpan_List_Manager *v6; // edi@1
-	TSpan_List_Manager *v7; // eax@7
-	TSpan_List_Manager *v8; // eax@8
-	int i; // edi@11
-
-	v5 = this;
-	v6 = this->SpanList;
-	this->ClipRect.left = x1;
-	this->ClipRect.top = y1;
-	this->ClipRect.right = x2;
+	this->ClipRect.left   = x1;
+	this->ClipRect.top    = y1;
+	this->ClipRect.right  = x2;
 	this->ClipRect.bottom = y2;
-	if( v6 && this->Height != v6->Num_Lines )
-	{
-		if( v6 )
-		{
-			TSpan_List_Manager::~TSpan_List_Manager(v6);
-			operator delete(v6);
+
+	if( this->SpanList &&
+        this->Height != this->SpanList->Num_Lines ){
+
+		if( this->SpanList ){
+			delete this->SpanList;
 		}
-		v5->SpanList = 0;
 	}
-	if( !v5->SpanList )
-	{
-		v7 = (TSpan_List_Manager *)operator new(0x68u);
-		if( v7 )
-			TSpan_List_Manager::TSpan_List_Manager(v7, v5->Width, v5->Height);
-		else
-			v8 = 0;
-		v5->SpanList = v8;
+	if( this->SpanList == nullptr ){
+		this->SpanList = new TSpan_List_Manager(this->Width, this->Height);
 	}
-	TSpan_List_Manager::ResetAll(v5->SpanList);
-	TSpan_List_Manager::SetSpanRegions(
-		v5->SpanList,
-		v5->ClipRect.left,
-		v5->ClipRect.top,
-		v5->ClipRect.right,
-		v5->ClipRect.bottom);
-	for ( i = v5->ClipRect.top; i <= v5->ClipRect.bottom; ++i )
-		TSpan_List_Manager::AddSpan(v5->SpanList, v5->ClipRect.left, v5->ClipRect.right, i);
-	v5->CurSpanList = v5->SpanList;
+	this->SpanList->ResetAll();
+
+	this->SpanList->SetSpanRegions(
+		this->ClipRect.left,
+		this->ClipRect.top,
+		this->ClipRect.right,
+		this->ClipRect.bottom);
+
+    for( int i = this->ClipRect.top; i <= this->ClipRect.bottom; i++ ){
+
+		this->SpanList->AddSpan(
+            this->ClipRect.left,
+            this->ClipRect.right,
+            i);
+	}
+	this->CurSpanList = this->SpanList;
 }
 
 void TDrawArea::Copy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, int allow_trans)
@@ -1123,31 +983,27 @@ void TDrawArea::Copy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rec
 		{
 			ddrval = 1;
 			if( v6->UseTrans && allow_trans )
-				v36 = ((int (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))dest_area->DrawSurface->vfptr[1].Release)(
-								dest_area->DrawSurface,
-								&dest_rect2,
-								v6->DrawSurface,
-								&src_rect2,
-								0x01008000,
-								0);
+				v36 = dest_area->DrawSurface->Blt(
+                    &dest_rect2,
+                    v6->DrawSurface,
+                    &src_rect2,
+                    0x01008000,
+                    0);
 			else
-				v36 = ((int (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))dest_area->DrawSurface->vfptr[1].Release)(
-								dest_area->DrawSurface,
-								&dest_rect2,
-								v6->DrawSurface,
-								&src_rect2,
-								0x01000000,
-								0);
+				v36 = dest_area->DrawSurface->Blt(
+                    &dest_rect2,
+                    v6->DrawSurface,
+                    &src_rect2,
+                    0x01000000,
+                    0);
 			v37 = 0;
 			ddrval = v36;
 			err = 0;
-			if( v36 )
-			{
-				v38 = v6->DrawSystem;
-				v37 = TDrawSystem::GetBlitErrorNum(v36);
+			if( v36 ){
+				v37 = v6->DrawSystem->GetBlitErrorNum(v36);
 				err = v37;
 			}
-			if( !v37 )
+			if( v37 == 0 )
 				err = 0;
 		}
 	}
@@ -1189,7 +1045,7 @@ void TDrawArea::PtrCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_
 			if( dest_y + nLines > dest_area->Height )
 				nLines = dest_area->Height - dest_y;
 
-			if( this->DrawSystem && this->DrawSystem->DrawType == 2 && !this->Lock(aPtrcopy1, 1) || !dest_area->Lock(aPtrcopy2, 1) )
+			if( this->DrawSystem && this->DrawSystem->DrawType == 2 && !this->Lock("PtrCopy1", 1) || !dest_area->Lock("PtrCopy2", 1) )
 				return;
 
 			YofD = dest_y;
@@ -1203,31 +1059,29 @@ void TDrawArea::PtrCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_
 			{
 				v15 = (char *)SrcP[YofS] + XofS;
 				v16 = (char *)DestP[YofD] + dest_x;
-				v17 = ((_BYTE)nWidth - (_BYTE)v16 - (_BYTE)nWidth) & 0x03;
+				v17 = ((char)nWidth - *v16 - (char)nWidth) & 0x03;
 				v18 = nWidth - v17;
 				if( nWidth > v17 )
 				{
-					qmemcpy(v16, v15, v17);
+					memcpy(v16, v15, v17);
 					v20 = &v15[v17];
 					v19 = &v16[v17];
 					v18 &= 3u;
 					unsigned int v21 = (unsigned int)(nWidth - v17) >> 2;
-					qmemcpy(v19, v20, 4 * v21);
+					memcpy(v19, v20, 4 * v21);
 					v15 = &v20[4 * v21];
 					v16 = &v19[4 * v21];
 					v17 = 0;
 				}
-				qmemcpy(v16, v15, v18 + v17);
+				memcpy(v16, v15, v18 + v17);
 				++YofS;
 				++YofD;
 			}
-			while ( --nLines );
+			while( --nLines );
 
-			if( this->DrawSystem && this->DrawSystem->DrawType == 2 )
-			{
-				this->Unlock(aPtrcopy1);
-
-				dest_area->Unlock(aPtrcopy2);
+			if( this->DrawSystem && this->DrawSystem->DrawType == 2 ){
+				this->Unlock("PtrCopy1");
+				dest_area->Unlock("PtrCopy2");
 			}
 		}
 	}
@@ -1297,7 +1151,7 @@ void TDrawArea::PtrSpanCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *
 									nLines = v14 - dest_y;
 								if( DestP->DrawSystem && DestP->DrawSystem->DrawType == 2 )
 								{
-									if( !TDrawArea::Lock(dest_area, aPtrspancopy, 1) )
+									if( !dest_area->Lock("PtrSpanCopy", 1) )
 										return;
 									v11 = dest_x;
 								}
@@ -1310,7 +1164,7 @@ void TDrawArea::PtrSpanCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *
 								{
 									v15 = (int)SrcP[YofS] + XofS;
 									v16 = (int)DestPa[YofD] + v11;
-									for ( i = SpanListPtrs[YofS]; i; i = *(char **)i )
+									for( i = SpanListPtrs[YofS]; i; i = *(char **)i )
 									{
 										v30 = v15;
 										v29 = v16;
@@ -1319,23 +1173,23 @@ void TDrawArea::PtrSpanCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *
 										v20 = (char *)(v18 + v16);
 										v21 = *((_DWORD *)i + 3) - v18 + 1;
 										v22 = v21;
-										v23 = ((_BYTE)v21 - (_BYTE)v20 - (_BYTE)v21) & 3;
+										v23 = ((char)v21 - *v20 - (char)v21) & 3;
 										v24 = __OFSUB__(v22, v23);
 										v25 = v22 - v23;
 										if( !((unsigned __int8)((v25 < 0) ^ v24) | (v25 == 0)) )
 										{
-											qmemcpy(v20, v19, v23);
+											memcpy(v20, v19, v23);
 											v27 = &v19[v23];
 											v26 = &v20[v23];
 											v28 = v25;
 											v25 &= 3u;
 											v28 >>= 2;
-											qmemcpy(v26, v27, 4 * v28);
+											memcpy(v26, v27, 4 * v28);
 											v19 = &v27[4 * v28];
 											v20 = &v26[4 * v28];
 											v23 = 0;
 										}
-										qmemcpy(v20, v19, v25 + v23);
+										memcpy(v20, v19, v25 + v23);
 										v16 = v29;
 										v15 = v30;
 									}
@@ -1416,17 +1270,17 @@ void TDrawArea::PtrSurfaceCopy(TDrawArea *dest_area, int dest_x, int dest_y, REC
 									{
 										if( SourceLock )
 										{
-											if( !TDrawArea::Lock(v8, aPtrsurfacecopy, 1) )
+											if( !v8->Lock("PtrSurfaceCopy1", 1) )
 												return;
 											v8 = XofS;
 											v14 = dest_y;
 										}
 										if( DestLock )
 										{
-											if( !TDrawArea::Lock(dest_area, aPtrsurfaceco_1, 1) )
+											if( !dest_area->Lock("PtrSurfaceCopy2", 1) )
 											{
 												if( SourceLock )
-													TDrawArea::Unlock(XofS, aPtrsurfacecopy);
+													XofS->Unlock("PtrSurfaceCopy1");
 												return;
 											}
 											v8 = XofS;
@@ -1443,27 +1297,27 @@ void TDrawArea::PtrSurfaceCopy(TDrawArea *dest_area, int dest_x, int dest_y, REC
 									{
 										v17 = (char *)SrcP[YofS] + XofSa;
 										v18 = (char *)DestP[YofD] + dest_x;
-										if( ((unsigned __int8)v18 ^ (unsigned __int8)(XofSa + LOBYTE(SrcP[YofS]))) & 3 )
+										if( *v18 ^ *v17 & 3 )
 										{
-											qmemcpy(v18, v17, nWidth);
+											memcpy(v18, v17, nWidth);
 										}
 										else
 										{
-											v19 = ((_BYTE)nWidth - (_BYTE)v18 - (_BYTE)nWidth) & 3;
+											v19 = ((char)nWidth - *v18 - (char)nWidth) & 3;
 											v20 = nWidth - v19;
 											if( nWidth > v19 )
 											{
-												qmemcpy(v18, v17, v19);
+												memcpy(v18, v17, v19);
 												v22 = &v17[v19];
 												v21 = &v18[v19];
 												v20 &= 3u;
 												v23 = (unsigned int)(nWidth - v19) >> 2;
-												qmemcpy(v21, v22, 4 * v23);
+												memcpy(v21, v22, 4 * v23);
 												v17 = &v22[4 * v23];
 												v18 = &v21[4 * v23];
 												v19 = 0;
 											}
-											qmemcpy(v18, v17, v20 + v19);
+											memcpy(v18, v17, v20 + v19);
 										}
 										++YofS;
 										++YofD;
@@ -1473,9 +1327,9 @@ void TDrawArea::PtrSurfaceCopy(TDrawArea *dest_area, int dest_x, int dest_y, REC
 									if( v8->DrawSystem && v8->DrawSystem->DrawType == 2 )
 									{
 										if( SourceLock )
-											TDrawArea::Unlock(v8, aPtrsurfacecopy);
+											v8->Unlock("PtrSurfaceCopy1");
 										if( DestLock )
-											TDrawArea::Unlock(dest_area, aPtrsurfaceco_1);
+											dest_area->Unlock("PtrSurfaceCopy2");
 									}
 								}
 							}
@@ -1509,7 +1363,7 @@ void TDrawArea::OverlayMemCopy(RECT *src_rect, RECT *dest_rect, int xDelta, int 
 
 	v17 = this;
 	if( (xDelta || yDelta)
-		&& (!this->DrawSystem || this->DrawSystem->DrawType != 2 || TDrawArea::Lock(this, aOverlaymemcopy, 1)) )
+		&& (!this->DrawSystem || this->DrawSystem->DrawType != 2 || this->Lock("OverlayMemCopy", 1)) )
 	{
 		v7 = xOffset;
 		BackCopy = 0;
@@ -1554,7 +1408,7 @@ void TDrawArea::OverlayMemCopy(RECT *src_rect, RECT *dest_rect, int xDelta, int 
 			v16 = xOffset;
 			do
 			{
-				qmemcpy((char *)SrcP[v16] + DstXStart, (char *)SrcP[(_DWORD)v15] + SrcXStart, 4 * LineLen);
+				memcpy((char *)SrcP[v16] + DstXStart, (char *)SrcP[(_DWORD)v15] + SrcXStart, 4 * LineLen);
 				v15 = (RECT *)((char *)v15 + (_DWORD)src_rect);
 				v16 += (int)src_rect;
 				--Lines;
@@ -1567,7 +1421,7 @@ void TDrawArea::OverlayMemCopy(RECT *src_rect, RECT *dest_rect, int xDelta, int 
 			v14 = xOffset;
 			do
 			{
-				qmemcpy((char *)SrcP[v14] + DstXStart, (char *)SrcP[(_DWORD)v13] + SrcXStart, 4 * LineLen);
+				memcpy((char *)SrcP[v14] + DstXStart, (char *)SrcP[(_DWORD)v13] + SrcXStart, 4 * LineLen);
 				v13 = (RECT *)((char *)v13 + (_DWORD)src_rect);
 				v14 += (int)src_rect;
 				--Lines;
@@ -1577,7 +1431,7 @@ void TDrawArea::OverlayMemCopy(RECT *src_rect, RECT *dest_rect, int xDelta, int 
 		if( v17->DrawSystem )
 		{
 			if( v17->DrawSystem->DrawType == 2 )
-				TDrawArea::Unlock(v17, aOverlaymemcopy);
+				v17->Unlock("OverlayMemCopy");
 		}
 	}
 }
@@ -1588,17 +1442,20 @@ void TDrawArea::SetTrans(int use_trans_in, char trans_color_in)
 
 	this->UseTrans = use_trans_in;
 
-	if( use_trans_in )
+	if( use_trans_in ){
 		this->TransColor = trans_color_in;
-	else
+	}else{
 		this->TransColor = -1;
+	}
+	if( use_trans_in &&
+        this->DrawSurface &&
+        this->DrawSystem &&
+        this->DrawSystem->DrawType == 2 ){
 
-	if( use_trans_in && this->DrawSurface && this->DrawSystem && this->DrawSystem->DrawType == 2 )
-	{
 		ddck.dwColorSpaceLowValue = this->TransColor;
 		ddck.dwColorSpaceHighValue = ddck.dwColorSpaceLowValue;
 
-		((void (__stdcall *)(IDirectDrawSurface *, signed int, DDCOLORKEY *))this->DrawSurface->vfptr[9].Release)(this->DrawSurface, 8, &ddck);
+		this->DrawSurface->SetColorKey(DDCKEY_SRCBLT, &ddck);
 	}
 }
 
@@ -1609,30 +1466,35 @@ void TDrawArea::SetOverlayTrans(int use_trans_in, char trans_color_in)
 	this->UseTrans = use_trans_in;
 	this->TransColor = trans_color_in;
 
-	if( use_trans_in && this->DrawSurface && this->DrawSystem && this->DrawSystem->DrawType == 2 )
-	{
+	if( use_trans_in &&
+        this->DrawSurface &&
+        this->DrawSystem &&
+        this->DrawSystem->DrawType == 2 ){
+
 		ddck.dwColorSpaceLowValue = (unsigned __int8)trans_color_in;
 		ddck.dwColorSpaceHighValue = (unsigned __int8)trans_color_in;
-		((void (__stdcall *)(IDirectDrawSurface *, signed int, DDCOLORKEY *))this->DrawSurface->vfptr[9].Release)(this->DrawSurface, 16, &ddck);
+
+		this->DrawSurface->SetColorKey(DDCKEY_SRCOVERLAY, &ddck);
 	}
 }
 
 void TDrawArea::SetPixel(int x, int y, char color)
 {
-	if( this->Bits
-		&& x >= this->ClipRect.left
-		&& x <= this->ClipRect.right
-		&& y >= this->ClipRect.top
-		&& y <= this->ClipRect.bottom )
-	{
-		if( this->Orien == 1 )
+	if( this->Bits &&
+		this->ClipRect.left <= x &&
+		this->ClipRect.right >= x &&
+		this->ClipRect.top <= y &&
+		this->ClipRect.bottom >= y ){
+
+		if( this->Orien == 1 ){
 			*(&this->Bits[x] + y * this->Pitch) = color;
-		else
+		}else{
 			*(&this->Bits[x] + this->Pitch * (this->Height - y - 1)) = color;
+        }
 	}
 }
 
-static void TDrawArea::DrawLine(int x1, int y1, int x2, int y2, char color)
+void TDrawArea::DrawLine(int x1, int y1, int x2, int y2, char color)
 {
 	int v6; // ebp@1
 	int v7; // esi@1
@@ -1715,7 +1577,7 @@ static void TDrawArea::DrawLine(int x1, int y1, int x2, int y2, char color)
 			else
 			{
 				v15 = 0;
-				for ( i = v7; v7 < x2; ++v7 )
+				for( i = v7; v7 < x2; ++v7 )
 				{
 					v15 += v14;
 					if( v15 >= v13 )
@@ -2161,7 +2023,7 @@ void TDrawArea::SetShadowTable(RGE_Color_Table *color_table_in)
 
 void TDrawArea::DrawShadowBox(int x1, int y1, int x2, int y2)
 {
-	_BYTE *v16;
+	char *v16;
 	int v17;
 
 	if( this->shadow_color_table && this->Bits )
@@ -2197,13 +2059,13 @@ void TDrawArea::DrawShadowBox(int x1, int y1, int x2, int y2)
 				int v15 = v6 - y1 + 1;
 				do
 				{
-					v16 = (_BYTE *)v12;
+					v16 = (char *)v12;
 					if( v12 <= v13 )
 					{
 						do
 						{
 							v17 = *v16++;
-							*(v16 - 1) = *(_BYTE *)(v14 + v17);
+							*(v16 - 1) = *(char *)(v14 + v17);
 						}
 						while ( (unsigned int)v16 <= v13 );
 					}
@@ -2246,96 +2108,73 @@ void TDrawArea::SetPalette(PALETTEENTRY *palette1)
 
 void TDrawArea::take_snapshot(char *filespec, int *index_no)
 {
-	TDrawArea *v3; // esi@1
-	int v4; // eax@1
-	int v5; // ecx@1
-	signed int v6; // eax@1
-	char v7; // dl@2
-	char v8; // cl@2
-	signed int v9; // ebp@3
-	int v10; // eax@7
-	_BYTE *v11; // edi@10
-	int v12; // ebx@10
-	int i; // ebp@12
-	int v14; // eax@13
-	_BYTE *j; // ecx@13
-	size_t bmWide; // [sp+10h] [bp-87Ch]@1
-	int v17; // [sp+14h] [bp-878h]@1
-	tagBITMAPFILEHEADER bmFH; // [sp+18h] [bp-874h]@1
-	tagBITMAPINFOHEADER bmIH; // [sp+28h] [bp-864h]@1
-	char BMPFile[60]; // [sp+50h] [bp-83Ch]@5
-	tagRGBQUAD bmPAL[256]; // [sp+8Ch] [bp-800h]@2
-	PALETTEENTRY thePal[256]; // [sp+48Ch] [bp-400h]@1
+	size_t bmWide = ((short)this->Width + 3) & 0xFFFC;
 
-	v3 = this;
-	v4 = this->Width;
-	v5 = this->Height;
-	bmIH.biWidth = v4;
-	v17 = v5;
-	bmIH.biHeight = v5;
-	bmWide = ((_WORD)v4 + 3) & 0xFFFC;
-	bmFH.bfType = 19778;
-	bmFH.bfSize = bmWide * v5 + 1078;
-	bmFH.bfReserved1 = 0;
-	bmFH.bfReserved2 = 0;
-	bmFH.bfOffBits = 1078;
-	bmIH.biSize = 40;
-	bmIH.biPlanes = 1;
-	bmIH.biBitCount = 8;
-	bmIH.biCompression = 0;
-	bmIH.biSizeImage = 0;
+	BITMAPFILEHEADER bmFH;
+	bmFH.bfType          = 19778;
+	bmFH.bfSize          = bmWide * this->Height + 1078;
+	bmFH.bfReserved1     = 0;
+	bmFH.bfReserved2     = 0;
+	bmFH.bfOffBits       = 1078;
+
+	BITMAPINFOHEADER bmIH;
+	bmIH.biWidth         = this->Width;
+	bmIH.biHeight        = this->Height;
+	bmIH.biSize          = sizeof(BITMAPINFOHEADER);
+	bmIH.biPlanes        = 1;
+	bmIH.biBitCount      = 8;
+	bmIH.biCompression   = 0;
+	bmIH.biSizeImage     = 0;
 	bmIH.biXPelsPerMeter = 0;
 	bmIH.biYPelsPerMeter = 0;
-	bmIH.biClrUsed = 0;
-	bmIH.biClrImportant = 0;
-	TDrawArea::GetPalette(v3, thePal);
-	v6 = 0;
-	do
-	{
-		v7 = thePal[v6].peGreen;
-		bmPAL[v6].rgbBlue = thePal[v6].peBlue;
-		v8 = thePal[v6].peRed;
-		bmPAL[v6].rgbGreen = v7;
-		bmPAL[v6].rgbRed = v8;
-		bmPAL[v6].rgbReserved = 0;
-		++v6;
+	bmIH.biClrUsed       = 0;
+	bmIH.biClrImportant  = 0;
+
+	PALETTEENTRY thePal[256];
+	this->GetPalette(thePal);
+	RGBQUAD bmPAL[256];
+	for( int i = 0; i < 256; i++ ){
+		bmPAL[i].rgbBlue     = thePal[i].peBlue;
+		bmPAL[i].rgbGreen    = thePal[i].peGreen;
+		bmPAL[i].rgbRed      = thePal[i].peRed;
+		bmPAL[i].rgbReserved = 0;
 	}
-	while ( v6 < 256 );
-	v9 = 0;
-	while ( 1 )
-	{
-		if( filespec )
+	char BMPFile[60];
+	int v9 = 0;
+	while( true ){
+		if( filespec ){
 			sprintf(BMPFile, filespec, *index_no);
-		else
-			sprintf(BMPFile, aCAoe_03d_bmp, *index_no);
-		++v9;
-		v10 = _open(BMPFile, 0);
+		}else{
+			sprintf(BMPFile, "C:\\AOE_%03d.BMP", *index_no);
+		}
+		v9++;
+		int v10 = open(BMPFile, 0);
 		if( v10 == -1 )
 			break;
-		++*index_no;
-		_close(v10);
+		*index_no++;
+		close(v10);
 		if( v9 > 1000 )
 			return;
 	}
-	v11 = malloc(bmWide);
-	v12 = _open(BMPFile, 33537, 384);
-	if( v12 != -1 )
-	{
-		_write(v12, &bmFH, 0xEu);
-		_write(v12, &bmIH, 0x28u);
-		_write(v12, bmPAL, 0x400u);
-		if( TDrawArea::Lock(v3, aTake_snapshot, 1) )
-		{
-			for ( i = v17 - 1; i >= 0; --i )
-			{
-				v14 = 0;
-				for ( j = v3->CurDisplayOffsets[i]; v14 < v3->Width; ++j )
+	char *v11 = (char *)malloc(bmWide);
+	int v12 = open(BMPFile, 33537, 384);
+	if( v12 != -1 ){
+
+		write(v12, &bmFH, 0xEu);
+		write(v12, &bmIH, sizeof(BITMAPINFOHEADER));
+		write(v12, bmPAL, 0x400u);
+
+		if( this->Lock("take_snapshot", 1) ){
+			for( int k = this->Height - 1; k >= 0; k-- ){
+				int v14 = 0;
+				for( char *j = (char *)this->CurDisplayOffsets[k]; v14 < this->Width; j++ ){
 					v11[v14++] = *j;
-				_write(v12, v11, bmWide);
+				}
+				write(v12, v11, bmWide);
 			}
-			TDrawArea::Unlock(v3, aTake_snapshot);
+			this->Unlock("take_snapshot");
 		}
-		_close(v12);
+		close(v12);
 	}
 	free(v11);
 }

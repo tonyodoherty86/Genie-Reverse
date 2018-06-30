@@ -1,9 +1,12 @@
 
 /**
- *
+ * @file    Engine\DrawSystem.cpp
+ * @author  Yvan Burrie
+ * @date    2018/06/28
+ * @version 1.0
  */
 
-char pszDriver[] = "DISPLAY";
+TDrawSystem *draw_system;
 
 int system_ignore_size_messages;
 
@@ -13,9 +16,6 @@ int FullPalSets;
 
 int AniPalSets;
 
-/**
- *
- */
 TDrawSystem::TDrawSystem()
 {
     this->ColorBits = 8;
@@ -29,41 +29,35 @@ TDrawSystem::TDrawSystem()
         0x00000000);
 }
 
-/**
- *
- */
 TDrawSystem::~TDrawSystem()
 {
 	DDBLTFX ddbltfx;
 
-	if( this->PrimarySurface && this->ScreenMode == 2 )
-	{
+	if( this->PrimarySurface &&
+        this->ScreenMode == 2 ){
+
 		ddbltfx.dwSize = 100;
 		ddbltfx.dwFillColor = 0;
 
 		this->PrimarySurface->Blt(
-			NULL,
-			NULL,
-			NULL,
+			nullptr,
+			nullptr,
+			nullptr,
 			DDBLT_COLORFILL|DDBLT_WAIT,
 			&ddbltfx);
 	}
 	this->DeleteSurfaces();
 
-	if( this->DirDraw )
-	{
-		if( this->DirDrawPal )
-		{
+	if( this->DirDraw ){
+		if( this->DirDrawPal ){
 			this->DirDrawPal->Release();
 			this->DirDrawPal = 0;
 		}
-		if( this->Clipper )
-		{
+		if( this->Clipper ){
 			this->Clipper->Release();
 			this->Clipper = 0;
 		}
-		if( this->ChangedMode )
-		{
+		if( this->ChangedMode ){
 			this->DirDraw->RestoreDisplayMode();
 			this->ChangedMode = 0;
 		}
@@ -74,50 +68,47 @@ TDrawSystem::~TDrawSystem()
 
 void TDrawSystem::CheckAvailModes(int full_screen)
 {
-	if( full_screen )
-	{
-        int ResetDraw;
+	if( full_screen ){
 
-		if( this->DirDraw )
-		{
+        int ResetDraw = 0;
+
+		if( this->DirDraw ){
 			ResetDraw = 1;
-		}
-		else
-		{
-			if( DirectDrawCreate(0, &this->DirDraw, 0) )
-				return;
-
-			ResetDraw = 0;
+		}else if( DirectDrawCreate(nullptr, &this->DirDraw, nullptr) ){
+            return;
 		}
 		this->DirDraw->EnumDisplayModes(
 			0,
-			(LPDDSURFACEDESC)NULL,
+			(LPDDSURFACEDESC)nullptr,
 			this,
 			(LPDDENUMMODESCALLBACK)TDrawSystem::CheckAvailModesCallback);
 
-		if( ResetDraw == 0 )
-		{
+		if( ResetDraw == 0 ){
 			this->DirDraw->Release();
 			this->DirDraw = 0;
 		}
-	}
-	else
-	{
+	}else{
+
 		this->ModeAvail640 = 1;
 
-		if( HDC DeviceCaps = CreateICA(pszDriver, 0, 0, 0) )
-		{
+		if( HDC DeviceCaps = CreateICA("DISPLAY", 0, 0, 0) ){
+
 			int HorzRes = GetDeviceCaps(DeviceCaps, HORZRES);
 			int VertRes = GetDeviceCaps(DeviceCaps, VERTRES);
 
 			DeleteDC(DeviceCaps);
 
-			if( HorzRes >= 800 )
-				this->ModeAvail800 = 1;
-			if( HorzRes >= 1024 )
-				this->ModeAvail1024 = 1;
-			if( HorzRes >= 1280 )
-				this->ModeAvail1280 = 1;
+			if( VertRes ){
+                if( HorzRes >= 800 ){
+                    this->ModeAvail800 = 1;
+                }
+                if( HorzRes >= 1024 ){
+                    this->ModeAvail1024 = 1;
+                }
+                if( HorzRes >= 1280 ){
+                    this->ModeAvail1280 = 1;
+                }
+            }
 		}
 	}
 }
@@ -146,32 +137,32 @@ int TDrawSystem::CheckAvailModesCallback(DDSURFACEDESC *lpDDSurfaceDesc, void *l
 						{
 							if( lpDDSurfaceDesc->dwHeight == 200 )
 							{
-								*((_DWORD *)lpContext + 23) = 1;
+								*((int *)lpContext + 23) = 1;
 							}
 							else if( lpDDSurfaceDesc->dwHeight == 240 )
 							{
-								*((_DWORD *)lpContext + 24) = 1;
+								*((int *)lpContext + 24) = 1;
 							}
 						}
 					}
 					else
 					{
-						*((_DWORD *)lpContext + 22) = 1;
+						*((int *)lpContext + 22) = 1;
 					}
 				}
 				else
 				{
-					*((_DWORD *)lpContext + 21) = 1;
+					*((int *)lpContext + 21) = 1;
 				}
 			}
 			else
 			{
-				*((_DWORD *)lpContext + 20) = 1;
+				*((int *)lpContext + 20) = 1;
 			}
 		}
 		else
 		{
-			*((_DWORD *)lpContext + 19) = 1;
+			*((int *)lpContext + 19) = 1;
 		}
 	}
 	else if( v3 == 16 )
@@ -187,107 +178,113 @@ int TDrawSystem::CheckAvailModesCallback(DDSURFACEDESC *lpDDSurfaceDesc, void *l
 					{
 						if( lpDDSurfaceDesc->dwHeight == 200 )
 						{
-							*((_DWORD *)lpContext + 25) = 1;
+							*((int *)lpContext + 25) = 1;
 						}
 						else if( lpDDSurfaceDesc->dwHeight == 240 )
 						{
-							*((_DWORD *)lpContext + 26) = 1;
+							*((int *)lpContext + 26) = 1;
 						}
 					}
 				}
 				else
 				{
-					*((_DWORD *)lpContext + 29) = 1;
+					*((int *)lpContext + 29) = 1;
 				}
 			}
 			else
 			{
-				*((_DWORD *)lpContext + 28) = 1;
+				*((int *)lpContext + 28) = 1;
 			}
 		}
 		else
 		{
-			*((_DWORD *)lpContext + 27) = 1;
+			*((int *)lpContext + 27) = 1;
 		}
 	}
 	return result;
 }
 
-int TDrawSystem::IsModeAvail(int wid_in, int hgt_in, int color_bits)
+int TDrawSystem::IsModeAvail(
+    int wid_in,
+    int hgt_in,
+    int color_bits)
 {
-	switch( color_bits )
-	{
-		/* 0x08 Color-Bits */
-		case 8:
-			switch( wid_in )
-			{
+	switch( color_bits ){
+
+    case 8:/* 0x08 Color-Bits */
+        switch( wid_in ){
+
 #ifdef DRAW_SYSTEM_RESOLUTION_1920
-				case 1920:
-					return this->ModeAvail1920;
+        case 1920:
+            return this->ModeAvail1920;
 #endif
 
-				case 1280:
-					return this->ModeAvail1280;
+        case 1280:
+            return this->ModeAvail1280;
 
-				case 1024:
-					return this->ModeAvail1024;
+        case 1024:
+            return this->ModeAvail1024;
 
-				case 800:
-					return this->ModeAvail800;
+        case 800:
+            return this->ModeAvail800;
 
-				case 640:
-					return this->ModeAvail640;
+        case 640:
+            return this->ModeAvail640;
 
-				case 320:
-					if( hgt_in == 200 )
-						return this->ModeAvail320_200;
+        case 320:
+            switch( hgt_in ){
 
-					if( hgt_in == 240 )
-						return this->ModeAvail320_240;
+            case 200:
+                return this->ModeAvail320_200;
 
-					break;
-			}
-			break;
+            case 240:
+                return this->ModeAvail320_240;
+            }
+            break;
+    }
+    break;
 
-		/* 0x10 Color-Bits */
-		case 16:
-			switch( wid_in )
-			{
-				case 1024:
-					return this->ModeAvail1024_16;
+    case 16:/* 0x10 Color-Bits */
+        switch( wid_in ){
 
-				case 800:
-					return this->ModeAvail800_16;
+        case 1024:
+            return this->ModeAvail1024_16;
 
-				case 640:
-					return this->ModeAvail640_16;
+        case 800:
+            return this->ModeAvail800_16;
 
-				case 320:
-					if( hgt_in == 200 )
-						return this->ModeAvail320_200_16;
+        case 640:
+            return this->ModeAvail640_16;
 
-					if( hgt_in == 240 )
-						return this->ModeAvail320_240_16;
+        case 320:
+            switch( hgt_in ){
 
-					break;
-			}
-			break;
+            case 200:
+                return this->ModeAvail320_200_16;
+
+            case 240:
+                return this->ModeAvail320_240_16;
+            }
+            break;
+        }
+        break;
 	}
 	return 0;
 }
 
-void TDrawSystem::Init(HINSTANCE *inst_in, HWND *wnd_in, HPALETTE *pal_in, char type_in, char mode_in, int wid_in, int hgt_in, unsigned int flags_in)
+/**
+ *
+ */
+void TDrawSystem::Init(
+    HINSTANCE *inst_in,
+    HWND *wnd_in,
+    HPALETTE *pal_in,
+    char type_in,
+    char mode_in,
+    int wid_in,
+    int hgt_in,
+    unsigned int flags_in)
 {
-	unsigned int BitsPerPixel = 8;
-	int index = 0;
-	int v23;
-
-    HRESULT DDResult;
-	DDSURFACEDESC ddsd;
-	DDBLTFX ddbltfx;
-	DDCAPS ddcaps;
-	PALETTEENTRY color_table[256];
-
 	this->Wnd          = wnd_in;
 	this->Pal          = pal_in;
 	this->Inst         = inst_in;
@@ -297,60 +294,53 @@ void TDrawSystem::Init(HINSTANCE *inst_in, HWND *wnd_in, HPALETTE *pal_in, char 
 	this->ScreenHeight = hgt_in;
 	this->Flags        = flags_in;
 
-	if( type_in == 1 )
+	if( type_in == 1 ){
         return;
+	}
+
+    HRESULT DDResult;
 
     DDResult = DirectDrawCreate(
-        NULL,
+        nullptr,
         &this->DirDraw,
-        NULL);
-    if( DDResult != DD_OK )
-    {
+        nullptr);
+    if( DDResult != DD_OK ){
         this->ErrorCode = 1;
         return;
     }
     this->CheckAvailModes(1);
 
-    if( this->ScreenMode == 1 )
-    {
-#ifdef DIRECT_DRAW
+    if( this->ScreenMode == 1 ){
         DDResult = this->DirDraw->SetCooperativeLevel(
-            this->Wnd,
+            *this->Wnd,
             DDSCL_NORMAL);
-        if( DDResult != DD_OK )
-        {
+        if( DDResult != DD_OK ){
             this->ErrorCode = 1;
             return;
         }
-#endif
+        DDSURFACEDESC ddsd;
         memset(&ddsd, 0, sizeof(DDSURFACEDESC));
         ddsd.dwSize = sizeof(DDSURFACEDESC);
 
         DDResult = this->DirDraw->GetDisplayMode(&ddsd);
-        if( DDResult != DD_OK )
-        {
+        if( DDResult != DD_OK ){
             this->ErrorCode = 1;
             return;
         }
-        if( ddsd.ddpfPixelFormat.dwRGBBitCount != BitsPerPixel )
-        {
+        if( ddsd.ddpfPixelFormat.dwRGBBitCount != 8 ){
             this->ErrorCode = 2;
             return;
         }
-    }
-    else
-    {
+    }else{
 #if ENGINE_AOC
     #define DRAW_SYSTEM_COOP_LEVEL DDSCL_FULLSCREEN|DDSCL_EXCLUSIVE|DDSCL_ALLOWREBOOT
 #else
     #define DRAW_SYSTEM_COOP_LEVEL DDSCL_FULLSCREEN|DDSCL_EXCLUSIVE
 #endif
-#ifdef DIRECT_DRAW
         DDResult = this->DirDraw->SetCooperativeLevel(
             *this->Wnd,
             DRAW_SYSTEM_COOP_LEVEL);
-        if( DDResult != DD_OK )
-        {
+        if( DDResult != DD_OK ){
             this->ErrorCode = 1;
             return;
         }
@@ -358,102 +348,91 @@ void TDrawSystem::Init(HINSTANCE *inst_in, HWND *wnd_in, HPALETTE *pal_in, char 
         DDResult = this->DirDraw->SetDisplayMode(
             this->ScreenWidth,
             this->ScreenHeight,
-            this->ColorBits = BitsPerPixel);
-        if( DDResult != DD_OK )
-        {
+            this->ColorBits = 8);
+        if( DDResult != DD_OK ){
             this->ErrorCode = 1;
             return;
         }
-#endif
         this->ChangedMode = 1;
     }
-    if( this->Pal )
-    {
+	PALETTEENTRY color_table[256];
+	int index = 0;
+    if( this->Pal ){
         GetPaletteEntries(
-            *(HPALETTE*)this->Pal,
+            *this->Pal,
             0,
             256,
             color_table);
-    }
-    else
-    {
-        for( index = 0; index < 256; index++ )
-        {
+    }else{
+        for( index = 0; index < 256; index++ ){
             color_table[index].peRed   = 0;
             color_table[index].peGreen = 0;
             color_table[index].peBlue  = 0;
             color_table[index].peFlags = 0;
         }
     }
-    for( index = 0; index < 256; index++ )
-    {
+    for( index = 0; index < 256; index++ ){
         this->palette[index].peRed   = 0;
         this->palette[index].peGreen = 0;
         this->palette[index].peBlue  = 0;
         this->palette[index].peFlags = 0;
     }
-#ifdef DIRECT_DRAW
+
     DDResult = this->DirDraw->CreatePalette(
         DDPCAPS_8BIT|DDPCAPS_ALLOW256,
         color_table,
         &this->DirDrawPal,
-        NULL);
-    if( DDResult != DD_OK )
-    {
+        nullptr);
+    if( DDResult != DD_OK ){
         this->ErrorCode = 1;
         return;
     }
-    DDResult = this->DirDrawPal->CreateSurface(
+    DDResult = this->DirDrawPal->SetEntries(
         0,
         0,
         256,
         this->palette);
-#endif
+
     DDResult = this->DirDraw->CreateClipper(
         0,
         &this->Clipper,
-        NULL);
-    if( DDResult != DD_OK )
-    {
+        nullptr);
+    if( DDResult != DD_OK ){
         this->ErrorCode = 1;
         return;
     }
     DDResult = this->Clipper->SetHWnd(
         0,
         *this->Wnd);
-    if( DDResult != DD_OK )
-    {
+    if( DDResult != DD_OK ){
         this->ErrorCode = 1;
         return;
     }
     this->CreateSurfaces();
 
-    if( v23 == 0 )
-    {
-        this->ErrorCode = 1;
-        return;
-    }
     this->IsBanked = 0;
+	DDCAPS ddcaps;
     ddcaps.dwSize = 316;
-
     DDResult = this->DirDraw->GetCaps(&ddcaps, 0);
-    if( DDResult != DD_OK )
-    {
-        if( ddcaps.dwCaps & DDSCAPS_VIDEOPORT )
+    if( DDResult != DD_OK ){
+        if( ddcaps.dwCaps & DDSCAPS_VIDEOPORT ){
             this->IsBanked = 1;
-
-        if( ddcaps.dwCaps & DDSCAPS_MIPMAP && BYTE1(ddcaps.dwCKeyCaps) & DDCKEYCAPS_DESTBLTCLRSPACE )
+        }
+        if( ddcaps.dwCaps & DDSCAPS_MIPMAP &&
+            BYTE1(ddcaps.dwCKeyCaps) & DDCKEYCAPS_DESTBLTCLRSPACE ){
             this->CanSrcBlt = 1;
+        }
     }
-    if( this->ScreenMode == 2 )
-    {
+    if( this->ScreenMode == 2 ){
+
+        DDBLTFX ddbltfx;
         ddbltfx.dwSize      = 100;
         ddbltfx.dwFillColor = 0;
 
         this->PrimarySurface->Blt(
-            NULL,
-            NULL,
-            NULL,
+            nullptr,
+            nullptr,
+            nullptr,
             DDBLT_COLORFILL|DDBLT_WAIT,
             &ddbltfx);
     }
@@ -463,7 +442,7 @@ bool TDrawSystem::SetDisplaySize(int wid_in, int hgt_in, int color_bits)
 {
 	DDBLTFX ddbltfx;
 
-	if( this->DrawType   == 2 &&
+	if( this->DrawType == 2 &&
         this->ScreenMode == 2 )
 	{
 		system_ignore_size_messages = 1;
@@ -472,9 +451,9 @@ bool TDrawSystem::SetDisplaySize(int wid_in, int hgt_in, int color_bits)
 		ddbltfx.dwFillColor = 0;
 
 		this->PrimarySurface->Blt(
-			NULL,
-			NULL,
-			NULL,
+			nullptr,
+			nullptr,
+			nullptr,
 			DDBLT_COLORFILL|DDBLT_WAIT,
 			&ddbltfx);
 
@@ -545,9 +524,9 @@ void TDrawSystem::ClearPrimarySurface()
 		ddbltfx.dwFillColor = 0;
 
 		this->PrimarySurface->Blt(
-			NULL,
-			NULL,
-			NULL,
+			nullptr,
+			nullptr,
+			nullptr,
 			DDBLT_COLORFILL|DDBLT_WAIT,
 			&ddbltfx);
 	}
@@ -599,9 +578,9 @@ char TDrawSystem::CheckSurfaces()
             ddbltfx.dwFillColor = 0;
 
             DDResult = this->PrimarySurface->Blt(
-                NULL,
-                NULL,
-                NULL,
+                nullptr,
+                nullptr,
+                nullptr,
                 DDBLT_COLORFILL|DDBLT_WAIT,
                 &ddbltfx);
         }
@@ -680,20 +659,18 @@ void TDrawSystem::CreateSurfaces()
 	DDResult = this->DirDraw->CreateSurface(
         &ddsd,
         &this->PrimarySurface,
-        NULL);
-	if( DDResult != DD_OK )
-	{
+        nullptr);
+	if( DDResult != DD_OK ){
         return;
 	}
-    if( this->ScreenMode == 2 )
-    {
+    if( this->ScreenMode == 2 ){
         ddbltfx.dwSize = 100;
         ddbltfx.dwFillColor = 0;
 
         this->PrimarySurface->Blt(
-            NULL,
-            NULL,
-            NULL,
+            nullptr,
+            nullptr,
+            nullptr,
             DDBLT_COLORFILL|DDBLT_WAIT,
             &ddbltfx);
     }
@@ -728,18 +705,15 @@ bool TDrawSystem::HandleSize(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	RECT wnd_rect;
 
-	if( this->DrawArea )
-	{
+	if( this->DrawArea ){
 		if( this->DrawType == 1 ||
-            this->ScreenMode == 1 )
-		{
+            this->ScreenMode == 1 ){
 			GetClientRect(*this->Wnd, &wnd_rect);
 
 			this->ScreenWidth  = wnd_rect.right;
 			this->ScreenHeight = wnd_rect.bottom;
 		}
-		if( this->PrimaryArea )
-        {
+		if( this->PrimaryArea ){
 			this->PrimaryArea->SetSize(this->ScreenWidth, this->ScreenHeight, 0);
         }
 		this->DrawArea->SetSize(this->ScreenWidth, this->ScreenHeight, 0);
@@ -749,8 +723,7 @@ bool TDrawSystem::HandleSize(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 bool TDrawSystem::HandlePaletteChanged(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if( hwnd != this->Wnd )
-    {
+	if( hwnd != this->Wnd ){
 		this->HandleQueryNewPalette(hwnd, msg, wParam, lParam);
     }
     return true;
@@ -793,10 +766,8 @@ void TDrawSystem::Paint(RECT *rect)
 	if( this->DrawType != 1 &&
 		this->PrimarySurface &&
 		this->DrawArea &&
-		this->DrawArea->DrawSurface )
-	{
-		if( this->ScreenMode == 1 )
-		{
+		this->DrawArea->DrawSurface ){
+		if( this->ScreenMode == 1 ){
 			GetClientRect(*this->Wnd, &r1);
 
 			r2.top    = r1.top;
@@ -806,9 +777,7 @@ void TDrawSystem::Paint(RECT *rect)
 
 			ClientToScreen(*this->Wnd, (LPPOINT)&r2.left);
 			ClientToScreen(*this->Wnd, (LPPOINT)&r2.right);
-		}
-		else
-		{
+		}else{
 			int v5 = this->ScreenWidth;
 			int v6 = this->ScreenHeight;
 
@@ -822,8 +791,7 @@ void TDrawSystem::Paint(RECT *rect)
 			r2.right  = v5;
 			r2.bottom = v6;
 		}
-		if( rect )
-		{
+		if( rect ){
 			int v7 = rect->left;
 			if( v7 < 0 )
 				r1.left = 0;
@@ -857,8 +825,8 @@ void TDrawSystem::Paint(RECT *rect)
 			&r2,
 			this->DrawArea->DrawSurface,
 			&r1,
-			DDBLT_PRESENTATION,
-			NULL);
+			DDBLT_WAIT,
+			nullptr);
 	}
 }
 
@@ -1270,18 +1238,15 @@ void TDrawSystem::SetPalette(HPALETTE *pal_in)
 {
 	PALETTEENTRY color_table[256];
 
-	if( this->Pal = pal_in )
-	{
-		GetPaletteEntries(
-			*pal_in,
-			0x0000,
-			0x0100,
-			color_table);
-	}
-	else
-	{
-		for ( int i = 0; i < 256; i++ )
-		{
+	this->Pal = pal_in;
+
+	if( pal_in ){
+
+		GetPaletteEntries(*pal_in, 0, 256, color_table);
+
+	}else{
+
+		for ( int i = 0; i < 256; i++ ){
 			color_table[i].peRed = 0;
 			color_table[i].peGreen = 0;
 			color_table[i].peBlue = 0;
@@ -1299,31 +1264,29 @@ void TDrawSystem::SetPalette(HPALETTE *pal_in)
 	color_table[0x00FF].peBlue  = -1;
 	color_table[0x00FF].peFlags = 0;
 
-	this->ModifyPalette(0x0000, 0x0100, color_table);
+	this->ModifyPalette(0, 256, color_table);
 }
 
 void TDrawSystem::ModifyPalette(int start_entry, int num_entries, PALETTEENTRY *pal_entries)
 {
 	PalSetRes = -99;
 
-	if( num_entries == 256 )
+	if( num_entries == 256 ){
 		FullPalSets++;
+	}
+	if( start_entry < (num_entries + start_entry) ){
 
-	if( start_entry < num_entries + start_entry )
-	{
 		char *v6 = (char*)&this->palette[start_entry];
-		int v7 = start_entry;
+		//int v7 = start_entry;
 		int i = num_entries;
-		do
-		{
+		do{
 			v6 += 4;
-			*((PALETTEENTRY *)v6 - 1) = *(PALETTEENTRY *)((char *)pal_entries)[++v7 - start_entry];
+			//*((PALETTEENTRY *)v6 - 1) = *(PALETTEENTRY *)((char *)pal_entries)[++v7 - start_entry];
 		}
 		while( --i );
 	}
 	if( this->DrawType != 1 &&
-        this->DirDrawPal )
-	{
+        this->DirDrawPal ){
 		if( num_entries == 7 )
 			AniPalSets++;
 

@@ -13,21 +13,22 @@ public:
 	TDrawSystem *DrawSystem;
 
 	HWND *Wnd;
+
 	char *Bits;
 
 	BITMAPINFO256 *BitmapInfo;
 
-	void *Bitmap;
-	void *OldBitmap;
+	HGDIOBJ *Bitmap,
+	        *OldBitmap;
 
-	int Width;
-	int Height;
+	int Width,
+	    Height;
 	int Pitch;
 	int Orien = 1;
 
 	RECT ClipRect;
 
-	void *DrawDc;
+	HDC *DrawDc;
 	IDirectDrawSurface *DrawSurface;
 	DDSURFACEDESC SurfaceDesc;
 
@@ -47,8 +48,8 @@ public:
 	TSpan_List_Manager *SpanList;
 	TSpan_List_Manager *CurSpanList;
 
-	int Float_X_Delta;
-	int Float_Y_Delta;
+	int Float_X_Delta,
+        Float_Y_Delta;
 
 	int DisplayOffsetsSz;
 	int FloatOffsetsSz;
@@ -63,6 +64,7 @@ public:
 	char TransColor = -1;
 
 	TDrawArea(const char *SurfaceName, int ForceSystemMem);
+
 	~TDrawArea();
 
 	DrawAreaNode *Init(TDrawSystem *draw_system_in, int wid_in, int hgt_in, int Extend, int isPrimary_in);
@@ -72,7 +74,7 @@ public:
 	char *Lock(char *caller_name, int wait);
 	void Unlock(char *caller_name);
 
-	void *GetDc(char *caller_name);
+	HDC *GetDc(char *caller_name);
 	void ReleaseDc(char *caller_name);
 
 	void SetSize(int wid_in, int hgt_in, int ExtendSurface);
@@ -124,6 +126,7 @@ public:
 struct DrawAreaNode
 {
 	TDrawArea *DrawArea;
-	DrawAreaNode *PrevNode;
-	DrawAreaNode *NextNode;
+
+	DrawAreaNode *PrevNode,
+	             *NextNode;
 };
