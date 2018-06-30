@@ -11,13 +11,20 @@ class ManagedArray//<int>/* TODO: make this a template */
 public:
 
     int *value;
+
     int numberValue;
+
     int desiredNumberValue;
+
     int maximumSizeValue;
 
     int *resize(int s);
+
     int contains(const int *r);
+
     int add(int r);
+
     int *operator[](int v);
+
     int remove(int r);
 };
