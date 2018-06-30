@@ -2,7 +2,7 @@
 /**
  * @file    Engine\Chat.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/26
  * @version 1.0
  */
 
@@ -16,7 +16,7 @@ public:
 
 	HWND *HostWnd;
 
-	int chatGroupPlayers[10];
+	int chatGroupPlayers[PLAYERS_ITERATIONS + 1];
 
 	char *Chat[CHAT_MAX_ARRAY_SIZE + 1];
 
@@ -25,6 +25,7 @@ public:
 	class TTaunt *taunt;
 
 	TChat(HWND *HostWndIn);
+
 	~TChat();
 
 	char *AddChatMsg(char *PlayerName, char *Text, char Local);
@@ -40,5 +41,6 @@ public:
 	int inChatGroup(int playerNum);
 
 	void StopSoundSystem();
+
 	int RestartSoundSystem(TSound_Driver *driver);
 };
