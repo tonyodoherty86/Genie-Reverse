@@ -2,7 +2,7 @@
 /**
  * @file    Engine\SpanList.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/24
  * @version 1.0
  */
 
@@ -58,6 +58,7 @@ struct VSpan_Node
 };
 
 class TShape;
+struct Shape_Info;
 
 class TSpan_List_Manager
 {
@@ -89,14 +90,18 @@ public:
 
 	void ResetAll();
 
+	void AddSpan(int LeftPx, int RightPx, int Line);
+
 	void AddShape(TShape *theShape, int shape_num, int Xpos, int Ypos, int Mirror);
+
+    void AddShape_Align(char *Shape_Base, Shape_Info *SI, int Xpos, int Ypos, int Mirror);
 
 	void AddLine_Align(int x1, int y1, int x2, int y2);
 };
 
 struct VSpanMiniList
 {
-	char Y_delta;
-	char X_start;
-	char X_end;
+	char Y_delta,
+	     X_start,
+	     X_end;
 };
