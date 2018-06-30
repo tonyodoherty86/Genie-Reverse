@@ -9,7 +9,7 @@
  * Most of the serialized data is compressed by ZLib technology.
  */
 
-int rge_fake_open(int file_handle, int fake_size);
+int rge_fake_open(int file_handle, size_t fake_size);
 
 int rge_open(char *filename, int flag);
 
@@ -19,12 +19,12 @@ int rge_fake_close(int handle);
 
 int rge_close(int handle);
 
-void rge_read_uncompressed(int handle, void *data, int size);
+void rge_read_uncompressed(int handle, void *data, size_t size);
 
-void rge_write_uncompressed(int handle, void *data, int size);
+void rge_write_uncompressed(int handle, void *data, size_t size);
 
-void rge_read(int handle, int temp_max, int size);
+void rge_read(int handle, void *data, size_t size);
 
-int rge_buffer_full(char *out_buf_ofs, int out_buf_size);
+int rge_buffer_full(char *out_buf_ofs, size_t out_buf_size);
 
-void rge_write(int handle, void *data, int size);
+void rge_write(int handle, void *data, size_t size);
