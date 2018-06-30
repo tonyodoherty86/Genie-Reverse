@@ -2,7 +2,7 @@
 /**
  * @file    Engine\SoundDriver.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/26
  * @version 1.0
  */
 
@@ -27,6 +27,7 @@ public:
 
     int mixer_open;
     void *mixer_handle;
+
     MIXERLINEA mixer_line_info;
     MIXERLINECONTROLSA mixer_line_controls;
     MIXERCONTROLA mixer_volume_control;
@@ -38,10 +39,13 @@ public:
     int play_list_count;
 
     TSound_Driver();
+
     TSound_Driver(HWND *wnd, char *path_in);
+
     ~TSound_Driver();
 
     void init_vars();
+
     int init(HWND *wnd, char *path_in);
 
     void exit();
@@ -59,7 +63,7 @@ public:
     int resume_stream();
     int stop_stream();
 
-    unsigned int handle_messages(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
+    LRESULT handle_messages(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
     int add_to_play_list(TDigital *sound);
     void play_list();
