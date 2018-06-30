@@ -2,9 +2,12 @@
 /**
  * @file    Engine\RGE\AiUnitModule.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/06/28
  * @version 1.0
  */
+
+struct OrderEvent;
+struct NotifyEvent;
 
 class UnitAIModule
 {
@@ -15,10 +18,10 @@ public:
     int objectCategoryValue;
     int orderQueueSizeValue;
     int orderQueueMaxSizeValue;
-    struct OrderEvent *orderQueueValue;
+    OrderEvent *orderQueueValue;
     int notifyQueueSizeValue;
     int notifyQueueMaxSizeValue;
-    struct NotifyEvent *notifyQueueValue;
+    NotifyEvent *notifyQueueValue;
     int currentOrderValue;
     int currentOrderPriorityValue;
     int currentActionValue;
@@ -158,7 +161,7 @@ public:
     void askForHelp(int unitToAttack, int a3, int a4, int a5);
 
     int processOrder(OrderEvent *oEvent, int orderNumber);
-    int processNotify(NotifyEvent *nEvent, unsigned int uTime, int tileY, int a6, _DWORD *a7);
+    int processNotify(NotifyEvent *nEvent, unsigned int uTime, int tileY, int a6, void *a7);
     void processGroupNotify(NotifyEvent *nEvent);
     int processIdle(int doSearch);
     int processMisc();
@@ -183,9 +186,11 @@ struct OrderEvent
     int priority;
     int target;
     int targetOwner;
-    float targetX;
-    float targetY;
-    float targetZ;
+
+    float targetX,
+          targetY,
+          targetZ;
+
     float range;
 };
 
@@ -194,7 +199,8 @@ struct NotifyEvent
     int caller;
     int recipient;
     int mType;
-    int p1;
-    int p2;
-    int p3;
+
+    int p1,
+        p2,
+        p3;
 };

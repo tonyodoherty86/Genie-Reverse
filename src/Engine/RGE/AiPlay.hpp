@@ -1,8 +1,8 @@
 
 /**
- * @file    Engine\AiPlay.hpp
+ * @file    Engine\RGE\AiPlay.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/06/24
  * @version 1.0
  */
 
@@ -100,15 +100,14 @@ public:
     XYZ(int a, int b, int c);
 
     void rotateXYByFacet(XYZ *refPoint, XYZ *rPoint, char facet);
-};
-/* TODO: */
-/*
-int operator==(XYZ *one, XYZ *two);
-int operator!=(XYZ *one, XYZ *two);
 
-XYZ *operator+(XYZ *result, XYZ *__$ReturnUdt);
-XYZ *operator-(XYZ *result, XYZ *__$ReturnUdt);
-*/
+    bool operator==(XYZ *two);
+    bool operator!=(XYZ *two);
+
+    XYZ *operator+(XYZ *result);
+    XYZ *operator-(XYZ *result);
+};
+
 class AIPlayStatus
 {
 public:
