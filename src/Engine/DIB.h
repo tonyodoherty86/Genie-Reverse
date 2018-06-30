@@ -2,86 +2,222 @@
 /**
  * @file    Engine\DIB.h
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/06/26
  * @version 1.0
  */
 
 struct BITMAPINFO256
 {
     BITMAPINFOHEADER bmiHeader;
+
     RGBQUAD bmiColors[256];
 };
 
 struct TRANSINFO
 {
     int AnyTrans;
-    int x;
-    int y;
-    int w;
-    int h;
+
+    int x, y, w, h;
+
     struct LINEINFO *LineInfo;
 };
 
 struct LINEINFO
 {
     int AllTrans;
+
     int MidSolid;
-    int StartX;
-    int EndX;
+
+    int StartX,
+        EndX;
 };
 
-void DibBlt(BITMAPINFO256 *DestInfo, char *DestBits, RECT *ClipRect, int DestX, int DestY, int DestWid, int DestHgt, BITMAPINFO256 *SrcInfo, char *SrcBits, int SrcX, int SrcY, int SrcWid, int SrcHgt, int Clip, int Mirror, int Flip);
+void DibBlt(
+    BITMAPINFO256 *DestInfo,
+    char *DestBits,
+    RECT *ClipRect,
+    int DestX,
+    int DestY,
+    int DestWid,
+    int DestHgt,
+    BITMAPINFO256 *SrcInfo,
+    char *SrcBits,
+    int SrcX,
+    int SrcY,
+    int SrcWid,
+    int SrcHgt,
+    int Clip,
+    bool Mirror,
+    bool Flip);
 
-void TransDibBlt(BITMAPINFO256 *DestInfo, char *DestBits, RECT *ClipRect, int DestX, int DestY, int DestWid, int DestHgt, BITMAPINFO256 *SrcInfo, char *SrcBits, TRANSINFO *TransInfo, int SrcX, int SrcY, int SrcWid, int SrcHgt, int Clip, int Mirror, int Flip, int TransColor);
+void TransDibBlt(
+    BITMAPINFO256 *DestInfo,
+    char *DestBits,
+    RECT *ClipRect,
+    int DestX,
+    int DestY,
+    int DestWid,
+    int DestHgt,
+    BITMAPINFO256 *SrcInfo,
+    char *SrcBits,
+    TRANSINFO *TransInfo,
+    int SrcX,
+    int SrcY,
+    int SrcWid,
+    int SrcHgt,
+    int Clip,
+    bool Mirror,
+    bool Flip,
+    int TransColor);
 
-int ClipDibBlt(BITMAPINFO256 *DestInfo, RECT *ClipRect, int *DestX, int *DestY, int *DestWid, int *DestHgt, int *SrcX, int *SrcY, int *SrcWid, int *SrcHgt, int Mirror, int Flip);
+int ClipDibBlt(
+    BITMAPINFO256 *DestInfo,
+    RECT *ClipRect,
+    int *DestX,
+    int *DestY,
+    int *DestWid,
+    int *DestHgt,
+    int *SrcX,
+    int *SrcY,
+    int *SrcWid,
+    int *SrcHgt,
+    bool Mirror,
+    bool Flip);
 
-void GetDibDim(BITMAPINFO256 *Info, int *TotWid, int *TotHgt, int *Orien);
+void GetDibDim(
+    BITMAPINFO256 *Info,
+    int *TotWid,
+    int *TotHgt,
+    int *Orien);
 
-int TileDibBlt(BITMAPINFO256 *DestInfo, char *DestBits, RECT *ClipRect, int DestX, int DestY, int DestWid, int DestHgt, int BlockWid, int BlockHgt, BITMAPINFO256 *SrcInfo, char *SrcBits, TRANSINFO *TransInfo, int SrcX, int SrcY, int SrcWid, int SrcHgt, int Trans, int Mirror, int Flip);
+int TileDibBlt(
+    BITMAPINFO256 *DestInfo,
+    char *DestBits,
+    RECT *ClipRect,
+    int DestX,
+    int DestY,
+    int DestWid,
+    int DestHgt,
+    int BlockWid,
+    int BlockHgt,
+    BITMAPINFO256 *SrcInfo,
+    char *SrcBits,
+    TRANSINFO *TransInfo,
+    int SrcX,
+    int SrcY,
+    int SrcWid,
+    int SrcHgt,
+    int Trans,
+    bool Mirror,
+    bool Flip);
 
-int DibCheckTrans(BITMAPINFO256 *DibInfo, TRANSINFO *TransInfo, char *DibBits);
+int DibCheckTrans(
+    BITMAPINFO256 *DibInfo,
+    TRANSINFO *TransInfo,
+    char *DibBits);
 
-BITMAPINFOHEADER *GetPaletteFromDib(char *FileName, int MakeIdentity);
+BITMAPINFOHEADER *GetPaletteFromDib(
+    char *FileName,
+    int MakeIdentity);
 
-void *ReadPalette(char *FileName, int ResourceId, int MakeIdentity);
+HPALETTE *ReadPalette(
+    char *FileName,
+    int ResourceId,
+    int MakeIdentity);
 
-BITMAPINFOHEADER *DibOpenFile(char *szFile);
+BITMAPINFOHEADER *DibOpenFile(
+    char *szFile);
 
 char *ReadDibBits(char *szFile);
 
-BITMAPINFOHEADER *DibWriteClipped(BITMAPINFOHEADER *pDIB, char *szFile, int x, int y, int w, int h);
+BITMAPINFOHEADER *DibWriteClipped(
+    BITMAPINFOHEADER *pDIB,
+    char *szFile,
+    int x,
+    int y,
+    int w,
+    int h);
 
-int DibWriteFile(BITMAPINFOHEADER *pdib, char *szFile);
+int DibWriteFile(
+    BITMAPINFOHEADER *pdib,
+    char *szFile);
 
-void *DibCreatePalette(BITMAPINFOHEADER *pdib);
+HPALETTE *DibCreatePalette(
+    BITMAPINFOHEADER *pdib);
 
-BITMAPINFOHEADER *DibReadBitmapInfo(int fh);
+BITMAPINFOHEADER *DibReadBitmapInfo(
+    int fh);
 
-BITMAPINFOHEADER *DibFromBitmap(void *hbm, unsigned int biStyle, unsigned int biBits, void *hpal, unsigned int wUsage);
+BITMAPINFOHEADER *DibFromBitmap(
+    HBITMAP *hbm,
+    unsigned int biStyle,
+    unsigned int biBits,
+    HPALETTE *hpal,
+    unsigned int wUsage);
 
-int DibSetUsage(BITMAPINFOHEADER *pdib, void *hpal, unsigned int wUsage);
+bool DibSetUsage(
+    BITMAPINFOHEADER *pdib,
+    HPALETTE *hpal,
+    unsigned int wUsage);
 
-BITMAPINFOHEADER *DibDraw(void *hdc, int x, int y, int dx, int dy, BITMAPINFOHEADER *pdib, int x0, int y0, int dx0, int dy0, int rop, unsigned int wUsage);
+BITMAPINFOHEADER *DibDraw(
+    HDC *hdc,
+    int x,
+    int y,
+    int dx,
+    int dy,
+    BITMAPINFOHEADER *pdib,
+    int x0,
+    int y0,
+    int dx0,
+    int dy0,
+    int rop,
+    unsigned int wUsage);
 
-BITMAPINFOHEADER *DibCopy(BITMAPINFOHEADER *pdib);
+BITMAPINFOHEADER *DibCopy(
+    BITMAPINFOHEADER *pdib);
 
-BITMAPINFOHEADER *DibCreate(int bits, int dx, int dy);
+BITMAPINFOHEADER *DibCreate(
+    int bits,
+    int dx,
+    int dy);
 
-void DibMapToPalette(BITMAPINFOHEADER *pdib, void *hpal, int TransLogic, int ZeroIsTrans);
+void DibMapToPalette(
+    BITMAPINFOHEADER *pdib,
+    HPALETTE *hpal,
+    int TransLogic,
+    int ZeroIsTrans);
 
-void xlatClut8(char *pb, unsigned int dwSize, char *xlat);
+void xlatClut8(
+    char *pb,
+    unsigned int dwSize,
+    char *xlat);
 
-void xlatClut4(char *pb, unsigned int dwSize, char *xlat);
+void xlatClut4(
+    char *pb,
+    unsigned int dwSize,
+    char *xlat);
 
-void xlatRle8(char *pb, unsigned int dwSize, char *xlat);
+void xlatRle8(
+    char *pb,
+    unsigned int dwSize,
+    char *xlat);
 
-void xlatRle4(char *pb, unsigned int dwSize, char *xlat);
+void xlatRle4(
+    char *pb,
+    unsigned int dwSize,
+    char *xlat);
 
-void memmove(char *d, char *s, int len);
+void memmove(
+    char *d,
+    char *s,
+    int len);
 
-void CreateIdentityPalette(void *hpal);
+void CreateIdentityPalette(
+    HPALETTE *hpal);
 
-void *CopyPalette(void *hpal);
+HPALETTE *CopyPalette(
+    HPALETTE *hpal);
 
-void DibFree(BITMAPINFOHEADER *pdib);
+void DibFree(
+    BITMAPINFOHEADER *pdib);
