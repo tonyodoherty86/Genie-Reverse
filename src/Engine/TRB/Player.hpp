@@ -2,41 +2,88 @@
 /**
  * @file    Engine\TRB\Player.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/03/09
  * @version 1.0
  */
 
 class TRIBE_Player;
 
+#define TRIBE_FEALTY_OFFER_MESSAGE_LENGTH 100
+
+/**
+ * Size: 128.
+ * Align: 4.
+ */
 struct TRIBE_FealtyOffer
 {
-	// 0
+	/**
+	 * Offset: 0.
+	 */
 	char Sequence;
-	// 1
+
+	/**
+	 * Offset: 1.
+	 */
 	char StartedBy;
-	// 8
+
+	/**
+	 * Offset: 8.
+	 */
 	int GameTime;
-	// 12
+
+	/**
+	 * Offset: 12.
+	 */
 	char Declare;
-	// 13
+
+	/**
+	 * Offset: 13.
+	 */
 	char OldDiplomacy;
-	// 14
+
+	/**
+	 * Offset: 14.
+	 */
 	char NewDiplomacy;
-	// 15
+
+	/**
+	 * Offset: 15.
+	 */
 	char OldIntelligence;
-	// 16
+
+	/**
+	 * Offset: 16.
+	 */
 	char NewIntelligence;
-	// 17
+
+	/**
+	 * Offset: 17.
+	 */
 	char OldTrade;
-	// 18
+
+	/**
+	 * Offset: 18.
+	 */
 	char NewTrade;
-	// 19
+
+	/**
+	 * Offset: 19.
+	 */
 	char Demand;
-	// 20
+
+	/**
+	 * Offset: 20.
+	 */
 	char Gold;
-	// 24
-	char Message[100];
-	// 124
+
+	/**
+	 * Offset: 24.
+	 */
+	char Message[TRIBE_FEALTY_OFFER_MESSAGE_LENGTH];
+
+	/**
+	 * Offset: 124.
+	 */
 	char Status;
 };
 
@@ -62,6 +109,8 @@ struct Trade_Avail
     float inventory;
 };
 
+#define TRIBE_PLAYER_OFF_MAP_TRADE_ROUTES_COUNT 20
+
 class TRIBE_Player : public RGE_Player
 {
 public:
@@ -79,18 +128,23 @@ public:
     int regularAttackCount;
     // 4788
     int regularAttackMode;
-    // 4792
-    float regularAttackX;
-    // 4796
-    float regularAttackY;
+
+    /**
+     * Offset: 4792, 4796.
+     */
+    float regularAttackX,
+          regularAttackY;
+
     // 4800
     int townAttackCount;
     // 4804
     char townAttackMode;
-    // 4808
-    float townAttackX;
-    // 4812
-    float townAttackY;
+
+    /**
+     * Offset: 4808, 4812.
+     */
+    float townAttackX,
+          townAttackY;
 #endif
     // 4816
     int update_history_count;
@@ -133,7 +187,7 @@ public:
     // 6412
     int totalRazings;
     // 6416
-    int oldPlayerKills[9];
+    int oldPlayerKills[RGE_PLAYERS_COUNT];
     // 6452
     class TRIBE_TechTree *TechTree;
     // 6456
@@ -141,20 +195,20 @@ public:
     // 6457
     char chanceToMaintainDistance;
     // 6458
-    char fealtyDiplomatics[9];
+    char fealtyDiplomatics[RGE_PLAYERS_COUNT];
     // 6467
-    char fealtyIntelligences[9];
+    char fealtyIntelligences[RGE_PLAYERS_COUNT];
     // 6476
-    char fealtyTrades[9];
+    char fealtyTrades[RGE_PLAYERS_COUNT];
     // 6489
-    TRIBE_FealtyOffer fealtyOffers[9];
+    TRIBE_FealtyOffer fealtyOffers[RGE_PLAYERS_COUNT];
 
     // 7712
     short fealtyValue;
     // 7714
-    char offMapTradeRouteExplored[20];
+    char offMapTradeRouteExplored[TRIBE_PLAYER_OFF_MAP_TRADE_ROUTES_COUNT];
     // 7734
-    char offMapTradeRouteBeingExplored[20];
+    char offMapTradeRouteBeingExplored[TRIBE_PLAYER_OFF_MAP_TRADE_ROUTES_COUNT];
 
     // 7792
     char productionQueueEnabled;
@@ -304,6 +358,7 @@ class TRIBE_Gaia : public TRIBE_Player
 public:
 
     float update_time;
+
     int update_nature;
     int last_count;
     int animal_max;

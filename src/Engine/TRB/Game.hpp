@@ -2,10 +2,13 @@
 /**
  * @file    Engine\TRB\Game.hpp
  * @author  Yvan Burrie
- * @date    2018/02/22
+ * @date    2018/06/28
  * @version 1.0
  */
 
+/**
+ * AOC off_636C50
+ */
 class TRIBE_Game: public RGE_Base_Game
 {
 public:
@@ -19,6 +22,7 @@ public:
         Huge      = 0x04,
         Humongous = 0x05,
     };
+
     enum MapType
     {
         AllWater     = 0x00,
@@ -31,6 +35,7 @@ public:
         Hilly        = 0x07,
         Isthmas      = 0x08,
     };
+
     enum VictoryType
     {
         VictoryDefault     = 0x00,
@@ -44,6 +49,7 @@ public:
         VictoryScore       = 0x08,
         VictoryStandard    = 0x09,
     };
+
     enum ResourceLevel
     {
         DefaultResources  = 0x00,
@@ -52,6 +58,7 @@ public:
         HighResources     = 0x03,
         VeryHighResources = 0x04,
     };
+
     enum Age
     {
         DefaultAge = 0x00,
@@ -66,7 +73,9 @@ public:
     int MouseRightClickTableSize;
     MouseClickInfo *MouseLeftClickTable;
     int MouseLeftClickTableSize;
+
     int queue_is_waiting_on_pop_counter[RGE_PLAYERS_COUNT];
+
     int random_civ[RGE_PLAYERS_COUNT];
 
     struct TRIBE_Game_Options
@@ -78,10 +87,12 @@ public:
         int predatorsValue;
         TRIBE_Game::VictoryType victoryTypeValue;
         int victoryAmountValue;
+
         char civilizationValue[RGE_PLAYERS_COUNT];
         int scenarioPlayerValue[RGE_PLAYERS_COUNT];
         char playerColorValue[RGE_PLAYERS_COUNT];
         char computerNameValue[RGE_PLAYERS_COUNT];
+
         char allowTradingValue;
         char longCombatValue;
         char randomizePositionsValue;
@@ -99,9 +110,27 @@ public:
 
     char testing_scenario[260];
 
+    enum Type
+    {
+        RANDOM_MAP        = 0x00,
+        REGICIDE          = 0x01,
+        DEATH_MATCH       = 0x02,
+        SCENARIO          = 0x03,
+        CAMPAIGN          = 0x04,
+        KING_OF_THE_HILL  = 0x05,
+        WONDER_RACE       = 0x06,
+        DEFEND_THE_WONDER = 0x07,
+        TURBO_RANDOM_MAP  = 0x08,
+    };
+
+    /**
+     * Offset: 5189.
+     */
+    TRIBE_Game::Type type;
+
     HWND *video_window;
     int cur_video = -1;
-    int (__stdcall *old_video_wnd_proc)();
+    WNDPROC (__stdcall *old_video_wnd_proc)();
     int video_paused;
     unsigned int last_video_time;
     int video_setup;
@@ -170,9 +199,11 @@ public:
     int save_game(char *fileName);
     int save_scenario(char *fileName);
     void calc_timing_text();
+
     void show_timings();
     void show_comm();
     void show_ai();
+
     void notification(int notify_type, int val1, int val2, int val3, int val4);
     int start_game(int skip_startup_screens);
     int test_scenario(char *scenario_file);
@@ -196,7 +227,9 @@ public:
     void setAnimals(int v);
     int predators();
     void setPredators(int v);
+
     TRIBE_Game::VictoryType victoryType();
+
     int victoryAmount();
     void setVictoryType(TRIBE_Game::VictoryType victory_type_in, int amount_in);
     int civilization(int player_num);
@@ -211,13 +244,16 @@ public:
     int longCombat();
     int randomizePositions();
     int fullTechTree();
+
     TRIBE_Game::ResourceLevel resourceLevel();
     TRIBE_Game::Age startingAge();
+
     int startingUnits();
     char deathMatch();
     char popLimit();
     char quickStartGame();
     int randomStartValue();
+
     void setAllowTrading(int val);
     void setLongCombat(int val);
     void setRandomizePositions(int val);
@@ -229,7 +265,9 @@ public:
     void setPopLimit(char val);
     void setQuickStartGame(char val);
     void setRandomStartValue(int val);
+
     char *gameSummary();
+
     static RGE_Base_Game *wnd_proc(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
     int handle_idle();
     int handle_query_new_palette(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);

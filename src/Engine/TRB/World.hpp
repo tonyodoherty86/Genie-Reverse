@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TRB\World.hpp
  * @author  Yvan Burrie
- * @date    2018/02/27
+ * @date    2018/02/28
  * @version 1.0
  */
 
@@ -76,6 +76,9 @@ class TRIBE_World : public RGE_Game_World
 {
 public:
 
+    /**
+     *
+     */
     class TRIBE_Tech *tech;
 
     int victory_type;
@@ -87,13 +90,100 @@ public:
     char controllingComputerPlayer;
     int sent_zone_score;
 
+    /**
+     *
+     */
+    float start_price,
+          min_price,
+          max_price,
+          delta_price,
+          wood_price,
+          food_price,
+          stone_price,
+          ore_price,
+          wood_price_delta,
+          wood_price_adjust,
+          stone_price_delta,
+          stone_price_adjust,
+          food_price_delta,
+          food_price_adjust,
+          ore_price_delta,
+          ore_price_adjust;
+
+    /**
+     *
+     */
+    unsigned int last_time_trading;
+
+    /**
+     *
+     */
+    int wood_inventory,
+        food_inventory,
+        stone_inventory,
+        ore_inventory;
+
+    /**
+     * Offset: 648.
+     */
+    char relic_bonus;
+
+    /**
+     * Offset: 649, 650.
+     */
+    char relic_warnings[2] = {
+        0,  /* 500 years */
+        0   /* 1000 years */
+    };
+
+    /**
+     * Offset: 661, 662.
+     */
+    char time_limit_warnings[2] = {
+        0,
+        0
+    };
+
+    /**
+     * Offset: 663, 664.
+     */
+    char ruins_warnings[2] = {
+        0,
+        0
+    };
+
+    /**
+     * Offset: 668.
+     */
+    float ruin_countdown_clock;
+
+    /**
+     * Offset: 680.
+     */
+    RGE_Object_List *wonders;
+
     TRIBE_World();
 
     ~TRIBE_World();
 
-    void data_load_players_type(short id, short type, _iobuf *infile);
-    void data_load_map(char *border_file, char *overlay_file, char *terrain_file, char *map_file, short tile_width, short tile_height, short elev_height, RGE_Sound **sounds, char *terr_obj_file);
-    char data_load_world(_iobuf *infile);
+    void data_load_players_type(
+        short id,
+        short type,
+        FILE *infile);
+
+    void data_load_map(
+        char *border_file,
+        char *overlay_file,
+        char *terrain_file,
+        char *map_file,
+        short tile_width,
+        short tile_height,
+        short elev_height,
+        RGE_Sound **sounds,
+        char *terr_obj_file);
+
+    char data_load_world(
+        FILE *infile);
 
     char init_player_type(int infile, short index, char type);
 
@@ -106,9 +196,15 @@ public:
 
     void effects_init(int infile);
 
-    void world_init(int infile, TSound_Driver *sound_dvr, TCommunications_Handler *com_hand);
+    void world_init(
+        int infile,
+        TSound_Driver *sound_dvr,
+        TCommunications_Handler *com_hand);
 
-    char init(char *base_name, TSound_Driver *sound_dvr, TCommunications_Handler *com_hand);
+    char init(
+        char *base_name,
+        TSound_Driver *sound_dvr,
+        TCommunications_Handler *com_hand);
 
     void base_save(int outfile);
     void save(int outfile);
