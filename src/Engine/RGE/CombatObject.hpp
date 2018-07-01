@@ -2,28 +2,53 @@
 /**
  * @file    Engine\RGE\CombatObject.hpp
  * @author  Yvan Burrie
- * @date    2018/03/06
+ * @date    2018/07/01
  * @version 1.0
  */
+
+#ifndef RGE_COMBAT_OBJECT_TYPE
+    #define RGE_COMBAT_OBJECT_TYPE 50
+#endif
 
 class RGE_Combat_Object : public RGE_Action_Object
 {
 public:
 
+    char type = RGE_COMBAT_OBJECT_TYPE;
+
     VISIBLE_UNIT_REC *VUR_Ptrs[RGE_PLAYERS_COUNT];
+
     unsigned int Unified_Map_Value;
 
     float attack_timer;
 
     char capture_flag;
 
-    RGE_Combat_Object(RGE_Master_Combat_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int do_setup);
-    RGE_Combat_Object(int infile, RGE_Game_World *gworld, int do_setup);
+    RGE_Combat_Object(
+        RGE_Master_Combat_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z,
+        bool do_setup);
+
+    RGE_Combat_Object(
+        int infile,
+        RGE_Game_World *gworld,
+        bool do_setup);
 
     ~RGE_Combat_Object();
 
-    int setup(RGE_Master_Combat_Object *tobj, RGE_Player *obj_owner, float x, float y, float z);
-    int setup(int infile, RGE_Game_World *gworld);
+    bool setup(
+        RGE_Master_Combat_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z);
+
+    bool setup(
+        int infile,
+        RGE_Game_World *gworld);
 
     void save(int outfile);
 
@@ -44,7 +69,9 @@ public:
     void get_speed_of_attack(float *cur_speed_of_attack_in, float *orig_speed_of_attack_in);
     void release_being_worked_on(RGE_Static_Object *caller);
     void enter_obj(RGE_Static_Object *target);
-    char update();
+
+    bool update();
+
     void copy_obj(RGE_Master_Static_Object *source2);
     void notify(int caller, int recipient, int mType, int p1, int p2, int p3);
     RGE_Static_Object *attack(int targetID, int unconditional);

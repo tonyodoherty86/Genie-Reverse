@@ -2,15 +2,21 @@
 /**
  * @file    Engine\RGE\ActionObject.hpp
  * @author  Yvan Burrie
- * @date    2018/06/30
+ * @date    2018/07/01
  * @version 1.0
  */
+
+#ifndef RGE_ACTION_OBJECT_TYPE
+    #define RGE_ACTION_OBJECT_TYPE 40
+#endif
 
 class RGE_Action;
 
 class RGE_Action_Object : public RGE_Moving_Object
 {
 public:
+
+    char type = RGE_ACTION_OBJECT_TYPE;
 
     RGE_Master_Action_Object *master_obj;
 
@@ -40,6 +46,14 @@ public:
     int lastActionStateValue;
 
     RGE_Action_Object(
+        RGE_Master_Action_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z,
+        bool do_setup);
+
+    RGE_Action_Object(
         int infile,
         RGE_Game_World *gworld,
         bool do_setup);
@@ -63,7 +77,8 @@ public:
 
     void rehook();
 
-    void save(int outfile);
+    void save(
+        int outfile);
 
     void transform(RGE_Master_Static_Object *obj);
     void destroy_obj();
@@ -99,6 +114,4 @@ public:
     char actionState();
 
     int get_action_checksum();
-
-    RGE_Action_Object(RGE_Master_Action_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int do_setup);
 };

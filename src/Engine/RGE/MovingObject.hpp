@@ -2,13 +2,19 @@
 /**
  * @file    Engine\RGE\MovingObject.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/07/01
  * @version 1.0
  */
+
+#ifndef RGE_MOVING_OBJECT_TYPE
+    #define RGE_MOVING_OBJECT_TYPE 30
+#endif
 
 class RGE_Moving_Object : public RGE_Animated_Object
 {
 public:
+
+    char type = RGE_MOVING_OBJECT_TYPE;
 
     float trail_remainder;
 
@@ -65,17 +71,41 @@ public:
         WaitingOnPathingCap = 0x02,
     };
 
-    RGE_Moving_Object(RGE_Master_Moving_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int do_setup);
-    RGE_Moving_Object(int infile, RGE_Game_World *gworld, int do_setup);
+    RGE_Moving_Object(
+        RGE_Master_Moving_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z,
+        bool do_setup);
+
+    RGE_Moving_Object(
+        int infile,
+        RGE_Game_World *gworld,
+        bool do_setup);
 
     ~RGE_Moving_Object();
 
-    void recycle_in_to_game(RGE_Master_Static_Object *tobj, RGE_Player *obj_owner, float x, float y, float z);
+    void recycle_in_to_game(
+        RGE_Master_Static_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z);
 
-    int setup(RGE_Master_Moving_Object *tobj, RGE_Player *obj_owner, float x, float y, float z);
-    int setup(int infile, RGE_Game_World *gworld);
+    bool setup(
+        RGE_Master_Moving_Object *tobj,
+        RGE_Player *obj_owner,
+        float x,
+        float y,
+        float z);
 
-    void save(int outfile);
+    bool setup(
+        int infile,
+        RGE_Game_World *gworld);
+
+    void save(
+        int outfile);
 
     void new_sprite(RGE_Sprite *nsprite);
 

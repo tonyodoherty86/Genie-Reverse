@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\ObjectList.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/07/01
  * @version 1.0
  */
 
@@ -11,6 +11,7 @@ class RGE_Object_List
 public:
 
     struct RGE_Object_Node *list;
+
     short number_of_objects;
 
     RGE_Object_List();
@@ -43,17 +44,17 @@ public:
 
     void load_list(int infile, RGE_Game_World *world);
 
-    void rehook_list();
+    RGE_Static_Object *load(char object_type, int infile, RGE_Game_World *world);
 
-    void load(char object_type, int infile, RGE_Game_World *world);
+    void rehook_list();
 };
 
 struct RGE_Object_Node
 {
     RGE_Static_Object *node;
 
-    RGE_Object_Node *next;
-    RGE_Object_Node *prev;
+    RGE_Object_Node *next,
+                    *prev;
 
     char centered;
 };
