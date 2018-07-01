@@ -2,7 +2,7 @@
 /**
  * @file    Engine\Taunt.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/07/01
  * @version 1.0
  */
 
@@ -10,27 +10,27 @@ class TTaunt
 {
 public:
 
-	TDigital *Audio[4];
+    TDigital *Audio[4];
 
-	int LastAudioPlayed;
+    int LastAudioPlayed;
 
-	char TBuff[255];
+    char TBuff[255];
 
-	char TauntDir[128];
+    char TauntDir[128];
 
-	int Mute = 0;
+    int Mute = 0;
 
-	TTaunt(TSound_Driver *driver);
+    TTaunt(TSound_Driver *driver);
 
-	int PlayTauntStr(char *Msg, char Local);
+    int PlayTauntStr(char *Msg, char Local);
 
-	IDirectSoundBuffer * PlayTauntNo(int TauntNo);
+    IDirectSoundBuffer * PlayTauntNo(int TauntNo);
 
-	static int GetTauntNo(char *Msg);
+    static int GetTauntNo(char *Msg);
 
-	char * GetTauntText(int TauntNo);
+    char * GetTauntText(int TauntNo);
 
-	void StopSoundSystem();
+    void StopSoundSystem();
 
-	bool RestartSoundSystem(TSound_Driver *driver);
+    bool RestartSoundSystem(TSound_Driver *driver);
 };

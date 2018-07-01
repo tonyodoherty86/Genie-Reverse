@@ -2,11 +2,10 @@
 /**
  * @file    Engine\EditPanel.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/07/01
  * @version 1.0
  */
 
-//typedef TInputPanel::FormatType TEditPanel::FormatType;
 
 class TEditPanel : public TPanel
 {
@@ -27,7 +26,7 @@ public:
     unsigned int highlight_text_color1;
     unsigned int highlight_text_color2;
     unsigned int back_color;
-    //TEditPanel::FormatType format;
+    TEditPanel::FormatType format;
     void *font;
     int multi_line;
     RECT draw_rect;
@@ -50,9 +49,20 @@ public:
 
     ~TEditPanel();
 
-    int setup(TDrawArea *render_area_in, TPanel *parent_panel_in, int x_in, int y_in, int wid_in, int hgt_in, void *font_in, short fixed_len_in, char *text_in, TEditPanel::FormatType format_in, int auto_sel_in);
+    int setup(
+        TDrawArea *render_area_in,
+        TPanel *parent_panel_in,
+        int x_in,
+        int y_in,
+        int wid_in,
+        int hgt_in,
+        void *font_in,
+        short fixed_len_in,
+        char *text_in,
+        TEditPanel::FormatType format_in,
+        int auto_sel_in);
 
-    static int pnl_sub_wnd_proc(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
+    static int pnl_sub_wnd_proc(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     void set_text(char *text_in);
     void update_text();
@@ -70,8 +80,8 @@ public:
     void set_bevel_info(int bevel_type_in, int c1, int c2, int c3, int c4, int c5, int c6);
     void set_ime_info(int enable_ime_in, int turn_ime_on_in);
 
-    void *wnd_proc(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-    int sub_wnd_proc(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    void *wnd_proc(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int sub_wnd_proc(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     int verify_char(int key);
     void draw();

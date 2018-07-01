@@ -2,7 +2,7 @@
 /**
  * @file    Engine\DrawSystem.hpp
  * @author  Yvan Burrie
- * @date    2018/06/24
+ * @date    2018/07/01
  * @version 1.0
  */
 
@@ -10,62 +10,63 @@ class TDrawSystem
 {
 public:
 
-	HINSTANCE *Inst;
-	HWND *Wnd;
-	HPALETTE *Pal;
+    HINSTANCE *Inst;
+    HWND *Wnd;
+    HPALETTE *Pal;
 
-	class TDrawArea *DrawArea;
-	class TDrawArea *PrimaryArea;
+    class TDrawArea *DrawArea,
+                    *PrimaryArea;
 
-	struct DrawAreaNode *DrawAreaList;
+    struct DrawAreaNode *DrawAreaList;
 
-	IDirectDraw *DirDraw;
-	IDirectDrawSurface *PrimarySurface;
-	IDirectDrawClipper *Clipper;
-	IDirectDrawPalette *DirDrawPal;
+    IDirectDraw *DirDraw;
+    IDirectDrawSurface *PrimarySurface;
+    IDirectDrawClipper *Clipper;
+    IDirectDrawPalette *DirDrawPal;
 
-	unsigned int Flags;
+    unsigned int Flags;
 
-	int ScreenWidth;
-	int ScreenHeight;
-	int ColorBits;
-	int ErrorCode;
-	int ChangedMode;
-	int IsBanked;
-	int CanSrcBlt;
-	int Restored;
+    int ScreenWidth,
+        ScreenHeight;
 
-	int ModeAvail640;
-	int ModeAvail800;
-	int ModeAvail1024;
-	int ModeAvail1280;
+    int ColorBits;
+    int ErrorCode;
+    int ChangedMode;
+    int IsBanked;
+    int CanSrcBlt;
+    int Restored;
+
+    int ModeAvail640,
+        ModeAvail800,
+        ModeAvail1024,
+        ModeAvail1280,
 #ifdef DRAW_SYSTEM_RESOLUTION_1920
-	int ModeAvail1920;
+        ModeAvail1920,
 #endif
-	int ModeAvail320_200;
-	int ModeAvail320_240;
-	int ModeAvail320_200_16;
-	int ModeAvail320_240_16;
-	int ModeAvail640_16;
-	int ModeAvail800_16;
-	int ModeAvail1024_16;
+        ModeAvail320_200,
+        ModeAvail320_240,
+        ModeAvail320_200_16,
+        ModeAvail320_240_16,
+        ModeAvail640_16,
+        ModeAvail800_16,
+        ModeAvail1024_16;
 
-	PALETTEENTRY palette[256];
+    PALETTEENTRY palette[256];
 
-	char DrawType;
-	char ScreenMode;
+    char DrawType;
+    char ScreenMode;
 
-	TDrawSystem();
+    TDrawSystem();
 
-	~TDrawSystem();
+    ~TDrawSystem();
 
-	void CheckAvailModes(int full_screen);
+    void CheckAvailModes(int full_screen);
 
-	static int CheckAvailModesCallback(DDSURFACEDESC *lpDDSurfaceDesc, void *lpContext);
+    static int CheckAvailModesCallback(DDSURFACEDESC *lpDDSurfaceDesc, void *lpContext);
 
-	int IsModeAvail(int wid_in, int hgt_in, int color_bits);
+    int IsModeAvail(int wid_in, int hgt_in, int color_bits);
 
-	void Init(
+    void Init(
         HINSTANCE *inst_in,
         HWND *wnd_in,
         HPALETTE *pal_in,
@@ -75,29 +76,29 @@ public:
         int hgt_in,
         unsigned int flags_in);
 
-	bool SetDisplaySize(int wid_in, int hgt_in, int color_bits);
+    bool SetDisplaySize(int wid_in, int hgt_in, int color_bits);
 
-	void ClearPrimarySurface();
-	char CheckSurfaces();
-	void ClearRestored();
-	void DeleteSurfaces();
-	void CreateSurfaces();
+    void ClearPrimarySurface();
+    char CheckSurfaces();
+    void ClearRestored();
+    void DeleteSurfaces();
+    void CreateSurfaces();
 
-	bool HandleSize(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	bool HandlePaletteChanged(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	bool HandleQueryNewPalette(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    bool HandleSize(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    bool HandlePaletteChanged(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    bool HandleQueryNewPalette(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-	void Paint(RECT *rect);
+    void Paint(RECT *rect);
 
-	static int GetIsLostErrorNum(int ddrval);
-	static int GetRestoreErrorNum(int ddrval);
-	static int GetSetDispModeErrorNum(int ddrval);
-	static int GetLockErrorNum(int ddrval);
-	static int GetDCErrorNum(int ddrval);
-	static int GetBlitErrorNum(int ddrval);
-	static int GetCreateErrorNum(int ddrval);
-	static int GetColorKeyErrorNum(int ddrval);
+    static int GetIsLostErrorNum(int ddrval);
+    static int GetRestoreErrorNum(int ddrval);
+    static int GetSetDispModeErrorNum(int ddrval);
+    static int GetLockErrorNum(int ddrval);
+    static int GetDCErrorNum(int ddrval);
+    static int GetBlitErrorNum(int ddrval);
+    static int GetCreateErrorNum(int ddrval);
+    static int GetColorKeyErrorNum(int ddrval);
 
-	void SetPalette(HPALETTE *pal_in);
-	void ModifyPalette(int start_entry, int num_entries, PALETTEENTRY *pal_entries);
+    void SetPalette(HPALETTE *pal_in);
+    void ModifyPalette(int start_entry, int num_entries, PALETTEENTRY *pal_entries);
 };

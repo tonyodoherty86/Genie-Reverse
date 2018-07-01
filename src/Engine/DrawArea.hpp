@@ -2,131 +2,136 @@
 /**
  * @file    Engine\DrawArea.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/07/01
  * @version 1.0
  */
+
+/* TODO: color-table should be independent of RGE namespace in this module */
+class RGE_Color_Table;
 
 class TDrawArea
 {
 public:
 
-	TDrawSystem *DrawSystem;
+    TDrawSystem *DrawSystem;
 
-	HWND *Wnd;
+    HWND *Wnd;
 
-	char *Bits;
+    char *Bits;
 
-	BITMAPINFO256 *BitmapInfo;
+    BITMAPINFO256 *BitmapInfo;
 
-	HGDIOBJ *Bitmap,
-	        *OldBitmap;
+    HGDIOBJ *Bitmap,
+            *OldBitmap;
 
-	int Width,
-	    Height;
-	int Pitch;
-	int Orien = 1;
+    int Width,
+        Height;
 
-	RECT ClipRect;
+    int Pitch;
 
-	HDC *DrawDc;
-	IDirectDrawSurface *DrawSurface;
-	DDSURFACEDESC SurfaceDesc;
+    int Orien = 1;
 
-	struct DrawAreaNode *Node;
+    RECT ClipRect;
 
-	char *Name;
+    HDC *DrawDc;
+    IDirectDrawSurface *DrawSurface;
+    DDSURFACEDESC SurfaceDesc;
 
-	char *LastBits;
-	int LastPitch;
+    struct DrawAreaNode *Node;
 
-	void **DisplayOffsets;
-	void **CurDisplayOffsets;
-	void **FloatOffsets;
+    char *Name;
 
-	class RGE_Color_Table *shadow_color_table;
+    char *LastBits;
+    int LastPitch;
 
-	TSpan_List_Manager *SpanList;
-	TSpan_List_Manager *CurSpanList;
+    void **DisplayOffsets;
+    void **CurDisplayOffsets;
+    void **FloatOffsets;
 
-	int Float_X_Delta,
+    RGE_Color_Table *shadow_color_table;
+
+    TSpan_List_Manager *SpanList,
+                       *CurSpanList;
+
+    int Float_X_Delta,
         Float_Y_Delta;
 
-	int DisplayOffsetsSz;
-	int FloatOffsetsSz;
+    int DisplayOffsetsSz,
+        FloatOffsetsSz;
 
-	int SystemMemOnly;
-	int UsingVidMem;
-	int UseTrans;
-	int IsPrimarySurface;
-	int Restored;
-	int ExtendedLines;
+    int SystemMemOnly;
+    int UsingVidMem;
+    int UseTrans;
+    int IsPrimarySurface;
+    int Restored;
+    int ExtendedLines;
 
-	char TransColor = -1;
+    char TransColor = -1;
 
-	TDrawArea(const char *SurfaceName, int ForceSystemMem);
+    TDrawArea(const char *SurfaceName, int ForceSystemMem);
 
-	~TDrawArea();
+    ~TDrawArea();
 
-	DrawAreaNode *Init(TDrawSystem *draw_system_in, int wid_in, int hgt_in, int Extend, int isPrimary_in);
+    DrawAreaNode *Init(TDrawSystem *draw_system_in, int wid_in, int hgt_in, int Extend, int isPrimary_in);
 
-	char CheckSurface();
+    char CheckSurface();
 
-	char *Lock(char *caller_name, int wait);
-	void Unlock(char *caller_name);
+    char *Lock(char *caller_name, int wait);
+    void Unlock(char *caller_name);
 
-	HDC *GetDc(char *caller_name);
-	void ReleaseDc(char *caller_name);
+    HDC *GetDc(char *caller_name);
+    void ReleaseDc(char *caller_name);
 
-	void SetSize(int wid_in, int hgt_in, int ExtendSurface);
+    void SetSize(int wid_in, int hgt_in, int ExtendSurface);
 
-	void Clear(tagRECT *rect, int color);
-	void PtrClear(tagRECT *rect, int color);
+    void Clear(tagRECT *rect, int color);
+    void PtrClear(tagRECT *rect, int color);
 
-	void SetAccessOffsets();
-	void SetFloatOffsets(int X_Delta, int Y_Delta);
-	void SetInfo();
+    void SetAccessOffsets();
+    void SetFloatOffsets(int X_Delta, int Y_Delta);
+    void SetInfo();
 
-	int AlignedWidth();
-	void SetClipRect(RECT *rect);
-	void SetClipRect(int x1, int y1, int x2, int y2);
+    int AlignedWidth();
+    void SetClipRect(RECT *rect);
+    void SetClipRect(int x1, int y1, int x2, int y2);
 
-	void Copy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, int allow_trans);
-	void PtrCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect);
-	void PtrSpanCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, char **SpanListPtrs);
-	void PtrSurfaceCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, int SourceLock, int DestLock);
-	void OverlayMemCopy(RECT *src_rect, RECT *dest_rect, int xDelta, int yDelta, int xOffset, int YOffset);
+    void Copy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, int allow_trans);
+    void PtrCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect);
+    void PtrSpanCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, char **SpanListPtrs);
+    void PtrSurfaceCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect, int SourceLock, int DestLock);
+    void OverlayMemCopy(RECT *src_rect, RECT *dest_rect, int xDelta, int yDelta, int xOffset, int YOffset);
 
-	void SetTrans(int use_trans_in, char trans_color_in);
-	void SetOverlayTrans(int use_trans_in, char trans_color_in);
+    void SetTrans(int use_trans_in, char trans_color_in);
+    void SetOverlayTrans(int use_trans_in, char trans_color_in);
 
-	void SetPixel(int x, int y, char color);
-	static void DrawLine(int x1, int y1, int x2, int y2, char color);
-	void DrawRect(int x1, int y1, int x2, int y2, char color);
-	void DrawRect(RECT *rect, char color);
-	void DrawHorzLine(int x, int y, int len, char color);
-	void DrawVertLine(int x, int y, int len, char color);
-	void FillRect(int x1, int y1, int x2, int y2, char color);
+    void SetPixel(int x, int y, char color);
+    void DrawLine(int x1, int y1, int x2, int y2, char color);
+    void DrawRect(int x1, int y1, int x2, int y2, char color);
+    void DrawRect(RECT *rect, char color);
+    void DrawHorzLine(int x, int y, int len, char color);
+    void DrawVertLine(int x, int y, int len, char color);
+    void FillRect(int x1, int y1, int x2, int y2, char color);
 
-	void DrawBevel(int x1, int y1, int x2, int y2, char c1, char c2);
-	void DrawBevel2(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4);
-	void DrawBevel3(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4, char c5, char c6);
-	void DrawBevel21(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4);
-	void DrawBevel32(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4, char c5, char c6);
+    void DrawBevel(int x1, int y1, int x2, int y2, char c1, char c2);
+    void DrawBevel2(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4);
+    void DrawBevel3(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4, char c5, char c6);
+    void DrawBevel21(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4);
+    void DrawBevel32(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4, char c5, char c6);
 
-	void SetShadowTable(class RGE_Color_Table *color_table_in);
+    void SetShadowTable(RGE_Color_Table *color_table_in);
 
-	void DrawShadowBox(int x1, int y1, int x2, int y2);
+    void DrawShadowBox(int x1, int y1, int x2, int y2);
 
-	void GetPalette(PALETTEENTRY *palette1);
-	void SetPalette(PALETTEENTRY *palette1);
+    void GetPalette(PALETTEENTRY *palette1);
+    void SetPalette(PALETTEENTRY *palette1);
 
-	void take_snapshot(char *filespec, int *index_no);
+    void take_snapshot(char *filespec, int *index_no);
 };
 
 struct DrawAreaNode
 {
-	TDrawArea *DrawArea;
+    TDrawArea *DrawArea;
 
-	DrawAreaNode *PrevNode,
-	             *NextNode;
+    DrawAreaNode *PrevNode,
+                 *NextNode;
 };

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Picture.hpp
  * @author  Yvan Burrie
- * @date    2018/06/26
+ * @date    2018/07/01
  * @version 1.0
  */
 
@@ -10,63 +10,65 @@ class TPicture
 {
 public:
 
-	BITMAPINFOHEADER *Dib;
+    BITMAPINFOHEADER *Dib;
 
-	BITMAPINFO256 *BitmapInfo;
+    BITMAPINFO256 *BitmapInfo;
 
-	char *Bits;
+    char *Bits;
 
-	TRANSINFO *TransInfo;
+    TRANSINFO *TransInfo;
 
-	int OwnMemory;
+    int OwnMemory;
 
-	int Width,
-	    Height;
+    int Width  = 0,
+        Height = 0;
 
     enum Orientation
     {
         None = -1,
+        Zero = 0,
+        One = 1,
     };
 
-	short Orien = 1;
+    short Orien = TPicture::Orientation::One;
 
-	TPicture(
+    TPicture(
         char *FileName,
         int res_id,
         bool UseTrans,
         HPALETTE *MapToPal,
         bool ZeroIsTrans);
 
-	TPicture(
+    TPicture(
         int infile,
         bool UseTrans);
 
-	~TPicture();
+    ~TPicture();
 
-	void Save(
+    void Save(
         int outfile);
 
-	void Load(
+    void Load(
         char *FileName,
         int res_id,
         bool UseTrans,
         HPALETTE *MapToPal,
         bool ZeroIsTrans);
 
-	void Init(
+    void Init(
         BITMAPINFO256 *FromInfo,
         char *FromBits,
         TRANSINFO *FromTrans);
 
-	int AlignedWidth();
+    int AlignedWidth();
 
-	void Draw(
+    void Draw(
         TDrawArea *DrawArea,
         int DestX, int DestY,
         bool Mirror,
         bool Flip);
 
-	int Tile(
+    int Tile(
         TDrawArea *DrawArea,
         int DestX,    int DestY,
         int DestWid,  int DestHgt,
@@ -74,7 +76,7 @@ public:
         int SrcX,     int SrcY,
         int SrcWid,   int SrcHgt);
 
-	char GetPixel(
+    char GetPixel(
         int x, int y,
         bool Mirror,
         bool Flip);
