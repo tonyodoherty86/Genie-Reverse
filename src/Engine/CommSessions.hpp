@@ -1,10 +1,28 @@
 
 /**
- * @file    Engine\CommSessions.cpp
+ * @file    Engine\CommSessions.hpp
  * @author  Yvan Burrie
- * @date    2018/02/22
+ * @date    2018/07/01
  * @version 1.0
  */
+
+struct SEs
+{
+    char Name[255];
+
+    char Password[255];
+
+    GUID AppGUID,
+         SessGUID;
+
+    unsigned int CurrentPlayers;
+    unsigned int MaxPlayers;
+
+    unsigned int User1,
+                 User2,
+                 User3,
+                 User4;
+};
 
 class TCommunications_Sessions
 {
@@ -18,7 +36,8 @@ public:
 
     IDirectPlay2 *glpIDC;
 
-    void TCommunications_Sessions(TCommunications_Handler *Comm);
+    TCommunications_Sessions(TCommunications_Handler *Comm);
+
     void EraseInformation();
     int GetSessionCount();
     char *GetSessionName(int id);
@@ -26,8 +45,24 @@ public:
     unsigned int GetSessionCurrentPlayers(int id);
     GUID *GetSessionGUID(int id);
     int IncSessionCount();
-    int AddSession(GUID Instance, GUID Application, unsigned int MaxPlayers, unsigned int CurrentPlayers, char *Name, char *Password, unsigned int User1, unsigned int User2, unsigned int User3, unsigned int User4);
+
+    int AddSession(
+        GUID Instance,
+        GUID Application,
+        unsigned int MaxPlayers,
+        unsigned int CurrentPlayers,
+        char *Name,
+        char *Password,
+        unsigned int User1,
+        unsigned int User2,
+        unsigned int User3,
+        unsigned int User4);
+
     int Refresh();
 };
 
-int EnumSessionCallback(DPSESSIONDESC2 *lpDPSessionDesc, unsigned int *lpdwTimeOut, unsigned int dwFlags, void *lpContext);
+static int EnumSessionCallback(
+    DPSESSIONDESC2 *lpDPSessionDesc,
+    unsigned int *lpdwTimeOut,
+    unsigned int dwFlags,
+    void *lpContext);

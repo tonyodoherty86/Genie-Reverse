@@ -1,10 +1,22 @@
 
 /**
- * @file    Engine\CommServices.cpp
+ * @file    Engine\CommServices.hpp
  * @author  Yvan Burrie
- * @date    2018/02/22
+ * @date    2018/07/01
  * @version 1.0
  */
+
+struct SPs
+{
+    char Name[80];
+
+    GUID *GUID;
+
+    unsigned int MajVersion,
+                 MinVersion;
+
+    int Active;
+};
 
 class TCommunications_Services
 {
@@ -28,4 +40,9 @@ public:
     void SetServiceActive(int id, int state);
 };
 
-int DPEnumCallback(GUID *pid, char *szName, unsigned int major_ver, unsigned int minor_ver, void *lpx);
+static int DPEnumCallback(
+    GUID *pid,
+    char *szName,
+    unsigned int major_ver,
+    unsigned int minor_ver,
+    void *lpx);
