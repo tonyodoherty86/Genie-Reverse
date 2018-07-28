@@ -77,7 +77,7 @@ void __thiscall RGE_View::RGE_View(RGE_View *this)
     ++v2;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v1->UC_ObjectTouched = 0;
   v1->UC_TouchedObj = 2147483648;
   v1->UC_StartTime = 0;
@@ -97,7 +97,7 @@ RGE_View *__thiscall RGE_View::`scalar deleting destructor'(RGE_View *this, unsi
 
   v2 = this;
   RGE_View::~RGE_View(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -118,54 +118,54 @@ void __thiscall RGE_View::~RGE_View(RGE_View *this)
   v1 = this;
   this->vfptr = (TPanelVtbl *)&RGE_View::`vftable';
   v2 = this->border_line_shape;
-  if ( v2 )
+  if( v2 )
   {
     TShape::~TShape(v2);
     operator delete(v2);
     v1->border_line_shape = 0;
   }
   RGE_View::delete_surfaces(v1);
-  if ( v1->red_pen )
+  if( v1->red_pen )
   {
     DeleteObject(v1->red_pen);
     v1->red_pen = 0;
   }
-  if ( v1->RenderOffsets )
+  if( v1->RenderOffsets )
     free(v1->RenderOffsets);
   v3 = v1->Terrain_Clip_Mask;
-  if ( v3 )
+  if( v3 )
   {
     TSpan_List_Manager::~TSpan_List_Manager(v1->Terrain_Clip_Mask);
     operator delete(v3);
   }
   v4 = v1->Terrain_Fog_Clip_Mask;
-  if ( v4 )
+  if( v4 )
   {
     TSpan_List_Manager::~TSpan_List_Manager(v1->Terrain_Fog_Clip_Mask);
     operator delete(v4);
   }
   v5 = v1->Master_Clip_Mask;
-  if ( v5 )
+  if( v5 )
   {
     TSpan_List_Manager::~TSpan_List_Manager(v1->Master_Clip_Mask);
     operator delete(v5);
   }
-  if ( v1->Tile_Edge_Tables )
+  if( v1->Tile_Edge_Tables )
     free(v1->Tile_Edge_Tables);
-  if ( v1->Black_Edge_Tables )
+  if( v1->Black_Edge_Tables )
     free(v1->Black_Edge_Tables);
-  if ( v1->Float_Scroll_Offsets )
+  if( v1->Float_Scroll_Offsets )
     free(v1->Float_Scroll_Offsets);
-  if ( v1->Blit_Queue )
+  if( v1->Blit_Queue )
     free(v1->Blit_Queue);
   v6 = v1->prior_objs;
-  if ( v6 )
+  if( v6 )
   {
     DClipInfo_List::~DClipInfo_List(v1->prior_objs);
     operator delete(v6);
   }
   v7 = v1->futur_objs;
-  if ( v7 )
+  if( v7 )
   {
     DClipInfo_List::~DClipInfo_List(v1->futur_objs);
     operator delete(v7);
@@ -174,18 +174,18 @@ void __thiscall RGE_View::~RGE_View(RGE_View *this)
   v9 = 5;
   do
   {
-    if ( *v8 )
+    if( *v8 )
       free(*v8);
     ++v8;
     --v9;
   }
-  while ( v9 );
-  if ( MouseSystem )
+  while( v9 );
+  if( MouseSystem )
   {
     TMousePointer::set_game_mode(MouseSystem, 0);
     TMousePointer::set_game_enable(MouseSystem, 0);
   }
-  if ( v1->DispSel_List )
+  if( v1->DispSel_List )
     free(v1->DispSel_List);
   RGE_View::reset_overlay_sprites(v1);
   TPanel::~TPanel((TPanel *)&v1->vfptr);
@@ -221,7 +221,7 @@ int __thiscall RGE_View::setup(RGE_View *this, TDrawArea *render_area_in, TPanel
   sprintf(str, aS_shp, border_line_file);
   v11 = (TShape *)operator new(0x20u);
   v17 = 0;
-  if ( v11 )
+  if( v11 )
     TShape::TShape(v11, str, -1);
   else
     v12 = 0;
@@ -237,7 +237,7 @@ int __thiscall RGE_View::setup(RGE_View *this, TDrawArea *render_area_in, TPanel
     ++v13;
     --v14;
   }
-  while ( v14 );
+  while( v14 );
   return 1;
 }
 
@@ -248,7 +248,7 @@ void __thiscall RGE_View::set_focus(RGE_View *this, int have_focus_in)
 
   v2 = this;
   TPanel::set_focus((TPanel *)&this->vfptr, have_focus_in);
-  if ( MouseSystem )
+  if( MouseSystem )
     TMousePointer::set_game_enable(MouseSystem, v2->have_focus);
 }
 
@@ -289,7 +289,7 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
   v1 = this;
   v2 = _open(aData2Tileedge_, 0x8000);
   v3 = v2;
-  if ( v2 != -1 )
+  if( v2 != -1 )
   {
     lseek(v2, 0, 2);
     v4 = _tell(v3);
@@ -305,7 +305,7 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
       ++v6;
       *v7 = (Tile_FogEdge_Table *)((char *)*v7 + (_DWORD)v5);
     }
-    while ( v6 < 17 );
+    while( v6 < 17 );
     v8 = 0;
     do
     {
@@ -313,22 +313,22 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
       v10 = v1->Tile_Edge_Tables[v8];
       do
       {
-        if ( v10->normal_draw )
+        if( v10->normal_draw )
           v10->normal_draw = (VSpanMiniList *)((char *)v10->normal_draw + (unsigned int)v5);
         v11 = v10->fog_draw;
-        if ( v11 )
+        if( v11 )
           v10->fog_draw = (VSpanMiniList *)((char *)v11 + (_DWORD)v5);
         ++v10;
         --v9;
       }
-      while ( v9 );
+      while( v9 );
       ++v8;
     }
-    while ( v8 < 17 );
+    while( v8 < 17 );
   }
   v12 = _open(aData2Blkedge_d, 0x8000);
   v13 = v12;
-  if ( v12 != -1 )
+  if( v12 != -1 )
   {
     lseek(v12, 0, 2);
     v14 = _tell(v13);
@@ -344,7 +344,7 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
       ++v16;
       *v17 = (Tile_BlackEdge_Table *)((char *)*v17 + (_DWORD)v15);
     }
-    while ( v16 < 17 );
+    while( v16 < 17 );
     v18 = 0;
     do
     {
@@ -352,15 +352,15 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
       v20 = 47;
       do
       {
-        if ( *v19 )
+        if( *v19 )
           *v19 = (VSpanMiniList *)((char *)*v19 + (_DWORD)v15);
         ++v19;
         --v20;
       }
-      while ( v20 );
+      while( v20 );
       ++v18;
     }
-    while ( v18 < 17 );
+    while( v18 < 17 );
   }
   v21 = v1->EdgeNumber;
   memset(v21, 0xFFu, 0x100u);
@@ -370,44 +370,44 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
   do
   {
     v23 = 1;
-    if ( (v22 & 0x80) == -128 && ((v22 & 1) == 1 || (v22 & 8) == 8) )
+    if( (v22 & 0x80) == -128 && ((v22 & 1) == 1 || (v22 & 8) == 8) )
       v23 = 0;
-    if ( (v22 & 0x40) == 64 && ((v22 & 4) == 4 || (v22 & 8) == 8) )
+    if( (v22 & 0x40) == 64 && ((v22 & 4) == 4 || (v22 & 8) == 8) )
       v23 = 0;
-    if ( (v22 & 0x20) == 32 && ((v22 & 2) == 2 || (v22 & 4) == 4) )
+    if( (v22 & 0x20) == 32 && ((v22 & 2) == 2 || (v22 & 4) == 4) )
       v23 = 0;
-    if ( (v22 & 0x10) == 16 && ((v22 & 1) == 1 || (v22 & 2) == 2) )
+    if( (v22 & 0x10) == 16 && ((v22 & 1) == 1 || (v22 & 2) == 2) )
       v23 = 0;
-    if ( v23 )
+    if( v23 )
       v21[v22] = y++;
     ++v22;
   }
-  while ( v22 < 256 );
+  while( v22 < 256 );
   v24 = 0;
   do
   {
-    if ( v21[v24] == -1 )
+    if( v21[v24] == -1 )
     {
       v25 = v24 & 1;
       v26 = v24 & 2;
       v27 = v24 & 4;
       v28 = v24 & 8;
-      if ( v24 & 0x80 )
+      if( v24 & 0x80 )
       {
         v28 = 0;
         v25 = 0;
       }
-      if ( v24 & 0x40 )
+      if( v24 & 0x40 )
       {
         v28 = 0;
         v27 = 0;
       }
-      if ( v24 & 0x20 )
+      if( v24 & 0x20 )
       {
         v27 = 0;
         v26 = 0;
       }
-      if ( v24 & 0x10 )
+      if( v24 & 0x10 )
       {
         v26 = 0;
         v25 = 0;
@@ -417,7 +417,7 @@ void __thiscall RGE_View::Init_Tile_Edge_Tables(RGE_View *this)
     }
     ++v24;
   }
-  while ( v24 < 256 );
+  while( v24 < 256 );
 }
 
 //----- (00533E10) --------------------------------------------------------
@@ -434,21 +434,21 @@ void __thiscall RGE_View::update_display_selected_objects(RGE_View *this)
   v1 = this;
   v2 = debug_timeGetTime();
   v3 = 0;
-  if ( v1->DispSel_List_Max > 0 )
+  if( v1->DispSel_List_Max > 0 )
   {
     v4 = 0;
     do
     {
       v5 = (int)&v1->DispSel_List[v4].active;
-      if ( *(_DWORD *)v5 )
+      if( *(_DWORD *)v5 )
       {
         v6 = v1->world->objectsValue[*(_DWORD *)(v5 + 4)];
-        if ( v6 )
+        if( v6 )
         {
           v7 = v2 - *(_DWORD *)(v5 + 8);
-          if ( v7 <= *(_DWORD *)(v5 + 12) )
+          if( v7 <= *(_DWORD *)(v5 + 12) )
           {
-            if ( !(v7 & 0x100) )
+            if( !(v7 & 0x100) )
             {
               v6->selected |= *(_BYTE *)(v5 + 16);
               goto LABEL_9;
@@ -471,7 +471,7 @@ LABEL_9:
       ++v3;
       ++v4;
     }
-    while ( v3 < v1->DispSel_List_Max );
+    while( v3 < v1->DispSel_List_Max );
   }
 }
 
@@ -489,7 +489,7 @@ void __thiscall RGE_View::display_object_selection(RGE_View *this, int id, int d
   v5 = this;
   v6 = 0;
   v7 = 0;
-  if ( this->DispSel_List_Max <= 0 )
+  if( this->DispSel_List_Max <= 0 )
   {
     v9 = reset_type;
   }
@@ -501,9 +501,9 @@ void __thiscall RGE_View::display_object_selection(RGE_View *this, int id, int d
     do
     {
       v11 = (int)&v5->DispSel_List[v10].active;
-      if ( *(_DWORD *)v11 )
+      if( *(_DWORD *)v11 )
       {
-        if ( v8 && *(_DWORD *)(v11 + 16) == v8 )
+        if( v8 && *(_DWORD *)(v11 + 16) == v8 )
         {
           *(_DWORD *)(v11 + 8) -= *(_DWORD *)(v11 + 12);
           v8 = reset_type;
@@ -517,9 +517,9 @@ void __thiscall RGE_View::display_object_selection(RGE_View *this, int id, int d
       ++v7;
       ++v10;
     }
-    while ( v7 < v5->DispSel_List_Max );
+    while( v7 < v5->DispSel_List_Max );
   }
-  if ( v6 )
+  if( v6 )
   {
     *(_DWORD *)v9 = 1;
     *(_DWORD *)(v9 + 4) = id;
@@ -551,42 +551,42 @@ void __thiscall RGE_View::set_rect(RGE_View *this, int x_in, int y_in, int wid_i
   v6 = v5->Terrain_Clip_Mask;
   LODWORD(v5->last_view_x) = -971228160;
   LODWORD(v5->last_view_y) = -971228160;
-  if ( v6 )
+  if( v6 )
   {
     TSpan_List_Manager::~TSpan_List_Manager(v6);
     operator delete(v6);
   }
   v7 = v5->Terrain_Fog_Clip_Mask;
-  if ( v7 )
+  if( v7 )
   {
     TSpan_List_Manager::~TSpan_List_Manager(v5->Terrain_Fog_Clip_Mask);
     operator delete(v7);
   }
   v8 = v5->Master_Clip_Mask;
-  if ( v8 )
+  if( v8 )
   {
     TSpan_List_Manager::~TSpan_List_Manager(v5->Master_Clip_Mask);
     operator delete(v8);
   }
   v9 = (TSpan_List_Manager *)operator new(0x68u);
-  if ( v9 )
+  if( v9 )
     TSpan_List_Manager::TSpan_List_Manager(v9, wid_in, hgt_in);
   else
     v10 = 0;
   v5->Terrain_Clip_Mask = v10;
   v11 = (TSpan_List_Manager *)operator new(0x68u);
-  if ( v11 )
+  if( v11 )
     TSpan_List_Manager::TSpan_List_Manager(v11, wid_in, hgt_in);
   else
     v12 = 0;
   v5->Terrain_Fog_Clip_Mask = v12;
   v13 = (TSpan_List_Manager *)operator new(0x68u);
-  if ( v13 )
+  if( v13 )
     TSpan_List_Manager::TSpan_List_Manager(v13, wid_in, hgt_in);
   else
     v14 = 0;
   v5->Master_Clip_Mask = v14;
-  if ( MouseSystem && wid_in > 0 && hgt_in > 0 )
+  if( MouseSystem && wid_in > 0 && hgt_in > 0 )
   {
     TMousePointer::set_game_window(MouseSystem, x_in, y_in, x_in + wid_in, y_in + hgt_in);
     TMousePointer::set_game_mode(MouseSystem, 1);
@@ -602,7 +602,7 @@ void __thiscall RGE_View::delete_surfaces(RGE_View *this)
 
   v1 = this;
   v2 = this->save_area1;
-  if ( v2 )
+  if( v2 )
   {
     TDrawArea::~TDrawArea(this->save_area1);
     operator delete(v2);
@@ -630,24 +630,24 @@ int __thiscall RGE_View::create_surfaces(RGE_View *this)
   int v15; // ecx@22
 
   v1 = this;
-  if ( this->pnl_wid || this->pnl_hgt )
+  if( this->pnl_wid || this->pnl_hgt )
   {
-    if ( !this->save_area1 )
+    if( !this->save_area1 )
     {
       v3 = (TDrawArea *)operator new(0x100u);
-      if ( v3 )
+      if( v3 )
         TDrawArea::TDrawArea(v3, aTerrainBuffer, 0);
       else
         v4 = 0;
       v1->save_area1 = v4;
-      if ( v4 )
+      if( v4 )
         TDrawArea::Init(v4, v1->render_area->DrawSystem, v1->pnl_wid, v1->pnl_hgt, 1, 0);
     }
     v5 = v1->save_area1;
-    if ( v5 )
+    if( v5 )
     {
       v6 = v1->pnl_hgt;
-      if ( v6 > 0 )
+      if( v6 > 0 )
       {
         TDrawArea::SetSize(v5, v1->pnl_wid, v6, 1);
         v7 = v1->save_area1;
@@ -655,26 +655,26 @@ int __thiscall RGE_View::create_surfaces(RGE_View *this)
         v1->Float_Y_Delta = 0;
         TDrawArea::SetFloatOffsets(v7, 0, 0);
         v8 = v1->prior_objs;
-        if ( v8 )
+        if( v8 )
         {
           DClipInfo_List::~DClipInfo_List(v1->prior_objs);
           operator delete(v8);
         }
         v9 = v1->futur_objs;
-        if ( v9 )
+        if( v9 )
         {
           DClipInfo_List::~DClipInfo_List(v1->futur_objs);
           operator delete(v9);
         }
         v10 = v1->pnl_hgt + 450;
         v11 = (DClipInfo_List *)operator new(0x70u);
-        if ( v11 )
+        if( v11 )
           DClipInfo_List::DClipInfo_List(v11, 2 * v10, v10, 64, -200, v1->pnl_hgt + 249, 40);
         else
           v12 = 0;
         v1->prior_objs = v12;
         v13 = (DClipInfo_List *)operator new(0x70u);
-        if ( v13 )
+        if( v13 )
           DClipInfo_List::DClipInfo_List(v13, 2 * v10, v10, 64, -200, v1->pnl_hgt + 249, 40);
         else
           v14 = 0;
@@ -704,7 +704,7 @@ void __thiscall RGE_View::calc_draw_vars(RGE_View *this)
   __int16 v6; // bx@4
   signed int v7; // kr00_4@4
 
-  if ( this->visible && (v1 = this->tile_wid) != 0 && (v2 = this->tile_hgt) != 0 )
+  if( this->visible && (v1 = this->tile_wid) != 0 && (v2 = this->tile_hgt) != 0 )
   {
     v3 = this->pnl_wid;
     this->center_scr_col_offset = 0;
@@ -739,7 +739,7 @@ void __thiscall RGE_View::set_redraw(RGE_View *this, TPanel::RedrawMode redraw_m
 
   v2 = this;
   TPanel::set_redraw((TPanel *)&this->vfptr, redraw_mode);
-  if ( redraw_mode == 2 )
+  if( redraw_mode == 2 )
     v2->render_terrain_mode = 0;
 }
 
@@ -752,7 +752,7 @@ void __thiscall RGE_View::set_world(RGE_View *this, RGE_Game_World *world_in)
 
   v2 = this;
   this->world = world_in;
-  if ( world_in )
+  if( world_in )
   {
     v3 = world_in->map;
     v2->map = v3;
@@ -798,14 +798,14 @@ void __thiscall RGE_View::set_selection_area(RGE_View *this, int sel_col1_in, in
 
   v5 = this;
   v6 = this->map;
-  if ( v6 && rge_base_game->game_mode != 21 )
+  if( v6 && rge_base_game->game_mode != 21 )
     RGE_Map::request_redraw(v6, v5->sel_col1, v5->sel_row1, v5->sel_col2, v5->sel_row2, 0);
   v7 = v5->map;
   v5->sel_col1 = sel_col1_in;
   v5->sel_row1 = sel_row1_in;
   v5->sel_col2 = sel_col2_in;
   v5->sel_row2 = sel_row2_in;
-  if ( v7 && rge_base_game->game_mode != 21 )
+  if( v7 && rge_base_game->game_mode != 21 )
     RGE_Map::request_redraw(v7, sel_col1_in, sel_row1_in, sel_col2_in, sel_row2_in, 16);
   v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
 }
@@ -833,66 +833,66 @@ int __thiscall RGE_View::get_selection_area(RGE_View *this, int *sel_col1_in, in
   v6 = this->sel_row2;
   *sel_row2_in = v6;
   v7 = *sel_col1_in;
-  if ( *sel_col1_in != -1 || *sel_row1_in != -1 || *sel_col2_in != -1 || v6 != -1 )
+  if( *sel_col1_in != -1 || *sel_row1_in != -1 || *sel_col2_in != -1 || v6 != -1 )
   {
-    if ( v7 >= 0 )
+    if( v7 >= 0 )
     {
       v9 = this->map->map_width;
-      if ( v7 >= v9 )
+      if( v7 >= v9 )
         *sel_col1_in = v9 - 1;
     }
     else
     {
       *sel_col1_in = 0;
     }
-    if ( *sel_row1_in >= 0 )
+    if( *sel_row1_in >= 0 )
     {
       v10 = this->map->map_height;
-      if ( *sel_row1_in >= v10 )
+      if( *sel_row1_in >= v10 )
         *sel_row1_in = v10 - 1;
     }
     else
     {
       *sel_row1_in = 0;
     }
-    if ( *sel_col2_in >= 0 )
+    if( *sel_col2_in >= 0 )
     {
       v11 = this->map->map_width;
-      if ( *sel_col2_in >= v11 )
+      if( *sel_col2_in >= v11 )
         *sel_col2_in = v11 - 1;
     }
     else
     {
       *sel_col2_in = 0;
     }
-    if ( *sel_row2_in >= 0 )
+    if( *sel_row2_in >= 0 )
     {
       v12 = this->map->map_height;
-      if ( *sel_row2_in >= v12 )
+      if( *sel_row2_in >= v12 )
         *sel_row2_in = v12 - 1;
     }
     else
     {
       *sel_row2_in = 0;
     }
-    if ( fix_coords )
+    if( fix_coords )
     {
       v13 = *sel_col1_in;
       v14 = *sel_col2_in;
       v15 = *sel_row2_in;
       v16 = *sel_row1_in;
       v17 = *sel_col1_in;
-      if ( *sel_col1_in >= *sel_col2_in )
+      if( *sel_col1_in >= *sel_col2_in )
         v17 = *sel_col2_in;
       *sel_col1_in = v17;
       v18 = v16;
-      if ( v16 >= v15 )
+      if( v16 >= v15 )
         v18 = v15;
       *sel_row1_in = v18;
-      if ( v13 <= v14 )
+      if( v13 <= v14 )
         v13 = v14;
       *sel_col2_in = v13;
-      if ( v16 <= v15 )
+      if( v16 <= v15 )
         v16 = v15;
       *sel_row2_in = v16;
     }
@@ -942,34 +942,34 @@ void __thiscall RGE_View::CreateBlitQueue(RGE_View *this, tagRECT *src_rect, tag
 
   v5 = this;
   One_Blit = 0;
-  if ( !xDelta && !yDelta )
+  if( !xDelta && !yDelta )
     return;
   v6 = src_rect;
   v7 = src_rect->top;
-  if ( v7 <= dest_rect->bottom && src_rect->left <= dest_rect->right )
+  if( v7 <= dest_rect->bottom && src_rect->left <= dest_rect->right )
   {
     v8 = src_rect->bottom;
     v29 = v8;
-    if ( v8 >= dest_rect->top )
+    if( v8 >= dest_rect->top )
     {
       v9 = src_rect->right;
       v30 = v9;
-      if ( v9 >= dest_rect->left )
+      if( v9 >= dest_rect->left )
       {
         v10 = v9 - src_rect->left + 1;
         v11 = v8 - v7 + 1;
         v12 = yDelta;
-        if ( yDelta < 0 )
+        if( yDelta < 0 )
           v12 = -yDelta;
         v13 = xDelta;
-        if ( xDelta < 0 )
+        if( xDelta < 0 )
           v13 = -xDelta;
         v14 = 9999;
         vBlits = 9999;
-        if ( yDelta )
+        if( yDelta )
           vBlits = (v12 + v11 - 1) / v12;
         v6 = src_rect;
-        if ( xDelta )
+        if( xDelta )
         {
           v6 = src_rect;
           v14 = (v13 + v10 - 1) / v13;
@@ -980,11 +980,11 @@ void __thiscall RGE_View::CreateBlitQueue(RGE_View *this, tagRECT *src_rect, tag
         v17 = v6->bottom;
         blt_deltaX = 0;
         blt_deltaY = 0;
-        if ( vBlits >= v14 )
+        if( vBlits >= v14 )
         {
           yd = v14;
           blt_deltaX = xDelta;
-          if ( xDelta >= 0 )
+          if( xDelta >= 0 )
             v16 = xDelta + src_rect->left - 1;
           else
             blt_src = xDelta + v30 + 1;
@@ -993,7 +993,7 @@ void __thiscall RGE_View::CreateBlitQueue(RGE_View *this, tagRECT *src_rect, tag
         {
           yd = vBlits;
           blt_deltaY = yDelta;
-          if ( yDelta >= 0 )
+          if( yDelta >= 0 )
             v17 = yDelta + src_rect->top - 1;
           else
             v15 = yDelta + v29 + 1;
@@ -1009,23 +1009,23 @@ void __thiscall RGE_View::CreateBlitQueue(RGE_View *this, tagRECT *src_rect, tag
   One_Blit = 1;
   yd = 1;
 CBQ_One:
-  if ( yd > v5->Blt_Queue_Allocated )
+  if( yd > v5->Blt_Queue_Allocated )
   {
-    if ( v5->Blit_Queue )
+    if( v5->Blit_Queue )
     {
       free(v5->Blit_Queue);
       v6 = src_rect;
     }
     v5->Blit_Queue = 0;
   }
-  if ( !v5->Blit_Queue )
+  if( !v5->Blit_Queue )
   {
     v18 = (Blit_Queue_Entry *)calloc(yd, 0x20u);
     v5->Blt_Queue_Allocated = yd;
     v6 = src_rect;
     v5->Blit_Queue = v18;
   }
-  if ( One_Blit )
+  if( One_Blit )
   {
     v19 = v5->Blit_Queue;
     v19->src.left = v6->left;
@@ -1034,7 +1034,7 @@ CBQ_One:
     v19->src.bottom = v6->bottom;
     v5->Blit_Queue->dest = *dest_rect;
   }
-  else if ( yd > 0 )
+  else if( yd > 0 )
   {
     v20 = 0;
     dest_recta = (tagRECT *)yd;
@@ -1053,18 +1053,18 @@ CBQ_One:
       v17 += blt_deltaY;
       v16 += blt_deltaX;
       blt_src += blt_deltaX;
-      if ( v15 < src_rect->top )
+      if( v15 < src_rect->top )
         v15 = src_rect->top;
-      if ( blt_src < src_rect->left )
+      if( blt_src < src_rect->left )
         blt_src = src_rect->left;
-      if ( v16 > src_rect->right )
+      if( v16 > src_rect->right )
         v16 = src_rect->right;
-      if ( v17 > src_rect->bottom )
+      if( v17 > src_rect->bottom )
         v17 = src_rect->bottom;
       ++v20;
       dest_recta = (tagRECT *)((char *)dest_recta - 1);
     }
-    while ( dest_recta );
+    while( dest_recta );
   }
   v22 = v5->render_rect.left;
   v23 = v5->render_rect.top;
@@ -1087,7 +1087,7 @@ void __thiscall RGE_View::ProcessQueuedBlit(RGE_View *this, int WaitIfBusy)
   tagRECT src; // [sp+Ch] [bp-10h]@7
 
   v2 = this;
-  if ( this->Queued_Blits
+  if( this->Queued_Blits
     && (WaitIfBusy
      || !((int (__stdcall *)(_DWORD, _DWORD))this->render_area->DrawSurface->vfptr[4].AddRef)(
            this->render_area->DrawSurface,
@@ -1096,7 +1096,7 @@ void __thiscall RGE_View::ProcessQueuedBlit(RGE_View *this, int WaitIfBusy)
     v3 = v2->Blit_Queue;
     v4 = v2->Current_Blit + 1;
     v2->Current_Blit = v4;
-    if ( !v3
+    if( !v3
       || v4 < 0
       || v4 >= v2->Blit_Queue_Size
       || (v5 = (int)&v3[v4].src.left,
@@ -1193,14 +1193,14 @@ void __thiscall RGE_View::draw(RGE_View *this)
 
   v1 = this;
   tiles_drawn = 0;
-  if ( view_debug_redraw_all )
+  if( view_debug_redraw_all )
   {
     this->render_terrain_mode = 0;
     view_debug_redraw_all = 0;
   }
-  if ( view_debug_ObstructionMap || view_debug_palette )
+  if( view_debug_ObstructionMap || view_debug_palette )
     this->render_terrain_mode = 0;
-  if ( this->world )
+  if( this->world )
   {
     v3 = this->start_map_col;
     old_start_scr_row = this->start_scr_row;
@@ -1217,7 +1217,7 @@ void __thiscall RGE_View::draw(RGE_View *this)
     RGE_View::update(v1);
     v63 = v1->vfptr;
     v1->vfptr->draw_setup((TPanel *)v1, 0);
-    if ( v1->render_terrain_mode == 1
+    if( v1->render_terrain_mode == 1
       && (v1->start_map_col != v3
        || v1->start_map_row != old_start_map_row
        || v1->start_scr_col != old_start_scr_col
@@ -1226,7 +1226,7 @@ void __thiscall RGE_View::draw(RGE_View *this)
       LOWORD(v6) = LOWORD(v1->map_scr_y_offset) - old_map_scr_y_offset;
       v7 = LOWORD(v1->map_scr_x_offset) - v5;
       old_map_scr_y_offseta = LOWORD(v1->map_scr_y_offset) - old_map_scr_y_offset;
-      if ( LOWORD(v1->map_scr_x_offset) != (_WORD)v5 || (_WORD)v6 )
+      if( LOWORD(v1->map_scr_x_offset) != (_WORD)v5 || (_WORD)v6 )
       {
         v8 = v1->pnl_wid;
         old_rect.left = 0;
@@ -1241,31 +1241,31 @@ void __thiscall RGE_View::draw(RGE_View *this)
         new_rect.left = v7;
         new_rect.top = (signed __int16)v6;
         new_rect.bottom = v10 + (signed __int16)v6;
-        if ( v10 + (signed __int16)v6 < 0 || new_rect.right < 0 || v10 < v6 || (v11 = v7, old_rect.right < v7) )
+        if( v10 + (signed __int16)v6 < 0 || new_rect.right < 0 || v10 < v6 || (v11 = v7, old_rect.right < v7) )
         {
           v1->render_terrain_mode = 0;
         }
         else
         {
-          if ( v7 & 7 )
+          if( v7 & 7 )
           {
-            if ( v7 <= 0 )
+            if( v7 <= 0 )
               v11 = v7 + 7;
             v12 = (v11 & 0xFFFFFFF8) - v7;
             v7 += v12;
             v1->map_scr_x_offset += v12;
           }
           LOWORD(v13) = old_map_scr_y_offseta;
-          if ( old_map_scr_y_offseta & 7 )
+          if( old_map_scr_y_offseta & 7 )
           {
             v14 = v6;
-            if ( old_map_scr_y_offseta <= 0 )
+            if( old_map_scr_y_offseta <= 0 )
               v14 = v6 + 7;
             v15 = (v14 & 0xFFFFFFF8) - v6;
             LOWORD(v13) = v15 + old_map_scr_y_offseta;
             v1->map_scr_y_offset += v15;
           }
-          if ( v7 < 0 )
+          if( v7 < 0 )
           {
             v16 = v7;
             old_rect.left = 0;
@@ -1282,7 +1282,7 @@ void __thiscall RGE_View::draw(RGE_View *this)
             v17 = v8 - v7 - 1;
           }
           new_rect.right = v17;
-          if ( (signed __int16)v13 < 0 )
+          if( (signed __int16)v13 < 0 )
           {
             old_rect.top = 0;
             v13 = (signed __int16)v13;
@@ -1299,12 +1299,12 @@ void __thiscall RGE_View::draw(RGE_View *this)
             new_rect.bottom = old_start_map_rowa - (signed __int16)v13 - 1;
           }
           v18 = v1->render_area;
-          if ( v18->DrawSystem->DrawType != 1 && v18->UsingVidMem )
+          if( v18->DrawSystem->DrawType != 1 && v18->UsingVidMem )
           {
             RGE_View::CreateBlitQueue(v1, &old_rect, &new_rect, v16, v13);
-            if ( MouseSystem )
+            if( MouseSystem )
               TMousePointer::Poll(MouseSystem);
-            if ( v1->Queued_Blits )
+            if( v1->Queued_Blits )
               RGE_View::ProcessQueuedBlit(v1, 0);
           }
           else
@@ -1316,15 +1316,15 @@ void __thiscall RGE_View::draw(RGE_View *this)
           v19 = v1->save_area1;
           v20 = v16 + v1->Float_X_Delta;
           v1->Float_X_Delta = v20;
-          if ( v20 < v19->Width )
+          if( v20 < v19->Width )
           {
-            if ( v20 < 0 && TDrawArea::Lock(v19, aViewDraw2, 1) )
+            if( v20 < 0 && TDrawArea::Lock(v19, aViewDraw2, 1) )
             {
               v23 = v1->save_area1;
               v24 = v1->Float_Y_Delta - 1;
               v1->Float_X_Delta += v23->Width;
               v1->Float_Y_Delta = v24;
-              if ( v24 < 0 )
+              if( v24 < 0 )
                 v1->Float_Y_Delta = v23->Height - 1;
               qmemcpy(
                 (char *)v23->DisplayOffsets[v23->Height - 1] + v23->Width,
@@ -1333,7 +1333,7 @@ void __thiscall RGE_View::draw(RGE_View *this)
               TDrawArea::Unlock(v1->save_area1, aViewDraw3);
             }
           }
-          else if ( TDrawArea::Lock(v19, aViewDraw, 1) )
+          else if( TDrawArea::Lock(v19, aViewDraw, 1) )
           {
             qmemcpy(
               *v1->save_area1->DisplayOffsets,
@@ -1343,7 +1343,7 @@ void __thiscall RGE_View::draw(RGE_View *this)
             v22 = v1->Float_Y_Delta + 1;
             v1->Float_X_Delta -= v21->Width;
             v1->Float_Y_Delta = v22;
-            if ( v22 >= v21->Height )
+            if( v22 >= v21->Height )
               v1->Float_Y_Delta = 0;
             TDrawArea::Unlock(v21, aViewDraw);
           }
@@ -1351,17 +1351,17 @@ void __thiscall RGE_View::draw(RGE_View *this)
           v26 = v13 + v25 < 0;
           v27 = v13 + v25;
           v1->Float_Y_Delta = v27;
-          if ( v26 )
+          if( v26 )
             v1->Float_Y_Delta = v27 + v1->save_area1->Height;
           v28 = v1->save_area1;
           v29 = v1->Float_Y_Delta;
           v30 = v28->Height;
-          if ( v29 >= v30 )
+          if( v29 >= v30 )
             v1->Float_Y_Delta = v29 - v30;
           TDrawArea::SetFloatOffsets(v28, v1->Float_X_Delta, v1->Float_Y_Delta);
-          if ( new_rect.left || (v31 = v1->pnl_wid - 1, new_rect.right != v31) )
+          if( new_rect.left || (v31 = v1->pnl_wid - 1, new_rect.right != v31) )
           {
-            if ( new_rect.left )
+            if( new_rect.left )
             {
               v36 = v1->pnl_hgt;
               v32 = 0;
@@ -1370,10 +1370,10 @@ void __thiscall RGE_View::draw(RGE_View *this)
               clip_rect1.left = 0;
               clip_rect1.top = 0;
               clip_rect1.bottom = v37;
-              if ( new_rect.top || new_rect.bottom != v37 )
+              if( new_rect.top || new_rect.bottom != v37 )
               {
                 clip_rect2.left = new_rect.left;
-                if ( new_rect.top )
+                if( new_rect.top )
                 {
                   v39 = v1->pnl_wid;
                   clip_rect2.top = 0;
@@ -1402,10 +1402,10 @@ void __thiscall RGE_View::draw(RGE_View *this)
               clip_rect1.left = new_rect.right + 1;
               clip_rect1.top = 0;
               clip_rect1.bottom = v35;
-              if ( new_rect.top || new_rect.bottom != v35 )
+              if( new_rect.top || new_rect.bottom != v35 )
               {
                 clip_rect2.left = 0;
-                if ( new_rect.top )
+                if( new_rect.top )
                 {
                   clip_rect2.top = 0;
                   clip_rect2.right = new_rect.right;
@@ -1428,10 +1428,10 @@ void __thiscall RGE_View::draw(RGE_View *this)
           {
             v32 = -1;
             clip_rect1.left = -1;
-            if ( new_rect.top || new_rect.bottom != v1->pnl_hgt - 1 )
+            if( new_rect.top || new_rect.bottom != v1->pnl_hgt - 1 )
             {
               clip_rect2.left = 0;
-              if ( new_rect.top )
+              if( new_rect.top )
               {
                 clip_rect2.top = 0;
                 clip_rect2.right = v31;
@@ -1450,7 +1450,7 @@ void __thiscall RGE_View::draw(RGE_View *this)
               clip_rect2.left = -1;
             }
           }
-          if ( v32 != -1 )
+          if( v32 != -1 )
           {
             TDrawArea::PtrClear(v1->save_area1, &clip_rect1, 0);
             v40 = clip_rect1.left;
@@ -1464,10 +1464,10 @@ void __thiscall RGE_View::draw(RGE_View *this)
             *(_DWORD *)(v42 + 8) = v43;
             *(_DWORD *)(v42 + 12) = v44;
           }
-          if ( clip_rect2.left != -1 )
+          if( clip_rect2.left != -1 )
           {
             TDrawArea::PtrClear(v1->save_area1, &clip_rect2, 0);
-            if ( clip_rect1.left == -1 )
+            if( clip_rect1.left == -1 )
             {
               v52 = clip_rect2.left;
               v53 = clip_rect2.top;
@@ -1497,14 +1497,14 @@ void __thiscall RGE_View::draw(RGE_View *this)
         }
       }
     }
-    if ( MouseSystem )
+    if( MouseSystem )
       TMousePointer::Poll(MouseSystem);
-    if ( v1->Queued_Blits )
+    if( v1->Queued_Blits )
       RGE_View::ProcessQueuedBlit(v1, 0);
     v50 = rge_base_game->game_mode;
-    if ( v50 >= 9 && (v50 <= 10 || v50 == 19) )
+    if( v50 >= 9 && (v50 <= 10 || v50 == 19) )
       RGE_View::draw_paint_brush(v1);
-    if ( !v1->render_terrain_mode )
+    if( !v1->render_terrain_mode )
     {
       v51 = v1->save_area1;
       v1->Float_X_Delta = 0;
@@ -1560,7 +1560,7 @@ void __thiscall RGE_View::update(RGE_View *this)
 
   v1 = this;
   v2 = this->player;
-  if ( v2 && (v2->view_x != this->last_view_x || v2->view_y != this->last_view_y) )
+  if( v2 && (v2->view_x != this->last_view_x || v2->view_y != this->last_view_y) )
   {
     this->center_map_col = (signed __int64)v2->view_x;
     v3 = (signed __int64)v2->view_y;
@@ -1642,11 +1642,11 @@ void __thiscall RGE_View::draw_view(RGE_View *this, char function_mode_in, TDraw
 
   v3 = draw_area_in;
   v4 = this;
-  if ( !draw_area_in )
+  if( !draw_area_in )
     v3 = this->render_area;
   this->cur_render_area = v3;
   v5 = v3;
-  if ( v3 == v4->save_area1 )
+  if( v3 == v4->save_area1 )
   {
     v6 = v4->render_rect.left;
     v8 = v4->render_rect.top;
@@ -1670,9 +1670,9 @@ void __thiscall RGE_View::draw_view(RGE_View *this, char function_mode_in, TDraw
     v8 = save_render_rect_4;
     v6 = save_render_rect;
   }
-  if ( TDrawArea::Lock(v5, aViewDraw_view, 1) )
+  if( TDrawArea::Lock(v5, aViewDraw_view, 1) )
   {
-    if ( function_mode_in == 10 )
+    if( function_mode_in == 10 )
     {
       *(_QWORD *)&v12.left = __PAIR__(v8, v6);
       *(_QWORD *)&v12.right = __PAIR__(v9, save_render_rect_8);
@@ -1684,7 +1684,7 @@ void __thiscall RGE_View::draw_view(RGE_View *this, char function_mode_in, TDraw
     }
     TDrawArea::Unlock(v4->cur_render_area, aViewDraw_view);
   }
-  if ( v4->cur_render_area == v4->save_area1 )
+  if( v4->cur_render_area == v4->save_area1 )
   {
     v13 = v4->render_rect.right;
     v14 = v4->render_rect.bottom;
@@ -1748,23 +1748,23 @@ void __thiscall RGE_View::draw_object_outline(RGE_View *this)
 
   v1 = this;
   v2 = rge_base_game->master_obj_id;
-  if ( v2 != -1 )
+  if( v2 != -1 )
   {
     v3 = *(RGE_Master_Static_Object **)(RGE_Base_Game::get_player(rge_base_game)->sprite_update_index + 4 * v2);
-    if ( v3 )
+    if( v3 )
     {
       RGE_Base_Game::get_mouse_pos(rge_base_game, &point);
       v4 = v1->render_rect.left;
-      if ( point.x >= v4 && point.x <= v1->render_rect.right )
+      if( point.x >= v4 && point.x <= v1->render_rect.right )
       {
         v5 = v1->render_rect.top;
-        if ( point.y >= v5
+        if( point.y >= v5
           && point.y <= v1->render_rect.bottom
           && (unsigned __int8)RGE_View::pick(v1, 40, 0, point.x - v4, point.y - v5, &pick_info, 0) == 51 )
         {
           v6 = v3->vfptr;
           v3->vfptr->alignment(v3, (float *)&pick_info, &pick_info.y, v1->world, 0);
-          if ( RGE_View::get_tile_screen_coords(
+          if( RGE_View::get_tile_screen_coords(
                  v1,
                  (signed __int64)pick_info.x,
                  (signed __int64)pick_info.y,
@@ -1803,10 +1803,10 @@ void __thiscall RGE_View::draw_object_outline(RGE_View *this)
                     1,
                     1);
             fog_next_shape = 1;
-            if ( v12 )
+            if( v12 )
             {
               v13 = (v1->world->world_time >> 7) & 7;
-              if ( v13 >= 4 )
+              if( v13 >= 4 )
                 v14 = 44 - v13;
               else
                 v14 = v13 + 36;
@@ -1821,15 +1821,15 @@ void __thiscall RGE_View::draw_object_outline(RGE_View *this)
             scr_x += LODWORD(x3) + (x1 - SLOWORD(x3)) / 2;
             v16 = LODWORD(y4) + (y2 - SLOWORD(y4)) / 2 + scr_y;
             scr_y += LODWORD(y4) + (y2 - SLOWORD(y4)) / 2;
-            if ( v3->sprite )
+            if( v3->sprite )
             {
               SDI_Draw_Line = (signed __int16)v16;
               v17 = v3->draw_flag & 1;
-              if ( v12 )
+              if( v12 )
                 LOBYTE(frame_color) = -105;
               else
                 LOBYTE(frame_color) = v3->draw_color;
-              if ( rge_base_game->game_mode == 8 && rge_base_game->sub_game_mode == 1 && (v18 = v1->movable_object) != 0 )
+              if( rge_base_game->game_mode == 8 && rge_base_game->sub_game_mode == 1 && (v18 = v1->movable_object) != 0 )
               {
                 v25 = frame_color;
                 v24 = v17;
@@ -1870,13 +1870,13 @@ void __thiscall RGE_View::draw_paint_brush(RGE_View *this)
   v1 = this;
   RGE_View::set_selection_area(this, -1, -1, -1, -1);
   RGE_Base_Game::get_mouse_pos(rge_base_game, &point);
-  if ( point.x >= v1->render_rect.left
+  if( point.x >= v1->render_rect.left
     && point.x <= v1->render_rect.right
     && point.y >= v1->render_rect.top
     && point.y <= v1->render_rect.bottom
     && (unsigned __int8)RGE_View::pick(v1, 40, 0, point.x, point.y, &pick_info, 0) == 51 )
   {
-    if ( rge_base_game->game_mode == 19 )
+    if( rge_base_game->game_mode == 19 )
     {
       pick_info.x = 1.0 - (double)(signed int)(-3 * (unsigned __int64)(signed __int64)(pick_info.x * 0.33333334));
       v2 = 3;
@@ -1929,11 +1929,11 @@ int __thiscall RGE_View::pick(RGE_View *this, char pick_mode_in, char select_lev
              &v9->y,
              &v9->scr_x,
              &v9->scr_y);
-  if ( (_BYTE)result == 52 )
+  if( (_BYTE)result == 52 )
   {
     v8->object = (RGE_Static_Object *)pick_mode_in;
   }
-  else if ( (_BYTE)result == 51 )
+  else if( (_BYTE)result == 51 )
   {
     v8->tile = (RGE_Tile *)pick_mode_in;
   }
@@ -1969,19 +1969,19 @@ char __thiscall RGE_View::pick_multi(RGE_View *this, char select_level, int x1, 
   v8 = 0;
   picked_any = 0;
   v9 = RGE_View::pick_multi_objects(this, x1, y1, x2, y2, 10, 20, this->player->id, select_level, 1);
-  if ( v9 > 0 )
+  if( v9 > 0 )
   {
     v10 = &Picked_Objects;
     do
     {
-      if ( *v10 != -1 )
+      if( *v10 != -1 )
       {
         v11 = v6->world->objectsValue[*v10];
-        if ( v11 )
+        if( v11 )
         {
-          if ( v11->object_state < 7u )
+          if( v11->object_state < 7u )
           {
-            if ( !RGE_Player::select_one_object(v6->player, v11, 0) )
+            if( !RGE_Player::select_one_object(v6->player, v11, 0) )
               break;
             picked_any = 1;
           }
@@ -1990,10 +1990,10 @@ char __thiscall RGE_View::pick_multi(RGE_View *this, char select_level, int x1, 
       ++v8;
       v10 += 3;
     }
-    while ( v8 < v9 );
+    while( v8 < v9 );
     v7 = y1;
   }
-  if ( picked_any )
+  if( picked_any )
   {
     result = 1;
   }
@@ -2002,13 +2002,13 @@ char __thiscall RGE_View::pick_multi(RGE_View *this, char select_level, int x1, 
     v13 = x2 - x1;
     v14 = y2 - v7;
     v15 = x2 - x1;
-    if ( x2 - x1 >= y2 - v7 )
+    if( x2 - x1 >= y2 - v7 )
       v15 = y2 - v7;
-    if ( v15 >= 50 )
+    if( v15 >= 50 )
     {
       v16 = 50;
     }
-    else if ( v13 >= v14 )
+    else if( v13 >= v14 )
     {
       v16 = y2 - v7;
     }
@@ -2017,23 +2017,23 @@ char __thiscall RGE_View::pick_multi(RGE_View *this, char select_level, int x1, 
       v16 = x2 - x1;
     }
     v17 = RGE_View::pick_objects(v6, x1 + v13 / 2, v7 + v14 / 2, 10, 20, v16, 4, 1);
-    if ( !v17 )
+    if( !v17 )
       goto LABEL_41;
     v18 = 0;
     v19 = 0;
     x2a = 0;
-    if ( v17 > 0 )
+    if( v17 > 0 )
     {
       v20 = &Picked_Objects;
       y1a = v17;
       do
       {
-        if ( *(_DWORD *)v20 >= 0 )
+        if( *(_DWORD *)v20 >= 0 )
         {
           v21 = v6->world->objectsValue[*(_DWORD *)v20];
-          if ( v21 )
+          if( v21 )
           {
-            if ( v21->object_state < 7u
+            if( v21->object_state < 7u
               && v21->master_obj->select_level >= 2u
               && (v6->map->map_visible_flag
                || (int)v6->vfptr[1].__vecDelDtor((TPanel *)v6, (unsigned int)v21)
@@ -2046,9 +2046,9 @@ char __thiscall RGE_View::pick_multi(RGE_View *this, char select_level, int x1, 
                       v6,
                       v21,
                       *((_WORD *)v20 + 2));
-              if ( v21->owner == v6->player )
+              if( v21->owner == v6->player )
                 v22 += 5;
-              if ( v22 > v19 )
+              if( v22 > v19 )
               {
                 x2a = (int)v21;
                 v19 = v22;
@@ -2059,10 +2059,10 @@ char __thiscall RGE_View::pick_multi(RGE_View *this, char select_level, int x1, 
         v20 = (char *)v20 + 12;
         --y1a;
       }
-      while ( y1a );
+      while( y1a );
       v18 = (RGE_Static_Object *)x2a;
     }
-    if ( v18 && RGE_Player::select_one_object(v6->player, v18, 0) )
+    if( v18 && RGE_Player::select_one_object(v6->player, v18, 0) )
       result = 1;
     else
 LABEL_41:
@@ -2105,17 +2105,17 @@ int __thiscall RGE_View::pick_weight(RGE_View *this, RGE_Static_Object *obj, int
   obja = obj->master_obj->select_level;
   v4 = this->UC_ObjectTouched && this->UC_TouchedObj == v3->id;
   result = 0;
-  if ( obja != 2 )
+  if( obja != 2 )
   {
-    if ( obja != 3 )
+    if( obja != 3 )
     {
-      if ( obja == 4 )
+      if( obja == 4 )
       {
-        if ( v4 )
+        if( v4 )
         {
           result = 5;
         }
-        else if ( confidence == 1 || confidence == 2 )
+        else if( confidence == 1 || confidence == 2 )
         {
           result = 4;
         }
@@ -2130,21 +2130,21 @@ int __thiscall RGE_View::pick_weight(RGE_View *this, RGE_Static_Object *obj, int
       }
       return result;
     }
-    if ( v4 )
+    if( v4 )
       return 5;
-    if ( confidence != 1 )
+    if( confidence != 1 )
     {
-      if ( confidence == 2 )
+      if( confidence == 2 )
         result = 3;
       return result;
     }
     return 3;
   }
-  if ( v4 )
+  if( v4 )
     return 5;
-  if ( confidence == 1 || confidence == 2 )
+  if( confidence == 1 || confidence == 2 )
     return 3;
-  if ( confidence == 3 )
+  if( confidence == 3 )
     result = 2;
   return result;
 }
@@ -2158,11 +2158,11 @@ int __thiscall RGE_View::get_tile_screen_coords(RGE_View *this, __int16 find_col
   int v9; // esi@10
   int result; // eax@21
 
-  if ( scr_x )
+  if( scr_x )
     *scr_x = 0;
-  if ( scr_y )
+  if( scr_y )
     *scr_y = 0;
-  if ( find_col >= 0
+  if( find_col >= 0
     && (v6 = this->map, find_col < v6->map_width)
     && find_row >= 0
     && find_row < v6->map_height
@@ -2170,17 +2170,17 @@ int __thiscall RGE_View::get_tile_screen_coords(RGE_View *this, __int16 find_col
   {
     v8 = *(_BYTE *)(v7 + 4);
     v9 = *(_WORD *)(v7 + 2) + v6->tilesizes[*(_BYTE *)(v7 + 4)].y_delta - this->map_scr_y_offset;
-    if ( drop )
+    if( drop )
     {
-      if ( v8 )
+      if( v8 )
         v9 += this->elev_hgt / 2;
-      if ( v8 == 6 )
+      if( v8 == 6 )
         LOWORD(v9) = v9 - this->elev_hgt;
-      if ( v8 == 5 )
+      if( v8 == 5 )
         LOWORD(v9) = v9 - this->elev_hgt;
-      if ( v8 == 3 )
+      if( v8 == 3 )
         LOWORD(v9) = v9 - this->elev_hgt;
-      if ( v8 == 11 )
+      if( v8 == 11 )
         LOWORD(v9) = v9 - this->elev_hgt;
     }
     result = 1;
@@ -2204,39 +2204,39 @@ void __thiscall RGE_View::get_center_screen_pos(RGE_View *this, __int16 *scr_x, 
 //----- (00535ED0) --------------------------------------------------------
 void __thiscall RGE_View::get_start_coords(RGE_View *this, __int16 *map_col, __int16 *map_row, __int16 *scr_x, __int16 *scr_y)
 {
-  if ( map_col )
+  if( map_col )
     *map_col = this->start_map_col;
-  if ( map_row )
+  if( map_row )
     *map_row = this->start_map_row;
-  if ( scr_x )
+  if( scr_x )
     *scr_x = this->start_scr_col;
-  if ( scr_y )
+  if( scr_y )
     *scr_y = this->start_scr_row;
 }
 
 //----- (00535F20) --------------------------------------------------------
 void __thiscall RGE_View::get_center_coords(RGE_View *this, __int16 *map_col, __int16 *map_row, __int16 *scr_x, __int16 *scr_y)
 {
-  if ( map_col )
+  if( map_col )
     *map_col = this->center_map_col;
-  if ( map_row )
+  if( map_row )
     *map_row = this->center_map_row;
-  if ( scr_x )
+  if( scr_x )
     *scr_x = this->center_scr_col;
-  if ( scr_y )
+  if( scr_y )
     *scr_y = this->center_scr_row;
 }
 
 //----- (00535F70) --------------------------------------------------------
 void __thiscall RGE_View::get_tile_sizes(RGE_View *this, __int16 *wid, __int16 *hgt, __int16 *half_wid, __int16 *half_hgt)
 {
-  if ( wid )
+  if( wid )
     *wid = this->tile_wid;
-  if ( hgt )
+  if( hgt )
     *hgt = this->tile_hgt;
-  if ( half_wid )
+  if( half_wid )
     *half_wid = this->tile_half_wid;
-  if ( half_hgt )
+  if( half_hgt )
     *half_hgt = this->tile_half_hgt;
 }
 
@@ -2327,13 +2327,13 @@ int __thiscall RGE_View::view_function(RGE_View *this, char function_mode_in, ch
   v10 = this;
   this->function_mode = function_mode_in;
   this->function_parm = function_parm_in;
-  if ( function_mode_in == 10 )
+  if( function_mode_in == 10 )
   {
-    if ( this->calc_draw_count )
+    if( this->calc_draw_count )
     {
       v11 = this->map;
       v12 = 0;
-      if ( v11->num_terrain > 0 )
+      if( v11->num_terrain > 0 )
       {
         do
         {
@@ -2341,7 +2341,7 @@ int __thiscall RGE_View::view_function(RGE_View *this, char function_mode_in, ch
           v11->terrain_types[24 * v13 / 0x198u].drawn = 0;
           v11 = v10->map;
         }
-        while ( (signed __int16)v12 < v11->num_terrain );
+        while( (signed __int16)v12 < v11->num_terrain );
       }
     }
   }
@@ -2349,14 +2349,14 @@ int __thiscall RGE_View::view_function(RGE_View *this, char function_mode_in, ch
   LOBYTE(result) = v10->function_mode;
   v16 = picked_item;
   picked_type = 50;
-  if ( (_BYTE)result == 40 )
+  if( (_BYTE)result == 40 )
     goto LABEL_11;
-  if ( (_BYTE)result != 60 )
+  if( (_BYTE)result != 60 )
   {
-    if ( (_BYTE)result != 41 && (_BYTE)result != 42 && (_BYTE)result != 43 && (_BYTE)result != 44 )
+    if( (_BYTE)result != 41 && (_BYTE)result != 42 && (_BYTE)result != 43 && (_BYTE)result != 44 )
       goto LABEL_19;
 LABEL_11:
-    if ( (_BYTE)result != 60 )
+    if( (_BYTE)result != 60 )
       goto LABEL_13;
   }
   v17 = *item_y;
@@ -2370,12 +2370,12 @@ LABEL_13:
   *item_scr_x = 0;
   *item_scr_y = 0;
   LOBYTE(result) = v10->function_mode;
-  if ( (_BYTE)result == 41 || (_BYTE)result == 42 || (_BYTE)result == 43 || (_BYTE)result == 44 )
+  if( (_BYTE)result == 41 || (_BYTE)result == 42 || (_BYTE)result == 43 || (_BYTE)result == 44 )
     orig_picked_obj = (RGE_Static_Object *)*picked_item;
   *picked_item = 0;
   last_picked_obj = 0;
 LABEL_19:
-  if ( v10->function_mode != 14
+  if( v10->function_mode != 14
     || (result = RGE_View::get_selection_area(v10, &calc_sel_col1, &calc_sel_row1, &calc_sel_col2, &calc_sel_row2, 1)) != 0 )
   {
     LOWORD(start_scr_col2) = v10->start_scr_col;
@@ -2389,7 +2389,7 @@ LABEL_19:
     cur_col_num = v14;
     direction = 4;
     row_num = 0;
-    if ( (signed __int16)(2 * result) > 0 )
+    if( (signed __int16)(2 * result) > 0 )
     {
       do
       {
@@ -2399,12 +2399,12 @@ LABEL_19:
         map_col = start_map_col2;
         map_row = start_map_row2;
         col_num = 0;
-        if ( (signed __int16)cur_col_num > 0 )
+        if( (signed __int16)cur_col_num > 0 )
         {
           do
           {
             v18 = (int)map_col;
-            if ( (signed __int16)map_col < 0
+            if( (signed __int16)map_col < 0
               || (v19 = (int)v10->map, (signed int)(signed __int16)map_col >= *(_DWORD *)(v19 + 8)) )
             {
               v20 = map_row;
@@ -2412,7 +2412,7 @@ LABEL_19:
             else
             {
               v20 = map_row;
-              if ( map_row >= 0 && (signed int)map_row < *(_DWORD *)(v19 + 12) )
+              if( map_row >= 0 && (signed int)map_row < *(_DWORD *)(v19 + 12) )
               {
                 v21 = 1;
                 goto LABEL_32;
@@ -2420,23 +2420,23 @@ LABEL_19:
             }
             v22 = v10->function_mode;
             v21 = 0;
-            if ( v22 != 40 )
+            if( v22 != 40 )
             {
-              if ( v22 != 42 )
+              if( v22 != 42 )
                 goto LABEL_139;
               v18 = (int)map_col;
               v20 = map_row;
             }
 LABEL_32:
-            if ( !v21 )
+            if( !v21 )
               goto LABEL_171;
             v23 = v10->player->visible;
-            if ( !v23 || v10->map->map_visible_flag )
+            if( !v23 || v10->map->map_visible_flag )
             {
               v24 = v20;
               v25 = (signed __int16)v18;
               visible = RGE_Visible_Map::get_visible(v23, (signed __int16)v18, v20);
-              if ( !visible )
+              if( !visible )
                 visible = -128;
             }
             else
@@ -2446,26 +2446,26 @@ LABEL_32:
               v26 = RGE_Visible_Map::get_visible(v23, (signed __int16)v18, v20);
               LOBYTE(v19) = v10->function_mode;
               visible = v26;
-              if ( (_BYTE)v19 == 30 || (_BYTE)v19 == 31 )
+              if( (_BYTE)v19 == 30 || (_BYTE)v19 == 31 )
                 visible = 15;
             }
-            if ( v10->function_mode == 11 )
+            if( v10->function_mode == 11 )
             {
               v18 = (int)&v10->map->map_row_offset[v24]->screen_xpos;
               v19 = v18 + 24 * v25;
-              if ( *(_BYTE *)(v18 + 24 * v25 + 9) == *(_BYTE *)(v19 + 7) )
+              if( *(_BYTE *)(v18 + 24 * v25 + 9) == *(_BYTE *)(v19 + 7) )
 LABEL_171:
                 visible = 0;
             }
-            if ( visible != 15 && visible != -128 )
+            if( visible != 15 && visible != -128 )
               visible = 0;
-            if ( !visible )
+            if( !visible )
             {
               v27 = v10->function_mode;
-              if ( v27 != 14 && v27 != 40 && v27 != 60 && v27 != 42 )
+              if( v27 != 14 && v27 != 40 && v27 != 60 && v27 != 42 )
                 goto LABEL_139;
             }
-            if ( v21 )
+            if( v21 )
             {
               v19 = 3 * (signed __int16)map_col;
               v18 = (int)&v10->map->map_row_offset[map_row]->screen_xpos;
@@ -2501,18 +2501,18 @@ LABEL_171:
                 break;
             }
             v30 = 1;
-            if ( (signed __int16)screen_col <= v10->render_rect.right )
+            if( (signed __int16)screen_col <= v10->render_rect.right )
             {
               v18 = v10->render_rect.bottom;
               v28 = (signed __int16)v28;
-              if ( (signed __int16)v28 <= v18 )
+              if( (signed __int16)v28 <= v18 )
               {
                 v29 = v10->map;
                 v18 = (signed __int16)screen_col + *((_WORD *)&v29->vfptr + 3 * (tile_type + 4));
-                if ( v18 > v10->render_rect.left )
+                if( v18 > v10->render_rect.left )
                 {
                   v19 = v28 + v29->tilesizes[tile_type].height;
-                  if ( v19 > v10->render_rect.top
+                  if( v19 > v10->render_rect.top
                     && (v10->function_mode != 14
                      || (signed __int16)map_col >= calc_sel_col1
                      && (signed __int16)map_col <= calc_sel_col2
@@ -2525,9 +2525,9 @@ LABEL_171:
               }
             }
             v31 = v10->function_mode;
-            if ( v31 != 10 && v31 != 30 && v31 != 31 && v31 != 32 && v31 != 21 && v31 != 11 && v31 != 14 )
+            if( v31 != 10 && v31 != 30 && v31 != 31 && v31 != 32 && v31 != 21 && v31 != 11 && v31 != 14 )
             {
-              if ( visible != 15 && visible != -128 || v31 != 41 && v31 != 42 && v31 != 43 && v31 != 44 )
+              if( visible != 15 && visible != -128 || v31 != 41 && v31 != 42 && v31 != 43 && v31 != 44 )
                 goto LABEL_88;
               fog_flag = visible != 15 && (visible != -128 || v10->map->fog_flag) ? 1 : 0;
               v32 = orig_picked_obj;
@@ -2544,20 +2544,20 @@ LABEL_171:
                       item_scr_y,
                       orig_picked_obj,
                       fog_flag);
-              if ( !v33 )
+              if( !v33 )
                 goto LABEL_88;
-              if ( v10->function_mode == 44 )
+              if( v10->function_mode == 44 )
               {
                 picked_type = 52;
                 goto LABEL_88;
               }
-              if ( v32 && v33 == v32 && picked_type == 52 )
+              if( v32 && v33 == v32 && picked_type == 52 )
               {
                 *picked_item = last_picked_obj;
                 return 52;
               }
               HIWORD(v19) = HIWORD(last_picked_obj);
-              if ( last_picked_obj
+              if( last_picked_obj
                 && (v18 = (int)last_picked_obj->master_obj,
                     (unsigned __int8)v33->master_obj->select_level < *(_BYTE *)(v18 + 141))
                 && (last_picked_obj != v32 || v33 == v32) )
@@ -2578,9 +2578,9 @@ LABEL_88:
                 picked_type = 52;
               }
               v36 = v10->function_mode;
-              if ( v36 == 40 || v36 == 42 && picked_type == 50 )
+              if( v36 == 40 || v36 == 42 && picked_type == 50 )
               {
-                if ( RGE_View::hit_tile(
+                if( RGE_View::hit_tile(
                        v10,
                        map_col,
                        (RGE_Tile *)v21,
@@ -2590,7 +2590,7 @@ LABEL_88:
                        map_row,
                        mouse_pos) )
                 {
-                  if ( v21 )
+                  if( v21 )
                   {
                     RGE_Map::tile_map_coords(
                       v10->map,
@@ -2617,10 +2617,10 @@ LABEL_88:
                   *picked_item = (void *)v21;
                 }
               }
-              else if ( v36 == 60 )
+              else if( v36 == 60 )
               {
                 HIWORD(v19) = HIWORD(map_col);
-                if ( (_WORD)map_col == (_WORD)find_col && map_row == (_WORD)find_row )
+                if( (_WORD)map_col == (_WORD)find_col && map_row == (_WORD)find_row )
                 {
                   *v35 = (double)(signed __int16)map_col;
                   max_row_num2 = map_row;
@@ -2634,10 +2634,10 @@ LABEL_88:
               }
               goto LABEL_139;
             }
-            if ( !v30 )
+            if( !v30 )
             {
               v38 = v10->function_mode;
-              if ( v38 == 10 || v38 == 11 || v38 == 14 )
+              if( v38 == 10 || v38 == 11 || v38 == 14 )
               {
                 v39 = v10->map;
                 v40 = *(_BYTE *)(v21 + 5) & 0x1F;
@@ -2645,29 +2645,29 @@ LABEL_88:
                 v18 = terrain_type;
                 v19 = 51 * (unsigned __int8)terrain_type;
                 v41 = v39->terrain_types[(unsigned __int8)terrain_type].terrain_to_draw;
-                if ( v41 != -1 )
+                if( v41 != -1 )
                 {
                   v40 = v39->terrain_types[(unsigned __int8)terrain_type].terrain_to_draw;
                   LOBYTE(terrain_type) = v39->terrain_types[(unsigned __int8)terrain_type].terrain_to_draw;
                   v18 = terrain_type;
                 }
-                if ( v10->function_mode == 10 && v10->calc_draw_count && v40 < v39->num_terrain )
+                if( v10->function_mode == 10 && v10->calc_draw_count && v40 < v39->num_terrain )
                 {
                   v18 = (unsigned __int8)v18;
                   v19 = 51 * (unsigned __int8)v18;
                   ++v39->terrain_types[v18].drawn;
                 }
-                if ( v10->function_mode == 11 )
+                if( v10->function_mode == 11 )
                   *(_BYTE *)(v21 + 7) = *(_BYTE *)(v21 + 9);
               }
             }
-            if ( visible != 15 && visible != -128 )
+            if( visible != 15 && visible != -128 )
               goto LABEL_139;
             v42 = v10->function_mode;
-            if ( v42 != 30 && v42 != 31 && v42 != 32 && v42 != 21 )
+            if( v42 != 30 && v42 != 31 && v42 != 32 && v42 != 21 )
               goto LABEL_139;
             fog_flaga = visible != 15 && (visible != -128 || (v19 = (int)v10->map, *(_BYTE *)(v19 + 36281)));
-            if ( v42 == 30 )
+            if( v42 == 30 )
             {
               v10->cur_render_area->CurSpanList = v10->Terrain_Fog_Clip_Mask;
               fog_next_shape = 1;
@@ -2692,7 +2692,7 @@ LABEL_88:
               v18 = (int)v43->SpanList;
               v43->CurSpanList = (TSpan_List_Manager *)v18;
             }
-            if ( v10->function_mode == 31 )
+            if( v10->function_mode == 31 )
             {
               v10->cur_render_area->CurSpanList = v10->Terrain_Fog_Clip_Mask;
               fog_next_shape = 1;
@@ -2718,9 +2718,9 @@ LABEL_88:
               v44->CurSpanList = (TSpan_List_Manager *)v19;
             }
             v45 = v10->function_mode;
-            if ( v45 == 32 )
+            if( v45 == 32 )
             {
-              if ( v10->map->fog_flag && visible == -128 )
+              if( v10->map->fog_flag && visible == -128 )
                 fog_next_shape = 1;
               RGE_Object_List::shadow_draw(
                 (RGE_Object_List *)(v21 + 12),
@@ -2733,9 +2733,9 @@ LABEL_138:
               fog_next_shape = 0;
               goto LABEL_139;
             }
-            if ( v45 == 21 )
+            if( v45 == 21 )
             {
-              if ( v10->map->fog_flag && visible == -128 )
+              if( v10->map->fog_flag && visible == -128 )
                 fog_next_shape = 1;
               RGE_Object_List::normal_draw(
                 (RGE_Object_List *)(v21 + 12),
@@ -2754,9 +2754,9 @@ LABEL_139:
             ++map_row;
             ++col_num;
           }
-          while ( v46 ^ v47 );
+          while( v46 ^ v47 );
         }
-        if ( direction == 1 && (_WORD)cur_col_num == (_WORD)max_col_num2 )
+        if( direction == 1 && (_WORD)cur_col_num == (_WORD)max_col_num2 )
           direction = 2;
         switch ( direction )
         {
@@ -2790,14 +2790,14 @@ LABEL_139:
         start_scr_row2 += v18;
         ++row_num;
       }
-      while ( (signed __int16)row_num < (signed __int16)max_row_num2 );
+      while( (signed __int16)row_num < (signed __int16)max_row_num2 );
       v16 = picked_item;
     }
-    if ( v10->function_mode == 10 )
+    if( v10->function_mode == 10 )
     {
       v48 = v10->map;
       v49 = 0;
-      if ( v48->num_terrain > 0 )
+      if( v48->num_terrain > 0 )
       {
         do
         {
@@ -2805,11 +2805,11 @@ LABEL_139:
           v48->terrain_types[24 * v50 / 0x198u].frame_changed = 0;
           v48 = v10->map;
         }
-        while ( (signed __int16)v49 < v48->num_terrain );
+        while( (signed __int16)v49 < v48->num_terrain );
       }
     }
     v51 = v10->function_mode;
-    if ( (v51 == 41 || v51 == 42 || v51 == 43) && picked_type == 52 )
+    if( (v51 == 41 || v51 == 42 || v51 == 43) && picked_type == 52 )
       *v16 = last_picked_obj;
     result = (unsigned __int8)picked_type;
   }
@@ -2976,7 +2976,7 @@ int __thiscall RGE_View::view_function_terrain(RGE_View *this, char function_mod
 
   v3 = this;
   v4 = 0;
-  if ( this->DispSel_List_Size > 0 )
+  if( this->DispSel_List_Size > 0 )
     RGE_View::update_display_selected_objects(this);
   v5 = v3->max_row_num;
   v6 = v3->start_map_row;
@@ -2992,7 +2992,7 @@ int __thiscall RGE_View::view_function_terrain(RGE_View *this, char function_mod
   v10 = v3->map;
   v11 = 0;
   Map_Height = v9;
-  if ( v10->num_terrain > 0 )
+  if( v10->num_terrain > 0 )
   {
     v12 = 0;
     do
@@ -3002,7 +3002,7 @@ int __thiscall RGE_View::view_function_terrain(RGE_View *this, char function_mod
       ++v11;
       ++v12;
     }
-    while ( v11 < v10->num_terrain );
+    while( v11 < v10->num_terrain );
   }
   v13 = v3->player;
   v14 = v13->mutualExploredMask;
@@ -3014,39 +3014,39 @@ int __thiscall RGE_View::view_function_terrain(RGE_View *this, char function_mod
   TileVisibleMask = v15;
   DClipInfo_List::ReclaimAllNodes(v17);
   LDI = (DClipInfo_Node *)-1;
-  if ( !v3->player->visible || (v18 = v3->map, Full_Visibility = 0, v18->map_visible_flag) )
+  if( !v3->player->visible || (v18 = v3->map, Full_Visibility = 0, v18->map_visible_flag) )
     Full_Visibility = 1;
   newFacet = 0;
-  if ( v7 > 0 )
+  if( v7 > 0 )
   {
-    while ( 1 )
+    while( 1 )
     {
       v19 = start_map_x;
       map_col = start_map_x;
       map_row = text_id;
-      if ( (v4 & 3) == 3 && MouseSystem )
+      if( (v4 & 3) == 3 && MouseSystem )
         TMousePointer::Poll(MouseSystem);
       v20 = v4 & 1;
       v152 = v4 & 1;
-      if ( v20 == 1 && v3->Queued_Blits )
+      if( v20 == 1 && v3->Queued_Blits )
         RGE_View::ProcessQueuedBlit(v3, 0);
       col_num = 0;
-      if ( cols_2_scan > 0 )
+      if( cols_2_scan > 0 )
         break;
 LABEL_126:
-      if ( v20 == 1 )
+      if( v20 == 1 )
         ++text_id;
       else
         --start_map_x;
       newFacet = ++v4;
-      if ( v4 >= rows_2_scan )
+      if( v4 >= rows_2_scan )
         goto LABEL_130;
     }
-    while ( 1 )
+    while( 1 )
     {
-      if ( map_row >= 0 && v19 >= 0 )
+      if( map_row >= 0 && v19 >= 0 )
       {
-        if ( map_row < Map_Height && v19 < Map_Width )
+        if( map_row < Map_Height && v19 < Map_Width )
         {
           v21 = v3->map;
           v22 = v21->map_row_offset[map_row];
@@ -3056,23 +3056,23 @@ LABEL_126:
           black_draw_data = (VSpanMiniList *)(v24 + v3->tile_wid);
           screen_row2 = screen_row + v21->tilesizes[*(_BYTE *)(v23 + 4)].height;
           v25 = (&unified_map_offsets)[map_row][v19];
-          if ( TileVisibleMask & (unsigned int)v25 )
+          if( TileVisibleMask & (unsigned int)v25 )
           {
             MapVis = 15;
 LABEL_27:
-            if ( v24 <= v3->render_rect.right
+            if( v24 <= v3->render_rect.right
               && screen_row <= v3->render_rect.bottom
               && (signed int)black_draw_data > v3->render_rect.left
               && screen_row2 > v3->render_rect.top )
             {
-              if ( v3->calc_draw_count && (*(_BYTE *)(v23 + 5) & 0x1F) < v21->num_terrain )
+              if( v3->calc_draw_count && (*(_BYTE *)(v23 + 5) & 0x1F) < v21->num_terrain )
                 ++v21->terrain_types[*(_BYTE *)(v23 + 5) & 0x1F].drawn;
               tile_mask_num = -1;
               black_tile_mask_num = -1;
               v26 = v3->render_terrain_mode;
               clip_to = 0;
               rect2 = 0;
-              if ( v26
+              if( v26
                 && *(_BYTE *)(v23 + 7) == MapVis
                 && (MapVis != 15
                  || (v3->map->fog_flag ? (tile_mask_num = RGE_View::get_tile_mask_num(
@@ -3093,11 +3093,11 @@ LABEL_27:
                                                                  TileFoggedMask)) : (black_tile_mask_num = 0),
                      *(_BYTE *)(v23 + 11) == black_tile_mask_num)) )
               {
-                if ( v3->Limited_Render_Rect )
+                if( v3->Limited_Render_Rect )
                 {
-                  if ( v3->Use_Rect2 )
+                  if( v3->Use_Rect2 )
                   {
-                    if ( v24 > v3->Render_Rect2.right
+                    if( v24 > v3->Render_Rect2.right
                       || (signed int)black_draw_data < v3->Render_Rect2.left
                       || screen_row > v3->Render_Rect2.bottom
                       || (v27 = v3->Render_Rect2.top, rect2 = 1, screen_row2 < v27) )
@@ -3105,7 +3105,7 @@ LABEL_27:
                       rect2 = 0;
                     }
                   }
-                  if ( v24 <= v3->Render_Rect1.right
+                  if( v24 <= v3->Render_Rect1.right
                     && (signed int)black_draw_data >= v3->Render_Rect1.left
                     && screen_row <= v3->Render_Rect1.bottom
                     && screen_row2 >= v3->Render_Rect1.top )
@@ -3113,7 +3113,7 @@ LABEL_27:
                     clip_to = 1;
                     goto draw_this_tile;
                   }
-                  if ( rect2 )
+                  if( rect2 )
                   {
                     rect2 = 0;
                     clip_to = 2;
@@ -3128,7 +3128,7 @@ draw_this_tile:
                 v29 = &v3->Tile_Edge_Tables[v28]->normal_draw;
                 v30 = v3->map;
                 black_draw = (int)v3->Black_Edge_Tables[v28];
-                if ( v30->fog_flag )
+                if( v30->fog_flag )
                 {
                   v31 = 0;
                 }
@@ -3137,11 +3137,11 @@ draw_this_tile:
                   v31 = 0;
                   tile_mask_num = 0;
                 }
-                if ( Full_Visibility )
+                if( Full_Visibility )
                   black_tile_mask_num = 0;
-                if ( tile_mask_num == -1 )
+                if( tile_mask_num == -1 )
                 {
-                  if ( MapVis == 15 )
+                  if( MapVis == 15 )
                   {
                     tile_mask_num = RGE_View::get_tile_mask_num(
                                       v3,
@@ -3157,9 +3157,9 @@ draw_this_tile:
                     tile_mask_num = 0;
                   }
                 }
-                if ( black_tile_mask_num == -1 )
+                if( black_tile_mask_num == -1 )
                 {
-                  if ( MapVis )
+                  if( MapVis )
                     v31 = RGE_View::get_tile_mask_num(v3, map_col, map_row, Map_Width, Map_Height, TileFoggedMask);
                   black_tile_mask_num = v31;
                 }
@@ -3168,7 +3168,7 @@ draw_this_tile:
                 fog_draw_data = v32;
                 v33 = *(_DWORD *)(black_draw + 4 * black_tile_mask_num);
                 black_draw_data = *(VSpanMiniList **)(black_draw + 4 * black_tile_mask_num);
-                if ( MapVis == -128 )
+                if( MapVis == -128 )
                 {
                   v34 = *v29;
                   fog_draw = 1;
@@ -3180,12 +3180,12 @@ draw_this_tile:
                   screen_row2 = normal_draw_data != 0;
                   fog_draw = v32 != 0;
                 }
-                if ( black_tile_mask_num <= 0 || (black_draw = 1, !v33) )
+                if( black_tile_mask_num <= 0 || (black_draw = 1, !v33) )
                   black_draw = 0;
                 v35 = clip_to;
-                if ( (DClipInfo_Node *)clip_to != LDI )
+                if( (DClipInfo_Node *)clip_to != LDI )
                 {
-                  if ( !clip_to )
+                  if( !clip_to )
                   {
                     TSpan_List_Manager::SetSpanRegions(
                       v3->Terrain_Clip_Mask,
@@ -3201,7 +3201,7 @@ draw_this_tile:
                       v3->render_rect.bottom);
                     v35 = 0;
                   }
-                  if ( v35 == 1 )
+                  if( v35 == 1 )
                   {
                     TSpan_List_Manager::SetSpanRegions(
                       v3->Terrain_Clip_Mask,
@@ -3217,7 +3217,7 @@ draw_this_tile:
                       v3->Render_Rect1.bottom);
                     v35 = clip_to;
                   }
-                  if ( v35 == 2 )
+                  if( v35 == 2 )
                   {
                     TSpan_List_Manager::SetSpanRegions(
                       v3->Terrain_Clip_Mask,
@@ -3235,18 +3235,18 @@ draw_this_tile:
                   }
                   LDI = (DClipInfo_Node *)v35;
                 }
-                if ( screen_row2 )
+                if( screen_row2 )
                   TSpan_List_Manager::AddMiniList(v3->Terrain_Clip_Mask, normal_draw_data, v24, screen_row);
-                if ( fog_draw )
+                if( fog_draw )
                   TSpan_List_Manager::AddMiniList(v3->Terrain_Fog_Clip_Mask, fog_draw_data, v24, screen_row);
-                if ( black_draw )
+                if( black_draw )
                 {
-                  if ( screen_row2 )
+                  if( screen_row2 )
                     TSpan_List_Manager::SubtractMiniList(v3->Terrain_Clip_Mask, black_draw_data, v24, screen_row);
-                  if ( fog_draw )
+                  if( fog_draw )
                     TSpan_List_Manager::SubtractMiniList(v3->Terrain_Fog_Clip_Mask, black_draw_data, v24, screen_row);
                 }
-                if ( rect2 )
+                if( rect2 )
                 {
                   TSpan_List_Manager::SetSpanRegions(
                     v3->Terrain_Clip_Mask,
@@ -3262,15 +3262,15 @@ draw_this_tile:
                     v3->Render_Rect2.bottom);
                   v36 = screen_row;
                   LDI = (DClipInfo_Node *)2;
-                  if ( screen_row2 )
+                  if( screen_row2 )
                     TSpan_List_Manager::AddMiniList(v3->Terrain_Clip_Mask, normal_draw_data, v24, screen_row);
-                  if ( fog_draw )
+                  if( fog_draw )
                     TSpan_List_Manager::AddMiniList(v3->Terrain_Fog_Clip_Mask, fog_draw_data, v24, screen_row);
-                  if ( black_draw )
+                  if( black_draw )
                   {
-                    if ( screen_row2 )
+                    if( screen_row2 )
                       TSpan_List_Manager::SubtractMiniList(v3->Terrain_Clip_Mask, black_draw_data, v24, screen_row);
-                    if ( fog_draw )
+                    if( fog_draw )
                       TSpan_List_Manager::SubtractMiniList(v3->Terrain_Fog_Clip_Mask, black_draw_data, v24, screen_row);
                   }
                 }
@@ -3280,7 +3280,7 @@ draw_this_tile:
                 }
                 y = *(_BYTE *)(v23 + 5) & 0x1F;
                 v37 = v3->map->terrain_types[(unsigned __int8)y].terrain_to_draw;
-                if ( v37 != -1 )
+                if( v37 != -1 )
                   y = v3->map->terrain_types[(unsigned __int8)y].terrain_to_draw;
                 v38 = tile_mask_num;
                 *(_BYTE *)(v23 + 11) = black_tile_mask_num;
@@ -3299,7 +3299,7 @@ draw_this_tile:
           }
           else
           {
-            if ( (unsigned int)v25 & TileFoggedMask || Full_Visibility )
+            if( (unsigned int)v25 & TileFoggedMask || Full_Visibility )
             {
               MapVis = v21->fog_flag != 0 ? -128 : 15;
               goto LABEL_27;
@@ -3307,22 +3307,22 @@ draw_this_tile:
             MapVis = 0;
             *(_BYTE *)(v23 + 7) = 0;
           }
-          if ( v23 && (*(_BYTE *)(v23 + 10) & 0x40) == 64 )
+          if( v23 && (*(_BYTE *)(v23 + 10) & 0x40) == 64 )
           {
             ya = *(_BYTE *)(v23 + 5) & 0x1F;
             v42 = v3->map->terrain_types[(unsigned __int8)ya].terrain_to_draw;
-            if ( v42 != -1 )
+            if( v42 != -1 )
               ya = v3->map->terrain_types[(unsigned __int8)ya].terrain_to_draw;
             RGE_View::draw_tile(v3, (RGE_Tile *)v23, ya, v24, screen_row, v19, map_row, MapVis, 1, 1);
             *(_BYTE *)(v23 + 10) &= 0xBFu;
           }
           HIWORD(v43) = HIWORD(view_debug_Objects);
-          if ( !view_debug_Objects && v23 )
+          if( !view_debug_Objects && v23 )
           {
             SDI_Capture_Info = 1;
-            if ( !MapVis )
+            if( !MapVis )
               DClipInfo_List::SetCaptureLevel(v3->futur_objs, 0, 5);
-            if ( MapVis != 15 )
+            if( MapVis != 15 )
               fog_next_shape = 1;
             LOWORD(v43) = v3->tile_half_hgt * (unsigned __int8)(*(_BYTE *)(v23 + 5) >> 5);
             RGE_Object_List::draw((RGE_Object_List *)(v23 + 12), v3->save_area1, v24, screen_row + v43, MapVis == -128);
@@ -3341,7 +3341,7 @@ SkipCol:
       map_col = v19;
       ++map_row;
       ++col_num;
-      if ( !(v44 ^ v45) )
+      if( !(v44 ^ v45) )
       {
         v20 = v152;
         v4 = newFacet;
@@ -3350,16 +3350,16 @@ SkipCol:
     }
   }
 LABEL_130:
-  while ( v3->Queued_Blits )
+  while( v3->Queued_Blits )
     RGE_View::ProcessQueuedBlit(v3, 1);
-  if ( MouseSystem )
+  if( MouseSystem )
     TMousePointer::Poll(MouseSystem);
   v3->render_rect.left += save_render_rect.left;
   v3->render_rect.top += save_render_rect.top;
   v3->render_rect.right += save_render_rect.left;
   v3->render_rect.bottom += save_render_rect.top;
   SDI_Capture_Info = 1;
-  if ( v3->scroll_action == 2 )
+  if( v3->scroll_action == 2 )
     DClipInfo_List::AddGDINode(
       v3->futur_objs,
       4,
@@ -3376,38 +3376,38 @@ LABEL_130:
       255,
       0);
   v46 = rge_base_game->game_mode;
-  if ( v46 == 1 || v46 > 6 && v46 <= 8 )
+  if( v46 == 1 || v46 > 6 && v46 <= 8 )
     RGE_View::draw_object_outline(v3);
-  if ( rge_base_game->game_mode == 21 )
+  if( rge_base_game->game_mode == 21 )
     (*(void (__thiscall **)(RGE_View *))&v3->vfptr[1].gap10[8])(v3);
   v120 = 0;
-  if ( v3->extra_sprites )
+  if( v3->extra_sprites )
   {
     v47 = debug_timeGetTime();
     v48 = v3->extra_sprites;
     newFacet = v47;
-    while ( v48 )
+    while( v48 )
     {
       v49 = 0;
-      if ( v48->theShape )
+      if( v48->theShape )
       {
         v50 = v48->LastDrawTime;
-        if ( v50 )
+        if( v50 )
         {
           v51 = v48->displayfunction;
-          if ( v51 == 1 || v51 == 2 )
+          if( v51 == 1 || v51 == 2 )
           {
             v52 = newFacet - v50;
-            if ( newFacet - v50 >= v48->DrawTimeInterval )
+            if( newFacet - v50 >= v48->DrawTimeInterval )
             {
               do
               {
                 v53 = v48->theShape;
-                if ( ++v48->thefacet >= TShape::shape_count(v53) )
+                if( ++v48->thefacet >= TShape::shape_count(v53) )
                 {
                   v54 = v48->displayfunction;
                   v48->thefacet = 0;
-                  if ( v54 == 2 )
+                  if( v54 == 2 )
                   {
                     v49 = 1;
                     v120 = 1;
@@ -3417,7 +3417,7 @@ LABEL_130:
                 v52 -= v55;
                 v48->LastDrawTime += v55;
               }
-              while ( v52 >= v55 );
+              while( v52 >= v55 );
             }
           }
         }
@@ -3425,15 +3425,15 @@ LABEL_130:
         {
           v48->LastDrawTime = newFacet;
         }
-        if ( v49 )
+        if( v49 )
         {
 LABEL_157:
           v57 = &v48->prev->next;
-          if ( v57 )
+          if( v57 )
             *v57 = v48->next;
-          if ( v48->next )
+          if( v48->next )
             v48->next->prev = v48->prev;
-          if ( !v48->prev )
+          if( !v48->prev )
             v3->extra_sprites = v48->next;
           v58 = v48->next;
           operator delete(v48);
@@ -3452,12 +3452,12 @@ LABEL_157:
           v48->flags,
           v48->colortable);
       }
-      if ( v49 )
+      if( v49 )
         goto LABEL_157;
       v48 = v48->next;
     }
   }
-  if ( v120 )
+  if( v120 )
     RGE_View::reset_cyclic_overlay_sprites(v3);
   v59 = 0;
   SDI_Capture_Info = 0;
@@ -3466,16 +3466,16 @@ LABEL_157:
   v3->render_rect.right -= save_render_rect.left;
   v3->render_rect.bottom -= save_render_rect.top;
   v60 = v3->futur_objs;
-  if ( v60->YLine_Size > 0 )
+  if( v60->YLine_Size > 0 )
   {
     do
     {
-      for ( i = v60->Draw_Clip_Nodes[v59]; i; i = i->Next )
+      for( i = v60->Draw_Clip_Nodes[v59]; i; i = i->Next )
       {
         v62 = v3->futur_objs;
         v63 = i->Draw_Level;
         v64 = v62->Draw_Level_Tail[v63];
-        if ( v64 )
+        if( v64 )
           v64->NextOnLevel = i;
         else
           v62->Draw_Level_Head[v63] = i;
@@ -3484,12 +3484,12 @@ LABEL_157:
       v60 = v3->futur_objs;
       ++v59;
     }
-    while ( v59 < v60->YLine_Size );
+    while( v59 < v60->YLine_Size );
   }
   v65 = 0;
   Clip_draw = 0;
   Clip_remove = 0;
-  if ( LDI )
+  if( LDI )
   {
     TSpan_List_Manager::SetSpanRegions(
       v3->Terrain_Clip_Mask,
@@ -3506,9 +3506,9 @@ LABEL_157:
   }
   do
   {
-    for ( j = v3->futur_objs->Draw_Level_Head[v65]; j; j = j->NextOnLevel )
+    for( j = v3->futur_objs->Draw_Level_Head[v65]; j; j = j->NextOnLevel )
     {
-      if ( !j->Node_Type )
+      if( !j->Node_Type )
       {
         v67 = v3->Terrain_Clip_Mask;
         ASMSet_Surface_Info(
@@ -3553,33 +3553,33 @@ LABEL_157:
     }
     ++v65;
   }
-  while ( v65 <= 5 );
+  while( v65 <= 5 );
   v70 = MouseSystem;
-  if ( MouseSystem )
+  if( MouseSystem )
   {
     TMousePointer::Poll(MouseSystem);
     v70 = MouseSystem;
   }
-  if ( rge_base_game->prog_mode == 4 )
+  if( rge_base_game->prog_mode == 4 )
   {
-    if ( v3->have_focus )
+    if( v3->have_focus )
     {
-      if ( TMousePointer::get_game_enable(v70) )
+      if( TMousePointer::get_game_enable(v70) )
       {
         v71 = debug_timeGetTime();
-        if ( RGE_View::Get_Cursor_Position(v3, &CPoint, -save_render_rect.left, -save_render_rect.top) )
+        if( RGE_View::Get_Cursor_Position(v3, &CPoint, -save_render_rect.left, -save_render_rect.top) )
         {
           v72 = RGE_View::pick_touched_object(v3, v3->futur_objs, CPoint.x, CPoint.y, 10, 40, &theObj) == 1;
           v73 = v3->UC_ObjectTouched;
-          if ( v72 )
+          if( v72 )
           {
             v72 = v73 == 0;
             v74 = theObj;
-            if ( !v72 && v3->UC_TouchedObj == theObj )
+            if( !v72 && v3->UC_TouchedObj == theObj )
               goto no_mouse_process;
             v75 = v3->UC_TouchedObj;
             v3->UC_ObjectTouched = 1;
-            if ( v75 == v74 )
+            if( v75 == v74 )
               goto no_mouse_process;
             v76 = &v3->player->vfptr;
             v3->UC_StartTime = v71;
@@ -3587,10 +3587,10 @@ LABEL_157:
             v77 = *v76;
             newFacet = 0;
             text_id = 0;
-            if ( ((int (__stdcall *)(int, int *, int *))v77->get_mouse_pointer_action_vars)(v74, &newFacet, &text_id) == 1 )
+            if( ((int (__stdcall *)(int, int *, int *))v77->get_mouse_pointer_action_vars)(v74, &newFacet, &text_id) == 1 )
             {
               TMousePointer::set_game_facet(MouseSystem, newFacet);
-              if ( v3->message_panel && rge_base_game->rollover )
+              if( v3->message_panel && rge_base_game->rollover )
               {
                 TPanel::get_string(text_id, pText, 127);
                 TMessagePanel::show_message(v3->message_panel, 0, pText, 112, 0, 0, 0, 0);
@@ -3599,18 +3599,18 @@ LABEL_157:
             }
             TMousePointer::set_game_facet(MouseSystem, 0);
             v78 = v3->message_panel;
-            if ( !v78 || !rge_base_game->rollover )
+            if( !v78 || !rge_base_game->rollover )
               goto no_mouse_process;
           }
           else
           {
-            if ( !v73 )
+            if( !v73 )
               goto no_mouse_process;
             v3->UC_ObjectTouched = 0;
             v3->UC_TouchedObj = 2147483648;
             TMousePointer::set_game_facet(MouseSystem, 0);
             v78 = v3->message_panel;
-            if ( !v78 || !rge_base_game->rollover )
+            if( !v78 || !rge_base_game->rollover )
               goto no_mouse_process;
           }
           TMessagePanel::remove_message(v78);
@@ -3620,17 +3620,17 @@ LABEL_157:
     }
   }
 no_mouse_process:
-  for ( k = v3->first_child_node; k; k = k->next_node )
+  for( k = v3->first_child_node; k; k = k->next_node )
   {
     v80 = k->panel;
-    if ( k->panel->active && v80->need_redraw )
+    if( k->panel->active && v80->need_redraw )
     {
       v80->vfptr->get_true_render_rect(v80, &panel_rect);
       v81 = panel_rect.top - save_render_rect.top;
       v82 = panel_rect.left - save_render_rect.left;
-      if ( panel_rect.left - save_render_rect.left < 0 )
+      if( panel_rect.left - save_render_rect.left < 0 )
         v82 = 0;
-      if ( v81 < 0 )
+      if( v81 < 0 )
         v81 = 0;
       v83 = DClipInfo_List::AddGDINode(
               v3->futur_objs,
@@ -3647,11 +3647,11 @@ no_mouse_process:
               30,
               v80->display_changed_count,
               0);
-      if ( v83 )
+      if( v83 )
       {
         v84 = v3->futur_objs;
         v85 = *((_DWORD *)v84->Draw_Level_Tail + 30);
-        if ( v85 )
+        if( v85 )
           *(_DWORD *)(v85 + 4) = v83;
         else
           *((_DWORD *)v84->Draw_Level_Head + 30) = v83;
@@ -3659,46 +3659,46 @@ no_mouse_process:
       }
     }
   }
-  if ( v3->render_terrain_mode )
+  if( v3->render_terrain_mode )
   {
     TSpan_List_Manager::Merge_n_Align(v3->Master_Clip_Mask, v3->Terrain_Clip_Mask, v3->Terrain_Fog_Clip_Mask);
-    if ( v3->Limited_Render_Rect )
+    if( v3->Limited_Render_Rect )
     {
-      if ( v3->Render_Rect1.left >= 0 )
+      if( v3->Render_Rect1.left >= 0 )
       {
-        for ( l = v3->Render_Rect1.top; l <= v3->Render_Rect1.bottom; ++l )
+        for( l = v3->Render_Rect1.top; l <= v3->Render_Rect1.bottom; ++l )
           TSpan_List_Manager::AddSpan(v3->Master_Clip_Mask, v3->Render_Rect1.left, v3->Render_Rect1.right, l);
       }
-      if ( v3->Use_Rect2 )
+      if( v3->Use_Rect2 )
       {
-        if ( v3->Render_Rect2.left >= 0 )
+        if( v3->Render_Rect2.left >= 0 )
         {
-          for ( m = v3->Render_Rect2.top; m <= v3->Render_Rect2.bottom; ++m )
+          for( m = v3->Render_Rect2.top; m <= v3->Render_Rect2.bottom; ++m )
             TSpan_List_Manager::AddSpan(v3->Master_Clip_Mask, v3->Render_Rect2.left, v3->Render_Rect2.right, m);
         }
       }
     }
     v90 = v3->futur_objs;
     v91 = 0;
-    for ( yb = 0; v91 < v90->YLine_Size; yb = v91 )
+    for( yb = 0; v91 < v90->YLine_Size; yb = v91 )
     {
       v92 = v90->Draw_Clip_Nodes;
       v93 = v92[v91];
-      for ( LDIa = v92[v91]; v93; LDIa = v93 )
+      for( LDIa = v92[v91]; v93; LDIa = v93 )
       {
-        if ( v93->Draw_Level > 5 )
+        if( v93->Draw_Level > 5 )
         {
           v94 = v3->prior_objs->Draw_Clip_Nodes[v91];
           v95 = 1;
           v96 = v93->Node_Type != 0 ? 0x10 : 0;
           text_id = 1;
           v97 = v96 + 36;
-          if ( v94 )
+          if( v94 )
           {
-            while ( memcmp(&v93->Shape, &v94->Shape, v97) )
+            while( memcmp(&v93->Shape, &v94->Shape, v97) )
             {
               v94 = v94->Next;
-              if ( !v94 )
+              if( !v94 )
               {
                 v95 = text_id;
                 goto LABEL_238;
@@ -3711,9 +3711,9 @@ no_mouse_process:
 LABEL_238:
             v93 = LDIa;
           }
-          if ( v95 )
+          if( v95 )
           {
-            if ( v93->Node_Type )
+            if( v93->Node_Type )
             {
               RGE_View::Add_GDI_Clip_Mask(v93, v3->Master_Clip_Mask);
             }
@@ -3735,23 +3735,23 @@ LABEL_238:
       }
       v98 = v3->prior_objs->Draw_Clip_Nodes;
       v99 = v98[v91];
-      for ( LDIb = v98[v91]; v99; LDIb = v99 )
+      for( LDIb = v98[v91]; v99; LDIb = v99 )
       {
-        if ( v99->Draw_Level > 5 )
+        if( v99->Draw_Level > 5 )
         {
           v100 = v99->Node_Type;
-          if ( v100 != -1 )
+          if( v100 != -1 )
           {
             v101 = v3->futur_objs->Draw_Clip_Nodes[v91];
             v102 = 1;
             v103 = v100 != 0 ? 52 : 36;
             text_id = 1;
-            if ( v101 )
+            if( v101 )
             {
-              while ( memcmp(&v101->Shape, &v99->Shape, v103) )
+              while( memcmp(&v101->Shape, &v99->Shape, v103) )
               {
                 v101 = v101->Next;
-                if ( !v101 )
+                if( !v101 )
                 {
                   v102 = text_id;
                   goto LABEL_254;
@@ -3762,9 +3762,9 @@ LABEL_238:
 LABEL_254:
               v99 = LDIb;
             }
-            if ( v102 )
+            if( v102 )
             {
-              if ( v99->Node_Type )
+              if( v99->Node_Type )
               {
                 RGE_View::Add_GDI_Clip_Mask(v99, v3->Master_Clip_Mask);
               }
@@ -3792,7 +3792,7 @@ LABEL_254:
   else
   {
     v86 = v3->save_area1;
-    for ( n = 0; n < v86->Height; ++n )
+    for( n = 0; n < v86->Height; ++n )
     {
       TSpan_List_Manager::AddSpan(v3->Master_Clip_Mask, 0, v86->Width - 1, n);
       v86 = v3->save_area1;
@@ -3832,11 +3832,11 @@ LABEL_254:
   do
   {
     v108 = *(int *)((char *)v3->futur_objs->Draw_Level_Head + v107);
-    if ( v108 )
+    if( v108 )
     {
       do
       {
-        if ( *(_DWORD *)(v108 + 44) )
+        if( *(_DWORD *)(v108 + 44) )
         {
           RGE_View::Draw_GDI_Object((DClipInfo_Node *)v108, v3->render_area);
         }
@@ -3844,11 +3844,11 @@ LABEL_254:
         {
           v109 = 0;
           v110 = *(_DWORD *)(v108 + 28) & 0xFFC;
-          if ( v110 )
+          if( v110 )
           {
-            if ( (v110 & 4) == 4 )
+            if( (v110 & 4) == 4 )
               ASMSet_Shadowing(0xFFFFFF, 0, -65281, 0);
-            if ( (v110 & 8) == 8 )
+            if( (v110 & 8) == 8 )
               ASMSet_Shadowing(
                 -16711936,
                 (v110 >> 4) & 0xFF | (((v110 >> 4) & 0xFF) << 16),
@@ -3867,32 +3867,32 @@ LABEL_254:
             **(_DWORD **)(v108 + 12),
             *(_DWORD *)(*(_DWORD *)(v108 + 12) + 4),
             *(_DWORD *)(v108 + 28) & 3);
-          if ( v109 )
+          if( v109 )
             ASMSet_Shadowing(16711935, 0, -16711936, 0);
         }
         v108 = *(_DWORD *)(v108 + 4);
       }
-      while ( v108 );
+      while( v108 );
       v107 = newFacet;
     }
     v107 += 4;
     newFacet = v107;
   }
-  while ( v107 <= 160 );
-  if ( view_debug_spans )
+  while( v107 <= 160 );
+  if( view_debug_spans )
   {
-    if ( v3->render_terrain_mode )
+    if( v3->render_terrain_mode )
     {
       v111 = v3->render_area;
       v112 = 0;
-      for ( ii = frame_count % 220 + 16; v112 < v111->Height; ++v112 )
+      for( ii = frame_count % 220 + 16; v112 < v111->Height; ++v112 )
       {
         TDrawArea::DrawLine(0, v112, v111->Width - 1, v112, ii);
         v111 = v3->render_area;
       }
     }
   }
-  if ( view_debug_palette )
+  if( view_debug_palette )
   {
     yc = 0;
     v114 = 32;
@@ -3901,19 +3901,19 @@ LABEL_254:
       v115 = 0;
       v116 = 16 * yc;
       v117 = 0;
-      while ( 1 )
+      while( 1 )
       {
         TDrawArea::FillRect(v3->render_area, v117, v114, v117 + 31, v114 + 15, v116 + v115);
         v117 += 32;
         ++v115;
-        if ( v117 >= 512 )
+        if( v117 >= 512 )
           break;
         v116 = 16 * yc;
       }
       v114 += 16;
       ++yc;
     }
-    while ( v114 < 288 );
+    while( v114 < 288 );
   }
   TDrawArea::Unlock(v3->render_area, aViewView_funct);
   v3->render_area->CurSpanList = v3->render_area->SpanList;
@@ -3943,21 +3943,21 @@ void __thiscall RGE_View::Update_Render_Pointers(RGE_View *this)
 
   v1 = this;
   v2 = this->render_area->Bits;
-  if ( this->LastRenderBits != v2 || this->LastRenderSize != this->render_rect.bottom - this->render_rect.top + 1 )
+  if( this->LastRenderBits != v2 || this->LastRenderSize != this->render_rect.bottom - this->render_rect.top + 1 )
   {
     v3 = this->render_rect.bottom - this->render_rect.top + 1;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
-      if ( v2 )
+      if( v2 )
       {
-        if ( v3 != this->LastRenderSize || !this->RenderOffsets )
+        if( v3 != this->LastRenderSize || !this->RenderOffsets )
         {
-          if ( this->RenderOffsets )
+          if( this->RenderOffsets )
             free(this->RenderOffsets);
           v1->RenderOffsets = (void **)malloc(4 * v3);
           v1->LastRenderSize = v3;
         }
-        for ( i = 0; i < v3; ++i )
+        for( i = 0; i < v3; ++i )
           v1->RenderOffsets[i] = (char *)v1->render_area->DisplayOffsets[v1->render_rect.top + i] + v1->render_rect.left;
       }
     }
@@ -3993,7 +3993,7 @@ void __stdcall RGE_View::Add_GDI_Clip_Mask(DClipInfo_Node *SDI, TSpan_List_Manag
 
   v3 = SDI;
   v4 = SDI->Node_Type;
-  if ( v4 == 1 )
+  if( v4 == 1 )
   {
     TSpan_List_Manager::AddLine_Align(Clip_Mask, SDI->x1, SDI->y1, SDI->x2, SDI->y2);
     TSpan_List_Manager::AddLine_Align(Clip_Mask, SDI->x2, SDI->y2, SDI->x3, SDI->y3);
@@ -4003,7 +4003,7 @@ void __stdcall RGE_View::Add_GDI_Clip_Mask(DClipInfo_Node *SDI, TSpan_List_Manag
   else
   {
     v5 = Clip_Mask;
-    if ( v4 == 2 || v4 == 3 )
+    if( v4 == 2 || v4 == 3 )
     {
       v8 = SDI->x1;
       v6 = SDI->y1;
@@ -4012,23 +4012,23 @@ void __stdcall RGE_View::Add_GDI_Clip_Mask(DClipInfo_Node *SDI, TSpan_List_Manag
       v9 = SDI->x2 | 3;
       xr = v8;
       SDIa = (DClipInfo_Node *)(SDI->x2 | 3);
-      if ( v6 <= v7 || (v10 = v6, v6 = v7, v7 = v10, v6 <= v10) )
+      if( v6 <= v7 || (v10 = v6, v6 = v7, v7 = v10, v6 <= v10) )
       {
-        while ( 1 )
+        while( 1 )
         {
           TSpan_List_Manager::AddSpan(v5, v8, v9, v6++);
-          if ( v6 > v7 )
+          if( v6 > v7 )
             break;
           v9 = (int)SDIa;
           v8 = xr;
         }
       }
     }
-    if ( v3->Node_Type == 4 )
+    if( v3->Node_Type == 4 )
     {
       v11 = (DClipInfo_Node *)v3->x1;
       v12 = v3->x2;
-      if ( (signed int)v11 > v12 )
+      if( (signed int)v11 > v12 )
       {
         v11 = (DClipInfo_Node *)v3->x2;
         v12 = v3->x1;
@@ -4045,7 +4045,7 @@ void __stdcall RGE_View::Add_GDI_Clip_Mask(DClipInfo_Node *SDI, TSpan_List_Manag
       v18 = v3->y1;
       xr2 = v17;
       xra = v3->y1;
-      if ( v18 > v14 )
+      if( v18 > v14 )
       {
         xra = v3->y2;
         v14 = v3->y1;
@@ -4053,7 +4053,7 @@ void __stdcall RGE_View::Add_GDI_Clip_Mask(DClipInfo_Node *SDI, TSpan_List_Manag
       }
       TSpan_List_Manager::AddSpan(v5, v16, v17, v18);
       TSpan_List_Manager::AddSpan(v5, v16, xr2, v14);
-      for ( i = xra + 1; i < v14; ++i )
+      for( i = xra + 1; i < v14; ++i )
       {
         TSpan_List_Manager::AddSpan(v5, v16, (int)SDIb, i);
         TSpan_List_Manager::AddSpan(v5, xl2, xr2, i);
@@ -4069,7 +4069,7 @@ void __stdcall RGE_View::Draw_GDI_Object(DClipInfo_Node *SDI, TDrawArea *render_
   int i; // edi@4
 
   v3 = SDI->Node_Type;
-  if ( v3 == 1 )
+  if( v3 == 1 )
   {
     TDrawArea::DrawLine(SDI->x1, SDI->y1, SDI->x2, SDI->y2, SDI->Draw_Flag);
     TDrawArea::DrawLine(SDI->x2, SDI->y2, SDI->x3, SDI->y3, SDI->Draw_Flag);
@@ -4078,17 +4078,17 @@ void __stdcall RGE_View::Draw_GDI_Object(DClipInfo_Node *SDI, TDrawArea *render_
   }
   else
   {
-    if ( v3 == 2 )
+    if( v3 == 2 )
     {
-      for ( i = SDI->y1; i <= SDI->y2; ++i )
+      for( i = SDI->y1; i <= SDI->y2; ++i )
       {
-        if ( SDI->y3 )
+        if( SDI->y3 )
           TDrawArea::DrawLine(SDI->x1, i, SDI->x3, i, 74);
-        if ( SDI->y4 )
+        if( SDI->y4 )
           TDrawArea::DrawLine(SDI->x4, i, SDI->x2, i, -105);
       }
     }
-    if ( SDI->Node_Type == 4 )
+    if( SDI->Node_Type == 4 )
     {
       TDrawArea::DrawLine(SDI->x1, SDI->y1, SDI->x2, SDI->y1, -1);
       TDrawArea::DrawLine(SDI->x1, SDI->y2, SDI->x2, SDI->y2, -1);
@@ -4113,30 +4113,30 @@ int __thiscall RGE_View::get_tile_mask_num(RGE_View *this, int map_col, int map_
 
   v15 = this;
   v6 = 0;
-  if ( map_col <= 0 || map_row <= 0 || map_col >= map_width - 1 || map_row >= map_height - 1 )
+  if( map_col <= 0 || map_row <= 0 || map_col >= map_width - 1 || map_row >= map_height - 1 )
   {
-    if ( map_col > 0 && !(VisibleMask & (unsigned int)(&unified_map_offsets)[map_row][map_col - 1]) )
+    if( map_col > 0 && !(VisibleMask & (unsigned int)(&unified_map_offsets)[map_row][map_col - 1]) )
       v6 = 16;
     v12 = map_width - 1;
-    if ( map_col < map_width - 1 && !(VisibleMask & (unsigned int)(&unified_map_offsets)[map_row][map_col + 1]) )
+    if( map_col < map_width - 1 && !(VisibleMask & (unsigned int)(&unified_map_offsets)[map_row][map_col + 1]) )
       v6 |= 0x40u;
-    if ( map_row > 0 && !(VisibleMask & *(_DWORD *)(dword_886804[map_row] + 4 * map_col)) )
+    if( map_row > 0 && !(VisibleMask & *(_DWORD *)(dword_886804[map_row] + 4 * map_col)) )
       LOBYTE(v6) = v6 | 0x80;
     v13 = map_height - 1;
-    if ( map_row < map_height - 1 && !(VisibleMask & *(_DWORD *)(dword_88680C[map_row] + 4 * map_col)) )
+    if( map_row < map_height - 1 && !(VisibleMask & *(_DWORD *)(dword_88680C[map_row] + 4 * map_col)) )
       v6 |= 0x20u;
-    if ( map_col > 0 )
+    if( map_col > 0 )
     {
-      if ( map_row > 0 && !(VisibleMask & *(_DWORD *)(dword_886804[map_row] + 4 * map_col - 4)) )
+      if( map_row > 0 && !(VisibleMask & *(_DWORD *)(dword_886804[map_row] + 4 * map_col - 4)) )
         v6 |= 1u;
-      if ( map_col > 0 && map_row < v13 && !(VisibleMask & *(_DWORD *)(dword_88680C[map_row] + 4 * map_col - 4)) )
+      if( map_col > 0 && map_row < v13 && !(VisibleMask & *(_DWORD *)(dword_88680C[map_row] + 4 * map_col - 4)) )
         v6 |= 2u;
     }
-    if ( map_col < v12 )
+    if( map_col < v12 )
     {
-      if ( map_row > 0 && !(VisibleMask & *(_DWORD *)(dword_886804[map_row] + 4 * map_col + 4)) )
+      if( map_row > 0 && !(VisibleMask & *(_DWORD *)(dword_886804[map_row] + 4 * map_col + 4)) )
         v6 |= 8u;
-      if ( map_col < v12 && map_row < v13 && !(VisibleMask & *(_DWORD *)(dword_88680C[map_row] + 4 * map_col + 4)) )
+      if( map_col < v12 && map_row < v13 && !(VisibleMask & *(_DWORD *)(dword_88680C[map_row] + 4 * map_col + 4)) )
         v6 |= 4u;
     }
   }
@@ -4144,24 +4144,24 @@ int __thiscall RGE_View::get_tile_mask_num(RGE_View *this, int map_col, int map_
   {
     v7 = dword_886804[map_row];
     v8 = 4 * map_col;
-    if ( !(VisibleMask & *(_DWORD *)(v7 + 4 * map_col)) )
+    if( !(VisibleMask & *(_DWORD *)(v7 + 4 * map_col)) )
       v6 = 128;
     v9 = (&unified_map_offsets)[map_row];
     v10 = 4 * map_col + 4;
-    if ( !(VisibleMask & *(unsigned int *)((char *)v9 + v10)) )
+    if( !(VisibleMask & *(unsigned int *)((char *)v9 + v10)) )
       v6 |= 0x40u;
     v11 = dword_88680C[map_row];
-    if ( !(VisibleMask & *(_DWORD *)(v11 + v8)) )
+    if( !(VisibleMask & *(_DWORD *)(v11 + v8)) )
       v6 |= 0x20u;
-    if ( !(VisibleMask & (unsigned int)v9[v8 / 4u - 1]) )
+    if( !(VisibleMask & (unsigned int)v9[v8 / 4u - 1]) )
       v6 |= 0x10u;
-    if ( !(VisibleMask & *(_DWORD *)(v10 + v7)) )
+    if( !(VisibleMask & *(_DWORD *)(v10 + v7)) )
       v6 |= 8u;
-    if ( !(VisibleMask & *(_DWORD *)(v11 + v10)) )
+    if( !(VisibleMask & *(_DWORD *)(v11 + v10)) )
       v6 |= 4u;
-    if ( !(VisibleMask & *(_DWORD *)(v11 + v8 - 4)) )
+    if( !(VisibleMask & *(_DWORD *)(v11 + v8 - 4)) )
       v6 |= 2u;
-    if ( !(VisibleMask & *(_DWORD *)(v7 + v8 - 4)) )
+    if( !(VisibleMask & *(_DWORD *)(v7 + v8 - 4)) )
       v6 |= 1u;
   }
   return v15->EdgeNumber[v6];
@@ -4204,7 +4204,7 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
   v10 = this;
   draw_attribute = tile->draw_attribute;
   v11 = this->map;
-  if ( (unsigned __int8)terrain_type < v11->num_terrain
+  if( (unsigned __int8)terrain_type < v11->num_terrain
     && (v36 = 408 * (unsigned __int8)terrain_type, v11->terrain_types[(unsigned __int8)terrain_type].loaded) )
   {
     draw_terrain = 1;
@@ -4212,16 +4212,16 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
     draw_border = 0;
     v12 = *((_BYTE *)tile + 6);
     border_type = *((_BYTE *)tile + 6) & 0xF;
-    if ( border_type )
+    if( border_type )
     {
       v13 = (unsigned __int8)border_type;
-      if ( v11->border_types[v13].loaded )
+      if( v11->border_types[v13].loaded )
       {
-        if ( v11->border_types[v13].shape )
+        if( v11->border_types[v13].shape )
         {
-          if ( v11->border_types[v13].border_style )
+          if( v11->border_types[v13].border_style )
           {
-            if ( RGE_View::get_border_edge_pictures(
+            if( RGE_View::get_border_edge_pictures(
                    this,
                    border_type,
                    tile->tile_type,
@@ -4237,7 +4237,7 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
               draw_terrain = 1;
             }
           }
-          else if ( RGE_View::get_border_picture(this, border_type, tile->tile_type, v12 >> 4, map_col, map_row) != -1 )
+          else if( RGE_View::get_border_picture(this, border_type, tile->tile_type, v12 >> 4, map_col, map_row) != -1 )
           {
             draw_border = 1;
             draw_terrain = v10->map->border_types[v13].draw_tile;
@@ -4245,21 +4245,21 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
         }
       }
     }
-    if ( View_Grid_Mode > 0
+    if( View_Grid_Mode > 0
       && !(draw_attribute & 0xDF)
       && (((unsigned __int8)(map_row / View_Grid_Mode) + (unsigned __int8)(map_col / View_Grid_Mode)) & 1) == 1 )
     {
       draw_attribute |= 0x20u;
     }
-    if ( view_debug_ObstructionMap )
+    if( view_debug_ObstructionMap )
       draw_border = 0;
-    if ( draw_terrain )
+    if( draw_terrain )
     {
       v14 = v10->map->terrain_types[v36 / 0x198].shape;
       v15 = RGE_View::get_tile_picture(v10, terrain_type, tile->tile_type, map_col, map_row);
-      if ( v14 && v15 != -1 )
+      if( v14 && v15 != -1 )
       {
-        if ( view_debug_ObstructionMap )
+        if( view_debug_ObstructionMap )
         {
           RGE_View::draw_terrain_obstruction_map(v10, x, y, v14, v15, map_col, map_row);
           return 1;
@@ -4268,15 +4268,15 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
         retval = 1;
       }
       v17 = map_col;
-      if ( !draw_border )
+      if( !draw_border )
       {
-        if ( map_col > 0 )
+        if( map_col > 0 )
         {
           v18 = (int)&v10->map->map_row_offset[map_row][map_col - 1].screen_xpos;
           *(_BYTE *)(v18 + 10) |= 0x40u;
         }
         v19 = v10->map;
-        if ( map_row < v19->map_height - 1 )
+        if( map_row < v19->map_height - 1 )
         {
           v20 = v19->map_row_offset[map_row + 1];
           v20[map_col].draw_attribute |= 0x40u;
@@ -4287,15 +4287,15 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
     {
       v17 = map_col;
     }
-    if ( draw_border )
+    if( draw_border )
     {
       v21 = (int)v10->map + 1440 * (unsigned __int8)border_type;
       v22 = *(TShape **)(v21 + 13228);
-      if ( v22 )
+      if( v22 )
       {
-        if ( *(_WORD *)(v21 + 14634) )
+        if( *(_WORD *)(v21 + 14634) )
         {
-          if ( RGE_View::get_border_edge_pictures(
+          if( RGE_View::get_border_edge_pictures(
                  v10,
                  border_type,
                  tile->tile_type,
@@ -4307,31 +4307,31 @@ int __thiscall RGE_View::draw_tile(RGE_View *this, RGE_Tile *tile, char terrain_
                  &left_index,
                  &bottom_index) )
           {
-            if ( top_index != -1 )
+            if( top_index != -1 )
               RGE_View::draw_terrain_shape(v10, x, y, v22, top_index, visible, draw_attribute, norm_draw, fog_draw);
-            if ( left_index != -1 )
+            if( left_index != -1 )
               RGE_View::draw_terrain_shape(v10, x, y, v22, left_index, visible, draw_attribute, norm_draw, fog_draw);
-            if ( right_index != -1 )
+            if( right_index != -1 )
               RGE_View::draw_terrain_shape(v10, x, y, v22, right_index, visible, draw_attribute, norm_draw, fog_draw);
-            if ( bottom_index != -1 )
+            if( bottom_index != -1 )
               RGE_View::draw_terrain_shape(v10, x, y, v22, bottom_index, visible, draw_attribute, norm_draw, fog_draw);
           }
         }
         else
         {
           v23 = RGE_View::get_border_picture(v10, border_type, tile->tile_type, *((_BYTE *)tile + 6) >> 4, v17, map_row);
-          if ( v23 != -1 )
+          if( v23 != -1 )
             RGE_View::draw_terrain_shape(v10, x, y, v22, v23, visible, draw_attribute, norm_draw, fog_draw);
         }
         v17 = map_col;
       }
-      if ( v17 > 0 )
+      if( v17 > 0 )
       {
         v24 = (int)&v10->map->map_row_offset[map_row][v17 - 1].screen_xpos;
         *(_BYTE *)(v24 + 10) |= 0x40u;
       }
       v25 = v10->map;
-      if ( map_row < v25->map_height - 1 )
+      if( map_row < v25->map_height - 1 )
       {
         v26 = v25->map_row_offset[map_row + 1];
         v26[v17].draw_attribute |= 0x40u;
@@ -4362,7 +4362,7 @@ void __thiscall RGE_View::draw_terrain_shape(RGE_View *this, int x, int y, TShap
   v11 = y - v10[index].Hotspot_Y;
   v12 = draw_attribute;
   v13 = x - v10[index].Hotspot_X;
-  if ( (draw_attribute & 0x10) == 16 )
+  if( (draw_attribute & 0x10) == 16 )
   {
     fog_next_shape = 1;
     ASMSet_Shadowing(16711935, 671098880, -16711936, 2621480);
@@ -4372,19 +4372,19 @@ void __thiscall RGE_View::draw_terrain_shape(RGE_View *this, int x, int y, TShap
   }
   else
   {
-    if ( (draw_attribute & 0x20) == 32 )
+    if( (draw_attribute & 0x20) == 32 )
     {
       ASMSet_Shadowing(16711935, 1442862592, -16711936, (int)&loc_560053 + 3);
       v12 = draw_attribute;
     }
-    if ( (v12 & 0x80) == -128 )
+    if( (v12 & 0x80) == -128 )
     {
       ASMSet_Shadowing(16711935, 268439552 * (v12 & 0xF) + 67109888, -16711936, 268439552 * (v12 & 0xF) + 67109888);
       v12 = draw_attribute;
     }
-    if ( v9->map->fog_flag && visible == -128 )
+    if( v9->map->fog_flag && visible == -128 )
       fog_next_shape = 1;
-    if ( draw_fog )
+    if( draw_fog )
     {
       v9->cur_render_area->CurSpanList = v9->Terrain_Fog_Clip_Mask;
       fog_next_shape = 1;
@@ -4392,9 +4392,9 @@ void __thiscall RGE_View::draw_terrain_shape(RGE_View *this, int x, int y, TShap
       v12 = draw_attribute;
       fog_next_shape = 0;
     }
-    if ( v12 & 0xA0 )
+    if( v12 & 0xA0 )
       fog_next_shape = 1;
-    if ( draw_normal )
+    if( draw_normal )
     {
       v9->cur_render_area->CurSpanList = v9->Terrain_Clip_Mask;
       TShape::shape_draw(shape, v9->cur_render_area, x, y, index, 0, 0);
@@ -4429,7 +4429,7 @@ void __thiscall RGE_View::draw_terrain_obstruction_map(RGE_View *this, int x, in
   TShape::shape_draw(shape, this->cur_render_area, x, y, index, 0, 0);
   shapea = (TShape *)RGE_Base_Game::get_shape(rge_base_game, 0);
   v8 = 0;
-  for ( TileXa = 0; ; v8 = TileXa )
+  for( TileXa = 0; ; v8 = TileXa )
   {
     v9 = 0;
     v10 = 8 * v8;
@@ -4438,16 +4438,16 @@ void __thiscall RGE_View::draw_terrain_obstruction_map(RGE_View *this, int x, in
     do
     {
       v12 = (unsigned __int8)PathingSystem::obstruction(&pathSystem, v9 + TileX4, (int)group_num_shape);
-      if ( v12 > 0 )
+      if( v12 > 0 )
         TShape::shape_draw(shapea, v7->cur_render_area, x + v10 + 2, y + v11 + 13, v12 - 1, 0, 0);
       ++v9;
       v10 += 8;
       v11 -= 4;
     }
-    while ( v9 < 4 );
+    while( v9 < 4 );
     v14 = __OFSUB__(TileXa + 1, 4);
     v13 = TileXa++ - 3 < 0;
-    if ( !(v13 ^ v14) )
+    if( !(v13 ^ v14) )
       break;
   }
 }
@@ -4465,13 +4465,13 @@ BOOL __thiscall RGE_View::Get_Cursor_Position(RGE_View *this, tagPOINT *Point, i
   v4 = this;
   GetCursorPos(Point);
   v5 = v4->render_area;
-  if ( v5->DrawSystem->ScreenMode == 1 )
+  if( v5->DrawSystem->ScreenMode == 1 )
   {
     ScreenToClient(v5->Wnd, Point);
-    if ( Point->x > 0x7FFF )
+    if( Point->x > 0x7FFF )
       Point->x -= 0x10000;
     v6 = Point->y;
-    if ( v6 > 0x7FFF )
+    if( v6 > 0x7FFF )
       Point->y = v6 - 0x10000;
   }
   v7 = Point->y;
@@ -4512,18 +4512,18 @@ int __thiscall RGE_View::Pick_Tile(RGE_View *this, int x, int y, int *Tile_X, in
   v9 = x + this->map_scr_x_offset - this->render_rect.left;
   v10 = y + this->map_scr_y_offset - this->render_rect.top;
   bx1 = v8;
-  if ( v9 >= 0 )
+  if( v9 >= 0 )
   {
     v13 = this->tile_wid;
-    if ( v9 < v13 * v7 )
+    if( v9 < v13 * v7 )
     {
       v15 = v9 / v13;
       v16 = v10 / v5->tile_hgt;
       v17 = v15;
       v18 = v16 + v15;
-      for ( i = v17 - v16; i < 0 || v18 >= v7; ++i )
+      for( i = v17 - v16; i < 0 || v18 >= v7; ++i )
         --v18;
-      while ( i >= bx1 || v18 < 0 )
+      while( i >= bx1 || v18 < 0 )
       {
         ++v18;
         --i;
@@ -4532,9 +4532,9 @@ int __thiscall RGE_View::Pick_Tile(RGE_View *this, int x, int y, int *Tile_X, in
       do
       {
         RGE_View::get_tile_bounding_coords(v5, v18, i, &bx1, (int *)&Tile_Y, &y, &x);
-        if ( v10 >= (signed int)Tile_Y )
+        if( v10 >= (signed int)Tile_Y )
         {
-          if ( v10 <= x )
+          if( v10 <= x )
           {
             Tile_X = 0;
           }
@@ -4550,7 +4550,7 @@ int __thiscall RGE_View::Pick_Tile(RGE_View *this, int x, int y, int *Tile_X, in
           --i;
         }
       }
-      while ( Tile_X );
+      while( Tile_X );
       result = 0;
       v5->tile_half_hgt = 0;
       v5->tile_half_wid = 0;
@@ -4642,7 +4642,7 @@ int __thiscall RGE_View::pick_objects(RGE_View *this, int Xpos, int Ypos, int mi
   int max_levela; // [sp+74h] [bp+10h]@37
 
   v40 = this;
-  if ( range < 0
+  if( range < 0
     || (v8 = max_level, v9 = min_level, max_level < min_level)
     || (v10 = this->render_rect.left, Xpos < v10)
     || Xpos > this->render_rect.right
@@ -4655,12 +4655,12 @@ int __thiscall RGE_View::pick_objects(RGE_View *this, int Xpos, int Ypos, int mi
   }
   else
   {
-    if ( min_level < 0 )
+    if( min_level < 0 )
     {
       v9 = 0;
       min_level = 0;
     }
-    if ( max_level > 40 )
+    if( max_level > 40 )
       v8 = 40;
     Yposa = Ypos - v11;
     v12 = (char *)&this->pick_list_size[1];
@@ -4682,36 +4682,36 @@ int __thiscall RGE_View::pick_objects(RGE_View *this, int Xpos, int Ypos, int mi
     *((_DWORD *)v12 + 1) = 0;
     *((_DWORD *)v12 + 2) = 0;
     *((_DWORD *)v12 + 3) = 0;
-    if ( v8 >= v9 )
+    if( v8 >= v9 )
     {
       v13 = (RGE_SPick_Info *)Yposa;
       do
       {
-        for ( i = v40->prior_objs->Draw_Level_Head[l]; i; i = i->NextOnLevel )
+        for( i = v40->prior_objs->Draw_Level_Head[l]; i; i = i->NextOnLevel )
         {
           v15 = 0;
-          if ( !i->Node_Type && (!ignoreNeg || i->Object_ID >= 0) )
+          if( !i->Node_Type && (!ignoreNeg || i->Object_ID >= 0) )
           {
             v16 = i->y1;
             v17 = i->x2;
-            if ( Xposa < i->x1 - range || Yposa < i->y1 - range || Xposa > v17 + range || Yposa > range + i->y2 )
+            if( Xposa < i->x1 - range || Yposa < i->y1 - range || Xposa > v17 + range || Yposa > range + i->y2 )
             {
               v15 = 0;
             }
             else
             {
               v15 = 4;
-              if ( Xposa >= i->x1 && Yposa >= v16 && Xposa <= v17 && Yposa <= i->y2 )
+              if( Xposa >= i->x1 && Yposa >= v16 && Xposa <= v17 && Yposa <= i->y2 )
               {
                 v15 = 3;
-                if ( (i->Draw_Flag & 2) == 2 )
+                if( (i->Draw_Flag & 2) == 2 )
                   v18 = RGE_View::sprite_check(i->Shape_Base, i->Shape, v17 - Xposa, Yposa - v16);
                 else
                   v18 = RGE_View::sprite_check(i->Shape_Base, i->Shape, Xposa - i->x1, Yposa - v16);
                 v19 = v18 - 1;
-                if ( v19 )
+                if( v19 )
                 {
-                  if ( v19 == 1 )
+                  if( v19 == 1 )
                     v15 = 1;
                 }
                 else
@@ -4721,7 +4721,7 @@ int __thiscall RGE_View::pick_objects(RGE_View *this, int Xpos, int Ypos, int mi
               }
             }
           }
-          if ( v15 && v15 <= max_confidence )
+          if( v15 && v15 <= max_confidence )
           {
             v20 = i->Object_ID;
             hotY = i->y3;
@@ -4730,15 +4730,15 @@ int __thiscall RGE_View::pick_objects(RGE_View *this, int Xpos, int Ypos, int mi
             max_levela = 1;
             v22 = 0;
             v23 = &head[1];
-            while ( !v22 )
+            while( !v22 )
             {
               v13 = *v23;
-              if ( *v23 )
+              if( *v23 )
               {
-                while ( v13->object_id != v20 )
+                while( v13->object_id != v20 )
                 {
                   v13 = v13->next;
-                  if ( !v13 )
+                  if( !v13 )
                     goto LABEL_45;
                 }
                 v22 = v13;
@@ -4747,39 +4747,39 @@ int __thiscall RGE_View::pick_objects(RGE_View *this, int Xpos, int Ypos, int mi
 LABEL_45:
               ++v21;
               ++v23;
-              if ( v21 >= 5 )
+              if( v21 >= 5 )
               {
-                if ( !v22 )
+                if( !v22 )
                   goto LABEL_61;
                 break;
               }
               v20 = i->Object_ID;
             }
-            if ( z < v15 || z == v15 && hotY < v22->draw_level )
+            if( z < v15 || z == v15 && hotY < v22->draw_level )
               max_levela = 0;
-            if ( max_levela )
+            if( max_levela )
             {
               v24 = z;
-              if ( head[z] == v22 )
+              if( head[z] == v22 )
                 head[v24] = v22->next;
-              if ( tail[v24] == v22 )
+              if( tail[v24] == v22 )
                 tail[v24] = v22->prev;
               v25 = v22->next;
-              if ( v25 )
+              if( v25 )
                 v25->prev = v22->prev;
               v26 = v22->prev;
-              if ( v26 )
+              if( v26 )
                 v26->next = v22->next;
               v22->next = freep[v24];
               v22->prev = 0;
               freep[v24] = v22;
             }
 LABEL_61:
-            if ( max_levela )
+            if( max_levela )
             {
               v27 = v15;
               v28 = freep[v15];
-              if ( v28 )
+              if( v28 )
               {
                 v13 = freep[v15];
                 freep[v27] = v28->next;
@@ -4787,7 +4787,7 @@ LABEL_61:
               else
               {
                 v29 = v40->pick_list_size[v15];
-                if ( v29 == 64 )
+                if( v29 == 64 )
                 {
                   max_levela = 0;
                 }
@@ -4797,7 +4797,7 @@ LABEL_61:
                   v40->pick_list_size[v15] = v29 + 1;
                 }
               }
-              if ( max_levela )
+              if( max_levela )
               {
                 v13->object_id = obj_id;
                 v13->confidence = v15;
@@ -4808,25 +4808,25 @@ LABEL_61:
                 v31 = head[v27];
                 v13->next = 0;
                 v13->prev = 0;
-                if ( v31 )
+                if( v31 )
                 {
-                  while ( hotY < v31->draw_level )
+                  while( hotY < v31->draw_level )
                   {
                     v32 = v31->next;
-                    if ( !v32 )
+                    if( !v32 )
                     {
                       v31->next = v13;
                       v13->prev = v31;
                       goto LABEL_78;
                     }
                     v31 = v31->next;
-                    if ( !v32 )
+                    if( !v32 )
                       goto LABEL_79;
                   }
                   v13->next = v31;
                   v33 = v31->prev;
                   v13->prev = v33;
-                  if ( v33 )
+                  if( v33 )
                   {
                     v13->prev->next = v13;
                     v31->prev = v13;
@@ -4851,24 +4851,24 @@ LABEL_79:
         }
         --l;
       }
-      while ( l >= min_level );
+      while( l >= min_level );
     }
     v34 = 0;
     v35 = 1;
     v36 = &head[1];
-    while ( 1 )
+    while( 1 )
     {
       v37 = *v36;
-      if ( *v36 )
+      if( *v36 )
         break;
 LABEL_86:
       ++v35;
       ++v36;
-      if ( v35 > 4 )
+      if( v35 > 4 )
         return v34;
     }
     v38 = 12 * v34 + 8901796;
-    while ( 1 )
+    while( 1 )
     {
       ++v34;
       *(_DWORD *)(v38 - 4) = v37->object_id;
@@ -4877,10 +4877,10 @@ LABEL_86:
       *(_WORD *)(v38 + 4) = v37->draw_x;
       *(_WORD *)(v38 + 6) = v37->draw_y;
       v38 += 12;
-      if ( v38 >= (signed int)&view_debug_redraw_all )
+      if( v38 >= (signed int)&view_debug_redraw_all )
         break;
       v37 = v37->next;
-      if ( !v37 )
+      if( !v37 )
         goto LABEL_86;
     }
     result = 64;
@@ -4907,7 +4907,7 @@ int __stdcall RGE_View::sprite_check(char *Shape_Base, Shape_Info *Shape, int ch
   int result; // eax@30
   unsigned __int8 Shapea; // [sp+18h] [bp+8h]@11
 
-  if ( Shape
+  if( Shape
     && check_x >= 0
     && (v5 = Shape->Width, check_x < v5)
     && check_y >= 0
@@ -4917,11 +4917,11 @@ int __stdcall RGE_View::sprite_check(char *Shape_Base, Shape_Info *Shape, int ch
     && check_x <= v5 - *(_WORD *)&v6[4 * check_y + 2] )
   {
     v8 = &Shape_Base[*(_DWORD *)(&Shape_Base[4 * check_y] + Shape->Shape_Data_Offsets)];
-    if ( v7 < v5 )
+    if( v7 < v5 )
     {
-      while ( 1 )
+      while( 1 )
       {
-        if ( check_x < v7 )
+        if( check_x < v7 )
           break;
         v9 = *v8++;
         Shapea = v9;
@@ -4933,7 +4933,7 @@ int __stdcall RGE_View::sprite_check(char *Shape_Base, Shape_Info *Shape, int ch
           case 0xC:
             v10 = (unsigned int)v9 >> 2;
             v7 += v10;
-            if ( check_x < v7 )
+            if( check_x < v7 )
               return 2;
             v8 += v10;
             goto LABEL_29;
@@ -4941,7 +4941,7 @@ int __stdcall RGE_View::sprite_check(char *Shape_Base, Shape_Info *Shape, int ch
             v11 = (unsigned __int8)*v8 | 16 * v9;
             v12 = (int)(v8 + 1);
             v7 += v11;
-            if ( check_x < v7 )
+            if( check_x < v7 )
               return 2;
             v8 = (char *)(v11 + v12);
             goto LABEL_29;
@@ -4957,32 +4957,32 @@ int __stdcall RGE_View::sprite_check(char *Shape_Base, Shape_Info *Shape, int ch
             goto LABEL_29;
           case 6:
             v14 = (unsigned int)v9 >> 4;
-            if ( !((unsigned int)Shapea >> 4) )
+            if( !((unsigned int)Shapea >> 4) )
               v14 = (unsigned __int8)*v8++;
             v7 += v14;
-            if ( check_x < v7 )
+            if( check_x < v7 )
               return 2;
             v8 += v14;
             goto LABEL_29;
           case 7:
           case 0xA:
             v15 = (unsigned int)v9 >> 4;
-            if ( !((unsigned int)Shapea >> 4) )
+            if( !((unsigned int)Shapea >> 4) )
               v15 = (unsigned __int8)*v8++;
             v7 += v15;
-            if ( check_x < v7 )
+            if( check_x < v7 )
               return 2;
             ++v8;
             goto LABEL_29;
           case 0xB:
             v16 = (unsigned int)v9 >> 4;
-            if ( !((unsigned int)Shapea >> 4) )
+            if( !((unsigned int)Shapea >> 4) )
               v16 = (unsigned __int8)*v8++;
             v7 += v16;
-            if ( check_x < v7 )
+            if( check_x < v7 )
               return 2;
 LABEL_29:
-            if ( v7 >= v5 )
+            if( v7 >= v5 )
               return 1;
             break;
           case 0xE:
@@ -5036,7 +5036,7 @@ int __thiscall RGE_View::pick_multi_objects(RGE_View *this, int Xpos1, int Ypos1
   v12 = this->render_rect.left;
   v27 = this;
   num_picked = 0;
-  if ( Xpos2 < v12
+  if( Xpos2 < v12
     || Xpos1 > this->render_rect.right
     || (v13 = this->render_rect.top, Ypos2 < v13)
     || Ypos1 > this->render_rect.bottom
@@ -5047,12 +5047,12 @@ int __thiscall RGE_View::pick_multi_objects(RGE_View *this, int Xpos1, int Ypos1
   }
   else
   {
-    if ( min_level < 0 )
+    if( min_level < 0 )
     {
       v14 = 0;
       min_level = 0;
     }
-    if ( max_level > 40 )
+    if( max_level > 40 )
       v15 = 40;
     Xpos1a = Xpos1 - v12;
     Xpos2a = Xpos2 - v12;
@@ -5060,34 +5060,34 @@ int __thiscall RGE_View::pick_multi_objects(RGE_View *this, int Xpos1, int Ypos1
     v16 = v15;
     Ypos1a = Ypos1 - v13;
     z = v15;
-    if ( v15 < v14 )
+    if( v15 < v14 )
     {
 LABEL_40:
       result = v11;
     }
     else
     {
-      while ( 1 )
+      while( 1 )
       {
         v17 = v10->prior_objs->Draw_Level_Head[v16];
-        if ( v17 )
+        if( v17 )
           break;
 LABEL_39:
         z = --v16;
-        if ( v16 < v14 )
+        if( v16 < v14 )
           goto LABEL_40;
       }
       v18 = 12 * v11 + 8901796;
-      while ( 1 )
+      while( 1 )
       {
         v19 = 0;
-        if ( !v17->Node_Type )
+        if( !v17->Node_Type )
         {
           max_level = v17->Object_ID;
-          if ( v17->Object_ID >= 0 && Xpos1a <= v17->x2 && Xpos2a >= v17->x1 && Ypos1a <= v17->y2 && Ypos2a >= v17->y1 )
+          if( v17->Object_ID >= 0 && Xpos1a <= v17->x2 && Xpos2a >= v17->x1 && Ypos1a <= v17->y2 && Ypos2a >= v17->y1 )
           {
             v20 = v27->world->objectsValue[max_level];
-            if ( (player == -1 || v20->owner->id == player)
+            if( (player == -1 || v20->owner->id == player)
               && v20->object_state == 2
               && v20->master_obj->select_level >= (unsigned __int8)select_level )
             {
@@ -5095,30 +5095,30 @@ LABEL_39:
             }
           }
         }
-        if ( v19 )
+        if( v19 )
         {
           v21 = 1;
-          if ( v18 > (signed int)word_87D4A4 )
+          if( v18 > (signed int)word_87D4A4 )
           {
             v22 = 0;
-            if ( v18 > (signed int)word_87D4A4 )
+            if( v18 > (signed int)word_87D4A4 )
             {
               v23 = &Picked_Objects;
-              while ( *v23 != max_level )
+              while( *v23 != max_level )
               {
                 ++v22;
                 v23 += 3;
-                if ( v22 >= num_picked )
+                if( v22 >= num_picked )
                   goto LABEL_34;
               }
               v24 = 3 * v22;
               v21 = 0;
-              if ( word_87D4A4[2 * v24] > v19 )
+              if( word_87D4A4[2 * v24] > v19 )
                 word_87D4A4[2 * v24] = v19;
             }
           }
 LABEL_34:
-          if ( v21 )
+          if( v21 )
           {
             *(_DWORD *)(v18 - 4) = max_level;
             *(_WORD *)v18 = v19;
@@ -5128,11 +5128,11 @@ LABEL_34:
             v18 += 12;
             ++num_picked;
           }
-          if ( v18 >= (signed int)&view_debug_redraw_all )
+          if( v18 >= (signed int)&view_debug_redraw_all )
             break;
         }
         v17 = v17->NextOnLevel;
-        if ( !v17 )
+        if( !v17 )
         {
           v14 = min_level;
           v16 = z;
@@ -5163,48 +5163,48 @@ int __thiscall RGE_View::pick_touched_object(RGE_View *this, DClipInfo_List *obj
 
   *touched_object_id = 0;
   v7 = max_level;
-  if ( max_level < min_level )
+  if( max_level < min_level )
     goto LABEL_24;
-  if ( Xpos < this->render_rect.left )
+  if( Xpos < this->render_rect.left )
     goto LABEL_24;
-  if ( Xpos > this->render_rect.right )
+  if( Xpos > this->render_rect.right )
     goto LABEL_24;
   v8 = Ypos;
-  if ( Ypos < this->render_rect.top || Ypos > this->render_rect.bottom || min_level > 40 || max_level < 0 )
+  if( Ypos < this->render_rect.top || Ypos > this->render_rect.bottom || min_level > 40 || max_level < 0 )
     goto LABEL_24;
-  if ( min_level < 0 )
+  if( min_level < 0 )
     min_level = 0;
-  if ( max_level > 40 )
+  if( max_level > 40 )
     v7 = 40;
   v9 = v7;
   max_levela = 0;
   Yposa = v7;
-  if ( v7 < min_level )
+  if( v7 < min_level )
   {
 LABEL_24:
     result = 0;
   }
   else
   {
-    while ( 1 )
+    while( 1 )
     {
       v10 = obj_list->Draw_Level_Head[v9];
-      if ( v10 )
+      if( v10 )
       {
         do
         {
-          if ( !v10->Node_Type )
+          if( !v10->Node_Type )
           {
             v11 = v10->y1;
-            if ( (v10->Draw_Flag & 2) == 2 )
+            if( (v10->Draw_Flag & 2) == 2 )
             {
-              if ( RGE_View::sprite_check(v10->Shape_Base, v10->Shape, v10->x2 - Xpos, v8 - v11) == 2 )
+              if( RGE_View::sprite_check(v10->Shape_Base, v10->Shape, v10->x2 - Xpos, v8 - v11) == 2 )
               {
                 max_levela = 1;
                 *touched_object_id = v10->Object_ID;
               }
             }
-            else if ( RGE_View::sprite_check(v10->Shape_Base, v10->Shape, Xpos - v10->x1, v8 - v11) == 2 )
+            else if( RGE_View::sprite_check(v10->Shape_Base, v10->Shape, Xpos - v10->x1, v8 - v11) == 2 )
             {
               max_levela = 1;
               *touched_object_id = v10->Object_ID;
@@ -5212,14 +5212,14 @@ LABEL_24:
           }
           v10 = v10->NextOnLevel;
         }
-        while ( v10 );
+        while( v10 );
         v9 = Yposa;
       }
       result = 1;
-      if ( max_levela == 1 )
+      if( max_levela == 1 )
         break;
       Yposa = --v9;
-      if ( v9 < min_level )
+      if( v9 < min_level )
         goto LABEL_24;
     }
   }
@@ -5243,23 +5243,23 @@ __int16 __thiscall RGE_View::get_tile_picture(RGE_View *this, char terrain_type,
 
   v5 = this->map;
   v6 = (int)&v5->terrain_types[(unsigned __int8)terrain_type].loaded;
-  if ( v5->terrain_types[(unsigned __int8)terrain_type].shape )
+  if( v5->terrain_types[(unsigned __int8)terrain_type].shape )
   {
     v8 = 3 * (unsigned __int8)tile_type;
     v9 = *(_WORD *)(v6 + 6 * (unsigned __int8)tile_type + 70);
     v10 = v6 + 6 * (unsigned __int8)tile_type + 70;
-    if ( v9 )
+    if( v9 )
     {
       v11 = 0;
-      if ( v9 > 1 )
+      if( v9 > 1 )
       {
         v12 = *(_BYTE *)(v6 + 186);
         v13 = *(_BYTE *)(v6 + 188);
         terrain_typea = *(_BYTE *)(v6 + 186);
         rows = *(_BYTE *)(v6 + 188);
-        if ( v12 > 1u || v13 > 1u )
+        if( v12 > 1u || v13 > 1u )
         {
-          if ( v12 )
+          if( v12 )
           {
             v11 = (unsigned __int8)terrain_typea;
             v8 = map_row / (signed int)(unsigned __int8)terrain_typea;
@@ -5270,7 +5270,7 @@ __int16 __thiscall RGE_View::get_tile_picture(RGE_View *this, char terrain_type,
           {
             LOBYTE(v11) = 0;
           }
-          if ( v13 )
+          if( v13 )
           {
             v8 = map_col / (signed int)rows;
             v6 = map_col % (signed int)rows;
@@ -5285,7 +5285,7 @@ __int16 __thiscall RGE_View::get_tile_picture(RGE_View *this, char terrain_type,
           v11 = v6 + v8 * v11;
         }
       }
-      if ( (signed __int16)v11 > v9 - 1 )
+      if( (signed __int16)v11 > v9 - 1 )
         LOWORD(v11) = 0;
       result = *(_WORD *)(v10 + 4) + v11 * *(_WORD *)(v10 + 2);
     }
@@ -5313,20 +5313,20 @@ __int16 __thiscall RGE_View::get_border_picture(RGE_View *this, char border_type
   __int16 v12; // cx@6
 
   v6 = &this->map->border_types[(unsigned __int8)border_type].loaded;
-  if ( *((_DWORD *)v6 + 8) )
+  if( *((_DWORD *)v6 + 8) )
   {
     v8 = (unsigned __int8)border_shape + 12 * (unsigned __int8)tile_type + 10;
     v9 = *(_WORD *)&v6[6 * v8];
     v10 = (int)&v6[6 * v8];
-    if ( v9 )
+    if( v9 )
     {
       v11 = 0;
-      if ( v9 > 1 )
+      if( v9 > 1 )
       {
         v12 = *((_WORD *)v6 + 719);
-        if ( (v12 || border_shape != 11 && border_shape != 12) && (v12 != 1 || border_shape != 3 && border_shape != 2) )
+        if( (v12 || border_shape != 11 && border_shape != 12) && (v12 != 1 || border_shape != 3 && border_shape != 2) )
         {
-          if ( (v12 || border_shape != 9 && border_shape != 10) && (v12 != 1 || border_shape != 1 && border_shape != 4) )
+          if( (v12 || border_shape != 9 && border_shape != 10) && (v12 != 1 || border_shape != 1 && border_shape != 4) )
             v11 = 0;
           else
             v11 = map_col % v9;
@@ -5336,7 +5336,7 @@ __int16 __thiscall RGE_View::get_border_picture(RGE_View *this, char border_type
           v11 = map_row % v9;
         }
       }
-      if ( v11 > v9 - 1 )
+      if( v11 > v9 - 1 )
         v11 = 0;
       result = *(_WORD *)(v10 + 4) + v11 * *(_WORD *)(v10 + 2);
     }
@@ -5367,27 +5367,27 @@ int __thiscall RGE_View::get_border_edge_pictures(RGE_View *this, char border_ty
   *left_index = -1;
   *right_index = -1;
   *bottom_index = -1;
-  if ( this->map->border_types[(unsigned __int8)border_type].shape && (v11 = border_shape) != 0 )
+  if( this->map->border_types[(unsigned __int8)border_type].shape && (v11 = border_shape) != 0 )
   {
-    if ( border_shape & 1 )
+    if( border_shape & 1 )
     {
       v12 = RGE_View::get_border_picture(this, border_type, tile_type, 1, map_col, map_row);
       v11 = border_shape;
       *top_index = v12;
     }
-    if ( v11 & 2 )
+    if( v11 & 2 )
     {
       v13 = RGE_View::get_border_picture(v10, border_type, tile_type, 4, map_col, map_row);
       v11 = border_shape;
       *bottom_index = v13;
     }
-    if ( v11 & 4 )
+    if( v11 & 4 )
     {
       v14 = RGE_View::get_border_picture(v10, border_type, tile_type, 3, map_col, map_row);
       v11 = border_shape;
       *left_index = v14;
     }
-    if ( v11 & 8 )
+    if( v11 & 8 )
       *right_index = RGE_View::get_border_picture(v10, border_type, tile_type, 2, map_col, map_row);
     result = 1;
   }
@@ -5415,7 +5415,7 @@ int __fastcall RGE_View::hit_tile(RGE_View *this, RGE_Tile *a2, RGE_Tile *tile, 
 
   v8 = 0;
   v18 = this;
-  if ( tile )
+  if( tile )
   {
     LOWORD(a2) = tile->tile_type;
     v9 = *((_BYTE *)tile + 5);
@@ -5427,28 +5427,28 @@ int __fastcall RGE_View::hit_tile(RGE_View *this, RGE_Tile *a2, RGE_Tile *tile, 
     tilea = 0;
     LOWORD(a2) = 0;
   }
-  if ( mouse_pos->x >= x )
+  if( mouse_pos->x >= x )
   {
     v10 = (signed __int16)a2;
     v11 = this->map;
-    if ( mouse_pos->x < x + (signed int)*((_WORD *)&v11->vfptr + 3 * ((signed __int16)a2 + 4)) )
+    if( mouse_pos->x < x + (signed int)*((_WORD *)&v11->vfptr + 3 * ((signed __int16)a2 + 4)) )
     {
       v12 = mouse_pos->y;
-      if ( v12 >= y )
+      if( v12 >= y )
       {
         v13 = v10;
-        if ( v12 < y + v11->tilesizes[v10].height )
+        if( v12 < y + v11->tilesizes[v10].height )
         {
-          if ( v8 >= v11->num_terrain )
+          if( v8 >= v11->num_terrain )
             return 1;
-          if ( !v11->terrain_types[v8].loaded )
+          if( !v11->terrain_types[v8].loaded )
             return 1;
           v14 = v11->terrain_types[v8].shape;
           v15 = RGE_View::get_tile_picture(v18, v8, (char)tilea, map_col, map_row);
-          if ( !v14 || v15 == -1 )
+          if( !v14 || v15 == -1 )
             return 1;
           v16 = mouse_pos->y;
-          if ( v16 < y + v18->map->tilesizes[v13].height && TShape::shape_check(v14, mouse_pos->x - x, v16 - y, v15) )
+          if( v16 < y + v18->map->tilesizes[v13].height && TShape::shape_check(v14, mouse_pos->x - x, v16 - y, v15) )
             return 1;
         }
       }
@@ -5478,11 +5478,11 @@ RGE_Static_Object *__thiscall RGE_View::hit_object(RGE_View *this, RGE_Tile *til
 
   v23 = this;
   picked_obj = 0;
-  if ( tile != (RGE_Tile *)-12 )
+  if( tile != (RGE_Tile *)-12 )
   {
     save_list = RGE_Object_List::sort(&tile->objects);
     temp = save_list;
-    if ( save_list )
+    if( save_list )
     {
       v12 = mouse_pos;
       v13 = y;
@@ -5490,20 +5490,20 @@ RGE_Static_Object *__thiscall RGE_View::hit_object(RGE_View *this, RGE_Tile *til
       do
       {
         v15 = temp->node;
-        if ( !temp->node )
+        if( !temp->node )
           break;
-        if ( v15->object_state < 7u
+        if( v15->object_state < 7u
           && (!fog_flag || v15->master_obj->fog_flag)
           && (unsigned __int8)v15->master_obj->select_level >= v23->function_parm )
         {
           v16 = v23->function_mode;
-          if ( v16 == 43 || v16 == 44 )
+          if( v16 == 43 || v16 == 44 )
           {
-            if ( v15->owner != v23->player )
+            if( v15->owner != v23->player )
               goto LABEL_31;
-            if ( v16 == 44 )
+            if( v16 == 44 )
             {
-              if ( RGE_Static_Object::box_hit_test(
+              if( RGE_Static_Object::box_hit_test(
                      v15,
                      v14,
                      v13,
@@ -5512,30 +5512,30 @@ RGE_Static_Object *__thiscall RGE_View::hit_object(RGE_View *this, RGE_Tile *til
                      v12->x,
                      v12->y) )
               {
-                if ( !RGE_Player::select_one_object(v23->player, v15, 0) )
+                if( !RGE_Player::select_one_object(v23->player, v15, 0) )
                   break;
                 picked_obj = v15;
               }
               goto LABEL_31;
             }
           }
-          if ( RGE_Static_Object::hit_test(v15, v14, v13, v14, v13, v12->x, v12->y, 5) )
+          if( RGE_Static_Object::hit_test(v15, v14, v13, v14, v13, v12->x, v12->y, 5) )
           {
-            if ( orig_picked_obj && v15 == orig_picked_obj )
+            if( orig_picked_obj && v15 == orig_picked_obj )
             {
               v17 = picked_obj;
-              if ( picked_obj )
+              if( picked_obj )
                 return picked_obj;
             }
             else
             {
               v17 = picked_obj;
             }
-            if ( !v17 )
+            if( !v17 )
             {
 LABEL_28:
               picked_obj = v15;
-              if ( !RGE_Static_Object::get_frame(v15, (__int16 *)&min_x, (__int16 *)&min_y, &max_x, (__int16 *)&tile) )
+              if( !RGE_Static_Object::get_frame(v15, (__int16 *)&min_x, (__int16 *)&min_y, &max_x, (__int16 *)&tile) )
               {
                 min_x = 0;
                 min_y = 0;
@@ -5545,22 +5545,22 @@ LABEL_28:
               goto LABEL_31;
             }
             v18 = v23->player;
-            if ( v15->owner != v18 )
+            if( v15->owner != v18 )
             {
-              if ( v17->owner == v18 )
+              if( v17->owner == v18 )
                 goto LABEL_31;
               v17 = picked_obj;
             }
-            if ( !v17 || (unsigned __int8)v15->master_obj->select_level >= v17->master_obj->select_level )
+            if( !v17 || (unsigned __int8)v15->master_obj->select_level >= v17->master_obj->select_level )
               goto LABEL_28;
           }
         }
 LABEL_31:
         temp = temp->next;
       }
-      while ( temp );
+      while( temp );
     }
-    if ( save_list )
+    if( save_list )
     {
       do
       {
@@ -5568,7 +5568,7 @@ LABEL_31:
         free(save_list);
         save_list = v19;
       }
-      while ( v19 );
+      while( v19 );
     }
   }
   return picked_obj;
@@ -5590,9 +5590,9 @@ int __thiscall RGE_View::start_scroll_view(RGE_View *this, char scroll_action_in
 
   v6 = scroll_action_in;
   v7 = this;
-  if ( scroll_action_in == 3 )
+  if( scroll_action_in == 3 )
   {
-    if ( (unsigned __int8)RGE_View::pick(this, 40, 0, x, y, &pick_info, 0) != 51 )
+    if( (unsigned __int8)RGE_View::pick(this, 40, 0, x, y, &pick_info, 0) != 51 )
       return 0;
     RGE_View::set_selection_area(
       v7,
@@ -5601,7 +5601,7 @@ int __thiscall RGE_View::start_scroll_view(RGE_View *this, char scroll_action_in
       (signed __int64)pick_info.x,
       (signed __int64)pick_info.y);
   }
-  else if ( scroll_action_in == 9 )
+  else if( scroll_action_in == 9 )
   {
     RGE_View::pick(this, 40, 0, x, y, &pick_info, 0);
     v9 = pick_info.y;
@@ -5616,7 +5616,7 @@ int __thiscall RGE_View::start_scroll_view(RGE_View *this, char scroll_action_in
                x,
                y,
                1);
-    if ( !result )
+    if( !result )
       return result;
     v10->set_redraw((TPanel *)v7, RedrawNormal);
     v6 = 9;
@@ -5628,16 +5628,16 @@ int __thiscall RGE_View::start_scroll_view(RGE_View *this, char scroll_action_in
   v7->mouse_down_y = y;
   TPanel::capture_mouse((TPanel *)&v7->vfptr);
   v11 = v7->scroll_action;
-  if ( v11 == 1 || v11 == 2 || v11 == 6 || v11 == 7 || v11 == 8 )
+  if( v11 == 1 || v11 == 2 || v11 == 6 || v11 == 7 || v11 == 8 )
     RGE_Base_Game::mouse_off(rge_base_game);
-  if ( v7->scroll_action == 2 )
+  if( v7->scroll_action == 2 )
   {
-    if ( !shift_key && !ctrl_key )
+    if( !shift_key && !ctrl_key )
       RGE_Player::unselect_object(v7->player);
     v7->vfptr->set_redraw((TPanel *)v7, RedrawNormal);
   }
   v12 = v7->scroll_action;
-  if ( v12 != 6 && v12 != 8 || (unsigned __int8)RGE_View::pick(v7, 40, 0, x, y, &pick_info, 0) != 51 )
+  if( v12 != 6 && v12 != 8 || (unsigned __int8)RGE_View::pick(v7, 40, 0, x, y, &pick_info, 0) != 51 )
   {
     result = 0;
   }
@@ -5729,7 +5729,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
   v5 = y;
   v6 = &this->mouse_last_x;
   save_mouse_last_x = this->mouse_last_x;
-  if ( x != this->mouse_last_x || y != this->mouse_last_y )
+  if( x != this->mouse_last_x || y != this->mouse_last_y )
   {
     v8 = this->player;
     change = SLODWORD(v8->view_x);
@@ -5747,7 +5747,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
       case 6:
         v10 = x;
         xa = this->vfptr;
-        if ( this->vfptr->is_inside((TPanel *)this, v10, v5)
+        if( this->vfptr->is_inside((TPanel *)this, v10, v5)
           && (unsigned __int8)RGE_View::pick(v4, 40, 0, v3, v5, &pick_info, 0) == 51 )
         {
           v11 = pick_info.y - -0.5;
@@ -5757,7 +5757,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
         v13 = v4->player;
         *v6 = v3;
         v4->mouse_last_y = v5;
-        if ( *(float *)&change != v13->view_x || save_view_y != v13->view_y )
+        if( *(float *)&change != v13->view_x || save_view_y != v13->view_y )
         {
           xa->set_redraw((TPanel *)v4, RedrawNormal);
           result = 1;
@@ -5770,20 +5770,20 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
       case 7:
         v14 = this->mouse_last_y;
         v15 = v5 - v14;
-        if ( v5 != v14 && v15 < 100 && v15 > -100 )
+        if( v5 != v14 && v15 < 100 && v15 > -100 )
         {
           v16 = (signed __int64)((double)(v5 - v14) * 0.5);
           v4->player->map_y += v16;
           v4->player->map_x -= v16;
         }
         v17 = x - *v6;
-        if ( x != *v6 && v17 < 100 && v17 > -100 )
+        if( x != *v6 && v17 < 100 && v17 > -100 )
         {
           v18 = (signed __int64)((double)(x - *v6) * 0.5);
           v4->player->map_y += v18;
           v4->player->map_x += v18;
         }
-        if ( abs(v5 - v4->mouse_down_y) > 8 || abs(x - v4->mouse_down_x) > 8 )
+        if( abs(v5 - v4->mouse_down_y) > 8 || abs(x - v4->mouse_down_x) > 8 )
         {
           v20 = v4->mouse_down_x;
           v21 = v4->render_area;
@@ -5811,7 +5811,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
         v24 = this->mouse_last_y;
         v25 = v5 - v24;
         xb = v5 - v24;
-        if ( v5 != v24 && v25 < 100 && v25 > -100 )
+        if( v5 != v24 && v25 < 100 && v25 > -100 )
         {
           v26 = v4->player;
           v27 = (double)(signed int)(signed __int64)((double)xb * 0.5);
@@ -5820,7 +5820,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
           RGE_Player::set_view_loc(v26, v29, v28);
         }
         v30 = v3 - *v6;
-        if ( v3 != *v6 && v30 < 100 && v30 > -100 )
+        if( v3 != *v6 && v30 < 100 && v30 > -100 )
         {
           v31 = v4->player;
           v32 = (double)(signed int)(signed __int64)((double)(v3 - *v6) * 0.5);
@@ -5828,7 +5828,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
           v34 = v31->view_x + v32;
           RGE_Player::set_view_loc(v31, v34, v33);
         }
-        if ( abs(v5 - v4->mouse_down_y) > 8 || abs(v3 - v4->mouse_down_x) > 8 )
+        if( abs(v5 - v4->mouse_down_y) > 8 || abs(v3 - v4->mouse_down_x) > 8 )
         {
           v35 = v4->mouse_down_x;
           v36 = v4->render_area;
@@ -5846,7 +5846,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
           v4->mouse_last_y = v5;
         }
         v38 = v4->player;
-        if ( *(float *)&change != v38->view_x || save_view_y != v38->view_y )
+        if( *(float *)&change != v38->view_x || save_view_y != v38->view_y )
         {
           v4->vfptr->set_redraw((TPanel *)v4, RedrawNormal);
           result = 1;
@@ -5857,7 +5857,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
         }
         break;
       default:
-        if ( v9 == 3 || v9 == 4 || v9 == 9 )
+        if( v9 == 3 || v9 == 4 || v9 == 9 )
           v39 = x < this->clip_rect.left + 64 && x < save_mouse_last_x
              || x > this->clip_rect.right - 64 && x > save_mouse_last_x
              || v5 < this->clip_rect.top + 32 && v5 < this->mouse_last_y
@@ -5866,7 +5866,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
           v39 = 1;
         v40 = this->mouse_last_y;
         v41 = v5 - v40;
-        if ( v5 != v40 && v41 < 200 && v41 > -200 && v39 )
+        if( v5 != v40 && v41 < 200 && v41 > -200 && v39 )
         {
           v42 = (double)(v5 - v40) * 0.0625;
           v43 = v8->view_y + v42;
@@ -5876,7 +5876,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
         v45 = v4->mouse_last_x;
         v46 = x - v45;
         xc = x - v45;
-        if ( v3 != v45 && v46 < 200 && v46 > -200 && v39 )
+        if( v3 != v45 && v46 < 200 && v46 > -200 && v39 )
         {
           v47 = v4->player;
           v48 = (double)xc * 0.0625;
@@ -5888,9 +5888,9 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
         xd = v4->mouse_last_y;
         v4->mouse_last_x = v3;
         v4->mouse_last_y = v5;
-        if ( v39 )
+        if( v39 )
         {
-          if ( abs(v5 - v4->mouse_down_y) > 8 || abs(v3 - v4->mouse_down_x) > 8 )
+          if( abs(v5 - v4->mouse_down_y) > 8 || abs(v3 - v4->mouse_down_x) > 8 )
           {
             v51 = v4->mouse_down_x;
             point.y = v4->mouse_down_y;
@@ -5912,7 +5912,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
         switch ( v54 )
         {
           case 3:
-            if ( (unsigned __int8)RGE_View::pick(v4, 40, 0, v3, v5, &pick_info, 0) == 51 && v4->player )
+            if( (unsigned __int8)RGE_View::pick(v4, 40, 0, v3, v5, &pick_info, 0) == 51 && v4->player )
               RGE_View::set_selection_area(
                 v4,
                 v4->sel_col1,
@@ -5921,7 +5921,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
                 (signed __int64)pick_info.y);
             break;
           case 4:
-            if ( v4->player->selected_obj && (unsigned __int8)RGE_View::pick(v4, 40, 0, v3, v5, &pick_info, 0) == 51 )
+            if( v4->player->selected_obj && (unsigned __int8)RGE_View::pick(v4, 40, 0, v3, v5, &pick_info, 0) == 51 )
             {
               (*(void (__stdcall **)(_DWORD, _DWORD, _DWORD))&v4->player->selected_obj->vfptr->gap4[48])(
                 LODWORD(pick_info.x),
@@ -5929,19 +5929,19 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
                 0);
               v55 = v4->player->selected_obj;
               v56 = v55->sprite_list;
-              if ( v56 )
+              if( v56 )
               {
                 v57 = RGE_Active_Sprite_List::get_lowest_draw_level(v56);
               }
               else
               {
                 v58 = v55->sprite;
-                if ( v58 )
+                if( v58 )
                   v57 = RGE_Sprite::get_lowest_draw_level(v58);
                 else
                   v57 = 20;
               }
-              if ( v57 )
+              if( v57 )
                 v4->vfptr->set_redraw((TPanel *)v4, RedrawNormal);
               else
                 v4->vfptr->set_redraw((TPanel *)v4, RedrawFull);
@@ -5960,7 +5960,7 @@ int __thiscall RGE_View::handle_scroll_view(RGE_View *this, int x, int y)
             break;
         }
         v60 = v4->player;
-        if ( *(float *)&change != v60->view_x || save_view_y != v60->view_y )
+        if( *(float *)&change != v60->view_x || save_view_y != v60->view_y )
         {
           v4->vfptr->set_redraw((TPanel *)v4, RedrawNormal);
           result = 1;
@@ -5997,7 +5997,7 @@ void __thiscall RGE_View::end_scroll_view(RGE_View *this)
   switch ( this->scroll_action )
   {
     case 2:
-      if ( this->mouse_down_x <= this->mouse_last_x )
+      if( this->mouse_down_x <= this->mouse_last_x )
       {
         v2 = this->mouse_down_x;
         v3 = this->mouse_last_x;
@@ -6008,7 +6008,7 @@ void __thiscall RGE_View::end_scroll_view(RGE_View *this)
         v3 = this->mouse_down_x;
       }
       v4 = this->mouse_down_y;
-      if ( v4 <= v1->mouse_last_y )
+      if( v4 <= v1->mouse_last_y )
       {
         v5 = v1->mouse_down_y;
         v4 = v1->mouse_last_y;
@@ -6046,7 +6046,7 @@ void __thiscall RGE_View::end_scroll_view(RGE_View *this)
       break;
   }
   v9 = v1->scroll_action;
-  if ( v9 == 1 || v9 == 2 || v9 == 6 || v9 == 7 || v9 == 8 )
+  if( v9 == 1 || v9 == 2 || v9 == 6 || v9 == 7 || v9 == 8 )
     RGE_Base_Game::mouse_on(rge_base_game);
   TPanel::release_mouse((TPanel *)&v1->vfptr);
   v1->scroll_action = 0;
@@ -6065,7 +6065,7 @@ int __thiscall RGE_View::do_paint(RGE_View *this, int old_x, int old_y, int new_
   RGE_Pick_Info pick_info; // [sp+4h] [bp-14h]@1
 
   v6 = this;
-  if ( (unsigned __int8)RGE_View::pick(this, 40, 0, new_x, new_y, &pick_info, 0) == 51 )
+  if( (unsigned __int8)RGE_View::pick(this, 40, 0, new_x, new_y, &pick_info, 0) == 51 )
   {
     v8 = (signed __int64)pick_info.x;
     v9 = (signed __int64)pick_info.y;
@@ -6075,10 +6075,10 @@ int __thiscall RGE_View::do_paint(RGE_View *this, int old_x, int old_y, int new_
     switch ( rge_base_game->game_mode )
     {
       case 9:
-        if ( up_down )
+        if( up_down )
         {
           LOWORD(v10) = rge_base_game->terrain_id;
-          if ( (_WORD)v10 != -1 )
+          if( (_WORD)v10 != -1 )
             v6->map->vfptr->do_terrain_brush_stroke(
               v6->map,
               v6->real_old_map_col,
@@ -6090,10 +6090,10 @@ int __thiscall RGE_View::do_paint(RGE_View *this, int old_x, int old_y, int new_
         }
         break;
       case 0xA:
-        if ( up_down )
+        if( up_down )
         {
           LOWORD(v10) = rge_base_game->elevation_height;
-          if ( (_WORD)v10 != -1 )
+          if( (_WORD)v10 != -1 )
             v6->map->vfptr->do_elevation_brush_stroke(
               v6->map,
               v6->real_old_map_col,
@@ -6106,7 +6106,7 @@ int __thiscall RGE_View::do_paint(RGE_View *this, int old_x, int old_y, int new_
         break;
       case 0x13:
         v12 = v6->map->vfptr;
-        if ( rge_base_game->sub_game_mode == 1 )
+        if( rge_base_game->sub_game_mode == 1 )
           ((void (__stdcall *)(int, int, int, int, _DWORD, signed int))v12->do_cliff_brush_stroke)(
             v6->real_old_map_col,
             v6->real_old_map_row,
@@ -6145,7 +6145,7 @@ void __thiscall RGE_View::reset_overlay_sprites(RGE_View *this)
 
   v1 = this;
   v2 = this->extra_sprites;
-  if ( v2 )
+  if( v2 )
   {
     do
     {
@@ -6153,7 +6153,7 @@ void __thiscall RGE_View::reset_overlay_sprites(RGE_View *this)
       operator delete(v2);
       v2 = v3;
     }
-    while ( v3 );
+    while( v3 );
   }
   v1->extra_sprites = 0;
 }
@@ -6168,16 +6168,16 @@ void __thiscall RGE_View::reset_cyclic_overlay_sprites(RGE_View *this)
 
   v1 = this;
   v2 = this->extra_sprites;
-  while ( v2 )
+  while( v2 )
   {
-    if ( v2->displayfunction == 1 )
+    if( v2->displayfunction == 1 )
     {
       v3 = &v2->prev->next;
-      if ( v3 )
+      if( v3 )
         *v3 = v2->next;
-      if ( v2->next )
+      if( v2->next )
         v2->next->prev = v2->prev;
-      if ( !v2->prev )
+      if( !v2->prev )
         v1->extra_sprites = v2->next;
       v4 = v2->next;
       operator delete(v2);
@@ -6199,12 +6199,12 @@ void __thiscall RGE_View::add_overlay_sprite(RGE_View *this, TShape *theShape, i
 
   v10 = this;
   v11 = (Ov_Sprite_Draw_Rec *)operator new(0x30u);
-  if ( v11 )
+  if( v11 )
   {
     v12 = v10->extra_sprites;
     v11->prev = 0;
     v11->next = v12;
-    if ( v12 )
+    if( v12 )
       v12->prev = v11;
     v10->extra_sprites = v11;
     v11->theShape = theShape;
@@ -6227,7 +6227,7 @@ bool __thiscall RGE_View::Object_Was_Displayed(RGE_View *this, int ObjectID, cha
   bool result; // al@2
 
   v3 = DClipInfo_List::LocateIDbyDrawLevel(this->prior_objs, ObjectID, 6, 40, 0);
-  if ( v3 )
+  if( v3 )
     result = InFogOK || !(v3->Draw_Flag & 1);
   else
     result = 0;

@@ -10,7 +10,7 @@ void __thiscall RGE_Master_Doppleganger_Object::RGE_Master_Doppleganger_Object(R
     (RGE_Master_Animated_Object *)&other_object->vfptr,
     0);
   v3->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Doppleganger_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Doppleganger_Object::setup(v3, other_object);
 }
 // 570520: using guessed type int (__thiscall *RGE_Master_Doppleganger_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -22,7 +22,7 @@ RGE_Master_Doppleganger_Object *__thiscall RGE_Master_Doppleganger_Object::`vect
 
   v2 = this;
   RGE_Master_Doppleganger_Object::~RGE_Master_Doppleganger_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -40,7 +40,7 @@ void __thiscall RGE_Master_Doppleganger_Object::RGE_Master_Doppleganger_Object(R
     sounds,
     0);
   v5->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Doppleganger_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Doppleganger_Object::setup(v5, infile, infile, sprites, sounds);
 }
 // 570520: using guessed type int (__thiscall *RGE_Master_Doppleganger_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -59,7 +59,7 @@ void __thiscall RGE_Master_Doppleganger_Object::RGE_Master_Doppleganger_Object(R
     in_id,
     0);
   v6->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Doppleganger_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Doppleganger_Object::setup(v6, infile, sprites, sounds, in_id);
 }
 // 570520: using guessed type int (__thiscall *RGE_Master_Doppleganger_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -119,7 +119,7 @@ void __thiscall RGE_Master_Doppleganger_Object::make_new_obj(RGE_Master_Dopplega
   RGE_Doppleganger_Object *v8; // eax@4
 
   v6 = this;
-  if ( this->recyclable && (v7 = RGE_Game_World::recycle_object_in_to_game(owner->world, this->master_type)) != 0 )
+  if( this->recyclable && (v7 = RGE_Game_World::recycle_object_in_to_game(owner->world, this->master_type)) != 0 )
   {
     (*(void (__thiscall **)(RGE_Static_Object *, RGE_Master_Doppleganger_Object *, RGE_Player *, _DWORD, _DWORD, _DWORD, RGE_Static_Object *))&v7->vfptr[1].gap4[0])(
       v7,
@@ -133,7 +133,7 @@ void __thiscall RGE_Master_Doppleganger_Object::make_new_obj(RGE_Master_Dopplega
   else
   {
     v8 = (RGE_Doppleganger_Object *)operator new(0xB0u);
-    if ( v8 )
+    if( v8 )
       RGE_Doppleganger_Object::RGE_Doppleganger_Object(v8, v6, owner, x, y, z, 1, obj_to_dopple);
   }
 }
@@ -146,7 +146,7 @@ void __thiscall RGE_Master_Doppleganger_Object::make_new_master(RGE_Master_Doppl
 
   v1 = this;
   v2 = (RGE_Master_Doppleganger_Object *)operator new(0xBCu);
-  if ( v2 )
+  if( v2 )
     RGE_Master_Doppleganger_Object::RGE_Master_Doppleganger_Object(v2, v1, 1);
 }
 

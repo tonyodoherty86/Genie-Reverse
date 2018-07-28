@@ -51,7 +51,7 @@ void __thiscall UnitAIModule::UnitAIModule(UnitAIModule *this, RGE_Static_Object
   v3->playStatus = 0;
   v3->stopAfterTargetKilledValue = 0;
   v3->vfptr = (UnitAIModuleVtbl *)&UnitAIModule::`vftable';
-  if ( o )
+  if( o )
   {
     v3->objectCategoryValue = o->master_obj->object_group;
     v3->defenseBufferValue = o->master_obj->los;
@@ -72,7 +72,7 @@ UnitAIModule *__thiscall UnitAIModule::`vector deleting destructor'(UnitAIModule
 
   v2 = this;
   UnitAIModule::~UnitAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -118,7 +118,7 @@ void __thiscall UnitAIModule::save(UnitAIModule *this, int outfile)
   rge_write(v3, &v2->lastWorldPositionValue, 16);
   rge_write(v3, &v2->orderQueueSizeValue, 4);
   v4 = 0;
-  if ( v2->orderQueueSizeValue > 0 )
+  if( v2->orderQueueSizeValue > 0 )
   {
     v5 = 0;
     do
@@ -127,11 +127,11 @@ void __thiscall UnitAIModule::save(UnitAIModule *this, int outfile)
       ++v4;
       ++v5;
     }
-    while ( v4 < v2->orderQueueSizeValue );
+    while( v4 < v2->orderQueueSizeValue );
   }
   rge_write(v3, &v2->notifyQueueSizeValue, 4);
   v6 = 0;
-  if ( v2->notifyQueueSizeValue > 0 )
+  if( v2->notifyQueueSizeValue > 0 )
   {
     v7 = 0;
     do
@@ -140,20 +140,20 @@ void __thiscall UnitAIModule::save(UnitAIModule *this, int outfile)
       ++v6;
       ++v7;
     }
-    while ( v6 < v2->notifyQueueSizeValue );
+    while( v6 < v2->notifyQueueSizeValue );
   }
   outfile = v2->attackingUnitsValue.numberValue;
   rge_write(v3, &outfile, 4);
-  for ( i = 0; i < v2->attackingUnitsValue.numberValue; ++i )
+  for( i = 0; i < v2->attackingUnitsValue.numberValue; ++i )
   {
-    if ( i > v2->attackingUnitsValue.maximumSizeValue - 1 )
+    if( i > v2->attackingUnitsValue.maximumSizeValue - 1 )
     {
       v9 = (int *)operator new(4 * i + 4);
-      if ( v9 )
+      if( v9 )
       {
-        for ( j = 0; j < v2->attackingUnitsValue.maximumSizeValue; v9[j - 1] = v2->attackingUnitsValue.value[j - 1] )
+        for( j = 0; j < v2->attackingUnitsValue.maximumSizeValue; v9[j - 1] = v2->attackingUnitsValue.value[j - 1] )
         {
-          if ( j >= i + 1 )
+          if( j >= i + 1 )
             break;
           ++j;
         }
@@ -165,7 +165,7 @@ void __thiscall UnitAIModule::save(UnitAIModule *this, int outfile)
     outfile = v2->attackingUnitsValue.value[i];
     rge_write(v3, &outfile, 4);
   }
-  if ( v2->playStatus )
+  if( v2->playStatus )
   {
     outfile = 1;
     rge_write(v3, &outfile, 4);
@@ -222,7 +222,7 @@ void __userpurge UnitAIModule::load(UnitAIModule *this@<ecx>, int a2@<ebp>, int 
   rge_read(a2, v4, v4, &v3->idleTimeoutValue, 4);
   rge_read(a2, v4, v4, &v3->adjustedIdleTimeoutValue, 4);
   rge_read(a2, v4, v4, &v3->secondaryTimerValue, 4);
-  if ( save_game_version < 6.9299998 )
+  if( save_game_version < 6.9299998 )
   {
     v3->lookAroundTimerValue = 0;
     v3->lookAroundTimeoutValue = 1000;
@@ -236,40 +236,40 @@ void __userpurge UnitAIModule::load(UnitAIModule *this@<ecx>, int a2@<ebp>, int 
   rge_read(a2, v4, v4, &v3->defenseBufferValue, 4);
   rge_read(a2, v4, v4, &v3->lastWorldPositionValue, 16);
   rge_read(a2, v4, v4, &infile, 4);
-  for ( j = 0; j < infile; ++j )
+  for( j = 0; j < infile; ++j )
   {
     rge_read(a2, v4, v4, &tempNotify, 36);
     UnitAIModule::addToOrderQueue(v3, (OrderEvent *)&tempNotify, 0);
   }
   rge_read(a2, v4, v4, &numberNotifies, 4);
-  for ( k = 0; k < numberNotifies; ++k )
+  for( k = 0; k < numberNotifies; ++k )
   {
     rge_read(a2, v4, v4, &tempNotify, 24);
     UnitAIModule::addToNotifyQueue(v3, &tempNotify);
   }
   rge_read(a2, v4, v4, &numberUnits, 4);
-  for ( i = 0; i < numberUnits; ++i )
+  for( i = 0; i < numberUnits; ++i )
   {
     rge_read(a2, v4, v4, &data, 4);
     v7 = v3->attackingUnitsValue.numberValue;
     v8 = 0;
-    for ( l = data; v8 < v7; ++v8 )
+    for( l = data; v8 < v7; ++v8 )
     {
-      if ( v8 >= v3->attackingUnitsValue.maximumSizeValue )
+      if( v8 >= v3->attackingUnitsValue.maximumSizeValue )
         break;
       a2 = (int)v3->attackingUnitsValue.value;
-      if ( *(AIPlayStatus **)(a2 + 4 * v8) == data )
+      if( *(AIPlayStatus **)(a2 + 4 * v8) == data )
         goto LABEL_20;
     }
-    if ( v7 > v3->attackingUnitsValue.maximumSizeValue - 1 )
+    if( v7 > v3->attackingUnitsValue.maximumSizeValue - 1 )
     {
       a2 = v7 + 1;
       v9 = (int *)operator new(4 * (v7 + 1));
-      if ( v9 )
+      if( v9 )
       {
-        for ( m = 0; m < v3->attackingUnitsValue.maximumSizeValue; v9[m - 1] = v3->attackingUnitsValue.value[m - 1] )
+        for( m = 0; m < v3->attackingUnitsValue.maximumSizeValue; v9[m - 1] = v3->attackingUnitsValue.value[m - 1] )
         {
-          if ( m >= a2 )
+          if( m >= a2 )
             break;
           ++m;
         }
@@ -283,12 +283,12 @@ LABEL_20:
     ;
   }
   rge_read(a2, v4, v4, &tempInt, 4);
-  if ( tempInt == 1 )
+  if( tempInt == 1 )
   {
     v11 = (AIPlayStatus *)operator new(0x1C8u);
     l = v11;
     v20 = 0;
-    if ( v11 )
+    if( v11 )
       AIPlayStatus::AIPlayStatus(v11);
     else
       v12 = 0;
@@ -296,7 +296,7 @@ LABEL_20:
     v3->playStatus = v12;
     AIPlayStatus::load(v12, a2, v4);
   }
-  if ( save_game_version >= 7.02 )
+  if( save_game_version >= 7.02 )
     rge_read(a2, v4, v4, &v3->stopAfterTargetKilledValue, 1);
 }
 // 58EBCC: using guessed type float save_game_version;
@@ -385,7 +385,7 @@ OrderEvent *__thiscall UnitAIModule::orderQueueElement(UnitAIModule *this, int v
   OrderEvent *v2; // eax@3
   OrderEvent *result; // eax@4
 
-  if ( v >= 0 && v < this->orderQueueSizeValue && (v2 = this->orderQueueValue) != 0 )
+  if( v >= 0 && v < this->orderQueueSizeValue && (v2 = this->orderQueueValue) != 0 )
     result = &v2[v];
   else
     result = 0;
@@ -506,21 +506,21 @@ int __thiscall UnitAIModule::attackingUnitID(UnitAIModule *this, int v)
   int result; // eax@9
 
   v2 = this;
-  if ( v < 0 || v >= this->attackingUnitsValue.numberValue )
+  if( v < 0 || v >= this->attackingUnitsValue.numberValue )
   {
     result = -1;
   }
   else
   {
-    if ( v > this->attackingUnitsValue.maximumSizeValue - 1 )
+    if( v > this->attackingUnitsValue.maximumSizeValue - 1 )
     {
       v3 = v + 1;
       v4 = (int *)operator new(4 * (v + 1));
-      if ( v4 )
+      if( v4 )
       {
-        for ( i = 0; i < v2->attackingUnitsValue.maximumSizeValue; v4[i - 1] = v2->attackingUnitsValue.value[i - 1] )
+        for( i = 0; i < v2->attackingUnitsValue.maximumSizeValue; v4[i - 1] = v2->attackingUnitsValue.value[i - 1] )
         {
-          if ( i >= v3 )
+          if( i >= v3 )
             break;
           ++i;
         }
@@ -595,30 +595,30 @@ int __userpurge UnitAIModule::update@<eax>(UnitAIModule *this@<ecx>, double a2@<
   int (__thiscall *uTimea)(UnitAIModule *, NotifyEvent *, unsigned int); // [sp+2Ch] [bp+4h]@72
 
   v3 = this;
-  if ( this->objectValue->object_state > 2u )
+  if( this->objectValue->object_state > 2u )
     return 1;
   taskedThisUpdate = 0;
   searchedThisUpdate = 0;
   numberVisibleObjects = 0;
   numberDifferentPlayerObjectsVisible = 0;
   haveGameAction = RGE_Action_List::have_action((RGE_Action_List *)this->objectValue[2].unitAIValue);
-  if ( !haveGameAction && (unsigned __int8)((int (*)(void))v3->objectValue->vfptr->waitingToMove)() == 1 )
+  if( !haveGameAction && (unsigned __int8)((int (*)(void))v3->objectValue->vfptr->waitingToMove)() == 1 )
     ((void (__stdcall *)(_DWORD))v3->objectValue->vfptr->setWaitingToMove)(0);
-  if ( v3->currentTargetValue != -1 )
+  if( v3->currentTargetValue != -1 )
   {
     v4 = UnitAIModule::lookupObject(v3, v3->currentTargetValue);
     v5 = v4;
-    if ( !v4 )
+    if( !v4 )
     {
       v6 = v3->currentActionValue;
       v3->currentTargetValue = -1;
-      if ( v6 == 600 )
+      if( v6 == 600 )
       {
         UnitAIModule::removeCurrentTarget(v3);
-        if ( actionFile )
+        if( actionFile )
         {
           v7 = v3->objectValue;
-          if ( v7 )
+          if( v7 )
             v8 = v7->id;
           else
             v8 = -1;
@@ -629,22 +629,22 @@ int __userpurge UnitAIModule::update@<eax>(UnitAIModule *this@<ecx>, double a2@<
       }
       goto LABEL_40;
     }
-    if ( v3->objectValue->object_state != 2 )
+    if( v3->objectValue->object_state != 2 )
       goto LABEL_34;
-    if ( v4->object_state <= 2u )
+    if( v4->object_state <= 2u )
       goto LABEL_34;
     v9 = v3->vfptr;
-    if ( v3->vfptr->actionRequiresLiveTarget(v3, v3->currentActionValue) != 1 )
+    if( v3->vfptr->actionRequiresLiveTarget(v3, v3->currentActionValue) != 1 )
       goto LABEL_34;
     v10 = v3->currentActionValue;
     v3->stopAfterTargetKilledValue = 0;
-    if ( v10 == 600 )
+    if( v10 == 600 )
     {
       v11 = v9->processIdle(v3, 0) == 5;
       v12 = v3->currentOrderValue;
-      if ( !v11 )
+      if( !v11 )
       {
-        if ( v12 != 725 )
+        if( v12 != 725 )
         {
           v3->lastOrderValue = v12;
           v3->currentOrderValue = -1;
@@ -652,11 +652,11 @@ int __userpurge UnitAIModule::update@<eax>(UnitAIModule *this@<ecx>, double a2@<
         }
         goto LABEL_34;
       }
-      if ( v12 != 725 )
+      if( v12 != 725 )
       {
         ((void (__stdcall *)(signed int))v3->objectValue->vfptr->weaponRange)(1);
         v13 = a2;
-        if ( !(*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD))&v9->gap90[0])(
+        if( !(*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD))&v9->gap90[0])(
                 v3,
                 LODWORD(v3->currentTargetXValue),
                 LODWORD(v3->currentTargetYValue),
@@ -664,10 +664,10 @@ int __userpurge UnitAIModule::update@<eax>(UnitAIModule *this@<ecx>, double a2@<
                 LODWORD(v13)) )
         {
           UnitAIModule::removeCurrentTarget(v3);
-          if ( actionFile )
+          if( actionFile )
           {
             v14 = v3->objectValue;
-            if ( v14 )
+            if( v14 )
               fprintf(actionFile, aDCallStopobjec, v14->id, aCMsdevWorkA_43, 821);
             else
               fprintf(actionFile, aDCallStopobjec, -1, aCMsdevWorkA_43, 821);
@@ -682,13 +682,13 @@ LABEL_33:
         v3->currentOrderPriorityValue = -1;
       }
 LABEL_34:
-      if ( RGE_Player::computerPlayer(v3->objectValue->owner) == 1 )
+      if( RGE_Player::computerPlayer(v3->objectValue->owner) == 1 )
       {
         v18 = v3->currentOrderPriorityValue;
-        if ( v18 != -1 && v18 < 100 )
+        if( v18 != -1 && v18 < 100 )
         {
           v19 = (signed __int64)(100.0 / RGE_Static_Object::distance_to_object(v3->objectValue, v5));
-          if ( (signed int)v19 > 99 )
+          if( (signed int)v19 > 99 )
             LODWORD(v19) = 99;
           v3->currentOrderPriorityValue = v19;
         }
@@ -696,10 +696,10 @@ LABEL_34:
       goto LABEL_40;
     }
     UnitAIModule::removeCurrentTarget(v3);
-    if ( actionFile )
+    if( actionFile )
     {
       v16 = v3->objectValue;
-      if ( v16 )
+      if( v16 )
         v17 = v16->id;
       else
         v17 = -1;
@@ -708,22 +708,22 @@ LABEL_34:
     goto LABEL_33;
   }
 LABEL_40:
-  if ( v3->attackingUnitsValue.numberValue || !(unsigned __int8)((int (*)(void))v3->objectValue->vfptr->underAttack)() )
+  if( v3->attackingUnitsValue.numberValue || !(unsigned __int8)((int (*)(void))v3->objectValue->vfptr->underAttack)() )
   {
     v20 = 0;
-    if ( v3->attackingUnitsValue.numberValue > 0 )
+    if( v3->attackingUnitsValue.numberValue > 0 )
     {
-      while ( 1 )
+      while( 1 )
       {
-        if ( v20 > v3->attackingUnitsValue.maximumSizeValue - 1 )
+        if( v20 > v3->attackingUnitsValue.maximumSizeValue - 1 )
         {
           v21 = v20 + 1;
           v22 = (int *)operator new(4 * v20 + 4);
-          if ( v22 )
+          if( v22 )
           {
-            for ( i = 0; i < v3->attackingUnitsValue.maximumSizeValue; v22[i - 1] = v3->attackingUnitsValue.value[i - 1] )
+            for( i = 0; i < v3->attackingUnitsValue.maximumSizeValue; v22[i - 1] = v3->attackingUnitsValue.value[i - 1] )
             {
-              if ( i >= v21 )
+              if( i >= v21 )
                 break;
               ++i;
             }
@@ -734,27 +734,27 @@ LABEL_40:
         }
         v24 = UnitAIModule::lookupObject(v3, v3->attackingUnitsValue.value[v20]);
         v25 = v24;
-        if ( !v24 )
+        if( !v24 )
           break;
-        if ( !RGE_Static_Object::unitAI(v24) )
+        if( !RGE_Static_Object::unitAI(v24) )
           break;
-        if ( v25->object_state > 2u )
+        if( v25->object_state > 2u )
           break;
         v26 = RGE_Static_Object::unitAI(v25);
-        if ( UnitAIModule::currentTarget(v26) != v3->objectValue->id )
+        if( UnitAIModule::currentTarget(v26) != v3->objectValue->id )
           break;
-        if ( ++v20 >= v3->attackingUnitsValue.numberValue )
+        if( ++v20 >= v3->attackingUnitsValue.numberValue )
           goto LABEL_71;
       }
-      if ( v20 > v3->attackingUnitsValue.maximumSizeValue - 1 )
+      if( v20 > v3->attackingUnitsValue.maximumSizeValue - 1 )
       {
         v27 = v20 + 1;
         v28 = (int *)operator new(4 * (v20 + 1));
-        if ( v28 )
+        if( v28 )
         {
-          for ( j = 0; j < v3->attackingUnitsValue.maximumSizeValue; v28[j - 1] = v3->attackingUnitsValue.value[j - 1] )
+          for( j = 0; j < v3->attackingUnitsValue.maximumSizeValue; v28[j - 1] = v3->attackingUnitsValue.value[j - 1] )
           {
-            if ( j >= v27 )
+            if( j >= v27 )
               break;
             ++j;
           }
@@ -766,32 +766,32 @@ LABEL_40:
       v30 = v3->attackingUnitsValue.maximumSizeValue;
       v31 = v3->attackingUnitsValue.value[v20];
       v32 = 0;
-      if ( v30 > 0 )
+      if( v30 > 0 )
       {
         v33 = v3->attackingUnitsValue.value;
         do
         {
-          if ( *v33 == v31 )
+          if( *v33 == v31 )
             break;
           ++v32;
           ++v33;
         }
-        while ( v32 < v30 );
+        while( v32 < v30 );
       }
-      if ( v32 < v30 )
+      if( v32 < v30 )
       {
-        if ( v32 < v30 - 1 )
+        if( v32 < v30 - 1 )
         {
           do
           {
             ++v32;
             v3->attackingUnitsValue.value[v32 - 1] = v3->attackingUnitsValue.value[v32];
           }
-          while ( v32 < v3->attackingUnitsValue.maximumSizeValue - 1 );
+          while( v32 < v3->attackingUnitsValue.maximumSizeValue - 1 );
         }
         v34 = v3->attackingUnitsValue.numberValue - 1;
         v3->attackingUnitsValue.numberValue = v34;
-        if ( v34 < 0 )
+        if( v34 < 0 )
           v3->attackingUnitsValue.numberValue = 0;
       }
     }
@@ -815,11 +815,11 @@ LABEL_71:
   v3->idleTimerValue = v38;
   v3->secondaryTimerValue = v42;
   v3->lookAroundTimerValue = uTime + v40;
-  if ( v41 <= 0 )
+  if( v41 <= 0 )
   {
 LABEL_76:
     UnitAIModule::purgeNotifyQueue(v3, v36);
-    if ( !haveGameAction )
+    if( !haveGameAction )
     {
       switch ( v3->currentActionValue )
       {
@@ -837,44 +837,44 @@ LABEL_76:
     }
     v45 = v3->objectValue;
     v46 = v3->currentOrderValue;
-    if ( v45->object_state > 2u )
+    if( v45->object_state > 2u )
       return 0;
-    if ( v45->groupCommanderValue == v45->id )
+    if( v45->groupCommanderValue == v45->id )
       UnitAIModule::updateGroup(v3, v36);
-    if ( v3->currentActionValue == -1 )
+    if( v3->currentActionValue == -1 )
     {
       v48 = 0;
-      if ( v3->orderQueueSizeValue > 0 )
+      if( v3->orderQueueSizeValue > 0 )
       {
         v49 = 0;
         v50 = v3->vfptr->processOrder;
         do
         {
-          if ( v50(v3, &v3->orderQueueValue[v49], v48) == 1 )
+          if( v50(v3, &v3->orderQueueValue[v49], v48) == 1 )
             break;
           ++v48;
           ++v49;
         }
-        while ( v48 < v3->orderQueueSizeValue );
+        while( v48 < v3->orderQueueSizeValue );
       }
     }
     v51 = v3->vfptr;
     v3->vfptr->processMisc(v3);
-    if ( v3->idleTimerValue > v3->adjustedIdleTimeoutValue )
+    if( v3->idleTimerValue > v3->adjustedIdleTimeoutValue )
     {
-      if ( v3->currentActionValue != -1 )
+      if( v3->currentActionValue != -1 )
         goto LABEL_94;
-      if ( v3->currentTargetValue == -1 )
+      if( v3->currentTargetValue == -1 )
       {
         v3->idleTimerValue = 0;
         v51->processIdle(v3, 1);
         goto LABEL_95;
       }
     }
-    if ( v3->currentActionValue == -1 && v3->currentTargetValue == -1 )
+    if( v3->currentActionValue == -1 && v3->currentTargetValue == -1 )
     {
 LABEL_95:
-      if ( RGE_Player::computerPlayer(v3->objectValue->owner) == 1
+      if( RGE_Player::computerPlayer(v3->objectValue->owner) == 1
         && v3->lookAroundTimerValue > v3->lookAroundTimeoutValue )
       {
         UnitAIModule::lookAround(v3);
@@ -887,16 +887,16 @@ LABEL_94:
   }
   v43 = 0;
   uTimea = v3->vfptr->processNotify;
-  while ( 1 )
+  while( 1 )
   {
     v44 = uTimea(v3, &v3->notifyQueueValue[v43], v36);
-    if ( v44 == 4 )
+    if( v44 == 4 )
       break;
-    if ( v44 != 3 )
+    if( v44 != 3 )
     {
       ++v37;
       ++v43;
-      if ( v37 < v3->notifyQueueSizeValue )
+      if( v37 < v3->notifyQueueSizeValue )
         continue;
     }
     goto LABEL_76;
@@ -994,24 +994,24 @@ void __thiscall UnitAIModule::updateGroup(UnitAIModule *this, unsigned int uTime
 
   v2 = this;
   v3 = this->playStatus;
-  if ( v3 )
+  if( v3 )
   {
     v4 = AIPlayBook::play(this->objectValue->owner->world->playbook, v3->playNumberValue);
     play = v4;
-    if ( v4 )
+    if( v4 )
     {
       target = UnitAIModule::lookupObject(v2, v2->playStatus->targetValue);
-      if ( !target )
+      if( !target )
       {
         v5 = v2->vfptr->bestUnitToAttack(v2, 1, 0, 0);
         v6 = v2->objectValue;
         v7 = v5;
         v8 = 0;
         deadCount = v5;
-        if ( v6->groupMembers.numberValue <= 0 )
+        if( v6->groupMembers.numberValue <= 0 )
         {
 LABEL_20:
-          if ( v7 == -1 )
+          if( v7 == -1 )
           {
             operator delete(v2->playStatus);
             v2->playStatus = 0;
@@ -1020,18 +1020,18 @@ LABEL_20:
         }
         else
         {
-          while ( v7 == -1 )
+          while( v7 == -1 )
           {
             v9 = v6->groupMembers.maximumSizeValue;
             v10 = (int)&v6->groupMembers;
-            if ( v8 > v9 - 1 )
+            if( v8 > v9 - 1 )
             {
               v11 = operator new(4 * v8 + 4);
-              if ( v11 )
+              if( v11 )
               {
-                for ( j = 0; j < *(_DWORD *)(v10 + 12); v11[j - 1] = *(_DWORD *)(*(_DWORD *)v10 + 4 * j - 4) )
+                for( j = 0; j < *(_DWORD *)(v10 + 12); v11[j - 1] = *(_DWORD *)(*(_DWORD *)v10 + 4 * j - 4) )
                 {
-                  if ( j >= v8 + 1 )
+                  if( j >= v8 + 1 )
                     break;
                   ++j;
                 }
@@ -1041,14 +1041,14 @@ LABEL_20:
               }
             }
             v13 = v2->objectValue;
-            if ( *(_DWORD *)(*(_DWORD *)v10 + 4 * v8) == v13->id )
+            if( *(_DWORD *)(*(_DWORD *)v10 + 4 * v8) == v13->id )
               goto LABEL_104;
             v14 = &v13->groupMembers;
-            if ( v8 > v13->groupMembers.maximumSizeValue - 1 )
+            if( v8 > v13->groupMembers.maximumSizeValue - 1 )
               ManagedArray<int>::resize(v14, v8 + 1);
             v15 = UnitAIModule::lookupObject(v2, v14->value[v8]);
             v16 = v15;
-            if ( v15 && RGE_Static_Object::unitAI(v15) )
+            if( v15 && RGE_Static_Object::unitAI(v15) )
             {
               v17 = RGE_Static_Object::unitAI(v16);
               v7 = v17->vfptr->bestUnitToAttack(v17, 1, 0, 0);
@@ -1060,7 +1060,7 @@ LABEL_104:
               v7 = deadCount;
             }
             v6 = v2->objectValue;
-            if ( ++v8 >= v6->groupMembers.numberValue )
+            if( ++v8 >= v6->groupMembers.numberValue )
               goto LABEL_20;
           }
         }
@@ -1070,7 +1070,7 @@ LABEL_104:
         target = UnitAIModule::lookupObject(v2, v7);
       }
       v18 = v2->playStatus;
-      if ( v18->currentPhaseValue == -3 )
+      if( v18->currentPhaseValue == -3 )
       {
         v19 = v2->objectValue;
         totalHitPoints[0] = 0;
@@ -1082,19 +1082,19 @@ LABEL_104:
         trigger = 0;
         totalHitPoints[4] = 0;
         triggerSatisfied = 0;
-        if ( v21 > 0 )
+        if( v21 > 0 )
         {
           deadCounta = groupList;
           do
           {
-            if ( v20 > v19->groupMembers.maximumSizeValue - 1 )
+            if( v20 > v19->groupMembers.maximumSizeValue - 1 )
             {
               v22 = (int *)operator new(4 * v20 + 4);
-              if ( v22 )
+              if( v22 )
               {
-                for ( k = 0; k < v19->groupMembers.maximumSizeValue; v22[k - 1] = v19->groupMembers.value[k - 1] )
+                for( k = 0; k < v19->groupMembers.maximumSizeValue; v22[k - 1] = v19->groupMembers.value[k - 1] )
                 {
-                  if ( k >= v20 + 1 )
+                  if( k >= v20 + 1 )
                     break;
                   ++k;
                 }
@@ -1104,13 +1104,13 @@ LABEL_104:
               }
             }
             v24 = UnitAIModule::lookupObject(v2, v19->groupMembers.value[v20]);
-            if ( v24 )
+            if( v24 )
             {
               *deadCounta = v24->id;
               trigger = (AIPlayPhaseTrigger *)((char *)trigger + 1);
               ++deadCounta;
               v25 = 0;
-              if ( ((int (*)(void))v2->objectValue->vfptr->numberUserDefinedWaypoints)() > 0 )
+              if( ((int (*)(void))v2->objectValue->vfptr->numberUserDefinedWaypoints)() > 0 )
               {
                 v26 = v24->vfptr->addUserDefinedWaypoint;
                 do
@@ -1119,18 +1119,18 @@ LABEL_104:
                   ((void (__thiscall *)(RGE_Static_Object *, int))v26)(v24, v27);
                   ++v25;
                 }
-                while ( v25 < ((int (*)(void))v2->objectValue->vfptr->numberUserDefinedWaypoints)() );
+                while( v25 < ((int (*)(void))v2->objectValue->vfptr->numberUserDefinedWaypoints)() );
                 v20 = triggerSatisfied;
               }
             }
             v19 = v2->objectValue;
             triggerSatisfied = ++v20;
           }
-          while ( v20 < v19->groupMembers.numberValue );
+          while( v20 < v19->groupMembers.numberValue );
         }
         v2->playStatus->lastPhaseChangeTimeValue = v2->objectValue->owner->world->world_time;
         AIPlay::fillGroups(play, v2->playStatus, groupList, (int)trigger, v2->objectValue->owner->world);
-        if ( (signed int)trigger > 0 )
+        if( (signed int)trigger > 0 )
         {
           v28 = groupList;
           deadCountb = (int)trigger;
@@ -1143,7 +1143,7 @@ LABEL_104:
             *v30 += (signed __int64)v29->hp;
             --deadCountb;
           }
-          while ( !v31 );
+          while( !v31 );
         }
         v32 = 0;
         v33 = totalHitPoints;
@@ -1152,26 +1152,26 @@ LABEL_104:
           AIPlayStatus::setOriginalHitPoints(v2->playStatus, v32++, *v33);
           ++v33;
         }
-        while ( v32 < 5 );
+        while( v32 < 5 );
         UnitAIModule::selectNewPlayPhase(v2, 0, 0);
       }
       else
       {
         v34 = AIPlay::phase(v4, v18->currentPhaseValue);
         phase = v34;
-        if ( v34 )
+        if( v34 )
         {
           v35 = 0;
           i = 0;
-          while ( 1 )
+          while( 1 )
           {
             v36 = AIPlayPhase::trigger(v34, v35);
             v37 = v36;
             v38 = 0;
             triggera = (AIPlayPhaseTrigger *)v36;
-            if ( v36 )
+            if( v36 )
             {
-              if ( v36->commands[0].groupValue )
+              if( v36->commands[0].groupValue )
               {
                 triggerSatisfieda = 0;
                 switch ( v36->commands[0].groupValue )
@@ -1181,38 +1181,38 @@ LABEL_104:
                     v39 = 0;
                     do
                     {
-                      if ( !triggerSatisfieda )
+                      if( !triggerSatisfieda )
                         break;
                       v40 = AIPlay::groupGivenCommandOnPhase(play, v39, 1, v2->playStatus->currentPhaseValue);
-                      if ( v40 != -1 )
+                      if( v40 != -1 )
                       {
                         v41 = AIPlayPhase::command(phase, v40);
                         v42 = 0;
                         do
                         {
-                          if ( !triggerSatisfieda )
+                          if( !triggerSatisfieda )
                             break;
                           v43 = (int)v2->playStatus + v42;
-                          if ( *(_BYTE *)(v43 + 4) == v39 )
+                          if( *(_BYTE *)(v43 + 4) == v39 )
                           {
                             v44 = UnitAIModule::lookupObject(v2, *(_DWORD *)v43);
-                            if ( v44 )
+                            if( v44 )
                             {
                               gatherDistance = *(float *)&v41->value2Value;
                               z = (double)SLODWORD(gatherDistance) + target->world_z;
                               y = (double)SLODWORD(gatherDistance) + target->world_y;
                               x = (double)v41->value1Value + target->world_x;
-                              if ( RGE_Static_Object::distance_to_position(v44, x, y, z) > (double)triggera->value1Value )
+                              if( RGE_Static_Object::distance_to_position(v44, x, y, z) > (double)triggera->value1Value )
                                 triggerSatisfieda = 0;
                             }
                           }
                           v42 += 8;
                         }
-                        while ( v42 < 400 );
+                        while( v42 < 400 );
                       }
                       ++v39;
                     }
-                    while ( v39 < 5 );
+                    while( v39 < 5 );
                     break;
                   case 2:
                     v49 = 0;
@@ -1221,19 +1221,19 @@ LABEL_104:
                     do
                     {
                       v51 = (int)v2->playStatus + v50;
-                      if ( *(_BYTE *)(v51 + 4) == triggera->value1Value )
+                      if( *(_BYTE *)(v51 + 4) == triggera->value1Value )
                       {
                         ++v49;
                         v52 = UnitAIModule::lookupObject(v2, *(_DWORD *)v51);
-                        if ( !v52 || v52->object_state > 2u )
+                        if( !v52 || v52->object_state > 2u )
                           ++deadCountc;
                       }
                       v50 += 8;
                     }
-                    while ( v50 < 400 );
-                    if ( !v49 )
+                    while( v50 < 400 );
+                    if( !v49 )
                       goto LABEL_94;
-                    if ( triggera->value2Value <= 100 * deadCountc / v49 )
+                    if( triggera->value2Value <= 100 * deadCountc / v49 )
                       triggerSatisfieda = 1;
                     break;
                   case 3:
@@ -1242,39 +1242,39 @@ LABEL_104:
                     do
                     {
                       v55 = (int)v2->playStatus + v54;
-                      if ( *(_BYTE *)(v55 + 4) == triggera->value1Value )
+                      if( *(_BYTE *)(v55 + 4) == triggera->value1Value )
                       {
                         v56 = UnitAIModule::lookupObject(v2, *(_DWORD *)v55);
-                        if ( v56 )
+                        if( v56 )
                           v53 += (signed __int64)v56->hp;
                       }
                       v54 += 8;
                     }
-                    while ( v54 < 400 );
+                    while( v54 < 400 );
                     v57 = AIPlayStatus::originalHitPoints(v2->playStatus, triggera->value1Value) - v53;
                     v58 = triggera->value2Value;
-                    if ( v58 <= 100 * v57 / AIPlayStatus::originalHitPoints(v2->playStatus, triggera->value1Value) )
+                    if( v58 <= 100 * v57 / AIPlayStatus::originalHitPoints(v2->playStatus, triggera->value1Value) )
                       triggerSatisfieda = 1;
                     break;
                   case 8:
                     v59 = 1;
                     do
                     {
-                      if ( !v59 )
+                      if( !v59 )
                         break;
                       v60 = (int)v2->playStatus + v38;
-                      if ( *(_BYTE *)(v60 + 4) == v37->commands[0].value1Value )
+                      if( *(_BYTE *)(v60 + 4) == v37->commands[0].value1Value )
                       {
                         v61 = UnitAIModule::lookupObject(v2, *(_DWORD *)v60);
-                        if ( v61 )
+                        if( v61 )
                         {
-                          if ( v61->object_state == 2 )
+                          if( v61->object_state == 2 )
                             v59 = 0;
                         }
                       }
                       v38 += 8;
                     }
-                    while ( v38 < 400 );
+                    while( v38 < 400 );
                     triggerSatisfieda = v59;
                     break;
                   case 9:
@@ -1282,24 +1282,24 @@ LABEL_104:
                     v62 = 0;
                     do
                     {
-                      if ( !triggerSatisfieda )
+                      if( !triggerSatisfieda )
                         break;
                       v63 = (int)v2->playStatus + v62;
-                      if ( *(_BYTE *)(v63 + 4) == triggera->value1Value )
+                      if( *(_BYTE *)(v63 + 4) == triggera->value1Value )
                       {
                         v64 = UnitAIModule::lookupObject(v2, *(_DWORD *)v63);
-                        if ( v64 )
+                        if( v64 )
                         {
-                          if ( (signed __int64)v64->hp < v64->master_obj->hp )
+                          if( (signed __int64)v64->hp < v64->master_obj->hp )
                             triggerSatisfieda = 0;
                         }
                       }
                       v62 += 8;
                     }
-                    while ( v62 < 400 );
+                    while( v62 < 400 );
                     break;
                   case 0xB:
-                    if ( (signed int)(v2->objectValue->owner->world->world_time
+                    if( (signed int)(v2->objectValue->owner->world->world_time
                                     - v2->playStatus->lastPhaseChangeTimeValue)
                        / 1000 > v36->commands[0].value1Value )
                       goto LABEL_94;
@@ -1311,14 +1311,14 @@ LABEL_94:
                   default:
                     break;
                 }
-                if ( triggerSatisfieda == 1 && UnitAIModule::selectNewPlayPhase(v2, triggera->nextPhaseValue, 0) == 1 )
+                if( triggerSatisfieda == 1 && UnitAIModule::selectNewPlayPhase(v2, triggera->nextPhaseValue, 0) == 1 )
                   break;
               }
             }
             v35 = i + 1;
             v66 = __OFSUB__(i + 1, 3);
             v65 = i++ - 2 < 0;
-            if ( !(v65 ^ v66) )
+            if( !(v65 ^ v66) )
             {
               UnitAIModule::selectNewPlayPhase(v2, v2->playStatus->currentPhaseValue, 1);
               return;
@@ -1342,11 +1342,11 @@ int *__thiscall ManagedArray<int>::resize(ManagedArray<int> *this, int s)
   v2 = this;
   result = (int *)operator new(4 * s);
   v4 = result;
-  if ( result )
+  if( result )
   {
-    for ( i = 0; i < v2->maximumSizeValue; v4[i - 1] = v2->value[i - 1] )
+    for( i = 0; i < v2->maximumSizeValue; v4[i - 1] = v2->value[i - 1] )
     {
-      if ( i >= s )
+      if( i >= s )
         break;
       ++i;
     }
@@ -1424,13 +1424,13 @@ int __thiscall UnitAIModule::selectNewPlayPhase(UnitAIModule *this, int newPhase
   v3 = this;
   v4 = 0;
   v5 = this->playStatus;
-  if ( !v5 )
+  if( !v5 )
     return 0;
   v7 = AIPlayBook::play(this->objectValue->owner->world->playbook, v5->playNumberValue);
   play = v7;
-  if ( !v7 )
+  if( !v7 )
     return 0;
-  if ( newPhase == 254 )
+  if( newPhase == 254 )
   {
     operator delete(v3->playStatus);
     v3->playStatus = 0;
@@ -1438,29 +1438,29 @@ int __thiscall UnitAIModule::selectNewPlayPhase(UnitAIModule *this, int newPhase
   }
   v8 = AIPlay::phase(v7, newPhase);
   phase = v8;
-  if ( !v8 )
+  if( !v8 )
     return 0;
   v9 = UnitAIModule::lookupObject(v3, v3->playStatus->targetValue);
   target = v9;
-  if ( !v9 )
+  if( !v9 )
     return 0;
   i = 0;
   v3->playStatus->currentPhaseValue = newPhase;
-  while ( 2 )
+  while( 2 )
   {
     v10 = AIPlayPhase::command(v8, v4);
     v11 = v10;
-    if ( !v10 )
+    if( !v10 )
       goto LABEL_52;
     v12 = v10->typeValue;
-    if ( !v12 )
+    if( !v12 )
       goto LABEL_52;
-    if ( (v12 == 6 || v12 == 7) && !pickup )
+    if( (v12 == 6 || v12 == 7) && !pickup )
     {
       v13 = (unsigned __int8)v12 - 6;
-      if ( v13 )
+      if( v13 )
       {
-        if ( v13 == 1 )
+        if( v13 == 1 )
           AIPlayStatus::removeDeadUnits(v3->playStatus, v11->groupValue, v3->objectValue->owner->world);
       }
       else
@@ -1472,29 +1472,29 @@ int __thiscall UnitAIModule::selectNewPlayPhase(UnitAIModule *this, int newPhase
     v14 = v3->objectValue;
     v15 = 0;
     a = 0;
-    if ( v14->groupMembers.numberValue <= 0 )
+    if( v14->groupMembers.numberValue <= 0 )
       goto LABEL_52;
-    while ( 2 )
+    while( 2 )
     {
       v16 = &v14->groupMembers.value;
-      if ( v15 > v14->groupMembers.maximumSizeValue - 1 )
+      if( v15 > v14->groupMembers.maximumSizeValue - 1 )
       {
         ManagedArray<int>::resize(&v14->groupMembers, v15 + 1);
         v15 = a;
       }
       v17 = UnitAIModule::lookupObject(v3, (*v16)[v15]);
       v18 = v17;
-      if ( !v17 )
+      if( !v17 )
         goto LABEL_50;
-      if ( !RGE_Static_Object::unitAI(v17) )
+      if( !RGE_Static_Object::unitAI(v17) )
         goto LABEL_50;
       newPhaseb = v11->groupValue;
-      if ( AIPlayStatus::group(v3->playStatus, v18->id) != newPhaseb )
+      if( AIPlayStatus::group(v3->playStatus, v18->id) != newPhaseb )
         goto LABEL_50;
-      if ( pickup == 1 )
+      if( pickup == 1 )
       {
         v19 = RGE_Static_Object::unitAI(v18);
-        if ( UnitAIModule::currentAction(v19) != -1 )
+        if( UnitAIModule::currentAction(v19) != -1 )
           goto LABEL_50;
       }
       switch ( v11->typeValue )
@@ -1504,7 +1504,7 @@ int __thiscall UnitAIModule::selectNewPlayPhase(UnitAIModule *this, int newPhase
           y = (double)v11->value2Value + v9->world_y;
           x = (double)v11->value1Value + v9->world_x;
           newPhasec = (signed __int64)RGE_Static_Object::distance_to_position(v18, x, y, z);
-          if ( newPhasec > AIPlay::gatherTolerance(play, v11->groupValue, v3->playStatus->currentPhaseValue) )
+          if( newPhasec > AIPlay::gatherTolerance(play, v11->groupValue, v3->playStatus->currentPhaseValue) )
           {
             member = (RGE_Static_Object *)v11->value1Value;
             newPhased = v11->value3Value;
@@ -1584,15 +1584,15 @@ int __thiscall UnitAIModule::selectNewPlayPhase(UnitAIModule *this, int newPhase
         default:
           goto LABEL_50;
       }
-      while ( 1 )
+      while( 1 )
       {
         v39 = (int)v3->playStatus + v38;
-        if ( *(_BYTE *)(v39 + 4) != v11->value1Value )
+        if( *(_BYTE *)(v39 + 4) != v11->value1Value )
           goto LABEL_43;
         v40 = UnitAIModule::lookupObject(v3, *(_DWORD *)v39);
-        if ( !v40 )
+        if( !v40 )
           goto LABEL_43;
-        if ( (signed int)((unsigned __int64)(signed __int64)v40->hp + 1) < v40->master_obj->hp )
+        if( (signed int)((unsigned __int64)(signed __int64)v40->hp + 1) < v40->master_obj->hp )
           break;
         v9 = target;
 LABEL_43:
@@ -1600,13 +1600,13 @@ LABEL_43:
         v42 = __OFSUB__(v52 + 8, 400);
         v41 = v52 - 392 < 0;
         v52 += 8;
-        if ( !(v41 ^ v42) )
+        if( !(v41 ^ v42) )
           goto LABEL_46;
       }
       v9 = target;
       newPhasea = v40->id;
 LABEL_46:
-      if ( newPhasea != -1 )
+      if( newPhasea != -1 )
       {
         v25 = RGE_Static_Object::unitAI(v18);
         v26 = v25->vfptr;
@@ -1633,7 +1633,7 @@ LABEL_49:
       }
 LABEL_50:
       v14 = v3->objectValue;
-      if ( ++a < v14->groupMembers.numberValue )
+      if( ++a < v14->groupMembers.numberValue )
       {
         v15 = a;
         continue;
@@ -1643,7 +1643,7 @@ LABEL_50:
     v4 = i;
 LABEL_52:
     i = ++v4;
-    if ( v4 < 5 )
+    if( v4 < 5 )
     {
       v8 = phase;
       continue;
@@ -1662,9 +1662,9 @@ int __thiscall UnitAIModule::order(UnitAIModule *this, int issuer, int orderType
 
   v12 = this;
   v13 = this->objectValue;
-  if ( v13->object_state <= 2u )
+  if( v13->object_state <= 2u )
   {
-    if ( !immediate )
+    if( !immediate )
     {
       UnitAIModule::addToOrderQueue(
         this,
@@ -1680,7 +1680,7 @@ int __thiscall UnitAIModule::order(UnitAIModule *this, int issuer, int orderType
         priority);
       return 1;
     }
-    if ( inFront == 1 )
+    if( inFront == 1 )
       UnitAIModule::addToOrderQueue(
         this,
         v13->id,
@@ -1705,13 +1705,13 @@ int __thiscall UnitAIModule::order(UnitAIModule *this, int issuer, int orderType
       range,
       1,
       priority);
-    if ( orderType != 729 )
+    if( orderType != 729 )
     {
       UnitAIModule::removeCurrentTarget(v12);
-      if ( actionFile )
+      if( actionFile )
       {
         v15 = v12->objectValue;
-        if ( v15 )
+        if( v15 )
           v16 = v15->id;
         else
           v16 = -1;
@@ -1733,28 +1733,28 @@ void *__thiscall UnitAIModule::notify(UnitAIModule *this, int callerID, int reci
   int v9; // eax@4
   int v10; // eax@14
 
-  if ( this->objectValue->object_state != 2 )
+  if( this->objectValue->object_state != 2 )
     return 0;
-  if ( mType == 699 )
+  if( mType == 699 )
   {
     v8 = this->attackingUnitsValue.numberValue;
     v9 = 0;
-    if ( v8 > 0 )
+    if( v8 > 0 )
     {
-      while ( v9 < this->attackingUnitsValue.maximumSizeValue )
+      while( v9 < this->attackingUnitsValue.maximumSizeValue )
       {
-        if ( this->attackingUnitsValue.value[v9] == callerID )
+        if( this->attackingUnitsValue.value[v9] == callerID )
           goto LABEL_9;
-        if ( ++v9 >= v8 )
+        if( ++v9 >= v8 )
           return 0;
       }
     }
     return 0;
   }
 LABEL_9:
-  if ( mType == 507 && p1 != this->currentActionValue )
+  if( mType == 507 && p1 != this->currentActionValue )
     return 0;
-  if ( mType != 506 || p1 != 610 || (v10 = this->currentActionValue, v10 == 610) || v10 == 616 )
+  if( mType != 506 || p1 != 610 || (v10 = this->currentActionValue, v10 == 610) || v10 == 616 )
     result = UnitAIModule::addToNotifyQueue(this, callerID, recipientID, mType, p1, p2, p3);
   else
     result = (void *)1;
@@ -1788,7 +1788,7 @@ int __thiscall UnitAIModule::notifyCommander(UnitAIModule *this, int callerID, i
   v7 = this;
   LOBYTE(v8) = RGE_Static_Object::inGroup(this->objectValue);
   v9 = p3;
-  if ( v8 == 1 )
+  if( v8 == 1 )
   {
     nEvent.caller = callerID;
     v10 = v7->objectValue;
@@ -1797,7 +1797,7 @@ int __thiscall UnitAIModule::notifyCommander(UnitAIModule *this, int callerID, i
     nEvent.p1 = p1;
     nEvent.p2 = p2;
     nEvent.p3 = p3;
-    if ( v10->id == v10->groupCommanderValue )
+    if( v10->id == v10->groupCommanderValue )
     {
       v7->vfptr->processGroupNotify(v7, &nEvent);
     }
@@ -1805,7 +1805,7 @@ int __thiscall UnitAIModule::notifyCommander(UnitAIModule *this, int callerID, i
     {
       v11 = UnitAIModule::lookupObject(v7, v10->groupCommanderValue);
       p3a = v11;
-      if ( v11 && RGE_Static_Object::unitAI(v11) )
+      if( v11 && RGE_Static_Object::unitAI(v11) )
       {
         v12 = RGE_Static_Object::unitAI(p3a);
         v12->vfptr->processGroupNotify(v12, &nEvent);
@@ -1837,12 +1837,12 @@ void __thiscall UnitAIModule::search(UnitAIModule *this)
   int *v10; // [sp-4h] [bp-10h]@7
 
   v1 = this;
-  if ( searchedThisUpdate != 1 )
+  if( searchedThisUpdate != 1 )
   {
     searchedThisUpdate = 1;
-    if ( this->importantObjects )
+    if( this->importantObjects )
     {
-      if ( this->currentOrderValue == 701
+      if( this->currentOrderValue == 701
         && this->defendTargetValue != -1
         && (v2 = UnitAIModule::lookupObject(this, this->defendTargetValue), (v3 = v2) != 0)
         && RGE_Static_Object::unitAI(v2) )
@@ -1858,7 +1858,7 @@ void __thiscall UnitAIModule::search(UnitAIModule *this)
         v3 = v1->objectValue;
         v5 = v3->master_obj;
         v4 = (signed __int64)v5->los;
-        if ( v5->id == 118 )
+        if( v5->id == 118 )
           LODWORD(v4) = 2 * v4;
         v6 = v3->owner;
         v10 = v6->unitDiplomacy;
@@ -1981,7 +1981,7 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
   v56 = this->vfptr;
   ((void (*)(void))this->vfptr->search)();
   v5 = RGE_Game_World::difficultyLevel(v4->objectValue->owner->world);
-  if ( (RGE_Base_Game::scenarioGame(rge_base_game) != 1
+  if( (RGE_Base_Game::scenarioGame(rge_base_game) != 1
      || RGE_Base_Game::singlePlayerGame(rge_base_game) != 1
      || v5 < 3
      || v4->objectValue->owner->id == 1)
@@ -1998,11 +1998,11 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
   else
   {
     v7 = v4->objectValue->owner;
-    if ( v7->id <= 1 )
+    if( v7->id <= 1 )
     {
       modifier = v5 != 3 ? 50 : 75;
     }
-    else if ( v5 == 3 )
+    else if( v5 == 3 )
     {
       modifier = ((int (__stdcall *)(signed int))v7->vfptr->strategicNumber)(219);
     }
@@ -2013,7 +2013,7 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
     v8 = v4->objectValue;
     v9 = (double)modifier * v8->master_obj->los * 0.0099999998;
     maxReactDistance = (signed __int64)v9;
-    if ( maxReactDistance < 1 )
+    if( maxReactDistance < 1 )
       maxReactDistance = 1;
   }
   modifiera = -1;
@@ -2022,12 +2022,12 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
   largestThreatIsBuilding = 0;
   world = v8->owner->world;
   currentTargetIsWall = 0;
-  if ( v10 != -1 )
+  if( v10 != -1 )
   {
     v11 = UnitAIModule::lookupObject(v4, v10);
-    if ( v11 )
+    if( v11 )
     {
-      if ( v11->master_obj->object_group == 27 )
+      if( v11->master_obj->object_group == 27 )
         currentTargetIsWall = 1;
     }
   }
@@ -2040,42 +2040,42 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
   v12 = 4;
   do
   {
-    for ( j = 0; j < (signed int)(&VisibleUnitList_Size)[v12]; ++j )
+    for( j = 0; j < (signed int)(&VisibleUnitList_Size)[v12]; ++j )
     {
       v14 = RGE_Game_World::object(world, (int)(&VisibleUnitList)[v12][2 * j]);
       v15 = v14;
-      if ( v14
+      if( v14
         && v14->object_state <= 2u
         && (*(int (__stdcall **)(_DWORD))&v4->objectValue->owner->vfptr->gap4[24])(v14->owner->id) != 1
         && !v15->inside_obj
         && (allowWallAttacks && currentTargetIsWall || v15->master_obj->object_group != 27) )
       {
-        if ( v15->master_obj->object_group != 3
+        if( v15->master_obj->object_group != 3
           || (v9 = v15->hp, v9 > 1.0)
           || (v16 = v4->objectValue->master_obj->id, v16 != 35) && v16 != 36 )
         {
-          if ( v56->canAttackUnit(v4, v15)
+          if( v56->canAttackUnit(v4, v15)
             && (v12 != 3 || v56->canAttackUnitAtNeutrality(v4, v15->master_obj->object_group)) )
           {
             v9 = RGE_Static_Object::distance_to_object(v4->objectValue, v15);
             *(float *)&i = v9;
             ((void (*)(void))v4->objectValue->vfptr->minimumWeaponRange)();
-            if ( v9 <= *(float *)&i && maxReactDistance >= SLOBYTE((&VisibleUnitList)[v12][2 * j + 1]) )
+            if( v9 <= *(float *)&i && maxReactDistance >= SLOBYTE((&VisibleUnitList)[v12][2 * j + 1]) )
             {
-              if ( v15->id != v4->currentTargetValue )
+              if( v15->id != v4->currentTargetValue )
                 ++numberNonCurrentTargets;
-              if ( v15->master_obj->object_group != 3 )
+              if( v15->master_obj->object_group != 3 )
                 ++numberMovingTargets;
               ((void (__thiscall *)(RGE_Static_Object *))v15->vfptr->damageCapability)(v15);
-              if ( v9 > 0.0 )
+              if( v9 > 0.0 )
                 ++numberDamagingUnits;
-              if ( v15->master_obj->object_group != 3 )
+              if( v15->master_obj->object_group != 3 )
               {
                 ((void (*)(void))v4->objectValue->vfptr->weaponRange)();
-                if ( v9 - -1.0 > *(float *)&i )
+                if( v9 - -1.0 > *(float *)&i )
                   ++numberObjectsInRange;
                 v9 = *(float *)&i;
-                if ( *(float *)&i < (double)closestEnemyDistance )
+                if( *(float *)&i < (double)closestEnemyDistance )
                 {
                   closestEnemyDistance = *(float *)&i;
                   enemyDistance = v15->id;
@@ -2088,16 +2088,16 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
     }
     --v12;
   }
-  while ( v12 >= 2 );
-  if ( v4->currentTargetValue == -1 )
+  while( v12 >= 2 );
+  if( v4->currentTargetValue == -1 )
     goto LABEL_79;
-  if ( quickCheck )
+  if( quickCheck )
     goto LABEL_79;
-  if ( v4->currentActionValue != 600 )
+  if( v4->currentActionValue != 600 )
     goto LABEL_79;
   v17 = UnitAIModule::lookupObject(v4, v4->currentTargetValue);
   v18 = v17;
-  if ( !v17 )
+  if( !v17 )
     goto LABEL_79;
   v9 = v17->world_x;
   v19 = UnitAIModule::visibleStatus(
@@ -2105,17 +2105,17 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
           v4->objectValue->owner->visible,
           (signed __int64)v9,
           (signed __int64)v17->world_y);
-  if ( numberNonCurrentTargets )
+  if( numberNonCurrentTargets )
   {
-    if ( v19 != 15 )
+    if( v19 != 15 )
       goto LABEL_79;
-    if ( ((int (__stdcall *)(RGE_Static_Object *))v4->objectValue->vfptr->inAttackRange)(v18) != 1 )
+    if( ((int (__stdcall *)(RGE_Static_Object *))v4->objectValue->vfptr->inAttackRange)(v18) != 1 )
     {
       v20 = v4->objectValue;
       v21 = v20->vfptr;
       ((void (__stdcall *)(_DWORD, _DWORD, signed int, signed int))v20->vfptr->weaponRange)(0, 0, -1, -1);
       v22 = v9;
-      if ( (*((int (__thiscall **)(RGE_Static_Object *, int, _DWORD))&v21->pause + 1))(
+      if( (*((int (__thiscall **)(RGE_Static_Object *, int, _DWORD))&v21->pause + 1))(
              v4->objectValue,
              v4->currentTargetValue,
              LODWORD(v22)) != 1 )
@@ -2124,13 +2124,13 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
   }
   v23 = RGE_Game_World::object(world, v4->currentTargetValue);
   v24 = v23;
-  if ( !v23
+  if( !v23
     || v23->object_state != 2
     || (*(int (__stdcall **)(_DWORD))&v4->objectValue->owner->vfptr->gap4[24])(v23->owner->id) )
   {
     goto LABEL_79;
   }
-  if ( v24->master_obj->id == 276 )
+  if( v24->master_obj->id == 276 )
     return v24->id;
   modifiera = v4->currentTargetValue;
   closestEnemyDistancea = v24->vfptr->damageCapability;
@@ -2140,25 +2140,25 @@ int __thiscall UnitAIModule::bestUnitToAttack(UnitAIModule *this, int allowWallA
                 * 100.0
                 + v26;
   v27 = v24->hp;
-  if ( v27 > 0.0 )
+  if( v27 > 0.0 )
     largestThreat = largestThreat / v27;
   *(float *)&ia = RGE_Static_Object::distance_to_object(v24, v4->objectValue);
   v9 = *(float *)&ia;
-  if ( numberMovingTargets >= 2 )
+  if( numberMovingTargets >= 2 )
   {
-    if ( *(float *)&ia == 0.0 )
+    if( *(float *)&ia == 0.0 )
       goto LABEL_74;
     v9 = largestThreat / ((double)numberMovingTargets * *(float *)&ia * 0.5);
   }
   else
   {
-    if ( *(float *)&ia == 0.0 )
+    if( *(float *)&ia == 0.0 )
       goto LABEL_74;
     v9 = largestThreat / *(float *)&ia;
   }
   largestThreat = v9;
 LABEL_74:
-  if ( v24->master_obj->object_group == 3 )
+  if( v24->master_obj->object_group == 3 )
   {
     largestThreatIsBuilding = 1;
   }
@@ -2168,21 +2168,21 @@ LABEL_74:
     ++numberMovingTargets;
   }
   ((void (__thiscall *)(RGE_Static_Object *))closestEnemyDistancea)(v24);
-  if ( v9 > 0.0 )
+  if( v9 > 0.0 )
     ++numberDamagingUnits;
-  if ( numberMovingTargets <= 1 )
+  if( numberMovingTargets <= 1 )
     goto LABEL_129;
   v28 = RGE_Game_World::object(world, enemyDistance);
-  if ( !v28 )
+  if( !v28 )
     goto LABEL_129;
 LABEL_79:
-  if ( ((int (__stdcall *)(RGE_Static_Object *))v4->objectValue->vfptr->inAttackRange)(v28) == 1 )
+  if( ((int (__stdcall *)(RGE_Static_Object *))v4->objectValue->vfptr->inAttackRange)(v28) == 1 )
     return enemyDistance;
   v29 = v4->objectValue;
   v30 = v29->vfptr;
   ((void (__stdcall *)(_DWORD, _DWORD, signed int, signed int))v29->vfptr->weaponRange)(0, 0, -1, -1);
   v31 = v9;
-  if ( (*((int (__thiscall **)(RGE_Static_Object *, int, _DWORD))&v30->pause + 1))(
+  if( (*((int (__thiscall **)(RGE_Static_Object *, int, _DWORD))&v30->pause + 1))(
          v4->objectValue,
          enemyDistance,
          LODWORD(v31)) == 1 )
@@ -2196,31 +2196,31 @@ LABEL_129:
     do
     {
       v33 = 0;
-      for ( ib = 0; v33 < (signed int)(&VisibleUnitList_Size)[v32]; ib = v33 )
+      for( ib = 0; v33 < (signed int)(&VisibleUnitList_Size)[v32]; ib = v33 )
       {
         v34 = RGE_Game_World::object(world, (int)(&VisibleUnitList)[v32][2 * v33]);
         v35 = v34;
-        if ( v34
+        if( v34
           && v34->object_state <= 2u
           && (*(int (__stdcall **)(_DWORD))&v4->objectValue->owner->vfptr->gap4[24])(v34->owner->id) != 1
           && !v35->inside_obj
           && (allowWallAttacks && currentTargetIsWall || v35->master_obj->object_group != 27) )
         {
-          if ( v35->master_obj->object_group != 3
+          if( v35->master_obj->object_group != 3
             || v35->hp > 1.0
             || (v36 = v4->objectValue->master_obj->id, v36 != 35) && v36 != 36 )
           {
-            if ( v56->canAttackUnit(v4, v35)
+            if( v56->canAttackUnit(v4, v35)
               && (v32 != 3 || v56->canAttackUnitAtNeutrality(v4, v35->master_obj->object_group)) )
             {
               v37 = RGE_Static_Object::distance_to_object(v4->objectValue, v35);
               v38 = v37;
               ((void (*)(void))v4->objectValue->vfptr->minimumWeaponRange)();
-              if ( v37 <= v38
+              if( v37 <= v38
                 && maxReactDistance >= SLOBYTE((&VisibleUnitList)[v32][2 * v33 + 1])
                 && (quickCheck != 1 || ((int (__stdcall *)(_DWORD))v4->objectValue->vfptr->inAttackRange)(v35)) )
               {
-                if ( quickCheck
+                if( quickCheck
                   || ((int (__stdcall *)(RGE_Static_Object *))v4->objectValue->vfptr->inAttackRange)(v35)
                   || (v39 = v4->objectValue->vfptr,
                       ((void (__stdcall *)(_DWORD, _DWORD, signed int, signed int))v39->weaponRange)(0, 0, -1, -1),
@@ -2235,24 +2235,24 @@ LABEL_129:
                 {
                   ((void (__thiscall *)(RGE_Static_Object *))v35->vfptr->damageCapability)(v35);
                   enemyDistancea = v37 * 50.0;
-                  if ( numberDamagingUnits <= 0 || enemyDistancea != 0.0 )
+                  if( numberDamagingUnits <= 0 || enemyDistancea != 0.0 )
                   {
                     v42 = (double)((int (__stdcall *)(RGE_Master_Static_Object *))v35->master_obj->vfptr->calc_base_damage_ability)(v4->objectValue->master_obj)
                         * 100.0
                         + enemyDistancea;
                     v43 = v35->hp;
-                    if ( v43 > 0.0 )
+                    if( v43 > 0.0 )
                       v42 = v42 / v43;
                     v44 = (&VisibleUnitList)[v32];
                     v45 = (unsigned __int8)v44[2 * v33 + 1];
                     v46 = (int *)&v44[2 * v33];
-                    if ( v45 )
+                    if( v45 )
                       v42 = v42 / (double)v45;
-                    if ( numberMovingTargets > 1 )
+                    if( numberMovingTargets > 1 )
                       v42 = v42
                           / (double)(LOBYTE(v44[2 * v33 + 1]) * LOBYTE(v44[2 * v33 + 1]) * LOBYTE(v44[2 * v33 + 1]));
                     v47 = v35->master_obj->object_group;
-                    if ( modifiera == -1
+                    if( modifiera == -1
                       || (largestThreatIsBuilding || v47 != 3)
                       && (modifiera == -1 || largestThreatIsBuilding == 1 && v47 != 3 || v42 > largestThreat) )
                     {
@@ -2270,7 +2270,7 @@ LABEL_129:
       }
       --v32;
     }
-    while ( v32 >= 2 );
+    while( v32 >= 2 );
     result = modifiera;
   }
   return result;
@@ -2297,10 +2297,10 @@ int __userpurge UnitAIModule::mostDangerousEnemy@<eax>(UnitAIModule *this@<ecx>,
   v4 = -1;
   v5 = 0;
   largestThreat = 0.0;
-  for ( i = 0; i < dword_87D7D8[0]; ++i )
+  for( i = 0; i < dword_87D7D8[0]; ++i )
   {
     v6 = UnitAIModule::lookupObject(v3, *(_DWORD *)(dword_87D7F0[0] + 8 * v5));
-    if ( v6 )
+    if( v6 )
     {
       v7 = v3->objectValue;
       v8 = v6->master_obj;
@@ -2315,7 +2315,7 @@ int __userpurge UnitAIModule::mostDangerousEnemy@<eax>(UnitAIModule *this@<ecx>,
         v8[1].portrait_pict,
         *(_DWORD *)&v8[1].tile_req1,
         LODWORD(v10));
-      if ( v4 == -1 || a2 > largestThreat )
+      if( v4 == -1 || a2 > largestThreat )
       {
         largestThreat = a2;
         v4 = *(_DWORD *)(dword_87D7F0[0] + 8 * i);
@@ -2323,7 +2323,7 @@ int __userpurge UnitAIModule::mostDangerousEnemy@<eax>(UnitAIModule *this@<ecx>,
     }
     v5 = i + 1;
   }
-  if ( threatSlot )
+  if( threatSlot )
     *threatSlot = largestThreat;
   return v4;
 }
@@ -2345,23 +2345,23 @@ int __thiscall UnitAIModule::weakestEnemy(UnitAIModule *this, float *threatSlot)
   v3 = -1;
   v4 = 0;
   smallestHP = 0.0;
-  if ( dword_87D7D8[0] > 0 )
+  if( dword_87D7D8[0] > 0 )
   {
     v5 = dword_87D7F0[0];
     do
     {
       v6 = UnitAIModule::lookupObject(v2, *(_DWORD *)(v5 + 8 * v4));
       v5 = dword_87D7F0[0];
-      if ( v6 && (v3 == -1 || v6->hp < (double)smallestHP) )
+      if( v6 && (v3 == -1 || v6->hp < (double)smallestHP) )
       {
         v3 = *(_DWORD *)(dword_87D7F0[0] + 8 * v4);
         smallestHP = v6->hp;
       }
       ++v4;
     }
-    while ( v4 < dword_87D7D8[0] );
+    while( v4 < dword_87D7D8[0] );
   }
-  if ( threatSlot )
+  if( threatSlot )
     *threatSlot = smallestHP;
   return v3;
 }
@@ -2387,17 +2387,17 @@ int __thiscall UnitAIModule::closestAttacker(UnitAIModule *this, float *threatSl
   v2 = this;
   v3 = 0;
   largestThreatID = -1;
-  for ( largestThreat = 0.0; v3 < v2->attackingUnitsValue.numberValue; ++v3 )
+  for( largestThreat = 0.0; v3 < v2->attackingUnitsValue.numberValue; ++v3 )
   {
-    if ( v3 > v2->attackingUnitsValue.maximumSizeValue - 1 )
+    if( v3 > v2->attackingUnitsValue.maximumSizeValue - 1 )
     {
       v4 = v3 + 1;
       v5 = (int *)operator new(4 * v3 + 4);
-      if ( v5 )
+      if( v5 )
       {
-        for ( i = 0; i < v2->attackingUnitsValue.maximumSizeValue; v5[i - 1] = v2->attackingUnitsValue.value[i - 1] )
+        for( i = 0; i < v2->attackingUnitsValue.maximumSizeValue; v5[i - 1] = v2->attackingUnitsValue.value[i - 1] )
         {
-          if ( i >= v4 )
+          if( i >= v4 )
             break;
           ++i;
         }
@@ -2407,20 +2407,20 @@ int __thiscall UnitAIModule::closestAttacker(UnitAIModule *this, float *threatSl
       }
     }
     v7 = RGE_Game_World::object(v2->objectValue->owner->world, v2->attackingUnitsValue.value[v3]);
-    if ( v7 )
+    if( v7 )
     {
       attackThreat = RGE_Static_Object::distance_to_object(v2->objectValue, v7);
-      if ( largestThreatID == -1 || attackThreat < (double)largestThreat )
+      if( largestThreatID == -1 || attackThreat < (double)largestThreat )
       {
-        if ( v3 > v2->attackingUnitsValue.maximumSizeValue - 1 )
+        if( v3 > v2->attackingUnitsValue.maximumSizeValue - 1 )
         {
           v8 = v3 + 1;
           v9 = (int *)operator new(4 * v3 + 4);
-          if ( v9 )
+          if( v9 )
           {
-            for ( j = 0; j < v2->attackingUnitsValue.maximumSizeValue; v9[j - 1] = v2->attackingUnitsValue.value[j - 1] )
+            for( j = 0; j < v2->attackingUnitsValue.maximumSizeValue; v9[j - 1] = v2->attackingUnitsValue.value[j - 1] )
             {
-              if ( j >= v8 )
+              if( j >= v8 )
                 break;
               ++j;
             }
@@ -2434,7 +2434,7 @@ int __thiscall UnitAIModule::closestAttacker(UnitAIModule *this, float *threatSl
       }
     }
   }
-  if ( threatSlot )
+  if( threatSlot )
     *threatSlot = largestThreat;
   return largestThreatID;
 }
@@ -2465,7 +2465,7 @@ int __thiscall UnitAIModule::closestObject(UnitAIModule *this, int objectGroup, 
   do
   {
     v7 = 0;
-    if ( (signed int)(&VisibleUnitList_Size)[v6] > 0 )
+    if( (signed int)(&VisibleUnitList_Size)[v6] > 0 )
     {
       v8 = &(&VisibleUnitList)[v6];
       do
@@ -2473,12 +2473,12 @@ int __thiscall UnitAIModule::closestObject(UnitAIModule *this, int objectGroup, 
         v9 = (int)&(*v8)[2 * v7];
         objectsOfPlayer[*(_BYTE *)(v9 + 5)] = 1;
         v10 = v18->objectValue;
-        if ( v10->id != *(_DWORD *)v9 )
+        if( v10->id != *(_DWORD *)v9 )
         {
           v11 = RGE_Game_World::object(v10->owner->world, (int)(*v8)[2 * v7]);
-          if ( v11 )
+          if( v11 )
           {
-            if ( v11->object_state < 7u
+            if( v11->object_state < 7u
               && (desiredRelation || v6 == 2 || v6 == 1)
               && (desiredRelation != 2 || v6 == 4)
               && (desiredRelation != 3 || v6 == 1)
@@ -2495,25 +2495,25 @@ int __thiscall UnitAIModule::closestObject(UnitAIModule *this, int objectGroup, 
         }
         ++v7;
       }
-      while ( v7 < (signed int)(&VisibleUnitList_Size)[v6] );
+      while( v7 < (signed int)(&VisibleUnitList_Size)[v6] );
     }
     ++v6;
   }
-  while ( v6 <= 4 );
+  while( v6 <= 4 );
   v12 = 0;
   v13 = &objectsOfPlayer[1];
   numberDifferentPlayerObjectsVisible = 0;
   v14 = 8;
   do
   {
-    if ( *v13 == 1 )
+    if( *v13 == 1 )
       ++v12;
     ++v13;
     --v14;
   }
-  while ( v14 );
+  while( v14 );
   numberDifferentPlayerObjectsVisible = v12;
-  if ( threatSlot )
+  if( threatSlot )
     *threatSlot = (signed __int64)closestDistance;
   return closestObjectID;
 }
@@ -2547,14 +2547,14 @@ int __thiscall UnitAIModule::closestResourceObject(UnitAIModule *this, int resou
            resourceType,
            &excList,
            v4);
-    if ( v7 )
+    if( v7 )
     {
       v8 = v3->objectValue;
-      if ( v8->master_obj->los - -5.0 >= (double)v7->distance )
+      if( v8->master_obj->los - -5.0 >= (double)v7->distance )
         continue;
     }
     return -1;
-    if ( (*((int (__stdcall **)(int, signed int, _DWORD, _DWORD, signed int, signed int))&v8->vfptr->pause + 1))(
+    if( (*((int (__stdcall **)(int, signed int, _DWORD, _DWORD, signed int, signed int))&v8->vfptr->pause + 1))(
            v7->object_id,
            1065353216,
            0,
@@ -2565,8 +2565,8 @@ int __thiscall UnitAIModule::closestResourceObject(UnitAIModule *this, int resou
     ++v4;
     excList = v7->object_id;
   }
-  while ( v4 < 100 );
-  if ( dSlot )
+  while( v4 < 100 );
+  if( dSlot )
     *dSlot = v7->distance;
   return v7->object_id;
 }
@@ -2605,7 +2605,7 @@ int __thiscall UnitAIModule::closestUndiscoveredTile(UnitAIModule *this, int *tX
   int randSelect; // [sp+5Ch] [bp-4h]@12
 
   v4 = this;
-  if ( this->currentOrderValue == 705
+  if( this->currentOrderValue == 705
     && LODWORD(this->currentTargetXValue) != -1082130432
     && LODWORD(this->currentTargetYValue) != -1082130432 )
   {
@@ -2625,14 +2625,14 @@ int __thiscall UnitAIModule::closestUndiscoveredTile(UnitAIModule *this, int *tX
   highY = v8;
   vMap = v9->visible;
   v11 = v9->world->map;
-  if ( lowX < 0 )
+  if( lowX < 0 )
     lowX = 0;
-  if ( highX > v11->map_width - 1 )
+  if( highX > v11->map_width - 1 )
     highX = v11->map_width - 1;
-  if ( v7 < 0 )
+  if( v7 < 0 )
     v7 = 0;
   v12 = v11->map_height - 1;
-  if ( v10 > v12 )
+  if( v10 > v12 )
   {
     highY = v12;
     v10 = v12;
@@ -2640,34 +2640,34 @@ int __thiscall UnitAIModule::closestUndiscoveredTile(UnitAIModule *this, int *tX
   randSelect = debug_rand(aCMsdevWorkA_43, 2862) % 3;
   currentZone = RGE_Static_Object::currentZone(v4->objectValue);
   searchRadius = v7;
-  if ( v7 <= v10 )
+  if( v7 <= v10 )
   {
     do
     {
       v13 = lowX;
-      for ( i = lowX; v13 <= highX; i = v13 )
+      for( i = lowX; v13 <= highX; i = v13 )
       {
-        if ( !UnitAIModule::visibleStatus(v4, vMap, v13, v7)
+        if( !UnitAIModule::visibleStatus(v4, vMap, v13, v7)
           && currentZone == RGE_Static_Object::lookupZone(v4->objectValue, v13, v7) )
         {
           v14 = (double)searchRadius;
           v15 = (double)i;
-          if ( ((int (__stdcall *)(_DWORD, _DWORD, _DWORD))v4->objectValue->vfptr->passableTile)(
+          if( ((int (__stdcall *)(_DWORD, _DWORD, _DWORD))v4->objectValue->vfptr->passableTile)(
                  LODWORD(v15),
                  LODWORD(v14),
                  0) )
           {
-            if ( !checkWaypointQueue || !UnitAIModule::inWaypointQueue(v4, v13, v7) )
+            if( !checkWaypointQueue || !UnitAIModule::inWaypointQueue(v4, v13, v7) )
             {
               v16 = (v7 - currY) * (v7 - currY) + (v13 - currX) * (v13 - currX);
-              if ( LODWORD(v4->currentTargetXValue) != -1082130432 )
+              if( LODWORD(v4->currentTargetXValue) != -1082130432 )
               {
                 v17 = v13 - (unsigned __int64)(signed __int64)v4->currentTargetXValue;
                 v16 += (v7 - (unsigned __int64)(signed __int64)v4->currentTargetYValue)
                      * (v7 - (unsigned __int64)(signed __int64)v4->currentTargetYValue)
                      + v17 * v17;
               }
-              if ( distance == -1 || distance + randSelect > v16 )
+              if( distance == -1 || distance + randSelect > v16 )
               {
                 v18 = tY;
                 distance = v16;
@@ -2681,9 +2681,9 @@ int __thiscall UnitAIModule::closestUndiscoveredTile(UnitAIModule *this, int *tX
       }
       searchRadius = ++v7;
     }
-    while ( v7 <= highY );
+    while( v7 <= highY );
   }
-  if ( distance == -1 )
+  if( distance == -1 )
   {
 LABEL_31:
     result = 0;
@@ -2722,7 +2722,7 @@ int __thiscall UnitAIModule::waypointQueueSize(UnitAIModule *this)
 //----- (004161F0) --------------------------------------------------------
 int __thiscall UnitAIModule::addToWaypointQueue(UnitAIModule *this, int x, int y)
 {
-  if ( this->waypointQueueSizeValue >= 8 )
+  if( this->waypointQueueSizeValue >= 8 )
     this->waypointQueueSizeValue = 0;
   *((float *)&this->vfptr + 4 * (this->waypointQueueSizeValue + 7)) = (double)x;
   this->waypointQueue[this->waypointQueueSizeValue++].y = (double)y;
@@ -2740,7 +2740,7 @@ int __thiscall UnitAIModule::inWaypointQueue(UnitAIModule *this, int x, int y)
 
   v3 = this->waypointQueueSizeValue;
   v4 = 0;
-  if ( v3 <= 0 )
+  if( v3 <= 0 )
   {
     result = 0;
   }
@@ -2748,11 +2748,11 @@ int __thiscall UnitAIModule::inWaypointQueue(UnitAIModule *this, int x, int y)
   {
     v5 = &this->waypointQueue[0].y;
     *(float *)&xa = (double)x;
-    while ( *(v5 - 1) != *(float *)&xa || (double)y != *v5 )
+    while( *(v5 - 1) != *(float *)&xa || (double)y != *v5 )
     {
       ++v4;
       v5 += 4;
-      if ( v4 >= v3 )
+      if( v4 >= v3 )
         return 0;
     }
     result = 1;
@@ -2786,7 +2786,7 @@ int __thiscall UnitAIModule::stopObject(UnitAIModule *this, int checkOrderAndAct
   int v4; // ecx@5
 
   v2 = this;
-  if ( actionFile )
+  if( actionFile )
     fprintf(
       actionFile,
       aTLdUDSoCoaaD_,
@@ -2795,7 +2795,7 @@ int __thiscall UnitAIModule::stopObject(UnitAIModule *this, int checkOrderAndAct
       checkOrderAndAction);
   v3 = v2->currentActionValue;
   v2->lastActionValue = v3;
-  if ( !checkOrderAndAction || v3 + 100 == v2->currentOrderValue )
+  if( !checkOrderAndAction || v3 + 100 == v2->currentOrderValue )
   {
     v4 = v2->currentOrderValue;
     v2->currentOrderValue = -1;
@@ -2816,7 +2816,7 @@ int __thiscall UnitAIModule::attackObject(UnitAIModule *this, int targetID, int 
   int result; // eax@6
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && (v4 = RGE_Game_World::object(this->objectValue->owner->world, targetID), (v5 = v4) != 0)
     && v3->vfptr->canAttackUnit(v3, v4)
     && ((int (__stdcall *)(int, int))v3->objectValue->vfptr->attack)(targetID, unconditional) == 1 )
@@ -2844,7 +2844,7 @@ int __userpurge UnitAIModule::attackRoundupObject@<eax>(UnitAIModule *this@<ecx>
   int result; // eax@7
 
   v3 = this;
-  if ( this->currentTargetValue != targetID
+  if( this->currentTargetValue != targetID
     && (v4 = RGE_Game_World::object(this->objectValue->owner->world, targetID), (v5 = v4) != 0)
     && v3->vfptr->canAttackUnit(v3, v4)
     && (v3->currentActionValue == -1
@@ -2879,23 +2879,23 @@ int __thiscall UnitAIModule::huntObject(UnitAIModule *this, int targetID, int un
   int result; // eax@10
 
   v3 = this;
-  if ( !unconditional && this->currentActionValue == 613 )
+  if( !unconditional && this->currentActionValue == 613 )
     goto LABEL_15;
-  if ( actionFile )
+  if( actionFile )
   {
     v4 = this->objectValue;
-    if ( v4 )
+    if( v4 )
       v5 = v4->id;
     else
       v5 = -1;
     fprintf(actionFile, aDCallStopobjec, v5, aCMsdevWorkA_43, 3144);
   }
   v3->vfptr->stopObject(v3, 1);
-  if ( ((int (__stdcall *)(int, int))v3->objectValue->vfptr->hunt)(targetID, unconditional) == 1 )
+  if( ((int (__stdcall *)(int, int))v3->objectValue->vfptr->hunt)(targetID, unconditional) == 1 )
   {
     v6 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 613);
-    if ( v6 )
+    if( v6 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v6->master_obj->object_group, v6->world_x, v6->world_y, v6->world_z);
       result = 1;
@@ -2922,12 +2922,12 @@ int __thiscall UnitAIModule::convertObject(UnitAIModule *this, int targetID, int
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue != 604)
+  if( (unconditional || this->currentActionValue != 604)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->convert)(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 604);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->master_obj->object_group, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -2953,12 +2953,12 @@ int __thiscall UnitAIModule::healObject(UnitAIModule *this, int targetID, int un
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue != 603)
+  if( (unconditional || this->currentActionValue != 603)
     && (*(int (__stdcall **)(int, int))&this->objectValue->vfptr->gap88[0])(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 603);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->master_obj->object_group, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -2984,12 +2984,12 @@ int __thiscall UnitAIModule::gatherObject(UnitAIModule *this, int targetID, int 
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue != 609)
+  if( (unconditional || this->currentActionValue != 609)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->gather)(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 609);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->master_obj->object_group, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -3015,12 +3015,12 @@ int __thiscall UnitAIModule::repairObject(UnitAIModule *this, int targetID, int 
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue != 618)
+  if( (unconditional || this->currentActionValue != 618)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->repair)(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 618);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->master_obj->object_group, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -3046,12 +3046,12 @@ int __thiscall UnitAIModule::buildObject(UnitAIModule *this, int targetID, int u
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue != 602)
+  if( (unconditional || this->currentActionValue != 602)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->build)(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 602);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->master_obj->object_group, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -3077,12 +3077,12 @@ int __thiscall UnitAIModule::tradeWithObject(UnitAIModule *this, int targetID, i
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue != 615)
+  if( (unconditional || this->currentActionValue != 615)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->trade)(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 615);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->master_obj->object_group, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -3109,7 +3109,7 @@ int __thiscall UnitAIModule::explore(UnitAIModule *this, int tX, int tY, int unc
   int result; // eax@4
 
   v4 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(int, int, int))this->objectValue->vfptr->explore)(tX, tY, unconditional) == 1 )
   {
     UnitAIModule::setCurrentAction(v4, 605);
@@ -3132,7 +3132,7 @@ int __thiscall UnitAIModule::enterObject(UnitAIModule *this, int targetID, int u
   int result; // eax@4
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->enter)(targetID, unconditional) == 1 )
   {
     UnitAIModule::setCurrentAction(v3, 617);
@@ -3153,7 +3153,7 @@ int __thiscall UnitAIModule::transportObject(UnitAIModule *this, float tX, float
   int result; // eax@4
 
   v5 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(_DWORD, _DWORD, _DWORD, int))this->objectValue->vfptr->transport)(
          LODWORD(tX),
          LODWORD(tY),
@@ -3179,7 +3179,7 @@ int __thiscall UnitAIModule::unload(UnitAIModule *this, int unconditional, float
   int result; // eax@5
 
   v4 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(int, _DWORD, _DWORD, _DWORD))this->objectValue->vfptr->unload)(
          unconditional,
          LODWORD(x),
@@ -3188,7 +3188,7 @@ int __thiscall UnitAIModule::unload(UnitAIModule *this, int unconditional, float
   {
     v5 = v4->objectValue;
     UnitAIModule::setCurrentAction(v4, 621);
-    if ( v5 )
+    if( v5 )
     {
       UnitAIModule::setCurrentTarget(
         v4,
@@ -3220,12 +3220,12 @@ int __thiscall UnitAIModule::moveTo(UnitAIModule *this, int targetID, int uncond
   int result; // eax@5
 
   v3 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->moveTo)(targetID, unconditional) == 1 )
   {
     v4 = RGE_Game_World::object(v3->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v3, 610);
-    if ( v4 )
+    if( v4 )
     {
       UnitAIModule::setCurrentTarget(v3, targetID, v4->world_x, v4->world_y, v4->world_z);
       result = 1;
@@ -3251,7 +3251,7 @@ int __thiscall UnitAIModule::moveTo(UnitAIModule *this, int targetID, float mini
   int result; // eax@5
 
   v4 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && (*(int (__stdcall **)(int, _DWORD, int))&this->objectValue->vfptr->gap154[4])(
          targetID,
          LODWORD(minimumRange),
@@ -3259,7 +3259,7 @@ int __thiscall UnitAIModule::moveTo(UnitAIModule *this, int targetID, float mini
   {
     v5 = RGE_Game_World::object(v4->objectValue->owner->world, targetID);
     UnitAIModule::setCurrentAction(v4, 610);
-    if ( v5 )
+    if( v5 )
     {
       UnitAIModule::setCurrentTarget(v4, targetID, v5->world_x, v5->world_y, v5->world_z);
       result = 1;
@@ -3284,7 +3284,7 @@ int __thiscall UnitAIModule::moveTo(UnitAIModule *this, float targetX, float tar
   int result; // eax@4
 
   v6 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && (*(int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, int))&this->objectValue->vfptr->gap154[0])(
          LODWORD(targetX),
          LODWORD(targetY),
@@ -3319,22 +3319,22 @@ int __thiscall UnitAIModule::evasiveMoveTo(UnitAIModule *this, float targetX, fl
   int result; // eax@30
 
   v5 = this;
-  if ( !unconditional && this->currentActionValue != -1 )
+  if( !unconditional && this->currentActionValue != -1 )
     goto LABEL_34;
-  if ( targetX >= 0.0 )
+  if( targetX >= 0.0 )
   {
     v6 = (double)this->objectValue->owner->world->map->map_width;
-    if ( targetX >= v6 )
+    if( targetX >= v6 )
       targetX = v6 - 1.0;
   }
   else
   {
     targetX = 0.0;
   }
-  if ( targetY >= 0.0 )
+  if( targetY >= 0.0 )
   {
     v7 = (double)this->objectValue->owner->world->map->map_height;
-    if ( targetY >= v7 )
+    if( targetY >= v7 )
       targetY = v7 - 1.0;
   }
   else
@@ -3342,53 +3342,53 @@ int __thiscall UnitAIModule::evasiveMoveTo(UnitAIModule *this, float targetX, fl
     targetY = 0.0;
   }
   v8 = 0;
-  while ( 1 )
+  while( 1 )
   {
     v9 = targetY;
     v10 = targetX;
-    if ( ((int (__stdcall *)(_DWORD, _DWORD, _DWORD))v5->objectValue->vfptr->passableTile)(
+    if( ((int (__stdcall *)(_DWORD, _DWORD, _DWORD))v5->objectValue->vfptr->passableTile)(
            LODWORD(targetX),
            LODWORD(targetY),
            0) == 1 )
       break;
-    if ( (char)debug_rand(aCMsdevWorkA_43, 3487) % -2 )
+    if( (char)debug_rand(aCMsdevWorkA_43, 3487) % -2 )
       v11 = (double)(unsigned __int8)((char)debug_rand(aCMsdevWorkA_43, 3488) % -4) + targetX;
     else
       v11 = targetX - (double)(unsigned __int8)((char)debug_rand(aCMsdevWorkA_43, 3490) % -4);
     targetX = v11;
-    if ( (char)debug_rand(aCMsdevWorkA_43, 3491) % -2 )
+    if( (char)debug_rand(aCMsdevWorkA_43, 3491) % -2 )
       v12 = (double)(unsigned __int8)((char)debug_rand(aCMsdevWorkA_43, 3492) % -4) + targetY;
     else
       v12 = targetY - (double)(unsigned __int8)((char)debug_rand(aCMsdevWorkA_43, 3494) % -4);
     targetY = v12;
-    if ( targetX >= 0.0 )
+    if( targetX >= 0.0 )
     {
       v13 = (double)v5->objectValue->owner->world->map->map_width;
-      if ( targetX >= v13 )
+      if( targetX >= v13 )
         targetX = v13 - 1.0;
     }
     else
     {
       targetX = 0.0;
     }
-    if ( targetY >= 0.0 )
+    if( targetY >= 0.0 )
     {
       v14 = (double)v5->objectValue->owner->world->map->map_height;
-      if ( targetY >= v14 )
+      if( targetY >= v14 )
         targetY = v14 - 1.0;
     }
     else
     {
       targetY = 0.0;
     }
-    if ( ++v8 >= 5 )
+    if( ++v8 >= 5 )
     {
       v9 = targetY;
       v10 = targetX;
       break;
     }
   }
-  if ( (*(int (__stdcall **)(float, float, _DWORD, _DWORD, int))&v5->objectValue->vfptr->gap154[0])(
+  if( (*(int (__stdcall **)(float, float, _DWORD, _DWORD, int))&v5->objectValue->vfptr->gap154[0])(
          COERCE_FLOAT(LODWORD(v10)),
          COERCE_FLOAT(LODWORD(v9)),
          LODWORD(targetZ),
@@ -3442,22 +3442,22 @@ int __thiscall UnitAIModule::intelligentEvasiveMoveTo(UnitAIModule *this, float 
   XYZPoint point; // [sp+50h] [bp-Ch]@11
 
   v6 = this;
-  if ( !unconditional && this->currentActionValue != -1 )
+  if( !unconditional && this->currentActionValue != -1 )
     goto LABEL_34;
-  if ( targetX >= 0.0 )
+  if( targetX >= 0.0 )
   {
     v7 = (double)this->objectValue->owner->world->map->map_width;
-    if ( targetX >= v7 )
+    if( targetX >= v7 )
       targetX = v7 - 1.0;
   }
   else
   {
     targetX = 0.0;
   }
-  if ( targetY >= 0.0 )
+  if( targetY >= 0.0 )
   {
     v8 = (double)this->objectValue->owner->world->map->map_height;
-    if ( targetY >= v8 )
+    if( targetY >= v8 )
       targetY = v8 - 1.0;
   }
   else
@@ -3475,7 +3475,7 @@ int __thiscall UnitAIModule::intelligentEvasiveMoveTo(UnitAIModule *this, float 
   x = 0.0;
   HIDWORD(v12) = v10->vfptr;
   point.z = v12;
-  if ( !(*(int (__thiscall **)(RGE_Static_Object *, int, int, _DWORD, signed int, signed int, _DWORD, _DWORD, signed int, signed int))(HIDWORD(v12) + 408))(
+  if( !(*(int (__thiscall **)(RGE_Static_Object *, int, int, _DWORD, signed int, signed int, _DWORD, _DWORD, signed int, signed int))(HIDWORD(v12) + 408))(
           v10,
           v9,
           v11,
@@ -3489,7 +3489,7 @@ int __thiscall UnitAIModule::intelligentEvasiveMoveTo(UnitAIModule *this, float 
   {
     v13 = -1;
     baseDistance = RGE_Static_Object::distance_to_position(v6->objectValue, targetX, targetY, v6->objectValue->world_z);
-    while ( 1 )
+    while( 1 )
     {
       v14 = v13 + 1;
       facet = v14;
@@ -3522,10 +3522,10 @@ LABEL_16:
         default:
           goto LABEL_34;
       }
-      if ( v9 >= 0 )
+      if( v9 >= 0 )
       {
         v15 = v6->objectValue->owner->world->map->map_width;
-        if ( v9 < v15 )
+        if( v9 < v15 )
           goto LABEL_22;
         v9 = v15 - 1;
       }
@@ -3535,10 +3535,10 @@ LABEL_16:
       }
       point.x = v9;
 LABEL_22:
-      if ( v11 >= 0 )
+      if( v11 >= 0 )
       {
         v16 = v6->objectValue->owner->world->map->map_height;
-        if ( v11 < v16 )
+        if( v11 < v16 )
           goto LABEL_27;
         v11 = v16 - 1;
       }
@@ -3548,7 +3548,7 @@ LABEL_22:
       }
       point.y = v11;
 LABEL_27:
-      if ( goCloser
+      if( goCloser
         || (v17 = v6->objectValue,
             v32 = LODWORD(v17->world_z),
             y = (double)point.y - -0.5,
@@ -3567,7 +3567,7 @@ LABEL_27:
         v24 = v9;
         v25 = v11;
         v26 = point.z;
-        if ( ((int (__stdcall *)(int, int, int, signed int, signed int, _DWORD, _DWORD, signed int, signed int))v20->canPath)(
+        if( ((int (__stdcall *)(int, int, int, signed int, signed int, _DWORD, _DWORD, signed int, signed int))v20->canPath)(
                v9,
                v11,
                point.z,
@@ -3593,7 +3593,7 @@ LABEL_27:
   x = targetZ;
   v29 = (double)point.y - -0.5;
   v28 = (double)point.x - -0.5;
-  if ( (*(int (__stdcall **)(_DWORD, _DWORD, _DWORD, signed int, int))&v22->gap154[0])(
+  if( (*(int (__stdcall **)(_DWORD, _DWORD, _DWORD, signed int, int))&v22->gap154[0])(
          LODWORD(v28),
          LODWORD(v29),
          LODWORD(targetZ),
@@ -3635,24 +3635,24 @@ int __userpurge UnitAIModule::runAwayFromAttackers@<eax>(UnitAIModule *this@<ecx
   int unconditionalc; // [sp+28h] [bp+4h]@14
 
   v3 = this;
-  if ( unconditional || this->currentActionValue == -1 )
+  if( unconditional || this->currentActionValue == -1 )
   {
     v5 = 0;
     xDiff = 0.0;
     unconditionala = 0.0;
-    if ( this->attackingUnitsValue.numberValue > 0 )
+    if( this->attackingUnitsValue.numberValue > 0 )
     {
       do
       {
-        if ( v5 > v3->attackingUnitsValue.maximumSizeValue - 1 )
+        if( v5 > v3->attackingUnitsValue.maximumSizeValue - 1 )
         {
           v6 = v5 + 1;
           v7 = (int *)operator new(4 * v5 + 4);
-          if ( v7 )
+          if( v7 )
           {
-            for ( i = 0; i < v3->attackingUnitsValue.maximumSizeValue; v7[i - 1] = v3->attackingUnitsValue.value[i - 1] )
+            for( i = 0; i < v3->attackingUnitsValue.maximumSizeValue; v7[i - 1] = v3->attackingUnitsValue.value[i - 1] )
             {
-              if ( i >= v6 )
+              if( i >= v6 )
                 break;
               ++i;
             }
@@ -3662,7 +3662,7 @@ int __userpurge UnitAIModule::runAwayFromAttackers@<eax>(UnitAIModule *this@<ecx
           }
         }
         v9 = RGE_Game_World::object(v3->objectValue->owner->world, v3->attackingUnitsValue.value[v5]);
-        if ( v9 )
+        if( v9 )
         {
           v10 = v3->objectValue;
           a2 = v9->world_y - v10->world_y + unconditionala;
@@ -3671,7 +3671,7 @@ int __userpurge UnitAIModule::runAwayFromAttackers@<eax>(UnitAIModule *this@<ecx
         }
         ++v5;
       }
-      while ( v5 < v3->attackingUnitsValue.numberValue );
+      while( v5 < v3->attackingUnitsValue.numberValue );
     }
     ((void (*)(void))v3->objectValue->vfptr->maximumSpeed)();
     v11 = unconditionala;
@@ -3703,11 +3703,11 @@ RGE_Static_Object *__thiscall UnitAIModule::followObject(UnitAIModule *this, int
   int v6; // esi@4
 
   v4 = this;
-  if ( unconditional || this->currentActionValue == -1 )
+  if( unconditional || this->currentActionValue == -1 )
   {
     result = RGE_Game_World::object(this->objectValue->owner->world, targetID);
     v6 = (int)result;
-    if ( result )
+    if( result )
     {
       UnitAIModule::setCurrentAction(v4, 612);
       UnitAIModule::setCurrentTarget(v4, targetID, *(float *)(v6 + 56), *(float *)(v6 + 60), *(float *)(v6 + 64));
@@ -3730,11 +3730,11 @@ RGE_Static_Object *__thiscall UnitAIModule::defendObject(UnitAIModule *this, int
   int v6; // edi@4
 
   v4 = this;
-  if ( unconditional || this->currentActionValue == -1 )
+  if( unconditional || this->currentActionValue == -1 )
   {
     result = RGE_Game_World::object(this->objectValue->owner->world, targetID);
     v6 = (int)result;
-    if ( result )
+    if( result )
     {
       UnitAIModule::setCurrentAction(v4, 601);
       UnitAIModule::setCurrentTarget(v4, targetID, *(float *)(v6 + 56), *(float *)(v6 + 60), *(float *)(v6 + 64));
@@ -3757,7 +3757,7 @@ int __thiscall UnitAIModule::defendPosition(UnitAIModule *this, float targetX, f
   int result; // eax@3
 
   v5 = this;
-  if ( unconditional || this->currentActionValue == -1 )
+  if( unconditional || this->currentActionValue == -1 )
   {
     UnitAIModule::setCurrentAction(this, 601);
     UnitAIModule::setCurrentTarget(v5, -1, targetX, targetY, v5->objectValue->world_z);
@@ -3781,7 +3781,7 @@ int __thiscall UnitAIModule::seekAndDestroy(UnitAIModule *this, int targetID, in
   int result; // eax@4
 
   v5 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(int, int))this->objectValue->vfptr->attack)(targetID, unconditional) == 1 )
   {
     UnitAIModule::setCurrentAction(v5, 622);
@@ -3806,7 +3806,7 @@ int __thiscall UnitAIModule::exploreAndDestroy(UnitAIModule *this, int tX, int t
   int result; // eax@4
 
   v4 = this;
-  if ( (unconditional || this->currentActionValue == -1)
+  if( (unconditional || this->currentActionValue == -1)
     && ((int (__stdcall *)(int, int, int))this->objectValue->vfptr->explore)(tX, tY, unconditional) == 1 )
   {
     UnitAIModule::setCurrentAction(v4, 623);
@@ -3857,7 +3857,7 @@ void __thiscall UnitAIModule::setCurrentTarget(UnitAIModule *this, int o, float 
   v5->currentTargetYValue = y;
   v5->currentTargetZValue = z;
   v9 = RGE_Game_World::object(v8->owner->world, o);
-  if ( v9 )
+  if( v9 )
     v5->currentTargetTypeValue = v9->master_obj->object_group;
 }
 
@@ -3886,18 +3886,18 @@ int __thiscall UnitAIModule::importantObject(UnitAIModule *this, int unitType)
 
   v2 = this->numberImportantObjects;
   v3 = 0;
-  if ( v2 <= 0 )
+  if( v2 <= 0 )
   {
     result = 0;
   }
   else
   {
     v4 = this->importantObjects;
-    while ( *v4 != unitType )
+    while( *v4 != unitType )
     {
       ++v3;
       ++v4;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return 0;
     }
     result = 1;
@@ -3912,7 +3912,7 @@ int __thiscall UnitAIModule::isEnemyOwner(UnitAIModule *this, int oID)
   int result; // eax@2
 
   v2 = this->objectValue->owner;
-  if ( v2->id == oID )
+  if( v2->id == oID )
     result = 0;
   else
     result = v2->relations[oID] == 3;
@@ -3928,7 +3928,7 @@ int __thiscall UnitAIModule::isAllyOwner(UnitAIModule *this, int oID)
 
   v2 = this->objectValue->owner;
   v3 = v2->id;
-  if ( v3 == oID )
+  if( v3 == oID )
     result = 1;
   else
     result = !v2->relations[oID] && !v2->world->players[oID]->relations[v3];
@@ -3942,7 +3942,7 @@ int __thiscall UnitAIModule::isNeutralOwner(UnitAIModule *this, int oID)
   int result; // eax@2
 
   v2 = this->objectValue->owner;
-  if ( v2->id == oID )
+  if( v2->id == oID )
     result = 0;
   else
     result = v2->relations[oID] == 1;
@@ -3958,7 +3958,7 @@ char __thiscall UnitAIModule::visibleStatus(UnitAIModule *this, RGE_Visible_Map 
 
   v4 = this->objectValue->owner;
   v5 = (&unified_map_offsets)[y][x];
-  if ( (unsigned int)v5 & v4->mutualVisibleMask )
+  if( (unsigned int)v5 & v4->mutualVisibleMask )
     result = 15;
   else
     result = ((unsigned int)v5 & v4->mutualExploredMask) != 0 ? 0x80 : 0;
@@ -3996,19 +3996,19 @@ void __thiscall UnitAIModule::setPlayStatus(UnitAIModule *this, AIPlayStatus *ps
   AIPlayStatus *v5; // ecx@6
 
   v2 = this;
-  if ( !this->playStatus )
+  if( !this->playStatus )
   {
     v3 = (AIPlayStatus *)operator new(0x1C8u);
-    if ( v3 )
+    if( v3 )
       AIPlayStatus::AIPlayStatus(v3);
     else
       v4 = 0;
     v2->playStatus = v4;
   }
   v5 = v2->playStatus;
-  if ( v5 )
+  if( v5 )
   {
-    if ( ps )
+    if( ps )
       AIPlayStatus::copy(v5, ps);
   }
 }
@@ -4036,10 +4036,10 @@ void __thiscall UnitAIModule::lookAround(UnitAIModule *this)
   world = v5->world;
   do
   {
-    for ( i = 0; i < dword_87D7D8[v3]; ++i )
+    for( i = 0; i < dword_87D7D8[v3]; ++i )
     {
       v7 = RGE_Game_World::object(world, *(_DWORD *)(dword_87D7F0[v3] + 8 * i));
-      if ( v7 && v7->object_state <= 2u )
+      if( v7 && v7->object_state <= 2u )
         ((void (__stdcall *)(_DWORD, int, signed int, _DWORD, _DWORD, _DWORD))v1->objectValue->owner->vfptr->notify)(
           v4,
           ownerID,
@@ -4050,7 +4050,7 @@ void __thiscall UnitAIModule::lookAround(UnitAIModule *this)
     }
     --v3;
   }
-  while ( v3 > -2 );
+  while( v3 > -2 );
   v1->lookAroundTimerValue = 0;
   v1->lookAroundTimeoutValue = debug_rand(aCMsdevWorkA_43, 3986) % 1000 + 4000;
 }
@@ -4067,18 +4067,18 @@ int __thiscall UnitAIModule::hasOrderOnQueue(UnitAIModule *this, int orderNumber
 
   v2 = this->orderQueueSizeValue;
   v3 = 0;
-  if ( v2 <= 0 )
+  if( v2 <= 0 )
   {
     result = 0;
   }
   else
   {
     v4 = (char *)&this->orderQueueValue->orderType;
-    while ( *(_DWORD *)v4 != orderNumber )
+    while( *(_DWORD *)v4 != orderNumber )
     {
       ++v3;
       v4 += 36;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return 0;
     }
     result = 1;
@@ -4112,45 +4112,45 @@ void __userpurge UnitAIModule::askForHelp(UnitAIModule *this@<ecx>, int unitToAt
   v5 = this;
   v23 = this;
   v6 = UnitAIModule::lookupObject(this, unitToAttack);
-  if ( v6 )
+  if( v6 )
   {
     v5->vfptr->search(v5);
     v7 = 0;
     v22 = 0;
     do
     {
-      for ( i = 0; i < *(int *)((char *)&dword_87D7CC + v7); ++i )
+      for( i = 0; i < *(int *)((char *)&dword_87D7CC + v7); ++i )
       {
-        if ( v5->objectValue->id != *(_DWORD *)(8 * i + *(int *)((char *)&dword_87D7E4 + v7)) )
+        if( v5->objectValue->id != *(_DWORD *)(8 * i + *(int *)((char *)&dword_87D7E4 + v7)) )
         {
           v8 = UnitAIModule::lookupObject(v5, *(_DWORD *)(8 * i + *(int *)((char *)&dword_87D7E4 + v7)));
           v9 = v8;
-          if ( v8 )
+          if( v8 )
           {
-            if ( RGE_Static_Object::unitAI(v8) )
+            if( RGE_Static_Object::unitAI(v8) )
             {
               v10 = v9->owner;
-              if ( v10 )
+              if( v10 )
               {
-                if ( v9->object_state <= 2u )
+                if( v9->object_state <= 2u )
                 {
                   v11 = v9->master_obj->object_group;
-                  if ( v11 != 1 && v11 != 3 && v11 != 4 && v11 != 21 && v11 != 18 && v11 != 20 && v11 != 27 )
+                  if( v11 != 1 && v11 != 3 && v11 != 4 && v11 != 21 && v11 != 18 && v11 != 20 && v11 != 27 )
                   {
                     v12 = v5->objectValue->owner->id;
-                    if ( v10->id == v12 || (*(int (__stdcall **)(_DWORD))&v10->vfptr->gap4[24])(v12) )
+                    if( v10->id == v12 || (*(int (__stdcall **)(_DWORD))&v10->vfptr->gap4[24])(v12) )
                     {
                       v13 = RGE_Static_Object::distance_to_object(v5->objectValue, v9);
-                      if ( v13 <= 3.0 )
+                      if( v13 <= 3.0 )
                       {
                         v14 = RGE_Static_Object::unitAI(v9);
-                        if ( UnitAIModule::currentAction(v14) == -1 )
+                        if( UnitAIModule::currentAction(v14) == -1 )
                         {
                           v15 = RGE_Static_Object::unitAI(v9);
-                          if ( UnitAIModule::currentOrder(v15) == -1 )
+                          if( UnitAIModule::currentOrder(v15) == -1 )
                           {
                             v16 = RGE_Static_Object::unitAI(v9);
-                            if ( UnitAIModule::orderQueueSize(v16) <= 0 )
+                            if( UnitAIModule::orderQueueSize(v16) <= 0 )
                             {
                               v17 = RGE_Static_Object::unitAI(v9);
                               v18 = v6->world_y;
@@ -4188,7 +4188,7 @@ void __userpurge UnitAIModule::askForHelp(UnitAIModule *this@<ecx>, int unitToAt
       v7 += 4;
       v22 = v7;
     }
-    while ( v7 <= 4 );
+    while( v7 <= 4 );
   }
 }
 // 87D7CC: using guessed type int dword_87D7CC;
@@ -4228,21 +4228,21 @@ BOOL __thiscall UnitAIModule::processOrder(UnitAIModule *this, OrderEvent *oEven
   {
     case 0x2D6:
       v3 = 1;
-      if ( AIPlayBook::play(this->objectValue->owner->world->playbook, oEvent->targetOwner) )
+      if( AIPlayBook::play(this->objectValue->owner->world->playbook, oEvent->targetOwner) )
       {
-        if ( v4->playStatus )
+        if( v4->playStatus )
           operator delete(v4->playStatus);
         v5 = (AIPlayStatus *)operator new(0x1C8u);
-        if ( v5 )
+        if( v5 )
           AIPlayStatus::AIPlayStatus(v5);
         else
           v6 = 0;
         v4->playStatus = v6;
-        if ( v6 )
+        if( v6 )
         {
           v6->playNumberValue = oEvent->targetOwner;
           v4->playStatus->targetValue = oEvent->target;
-          if ( LODWORD(oEvent->targetX) == -1082130432 )
+          if( LODWORD(oEvent->targetX) == -1082130432 )
           {
             v10 = v4->objectValue;
             v11 = (signed __int64)v10->world_z;
@@ -4273,7 +4273,7 @@ BOOL __thiscall UnitAIModule::processOrder(UnitAIModule *this, OrderEvent *oEven
       }
       break;
     case 0x2D7:
-      if ( !this->playStatus )
+      if( !this->playStatus )
         goto LABEL_43;
       operator delete(this->playStatus);
       v4->playStatus = 0;
@@ -4281,10 +4281,10 @@ BOOL __thiscall UnitAIModule::processOrder(UnitAIModule *this, OrderEvent *oEven
       break;
     case 0x2C2:
       UnitAIModule::removeCurrentTarget(this);
-      if ( !actionFile )
+      if( !actionFile )
         goto LABEL_42;
       v14 = v4->objectValue;
-      if ( v14 )
+      if( v14 )
         v15 = v14->id;
       else
         v15 = -1;
@@ -4310,7 +4310,7 @@ BOOL __thiscall UnitAIModule::processOrder(UnitAIModule *this, OrderEvent *oEven
     case 0x2BD:
       v17 = oEvent->target;
       v18 = this->vfptr;
-      if ( v17 == -1 )
+      if( v17 == -1 )
         v16 = ((int (__thiscall *)(UnitAIModule *, _DWORD, _DWORD, _DWORD, signed int))v18->defendPosition)(
                 this,
                 LODWORD(oEvent->targetX),
@@ -4385,10 +4385,10 @@ BOOL __thiscall UnitAIModule::processOrder(UnitAIModule *this, OrderEvent *oEven
       goto LABEL_49;
     case 0x2D5:
       UnitAIModule::removeCurrentTarget(this);
-      if ( actionFile )
+      if( actionFile )
       {
         v19 = v4->objectValue;
-        if ( v19 )
+        if( v19 )
           v20 = v19->id;
         else
           v20 = -1;
@@ -4421,21 +4421,21 @@ LABEL_49:
     default:
       break;
   }
-  if ( v3 == 1 )
+  if( v3 == 1 )
   {
     v21 = oEvent->orderType;
-    if ( v21 == 706 )
+    if( v21 == 706 )
     {
       v22 = -1;
       v4->currentOrderValue = -1;
     }
     else
     {
-      if ( v21 == 729 )
+      if( v21 == 729 )
       {
         v4->currentOrderValue = 700;
       }
-      else if ( v21 != 700 || v4->objectValue->master_obj->id != 125 )
+      else if( v21 != 700 || v4->objectValue->master_obj->id != 125 )
       {
         v4->currentOrderValue = v21;
       }
@@ -4448,15 +4448,15 @@ LABEL_49:
     }
     v4->currentOrderPriorityValue = v22;
   }
-  if ( orderNumber >= 0 )
+  if( orderNumber >= 0 )
   {
     v23 = v4->orderQueueSizeValue;
-    if ( orderNumber < v23 )
+    if( orderNumber < v23 )
     {
-      if ( v4->orderQueueValue )
+      if( v4->orderQueueValue )
       {
         v24 = orderNumber;
-        if ( orderNumber < v23 - 1 )
+        if( orderNumber < v23 - 1 )
         {
           v25 = orderNumber;
           do
@@ -4473,7 +4473,7 @@ LABEL_49:
             ++v25;
             *(_DWORD *)(v26 + 28) = *(_DWORD *)(v26 + 64);
           }
-          while ( v24 < v4->orderQueueSizeValue - 1 );
+          while( v24 < v4->orderQueueSizeValue - 1 );
         }
         --v4->orderQueueSizeValue;
       }
@@ -4616,7 +4616,7 @@ int __userpurge UnitAIModule::processNotify@<eax>(UnitAIModule *this@<ecx>, doub
     case 0x20F:
       v125 = this->vfptr;
       ((void (__thiscall *)(UnitAIModule *, NotifyEvent *))this->vfptr->notifyCommander)(this, nEvent);
-      if ( nEvent->p2 <= 0 )
+      if( nEvent->p2 <= 0 )
       {
         ((void (__stdcall *)(int, int, signed int, int, _DWORD, _DWORD))v8->objectValue->owner->vfptr->notify)(
           v8->objectValue->id,
@@ -4628,7 +4628,7 @@ int __userpurge UnitAIModule::processNotify@<eax>(UnitAIModule *this@<ecx>, doub
         UnitAIModule::purgeNotifyQueue(v8, uTime);
         return 4;
       }
-      if ( !v8->attackingUnitsValue.numberValue || RGE_Player::computerPlayer(v8->objectValue->owner) == 1 )
+      if( !v8->attackingUnitsValue.numberValue || RGE_Player::computerPlayer(v8->objectValue->owner) == 1 )
         ((void (__stdcall *)(int, int, signed int, int, _DWORD, _DWORD))v8->objectValue->owner->vfptr->notify)(
           v8->objectValue->id,
           v8->objectValue->id,
@@ -4638,39 +4638,39 @@ int __userpurge UnitAIModule::processNotify@<eax>(UnitAIModule *this@<ecx>, doub
           0);
       v10 = v8->attackingUnitsValue.numberValue;
       v11 = 0;
-      if ( v10 <= 0 )
+      if( v10 <= 0 )
         goto LABEL_11;
       do
       {
-        if ( v11 >= v8->attackingUnitsValue.maximumSizeValue )
+        if( v11 >= v8->attackingUnitsValue.maximumSizeValue )
           break;
-        if ( v8->attackingUnitsValue.value[v11] == nEvent->caller )
+        if( v8->attackingUnitsValue.value[v11] == nEvent->caller )
           goto LABEL_14;
         ++v11;
       }
-      while ( v11 < v10 );
+      while( v11 < v10 );
 LABEL_11:
-      if ( !RGE_Player::computerPlayer(v8->objectValue->owner) && v8->currentTargetValue != nEvent->caller )
+      if( !RGE_Player::computerPlayer(v8->objectValue->owner) && v8->currentTargetValue != nEvent->caller )
         UnitAIModule::askForHelp(v8, nEvent->caller, v122, v123, v124);
 LABEL_14:
       v12 = v8->attackingUnitsValue.numberValue;
       v13 = nEvent->caller;
-      for ( i = 0; i < v12; ++i )
+      for( i = 0; i < v12; ++i )
       {
-        if ( i >= v8->attackingUnitsValue.maximumSizeValue )
+        if( i >= v8->attackingUnitsValue.maximumSizeValue )
           break;
-        if ( v8->attackingUnitsValue.value[i] == v13 )
+        if( v8->attackingUnitsValue.value[i] == v13 )
           goto LABEL_26;
       }
-      if ( v12 > v8->attackingUnitsValue.maximumSizeValue - 1 )
+      if( v12 > v8->attackingUnitsValue.maximumSizeValue - 1 )
       {
         v15 = v12 + 1;
         v16 = (int *)operator new(4 * (v12 + 1));
-        if ( v16 )
+        if( v16 )
         {
-          for ( j = 0; j < v8->attackingUnitsValue.maximumSizeValue; v16[j - 1] = v8->attackingUnitsValue.value[j - 1] )
+          for( j = 0; j < v8->attackingUnitsValue.maximumSizeValue; v16[j - 1] = v8->attackingUnitsValue.value[j - 1] )
           {
-            if ( j >= v15 )
+            if( j >= v15 )
               break;
             ++j;
           }
@@ -4684,34 +4684,34 @@ LABEL_14:
 LABEL_26:
       ((void (__stdcall *)(signed int))v8->objectValue->vfptr->setUnderAttack)(1);
       v18 = v8->currentOrderValue;
-      if ( v18 != 725 && v18 != -1 && !RGE_Player::computerPlayer(v8->objectValue->owner) )
+      if( v18 != 725 && v18 != -1 && !RGE_Player::computerPlayer(v8->objectValue->owner) )
         return 2;
-      if ( v8->currentOrderValue == 725 )
+      if( v8->currentOrderValue == 725 )
         return 2;
       v19 = UnitAIModule::lookupObject(v8, v7->caller);
       v20 = v19;
-      if ( !v19 || v19->owner->id == v8->objectValue->owner->id )
+      if( !v19 || v19->owner->id == v8->objectValue->owner->id )
         return 2;
-      if ( v8->currentActionValue != 603 || v125->runAwayFromAttackers(v8, 1) != 1 )
+      if( v8->currentActionValue != 603 || v125->runAwayFromAttackers(v8, 1) != 1 )
       {
         v21 = 0;
-        if ( v8->currentTargetValue != -1 )
+        if( v8->currentTargetValue != -1 )
           v21 = UnitAIModule::lookupObject(v8, v8->currentTargetValue);
-        if ( v21 )
+        if( v21 )
         {
           v25 = v21->master_obj;
           v26 = v25->object_group;
-          if ( v26 != 3 && v26 != 27
+          if( v26 != 3 && v26 != 27
             || (v27 = v25->id, v27 == 79)
             || v27 == 199
             || v27 == 69
             || RGE_Player::computerPlayer(v8->objectValue->owner) )
           {
-            if ( RGE_Player::computerPlayer(v8->objectValue->owner) != 1 || v21->master_obj->id == 276 )
+            if( RGE_Player::computerPlayer(v8->objectValue->owner) != 1 || v21->master_obj->id == 276 )
               return 2;
             tileX = (int)v21->vfptr;
             (*(void (__thiscall **)(RGE_Static_Object *))(tileX + 264))(v21);
-            if ( a2 == 0.0 )
+            if( a2 == 0.0 )
             {
               *(float *)&uTime = 0.0;
             }
@@ -4721,12 +4721,12 @@ LABEL_26:
               *(float *)&uTime = a2;
             }
             lastTargetXValue = *(float *)&v125->canAttackUnit;
-            if ( ((int (__thiscall *)(UnitAIModule *, RGE_Static_Object *))LODWORD(lastTargetXValue))(v8, v20) == 1 )
+            if( ((int (__thiscall *)(UnitAIModule *, RGE_Static_Object *))LODWORD(lastTargetXValue))(v8, v20) == 1 )
             {
               a2 = *(float *)&uTime;
-              if ( *(float *)&uTime == 0.0 )
+              if( *(float *)&uTime == 0.0 )
               {
-                if ( ((int (__stdcall *)(RGE_Static_Object *))v8->objectValue->vfptr->inAttackRange)(v20) == 1
+                if( ((int (__stdcall *)(RGE_Static_Object *))v8->objectValue->vfptr->inAttackRange)(v20) == 1
                   || (v31 = v8->objectValue,
                       v32 = v31->vfptr,
                       ((void (__stdcall *)(_DWORD, _DWORD, signed int, signed int))v31->vfptr->weaponRange)(
@@ -4750,18 +4750,18 @@ LABEL_26:
               v20,
               v8->objectValue);
             *(float *)&uTime = a2 <= 0.0 ? 25000.0 : (float)(v20->hp / a2);
-            if ( ((int (__thiscall *)(UnitAIModule *, RGE_Static_Object *))LODWORD(lastTargetXValue))(v8, v20) != 1 )
+            if( ((int (__thiscall *)(UnitAIModule *, RGE_Static_Object *))LODWORD(lastTargetXValue))(v8, v20) != 1 )
               return 2;
             v34 = *(float *)&uTime;
-            if ( *(float *)&uTime >= (double)*(float *)&tileX )
+            if( *(float *)&uTime >= (double)*(float *)&tileX )
               return 2;
-            if ( ((int (__stdcall *)(RGE_Static_Object *))v8->objectValue->vfptr->inAttackRange)(v20) != 1 )
+            if( ((int (__stdcall *)(RGE_Static_Object *))v8->objectValue->vfptr->inAttackRange)(v20) != 1 )
             {
               v35 = v8->objectValue;
               v36 = v35->vfptr;
               ((void (__stdcall *)(_DWORD, _DWORD, signed int, signed int))v35->vfptr->weaponRange)(0, 0, -1, -1);
               v37 = v34;
-              if ( (*((int (__thiscall **)(RGE_Static_Object *, _DWORD, _DWORD))&v36->pause + 1))(
+              if( (*((int (__thiscall **)(RGE_Static_Object *, _DWORD, _DWORD))&v36->pause + 1))(
                      v8->objectValue,
                      *a7,
                      LODWORD(v37)) != 1 )
@@ -4770,7 +4770,7 @@ LABEL_26:
             v125->attackObject(v8, nEvent->caller, 1);
             result = 2;
           }
-          else if ( v125->canAttackUnit(v8, v20) != 1
+          else if( v125->canAttackUnit(v8, v20) != 1
                  || ((int (__stdcall *)(_DWORD))v8->objectValue->vfptr->inAttackRange)(v20) != 1
                  && (v28 = v8->objectValue,
                      v29 = v28->vfptr,
@@ -4790,7 +4790,7 @@ LABEL_26:
             result = 3;
           }
         }
-        else if ( v125->canAttackUnit(v8, v20) != 1
+        else if( v125->canAttackUnit(v8, v20) != 1
                || ((int (__stdcall *)(_DWORD))v8->objectValue->vfptr->inAttackRange)(v20) != 1
                && (v22 = v8->objectValue,
                    v23 = v22->vfptr,
@@ -4801,14 +4801,14 @@ LABEL_26:
                      *a7,
                      LODWORD(v24)) != 1) )
         {
-          if ( v8->currentActionValue == 610 )
+          if( v8->currentActionValue == 610 )
             goto LABEL_266;
           v125->runAwayFromAttackers(v8, 1);
           result = 3;
         }
         else
         {
-          if ( v125->attackObject(v8, nEvent->caller, 1) != 1 || v8->currentOrderValue == 700 )
+          if( v125->attackObject(v8, nEvent->caller, 1) != 1 || v8->currentOrderValue == 700 )
             goto LABEL_266;
           v8->currentOrderValue = -1;
           result = 3;
@@ -4822,14 +4822,14 @@ LABEL_26:
     case 0x1FC:
       v38 = UnitAIModule::lookupObject(this, this->currentTargetValue);
       v39 = v38;
-      if ( !v38 )
+      if( !v38 )
         goto LABEL_88;
       v40 = UnitAIModule::visibleStatus(
               v8,
               v8->objectValue->owner->visible,
               (signed __int64)v38->world_x,
               (signed __int64)v38->world_y);
-      if ( !v39->owner->id || v40 == 15 )
+      if( !v39->owner->id || v40 == 15 )
         return 2;
       v41 = LODWORD(v8->currentTargetYValue);
       v42 = v8->vfptr;
@@ -4837,9 +4837,9 @@ LABEL_26:
       lastTargetXValue = v8->currentTargetXValue;
       uTime = v41;
       v43 = v42->bestUnitToAttack(v8, 1, 0, 0);
-      if ( v43 == -1 || v43 == v8->currentTargetValue || v42->attackObject(v8, v43, 1) != 1 )
+      if( v43 == -1 || v43 == v8->currentTargetValue || v42->attackObject(v8, v43, 1) != 1 )
       {
-        if ( RGE_Player::computerPlayer(v8->objectValue->owner)
+        if( RGE_Player::computerPlayer(v8->objectValue->owner)
           || (*(int (__thiscall **)(UnitAIModule *, _DWORD, unsigned int, NotifyEvent *, _DWORD, signed int))&v42->gap90[0])(
                v8,
                LODWORD(lastTargetXValue),
@@ -4850,10 +4850,10 @@ LABEL_26:
         {
 LABEL_88:
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v45 = v8->objectValue;
-            if ( v45 )
+            if( v45 )
               fprintf(actionFile, aDCallStopobjec, v45->id, aCMsdevWorkA_43, 4713);
             else
               fprintf(actionFile, aDCallStopobjec, -1, aCMsdevWorkA_43, 4713);
@@ -4874,15 +4874,15 @@ LABEL_88:
       return result;
     case 0x1FA:
       v46 = this->currentOrderValue;
-      if ( v46 == 700 && nEvent->p1 == 600 )
+      if( v46 == 700 && nEvent->p1 == 600 )
       {
         v47 = this->vfptr;
-        if ( ((int (__fastcall *)(UnitAIModule *, signed int, _DWORD))this->vfptr->processIdle)(this, 600, 0) != 5 )
+        if( ((int (__fastcall *)(UnitAIModule *, signed int, _DWORD))this->vfptr->processIdle)(this, 600, 0) != 5 )
           return 2;
-        if ( v8->currentOrderValue != 725 && RGE_Player::computerPlayer(v8->objectValue->owner) )
+        if( v8->currentOrderValue != 725 && RGE_Player::computerPlayer(v8->objectValue->owner) )
         {
           v48 = v8->desiredTargetDistanceValue - -2.0;
-          if ( (*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, signed int))&v47->gap90[0])(
+          if( (*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, signed int))&v47->gap90[0])(
                  v8,
                  LODWORD(v8->currentTargetXValue),
                  LODWORD(v8->currentTargetYValue),
@@ -4897,10 +4897,10 @@ LABEL_88:
             return 2;
           }
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v49 = v8->objectValue;
-            if ( v49 )
+            if( v49 )
               v50 = v49->id;
             else
               v50 = -1;
@@ -4912,10 +4912,10 @@ LABEL_88:
         else
         {
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v52 = v8->objectValue;
-            if ( v52 )
+            if( v52 )
               v53 = v52->id;
             else
               v53 = -1;
@@ -4925,15 +4925,15 @@ LABEL_88:
         v47->stopObject(v8, 0);
         return 2;
       }
-      if ( v46 == -1 )
+      if( v46 == -1 )
         goto LABEL_118;
-      if ( this->currentActionValue + 100 == v46 )
+      if( this->currentActionValue + 100 == v46 )
       {
         UnitAIModule::removeCurrentTarget(this);
-        if ( !actionFile )
+        if( !actionFile )
           goto LABEL_285;
         v54 = v8->objectValue;
-        if ( v54 )
+        if( v54 )
           v55 = v54->id;
         else
           v55 = -1;
@@ -4941,16 +4941,16 @@ LABEL_88:
         v8->vfptr->stopObject(v8, 1);
         return 2;
       }
-      if ( v46 != -1 )
+      if( v46 != -1 )
         goto LABEL_124;
 LABEL_118:
-      if ( this->currentActionValue == nEvent->p1 )
+      if( this->currentActionValue == nEvent->p1 )
       {
         UnitAIModule::removeCurrentTarget(this);
-        if ( !actionFile )
+        if( !actionFile )
           goto LABEL_285;
         v56 = v8->objectValue;
-        if ( v56 )
+        if( v56 )
           v57 = v56->id;
         else
           v57 = -1;
@@ -4961,17 +4961,17 @@ LABEL_118:
       else
       {
 LABEL_124:
-        if ( v46 != 724 || nEvent->p1 != 610 )
+        if( v46 != 724 || nEvent->p1 != 610 )
         {
-          if ( v46 != 701 || nEvent->p1 != 610 )
+          if( v46 != 701 || nEvent->p1 != 610 )
           {
-            if ( v46 != 725 || nEvent->p1 != 600 )
+            if( v46 != 725 || nEvent->p1 != 600 )
               return 2;
             UnitAIModule::removeCurrentTarget(this);
-            if ( !actionFile )
+            if( !actionFile )
               goto LABEL_285;
             v60 = v8->objectValue;
-            if ( v60 )
+            if( v60 )
               v61 = v60->id;
             else
               v61 = -1;
@@ -4988,10 +4988,10 @@ LABEL_124:
         else
         {
           UnitAIModule::removeCurrentTarget(this);
-          if ( actionFile )
+          if( actionFile )
           {
             v58 = v8->objectValue;
-            if ( v58 )
+            if( v58 )
               v59 = v58->id;
             else
               v59 = -1;
@@ -5004,33 +5004,33 @@ LABEL_124:
       return result;
     case 0x1F9:
       v62 = this->currentOrderValue;
-      if ( v62 != 700 || nEvent->p1 != 600 )
+      if( v62 != 700 || nEvent->p1 != 600 )
       {
-        if ( v62 == -1 )
+        if( v62 == -1 )
           goto LABEL_322;
-        if ( this->currentActionValue + 100 == v62 )
+        if( this->currentActionValue + 100 == v62 )
         {
           UnitAIModule::removeCurrentTarget(this);
-          if ( actionFile )
+          if( actionFile )
           {
             v69 = v8->objectValue;
-            if ( v69 )
+            if( v69 )
               fprintf(actionFile, aDCallStopobjec, v69->id, aCMsdevWorkA_43, 4868);
             else
               fprintf(actionFile, aDCallStopobjec, -1, aCMsdevWorkA_43, 4868);
           }
           goto LABEL_317;
         }
-        if ( v62 == -1 )
+        if( v62 == -1 )
         {
 LABEL_322:
-          if ( this->currentActionValue == nEvent->p1 )
+          if( this->currentActionValue == nEvent->p1 )
           {
             UnitAIModule::removeCurrentTarget(this);
-            if ( actionFile )
+            if( actionFile )
             {
               v70 = v8->objectValue;
-              if ( v70 )
+              if( v70 )
                 fprintf(actionFile, aDCallStopobjec, v70->id, aCMsdevWorkA_43, 4877);
               else
                 fprintf(actionFile, aDCallStopobjec, -1, aCMsdevWorkA_43, 4877);
@@ -5038,13 +5038,13 @@ LABEL_322:
             goto LABEL_317;
           }
         }
-        if ( v62 == 724 && nEvent->p1 == 610 )
+        if( v62 == 724 && nEvent->p1 == 610 )
         {
           UnitAIModule::removeCurrentTarget(this);
-          if ( !actionFile )
+          if( !actionFile )
             goto LABEL_224;
           v71 = v8->objectValue;
-          if ( v71 )
+          if( v71 )
             v72 = v71->id;
           else
             v72 = -1;
@@ -5053,15 +5053,15 @@ LABEL_322:
           v8->vfptr->stopObject(v8, 0);
           goto LABEL_318;
         }
-        if ( v62 != 701 || nEvent->p1 != 610 )
+        if( v62 != 701 || nEvent->p1 != 610 )
         {
-          if ( v62 != 725 || nEvent->p1 != 600 )
+          if( v62 != 725 || nEvent->p1 != 600 )
             return 2;
           UnitAIModule::removeCurrentTarget(this);
-          if ( !actionFile )
+          if( !actionFile )
             goto LABEL_285;
           v74 = v8->objectValue;
-          if ( v74 )
+          if( v74 )
             v75 = v74->id;
           else
             v75 = -1;
@@ -5078,12 +5078,12 @@ LABEL_322:
       else
       {
         v63 = this->vfptr;
-        if ( ((int (__fastcall *)(UnitAIModule *, signed int, _DWORD))this->vfptr->processIdle)(this, 600, 0) != 5 )
+        if( ((int (__fastcall *)(UnitAIModule *, signed int, _DWORD))this->vfptr->processIdle)(this, 600, 0) != 5 )
           return 2;
-        if ( v8->currentOrderValue != 725 && RGE_Player::computerPlayer(v8->objectValue->owner) )
+        if( v8->currentOrderValue != 725 && RGE_Player::computerPlayer(v8->objectValue->owner) )
         {
           v64 = v8->desiredTargetDistanceValue - -2.0;
-          if ( (*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, signed int))&v63->gap90[0])(
+          if( (*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, signed int))&v63->gap90[0])(
                  v8,
                  LODWORD(v8->currentTargetXValue),
                  LODWORD(v8->currentTargetYValue),
@@ -5094,10 +5094,10 @@ LABEL_322:
             goto LABEL_198;
           }
           UnitAIModule::removeCurrentTarget(v8);
-          if ( !actionFile )
+          if( !actionFile )
             goto LABEL_204;
           v65 = v8->objectValue;
-          if ( v65 )
+          if( v65 )
             v66 = v65->id;
           else
             v66 = -1;
@@ -5108,10 +5108,10 @@ LABEL_322:
         else
         {
           UnitAIModule::removeCurrentTarget(v8);
-          if ( !actionFile )
+          if( !actionFile )
             goto LABEL_204;
           v67 = v8->objectValue;
-          if ( v67 )
+          if( v67 )
             v68 = v67->id;
           else
             v68 = -1;
@@ -5123,15 +5123,15 @@ LABEL_322:
       return result;
     case 0x1FB:
       v76 = this->currentOrderValue;
-      if ( v76 == 700 && nEvent->p1 == 600 )
+      if( v76 == 700 && nEvent->p1 == 600 )
       {
         v63 = this->vfptr;
-        if ( ((int (__fastcall *)(_DWORD, _DWORD, _DWORD))this->vfptr->processIdle)(this, 600, 0) != 5 )
+        if( ((int (__fastcall *)(_DWORD, _DWORD, _DWORD))this->vfptr->processIdle)(this, 600, 0) != 5 )
           return 2;
-        if ( v8->currentOrderValue != 725 && RGE_Player::computerPlayer(v8->objectValue->owner) )
+        if( v8->currentOrderValue != 725 && RGE_Player::computerPlayer(v8->objectValue->owner) )
         {
           v77 = v8->desiredTargetDistanceValue - -2.0;
-          if ( (*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, signed int))&v63->gap90[0])(
+          if( (*(int (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, signed int))&v63->gap90[0])(
                  v8,
                  LODWORD(v8->currentTargetXValue),
                  LODWORD(v8->currentTargetYValue),
@@ -5147,10 +5147,10 @@ LABEL_198:
             return 2;
           }
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v78 = v8->objectValue;
-            if ( v78 )
+            if( v78 )
               v79 = v78->id;
             else
               v79 = -1;
@@ -5162,10 +5162,10 @@ LABEL_198:
         else
         {
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v81 = v8->objectValue;
-            if ( v81 )
+            if( v81 )
               v82 = v81->id;
             else
               v82 = -1;
@@ -5176,31 +5176,31 @@ LABEL_204:
         v63->stopObject(v8, 1);
         return 2;
       }
-      if ( v76 == -1 )
+      if( v76 == -1 )
         goto LABEL_323;
-      if ( this->currentActionValue + 100 == v76 )
+      if( this->currentActionValue + 100 == v76 )
       {
         UnitAIModule::removeCurrentTarget(this);
-        if ( actionFile )
+        if( actionFile )
         {
           v83 = v8->objectValue;
-          if ( v83 )
+          if( v83 )
             fprintf(actionFile, aDCallStopobjec, v83->id, aCMsdevWorkA_43, 4956);
           else
             fprintf(actionFile, aDCallStopobjec, -1, aCMsdevWorkA_43, 4956);
         }
         goto LABEL_317;
       }
-      if ( v76 == -1 )
+      if( v76 == -1 )
       {
 LABEL_323:
-        if ( this->currentActionValue == nEvent->p1 )
+        if( this->currentActionValue == nEvent->p1 )
         {
           UnitAIModule::removeCurrentTarget(this);
-          if ( actionFile )
+          if( actionFile )
           {
             v84 = v8->objectValue;
-            if ( v84 )
+            if( v84 )
               fprintf(actionFile, aDCallStopobjec, v84->id, aCMsdevWorkA_43, 4965);
             else
               fprintf(actionFile, aDCallStopobjec, -1, aCMsdevWorkA_43, 4965);
@@ -5208,13 +5208,13 @@ LABEL_323:
           goto LABEL_317;
         }
       }
-      if ( v76 == 724 && nEvent->p1 == 610 )
+      if( v76 == 724 && nEvent->p1 == 610 )
       {
         UnitAIModule::removeCurrentTarget(this);
-        if ( actionFile )
+        if( actionFile )
         {
           v85 = v8->objectValue;
-          if ( v85 )
+          if( v85 )
             v86 = v85->id;
           else
             v86 = -1;
@@ -5225,15 +5225,15 @@ LABEL_224:
         v8->vfptr->stopObject(v8, 0);
         goto LABEL_318;
       }
-      if ( v76 != 701 || nEvent->p1 != 610 )
+      if( v76 != 701 || nEvent->p1 != 610 )
       {
-        if ( v76 != 725 || nEvent->p1 != 600 )
+        if( v76 != 725 || nEvent->p1 != 600 )
           return 2;
         UnitAIModule::removeCurrentTarget(this);
-        if ( !actionFile )
+        if( !actionFile )
           goto LABEL_285;
         v87 = v8->objectValue;
-        if ( v87 )
+        if( v87 )
           v88 = v87->id;
         else
           v88 = -1;
@@ -5249,16 +5249,16 @@ LABEL_224:
       return result;
     case 0x202:
       v89 = this->currentActionValue;
-      if ( v89 == 605 || v89 == 623 )
+      if( v89 == 605 || v89 == 623 )
       {
         v91 = this->vfptr;
-        if ( this->vfptr->closestUndiscoveredTile(this, &tileX, (int *)&uTime, 1) != 1 )
+        if( this->vfptr->closestUndiscoveredTile(this, &tileX, (int *)&uTime, 1) != 1 )
         {
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v100 = v8->objectValue;
-            if ( v100 )
+            if( v100 )
               v101 = v100->id;
             else
               v101 = -1;
@@ -5267,13 +5267,13 @@ LABEL_224:
           goto LABEL_272;
         }
         UnitAIModule::addToWaypointQueue(v8, tileX, uTime);
-        if ( !v91->explore(v8, tileX, uTime, 1) )
+        if( !v91->explore(v8, tileX, uTime, 1) )
         {
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v98 = v8->objectValue;
-            if ( v98 )
+            if( v98 )
               v99 = v98->id;
             else
               v99 = -1;
@@ -5288,14 +5288,14 @@ LABEL_266:
       }
       else
       {
-        if ( v89 != 609 )
+        if( v89 != 609 )
           return 2;
         v90 = this->currentTargetTypeValue;
-        if ( v90 == -1 )
+        if( v90 == -1 )
           v90 = this->lastTargetTypeValue;
         v91 = this->vfptr;
         v92 = this->vfptr->convertToLOSResourceType(this, v90);
-        if ( v92 == -1 )
+        if( v92 == -1 )
           v93 = ((int (__thiscall *)(UnitAIModule *, int, signed int, signed int, signed int))v91->closestObject)(
                   v8,
                   v90,
@@ -5304,15 +5304,15 @@ LABEL_266:
                   -1);
         else
           v93 = ((int (__thiscall *)(UnitAIModule *, int))v91->closestResourceObject)(v8, v92);
-        if ( v93 != -1 )
+        if( v93 != -1 )
         {
-          if ( v91->gatherObject(v8, v93, 1) == 1 )
+          if( v91->gatherObject(v8, v93, 1) == 1 )
             return 3;
           UnitAIModule::removeCurrentTarget(v8);
-          if ( actionFile )
+          if( actionFile )
           {
             v94 = v8->objectValue;
-            if ( v94 )
+            if( v94 )
               v95 = v94->id;
             else
               v95 = -1;
@@ -5327,10 +5327,10 @@ LABEL_272:
           return 2;
         }
         UnitAIModule::removeCurrentTarget(v8);
-        if ( actionFile )
+        if( actionFile )
         {
           v96 = v8->objectValue;
-          if ( v96 )
+          if( v96 )
             v97 = v96->id;
           else
             v97 = -1;
@@ -5344,10 +5344,10 @@ LABEL_272:
     case 0x20B:
       ((void (*)(void))this->objectValue->vfptr->stopAction)();
       UnitAIModule::removeCurrentTarget(v8);
-      if ( actionFile )
+      if( actionFile )
       {
         v102 = v8->objectValue;
-        if ( v102 )
+        if( v102 )
           v103 = v102->id;
         else
           v103 = -1;
@@ -5358,17 +5358,17 @@ LABEL_272:
       v104 = v8->objectValue;
       v8->orderQueueSizeValue = 0;
       v105 = UnitAIModule::lookupObject(v8, v104->groupCommanderValue);
-      if ( !v105 )
+      if( !v105 )
         return 2;
       RGE_Static_Object::commanderRemoveFromGroup(v105, v8->objectValue->id);
       return 2;
     case 0x1FE:
       ((void (*)(void))this->objectValue->vfptr->stopAction)();
       UnitAIModule::removeCurrentTarget(v8);
-      if ( actionFile )
+      if( actionFile )
       {
         v106 = v8->objectValue;
-        if ( v106 )
+        if( v106 )
           v107 = v106->id;
         else
           v107 = -1;
@@ -5381,27 +5381,27 @@ LABEL_285:
       v108 = this->attackingUnitsValue.numberValue;
       v109 = nEvent->caller;
       v110 = 0;
-      if ( v108 <= 0 )
+      if( v108 <= 0 )
         goto LABEL_290;
       do
       {
-        if ( v110 >= v8->attackingUnitsValue.maximumSizeValue )
+        if( v110 >= v8->attackingUnitsValue.maximumSizeValue )
           break;
-        if ( v8->attackingUnitsValue.value[v110] == v109 )
+        if( v8->attackingUnitsValue.value[v110] == v109 )
           goto LABEL_297;
         ++v110;
       }
-      while ( v110 < v108 );
+      while( v110 < v108 );
 LABEL_290:
-      if ( v108 > v8->attackingUnitsValue.maximumSizeValue - 1 )
+      if( v108 > v8->attackingUnitsValue.maximumSizeValue - 1 )
       {
         v111 = v108 + 1;
         v112 = (int *)operator new(4 * (v108 + 1));
-        if ( v112 )
+        if( v112 )
         {
-          for ( k = 0; k < v8->attackingUnitsValue.maximumSizeValue; v112[k - 1] = v8->attackingUnitsValue.value[k - 1] )
+          for( k = 0; k < v8->attackingUnitsValue.maximumSizeValue; v112[k - 1] = v8->attackingUnitsValue.value[k - 1] )
           {
-            if ( k >= v111 )
+            if( k >= v111 )
               break;
             ++k;
           }
@@ -5417,54 +5417,54 @@ LABEL_297:
     case 0x2BB:
       v114 = this->attackingUnitsValue.numberValue;
       v115 = 0;
-      if ( v114 <= 0 )
+      if( v114 <= 0 )
         return 2;
-      while ( 1 )
+      while( 1 )
       {
-        if ( v115 >= v8->attackingUnitsValue.maximumSizeValue )
+        if( v115 >= v8->attackingUnitsValue.maximumSizeValue )
           return 2;
-        if ( v8->attackingUnitsValue.value[v115] == nEvent->caller )
+        if( v8->attackingUnitsValue.value[v115] == nEvent->caller )
           break;
-        if ( ++v115 >= v114 )
+        if( ++v115 >= v114 )
           return 2;
       }
       v116 = v8->attackingUnitsValue.maximumSizeValue;
       v117 = 0;
-      if ( v116 > 0 )
+      if( v116 > 0 )
       {
         v118 = v8->attackingUnitsValue.value;
         do
         {
-          if ( *v118 == nEvent->caller )
+          if( *v118 == nEvent->caller )
             break;
           ++v117;
           ++v118;
         }
-        while ( v117 < v116 );
+        while( v117 < v116 );
       }
-      if ( v117 >= v116 )
+      if( v117 >= v116 )
         return 2;
-      if ( v117 < v116 - 1 )
+      if( v117 < v116 - 1 )
       {
         do
         {
           ++v117;
           v8->attackingUnitsValue.value[v117 - 1] = v8->attackingUnitsValue.value[v117];
         }
-        while ( v117 < v8->attackingUnitsValue.maximumSizeValue - 1 );
+        while( v117 < v8->attackingUnitsValue.maximumSizeValue - 1 );
       }
       v119 = v8->attackingUnitsValue.numberValue - 1;
       v8->attackingUnitsValue.numberValue = v119;
-      if ( v119 >= 0 )
+      if( v119 >= 0 )
         return 2;
       v8->attackingUnitsValue.numberValue = 0;
       return 2;
     default:
       UnitAIModule::removeCurrentTarget(this);
-      if ( actionFile )
+      if( actionFile )
       {
         v120 = v8->objectValue;
-        if ( v120 )
+        if( v120 )
           v121 = v120->id;
         else
           v121 = -1;
@@ -5518,29 +5518,29 @@ void __thiscall UnitAIModule::processGroupNotify(UnitAIModule *this, NotifyEvent
 
   v2 = this;
   v3 = this->playStatus;
-  if ( v3 )
+  if( v3 )
   {
     v4 = AIPlayBook::play(this->objectValue->owner->world->playbook, v3->playNumberValue);
-    if ( v4 )
+    if( v4 )
     {
       v5 = AIPlay::phase(v4, v2->playStatus->currentPhaseValue);
       phase = v5;
-      if ( v5 )
+      if( v5 )
       {
-        if ( nEvent->mType == 500 )
+        if( nEvent->mType == 500 )
         {
           v2->playStatus->savedAttackerValue = nEvent->caller;
           v6 = 0;
-          while ( 1 )
+          while( 1 )
           {
             v7 = AIPlayPhase::trigger(v5, v6);
             v8 = v7;
-            if ( v7 )
+            if( v7 )
             {
               v9 = v7->commands[0].groupValue;
-              if ( v8->commands[0].groupValue )
+              if( v8->commands[0].groupValue )
               {
-                if ( v9 == 5
+                if( v9 == 5
                   || v9 == 4
                   && (v10 = v8->commands[0].value1Value,
                       v10 == (unsigned __int8)AIPlayStatus::group(v2->playStatus, nEvent->recipient)) )
@@ -5549,7 +5549,7 @@ void __thiscall UnitAIModule::processGroupNotify(UnitAIModule *this, NotifyEvent
                 }
               }
             }
-            if ( ++v6 >= 3 )
+            if( ++v6 >= 3 )
               break;
             v5 = phase;
           }
@@ -5569,11 +5569,11 @@ int __thiscall UnitAIModule::processIdle(UnitAIModule *this, int doSearch)
   bool v6; // zf@5
 
   v2 = this;
-  if ( doSearch != 1 || ((int (*)(void))this->vfptr->processRetryableOrder)() != 8 )
+  if( doSearch != 1 || ((int (*)(void))this->vfptr->processRetryableOrder)() != 8 )
   {
     v4 = v2->vfptr;
     v5 = v2->vfptr->bestUnitToAttack(v2, 1, 0, 0);
-    if ( v5 == -1 || (v6 = v4->attackObject(v2, v5, 1) == 1, result = 6, !v6) )
+    if( v5 == -1 || (v6 = v4->attackObject(v2, v5, 1) == 1, result = 6, !v6) )
       result = 5;
   }
   else
@@ -5657,39 +5657,39 @@ int __usercall UnitAIModule::processMisc@<eax>(UnitAIModule *this@<ecx>, double 
 
   v2 = this;
   v3 = this->currentOrderValue;
-  if ( v3 == -1 )
+  if( v3 == -1 )
   {
     v4 = this->currentActionValue;
-    if ( v4 == -1 )
+    if( v4 == -1 )
       v3 = -1;
     else
       v3 = v4 + 100;
   }
   v5 = v3 - 700;
-  if ( !v5 )
+  if( !v5 )
   {
-    if ( taskedThisUpdate != 1 )
+    if( taskedThisUpdate != 1 )
     {
-      if ( RGE_Player::computerPlayer(this->objectValue->owner) )
+      if( RGE_Player::computerPlayer(this->objectValue->owner) )
       {
-        if ( (unsigned __int8)((int (*)(void))v2->objectValue->vfptr->can_attack)() )
+        if( (unsigned __int8)((int (*)(void))v2->objectValue->vfptr->can_attack)() )
         {
           *(float *)&v43 = COERCE_FLOAT(UnitAIModule::lookupObject(v2, v2->currentTargetValue));
           yDiff = *(float *)&v43;
-          if ( *(float *)&v43 == 0.0 || v43->master_obj->id != 276 )
+          if( *(float *)&v43 == 0.0 || v43->master_obj->id != 276 )
           {
             v44 = v2->vfptr;
             v45 = v2->vfptr->bestUnitToAttack(v2, 0, 0, 0);
             v46 = v45;
             v47 = UnitAIModule::lookupObject(v2, v45);
             v48 = v47;
-            if ( v46 != -1 && v47 && v46 != v2->currentTargetValue )
+            if( v46 != -1 && v47 && v46 != v2->currentTargetValue )
             {
               v49 = v47->master_obj;
               v50 = v49->object_group;
-              if ( v50 == 3 || v50 == 27 )
+              if( v50 == 3 || v50 == 27 )
               {
-                if ( v49->id == 276 )
+                if( v49->id == 276 )
                 {
                   ((void (__stdcall *)(signed int, _DWORD, int))v2->objectValue->vfptr->weaponRange)(
                     1,
@@ -5712,7 +5712,7 @@ int __usercall UnitAIModule::processMisc@<eax>(UnitAIModule *this@<ecx>, double 
                     v68);
                 }
               }
-              else if ( yDiff == 0.0 || (v51 = *(_WORD *)(*(_DWORD *)(LODWORD(yDiff) + 8) + 20), v51 == 3) || v51 == 27 )
+              else if( yDiff == 0.0 || (v51 = *(_WORD *)(*(_DWORD *)(LODWORD(yDiff) + 8) + 20), v51 == 3) || v51 == 27 )
               {
                 ((void (__stdcall *)(signed int, _DWORD, int))v2->objectValue->vfptr->weaponRange)(
                   1,
@@ -5743,24 +5743,24 @@ int __usercall UnitAIModule::processMisc@<eax>(UnitAIModule *this@<ecx>, double 
     return 9;
   }
   v6 = v5 - 1;
-  if ( v6 )
+  if( v6 )
   {
-    if ( v6 == 11 )
+    if( v6 == 11 )
     {
       v7 = this->currentTargetValue;
       v8 = 0.0;
-      if ( v7 != -1 )
+      if( v7 != -1 )
       {
         *(float *)&v9 = COERCE_FLOAT(UnitAIModule::lookupObject(v2, v2->currentTargetValue));
         v8 = *(float *)&v9;
-        if ( *(float *)&v9 == 0.0 || v9->object_state > 2u )
+        if( *(float *)&v9 == 0.0 || v9->object_state > 2u )
         {
           v2->defendTargetValue = -1;
           UnitAIModule::removeCurrentTarget(v2);
-          if ( actionFile )
+          if( actionFile )
           {
             v10 = v2->objectValue;
-            if ( v10 )
+            if( v10 )
               v11 = v10->id;
             else
               v11 = -1;
@@ -5778,17 +5778,17 @@ LABEL_50:
           return 9;
         }
       }
-      if ( v8 == 0.0 )
+      if( v8 == 0.0 )
         v13 = -10.0;
       else
         v13 = *(float *)(LODWORD(v8) + 56) - v2->currentTargetXValue;
-      if ( v8 == 0.0 )
+      if( v8 == 0.0 )
         yDiff = -10.0;
       else
         yDiff = *(float *)(LODWORD(v8) + 60) - v2->currentTargetYValue;
-      if ( v13 < -1.0 || v13 > 1.0 || yDiff < -1.0 || yDiff > 1.0 )
+      if( v13 < -1.0 || v13 > 1.0 || yDiff < -1.0 || yDiff > 1.0 )
       {
-        if ( v2->currentTargetValue == -1 )
+        if( v2->currentTargetValue == -1 )
         {
           v17 = RGE_Static_Object::distance_to_position(
                   v2->objectValue,
@@ -5809,12 +5809,12 @@ LABEL_50:
         }
         v18 = v2->desiredTargetDistanceValue;
         yDiff = v2->desiredTargetDistanceValue;
-        if ( v17 > yDiff )
+        if( v17 > yDiff )
         {
           v19 = v2->currentTargetValue;
           v20 = v2->vfptr;
           v68 = (RGE_Static_Object *)1;
-          if ( v19 == -1 )
+          if( v19 == -1 )
           {
             (*(void (__thiscall **)(UnitAIModule *, _DWORD, _DWORD, _DWORD, _DWORD, RGE_Static_Object *))&v20->gap90[0])(
               v2,
@@ -5841,14 +5841,14 @@ LABEL_50:
     return 9;
   }
   v21 = 0.0;
-  if ( this->defendTargetValue == -1 )
+  if( this->defendTargetValue == -1 )
   {
 LABEL_51:
     v27 = v2->currentActionValue;
-    if ( v27 != 600
+    if( v27 != 600
       && (v27 != 610 || ((int (*)(void))v2->objectValue->vfptr->currentTargetID)() != v2->defendTargetValue) )
     {
-      if ( v2->defendTargetValue == -1 )
+      if( v2->defendTargetValue == -1 )
       {
         v30 = RGE_Static_Object::distance_to_position(
                 v2->objectValue,
@@ -5867,24 +5867,24 @@ LABEL_51:
         v30 = RGE_Static_Object::distance_to_object(v29, v68);
       }
       yDiff = v2->desiredTargetDistanceValue;
-      if ( v30 <= yDiff - -1.0 )
+      if( v30 <= yDiff - -1.0 )
       {
-        if ( v21 == 0.0 || !RGE_Static_Object::unitAI((RGE_Static_Object *)LODWORD(v21)) )
+        if( v21 == 0.0 || !RGE_Static_Object::unitAI((RGE_Static_Object *)LODWORD(v21)) )
           return 9;
         v41 = RGE_Static_Object::unitAI((RGE_Static_Object *)LODWORD(v21));
         v42 = v41->vfptr->closestAttacker(v41, 0);
-        if ( v42 != -1 )
+        if( v42 != -1 )
         {
           v2->vfptr->attackObject(v2, v42, 1);
           return 10;
         }
-        if ( v2->vfptr->processIdle(v2, 0) != 6 )
+        if( v2->vfptr->processIdle(v2, 0) != 6 )
           return 9;
       }
       else
       {
         v31 = v2->defendTargetValue;
-        if ( v31 == -1 )
+        if( v31 == -1 )
         {
           v32 = (signed __int64)v2->currentTargetXValue;
           v33 = (signed __int64)v2->currentTargetYValue;
@@ -5899,7 +5899,7 @@ LABEL_51:
           v60 = v32;
           v61 = v33;
           v62 = -1;
-          if ( ((int (__stdcall *)(int, _DWORD, signed int, _DWORD, signed int, _DWORD, _DWORD, signed int, signed int))v35->canPath)(
+          if( ((int (__stdcall *)(int, _DWORD, signed int, _DWORD, signed int, _DWORD, _DWORD, signed int, signed int))v35->canPath)(
                  v32,
                  v33,
                  -1,
@@ -5930,7 +5930,7 @@ LABEL_51:
             return 10;
           }
         }
-        else if ( (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, signed int, signed int))&v2->objectValue->vfptr->pause
+        else if( (*((int (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, signed int, signed int))&v2->objectValue->vfptr->pause
                    + 1))(
                     v31,
                     LODWORD(yDiff),
@@ -5953,21 +5953,21 @@ LABEL_51:
   }
   *(float *)&v22 = COERCE_FLOAT(UnitAIModule::lookupObject(this, this->defendTargetValue));
   v21 = *(float *)&v22;
-  if ( *(float *)&v22 != 0.0 )
+  if( *(float *)&v22 != 0.0 )
   {
-    if ( LODWORD(v2->currentTargetXValue) == -1082130432 )
+    if( LODWORD(v2->currentTargetXValue) == -1082130432 )
     {
       v2->currentTargetXValue = v22->world_x;
       v2->currentTargetYValue = v22->world_y;
     }
-    if ( v22->object_state > 2u && v22->owner->id )
+    if( v22->object_state > 2u && v22->owner->id )
     {
       v2->defendTargetValue = -1;
       UnitAIModule::removeCurrentTarget(v2);
-      if ( actionFile )
+      if( actionFile )
       {
         v25 = v2->objectValue;
-        if ( v25 )
+        if( v25 )
           v26 = v25->id;
         else
           v26 = -1;
@@ -5982,10 +5982,10 @@ LABEL_51:
   }
   v2->defendTargetValue = -1;
   UnitAIModule::removeCurrentTarget(v2);
-  if ( actionFile )
+  if( actionFile )
   {
     v23 = v2->objectValue;
-    if ( v23 )
+    if( v23 )
       v24 = v23->id;
     else
       v24 = -1;
@@ -6009,14 +6009,14 @@ int __thiscall UnitAIModule::processRetryableOrder(UnitAIModule *this)
 
   v1 = this;
   v2 = this->vfptr;
-  if ( ((int (__stdcall *)(int))this->vfptr->retryableOrder)(this->lastOrderValue) == 1 )
+  if( ((int (__stdcall *)(int))this->vfptr->retryableOrder)(this->lastOrderValue) == 1 )
   {
     v3 = v2->closestObject(v1, v1->lastTargetTypeValue, -1, -1, -1, 0);
-    if ( v3 != -1 )
+    if( v3 != -1 )
     {
-      if ( v1->lastOrderValue == 709 )
+      if( v1->lastOrderValue == 709 )
         return 8 - (v2->gatherObject(v1, v3, 0) != 1);
-      if ( v1->lastOrderValue == 713 )
+      if( v1->lastOrderValue == 713 )
         return 8 - (v2->huntObject(v1, v3, 0) != 1);
     }
   }
@@ -6059,14 +6059,14 @@ void *__thiscall UnitAIModule::addToOrderQueue(UnitAIModule *this, int issuer, i
 
   v11 = this;
   v12 = this->orderQueueMaxSizeValue;
-  if ( v12 == this->orderQueueSizeValue )
+  if( v12 == this->orderQueueSizeValue )
   {
     result = operator new(72 * v12);
     v14 = (int)result;
-    if ( !result )
+    if( !result )
       return result;
     v15 = 0;
-    if ( v11->orderQueueSizeValue > 0 )
+    if( v11->orderQueueSizeValue > 0 )
     {
       v16 = 0;
       v17 = v14 + 8;
@@ -6086,18 +6086,18 @@ void *__thiscall UnitAIModule::addToOrderQueue(UnitAIModule *this, int issuer, i
         *(_DWORD *)(v17 - 16) = *((_DWORD *)&v11->orderQueueValue[v16] - 2);
         *(_DWORD *)(v17 - 12) = *((_DWORD *)&v11->orderQueueValue[v16] - 1);
       }
-      while ( v15 < v11->orderQueueSizeValue );
+      while( v15 < v11->orderQueueSizeValue );
     }
-    if ( v11->orderQueueValue )
+    if( v11->orderQueueValue )
       operator delete(v11->orderQueueValue);
     v19 = v11->orderQueueMaxSizeValue;
     v11->orderQueueValue = (OrderEvent *)v14;
     v11->orderQueueMaxSizeValue = 2 * v19;
   }
-  if ( inFront && (v20 = v11->orderQueueSizeValue) != 0 )
+  if( inFront && (v20 = v11->orderQueueSizeValue) != 0 )
   {
     v21 = 0;
-    if ( v20 > 0 )
+    if( v20 > 0 )
     {
       v22 = 0;
       do
@@ -6115,7 +6115,7 @@ void *__thiscall UnitAIModule::addToOrderQueue(UnitAIModule *this, int issuer, i
         ++v22;
         *(_DWORD *)(v23 + 68) = *(_DWORD *)(v23 + 32);
       }
-      while ( v21 < v11->orderQueueSizeValue );
+      while( v21 < v11->orderQueueSizeValue );
     }
     v11->orderQueueValue->issuer = issuer;
     v11->orderQueueValue->orderType = orderType;
@@ -6173,14 +6173,14 @@ void *__thiscall UnitAIModule::addToNotifyQueue(UnitAIModule *this, int callerID
 
   v7 = this;
   v8 = this->notifyQueueMaxSizeValue;
-  if ( v8 == this->notifyQueueSizeValue )
+  if( v8 == this->notifyQueueSizeValue )
   {
     result = operator new(48 * v8);
     v10 = (int)result;
-    if ( !result )
+    if( !result )
       return result;
     v11 = 0;
-    if ( v7->notifyQueueSizeValue > 0 )
+    if( v7->notifyQueueSizeValue > 0 )
     {
       v12 = 0;
       v13 = v10 + 8;
@@ -6197,9 +6197,9 @@ void *__thiscall UnitAIModule::addToNotifyQueue(UnitAIModule *this, int callerID
         *(_DWORD *)(v13 - 16) = *((_DWORD *)&v7->notifyQueueValue[v12] - 2);
         *(_DWORD *)(v13 - 12) = *((_DWORD *)&v7->notifyQueueValue[v12] - 1);
       }
-      while ( v11 < v7->notifyQueueSizeValue );
+      while( v11 < v7->notifyQueueSizeValue );
     }
-    if ( v7->notifyQueueValue )
+    if( v7->notifyQueueValue )
       operator delete(v7->notifyQueueValue);
     v15 = v7->notifyQueueMaxSizeValue;
     v7->notifyQueueValue = (NotifyEvent *)v10;
@@ -6228,29 +6228,29 @@ void __thiscall UnitAIModule::purgeNotifyQueue(UnitAIModule *this, unsigned int 
   v2 = this;
   v3 = 0;
   v4 = this->notifyQueueSizeValue;
-  if ( v4 > 0 )
+  if( v4 > 0 )
   {
     v5 = (char *)&this->notifyQueueValue->p1;
-    while ( 1 )
+    while( 1 )
     {
-      if ( *((_DWORD *)v5 - 1) == 506 )
+      if( *((_DWORD *)v5 - 1) == 506 )
       {
-        if ( *(_DWORD *)v5 != 610 || (v6 = v2->currentActionValue, v6 == 610) || v6 == 616 )
+        if( *(_DWORD *)v5 != 610 || (v6 = v2->currentActionValue, v6 == 610) || v6 == 616 )
         {
-          if ( v2->currentOrderValue == -1 && v2->currentActionValue == *(_DWORD *)v5 )
+          if( v2->currentOrderValue == -1 && v2->currentActionValue == *(_DWORD *)v5 )
             break;
         }
       }
       ++v3;
       v5 += 24;
-      if ( v3 >= v4 )
+      if( v3 >= v4 )
         goto LABEL_17;
     }
     UnitAIModule::removeCurrentTarget(v2);
-    if ( actionFile )
+    if( actionFile )
     {
       v7 = v2->objectValue;
-      if ( v7 )
+      if( v7 )
         v8 = v7->id;
       else
         v8 = -1;
@@ -6272,7 +6272,7 @@ RGE_Static_Object *__thiscall UnitAIModule::lookupObject(UnitAIModule *this, int
   RGE_Static_Object *result; // eax@4
 
   v2 = this->objectValue;
-  if ( v2 && (v3 = v2->owner) != 0 && (v4 = v3->world) != 0 )
+  if( v2 && (v3 = v2->owner) != 0 && (v4 = v3->world) != 0 )
     result = RGE_Game_World::object(v4, id);
   else
     result = 0;
@@ -6286,7 +6286,7 @@ void UnitAIModule::logDebug(UnitAIModule *this, char *textIn, ...)
   va_list va; // [sp+410h] [bp+Ch]@1
 
   va_start(va, textIn);
-  if ( this->objectValue )
+  if( this->objectValue )
   {
     vsprintf(textOut, textIn, va);
     ((void (__cdecl *)(_DWORD, _DWORD))this->objectValue->vfptr->logDebug)(this->objectValue, textOut);

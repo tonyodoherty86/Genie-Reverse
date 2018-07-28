@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Player.hpp
  * @author  Yvan Burrie
- * @date    2018/06/27
+ * @date    2018/07/05
  * @version 1.0
  */
 
@@ -10,10 +10,10 @@
     #define RGE_PLAYER_TYPE 0
 #endif
 
-class RGE_Player;
-
 #define RGE_PLAYER_MASTER_CATEGORIES_COUNTER 900
 #define RGE_PLAYER_MASTER_GROUPS_COUNTER 100
+
+#define RGE_PLAYER_ESCROWS_COUNT 4
 
 class RGE_Tile_List
 {
@@ -23,15 +23,23 @@ public:
     int num_active;
     int new_count;
     int collapse_list;
+
     struct RGE_Tile_List_Node *list;
 
-    RGE_Tile_List(int Initial_Size);
+    RGE_Tile_List(
+        int Initial_Size);
 
     ~RGE_Tile_List();
 
-    void add_node(int col, int row);
+    void add_node(
+        int col, int row);
+
     void del_list();
-    void get_list_info(RGE_Tile_List_Node **theList, int *list_size);
+
+    void get_list_info(
+        RGE_Tile_List_Node **theList,
+        int *list_size);
+
     int get_new_count();
 };
 
@@ -56,7 +64,8 @@ public:
     int checksum;
     int position_checksum;
     int action_checksum;
-    char checksum_created_this_update;
+
+    bool checksum_created_this_update;
 
     int line_ratio;
     int column_ratio;
@@ -66,9 +75,9 @@ public:
     float formation_influence_distance;
     int break_auto_formations_by_speed;
 
-    float pending_debits[4],
-          escrow_amounts[4],
-          escrow_percents[4];
+    float pending_debits [RGE_PLAYER_ESCROWS_COUNT],
+          escrow_amounts [RGE_PLAYER_ESCROWS_COUNT],
+          escrow_percents[RGE_PLAYER_ESCROWS_COUNT];
 
     /**
      * Offset: 112.
@@ -83,9 +92,10 @@ public:
     /**
      * Offset: 120, 124, 128.
      */
-    class RGE_Object_List *objects,
-                          *sleeping_objects,
-                          *doppleganger_objects;
+    class RGE_Object_List
+        *objects,
+        *sleeping_objects,
+        *doppleganger_objects;
 
     /**
      * Offset: 132.
@@ -148,7 +158,9 @@ public:
      * Offset: 220.
      */
     char *relations;
+
     int unitDiplomacy[RGE_PLAYERS_COUNT];
+
     int mutualAlly[RGE_PLAYERS_COUNT];
 
     unsigned int mutualExploredMask,
@@ -193,8 +205,8 @@ public:
      */
     class Visible_Resource_Manager *VR_List;
 
-    float view_x = -1.0,
-          view_y = -1.0;
+    float view_x = -1.0f,
+          view_y = -1.0f;
 
     short map_x = -1,
           map_y = -1;
@@ -230,20 +242,31 @@ public:
     /**
      * Offset: 748, 2548, 2748, 4548.
      */
-    short master_categories_count[RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
-          master_groups_count[RGE_PLAYER_MASTER_GROUPS_COUNTER],
+    short master_categories_count      [RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
+          master_groups_count          [RGE_PLAYER_MASTER_GROUPS_COUNTER],
           built_master_categories_count[RGE_PLAYER_MASTER_CATEGORIES_COUNTER],
-          built_master_groups_count[RGE_PLAYER_MASTER_GROUPS_COUNTER];
+          built_master_groups_count    [RGE_PLAYER_MASTER_GROUPS_COUNTER];
 
+    /**
+     * Offset: 4748, 4750, 4752, 4754.
+     */
     short total_units_count,
-          total_buildings_ount,
+          total_buildings_count,
           trained_units_count,
           built_buildings_count;
 
+    /**
+     * Offset: 4756, 4760.
+     */
     int easiest_reaction_percent,
         easier_reaction_percent;
 
-    char task_ungrouped_soldiers;
+    /**
+     * Offset: 4764.
+     */
+    bool task_ungrouped_soldiers;
+
+    /* Constructors and destructor: */
 
     RGE_Player(
         int infile,
@@ -269,10 +292,10 @@ public:
     char *aiStatus(int sNum);
     int computerPlayer();
 
-    int isEnemy(int playerNum);
-    int isAlly(int playerNum);
-    int isNeutral(int playerNum);
-    int isAllNeutral();
+    bool isEnemy(int playerNum);
+    bool isAlly(int playerNum);
+    bool isNeutral(int playerNum);
+    bool isAllNeutral();
 
     void sendUnitAIOrder(
         int issuer,
@@ -317,7 +340,10 @@ public:
     int availablePathingAttempts(int numWaitDelays);
     void incrementPathingAttempts();
 
-    void sendChatMessage(int playerID, int copySelf, char *textIn, ...);
+    void sendChatMessage(
+        int playerID,
+        int copySelf,
+        char *textIn, ...);
 
     RGE_Static_Object *make_scenario_obj(
         float world_x,
@@ -327,59 +353,138 @@ public:
         char state,
         float new_angle);
 
-    void scenario_save(int outfile);
-    void scenario_load(int infile, int *player_id_hash, float version);
-    void scenario_postsave(int outfile);
-    void scenario_postload(int infile, int *player_id_hash, float version);
+    /* Scenario methods: */
 
-    void load(int infile);
-    void load_master_object(int infile, short index, char type, RGE_Sprite **sprites, RGE_Sound **sounds);
-    void load_info(int infile);
+    void scenario_save(
+        int outfile);
+
+    void scenario_load(
+        int infile,
+        int *player_id_hash,
+        float version);
+
+    void scenario_postsave(
+        int outfile);
+
+    void scenario_postload(
+        int infile,
+        int *player_id_hash,
+        float version);
+
+    /* Regression reading methods: */
+
+    void load(
+        int infile);
+
+    void load_master_object(
+        int infile,
+        short index,
+        char type,
+        RGE_Sprite **sprites,
+        RGE_Sound **sounds);
+
+    void load_info(
+        int infile);
 
     int get_checksum();
-    char get_checksums(int *new_checksum, int *new_position_checksum, int *new_action_checksum);
+
+    bool get_checksums(
+        int *new_checksum,
+        int *new_position_checksum,
+        int *new_action_checksum);
+
     int create_checksum();
 
-    void new_attribute_num(short attribute, float amount);
-    void add_attribute_num(short attribute, float amount, char earned);
+    void new_attribute_num(
+        short attribute,
+        float amount);
 
-    void make_available(short obj_category, char on_off_flag);
+    void add_attribute_num(
+        short attribute,
+        float amount,
+        char earned);
+
+    void make_available(
+        short obj_category,
+        char on_off_flag);
 
     void update();
+
     void update_dopplegangers();
 
-    void save(int outfile);
-    void save2(int outfile);
-    void save_info(int outfile);
+    void save(
+        int outfile);
 
-    void set_map_loc(short x, short y);
-    void set_view_loc(float x, float y);
+    void save2(
+        int outfile);
+
+    void save_info(
+        int outfile);
+
+    void set_map_loc(
+        short x,
+        short y);
+
+    void set_view_loc(
+        float x,
+        float y);
 
     void destroy_objects();
 
-    void set_color_table(char new_table);
+    void set_color_table(
+        char new_table);
 
     void victory_if_game_on();
+
     void loss_if_game_on();
+
     void win_game_now();
 
     bool check_victory_conditions();
-    char check_ally_group(int *count);
-    char check_victory();
 
-    void modify_tobj(short obj_id, short group, float amount, int flag);
-    void modify_tobj_delta(short obj_id, short group, float amount, int flag);
-    void modify_tobj_percent(short obj_id, short group, float amount, int flag);
+    bool check_ally_group(
+        int *count);
 
-    void copy_obj(short dest, short source);
+    bool check_victory();
 
-    void set_allied_victory(char flag);
+    void modify_tobj(
+        short obj_id,
+        short group,
+        float amount,
+        int flag);
+
+    void modify_tobj_delta(
+        short obj_id,
+        short group,
+        float amount, int flag);
+
+    void modify_tobj_percent(
+        short obj_id,
+        short group,
+        float amount, int flag);
+
+    void copy_obj(
+        short dest,
+        short source);
+
+    void set_allied_victory(
+        char flag);
+
     char get_allied_victory();
 
-    char relation(int player_id);
-    void set_relation(int player_id, int relation);
+    char relation(
+        int player_id);
 
-    RGE_Static_Object *make_new_object(int obj_id, float x, float y, float z, int build_all_the_way);
+    void set_relation(
+        int player_id,
+        int relation);
+
+    RGE_Static_Object *make_new_object(
+        int obj_id,
+        float x,
+        float y,
+        float z,
+        int build_all_the_way);
 
     void reset_selected();
     int select_object(RGE_Static_Object *obj);
@@ -394,35 +499,55 @@ public:
     int is_group_selected(short object_group);
     char unit_level_selected();
     int get_select_level();
-    char get_selected_objects_to_command(RGE_Static_Object ***list_in, short *list_num_in, int min_select_level, short object_group, short object_id, short unit_level);
+
+    bool get_selected_objects_to_command(
+        RGE_Static_Object ***list_in,
+        short *list_num_in,
+        int min_select_level,
+        short object_group,
+        short object_id,
+        short unit_level);
+
     void update_selected();
-    void select_area(short col1, short row1, short col2, short row2);
+
+    void select_area(
+        short col1,
+        short row1,
+        short col2,
+        short row2);
+
     void unselect_area();
+
     void ungroup_objects();
+
     int get_mouse_pointer_action_vars(int Obj_id, int *newFacet, int *text_id);
 
-    char command_make_move(RGE_Static_Object *obj, float x, float y);
-    char command_make_work(RGE_Static_Object *obj, float x, float y);
-    char command_make_do(RGE_Static_Object *obj, float x, float y);
-    char command_stop();
-    char command_place_object(short obj_id, float x, float y, float z);
-    char command_add_attribute(int attr_id, float attr_amount);
-    char command_give_attribute(int to_player_id, int attr_id, float attr_amount);
-    char command_formation(int formationID);
-    char command_stand_ground();
-    char command_create_group(int commander, int *groupList, int groupLength, float range);
-    char command_add_to_group(int commander, int unitID, float range);
-    char command_remove_from_group(int commander, int unitID);
-    char command_destroy_group(int unitID);
-    char command_resign(int comm_player_id, int dropped);
-    char command_add_waypoint(float x, float y, float z);
+    bool command_make_move(RGE_Static_Object *obj, float x, float y);
+    bool command_make_work(RGE_Static_Object *obj, float x, float y);
+    bool command_make_do(RGE_Static_Object *obj, float x, float y);
+    bool command_stop();
+    bool command_place_object(short obj_id, float x, float y, float z);
+    bool command_add_attribute(int attr_id, float attr_amount);
+    bool command_give_attribute(int to_player_id, int attr_id, float attr_amount);
+    bool command_formation(int formationID);
+    bool command_stand_ground();
+    bool command_create_group(int commander, int *groupList, int groupLength, float range);
+    bool command_add_to_group(int commander, int unitID, float range);
+    bool command_remove_from_group(int commander, int unitID);
+    bool command_destroy_group(int unitID);
+    bool command_resign(int comm_player_id, int dropped);
+    bool command_add_waypoint(float x, float y, float z);
 
-    struct RGE_Object_Node *addObject(RGE_Static_Object *obj, int sleep_flag, int dopple_flag);
+    RGE_Object_Node *addObject(RGE_Static_Object *obj, int sleep_flag, int dopple_flag);
     void removeObject(RGE_Static_Object *obj, int sleep_flag, int dopple_flag, RGE_Object_Node *node);
 
     void set_map_visible();
     void remake_visible_map();
 
-    void load_victory(int infile, int *player_id_hash, char version_control);
+    void load_victory(
+        int infile,
+        int *player_id_hash,
+        bool version_control);
+
     void new_victory();
 };

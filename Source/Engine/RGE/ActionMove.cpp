@@ -26,7 +26,7 @@ RGE_Action_Move_To *__thiscall RGE_Action_Move_To::`vector deleting destructor'(
 
   v2 = this;
   RGE_Action_Move_To::~RGE_Action_Move_To(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -47,13 +47,13 @@ void __thiscall RGE_Action_Move_To::RGE_Action_Move_To(RGE_Action_Move_To *this,
   v7->action_type = 1;
   v7->target_y = y;
   v7->sprite = sprite_in;
-  if ( range_in <= 0.0 )
+  if( range_in <= 0.0 )
     LODWORD(v7->range) = 1053609165;
-  if ( !sprite_in )
+  if( !sprite_in )
   {
     v8 = v7->obj->master_obj;
     v9 = *(RGE_Sprite **)&v8[1].master_type;
-    if ( v9 )
+    if( v9 )
       v7->sprite = v9;
     else
       v7->sprite = v8->sprite;
@@ -73,7 +73,7 @@ void __thiscall RGE_Action_Move_To::RGE_Action_Move_To(RGE_Action_Move_To *this,
   v5->vfptr = (RGE_ActionVtbl *)&RGE_Action_Move_To::`vftable';
   v5->action_type = 1;
   RGE_Action::set_target_obj((RGE_Action *)&v5->vfptr, target_obj_in);
-  if ( target_obj_in )
+  if( target_obj_in )
   {
     v5->target_x = target_obj_in->world_x;
     v5->target_y = target_obj_in->world_y;
@@ -81,13 +81,13 @@ void __thiscall RGE_Action_Move_To::RGE_Action_Move_To(RGE_Action_Move_To *this,
   }
   v5->range = range_in;
   v5->sprite = sprite_in;
-  if ( range_in <= 0.0 )
+  if( range_in <= 0.0 )
     LODWORD(v5->range) = 1053609165;
-  if ( !sprite_in )
+  if( !sprite_in )
   {
     v6 = v5->obj->master_obj;
     v7 = *(RGE_Sprite **)&v6[1].master_type;
-    if ( v7 )
+    if( v7 )
       v5->sprite = v7;
     else
       v5->sprite = v6->sprite;
@@ -126,14 +126,14 @@ void __userpurge RGE_Action_Move_To::first_in_stack(RGE_Action_Move_To *this@<ec
 
   v3 = this;
   v4 = this->target_obj;
-  if ( v4 && RGE_Static_Object::inRange((RGE_Static_Object *)&this->obj->vfptr, v4, this->range) )
+  if( v4 && RGE_Static_Object::inRange((RGE_Static_Object *)&this->obj->vfptr, v4, this->range) )
   {
     v3->vfptr->set_state((RGE_Action *)v3, 1);
   }
   else
   {
     ((void (*)(void))v3->obj->vfptr->maximumSpeed)();
-    if ( a2 == 0.0 )
+    if( a2 == 0.0 )
       v3->vfptr->set_state((RGE_Action *)v3, 13);
     else
       v3->vfptr->set_state((RGE_Action *)v3, 3);
@@ -152,7 +152,7 @@ void __thiscall RGE_Action_Move_To::set_state(RGE_Action_Move_To *this, char new
     case 1:
     case 0xD:
     case 0xE:
-      if ( !this->subActionValue )
+      if( !this->subActionValue )
         (*(void (__thiscall **)(_DWORD, _DWORD))&this->obj->vfptr->gap4[52])(this->obj, this->obj->master_obj->sprite);
       break;
     default:
@@ -184,19 +184,19 @@ char __thiscall RGE_Action_Move_To::update(RGE_Action_Move_To *this)
   float v21; // [sp+Ch] [bp-4h]@41
 
   v1 = this;
-  if ( this->targetID != -1 && !RGE_Game_World::object(this->obj->owner->world, this->targetID) )
+  if( this->targetID != -1 && !RGE_Game_World::object(this->obj->owner->world, this->targetID) )
   {
     v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
     goto LABEL_10;
   }
-  if ( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
+  if( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
     v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
   v2 = v1->target_obj;
-  if ( v2 && v2->object_state >= 7u )
+  if( v2 && v2->object_state >= 7u )
   {
     v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
 LABEL_10:
-    if ( v1->subActionValue == 1 )
+    if( v1->subActionValue == 1 )
     {
       result = 5;
     }
@@ -216,10 +216,10 @@ LABEL_10:
   switch ( v1->state )
   {
     case 3:
-      if ( v2 && RGE_Static_Object::inRange((RGE_Static_Object *)&v1->obj->vfptr, v2, v1->range) )
+      if( v2 && RGE_Static_Object::inRange((RGE_Static_Object *)&v1->obj->vfptr, v2, v1->range) )
       {
         v1->vfptr->set_state((RGE_Action *)v1, 1);
-        if ( !v1->subActionValue )
+        if( !v1->subActionValue )
           ((void (__stdcall *)(int, int, signed int, signed int, _DWORD, _DWORD))v1->obj->vfptr->notify)(
             v1->obj->id,
             v1->obj->id,
@@ -234,7 +234,7 @@ LABEL_10:
       else
       {
         v4 = v1->target_obj;
-        if ( v4 )
+        if( v4 )
         {
           v1->target_x = v4->world_x;
           v1->target_y = v4->world_y;
@@ -248,14 +248,14 @@ LABEL_10:
         BYTE1(yDiff) = v6;
         v8 = v1->obj;
         BYTE2(yDiff) = (signed __int64)v7;
-        if ( !v8->finalUserDefinedWaypoint )
+        if( !v8->finalUserDefinedWaypoint )
         {
           ((void (__stdcall *)(float *, _DWORD))v8->vfptr->addUserDefinedWaypoint)(&yDiff, 0);
           RGE_Moving_Object::setFinalUserDefinedWaypoint((RGE_Moving_Object *)&v1->obj->vfptr);
         }
         RGE_Moving_Object::setActionRange((RGE_Moving_Object *)&v1->obj->vfptr, v1->range);
         v9 = v1->target_obj;
-        if ( v9 )
+        if( v9 )
         {
           RGE_Moving_Object::setTargetID((RGE_Moving_Object *)&v1->obj->vfptr, v9->id);
           RGE_Moving_Object::setTargetRadius(
@@ -268,30 +268,30 @@ LABEL_10:
           RGE_Moving_Object::setTargetID((RGE_Moving_Object *)&v1->obj->vfptr, -1);
           RGE_Moving_Object::setTargetRadius((RGE_Moving_Object *)&v1->obj->vfptr, 0.0, 0.0);
         }
-        if ( RGE_Moving_Object::findPath((RGE_Moving_Object *)&v1->obj->vfptr) )
+        if( RGE_Moving_Object::findPath((RGE_Moving_Object *)&v1->obj->vfptr) )
           goto LABEL_38;
         v1->vfptr->set_state((RGE_Action *)v1, 4);
         result = 0;
       }
       break;
     case 4:
-      if ( v2 )
+      if( v2 )
       {
         v10 = v1->target_x - v2->world_x;
         yDiff = v1->target_y - v2->world_y;
-        if ( v12 || v10 > 1.0 || yDiff < -1.0 || yDiff > 1.0 )
+        if( v12 || v10 > 1.0 || yDiff < -1.0 || yDiff > 1.0 )
           goto LABEL_52;
       }
       v13 = RGE_Moving_Object::doMove((RGE_Moving_Object *)&v1->obj->vfptr);
-      if ( !v13 )
+      if( !v13 )
       {
         v1->vfptr->set_state((RGE_Action *)v1, 1);
         goto LABEL_35;
       }
-      if ( v13 != 2 )
+      if( v13 != 2 )
         goto LABEL_38;
       v14 = v1->target_obj;
-      if ( v14
+      if( v14
         && ((v15 = v1->target_x - v14->world_x, v21 = v1->target_y - v14->world_y, v17)
          || v15 > 1.0
          || v21 < -1.0
@@ -314,7 +314,7 @@ LABEL_52:
       }
       else
       {
-        if ( !v1->subActionValue )
+        if( !v1->subActionValue )
           ((void (__stdcall *)(int, int, signed int, signed int, _DWORD, _DWORD))v1->obj->vfptr->notify)(
             v1->obj->id,
             v1->obj->id,
@@ -328,7 +328,7 @@ LABEL_52:
       break;
     case 0xD:
 LABEL_35:
-      if ( !v1->subActionValue )
+      if( !v1->subActionValue )
         ((void (__stdcall *)(_DWORD, _DWORD, signed int, signed int, _DWORD, _DWORD))v1->obj->vfptr->notify)(
           v1->obj->id,
           v1->obj->id,
@@ -358,14 +358,14 @@ char __thiscall RGE_Action_Move_To::is_in_range(RGE_Action_Move_To *this)
 
   v1 = this;
   v2 = this->target_obj;
-  if ( this->range <= 0.0 )
+  if( this->range <= 0.0 )
   {
-    if ( v2 && RGE_Static_Object::inRange((RGE_Static_Object *)&this->obj->vfptr, v2, 0.25) )
+    if( v2 && RGE_Static_Object::inRange((RGE_Static_Object *)&this->obj->vfptr, v2, 0.25) )
       return 1;
   }
   else
   {
-    if ( v2 )
+    if( v2 )
       v3 = RGE_Static_Object::distance_to_object((RGE_Static_Object *)&this->obj->vfptr, v2);
     else
       v3 = RGE_Static_Object::distance_to_position(
@@ -373,7 +373,7 @@ char __thiscall RGE_Action_Move_To::is_in_range(RGE_Action_Move_To *this)
              this->target_x,
              this->target_y,
              this->target_z);
-    if ( v3 <= v1->range )
+    if( v3 <= v1->range )
       return 1;
   }
   return 0;

@@ -72,7 +72,7 @@ void __thiscall XYZ::rotateXYByFacet(XYZ *this, XYZ *refPoint, XYZ *rPoint, char
 
   v4 = rPoint;
   *rPoint = *this;
-  if ( facet )
+  if( facet )
   {
     v5 = (double)(this->xValue - refPoint->xValue);
     v6 = (double)(unsigned __int8)facet * 0.78539819;

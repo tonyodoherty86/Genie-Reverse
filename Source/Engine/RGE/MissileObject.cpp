@@ -7,7 +7,7 @@ void __thiscall RGE_Missile_Object::RGE_Missile_Object(RGE_Missile_Object *this,
   v7 = this;
   RGE_Combat_Object::RGE_Combat_Object((RGE_Combat_Object *)&this->vfptr, tobj, obj_owner, x, y, z, 0);
   v7->vfptr = (RGE_Static_ObjectVtbl *)&RGE_Missile_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Missile_Object::setup(v7, tobj, obj_owner, x, y, z);
   v7->type = 60;
 }
@@ -20,7 +20,7 @@ RGE_Missile_Object *__thiscall RGE_Missile_Object::`scalar deleting destructor'(
 
   v2 = this;
   RGE_Missile_Object::~RGE_Missile_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -33,7 +33,7 @@ void __userpurge RGE_Missile_Object::RGE_Missile_Object(RGE_Missile_Object *this
   v5 = this;
   RGE_Combat_Object::RGE_Combat_Object((RGE_Combat_Object *)&this->vfptr, a2, infile, gworld, 0);
   v5->vfptr = (RGE_Static_ObjectVtbl *)&RGE_Missile_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Missile_Object::setup(v5, a2, infile, gworld);
   v5->type = 60;
 }
@@ -59,7 +59,7 @@ int __userpurge RGE_Missile_Object::setup@<eax>(RGE_Missile_Object *this@<ecx>, 
   v4 = this;
   RGE_Combat_Object::setup((RGE_Combat_Object *)&this->vfptr, a2, infile, gworld);
   v4->type = 60;
-  if ( save_game_version <= 7.0900002 )
+  if( save_game_version <= 7.0900002 )
   {
     result = 1;
     v4->max_range = v4->master_obj[1].construction_radius_x;
@@ -92,7 +92,7 @@ void __thiscall RGE_Missile_Object::init_missile(RGE_Missile_Object *this, RGE_C
 
   v4 = this;
   v5 = (RGE_Action_Missile *)operator new(0x54u);
-  if ( v5 )
+  if( v5 )
     RGE_Action_Missile::RGE_Action_Missile(
       v5,
       (RGE_Action_Object *)&v4->vfptr,
@@ -103,7 +103,7 @@ void __thiscall RGE_Missile_Object::init_missile(RGE_Missile_Object *this, RGE_C
       target->world_z);
   else
     v6 = 0;
-  if ( v6 )
+  if( v6 )
     RGE_Action_List::add_action(v4->actions, v6);
   v4->max_range = in_range;
 }
@@ -117,7 +117,7 @@ void __thiscall RGE_Missile_Object::init_missile(RGE_Missile_Object *this, RGE_C
 
   v6 = this;
   v7 = (RGE_Action_Missile *)operator new(0x54u);
-  if ( v7 )
+  if( v7 )
     RGE_Action_Missile::RGE_Action_Missile(
       v7,
       (RGE_Action_Object *)&v6->vfptr,
@@ -128,7 +128,7 @@ void __thiscall RGE_Missile_Object::init_missile(RGE_Missile_Object *this, RGE_C
       z);
   else
     v8 = 0;
-  if ( v8 )
+  if( v8 )
     RGE_Action_List::add_action(v6->actions, v8);
   v6->max_range = in_range;
 }
@@ -149,7 +149,7 @@ BOOL __thiscall RGE_Missile_Object::missile_move(RGE_Missile_Object *this)
   v2 = this->velocity_z + this->world_z;
   new_y = this->world_y + this->velocity_y;
   new_z = v2;
-  if ( v4
+  if( v4
     || (v5 = this->owner->world->map, v2 = (double)v5->map_width, v2 <= new_x)
     || (v2 = new_y, new_y < 0.0)
     || (v2 = (double)v5->map_height, v2 <= new_y) )
@@ -210,7 +210,7 @@ RGE_Check_List *__thiscall RGE_Missile_Object::make_object_collision_list(RGE_Mi
   v3 = this->master_obj;
   rx = v3->radius_x;
   ry = v3->radius_y;
-  if ( rx <= 0.0 || ry <= 0.0 )
+  if( rx <= 0.0 || ry <= 0.0 )
   {
     result = 0;
   }
@@ -224,7 +224,7 @@ RGE_Check_List *__thiscall RGE_Missile_Object::make_object_collision_list(RGE_Mi
     map = this->owner->world->map;
     v7 = (RGE_Check_List *)operator new(4u);
     v8 = 0;
-    if ( v7 )
+    if( v7 )
     {
       RGE_Check_List::RGE_Check_List(v7);
       v27 = v9;
@@ -236,19 +236,19 @@ RGE_Check_List *__thiscall RGE_Missile_Object::make_object_collision_list(RGE_Mi
     }
     v10 = v27;
     check_list = v27;
-    if ( v4 < v8 )
+    if( v4 < v8 )
     {
       LOWORD(x1) = 0;
       v4 = 0;
     }
     v11 = map;
-    if ( (signed __int16)x2 >= map->map_width )
+    if( (signed __int16)x2 >= map->map_width )
       LOWORD(x2) = LOWORD(map->map_width) - 1;
-    if ( v5 < 0 )
+    if( v5 < 0 )
       v5 = 0;
-    if ( v6 >= map->map_height )
+    if( v6 >= map->map_height )
       v6 = LOWORD(map->map_height) - 1;
-    if ( v5 <= v6 )
+    if( v5 <= v6 )
     {
       v38 = v4;
       v12 = 24 * v4;
@@ -257,33 +257,33 @@ RGE_Check_List *__thiscall RGE_Missile_Object::make_object_collision_list(RGE_Mi
       v36 = v6 - v5 + 1;
       do
       {
-        if ( v4 <= (signed __int16)x2 )
+        if( v4 <= (signed __int16)x2 )
         {
           v13 = (RGE_Object_Node **)((char *)&v11->map_row_offset[v30]->objects.list + v12);
           v14 = (signed __int16)x2 - v38 + 1;
           do
           {
-            for ( i = *v13; i; i = i->next )
+            for( i = *v13; i; i = i->next )
             {
               v16 = i->node;
-              if ( (RGE_Missile_Object *)i->node != v2 )
+              if( (RGE_Missile_Object *)i->node != v2 )
               {
                 v17 = v16->master_obj;
                 ry2 = v17->radius_y;
                 rx2 = v17->radius_x;
-                if ( ry2 > 0.0 && rx2 > 0.0 )
+                if( ry2 > 0.0 && rx2 > 0.0 )
                 {
                   v18 = v16->world_z - v2->world_z;
-                  if ( v18 >= -(v17->radius_z - -0.1) && v18 <= v2->master_obj->radius_z - -0.1 )
+                  if( v18 >= -(v17->radius_z - -0.1) && v18 <= v2->master_obj->radius_z - -0.1 )
                   {
                     v19 = v16->world_x - v2->world_x;
                     v20 = v16->world_y - v2->world_y;
-                    if ( v19 < 0.0 )
+                    if( v19 < 0.0 )
                       v19 = -v19;
-                    if ( v20 < 0.0 )
+                    if( v20 < 0.0 )
                       v20 = -v20;
                     dy = v20 - (ry2 + ry + delta);
-                    if ( v23 | v24 && dy <= 0.0 )
+                    if( v23 | v24 && dy <= 0.0 )
                     {
                       v21 = v19 - (rx2 + rx + delta);
                       RGE_Check_List::add_node(v27, v16, v21, dy, 0);
@@ -295,7 +295,7 @@ RGE_Check_List *__thiscall RGE_Missile_Object::make_object_collision_list(RGE_Mi
             v13 += 6;
             --v14;
           }
-          while ( v14 );
+          while( v14 );
           v4 = x1;
           v11 = map;
           v12 = v40;
@@ -304,12 +304,12 @@ RGE_Check_List *__thiscall RGE_Missile_Object::make_object_collision_list(RGE_Mi
         ++v30;
         --v36;
       }
-      while ( !v25 );
+      while( !v25 );
       v10 = v27;
     }
-    if ( !v10->list )
+    if( !v10->list )
     {
-      if ( v10 )
+      if( v10 )
       {
         RGE_Check_List::~RGE_Check_List(v10);
         operator delete(v27);

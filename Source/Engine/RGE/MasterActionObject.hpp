@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\MasterActionObject.hpp
  * @author  Yvan Burrie
- * @date    2018/06/30
+ * @date    2018/07/07
  * @version 1.0
  */
 
@@ -19,10 +19,13 @@ public:
     char master_type = RGE_MASTER_ACTION_OBJECT_TYPE;
 
     class RGE_Task_List *tasks;
-    short default_task;
 
-    float search_radius;
-    float work_rate;
+    short default_task = -1;
+
+    float search_radius = 0.0;
+
+    float work_rate = 0.0;
+
     short drop_site;
     short backup_drop_site;
     char task_by_group;
@@ -52,20 +55,43 @@ public:
 
     ~RGE_Master_Action_Object();
 
-    void make_new_obj(RGE_Player *owner, float x, float y, float z);
+    void make_new_obj(
+        RGE_Player *owner,
+        float x,
+        float y,
+        float z);
+
     void make_new_master();
 
-    RGE_Task *get_task(short task_id);
-    RGE_Task *getTaskByTaskID(int t);
+    RGE_Task *get_task(
+        short task_id);
 
-    void copy_obj(RGE_Master_Static_Object *source);
+    RGE_Task *getTaskByTaskID(
+        int t);
 
-    void modify(        float amount, char flag);
-    void modify_delta(  float amount, char flag);
-    void modify_percent(float amount, char flag);
+    void copy_obj(
+        RGE_Master_Static_Object *source);
 
-    void save(int outfile);
+    enum ModifyFlag
+    {
 
-    void play_command_sound();
-    void play_move_sound();
+    };
+
+    void modify(
+        float amount,
+        char flag);
+
+    void modify_delta(
+        float amount,
+        char flag);
+
+    void modify_percent(
+        float amount,
+        char flag);
+
+    void save(
+        int outfile);
+
+    void play_command_sound(),
+         play_move_sound();
 };

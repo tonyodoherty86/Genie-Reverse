@@ -2,12 +2,28 @@
 /**
  * @file    Engine\RGE\CombatObject.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/07
  * @version 1.0
  */
 
 #ifndef RGE_COMBAT_OBJECT_TYPE
     #define RGE_COMBAT_OBJECT_TYPE 50
+#endif
+
+#ifndef RGE_COMBAT_OBJECT_CAPTURE_FLAG_EXISTS
+    #define RGE_COMBAT_OBJECT_CAPTURE_FLAG_EXISTS TRUE
+#endif
+
+#ifndef RGE_COMBAT_OBJECT_FORMATION_EXISTS
+    #define RGE_COMBAT_OBJECT_FORMATION_EXISTS TRUE
+#endif
+
+#ifndef RGE_COMBAT_OBJECT_VISIBILITY_INFO_EXISTS
+    #define RGE_COMBAT_OBJECT_VISIBILITY_INFO_EXISTS TRUE
+#endif
+
+#ifndef RGE_COMBAT_OBJECT_ATTACK_COUNT_EXISTS
+    #define RGE_COMBAT_OBJECT_ATTACK_COUNT_EXISTS TRUE
 #endif
 
 class RGE_Combat_Object : public RGE_Action_Object
@@ -16,13 +32,51 @@ public:
 
     char type = RGE_COMBAT_OBJECT_TYPE;
 
+    RGE_Master_Combat_Object *master_obj;
+
     VISIBLE_UNIT_REC *VUR_Ptrs[RGE_PLAYERS_COUNT];
 
     unsigned int Unified_Map_Value;
 
+#if RGE_COMBAT_OBJECT_VISIBILITY_INFO_EXISTS
+    /**
+     * Offset: 312.
+     */
+    char multi_unified_point;
+
+    /**
+     * Offset: 313.
+     */
+    char large_radius;
+#endif
+
+#if RGE_COMBAT_OBJECT_ATTACK_COUNT_EXISTS
+    /**
+     * Offset: 316.
+     */
+    int attack_count;
+#endif
+
+    /**
+     * Offset: 320.
+     */
     float attack_timer;
 
+#if RGE_COMBAT_OBJECT_CAPTURE_FLAG_EXISTS
+    /**
+     * Offset: 324.
+     */
     char capture_flag;
+#endif
+
+#if RGE_COMBAT_OBJECT_FORMATION_EXISTS
+    /**
+     * Offset: 325, 326, 327.
+     */
+    char formation_id,
+         formation_row,
+         formation_col;
+#endif
 
     RGE_Combat_Object(
         RGE_Master_Combat_Object *tobj,
@@ -50,7 +104,8 @@ public:
         int infile,
         RGE_Game_World *gworld);
 
-    void save(int outfile);
+    void save(
+        int outfile);
 
     void stop();
 
@@ -61,7 +116,9 @@ public:
     char do_attack(RGE_Static_Object *target, RGE_Combat_Object *attacker, float x, float y, float z);
     void damage(int weapon_num, RGE_Armor_Weapon_Info *damage, float attack_modifier, RGE_Player *attacking_player, RGE_Static_Object *attackingObject);
     double calculateDamage(int weapon_num, RGE_Armor_Weapon_Info *damage, float attack_modifier, RGE_Player *attacking_player, RGE_Static_Object *attackingObject);
+
     bool can_attack();
+
     void reset_attack_timer();
     void get_armor(short *cur_armor_in, short *orig_armor_in);
     void get_weapon(short *cur_weapon_in, short *orig_weapon_in);

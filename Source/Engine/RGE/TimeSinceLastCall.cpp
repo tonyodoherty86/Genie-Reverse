@@ -26,19 +26,19 @@ unsigned int __thiscall RGE_TimeSinceLastCall::GetAvg(RGE_TimeSinceLastCall *thi
   unsigned int result; // eax@9
 
   v2 = 0;
-  if ( duration < 1 || duration > 100 )
+  if( duration < 1 || duration > 100 )
   {
     result = 0;
   }
   else
   {
     v3 = this->Offset;
-    for ( i = 0; i < duration; ++i )
+    for( i = 0; i < duration; ++i )
     {
-      if ( --v3 <= 0 )
+      if( --v3 <= 0 )
         v3 = 100;
       v2 += this->aTSLC[v3];
-      if ( v2 >= 0x3E8 )
+      if( v2 >= 0x3E8 )
         this->cps = i;
     }
     result = v2 / duration;
@@ -67,7 +67,7 @@ unsigned int __thiscall RGE_TimeSinceLastCall::Set(RGE_TimeSinceLastCall *this)
   v1 = this;
   v2 = debug_timeGetTime();
   v3 = v1->LastCall;
-  if ( v3 == v2 )
+  if( v3 == v2 )
   {
     result = 0;
   }
@@ -78,16 +78,16 @@ unsigned int __thiscall RGE_TimeSinceLastCall::Set(RGE_TimeSinceLastCall *this)
     v6 = v1->Offset + 1;
     v1->TSLC = v5;
     v1->Offset = v6;
-    if ( v6 > 100 )
+    if( v6 > 100 )
       v1->Offset = 0;
     v1->aTSLC[v1->Offset] = v1->TSLC;
     result = v1->TSLC;
     v7 = v1->lowTSLC;
-    if ( result < v7 )
+    if( result < v7 )
       v7 = v1->TSLC;
     v1->lowTSLC = v7;
     v8 = v1->highTSLC;
-    if ( result > v8 )
+    if( result > v8 )
       v8 = result;
     v1->highTSLC = v8;
   }
@@ -134,7 +134,7 @@ RGE_TimeSinceLastCall *__thiscall RGE_TimeSinceLastCall::GetHiLoMaxInfo(RGE_Time
   v4 = 0;
   v5 = this;
   v6 = 999999;
-  if ( duration < 1 || duration > 100 )
+  if( duration < 1 || duration > 100 )
   {
     v10 = duration;
     v6 = duration;
@@ -143,21 +143,21 @@ RGE_TimeSinceLastCall *__thiscall RGE_TimeSinceLastCall::GetHiLoMaxInfo(RGE_Time
   else
   {
     v7 = this->Offset;
-    if ( duration > 0 )
+    if( duration > 0 )
     {
       do
       {
-        if ( --v7 <= 0 )
+        if( --v7 <= 0 )
           v7 = 100;
         v8 = v5->aTSLC[v7];
         v3 += v8;
-        if ( v8 < v6 )
+        if( v8 < v6 )
           v6 = v5->aTSLC[v7];
-        if ( v8 > v4 )
+        if( v8 > v4 )
           v4 = v5->aTSLC[v7];
         --duration;
       }
-      while ( duration );
+      while( duration );
     }
     v9 = v4;
     v10 = v3 / v2;
@@ -184,7 +184,7 @@ RGE_TimeSinceLastCall *__thiscall RGE_TimeSinceLastCall::GetHiLoInfo(RGE_TimeSin
   v4 = 0;
   v5 = this;
   v6 = 999999;
-  if ( duration < 1 || duration > 100 )
+  if( duration < 1 || duration > 100 )
   {
     v10 = duration;
     v6 = duration;
@@ -193,21 +193,21 @@ RGE_TimeSinceLastCall *__thiscall RGE_TimeSinceLastCall::GetHiLoInfo(RGE_TimeSin
   else
   {
     v7 = this->Offset;
-    if ( duration > 0 )
+    if( duration > 0 )
     {
       do
       {
-        if ( --v7 <= 0 )
+        if( --v7 <= 0 )
           v7 = 100;
         v8 = v5->aTSLC[v7];
         v3 += v8;
-        if ( v8 < v6 )
+        if( v8 < v6 )
           v6 = v5->aTSLC[v7];
-        if ( v8 > v4 )
+        if( v8 > v4 )
           v4 = v5->aTSLC[v7];
         --duration;
       }
-      while ( duration );
+      while( duration );
     }
     v9 = v4;
     v10 = v3 / v2;
@@ -250,11 +250,11 @@ RGE_TimeSinceLastCall *__thiscall RGE_TimeSinceLastCall::GetElapsedFirstCall(RGE
   v5 = v1->FirstCall;
   v1->Now = v4;
   v6 = (v4 - v5) / 0x3E8;
-  if ( v6 > 59 )
+  if( v6 > 59 )
   {
     v3 = v6 / 60;
     v6 %= 60;
-    if ( v3 > 59 )
+    if( v3 > 59 )
     {
       v2 = v3 / 60;
       v3 %= 60;

@@ -2,22 +2,29 @@
 /**
  * @file    Engine\RGE\MasterCombatObject.cpp
  * @author  Yvan Burrie
- * @date    2018/06/29
+ * @date    2018/07/07
  * @version 1.0
  */
 
-RGE_Master_Combat_Object::RGE_Master_Combat_Object(RGE_Master_Combat_Object *other_object, bool do_setup)
+RGE_Master_Combat_Object::RGE_Master_Combat_Object(
+    RGE_Master_Combat_Object *other_object,
+    bool do_setup)
 {
     RGE_Master_Action_Object::RGE_Master_Action_Object(
         other_object,
         false);
 
     if( do_setup ){
-        RGE_Master_Combat_Object::setup(other_object);
+        RGE_Master_Combat_Object::setup(
+            other_object);
     }
 }
 
-RGE_Master_Combat_Object::RGE_Master_Combat_Object(int infile, RGE_Sprite **sprites, RGE_Sound **sounds, bool do_setup)
+RGE_Master_Combat_Object::RGE_Master_Combat_Object(
+    int infile,
+    RGE_Sprite **sprites,
+    RGE_Sound **sounds,
+    bool do_setup)
 {
     RGE_Master_Action_Object::RGE_Master_Action_Object(
         infile,
@@ -26,11 +33,15 @@ RGE_Master_Combat_Object::RGE_Master_Combat_Object(int infile, RGE_Sprite **spri
         false);
 
     if( do_setup ){
-        RGE_Master_Combat_Object::setup(infile, sprites, sounds);
+        RGE_Master_Combat_Object::setup(
+            infile,
+            sprites,
+            sounds);
     }
 }
 
-bool RGE_Master_Combat_Object::setup(RGE_Master_Combat_Object *other_object)
+bool RGE_Master_Combat_Object::setup(
+    RGE_Master_Combat_Object *other_object)
 {
     if( this->weapon_num > 0 ){
         this->weapon = new RGE_Armor_Weapon_Info[this->weapon_num];
@@ -67,9 +78,15 @@ bool RGE_Master_Combat_Object::setup(RGE_Master_Combat_Object *other_object)
     return true;
 }
 
-bool RGE_Master_Combat_Object::setup(int infile, RGE_Sprite **sprites, RGE_Sound **sounds)
+bool RGE_Master_Combat_Object::setup(
+    int infile,
+    RGE_Sprite **sprites,
+    RGE_Sound **sounds)
 {
-    RGE_Master_Action_Object::setup(infile, sprites, sounds);
+    RGE_Master_Action_Object::setup(
+        infile,
+        sprites,
+        sounds);
 
 #if RGE_MASTER_COMBAT_OBJECT_BASE_ARMOR_CAST
     if( save_game_version >= 11.52 ){
@@ -153,7 +170,7 @@ bool RGE_Master_Combat_Object::setup(int infile, RGE_Sprite **sprites, RGE_Sound
                 v15 += 2;
                 --v14;
             }
-            while ( v14 );
+            while( v14 );
         }
         v16 = v4->weapon_num;
         v4->orig_weapon = 0;
@@ -168,7 +185,7 @@ bool RGE_Master_Combat_Object::setup(int infile, RGE_Sprite **sprites, RGE_Sound
                 v18 += 2;
                 --v17;
             }
-            while ( v17 );
+            while( v17 );
         }
         this->orig_weapon_range    = this->weapon_range;
         this->orig_speed_of_attack = this->speed_of_attack;
@@ -177,9 +194,13 @@ bool RGE_Master_Combat_Object::setup(int infile, RGE_Sprite **sprites, RGE_Sound
     return true;
 }
 
-bool RGE_Master_Combat_Object::setup(int infile, RGE_Master **masters)
+bool RGE_Master_Combat_Object::setup(
+    int infile,
+    RGE_Master **masters)
 {
-    RGE_Master_Action_Object::setup(infile, masters);
+    RGE_Master_Action_Object::setup(
+        infile,
+        masters);
 
     RGE_Master_Combat_Object *other_master = masters[this->copy_id];
     if( other_master &&
@@ -267,10 +288,10 @@ void RGE_Master_Combat_Object::copy_obj(RGE_Master_Combat_Object *source)
 {
     RGE_Master_Combat_Object *v2; // ebx@1
     RGE_Armor_Weapon_Info *v3; // eax@1
-    __int16 v4; // ax@3
+    short v4; // ax@3
     RGE_Armor_Weapon_Info *v5; // eax@4
     unsigned int v6; // ecx@4
-    __int16 v7; // ax@8
+    short v7; // ax@8
     RGE_Armor_Weapon_Info *v8; // eax@9
     unsigned int v9; // ecx@9
 
@@ -332,13 +353,9 @@ void RGE_Master_Combat_Object::copy_obj(RGE_Master_Combat_Object *source)
 
 void RGE_Master_Combat_Object::modify(float amount, char flag)
 {
-    signed __int64 v3; // rax@2
-    int v4; // esi@3
-    int v5; // ecx@3
-
     switch( flag ){
 
-    case 8:
+    case RGE_Master_Combat_Object::ModifyFlag::ArmorValue:
         v3 = (signed __int64)amount;
         HIDWORD(v3) = this->armor;
         if( HIDWORD(v3) )
@@ -349,40 +366,39 @@ void RGE_Master_Combat_Object::modify(float amount, char flag)
         }
         break;
 
-    case 9:
+    case RGE_Master_Combat_Object::ModifyFlag::WeaponValue:
         v3 = (signed __int64)amount;
         HIDWORD(v3) = this->weapon;
-        if( HIDWORD(v3) )
-        {
-            v4 = this->weapon_num;
+        if( this->weapon ){
             v5 = BYTE1(v3);
 LABEL_6:
-            if( v5 < v4 )
-                *(_WORD *)(HIDWORD(v3) + 4 * v5 + 2) = (unsigned __int8)v3;
+            if( v5 < this->weapon_num ){
+                this->weapon[v5]->value = (unsigned char)amount;
+            }
         }
         break;
 
-    case 0xA:
+    case RGE_Master_Combat_Object::ModifyFlag::AttackSpeed:
         this->speed_of_attack = amount;
         break;
 
-    case 0xB:
+    case RGE_Master_Combat_Object::ModifyFlag::BaseHitChance:
         this->base_hit_chance = (short)amount;
         break;
 
-    case 0xC:
+    case RGE_Master_Combat_Object::ModifyFlag::WeaponRange:
         this->weapon_range = amount;
         break;
 
-    case 0xF:
+    case RGE_Master_Combat_Object::ModifyFlag::BaseArmor:
         this->base_armor = (short)amount;
         break;
 
-    case 0x10:
+    case RGE_Master_Combat_Object::ModifyFlag::MissileId:
         this->missile_id = (short)amount;
         break;
 
-    case 0x12:
+    case RGE_Master_Combat_Object::ModifyFlag::DefenseTerrainBonus:
         this->defense_terrain_bonus = (short)amount;
         break;
 
@@ -420,7 +436,7 @@ void RGE_Master_Combat_Object::modify_delta(float amount, char flag)
                     ++WORD2(v3);
                     v6 = WORD2(v3);
                 }
-                while ( WORD2(v3) < v5 );
+                while( WORD2(v3) < v5 );
             }
         }
         break;
@@ -435,7 +451,7 @@ void RGE_Master_Combat_Object::modify_delta(float amount, char flag)
             if( v7 > 0 )
             {
                 v8 = 0;
-                while ( v4[v8].type != BYTE1(v3) )
+                while( v4[v8].type != BYTE1(v3) )
                 {
                     ++WORD2(v3);
                     v8 = WORD2(v3);
@@ -606,7 +622,7 @@ double RGE_Master_Combat_Object::calc_base_damage_ability(RGE_Master_Combat_Obje
                     ++v4;
                     --v5;
                 }
-                while ( v5 );
+                while( v5 );
             }
             v6 = (double)v3->value - (double)(signed int)attackera;
             if( v6 > 0.0 )
@@ -614,7 +630,7 @@ double RGE_Master_Combat_Object::calc_base_damage_ability(RGE_Master_Combat_Obje
             ++v3;
             --v8;
         }
-        while ( v8 );
+        while( v8 );
     }
     if( v2 < 1.0 )
         v2 = 1.0;

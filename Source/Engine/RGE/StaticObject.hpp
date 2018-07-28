@@ -2,12 +2,24 @@
 /**
  * @file    Engine\RGE\StaticObject.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/07
  * @version 1.0
  */
 
 #ifndef RGE_STATIC_OBJECT_TYPE
     #define RGE_STATIC_OBJECT_TYPE 10
+#endif
+
+#ifndef RGE_STATIC_OBJECT_WORKER_NUM_LONG_CAST
+    #define RGE_STATIC_OBJECT_WORKER_NUM_LONG_CAST FALSE
+#endif
+
+#ifndef RGE_STATIC_OBJECT_ACTIVE_SPRITES_FLAG_PARSED
+    #define RGE_STATIC_OBJECT_ACTIVE_SPRITES_FLAG_PARSED FALSE
+#endif
+
+#ifndef RGE_STATIC_OBJECT_ALREADY_COLLIDED_EXISTS
+    #define RGE_STATIC_OBJECT_ALREADY_COLLIDED_EXISTS FALSE
 #endif
 
 class RGE_Check_List;
@@ -30,64 +42,84 @@ public:
 
     /**
      * The Player which this Object belongs to.
-     * Offset: 8.
+     * Offset: 12.
      */
     RGE_Player *owner;
 
     /**
      * The idle or standing Sprite this Object will draw.
+     * Offset: 16.
      */
     RGE_Sprite *sprite;
 
     /**
      * The backup Sprite this Object will draw.
+     * Offset: 20.
      */
     RGE_Sprite *old_sprite;
 
+    /**
+     * Offset: 24.
+     */
     class RGE_Active_Sprite_List *sprite_list;
 
+    /**
+     * Offset: 28.
+     */
     RGE_Tile *tile;
 
+    /**
+     * Offset: 32.
+     */
     RGE_Static_Object *inside_obj;
 
+    /**
+     * Offset: 36.
+     */
     RGE_Object_List *objects;
 
     /**
      * The coordinates this Object is drawn on the screen.
+     * Offset: 40, 42, 44, 46.
      */
-    short screen_x_offset,
-          screen_y_offset,
-          shadow_x_offset,
-          shadow_y_offset;
+    short screen_x_offset = 0,
+          screen_y_offset = 0,
+          shadow_x_offset = 0,
+          shadow_y_offset = 0;
 
     /**
      * The Hit-Points this Object currently has.
+     * Offset: 48.
      */
     float hp = 0.0;
 
     /**
      * The current percent of damage this Object should have.
+     * Offset: 52.
      */
     char curr_damage_percent = 0;
 
     /**
      * The current Facet of this Object's Sprite.
+     * Offset: 53.
      */
     char facet = -1;
 
     /**
      * Determines whether this Object is currently selected.
+     * Offset: 54.
      */
     bool selected = false;
 
     /**
      * Determines the current Unit-Group this Object belongs to.
+     * Offset: 55.
      */
     char selected_group;
 
     /**
      * The coordinates this Object is located on the map.
-     * Offset for AOC0007260809: 64, 68, 72.
+     * Offset for AOC07260809: 56, 60, 64.
      */
     float world_x = -1.0,
           world_y = -1.0,
@@ -95,31 +127,70 @@ public:
 
     /**
      * The current amount of whatever attribute.
+     * Offset: 68.
      */
-    float attribute_amount_held;
+    float attribute_amount_held = 0.0;
 
+    /**
+     * Specifies whether the Object is existing, alive, dead, etc.
+     */
     enum State
     {
         Ready   = 0,
         Founded = 1,
         Alive   = 2,
         Dying   = 3,
+        Unk4    = 4,/* TODO */
+        Unk5    = 5,/* TODO */
+        Unk6    = 6,/* TODO */
+        Unk7    = 7,/* TODO */
     };
 
     /**
-     * Specifies whether the Object is existing, alive, dead, etc.
+     * Offset: 72.
      */
     char object_state = State::Ready;
 
-    char sleep_flag,
-         dopple_flag,
-         goto_sleep_flag;
+    /**
+     * Offset: 73.
+     */
+    bool sleep_flag;
 
+    /**
+     * Offset: 74.
+     */
+    bool dopple_flag;
+
+    /**
+     * Offset: 75.
+     */
+    char goto_sleep_flag;
+
+    /**
+     * Offset: 76.
+     */
     short attribute_type_held;
 
+    /**
+     * Offset: 78.
+     */
     char type = RGE_STATIC_OBJECT_TYPE;
 
+    /**
+     * Offset: 79.
+     */
+#if RGE_STATIC_OBJECT_WORKER_NUM_LONG_CAST
+    int worker_num;
+#else
     char worker_num;
+#endif
+
+#if RGE_STATIC_OBJECT_DAMAGE_PERCENT_EXISTS
+    /**
+     * Offset: 104.
+     */
+    char damage_timer;
+#endif
 
     RGE_Object_Node *player_object_node;
 
@@ -129,12 +200,20 @@ public:
 
     UnitAIModule *unitAIValue;
 
-    int groupCommanderValue;
-    int zoneMapIndex;
-    float groupRangeValue;
+    int groupCommanderValue = -1;
+
+    int zoneMapIndex = -1;
+
+    float groupRangeValue = 5.0;
+
     char inObstructionMapValue;
+
     char lastInObstructionMapValue;
-    char underAttackValue;
+
+    /**
+     * Offset: 118.
+     */
+    bool underAttackValue;
 
     // int GroupId; // Offset (AOC): 120 ??????
 
@@ -164,7 +243,7 @@ public:
         float x,
         float y,
         float z);
-    
+
     void recycle_out_of_game();
 
     bool setup(
@@ -173,47 +252,59 @@ public:
         float x,
         float y,
         float z);
-    
+
     bool setup(
         int infile,
         RGE_Game_World *gworld);
 
     double getSpeed();
+
     void change_unique_id();
-    void create_object_list();
-    void create_sprite_list();
+
+    RGE_Object_List *create_object_list();
+
+    RGE_Active_Sprite_List *create_sprite_list();
+
     void get_starting_attribute();
     void give_attribute_to_owner();
     void take_attribute_from_owner();
-    void draw(TDrawArea *render_area, short x, short y, RGE_Color_Table *draw_color);
-    void shadow_draw(TDrawArea *render_area, short x, short y, int flag);
-    void normal_draw(TDrawArea *render_area, int x, int y);
-    void draw_front_frame(TDrawArea *render_area, int x, int y);
-    void draw_back_frame(TDrawArea *render_area, short x, short y);
-    void capture_frame(TDrawArea *render_area, short x, short y);
-    void capture_square_frame(TDrawArea *render_area, short x, short y);
-    void capture_frame_3d_cube(TDrawArea *render_area, short x, short y);
-    void capture_frame_3d_square(TDrawArea *render_area, short x, short y);
-    void draw_frame_3d_square_back(TDrawArea *render_area, short x, short y);
+
+    void draw(                      TDrawArea *render_area, short x, short y, RGE_Color_Table *draw_color);
+    void shadow_draw(               TDrawArea *render_area, short x, short y, int flag);
+    void normal_draw(               TDrawArea *render_area, int x, int y);
+    void draw_front_frame(          TDrawArea *render_area, int x, int y);
+    void draw_back_frame(           TDrawArea *render_area, short x, short y);
+    void capture_frame(             TDrawArea *render_area, short x, short y);
+    void capture_square_frame(      TDrawArea *render_area, short x, short y);
+    void capture_frame_3d_cube(     TDrawArea *render_area, short x, short y);
+    void capture_frame_3d_square(   TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_square_back( TDrawArea *render_area, short x, short y);
     void draw_frame_3d_square_front(TDrawArea *render_area, short x, short y);
-    void draw_frame_3d_cube_back(TDrawArea *render_area, short x, short y);
-    void draw_frame_3d_cube_front(TDrawArea *render_area, short x, short y);
-    void draw_frame(TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_cube_back(   TDrawArea *render_area, short x, short y);
+    void draw_frame_3d_cube_front(  TDrawArea *render_area, short x, short y);
+    void draw_frame(                TDrawArea *render_area, short x, short y);
+
     bool update();
+
     void check_damage_sprites();
     RGE_Static_Object *spawn_death_obj();
     void rehook();
     RGE_Static_Object *get_object_pointer(int obj_id);
     RGE_Sprite *get_sprite_pointer(short sprite_id);
+
     void save(int outfile);
+
     double teleport(float x, float y, float z);
+
     void new_sprite(RGE_Sprite *nsprite);
     void add_overlay_sprite(RGE_Sprite *nsprite, char order);
     void remove_overlay_sprite(RGE_Sprite *nsprite);
     void change_ownership(RGE_Player *new_owner);
-    void modify(float amount, char flag);
-    void modify_delta(float amount, char flag);
+
+    void modify(        float amount, char flag);
+    void modify_delta(  float amount, char flag);
     void modify_percent(float amount, char flag);
+
     void transform(RGE_Master_Static_Object *obj);
     void copy_obj(RGE_Master_Static_Object *source);
     void destroy_obj();

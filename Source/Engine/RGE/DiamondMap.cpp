@@ -47,7 +47,7 @@ RGE_Diamond_Map *__thiscall RGE_Diamond_Map::`vector deleting destructor'(RGE_Di
 
   v2 = this;
   RGE_Diamond_Map::~RGE_Diamond_Map(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -85,18 +85,18 @@ int __thiscall RGE_Diamond_Map::set_bitmap(RGE_Diamond_Map *this, char *map_bmp,
   TPicture *y; // [sp+2Ch] [bp+8h]@6
 
   v3 = this;
-  if ( this->map_image_lines )
+  if( this->map_image_lines )
   {
     free(this->map_image_lines);
     v3->map_image_lines = 0;
   }
-  if ( v3->map_tile_rows )
+  if( v3->map_tile_rows )
   {
     free(v3->map_tile_rows);
     v3->map_tile_rows = 0;
   }
   v4 = (TPicture *)operator new(0x20u);
-  if ( v4 )
+  if( v4 )
   {
     TPicture::TPicture(v4, map_bmp, res_id, 0, 0, 0);
     v6 = v5;
@@ -107,15 +107,15 @@ int __thiscall RGE_Diamond_Map::set_bitmap(RGE_Diamond_Map *this, char *map_bmp,
     y = 0;
     v6 = 0;
   }
-  if ( v6 )
+  if( v6 )
   {
-    if ( v6->Dib )
+    if( v6->Dib )
     {
       v8 = v6->Width;
       v9 = LOWORD(v6->Height);
       pic_hgt = v6->Height;
       v3->map_image_lines = (RGE_Map_Image_Line *)calloc(v9, 6u);
-      if ( v6->Orien == 1 )
+      if( v6->Orien == 1 )
       {
         v10 = (int)v6->Bits;
         LOBYTE(v11) = TPicture::AlignedWidth(y);
@@ -132,48 +132,48 @@ int __thiscall RGE_Diamond_Map::set_bitmap(RGE_Diamond_Map *this, char *map_bmp,
       v3->map_image_wid = 0;
       v3->map_image_hgt = 0;
       map_bmpa = 0;
-      if ( pic_hgt > 0 )
+      if( pic_hgt > 0 )
       {
         do
         {
           v14 = -1;
           v15 = 0;
           v16 = (_BYTE *)v10;
-          if ( v8 > 0 )
+          if( v8 > 0 )
           {
-            while ( *v16 != -1 )
+            while( *v16 != -1 )
             {
               ++v16;
-              if ( (signed __int16)++v15 >= v8 )
+              if( (signed __int16)++v15 >= v8 )
                 goto LABEL_21;
             }
             v14 = v15;
           }
 LABEL_21:
-          if ( v14 != -1 )
+          if( v14 != -1 )
           {
-            for ( i = 0; (signed __int16)v15 < v8; ++v15 )
+            for( i = 0; (signed __int16)v15 < v8; ++v15 )
             {
-              if ( *v16 != -1 )
+              if( *v16 != -1 )
                 break;
               ++i;
               ++v16;
             }
             v3->map_image_lines[v3->map_image_hgt].start_x = v14;
             v3->map_image_lines[v3->map_image_hgt++].line_len = i;
-            if ( i > v3->map_image_wid )
+            if( i > v3->map_image_wid )
               v3->map_image_wid = i;
-            if ( v3->map_image_start_y == -1 )
+            if( v3->map_image_start_y == -1 )
               v3->map_image_start_y = (signed __int16)map_bmpa;
           }
           v10 += pic_pitch;
           ++map_bmpa;
         }
-        while ( (signed __int16)map_bmpa < pic_hgt );
+        while( (signed __int16)map_bmpa < pic_hgt );
       }
       TPicture::~TPicture(y);
       operator delete(y);
-      if ( v3->world )
+      if( v3->world )
         RGE_Diamond_Map::set_world(v3, v3->world);
       result = 1;
     }
@@ -252,7 +252,7 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
   v2 = this;
   v3 = 0;
   this->world = world_in;
-  if ( world_in && this->map_image_lines )
+  if( world_in && this->map_image_lines )
   {
     v4 = world_in->map;
     this->map = v4;
@@ -264,7 +264,7 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
     v7 = (_WORD)v4 + v6;
     v8 = v2->map_tile_rows;
     v2->map_tile_row_cnt = v7 - 1;
-    if ( v8 )
+    if( v8 )
       free(v8);
     v9 = (RGE_Map_Tile_Row *)calloc(v2->map_tile_row_cnt, 0x24u);
     v10 = v2->map_tile_row_cnt;
@@ -273,12 +273,12 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
     tile_row = 0.0;
     v12 = (double)v10 / (double)v11;
     v2->map_row_step = v12;
-    if ( v10 > v11 )
+    if( v10 > v11 )
       tile_row = v12 * 0.5;
     v13 = 0.0;
     tot_draw_wid = 0;
     world_ina = 0;
-    if ( v11 > 0 )
+    if( v11 > 0 )
     {
       v14 = tile_row;
       do
@@ -288,11 +288,11 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
         v18 = (signed __int64)v14;
         v17 = (signed __int64)v14;
         LOWORD(v18) = v2->map_tile_row_cnt;
-        if ( (signed __int16)v17 >= (signed __int16)v18 )
+        if( (signed __int16)v17 >= (signed __int16)v18 )
           LOWORD(v17) = v18 - 1;
         v15[(signed __int16)world_ina].tile_row = v17;
         LOWORD(v18) = v2->map_wid;
-        if ( (signed __int16)v17 >= (signed __int16)v18 )
+        if( (signed __int16)v17 >= (signed __int16)v18 )
         {
           WORD2(v18) = v2->map_hgt - v17;
           v19 = HIDWORD(v18) + v18 - 1;
@@ -300,7 +300,7 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
         else
         {
           LOWORD(v19) = v2->map_hgt;
-          if ( (signed __int16)v17 < (signed __int16)v19 )
+          if( (signed __int16)v17 < (signed __int16)v19 )
             LOWORD(v19) = v17 + 1;
         }
         v20 = (double)(signed __int16)v19;
@@ -318,7 +318,7 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
         v31 = v28;
         v32 = v24;
         v33 = v31;
-        if ( !v34 )
+        if( !v34 )
         {
           LOWORD(v23) = v23 + 1;
           LOWORD(tile_rowa) = v23;
@@ -333,13 +333,13 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
         v2->map_tile_rows[v35].num_tiles = (signed __int64)(v33 / v32);
         v2->map_tile_rows[v35].ratio = v33 / v26;
         v36 = (int)&v2->map_tile_rows[v35].image_line;
-        if ( *(float *)(v36 + 32) >= 1.0 )
+        if( *(float *)(v36 + 32) >= 1.0 )
           v37 = 0.0;
         else
           v37 = col_step * 0.5;
         *(float *)(v36 + 12) = v37;
         v38 = v2->map_wid;
-        if ( (signed __int16)v17 >= v38 )
+        if( (signed __int16)v17 >= v38 )
         {
           v2->map_tile_rows[v35].map_row = v17 - v38 + 1;
           v2->map_tile_rows[v35].map_col = 0;
@@ -356,31 +356,31 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
         world_ina = (RGE_Game_World *)((char *)world_ina + 1);
         v14 = v14 + v2->map_row_step;
       }
-      while ( v39 ^ v40 );
+      while( v39 ^ v40 );
       v3 = 0;
     }
     v41 = 1.0 / v2->map_row_step;
     v42 = (signed __int64)v41;
     v2->map_tile_draw_hgt = v42;
-    if ( (double)v42 != v41 )
+    if( (double)v42 != v41 )
       v2->map_tile_draw_hgt = v42 + 1;
     v43 = tot_draw_wid / v2->map_image_hgt;
     world_inb = (RGE_Game_World *)v2->map_image_hgt;
     v2->map_tile_draw_wid = v43;
-    if ( v43 == v3 )
+    if( v43 == v3 )
       v2->map_tile_draw_wid = 1;
     v44 = v2->map_tile_row_cnt;
     v45 = 0;
     v46 = (double)(signed int)world_inb;
     v2->map_col_ratio = v13 / v46;
     v2->map_row_ratio = v46 / (double)v44;
-    if ( v44 > v3 )
+    if( v44 > v3 )
     {
       do
       {
         v47 = v2->map_tile_rows;
         v48 = v45;
-        if ( v47[v48].draw )
+        if( v47[v48].draw )
         {
           v3 = v45;
         }
@@ -398,7 +398,7 @@ void __thiscall RGE_Diamond_Map::set_world(RGE_Diamond_Map *this, RGE_Game_World
         }
         ++v45;
       }
-      while ( v45 < v2->map_tile_row_cnt );
+      while( v45 < v2->map_tile_row_cnt );
     }
     v50 = v2->vfptr;
     v2->view_col = -1;
@@ -428,7 +428,7 @@ void __thiscall RGE_Diamond_Map::set_redraw(RGE_Diamond_Map *this, TPanel::Redra
 
   v2 = this;
   TPanel::set_redraw((TPanel *)&this->vfptr, redraw_mode);
-  if ( redraw_mode == 2 )
+  if( redraw_mode == 2 )
     v2->render_all = 1;
 }
 
@@ -440,9 +440,9 @@ void __thiscall RGE_Diamond_Map::delete_surfaces(RGE_Diamond_Map *this)
 
   v1 = this;
   v2 = this->save_area;
-  if ( v2 && this->own_save_area )
+  if( v2 && this->own_save_area )
   {
-    if ( v2 )
+    if( v2 )
     {
       TDrawArea::~TDrawArea(this->save_area);
       operator delete(v2);
@@ -469,29 +469,29 @@ void __thiscall RGE_Diamond_Map::create_surfaces(RGE_Diamond_Map *this)
 
   v1 = this;
   v2 = this->save_area;
-  if ( v2 )
+  if( v2 )
   {
-    if ( v1->own_save_area )
+    if( v1->own_save_area )
       TDrawArea::SetSize(v2, v1->pnl_wid, v1->pnl_hgt, 0);
   }
   else
   {
     v3 = (TDrawArea *)operator new(0x100u);
-    if ( v3 )
+    if( v3 )
       TDrawArea::TDrawArea(v3, aDiamondMapRest, 0);
     else
       v4 = 0;
     v1->save_area = v4;
-    if ( v4 )
+    if( v4 )
     {
-      if ( TDrawArea::Init(v4, v1->render_area->DrawSystem, v1->pnl_wid, v1->pnl_hgt, 0, 0) )
+      if( TDrawArea::Init(v4, v1->render_area->DrawSystem, v1->pnl_wid, v1->pnl_hgt, 0, 0) )
       {
         v1->own_save_area = 1;
       }
       else
       {
         v5 = v1->save_area;
-        if ( v5 )
+        if( v5 )
         {
           TDrawArea::~TDrawArea(v1->save_area);
           operator delete(v5);
@@ -567,18 +567,18 @@ void __thiscall RGE_Diamond_Map::draw(RGE_Diamond_Map *this)
   TPanel *v6; // ecx@22
 
   v1 = this;
-  if ( this->render_area && this->save_area && this->visible && this->active )
+  if( this->render_area && this->save_area && this->visible && this->active )
   {
-    if ( this->map && this->player && this->map_image_lines && this->map_tile_rows )
+    if( this->map && this->player && this->map_image_lines && this->map_tile_rows )
     {
       v2 = this->vfptr;
       ((void (__stdcall *)(_DWORD))this->vfptr->draw_setup)(0);
       v3 = v1->render_all;
       v1->cur_player_bit = 1 << LOBYTE(v1->world->curr_player);
-      if ( v3 )
+      if( v3 )
       {
         v4 = v1->parent_panel;
-        if ( v4 )
+        if( v4 )
         {
           ((void (__stdcall *)(int))v4->vfptr->draw_rect)((int)&v1->clip_rect);
           TDrawArea::Copy(v1->render_area, v1->save_area, 0, 0, &v1->render_rect, 0);
@@ -596,10 +596,10 @@ void __thiscall RGE_Diamond_Map::draw(RGE_Diamond_Map *this)
         RGE_Diamond_Map::draw_explored_tiles(v1);
       }
       RGE_Diamond_Map::copy_image(v1);
-      if ( rge_base_game->game_mode != 21 )
+      if( rge_base_game->game_mode != 21 )
         ((void (__thiscall *)(RGE_Diamond_Map *))v2[1].__vecDelDtor)(v1);
       (*(void (__thiscall **)(RGE_Diamond_Map *))&v2[1].gap4[0])(v1);
-      if ( TDrawArea::Lock(v1->render_area, aDiam_mapDraw, 1) )
+      if( TDrawArea::Lock(v1->render_area, aDiam_mapDraw, 1) )
       {
         (*(void (__thiscall **)(RGE_Diamond_Map *))&v2[1].gap10[0])(v1);
         TDrawArea::Unlock(v1->render_area, aDiam_mapDraw);
@@ -611,7 +611,7 @@ void __thiscall RGE_Diamond_Map::draw(RGE_Diamond_Map *this)
     {
       v5 = this->vfptr;
       ((void (__stdcall *)(_DWORD))this->vfptr->draw_setup)(0);
-      if ( v1->map_image_lines )
+      if( v1->map_image_lines )
       {
         RGE_Diamond_Map::clear_image(v1);
         RGE_Diamond_Map::copy_image(v1);
@@ -620,7 +620,7 @@ void __thiscall RGE_Diamond_Map::draw(RGE_Diamond_Map *this)
       else
       {
         v6 = v1->parent_panel;
-        if ( v6 )
+        if( v6 )
         {
           ((void (__stdcall *)(int))v6->vfptr->draw_rect)((int)&v1->clip_rect);
           v5->draw_finish((TPanel *)v1);
@@ -683,11 +683,11 @@ void __thiscall RGE_Diamond_Map::clear_image(RGE_Diamond_Map *this)
   int v21; // [sp+10h] [bp-4h]@6
 
   v1 = this;
-  if ( TDrawArea::Lock(this->save_area, aDiam_mapClear_, 1) )
+  if( TDrawArea::Lock(this->save_area, aDiam_mapClear_, 1) )
   {
     v2 = v1->save_area;
     v3 = v1->map_image_start_y;
-    if ( v2->Orien == 1 )
+    if( v2->Orien == 1 )
     {
       v4 = v2->Pitch * v3;
       v5 = v2->Bits;
@@ -701,7 +701,7 @@ void __thiscall RGE_Diamond_Map::clear_image(RGE_Diamond_Map *this)
     }
     v8 = v3 + LOWORD(v1->pnl_y);
     v9 = v8 + v1->map_image_hgt;
-    if ( v8 < v9 )
+    if( v8 < v9 )
     {
       v21 = v6;
       v10 = &v1->map_image_lines->line_len;
@@ -711,21 +711,21 @@ void __thiscall RGE_Diamond_Map::clear_image(RGE_Diamond_Map *this)
       v20 = v9 - v8;
       do
       {
-        if ( v11 >= v1->clip_rect.top && v11 <= v1->clip_rect.bottom )
+        if( v11 >= v1->clip_rect.top && v11 <= v1->clip_rect.bottom )
         {
           v12 = *(v10 - 1);
           v13 = v12 + LOWORD(v1->pnl_x);
           v14 = *v10 + v12 + LOWORD(v1->pnl_x) - 1;
-          if ( (signed __int16)(v12 + LOWORD(v1->pnl_x)) < v1->clip_rect.left )
+          if( (signed __int16)(v12 + LOWORD(v1->pnl_x)) < v1->clip_rect.left )
           {
             v15 = LOWORD(v1->clip_rect.left) - v13;
             v13 = v1->clip_rect.left;
             v12 += v15;
           }
           v16 = v1->clip_rect.right;
-          if ( v14 > v16 )
+          if( v14 > v16 )
             v14 = v1->clip_rect.right;
-          if ( v13 >= v1->clip_rect.left && v14 <= v16 )
+          if( v13 >= v1->clip_rect.left && v14 <= v16 )
             memset((void *)(v12 + v7), v1->color, v14 - v13 + 1);
           v11 = v18;
         }
@@ -737,7 +737,7 @@ void __thiscall RGE_Diamond_Map::clear_image(RGE_Diamond_Map *this)
         v18 = v11;
         --v20;
       }
-      while ( !v17 );
+      while( !v17 );
     }
     TDrawArea::Unlock(v1->save_area, aDiam_mapClear_);
   }
@@ -767,23 +767,23 @@ void __thiscall RGE_Diamond_Map::draw_all_tiles(RGE_Diamond_Map *this)
   int v3; // esi@3
 
   v1 = this;
-  if ( TDrawArea::Lock(this->save_area, aDiam_mapDraw_a, 1) )
+  if( TDrawArea::Lock(this->save_area, aDiam_mapDraw_a, 1) )
   {
     v2 = 0;
-    if ( v1->map_hgt > 0 )
+    if( v1->map_hgt > 0 )
     {
       do
       {
         v3 = 0;
-        if ( v1->map_wid > 0 )
+        if( v1->map_wid > 0 )
         {
           do
             RGE_Diamond_Map::draw_tile(v1, v3++, v2, 0, 0);
-          while ( (signed __int16)v3 < v1->map_wid );
+          while( (signed __int16)v3 < v1->map_wid );
         }
         ++v2;
       }
-      while ( (signed __int16)v2 < v1->map_hgt );
+      while( (signed __int16)v2 < v1->map_hgt );
     }
     TDrawArea::Unlock(v1->save_area, aDiam_mapDraw_a);
   }
@@ -801,10 +801,10 @@ void __thiscall RGE_Diamond_Map::draw_explored_tiles(RGE_Diamond_Map *this)
 
   v1 = this;
   RGE_Tile_List::get_list_info(&this->player->diam_tile_list, &list, &list_size);
-  if ( list_size > 0 && TDrawArea::Lock(v1->save_area, aDiam_mapDraw_e, 1) )
+  if( list_size > 0 && TDrawArea::Lock(v1->save_area, aDiam_mapDraw_e, 1) )
   {
     v3 = 0;
-    if ( list_size > 0 )
+    if( list_size > 0 )
     {
       v4 = list;
       do
@@ -816,7 +816,7 @@ void __thiscall RGE_Diamond_Map::draw_explored_tiles(RGE_Diamond_Map *this)
         v4 = list + 1;
         ++list;
       }
-      while ( v3 < list_size );
+      while( v3 < list_size );
     }
     TDrawArea::Unlock(v1->save_area, aDiam_mapDraw_e);
   }
@@ -873,21 +873,21 @@ void __thiscall RGE_Diamond_Map::draw_tile(RGE_Diamond_Map *this, int col, int r
   color = 0;
   v6 = &this->map_tile_rows[this->map_wid + (signed __int16)row - (signed __int16)col - 1];
   tile_row = v6;
-  if ( !v6->draw )
+  if( !v6->draw )
     return;
   v7 = this->map;
   v41 = v7->map_row_offset;
-  if ( !v7->map_visible_flag
+  if( !v7->map_visible_flag
     && !((unsigned int)(&unified_map_offsets)[(signed __int16)row][(signed __int16)col] & this->player->mutualExploredMask) )
   {
     return;
   }
   LOWORD(v8) = row;
-  if ( (signed __int16)col < (signed __int16)row )
+  if( (signed __int16)col < (signed __int16)row )
     LOWORD(v8) = col;
   v9 = 0;
   v8 = (signed __int16)v8;
-  if ( v6->ratio >= 1.0 )
+  if( v6->ratio >= 1.0 )
   {
     v11 = (signed __int64)((double)v8 * v6->draw_step);
   }
@@ -895,12 +895,12 @@ void __thiscall RGE_Diamond_Map::draw_tile(RGE_Diamond_Map *this, int col, int r
   {
     v10 = (double)v8 * v6->ratio;
     v11 = (signed __int64)v10;
-    if ( v10 - (double)v11 >= v6->ratio )
+    if( v10 - (double)v11 >= v6->ratio )
       goto LABEL_11;
   }
   v9 = 1;
 LABEL_11:
-  if ( v9 )
+  if( v9 )
   {
     v12 = v6->image_line;
     v13 = v11 + v5->map_image_lines[v12].start_x;
@@ -908,7 +908,7 @@ LABEL_11:
     x = v13;
     y = v12 + v5->map_image_start_y;
     terrain = *((_BYTE *)&v41[(signed __int16)row][(signed __int16)col] + 5) & 0x1F;
-    if ( fog )
+    if( fog )
     {
       HIWORD(v28) = HIWORD(v6);
       v27 = v5->map_tile_draw_hgt;
@@ -917,18 +917,18 @@ LABEL_11:
       xa = v29;
       ya = v5->pnl_y + v14;
       rowc = v28;
-      if ( v27 == 1 )
+      if( v27 == 1 )
       {
-        if ( (_WORD)v28 == 1 )
+        if( (_WORD)v28 == 1 )
         {
           TDrawArea::SetPixel(v5->render_area, v29, ya, v5->fog_color);
         }
-        else if ( (_WORD)v28 == 2 )
+        else if( (_WORD)v28 == 2 )
         {
           TDrawArea::SetPixel(v5->render_area, v29, ya, v5->fog_color);
           TDrawArea::SetPixel(v5->render_area, v29 + 1, ya, v5->fog_color);
         }
-        else if ( (signed __int16)v28 > 0 )
+        else if( (signed __int16)v28 > 0 )
         {
           v30 = (signed __int16)v28;
           do
@@ -936,18 +936,18 @@ LABEL_11:
             TDrawArea::SetPixel(v5->render_area, v29++, ya, v5->fog_color);
             --v30;
           }
-          while ( v30 );
+          while( v30 );
         }
       }
       else
       {
         v31 = 0;
         override_colorc = 0;
-        if ( v27 > 0 )
+        if( v27 > 0 )
         {
           do
           {
-            if ( (signed __int16)v28 > 0 )
+            if( (signed __int16)v28 > 0 )
             {
               v32 = (signed __int16)v28;
               v33 = ya + (signed __int16)v31;
@@ -956,21 +956,21 @@ LABEL_11:
                 TDrawArea::SetPixel(v5->render_area, v29++, v33, v5->fog_color);
                 --v32;
               }
-              while ( v32 );
+              while( v32 );
               v31 = override_colorc;
               LOWORD(v28) = rowc;
               v29 = xa;
             }
             override_colorc = ++v31;
           }
-          while ( (signed __int16)v31 < v5->map_tile_draw_hgt );
+          while( (signed __int16)v31 < v5->map_tile_draw_hgt );
         }
       }
     }
     else
     {
       v15 = override_color;
-      if ( (_BYTE)override_color )
+      if( (_BYTE)override_color )
       {
 LABEL_18:
         color = v15;
@@ -1009,26 +1009,26 @@ LABEL_18:
       v16 = row;
       rowa = (signed __int16)row + 2;
       v17 = v16 - 1;
-      for ( override_colora = v16 - 1; ; override_colora = v17 )
+      for( override_colora = v16 - 1; ; override_colora = v17 )
       {
         HIWORD(v18) = HIWORD(rowa);
         v19 = (signed __int16)v17;
-        if ( (signed __int16)v17 >= rowa )
+        if( (signed __int16)v17 >= rowa )
           break;
-        if ( (signed __int16)v17 > -1 && (signed __int16)v17 < v5->map_hgt )
+        if( (signed __int16)v17 > -1 && (signed __int16)v17 < v5->map_hgt )
         {
 LABEL_24:
-          for ( i = col - 1; (signed __int16)i < (signed __int16)col + 2; ++i )
+          for( i = col - 1; (signed __int16)i < (signed __int16)col + 2; ++i )
           {
-            if ( (signed __int16)i > -1 && (signed __int16)i < v5->map_wid )
+            if( (signed __int16)i > -1 && (signed __int16)i < v5->map_wid )
             {
               v21 = v41[v19][(signed __int16)i].objects.list;
-              if ( v21 )
+              if( v21 )
               {
-                while ( v21->node->master_obj->map_draw_level != 4 )
+                while( v21->node->master_obj->map_draw_level != 4 )
                 {
                   v21 = v21->next;
-                  if ( !v21 )
+                  if( !v21 )
                   {
                     v17 = override_colora;
                     ++i;
@@ -1046,18 +1046,18 @@ LABEL_24:
       v22 = v5->map_tile_draw_hgt;
       LOWORD(v18) = tile_row->draw_wid;
       rowb = v18;
-      if ( v22 == 1 )
+      if( v22 == 1 )
       {
-        if ( (_WORD)v18 == 1 )
+        if( (_WORD)v18 == 1 )
         {
           TDrawArea::SetPixel(v5->save_area, v13, y, color);
         }
-        else if ( (_WORD)v18 == 2 )
+        else if( (_WORD)v18 == 2 )
         {
           TDrawArea::SetPixel(v5->save_area, v13, y, color);
           TDrawArea::SetPixel(v5->save_area, v13 + 1, y, color);
         }
-        else if ( (signed __int16)v18 > 0 )
+        else if( (signed __int16)v18 > 0 )
         {
           v23 = (signed __int16)v18;
           do
@@ -1065,18 +1065,18 @@ LABEL_24:
             TDrawArea::SetPixel(v5->save_area, v13++, y, color);
             --v23;
           }
-          while ( v23 );
+          while( v23 );
         }
       }
       else
       {
         v24 = 0;
         override_colorb = 0;
-        if ( v22 > 0 )
+        if( v22 > 0 )
         {
           do
           {
-            if ( (signed __int16)v18 > 0 )
+            if( (signed __int16)v18 > 0 )
             {
               v25 = (signed __int16)v18;
               v26 = y + (signed __int16)v24;
@@ -1085,14 +1085,14 @@ LABEL_24:
                 TDrawArea::SetPixel(v5->save_area, v13++, v26, color);
                 --v25;
               }
-              while ( v25 );
+              while( v25 );
               v24 = override_colorb;
               LOWORD(v18) = rowb;
               v13 = x;
             }
             override_colorb = ++v24;
           }
-          while ( (signed __int16)v24 < v5->map_tile_draw_hgt );
+          while( (signed __int16)v24 < v5->map_tile_draw_hgt );
         }
       }
     }
@@ -1115,18 +1115,18 @@ void __thiscall RGE_Diamond_Map::draw_selected_area(RGE_Diamond_Map *this)
 
   v1 = this;
   v2 = this->main_view;
-  if ( v2
+  if( v2
     && RGE_View::get_selection_area(v2, &sel_col1, &sel_row1, &sel_col2, &sel_row2, 1)
     && TDrawArea::Lock(v1->render_area, aDiam_mapDraw_s, 1) )
   {
     v3 = sel_row1;
-    if ( sel_row1 <= sel_row2 )
+    if( sel_row1 <= sel_row2 )
     {
       v4 = sel_col2;
       v5 = sel_col1;
       do
       {
-        if ( v5 <= v4 )
+        if( v5 <= v4 )
         {
           do
           {
@@ -1134,12 +1134,12 @@ void __thiscall RGE_Diamond_Map::draw_selected_area(RGE_Diamond_Map *this)
             v4 = sel_col2;
             ++v5;
           }
-          while ( v5 <= sel_col2 );
+          while( v5 <= sel_col2 );
           v5 = sel_col1;
         }
         ++v3;
       }
-      while ( v3 <= sel_row2 );
+      while( v3 <= sel_row2 );
     }
     TDrawArea::Unlock(v1->render_area, aDiam_mapDraw_s);
   }
@@ -1171,13 +1171,13 @@ void __thiscall RGE_Diamond_Map::draw_objects(RGE_Diamond_Map *this)
   signed int i; // [sp+38h] [bp-4h]@6
 
   v1 = this;
-  if ( TDrawArea::Lock(this->render_area, aDiam_mapDraw_o, 1) )
+  if( TDrawArea::Lock(this->render_area, aDiam_mapDraw_o, 1) )
   {
     v2 = v1->world;
     v1->draw_objects_mode = 1;
-    for ( j = (*v2->players)->objects->list; j; j = j->next )
+    for( j = (*v2->players)->objects->list; j; j = j->next )
     {
-      if ( j->node )
+      if( j->node )
         (*(void (__thiscall **)(RGE_Diamond_Map *, RGE_Static_Object *, signed int, signed int))&v1->vfptr[1].gap4[4])(
           v1,
           j->node,
@@ -1188,30 +1188,30 @@ void __thiscall RGE_Diamond_Map::draw_objects(RGE_Diamond_Map *this)
     v1->draw_objects_mode = 2;
     v5 = 1;
     i = 1;
-    if ( v4->player_num > 1 )
+    if( v4->player_num > 1 )
     {
       do
       {
         v6 = v4->players[v5];
         v7 = v6->doppleganger_objects->list;
         color1 = v6->color_table->map_color;
-        for ( color2 = v6->color_table->map_color; v7; v7 = v7->next )
+        for( color2 = v6->color_table->map_color; v7; v7 = v7->next )
         {
-          if ( v7->node )
+          if( v7->node )
             (*(void (__thiscall **)(RGE_Diamond_Map *, RGE_Static_Object *))&v1->vfptr[1].gap4[4])(v1, v7->node);
         }
-        for ( k = v6->objects->list; k; k = k->next )
+        for( k = v6->objects->list; k; k = k->next )
         {
           v11 = k->node;
-          if ( k->node && !(v11->selected & 1) && (v11->owner != v1->player || !v11->vfptr->underAttack(k->node)) )
+          if( k->node && !(v11->selected & 1) && (v11->owner != v1->player || !v11->vfptr->underAttack(k->node)) )
             (*(void (__thiscall **)(RGE_Diamond_Map *, RGE_Static_Object *))&v1->vfptr[1].gap4[4])(v1, v11);
         }
         v4 = v1->world;
         v5 = i++ + 1;
       }
-      while ( (signed __int16)i < v4->player_num );
+      while( (signed __int16)i < v4->player_num );
     }
-    if ( v1->player->sel_count > 0 )
+    if( v1->player->sel_count > 0 )
     {
       v12 = 0;
       v1->draw_objects_mode = 3;
@@ -1219,10 +1219,10 @@ void __thiscall RGE_Diamond_Map::draw_objects(RGE_Diamond_Map *this)
       do
       {
         v14 = v1->player;
-        if ( v13 >= v14->sel_count )
+        if( v13 >= v14->sel_count )
           break;
         v15 = v14->sel_list[v12];
-        if ( v15 )
+        if( v15 )
         {
           (*(void (__thiscall **)(RGE_Diamond_Map *, RGE_Static_Object *, signed int, signed int))&v1->vfptr[1].gap4[4])(
             v1,
@@ -1233,26 +1233,26 @@ void __thiscall RGE_Diamond_Map::draw_objects(RGE_Diamond_Map *this)
         }
         ++v12;
       }
-      while ( v12 < 25 );
+      while( v12 < 25 );
     }
     v16 = v1->player;
     v1->draw_objects_mode = 4;
     v17 = v16->objects->list;
     v19 = v16->color_table->map_color;
-    if ( v17 )
+    if( v17 )
     {
       v18 = v16->color_table->map_color;
       do
       {
         v20 = v17->node;
-        if ( v17->node )
+        if( v17->node )
         {
-          if ( v20->vfptr->underAttack(v17->node) )
+          if( v20->vfptr->underAttack(v17->node) )
             (*(void (__thiscall **)(RGE_Diamond_Map *, RGE_Static_Object *))&v1->vfptr[1].gap4[4])(v1, v20);
         }
         v17 = v17->next;
       }
-      while ( v17 );
+      while( v17 );
     }
     TDrawArea::Unlock(v1->render_area, aDiam_mapDraw_o);
   }
@@ -1278,39 +1278,39 @@ void __thiscall RGE_Diamond_Map::draw_visible_object(RGE_Diamond_Map *this, RGE_
 
   v4 = game_obj;
   v5 = this;
-  if ( game_obj->tile )
+  if( game_obj->tile )
   {
     v6 = game_obj->world_y;
     game_obja = (RGE_Static_Object *)(signed __int64)game_obj->world_x;
     v7 = this->player;
     row = (signed __int64)v6;
-    if ( !v7->visible )
+    if( !v7->visible )
       goto LABEL_34;
     v8 = this->map;
     v9 = v8->map_visible_flag;
-    if ( v9 )
+    if( v9 )
     {
-      if ( !v8->fog_flag )
+      if( !v8->fog_flag )
         goto LABEL_34;
     }
     v10 = (&unified_map_offsets)[(signed __int16)(signed __int64)v6][(signed __int16)game_obja];
     v11 = 0;
-    if ( (unsigned int)v10 & v7->mutualExploredMask )
+    if( (unsigned int)v10 & v7->mutualExploredMask )
       v11 = -128;
-    if ( (unsigned int)v10 & v7->mutualVisibleMask )
+    if( (unsigned int)v10 & v7->mutualVisibleMask )
       v11 = 15;
-    if ( v9 && !v11 )
+    if( v9 && !v11 )
       v11 = -128;
-    if ( !v8->fog_flag && v11 == -128 )
+    if( !v8->fog_flag && v11 == -128 )
 LABEL_34:
       v11 = 15;
-    if ( v11 == 15 || v11 == -128 && v4->master_obj->fog_flag )
+    if( v11 == 15 || v11 == -128 && v4->master_obj->fog_flag )
     {
-      if ( v4->type == 25 )
+      if( v4->type == 25 )
       {
-        if ( v11 == 15 )
+        if( v11 == 15 )
           return;
-        if ( v7->mutualAlly[v4->owner->id] != 1 || (unsigned int)v4[1].tile & v5->cur_player_bit )
+        if( v7->mutualAlly[v4->owner->id] != 1 || (unsigned int)v4[1].tile & v5->cur_player_bit )
         {
           v12 = 255;
           v13 = 0;
@@ -1327,7 +1327,7 @@ LABEL_34:
       {
         v15 = v4->master_obj;
         v13 = v15->map_draw_level;
-        if ( v13 == 3 )
+        if( v13 == 3 )
           v12 = v15->map_color;
         else
           v12 = (unsigned __int8)color1;
@@ -1387,9 +1387,9 @@ void __thiscall RGE_Diamond_Map::draw_object(RGE_Diamond_Map *this, __int16 col,
   v6 = this;
   v7 = row;
   v8 = (int)&v6->map_tile_rows[row + v6->map_wid - col - 1].image_line;
-  if ( col < row )
+  if( col < row )
     v7 = col;
-  if ( *(float *)(v8 + 32) >= 1.0 )
+  if( *(float *)(v8 + 32) >= 1.0 )
     v9 = (double)v7 * *(float *)(v8 + 24);
   else
     v9 = (double)v7 * *(float *)(v8 + 32);
@@ -1434,12 +1434,12 @@ void __userpurge RGE_Diamond_Map::draw_clipped_horz_line(RGE_Diamond_Map *this@<
   v8 = image_line->start_x + this->pnl_x;
   v9 = x;
   image_linea = a2;
-  if ( x < v8 )
+  if( x < v8 )
     v9 = (_WORD)a2 + LOWORD(this->pnl_x);
   v10 = len;
   v11 = v7->line_len;
   xa = v9;
-  if ( len + v9 - 1 >= v8 + v11 )
+  if( len + v9 - 1 >= v8 + v11 )
     v10 = (_WORD)image_linea + v11 + LOWORD(this->pnl_x) - v9;
   TDrawArea::DrawHorzLine(this->render_area, xa, y, v10, color);
 }
@@ -1486,21 +1486,21 @@ void __thiscall RGE_Diamond_Map::draw_view_rect(RGE_Diamond_Map *this)
   v4 = (signed __int64)v2->view_y;
   v5 = (_WORD)v3 == this->view_col;
   row = v4;
-  if ( !v5 || (_WORD)v4 != this->view_row )
+  if( !v5 || (_WORD)v4 != this->view_row )
   {
-    if ( (signed __int16)v3 < 0 )
+    if( (signed __int16)v3 < 0 )
       return;
     v6 = this->map;
-    if ( (signed __int16)v3 >= v6->map_width || (signed __int16)v4 < 0 || (signed __int16)v4 >= v6->map_height )
+    if( (signed __int16)v3 >= v6->map_width || (signed __int16)v4 < 0 || (signed __int16)v4 >= v6->map_height )
       return;
     v7 = (int)&v1->map_tile_rows[v1->map_wid
                                - (signed __int16)(signed __int64)v2->view_x
                                + (signed __int16)(signed __int64)v2->view_y
                                - 1].image_line;
     v8 = row;
-    if ( (signed __int16)v3 < (signed __int16)row )
+    if( (signed __int16)v3 < (signed __int16)row )
       v8 = v3;
-    if ( *(float *)(v7 + 32) >= 1.0 )
+    if( *(float *)(v7 + 32) >= 1.0 )
     {
       vhgt = v8;
       v9 = (double)v8 * *(float *)(v7 + 24);
@@ -1531,25 +1531,25 @@ void __thiscall RGE_Diamond_Map::draw_view_rect(RGE_Diamond_Map *this)
     v1->view_row = v16;
   }
   v17 = v1->view_rect.top;
-  for ( i = v1->view_rect.bottom; v17 <= i; ++v17 )
+  for( i = v1->view_rect.bottom; v17 <= i; ++v17 )
   {
     v19 = v1->map_image_start_y;
     v20 = v1->pnl_y;
-    if ( v17 >= v20 + v19 && v17 <= v1->map_image_hgt + v20 + v19 - 1 )
+    if( v17 >= v20 + v19 && v17 <= v1->map_image_hgt + v20 + v19 - 1 )
     {
       v21 = v17 - v19 - v20;
       v22 = v1->view_rect.right;
       v23 = (int)&v1->map_image_lines[v21].tile_row;
       v24 = v1->view_rect.left;
-      if ( v17 == v1->view_rect.top || v17 == i )
+      if( v17 == v1->view_rect.top || v17 == i )
       {
         v27 = v1->pnl_x + *(_WORD *)(v23 + 2);
         v28 = v27 + *(_WORD *)(v23 + 4);
-        if ( v24 < v28 && v22 >= v27 )
+        if( v24 < v28 && v22 >= v27 )
         {
-          if ( v24 < v27 )
+          if( v24 < v27 )
             v24 = v1->pnl_x + *(_WORD *)(v23 + 2);
-          if ( v22 >= v28 )
+          if( v22 >= v28 )
             v22 = v28 - 1;
           TDrawArea::DrawHorzLine(v1->render_area, v24, v17, v22 - v24 + 1, -1);
         }
@@ -1557,10 +1557,10 @@ void __thiscall RGE_Diamond_Map::draw_view_rect(RGE_Diamond_Map *this)
       else
       {
         v25 = v1->pnl_x + *(_WORD *)(v23 + 2);
-        if ( v24 < v25 + *(_WORD *)(v23 + 4) && v24 >= v25 )
+        if( v24 < v25 + *(_WORD *)(v23 + 4) && v24 >= v25 )
           TDrawArea::SetPixel(v1->render_area, v24, v17, -1);
         v26 = v1->pnl_x + *(_WORD *)(v23 + 2);
-        if ( v22 < v26 + *(_WORD *)(v23 + 4) && v22 >= v26 )
+        if( v22 < v26 + *(_WORD *)(v23 + 4) && v22 >= v26 )
           TDrawArea::SetPixel(v1->render_area, v22, v17, -1);
       }
     }
@@ -1587,7 +1587,7 @@ int __thiscall RGE_Diamond_Map::pick_tile(RGE_Diamond_Map *this, int x, int y, _
   int result; // eax@13
 
   v6 = this;
-  if ( this->map
+  if( this->map
     && (v7 = this->map_image_lines) != 0
     && (v8 = this->pnl_x, v9 = y - this->pnl_y, v10 = x - v8, v11 = v6->map_image_start_y, v9 >= v11)
     && v9 <= v6->map_image_hgt + v11 - 1
@@ -1598,11 +1598,11 @@ int __thiscall RGE_Diamond_Map::pick_tile(RGE_Diamond_Map *this, int x, int y, _
     v16 = (signed __int64)((double)(v10 - v13) * *(float *)(v15 + 8) + *(float *)(v15 + 12));
     v17 = v16 + *(_WORD *)(v15 + 16);
     v18 = v16 + *(_WORD *)(v15 + 18);
-    if ( col )
+    if( col )
       *col = v17;
-    if ( row )
+    if( row )
       *row = v18;
-    if ( tile )
+    if( tile )
       *tile = &v6->map->map_row_offset[v18][v17];
     result = 1;
   }
@@ -1642,7 +1642,7 @@ void __thiscall RGE_Diamond_Map::start_scroll_view(RGE_Diamond_Map *this, int x,
   v3 = x;
   v4 = this;
   v5 = y;
-  if ( RGE_Diamond_Map::pick_tile(this, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
+  if( RGE_Diamond_Map::pick_tile(this, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
   {
     TPanel::capture_mouse((TPanel *)&v4->vfptr);
     v6 = (double)(signed __int16)y - -0.5;
@@ -1653,7 +1653,7 @@ void __thiscall RGE_Diamond_Map::start_scroll_view(RGE_Diamond_Map *this, int x,
     RGE_Player::set_view_loc(v4->player, v9, v8);
     v4->vfptr->set_redraw((TPanel *)v4, RedrawNormal);
     v10 = v4->main_view;
-    if ( v10 )
+    if( v10 )
       ((void (__stdcall *)(signed int))v10->vfptr->set_redraw)(1);
     v4->mouse_last_x = v3;
     v4->mouse_last_y = v5;
@@ -1674,14 +1674,14 @@ void __thiscall RGE_Diamond_Map::handle_scroll_view(RGE_Diamond_Map *this, int x
   v3 = x;
   v4 = this;
   v5 = y;
-  if ( RGE_Diamond_Map::pick_tile(this, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
+  if( RGE_Diamond_Map::pick_tile(this, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
   {
     v6 = (double)(signed __int16)y - -0.5;
     v7 = (double)(signed __int16)x - -0.5;
     RGE_Player::set_view_loc(v4->player, v7, v6);
     v4->vfptr->set_redraw((TPanel *)v4, RedrawNormal);
     v8 = v4->main_view;
-    if ( v8 )
+    if( v8 )
       ((void (__stdcall *)(signed int))v8->vfptr->set_redraw)(1);
     v4->mouse_last_x = v3;
     v4->mouse_last_y = v5;
@@ -1707,7 +1707,7 @@ int __thiscall RGE_Diamond_Map::is_inside(RGE_Diamond_Map *this, int x, int y)
   v3 = x;
   v4 = y;
   v5 = this;
-  if ( TPanel::is_inside((TPanel *)&this->vfptr, x, y) )
+  if( TPanel::is_inside((TPanel *)&this->vfptr, x, y) )
     result = RGE_Diamond_Map::pick_tile(v5, v3, v4, (__int16 *)&x, (__int16 *)&y, &tile);
   else
     result = 0;

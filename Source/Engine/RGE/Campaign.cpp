@@ -14,7 +14,7 @@ void __thiscall RGE_Campaign::RGE_Campaign(RGE_Campaign *this, char *in_filename
   sprintf(this->filename, aSS, rge_base_game->prog_info->campaign_dir, in_filename);
   v3 = _open(v2->filename, 0x8000);
   v4 = v3;
-  if ( v3 < 0 )
+  if( v3 < 0 )
   {
     strcpy(v2->campaign_header.name, aFileNotFound);
     v2->campaign_header.scenario_num = 0;
@@ -25,7 +25,7 @@ void __thiscall RGE_Campaign::RGE_Campaign(RGE_Campaign *this, char *in_filename
   {
     read(v3, v2, 0x108u);
     v5 = v2->campaign_header.scenario_num;
-    if ( v5 <= 0 )
+    if( v5 <= 0 )
     {
       v2->scenario_offsets = 0;
       _close(v4);
@@ -59,13 +59,13 @@ void __thiscall RGE_Campaign::RGE_Campaign(RGE_Campaign *this, char *campaign_fi
   v7 = 0;
   strcpy(v6->campaign_header.name, campaign_name);
   v6->campaign_header.scenario_num = scenario_num;
-  if ( scenario_num <= 0 )
+  if( scenario_num <= 0 )
   {
     v6->scenario_offsets = 0;
     goto LABEL_8;
   }
   v6->scenario_offsets = (RGE_Scenario_Offset *)calloc(scenario_num, 0x208u);
-  if ( scenario_num <= 0 )
+  if( scenario_num <= 0 )
   {
 LABEL_8:
     RGE_Campaign::create_file(v6);
@@ -74,7 +74,7 @@ LABEL_8:
   v8 = scenarios;
   v9 = (char *)scenarios_name - (char *)scenarios;
   campaign_filenamea = (char *)scenario_num;
-  while ( 1 )
+  while( 1 )
   {
     v10 = *(char **)((char *)v8 + v9);
     ++v8;
@@ -82,7 +82,7 @@ LABEL_8:
     scenario_numa = v6->scenario_offsets[v7].file_name;
     ++v7;
     strcpy(scenario_numa, *(v8 - 1));
-    if ( !--campaign_filenamea )
+    if( !--campaign_filenamea )
       break;
     v9 = (char *)scenarios_name - (char *)scenarios;
   }
@@ -95,7 +95,7 @@ void __thiscall RGE_Campaign::~RGE_Campaign(RGE_Campaign *this)
   RGE_Campaign *v1; // esi@1
 
   v1 = this;
-  if ( this->scenario_offsets )
+  if( this->scenario_offsets )
   {
     free(this->scenario_offsets);
     v1->scenario_offsets = 0;
@@ -124,16 +124,16 @@ void __thiscall RGE_Campaign::create_file(RGE_Campaign *this)
   v1 = this;
   v2 = _open(this->filename, 33537, 384);
   handle = v2;
-  if ( v2 >= 0 )
+  if( v2 >= 0 )
   {
     _write(v2, v1, 0x108u);
     v3 = v1->campaign_header.scenario_num;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
       _write(v2, v1->scenario_offsets, 520 * v3);
       index = 0;
       current_offset = 520 * v1->campaign_header.scenario_num + 264;
-      if ( v1->campaign_header.scenario_num > 0 )
+      if( v1->campaign_header.scenario_num > 0 )
       {
         v11 = 0;
         do
@@ -141,7 +141,7 @@ void __thiscall RGE_Campaign::create_file(RGE_Campaign *this)
           sprintf(tempname, aSS, rge_base_game->prog_info->scenario_dir, v1->scenario_offsets[v11].file_name);
           v4 = _open(tempname, 0x8000);
           v5 = v4;
-          if ( v4 > -1 )
+          if( v4 > -1 )
           {
             lseek(v4, 0, 2);
             v6 = _tell(v5);
@@ -161,7 +161,7 @@ void __thiscall RGE_Campaign::create_file(RGE_Campaign *this)
           v9 = index++ + 1 - v8 < 0;
           ++v11;
         }
-        while ( v9 ^ v10 );
+        while( v9 ^ v10 );
       }
       lseek(v2, 264, 0);
       _write(v2, v1->scenario_offsets, 520 * v1->campaign_header.scenario_num);
@@ -179,7 +179,7 @@ int __thiscall RGE_Campaign::open_scenario(RGE_Campaign *this, int scenario)
   int result; // eax@4
 
   v2 = this;
-  if ( scenario < 0
+  if( scenario < 0
     || scenario >= this->campaign_header.scenario_num
     || (v3 = _open(this->filename, 0x8000), v4 = v3, v3 < 0) )
   {
@@ -216,7 +216,7 @@ int __thiscall RGE_Campaign::scenario_info(RGE_Campaign *this, char ***scenario_
   v2 = this;
   v3 = 0;
   *scenario_names = (char **)calloc(this->campaign_header.scenario_num, 4u);
-  if ( v2->campaign_header.scenario_num > 0 )
+  if( v2->campaign_header.scenario_num > 0 )
   {
     v4 = 0;
     do
@@ -224,7 +224,7 @@ int __thiscall RGE_Campaign::scenario_info(RGE_Campaign *this, char ***scenario_
       getstring(&(*scenario_names)[v3++], v2->scenario_offsets[v4].name);
       ++v4;
     }
-    while ( v3 < v2->campaign_header.scenario_num );
+    while( v3 < v2->campaign_header.scenario_num );
   }
   return v2->campaign_header.scenario_num;
 }

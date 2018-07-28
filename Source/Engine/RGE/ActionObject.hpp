@@ -39,7 +39,7 @@ public:
      * TODO: when was this added?
      * Offset (AOC): 270.
      */
-	short selected_group_info;
+    short selected_group_info;
 
     int lastActionValue;
 

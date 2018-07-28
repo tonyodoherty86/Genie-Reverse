@@ -25,7 +25,7 @@ RGE_Action_Explore *__thiscall RGE_Action_Explore::`vector deleting destructor'(
 
   v2 = this;
   RGE_Action_Explore::~RGE_Action_Explore(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -49,7 +49,7 @@ void __thiscall RGE_Action_Explore::RGE_Action_Explore(RGE_Action_Explore *this,
 //----- (00402BE0) --------------------------------------------------------
 void __thiscall RGE_Action_Explore::first_in_stack(RGE_Action_Explore *this, char first_time)
 {
-  if ( LODWORD(this->target_x) == -1082130432 )
+  if( LODWORD(this->target_x) == -1082130432 )
     ((void (__stdcall *)(_DWORD))this->vfptr->set_state)(3);
   else
     ((void (__stdcall *)(_DWORD))this->vfptr->set_state)(11);
@@ -100,12 +100,12 @@ LABEL_3:
       break;
     case 0xB:
       v4 = v2->task;
-      if ( v4 && (v5 = v4->move_sprite) != 0 )
+      if( v4 && (v5 = v4->move_sprite) != 0 )
         v6 = v5;
       else
         v6 = *(RGE_Sprite **)&v2->obj->master_obj[1].master_type;
       v7 = (RGE_Action_Move_To *)operator new(0x44u);
-      if ( v7 )
+      if( v7 )
       {
         RGE_Action_Move_To::RGE_Action_Move_To(v7, v2->obj, v2->target_x, v2->target_y, v2->target_z, 0.0, v6);
         v9 = v8;
@@ -114,7 +114,7 @@ LABEL_3:
       {
         v9 = 0;
       }
-      if ( v9 )
+      if( v9 )
       {
         RGE_Action::setSubAction(v9, 1);
         RGE_Action_List::add_action(v2->sub_actions, v9);
@@ -135,13 +135,13 @@ char __thiscall RGE_Action_Explore::update(RGE_Action_Explore *this)
   RGE_ActionVtbl *v3; // edi@6
 
   v1 = this;
-  if ( this->state == 1 )
+  if( this->state == 1 )
   {
     result = 1;
   }
   else
   {
-    if ( this->state == 11 )
+    if( this->state == 11 )
     {
       switch ( (unsigned __int8)((int (*)(void))this->sub_actions->vfptr->update)() )
       {
@@ -162,7 +162,7 @@ char __thiscall RGE_Action_Explore::update(RGE_Action_Explore *this)
           break;
       }
     }
-    else if ( this->state == 13 )
+    else if( this->state == 13 )
     {
       ((void (__stdcall *)(int, int, signed int, signed int, _DWORD, _DWORD))this->obj->vfptr->notify)(
         this->obj->id,
@@ -185,7 +185,7 @@ int __thiscall RGE_Action_Explore::work(RGE_Action_Explore *this, RGE_Static_Obj
   RGE_ActionVtbl *v5; // edx@3
   int result; // eax@3
 
-  if ( x < 0.0 || y < 0.0 )
+  if( x < 0.0 || y < 0.0 )
   {
     ((void (__stdcall *)(signed int))this->vfptr->set_state)(3);
     result = 1;

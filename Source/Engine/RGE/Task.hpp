@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Task.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/06
  * @version 1.0
  */
 
@@ -10,46 +10,46 @@ class RGE_Task
 {
 public:
 
-    short task_type;
+    short task_type = 1;
 
-    short id;
+    short id = -1;
 
-    char is_default;
+    bool is_default = false;
 
-    short action_type;
+    short action_type = 0;
 
-    short object_group;
+    short object_group = 0;
     
-    short object_id;
+    short object_id = 0;
 
-    char combat_level;
+    char combat_level = 0;
 
-    char combat_level_flag;
+    char combat_level_flag = 0;
 
     short terrain_id = -1;
 
-    char owner_type;
+    char owner_type = 0;
 
-    char holding_attr;
+    char holding_attr = 0;
 
-    char state_building;
+    char state_building = 0;
 
     short attribute_type = -1,
           attribute_type2 = -1,
           attribute_type3 = -1,
           attribute_type4 = -1;
 
-    float work_val1,
-          work_val2;
+    float work_val1 = 0.0,
+          work_val2 = 0.0;
 
-    float work_range;
+    float work_range = 0.0;
 
-    char search_flag;
+    char search_flag = 0.0;
 
     float search_wait_time;
 
-    short work_flag,
-          work_flag2;
+    short work_flag = 0,
+          work_flag2 = 0;
 
     RGE_Sprite *move_sprite,
                *work_sprite,
@@ -61,8 +61,6 @@ public:
 
     RGE_Task(
         short id_in);
-
-    ~RGE_Task();
 
     void copy(
         RGE_Task *other_task);

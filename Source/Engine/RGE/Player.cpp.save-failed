@@ -1,79 +1,117 @@
 
-/**
- * @file    Engine\RGE\Player.cpp
- * @author  Yvan Burrie
- * @date    2018/07/05
- * @version 1.0
- */
-
-RGE_Player::RGE_Player(
-    int infile,
-    RGE_Game_World *gworld,
-    char this_id)
+//----- (0046E4B0) --------------------------------------------------------
+void RGE_Player::RGE_Player(int infile, RGE_Game_World *gworld, char this_id)
 {
+    RGE_Player *v4; // esi@1
+    char *v5; // ebx@1
+    int v6; // eax@1
+    RGE_Doppleganger_Creator *v7; // eax@1
+    RGE_Doppleganger_Creator *v8; // eax@2
+    RGE_Game_World *v9; // eax@4
+    char *v10; // eax@4
+    RGE_Game_World *v11; // edx@4
+    char *v12; // eax@8
+    int v13; // ecx@8
+    short *v14; // ebp@10
+    float *v15; // eax@11
+    int v16; // ecx@11
+    short index; // [sp+12h] [bp-16h]@7
+    int table; // [sp+14h] [bp-14h]@13
+    RGE_Player *v19; // [sp+18h] [bp-10h]@1
+    int v20; // [sp+24h] [bp-4h]@1
+
+    v4 = this;
+    v5 = (char *)&this->pathingAttemptCapValue;
+    v19 = this;
     this->computerPlayerValue = 0;
     this->pathingAttemptCapValue = 5;
     this->pathingDelayCapValue = 10;
-
-    this->tile_list->RGE_Tile_List(400);
-    this->diam_tile_list->RGE_Tile_List(400);
-
-    this->id = this_id;
-    this->pathingAttemptCapValue = pathingCapValue;
-    this->world = gworld;
-    this->reset_selected();
-    this->doppleganger_creator = new RGE_Doppleganger_Creator(this, 100);
-    this->relations = new char[this->player_num];
-    rge_read(infile, this->relations, this->world->player_num);
-    rge_read(infile, this->unitDiplomacy, 4 * RGE_PLAYERS_COUNT);
-
-    if( save_game_version >= 4.01 ){
-        rge_read(infile, &this->allied_LOS_Enable, 4);
-    }else{
-        this->allied_LOS_Enable = 0;
+    RGE_Tile_List::RGE_Tile_List(&this->tile_list, 400);
+    v20 = 0;
+    RGE_Tile_List::RGE_Tile_List(&v4->diam_tile_list, 400);
+    v4->vfptr = (RGE_PlayerVtbl *)&RGE_Player::`vftable';
+    v6 = pathingCapValue;
+    v4->id = (unsigned __int8)this_id;
+    *(_DWORD *)v5 = v6;
+    v4->world = gworld;
+    RGE_Player::reset_selected(v4);
+    v7 = (RGE_Doppleganger_Creator *)operator new(0x1Cu);
+    LOBYTE(v20) = 2;
+    if( v7 )
+        RGE_Doppleganger_Creator::RGE_Doppleganger_Creator(v7, v4, 100);
+    else
+        v8 = 0;
+    v4->doppleganger_creator = v8;
+    v9 = v4->world;
+    LOBYTE(v20) = 1;
+    v10 = (char *)calloc(1u, v9->player_num);
+    v11 = v4->world;
+    v4->relations = v10;
+    rge_read(0, infile, infile, v10, v11->player_num);
+    rge_read(0, infile, infile, v4->unitDiplomacy, 36);
+    if( save_game_version < 4.0100002 )
+        v4->allied_LOS_Enable = 0;
+    else
+        rge_read(0, infile, infile, &v4->allied_LOS_Enable, 4);
+    rge_read(0, infile, infile, &v4->allied_victory, 1);
+    rge_read(0, infile, infile, &index, 2);
+    if( index <= 0 )
+    {
+        v4->name = 0;
     }
-    rge_read(infile, &this->allied_victory, 1);
-    rge_read(infile, &index, 2);
-    if( index > 0 ){
+    else
+    {
         v12 = (char *)calloc(index, 1u);
         v13 = index;
-        this->name = v12;
+        v4->name = v12;
         rge_read(0, infile, infile, v12, v13);
-    }else{
-        this->name = NULL;
     }
-
-    rge_read(infile, &this->attribute_num, 2);
-    if( this->attribute_num > 0 ){
-        this->attributes = new float[this->attribute_num];
-        rge_read(infile, this->attributes, 4 * this->attribute_num);
-    }else{
-        this->attributes = nullptr;
+    v14 = &v4->attribute_num;
+    rge_read((int)&v4->attribute_num, infile, infile, &v4->attribute_num, 2);
+    if( v4->attribute_num <= 0 )
+    {
+        v4->attributes = 0;
     }
-    rge_read(infile, &this->view_x, 4);
-    rge_read(infile, &this->view_y, 4);
-    rge_read(infile, &this->map_x, 2);
-    rge_read(infile, &this->map_y, 2);
-    rge_read(infile, &this->culture, 1);
-    rge_read(infile, &this->master_player_id, 1);
-    rge_read(infile, &this->game_status, 1);
-    rge_read(infile, &this->resigned, 1);
-    rge_read(infile, &table, 1);
-    this->set_color_table(table);
-    rge_read(infile, v5, 4);
-    rge_read(infile, &this->pathingDelayCapValue, 4);
+    else
+    {
+        v15 = (float *)calloc(v4->attribute_num, 4u);
+        v16 = *v14;
+        v4->attributes = v15;
+        rge_read((int)v14, infile, infile, v15, 4 * v16);
+    }
+    rge_read((int)v14, infile, infile, &v4->view_x, 4);
+    rge_read((int)v14, infile, infile, &v4->view_y, 4);
+    rge_read((int)v14, infile, infile, &v4->map_x, 2);
+    rge_read((int)v14, infile, infile, &v4->map_y, 2);
+    rge_read((int)v14, infile, infile, &v4->culture, 1);
+    rge_read((int)v14, infile, infile, &v4->master_player_id, 1);
+    rge_read((int)v14, infile, infile, &v4->game_status, 1);
+    rge_read((int)v14, infile, infile, &v4->resigned, 1);
+    rge_read((int)v14, infile, infile, &table, 1);
+    RGE_Player::set_color_table(v4, table);
+    rge_read((int)v14, infile, infile, v5, 4);
+    rge_read((int)v14, infile, infile, &v4->pathingDelayCapValue, 4);
+    v4->checksum_created_this_update = 0;
+    v4->checksum = 0;
+}
+// 570ED0: using guessed type int (*RGE_Player::`vftable')(void *Memory, unsigned int __flags);
+// 57F9F8: using guessed type int pathingCapValue;
+// 58EBCC: using guessed type float save_game_version;
 
-    this->checksum_created_this_update = 0;
-    this->checksum = 0;
+//----- (0046E750) --------------------------------------------------------
+RGE_Player *RGE_Player::`vector deleting destructor'(unsigned int __flags)
+{
+    RGE_Player *v2; // esi@1
+
+    v2 = this;
+    RGE_Player::~RGE_Player(this);
+    if( __flags & 1 )
+        operator delete(v2);
+    return v2;
 }
 
-RGE_Player::RGE_Player(
-    RGE_Game_World *gworld,
-    RGE_Master_Player *prototype,
-    char this_id,
-    char *new_name,
-    char m_player_id,
-    char flag)
+//----- (0046E770) --------------------------------------------------------
+void RGE_Player::RGE_Player(RGE_Game_World *gworld, RGE_Master_Player *prototype, char this_id, char *new_name, char m_player_id, char flag)
 {
     RGE_Player *v7; // ebp@1
     short v8; // si@1
@@ -252,8 +290,11 @@ RGE_Player::RGE_Player(
     v7->checksum = 0;
     v7->checksum_created_this_update = 0;
 }
+// 570ED0: using guessed type int (*RGE_Player::`vftable')(void *Memory, unsigned int __flags);
+// 57F9F8: using guessed type int pathingCapValue;
 
-RGE_Player::~RGE_Player()
+//----- (0046EB00) --------------------------------------------------------
+void RGE_Player::~RGE_Player()
 {
     RGE_Player *v1; // esi@1
     RGE_Object_List *v2; // edi@1
@@ -345,24 +386,28 @@ RGE_Player::~RGE_Player()
     RGE_Tile_List::~RGE_Tile_List(&v1->diam_tile_list);
     RGE_Tile_List::~RGE_Tile_List(&v1->tile_list);
 }
+// 570ED0: using guessed type int (*RGE_Player::`vftable')(void *Memory, unsigned int __flags);
 
-int RGE_Player::strategicNumber()
+//----- (0046ECB0) --------------------------------------------------------
+int __stdcall RGE_Player::strategicNumber(int __formal)
 {
     return -1;
 }
 
-int RGE_Player::sendAICommand()
+//----- (0046ECC0) --------------------------------------------------------
+int __stdcall RGE_Player::sendAICommand(int __formal, int a3, int a4, int a5, int a6)
 {
     return 0;
 }
 
-int RGE_Player::objectCostByType()
+//----- (0046ECD0) --------------------------------------------------------
+int __stdcall RGE_Player::objectCostByType(int __formal)
 {
     return -1;
 }
 
-void RGE_Player::set_game_status(
-    char new_status)
+//----- (0046ECE0) --------------------------------------------------------
+void RGE_Player::set_game_status(char new_status)
 {
     char v2; // dl@2
 
@@ -383,8 +428,8 @@ void RGE_Player::set_game_status(
     }
 }
 
-void RGE_Player::do_resign(
-    int dropped)
+//----- (0046ED50) --------------------------------------------------------
+void RGE_Player::do_resign(int dropped)
 {
     RGE_Player *v2; // esi@1
     RGE_PlayerVtbl *v3; // eax@1
@@ -396,7 +441,7 @@ void RGE_Player::do_resign(
     this->resigned = 1;
     (*(void (__stdcall **)(signed int))&v3->gap4[0])(2);
     if( !v4 )
-        rge_base_game->notification(
+        ((void (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))rge_base_game->vfptr->notification)(
             5,
             v2->id,
             dropped,
@@ -404,55 +449,56 @@ void RGE_Player::do_resign(
             0);
 }
 
+//----- (0046ED90) --------------------------------------------------------
 char RGE_Player::get_resigned()
 {
     return this->resigned;
 }
 
-char *RGE_Player::aiStatus(
-    int sNum)
+//----- (0046EDA0) --------------------------------------------------------
+char *__stdcall RGE_Player::aiStatus(int sNum)
 {
     return 0;
 }
 
+//----- (0046EDB0) --------------------------------------------------------
 int RGE_Player::computerPlayer()
 {
     return this->computerPlayerValue;
 }
 
-bool RGE_Player::isEnemy(
-    int playerNum)
+//----- (0046EDC0) --------------------------------------------------------
+BOOL RGE_Player::isEnemy(int playerNum)
 {
-    return
-        playerNum != this->id &&
-        playerNum > 0 &&
-        playerNum < this->world->player_num &&
-        this->relations[playerNum] == 3;
+    return playerNum != this->id
+            && playerNum > 0
+            && playerNum < this->world->player_num
+            && this->relations[playerNum] == 3;
 }
 
-bool RGE_Player::isAlly(
-    int playerNum)
+//----- (0046EE00) --------------------------------------------------------
+int RGE_Player::isAlly(int playerNum)
 {
-    if( playerNum == this->id ){
-        return true;
-    }
-    return
-        playerNum > 0 &&
-        playerNum < this->world->player_num &&
-        this->relations[playerNum] == 0;
+    int result; // eax@2
+
+    if( playerNum == this->id )
+        result = 1;
+    else
+        result = playerNum > 0 && playerNum < this->world->player_num && !this->relations[playerNum];
+    return result;
 }
 
-bool RGE_Player::isNeutral(
-    int playerNum)
+//----- (0046EE40) --------------------------------------------------------
+BOOL RGE_Player::isNeutral(int playerNum)
 {
-    return
-        playerNum != this->id &&
-        playerNum > 0 &&
-        playerNum < this->world->player_num &&
-        this->relations[playerNum] == 1;
+    return playerNum != this->id
+            && playerNum > 0
+            && playerNum < this->world->player_num
+            && this->relations[playerNum] == 1;
 }
 
-bool RGE_Player::isAllNeutral()
+//----- (0046EE80) --------------------------------------------------------
+int RGE_Player::isAllNeutral()
 {
     RGE_Player *v1; // esi@1
     signed int v2; // edi@1
@@ -476,21 +522,11 @@ bool RGE_Player::isAllNeutral()
     return result;
 }
 
-void RGE_Player::sendUnitAIOrder(
-    int issuer,
-    int recipient,
-    int orderType,
-    int target,
-    int targetOwner,
-    float targetX,
-    float targetY,
-    float targetZ,
-    float range,
-    int immediate,
-    int inFront,
-    int priority)
+//----- (0046EEF0) --------------------------------------------------------
+void RGE_Player::sendUnitAIOrder(int issuer, int recipient, int orderType, int target, int targetOwner, float targetX, float targetY, float targetZ, float range, int immediate, int inFront, int priority)
 {
-    this->world->commands->command_ai_order(
+    RGE_Command::command_ai_order(
+        this->world->commands,
         issuer,
         issuer,
         recipient,
@@ -506,25 +542,14 @@ void RGE_Player::sendUnitAIOrder(
         priority);
 }
 
-void RGE_Player::processAIOrder(
-    int issuer,
-    int recipient,
-    int orderType,
-    int target,
-    int targetOwner,
-    float targetX,
-    float targetY,
-    float targetZ,
-    float range,
-    int immediate,
-    int inFront,
-    int priority)
+//----- (0046EF40) --------------------------------------------------------
+void RGE_Player::processAIOrder(int issuer, int recipient, int orderType, int target, int targetOwner, float targetX, float targetY, float targetZ, float range, int immediate, int inFront, int priority)
 {
     RGE_Static_Object *v13; // eax@1
     RGE_Static_Object *v14; // esi@1
     UnitAIModule *v15; // eax@3
 
-    v13 = this->world->object(recipient);
+    v13 = RGE_Game_World::object(this->world, recipient);
     v14 = v13;
     if( v13 )
     {
@@ -548,27 +573,20 @@ void RGE_Player::processAIOrder(
     }
 }
 
+//----- (0046EFB0) --------------------------------------------------------
 void RGE_Player::sendGameOrder(RGE_Static_Object *unit, RGE_Static_Object *target, float targetX, float targetY)
 {
     RGE_Command::command_order(this->world->commands, &unit, 1, target, targetX, targetY);
 }
 
-void RGE_Player::sendAddWaypointCommand(
-    int recipient,
-    XYZBYTEPoint *waypoint,
-    int numWaypoints)
+//----- (0046EFE0) --------------------------------------------------------
+void RGE_Player::sendAddWaypointCommand(int recipient, XYZBYTEPoint *waypoint, int numWaypoints)
 {
-    this->world->commands->command_add_waypoint(
-        this->id,
-        recipient,
-        waypoint,
-        numWaypoints);
+    RGE_Command::command_add_waypoint(this->world->commands, this->id, recipient, waypoint, numWaypoints);
 }
 
-void RGE_Player::processAddWaypointCommand(
-    int recipient,
-    XYZBYTEPoint *waypoint,
-    int numWaypoints)
+//----- (0046F010) --------------------------------------------------------
+void RGE_Player::processAddWaypointCommand(int recipient, XYZBYTEPoint *waypoint, int numWaypoints)
 {
     RGE_Static_Object *v4; // eax@1
     RGE_Static_Object *v5; // edi@1
@@ -596,10 +614,8 @@ void RGE_Player::processAddWaypointCommand(
     }
 }
 
-void RGE_Player::sendPlayCommand(
-    int recipient,
-    int target,
-    int playID)
+//----- (0046F050) --------------------------------------------------------
+void RGE_Player::sendPlayCommand(int recipient, int target, int playID)
 {
     RGE_Player *v4; // esi@1
     RGE_PlayerVtbl *v5; // ebp@1
@@ -674,29 +690,28 @@ void RGE_Player::sendPlayCommand(
     }
 }
 
-void RGE_Player::sendPlayCommand(
-    int recipient,
-    int *groupUnits,
-    int groupCount,
-    int target,
-    int playID)
+//----- (0046F140) --------------------------------------------------------
+void RGE_Player::sendPlayCommand(int recipient, int *groupUnits, int groupCount, int target, int playID)
 {
-    this->command_destroy_group(recipient);
+    RGE_Player *v6; // esi@1
+    RGE_PlayerVtbl *v7; // edi@1
 
-    if( this->world->playbook->play(playID) ){
-
-        if( groupCount ){
-
-            this->command_create_group(
-                this,
+    v6 = this;
+    v7 = this->vfptr;
+    ((void (__stdcall *)(_DWORD))this->vfptr->command_destroy_group)(recipient);
+    if( AIPlayBook::play(v6->world->playbook, playID) )
+    {
+        if( groupCount )
+        {
+            ((void (*)(RGE_Player *, int, int *, int, signed int))v7->command_create_group)(
+                v6,
                 recipient,
                 groupUnits,
                 groupCount,
                 0x40000000);
-
-            this->sendUnitAIOrder(
-                this,
-                this->id,
+            ((void (*)(RGE_Player *, _DWORD, int, signed int, int, int, signed int, signed int, signed int, signed int, signed int, _DWORD, signed int))v7->sendUnitAIOrder)(
+                v6,
+                v6->id,
                 recipient,
                 726,
                 target,
@@ -709,11 +724,12 @@ void RGE_Player::sendPlayCommand(
                 0,
                 100);
         }
-    }else{
-
-        this->sendUnitAIOrder(
-            this,
-            this->id,
+    }
+    else
+    {
+        ((void (*)(_DWORD, _DWORD, _DWORD, signed int, signed int, signed int, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))v7->sendUnitAIOrder)(
+            v6,
+            v6->id,
             recipient,
             727,
             -1,
@@ -728,31 +744,37 @@ void RGE_Player::sendPlayCommand(
     }
 }
 
+//----- (0046F200) --------------------------------------------------------
 int RGE_Player::pathingAttemptCap()
 {
     return this->pathingAttemptCapValue;
 }
 
+//----- (0046F210) --------------------------------------------------------
 void RGE_Player::setPathingAttemptCap(int v)
 {
     this->pathingAttemptCapValue = v;
 }
 
+//----- (0046F220) --------------------------------------------------------
 int RGE_Player::pathingDelayCap()
 {
     return this->pathingDelayCapValue;
 }
 
+//----- (0046F230) --------------------------------------------------------
 void RGE_Player::setPathingDelayCap(int v)
 {
     this->pathingDelayCapValue = v;
 }
 
+//----- (0046F240) --------------------------------------------------------
 int RGE_Player::currentUpdatePathingAttempts()
 {
     return this->currentUpdatePathingAttemptsValue;
 }
 
+//----- (0046F250) --------------------------------------------------------
 int RGE_Player::availablePathingAttempts(int numWaitDelays)
 {
     int v2; // eax@1
@@ -819,20 +841,21 @@ RGE_Static_Object *RGE_Player::make_scenario_obj(
 
     v7 = 0;
     v8 = this->master_objects[master_id];
-
-    if( this->master_objects[master_id] ){
-        v7 = this->master_objects[master_id]->make_new_obj(
-             v8,
-             this,
-             LODWORD(world_x),
-             LODWORD(world_y),
-             LODWORD(world_z));
-
-        if( (unsigned __int8)state >= RGE_Static_Object::State::Unk7 ){
+    if( v8 )
+    {
+        v7 = ((int (*)(RGE_Master_Static_Object *, RGE_Player *, _DWORD, _DWORD, _DWORD))v8->vfptr->make_new_obj)(
+                     v8,
+                     this,
+                     LODWORD(world_x),
+                     LODWORD(world_y),
+                     LODWORD(world_z));
+        if( (unsigned __int8)state >= 7u )
+        {
             (*(void (**)(int))(*(_DWORD *)v7 + 104))(v7);
             return (RGE_Static_Object *)v7;
         }
-        if( state > RGE_Static_Object::State::Alive ){
+        if( (unsigned __int8)state > 2u )
+        {
             (*(void (**)(int))(*(_DWORD *)v7 + 108))(v7);
             return (RGE_Static_Object *)v7;
         }
@@ -857,131 +880,128 @@ void RGE_Player::scenario_load(
     int v14; // eax@26
 
     if( version <= 1.05 ){
-        return;
-    }
-    v6 = infile;
-    short count;
-    rge_read(infile, &count, 2);
-    if( count > 0 ){
-        a2 = (char *)calloc(count, 1u);
-        rge_read(v6, (int)a2, v6, a2, count);
-        if( this->name )
-            free(a2);
-        else
-            this->name = a2;
-    }
-    rge_read(v6, (int)a2, v6, &this->view_x, 4);
-    rge_read(v6, (int)a2, v6, &this->view_y, 4);
-    rge_read(v6, (int)a2, v6, &this->map_x, 2);
-    rge_read(v6, (int)a2, v6, &this->map_y, 2);
-    v7 = 0;
-    v8 = rge_base_game->prog_mode;
-    int has_team = 0;
-    if( rge_base_game->prog_mode != 7 ){
-        a2 = (char *)1;
-        while( rge_base_game->playerID((int)a2) != this->id
-                 || comm->GetPlayerHumanity((unsigned int)a2) != 2
-                 && comm->GetPlayerHumanity((unsigned int)a2) != 4 )
-        {
-            if( (signed int)++a2 >= 9 )
-                goto LABEL_15;
+        v6 = infile;
+        short count;
+        rge_read(infile, &count, 2);
+        if( count > 0 ){
+            a2 = (char *)calloc(count, 1u);
+            rge_read(v6, (int)a2, v6, a2, count);
+            if( this->name )
+                free(a2);
+            else
+                this->name = a2;
         }
-        if( RGE_Base_Game::playerTeam(rge_base_game, (int)--a2) > 1 ){
-            v7 = 1;
-            has_team = 1;
-        }
-    }
-    LABEL_15:
-    if( version > 1.0 ){
-        char temp_byte;
-        rge_read(infile, &temp_byte, 1);
-        if( v7 == 0 ){
-            this->allied_victory = temp_byte;
-        }
-    }
-    v9 = 0;
-    v10 = this->attribute_num == 0;
-    v11 = this->attribute_num < 0;
-    this->allied_LOS_Enable = 0;
-    if( this->attribute_num > 0 ){
-        rge_read(infile, this->attributes, 116);
-    }
-    short player_count;
-    rge_read(infile, &player_count, 2);
-    if( player_count > 0 )
-    {
-        while( 1 )
-        {
-            rge_read(infile, &infile, 1);
-            if( !v7 )
+        rge_read(v6, (int)a2, v6, &this->view_x, 4);
+        rge_read(v6, (int)a2, v6, &this->view_y, 4);
+        rge_read(v6, (int)a2, v6, &this->map_x, 2);
+        rge_read(v6, (int)a2, v6, &this->map_y, 2);
+        v7 = 0;
+        v8 = rge_base_game->prog_mode;
+        int has_team = 0;
+        if( rge_base_game->prog_mode != 7 ){
+            a2 = (char *)1;
+            while( rge_base_game->playerID((int)a2) != this->id
+                     || comm->GetPlayerHumanity((unsigned int)a2) != 2
+                     && comm->GetPlayerHumanity((unsigned int)a2) != 4 )
             {
-                v12 = &player_id_hash[(signed short)v9];
-                v13 = *v12;
-                if( *v12 < this->world->player_num && v13 >= 0 )
+                if( (signed int)++a2 >= 9 )
+                    goto LABEL_15;
+            }
+            if( RGE_Base_Game::playerTeam(rge_base_game, (int)--a2) > 1 ){
+                v7 = 1;
+                has_team = 1;
+            }
+        }
+        LABEL_15:
+        if( version > 1.0 ){
+            char temp_byte;
+            rge_read(infile, &temp_byte, 1);
+            if( v7 == 0 ){
+                this->allied_victory = temp_byte;
+            }
+        }
+        v9 = 0;
+        v10 = this->attribute_num == 0;
+        v11 = this->attribute_num < 0;
+        this->allied_LOS_Enable = 0;
+        if( this->attribute_num > 0 ){
+            rge_read(infile, this->attributes, 116);
+        }
+        short player_count;
+        rge_read(infile, &player_count, 2);
+        if( player_count > 0 )
+        {
+            while( 1 )
+            {
+                rge_read(infile, &infile, 1);
+                if( !v7 )
                 {
-                    this->relations[v13] = infile;
-                    v14 = *v12;
-                    if( *v12 )
+                    v12 = &player_id_hash[(signed short)v9];
+                    v13 = *v12;
+                    if( *v12 < this->world->player_num && v13 >= 0 )
                     {
-                        if( (_WORD)v9 == this->id )
+                        this->relations[v13] = infile;
+                        v14 = *v12;
+                        if( *v12 )
                         {
-                            this->unitDiplomacy[v14] = 1;
-                        }
-                        else if( (_BYTE)infile )
-                        {
-                            if( (_BYTE)infile == 1 )
-                                this->unitDiplomacy[v14] = 3;
+                            if( (_WORD)v9 == this->id )
+                            {
+                                this->unitDiplomacy[v14] = 1;
+                            }
+                            else if( (_BYTE)infile )
+                            {
+                                if( (_BYTE)infile == 1 )
+                                    this->unitDiplomacy[v14] = 3;
+                                else
+                                    this->unitDiplomacy[v14] = 4;
+                            }
                             else
-                                this->unitDiplomacy[v14] = 4;
+                            {
+                                this->unitDiplomacy[v14] = 2;
+                            }
                         }
                         else
                         {
-                            this->unitDiplomacy[v14] = 2;
+                            this->unitDiplomacy[0] = 0;
                         }
                     }
-                    else
-                    {
-                        this->unitDiplomacy[0] = 0;
-                    }
                 }
+                if( (signed short)++v9 >= player_count )
+                    break;
+                v7 = has_team;
             }
-            if( (signed short)++v9 >= player_count )
-                break;
-            v7 = has_team;
         }
+        if( version > 1.08 ){
+            rge_read(infile, this->unitDiplomacy, 36);
+        }
+        if( this->victory_conditions ){
+            delete this->victory_conditions;
+        }
+        this->load_victory(v6, player_id_hash, 0);
     }
-    if( version > 1.08 ){
-        rge_read(infile, this->unitDiplomacy, 4 * RGE_PLAYERS_COUNT);
-    }
-    if( this->victory_conditions ){
-        delete this->victory_conditions;
-    }
-    this->load_victory(v6, player_id_hash, false);
 }
 
-void RGE_Player::scenario_postsave(
-    int outfile)
+void RGE_Player::scenario_postsave(int outfile)
 {
-    unsigned int count;
+    RGE_Player *v2; // esi@1
+    unsigned int count; // [sp+8h] [bp-4h]@1
+
+    v2 = this;
     count = strlen(this->name) + 1;
     rge_write(outfile, &count, 2);
-    rge_write(outfile, this->name, (signed short)count);
-    rge_write(outfile, &this->view_x, 4);
-    rge_write(outfile, &this->view_y, 4);
-    rge_write(outfile, &this->map_x, 2);
-    rge_write(outfile, &this->map_y, 2);
-    rge_write(outfile, &this->allied_victory, 1);
-    rge_write(outfile, &this->world->player_num, 2);
-    rge_write(outfile, this->relations, this->world->player_num);
-    rge_write(outfile, this->unitDiplomacy, 4 * RGE_PLAYERS_COUNT);
-
-    this->victory_conditions->save(outfile);
+    rge_write(outfile, v2->name, (signed short)count);
+    rge_write(outfile, &v2->view_x, 4);
+    rge_write(outfile, &v2->view_y, 4);
+    rge_write(outfile, &v2->map_x, 2);
+    rge_write(outfile, &v2->map_y, 2);
+    rge_write(outfile, &v2->allied_victory, 1);
+    rge_write(outfile, &v2->world->player_num, 2);
+    rge_write(outfile, v2->relations, v2->world->player_num);
+    rge_write(outfile, v2->unitDiplomacy, 36);
+    ((void (__stdcall *)(int))v2->victory_conditions->vfptr->save)(outfile);
 }
 
-void RGE_Player::scenario_postload(
-    int infile,
-    int *player_id_hash,
-    float version)
+void RGE_Player::scenario_postload(int infile, int *player_id_hash, float version)
 {
     int v5; // ebp@1
     RGE_Player *v6; // esi@1
@@ -1003,20 +1023,20 @@ void RGE_Player::scenario_postload(
     {
         a2 = (char *)calloc(count, 1u);
         rge_read(infile, a2, count);
-        if( this->name )
+        if( v6->name )
             free(a2);
         else
-            this->name = a2;
+            v6->name = a2;
     }
-    rge_read(infile, &this->view_x, 4);
-    rge_read(infile, &this->view_y, 4);
-    rge_read(infile, &this->map_x, 2);
-    rge_read(infile, &this->map_y, 2);
+    rge_read(infile, &v6->view_x, 4);
+    rge_read(infile, &v6->view_y, 4);
+    rge_read(infile, &v6->map_x, 2);
+    rge_read(infile, &v6->map_y, 2);
     has_team = 0;
     if( rge_base_game->prog_mode != 7 )
     {
         a2 = (char *)1;
-        while( RGE_Base_Game::playerID(rge_base_game, (int)a2) != this->id
+        while( RGE_Base_Game::playerID(rge_base_game, (int)a2) != v6->id
                  || TCommunications_Handler::GetPlayerHumanity(comm, (unsigned int)a2) != 2
                  && TCommunications_Handler::GetPlayerHumanity(comm, (unsigned int)a2) != 4 )
         {
@@ -1031,13 +1051,13 @@ LABEL_14:
     {
         rge_read(infile, &temp_byte, 1);
         if( !has_team )
-            this->allied_victory = temp_byte;
+            v6->allied_victory = temp_byte;
     }
     v7 = version < 1.06;
     v8 = version == 1.06;
-    this->allied_LOS_Enable = 0;
-    if( (v7 || v8) && this->attribute_num > 0 )
-        rge_read(infile, this->attributes, 116);
+    v6->allied_LOS_Enable = 0;
+    if( (v7 || v8) && v6->attribute_num > 0 )
+        rge_read(infile, v6->attributes, 116);
     rge_read(infile, &player_count, 2);
     v9 = 0;
     v10 = player_id_hash;
@@ -1049,30 +1069,30 @@ LABEL_14:
             if( !has_team )
             {
                 v11 = v10 ? LOWORD(v10[(signed short)v9]) : (_WORD)v9;
-                if( v11 < this->world->player_num && v11 >= 0 )
+                if( v11 < v6->world->player_num && v11 >= 0 )
                 {
-                    this->relations[v11] = infile;
+                    v6->relations[v11] = infile;
                     if( v11 )
                     {
-                        if( v11 == this->id )
+                        if( v11 == v6->id )
                         {
-                            this->unitDiplomacy[v11] = 1;
+                            v6->unitDiplomacy[v11] = 1;
                         }
                         else if( (_BYTE)infile )
                         {
                             if( (_BYTE)infile == 1 )
-                                this->unitDiplomacy[v11] = 3;
+                                v6->unitDiplomacy[v11] = 3;
                             else
-                                this->unitDiplomacy[v11] = 4;
+                                v6->unitDiplomacy[v11] = 4;
                         }
                         else
                         {
-                            this->unitDiplomacy[v11] = 2;
+                            v6->unitDiplomacy[v11] = 2;
                         }
                     }
                     else
                     {
-                        this->unitDiplomacy[0] = 0;
+                        v6->unitDiplomacy[0] = 0;
                     }
                 }
             }
@@ -1082,17 +1102,17 @@ LABEL_14:
         while( (signed short)v9 < player_count );
     }
     if( version >= 1.08 )
-        rge_read(v5, v9, v5, this->unitDiplomacy, 36);
-    v12 = this->victory_conditions;
+        rge_read(v5, v9, v5, v6->unitDiplomacy, 36);
+    v12 = v6->victory_conditions;
     if( v12 )
     {
-        RGE_Victory_Conditions::~RGE_Victory_Conditions(this->victory_conditions);
+        RGE_Victory_Conditions::~RGE_Victory_Conditions(v6->victory_conditions);
         operator delete(v12);
     }
     if( version >= 1.09 ){
-        this->load_victory(v6, v5, v10, false);
+        this->load_victory(v6, v5, v10, 0);
     }else{
-        this->load_victory(v6, v5, v10, true);
+        this->load_victory(v6, v5, v10, 1);
     }
 }
 
@@ -1126,22 +1146,22 @@ void RGE_Player::load(
     v6 = 0;
     if( *(_WORD *)v5 <= 0 )
     {
-        this->master_objects = 0;
+        v4->master_objects = 0;
     }
     else
     {
         v7 = (RGE_Master_Static_Object **)calloc(*(_WORD *)v5, 4u);
         v8 = *(_WORD *)v5;
-        this->master_objects = v7;
+        v4->master_objects = v7;
         rge_read((int)v5, 0, v3, v7, 4 * v8);
         if( *(_WORD *)v5 > 0 )
         {
             do
             {
-                if( this->master_objects[(signed short)v6] )
+                if( v4->master_objects[(signed short)v6] )
                 {
                     rge_read((int)v5, v6, v3, &infile, 1);
-                    RGE_Player::load_master_object(v4, (int)v5, v3, v6, infile, this->world->sprites, this->world->sounds);
+                    RGE_Player::load_master_object(v4, (int)v5, v3, v6, infile, v4->world->sprites, v4->world->sounds);
                 }
                 ++v6;
             }
@@ -1150,42 +1170,41 @@ void RGE_Player::load(
     }
     v9 = (RGE_Visible_Map *)operator new(0x38u);
     if( v9 )
-        RGE_Visible_Map::RGE_Visible_Map(v9, v6, v3, this->world);
+        RGE_Visible_Map::RGE_Visible_Map(v9, v6, v3, v4->world);
     else
         v10 = 0;
-    this->visible = v10;
+    v4->visible = v10;
     v11 = (Visible_Resource_Manager *)operator new(0x14u);
     if( v11 )
         Visible_Resource_Manager::Visible_Resource_Manager(v11, v3, v4);
     else
         v12 = 0;
-    this->VR_List = v12;
+    v4->VR_List = v12;
     v13 = (RGE_Object_List *)operator new(0xCu);
     if( v13 )
         RGE_Object_List::RGE_Object_List(v13);
     else
         v14 = 0;
-    v15 = this->world;
-    this->objects = v14;
+    v15 = v4->world;
+    v4->objects = v14;
     RGE_Object_List::load_list(v14, (int)v5, v3, v15);
     v16 = (RGE_Object_List *)operator new(0xCu);
     if( v16 )
         RGE_Object_List::RGE_Object_List(v16);
     else
         v17 = 0;
-    this->sleeping_objects = v17;
+    v4->sleeping_objects = v17;
     v18 = (RGE_Object_List *)operator new(0xCu);
     if( v18 )
         RGE_Object_List::RGE_Object_List(v18);
     else
         v19 = 0;
-    v20 = this->sleeping_objects;
-    v21 = this->world;
-    this->doppleganger_objects = v19;
+    v20 = v4->sleeping_objects;
+    v21 = v4->world;
+    v4->doppleganger_objects = v19;
     RGE_Object_List::load_list(v20, (int)v5, v3, v21);
-    if( save_game_version >= 7.0900002 ){
-        this->doppleganger_objects->load_list((int)v5, v3, this->world);
-    }
+    if( save_game_version >= 7.0900002 )
+        RGE_Object_List::load_list(v4->doppleganger_objects, (int)v5, v3, v4->world);
 }
 
 void RGE_Player::load_master_object(
@@ -1195,111 +1214,122 @@ void RGE_Player::load_master_object(
     RGE_Sprite **sprites,
     RGE_Sound **sounds)
 {
-    RGE_Static_Object *obj;
+    RGE_Player *v7; // esi@1
+    RGE_Master_Static_Object *v8; // eax@2
+    RGE_Master_Static_Object *v9; // eax@3
+    RGE_Master_Animated_Object *v10; // eax@4
+    RGE_Master_Static_Object *v11; // eax@5
+    RGE_Master_Moving_Object *v12; // eax@6
+    RGE_Master_Missile_Object *v13; // eax@8
+    RGE_Master_Static_Object *v14; // eax@9
+    RGE_Master_Action_Object *v15; // eax@10
+    RGE_Master_Combat_Object *v16; // eax@12
+    RGE_Master_Static_Object *v17; // eax@13
+    RGE_Master_Doppleganger_Object *v18; // eax@15
 
-    switch ( type ){
-
-    case RGE_STATIC_OBJECT_TYPE:
-        obj = new RGE_Master_Static_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    case RGE_ANIMATED_OBJECT_TYPE:
-        obj = new RGE_Master_Animated_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    case RGE_MOVING_OBJECT_TYPE:
-        obj = new RGE_Master_Moving_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    case RGE_DOPPLEGANGER_OBJECT_TYPE:
-        obj = new RGE_Master_Doppleganger_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    case RGE_ACTION_OBJECT_TYPE:
-        obj = new RGE_Master_Action_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    case RGE_COMBAT_OBJECT_TYPE:
-        obj = new RGE_Master_Combat_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    case RGE_MISSILE_OBJECT_TYPE:
-        obj = new RGE_Master_Missile_Object(
-            infile,
-            sprites,
-            sounds,
-            true);
-        break;
-
-    default:
-        return;
+    v7 = this;
+    switch ( type )
+    {
+        case 0xA:
+            v8 = (RGE_Master_Static_Object *)operator new(0xB8u);
+            if( !v8 )
+                goto LABEL_17;
+            RGE_Master_Static_Object::RGE_Master_Static_Object(v8, a2, infile, sprites, sounds, 1);
+            goto LABEL_18;
+        case 0x14:
+            v10 = (RGE_Master_Animated_Object *)operator new(0xBCu);
+            if( !v10 )
+                goto LABEL_14;
+            RGE_Master_Animated_Object::RGE_Master_Animated_Object(v10, infile, sprites, sounds, 1);
+            v7->master_objects[index] = v11;
+            return;
+        case 0x1E:
+            v12 = (RGE_Master_Moving_Object *)operator new(0xD8u);
+            if( !v12 )
+                goto LABEL_17;
+            RGE_Master_Moving_Object::RGE_Master_Moving_Object(v12, infile, sprites, sounds, 1);
+            goto LABEL_18;
+        case 0x3C:
+            v13 = (RGE_Master_Missile_Object *)operator new(0x154u);
+            if( !v13 )
+                goto LABEL_14;
+            RGE_Master_Missile_Object::RGE_Master_Missile_Object(v13, infile, sprites, sounds, 1);
+            v7->master_objects[index] = v14;
+            return;
+        case 0x28:
+            v15 = (RGE_Master_Action_Object *)operator new(0xFCu);
+            if( !v15 )
+                goto LABEL_17;
+            RGE_Master_Action_Object::RGE_Master_Action_Object(v15, infile, sprites, sounds, 1);
+            goto LABEL_18;
+        case 0x32:
+            v16 = (RGE_Master_Combat_Object *)operator new(0x148u);
+            if( v16 )
+            {
+                RGE_Master_Combat_Object::RGE_Master_Combat_Object(v16, infile, sprites, sounds, 1);
+                v7->master_objects[index] = v17;
+            }
+            else
+            {
+LABEL_14:
+                v7->master_objects[index] = 0;
+            }
+            break;
+        case 0x19:
+            v18 = (RGE_Master_Doppleganger_Object *)operator new(0xBCu);
+            if( v18 )
+                RGE_Master_Doppleganger_Object::RGE_Master_Doppleganger_Object(v18, infile, sprites, sounds, 1);
+            else
+LABEL_17:
+                v9 = 0;
+LABEL_18:
+            v7->master_objects[index] = v9;
+            break;
+        default:
+            return;
     }
-
-    this->master_objects[index] = obj;
 }
 
-void RGE_Player::load_info(
-    int infile)
+//----- (0046FF00) --------------------------------------------------------
+void RGE_Player::load_info(int infile)
 {
-    int player_id = 0;
+    RGE_Player *v2; // esi@1
 
-    this->load_victory(
-        infile,
-        player_id,
-        true);
-
-    this->objects             ->rehook_list();
-    this->sleeping_objects    ->rehook_list();
-    this->doppleganger_objects->rehook_list();
+    v2 = this;
+    ((void (__stdcall *)(_DWORD, _DWORD, _DWORD))this->vfptr->load_victory)(infile, 0, 1);
+    RGE_Object_List::rehook_list(v2->objects);
+    RGE_Object_List::rehook_list(v2->sleeping_objects);
+    RGE_Object_List::rehook_list(v2->doppleganger_objects);
 }
 
+//----- (0046FF40) --------------------------------------------------------
 int RGE_Player::get_checksum()
 {
-    if( this->checksum_created_this_update == false ){
-        this->create_checksum();
-    }
-    return this->checksum;
+    RGE_Player *v1; // esi@1
+
+    v1 = this;
+    if( !this->checksum_created_this_update )
+        RGE_Player::create_checksum(this);
+    return v1->checksum;
 }
 
-bool RGE_Player::get_checksums(
-    int *new_checksum,
-    int *new_position_checksum,
-    int *new_action_checksum)
+//----- (0046FF60) --------------------------------------------------------
+char RGE_Player::get_checksums(int *new_checksum, int *new_position_checksum, int *new_action_checksum)
 {
-    if( this->checksum_created_this_update == false ){
-        this->create_checksum();
-    }
-    *new_checksum          = this->checksum;
-    *new_position_checksum = this->position_checksum;
-    *new_action_checksum   = this->action_checksum;
+    RGE_Player *v4; // esi@1
+    char result; // al@3
 
-    return true;
+    v4 = this;
+    if( !this->checksum_created_this_update )
+        RGE_Player::create_checksum(this);
+    *new_checksum = v4->checksum;
+    *new_position_checksum = v4->position_checksum;
+    result = 1;
+    *new_action_checksum = v4->action_checksum;
+    return result;
 }
 
+//----- (0046FF90) --------------------------------------------------------
 int RGE_Player::create_checksum()
 {
     RGE_Player *v1; // ebx@1
@@ -1362,36 +1392,31 @@ int RGE_Player::create_checksum()
     return v11;
 }
 
-void RGE_Player::new_attribute_num(
-    short attribute,
-    float amount)
+//----- (004700B0) --------------------------------------------------------
+void RGE_Player::new_attribute_num(short attribute, float amount)
 {
-    if( attribute >= 0 &&
-        attribute < this->attribute_num ){
+    if( attribute >= 0 && attribute < this->attribute_num )
         this->attributes[attribute] = amount;
-    }
 }
 
-void RGE_Player::add_attribute_num(
-    short attribute,
-    float amount,
-    char earned)
+//----- (004700D0) --------------------------------------------------------
+void RGE_Player::add_attribute_num(short attribute, float amount, char earned)
 {
-    if( attribute >= 0 &&
-        attribute < this->attribute_num ){
+    if( attribute >= 0 && attribute < this->attribute_num )
         this->attributes[attribute] = amount + this->attributes[attribute];
-    }
 }
 
-void RGE_Player::make_available(
-    short obj_category,
-    char on_off_flag)
+//----- (00470100) --------------------------------------------------------
+void RGE_Player::make_available(short obj_category, char on_off_flag)
 {
-    if( this->master_objects[obj_category] ){
-        this->master_objects[obj_category]->make_available(on_off_flag);
-    }
+    RGE_Master_Static_Object *v3; // ecx@1
+
+    v3 = this->master_objects[obj_category];
+    if( v3 )
+        RGE_Master_Static_Object::make_available(v3, on_off_flag);
 }
 
+//----- (00470120) --------------------------------------------------------
 void RGE_Player::update()
 {
     RGE_Player *v1; // esi@1
@@ -1413,99 +1438,130 @@ void RGE_Player::update()
         Visible_Resource_Manager::Process_New_Tiles(v3, &v1->tile_list);
 }
 
+//----- (00470180) --------------------------------------------------------
 void RGE_Player::update_dopplegangers()
 {
-    if( MouseSystem ){
-        MouseSystem->Poll();
-    }
-    this->doppleganger_objects->update();
-    this->doppleganger_creator->perform_doppleganger_checks();
+    RGE_Player *v1; // esi@1
+
+    v1 = this;
+    if( MouseSystem )
+        TMousePointer::Poll(MouseSystem);
+    RGE_Object_List::update(v1->doppleganger_objects);
+    RGE_Doppleganger_Creator::perform_doppleganger_checks(v1->doppleganger_creator);
 }
 
-void RGE_Player::save(
-    int outfile)
+//----- (004701B0) --------------------------------------------------------
+void RGE_Player::save(int outfile)
 {
-    rge_write(outfile, &this->type, 1);
-    rge_write(outfile, this->relations, this->world->player_num);
-    rge_write(outfile, this->unitDiplomacy, 4 * RGE_PLAYERS_COUNT);
-    rge_write(outfile, &this->allied_LOS_Enable, 4);
-    rge_write(outfile, &this->allied_victory, 1);
-    size_t index = strlen(this->name) + 1;
+    RGE_Player *v2; // esi@1
+    short v3; // di@3
+    RGE_Color_Table *v4; // eax@5
+    char table; // [sp+Fh] [bp-5h]@6
+    unsigned int index; // [sp+10h] [bp-4h]@1
+
+    v2 = this;
+    color_log(50, 50, 3);
+    rge_write(outfile, &v2->type, 1);
+    rge_write(outfile, v2->relations, v2->world->player_num);
+    rge_write(outfile, v2->unitDiplomacy, 36);
+    rge_write(outfile, &v2->allied_LOS_Enable, 4);
+    rge_write(outfile, &v2->allied_victory, 1);
+    index = strlen(v2->name) + 1;
     rge_write(outfile, &index, 2);
-    if( index > 0 ){
-        rge_write(outfile, this->name, index);
-    }
-    rge_write(outfile, &this->attribute_num, 2);
-    if( this->attribute_num > 0 ){
-        rge_write(outfile, this->attributes, 4 * this->attribute_num);
-    }
-    rge_write(outfile, &this->view_x, 4);
-    rge_write(outfile, &this->view_y, 4);
-    rge_write(outfile, &this->map_x, 2);
-    rge_write(outfile, &this->map_y, 2);
-    rge_write(outfile, &this->culture, 1);
-    rge_write(outfile, &this->master_player_id, 1);
-    rge_write(outfile, &this->game_status, 1);
-    rge_write(outfile, &this->resigned, 1);
-    char table;
-    if( this->color_table ){
-        table = this->color_table->id;
-    }else{
+    if( (signed short)index > 0 )
+        rge_write(outfile, v2->name, (signed short)index);
+    rge_write(outfile, &v2->attribute_num, 2);
+    v3 = v2->attribute_num;
+    if( v3 > 0 )
+        rge_write(outfile, v2->attributes, 4 * v3);
+    rge_write(outfile, &v2->view_x, 4);
+    rge_write(outfile, &v2->view_y, 4);
+    rge_write(outfile, &v2->map_x, 2);
+    rge_write(outfile, &v2->map_y, 2);
+    rge_write(outfile, &v2->culture, 1);
+    rge_write(outfile, &v2->master_player_id, 1);
+    rge_write(outfile, &v2->game_status, 1);
+    rge_write(outfile, &v2->resigned, 1);
+    v4 = v2->color_table;
+    if( v4 )
+        table = v4->id;
+    else
         table = 0;
-    }
     rge_write(outfile, &table, 1);
-    rge_write(outfile, &this->pathingAttemptCapValue, 4);
-    rge_write(outfile, &this->pathingDelayCapValue, 4);
+    rge_write(outfile, &v2->pathingAttemptCapValue, 4);
+    rge_write(outfile, &v2->pathingDelayCapValue, 4);
+    color_log(50, 95, 3);
 }
 
-void RGE_Player::save2(
-    int outfile)
+//----- (00470380) --------------------------------------------------------
+void RGE_Player::save2(int outfile)
 {
-    /* save master-objects: */
-    rge_write(outfile, &this->master_object_num, 2);
-    for( int i = 0; i < this->master_object_num; i++ ){
-        if( this->master_objects[i] ){
-            rge_write(outfile, 1, 4);
-        }else{
-            rge_write(outfile, 0, 4);
+    RGE_Player *v2; // esi@1
+    int v3; // ebx@1
+    short *v4; // ebp@1
+    signed int v5; // edi@2
+    short v6; // di@4
+    RGE_Master_Static_Object *v7; // ecx@5
+
+    v2 = this;
+    color_log(76, 76, 4);
+    v3 = outfile;
+    v4 = &v2->master_object_num;
+    rge_write(outfile, &v2->master_object_num, 2);
+    if( v2->master_object_num > 0 )
+    {
+        v5 = 0;
+        if( v2->master_object_num > 0 )
+        {
+            do
+            {
+                outfile = (int)v2->master_objects[v5];
+                outfile = outfile != 0;
+                rge_write(v3, &outfile, 4);
+                ++v5;
+            }
+            while( v5 < *v4 );
+        }
+        v6 = 0;
+        if( *v4 > 0 )
+        {
+            do
+            {
+                v7 = v2->master_objects[v6];
+                if( v7 )
+                    ((void (__stdcall *)(int))v7->vfptr->save)(v3);
+                ++v6;
+            }
+            while( v6 < *v4 );
         }
     }
-    for( int j = 0; j < this->master_object_num; j++ ){
-        if( this->master_objects[j] ){
-            this->master_objects[j]->save(outfile);
-        }
-    }
-
-    /* save visible-map: */
-    this->visible->save(outfile);
-
-    /* save visible-resources: */
-    this->VR_List->save(outfile);
-
-    /* save objects: */
-    this->objects             ->save(outfile);
-    this->sleeping_objects    ->save(outfile);
-    this->doppleganger_objects->save(outfile);
+    color_log(76, 36, 4);
+    RGE_Visible_Map::save(v2->visible, v3);
+    Visible_Resource_Manager::save(v2->VR_List, v3);
+    color_log(76, 22, 4);
+    RGE_Object_List::save(v2->objects, v3);
+    color_log(76, 50, 4);
+    RGE_Object_List::save(v2->sleeping_objects, v3);
+    color_log(76, 50, 4);
+    RGE_Object_List::save(v2->doppleganger_objects, v3);
+    color_log(76, 95, 4);
 }
 
-void RGE_Player::save_info(
-    int outfile)
+//----- (00470490) --------------------------------------------------------
+void RGE_Player::save_info(int outfile)
 {
-    /* save victory-conditions: */
-    this->victory_conditions->save(outfile);
+    ((void (__stdcall *)(_DWORD))this->victory_conditions->vfptr->save)(outfile);
 }
 
-void RGE_Player::set_map_loc(
-    short x,
-    short y)
+//----- (004704A0) --------------------------------------------------------
+void RGE_Player::set_map_loc(short x, short y)
 {
     this->map_x = x;
     this->map_y = y;
 }
 
-void RGE_Player::set_view_loc(
-    float x,
-    float y)
+//----- (004704C0) --------------------------------------------------------
+void RGE_Player::set_view_loc(float x, float y)
 {
     double v3; // st7@3
     double v4; // st7@7
@@ -3065,7 +3121,7 @@ void RGE_Tile_List::del_list()
     }
 }
 
-RGE_Tile_List::RGE_Tile_List(int Initial_Size)
+void RGE_Tile_List::RGE_Tile_List(int Initial_Size)
 {
     this->list = new RGE_Tile_List_Node[Initial_Size];
     this->list_size = Initial_Size;
@@ -3080,9 +3136,7 @@ RGE_Tile_List::~RGE_Tile_List()
         free(this->list);
 }
 
-void RGE_Tile_List::get_list_info(
-    RGE_Tile_List_Node **theList,
-    int *list_size)
+void RGE_Tile_List::get_list_info(RGE_Tile_List_Node **theList, int *list_size)
 {
     *theList = this->list;
     *list_size = this->num_active;

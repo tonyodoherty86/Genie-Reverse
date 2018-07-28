@@ -48,7 +48,7 @@ BuildAIModule *__thiscall BuildAIModule::`vector deleting destructor'(BuildAIMod
 
   v2 = this;
   BuildAIModule::~BuildAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -120,7 +120,7 @@ void __thiscall BuildAIModule::BuildAIModule(BuildAIModule *this, int playerID, 
   rge_read(v5, 0, v5, &tempInt, 4);
   rge_read(v5, 0, v5, v4->currentBuildItemRequestedValue, tempInt);
   v4->currentBuildItemRequestedValue[tempInt] = 0;
-  if ( save_game_version < 3.0999999 )
+  if( save_game_version < 3.0999999 )
   {
     strcpy(v4->nextBuildItemRequestedValue, aNone_3);
     v3 = 0;
@@ -132,7 +132,7 @@ void __thiscall BuildAIModule::BuildAIModule(BuildAIModule *this, int playerID, 
     v4->nextBuildItemRequestedValue[tempInt] = 0;
   }
   rge_read(infile, 0, infile, &v4->numberItemsIntoBuildListValue, 4);
-  if ( v4->buildListLengthValue > 0 )
+  if( v4->buildListLengthValue > 0 )
   {
     do
     {
@@ -160,14 +160,14 @@ void __thiscall BuildAIModule::BuildAIModule(BuildAIModule *this, int playerID, 
       rge_read(infile, v3, infile, &placeOnElevation, 4);
       rge_read(infile, v3, infile, &numberBuilds, 4);
       buildCap = -1;
-      if ( save_game_version >= 2.2 )
+      if( save_game_version >= 2.2 )
         rge_read(infile, v3, infile, &buildCap, 4);
       rge_read(infile, v3, infile, &numberSkipCycles, 4);
       rge_read(infile, v3, infile, &permanentSkip, 1);
       v6 = (BuildItem *)operator new(0xB0u);
       v36 = v6;
       LOBYTE(v38) = 3;
-      if ( v6 )
+      if( v6 )
       {
         BuildItem::BuildItem(
           v6,
@@ -212,7 +212,7 @@ void __thiscall BuildAIModule::BuildAIModule(BuildAIModule *this, int playerID, 
       v10 = v4->buildListLengthValue;
       v4->buildList.prev = v8;
     }
-    while ( v3 < v10 );
+    while( v3 < v10 );
   }
 }
 // 56E738: using guessed type int (__thiscall *BuildAIModule::`vftable')(void *Memory, unsigned int __flags);
@@ -224,7 +224,7 @@ void __thiscall ManagedArray<int>::~ManagedArray<int>(ManagedArray<int> *this)
   ManagedArray<int> *v1; // esi@1
 
   v1 = this;
-  if ( this->value )
+  if( this->value )
   {
     operator delete(this->value);
     v1->value = 0;
@@ -242,10 +242,10 @@ void __thiscall BuildAIModule::~BuildAIModule(BuildAIModule *this)
 
   v1 = this;
   this->vfptr = (AIModuleVtbl *)&BuildAIModule::`vftable';
-  if ( this->buildListLengthValue > 0 )
+  if( this->buildListLengthValue > 0 )
     BuildAIModule::removeOldList(this);
   v2 = v1->typesToIgnore.value;
-  if ( v2 )
+  if( v2 )
   {
     operator delete(v2);
     v1->typesToIgnore.value = 0;
@@ -294,11 +294,11 @@ int __thiscall BuildAIModule::save(BuildAIModule *this, int outfile)
   v3 = (BaseItem *)&v2->buildList.next->vfptr;
   v4 = (BuildItem *)v3 == &v10->buildList;
   v10 = (BuildAIModule *)((char *)v10 + 240);
-  if ( !v4 )
+  if( !v4 )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
       strcpy(tempString, BaseItem::name(v3));
       tempInt = strlen(tempString);
@@ -352,7 +352,7 @@ int __thiscall BuildAIModule::save(BuildAIModule *this, int outfile)
       rge_write(outfile, &tempBYTE, 1);
       v3 = (BaseItem *)v3[1].vfptr;
     }
-    while ( (BuildAIModule *)v3 != v10 );
+    while( (BuildAIModule *)v3 != v10 );
   }
   return 1;
 }
@@ -391,11 +391,11 @@ void __thiscall BuildAIModule::displayBuildList(BuildAIModule *this)
 
   v1 = this;
   AIModule::logCommonHistory((AIModule *)&this->vfptr, textIn, this->buildListNameValue);
-  for ( i = v1->buildList.next; i != &v1->buildList; i = i->next )
+  for( i = v1->buildList.next; i != &v1->buildList; i = i->next )
   {
-    if ( !i )
+    if( !i )
       break;
-    if ( BuildItem::built(i) == 1 )
+    if( BuildItem::built(i) == 1 )
     {
       v3 = BuildItem::skipCycles(i);
       v4 = (unsigned __int8)BuildItem::permanentSkip(i);
@@ -502,9 +502,9 @@ int __thiscall BuildAIModule::loadBuildList(BuildAIModule *this, char *lName, RG
   v4 = this->buildListNameValue;
   Str = this->buildListNameValue;
   strncpy(this->buildListNameValue, lName, 0x3Fu);
-  if ( !strcmp(v4, aNone_2) || (v5 = Str) == 0 || strlen(Str) == 0 )
+  if( !strcmp(v4, aNone_2) || (v5 = Str) == 0 || strlen(Str) == 0 )
   {
-    if ( !Str )
+    if( !Str )
       strcpy(0, aNull);
     AIModule::logCommonHistory((AIModule *)&v3->vfptr, aThereIsNoBuild);
   }
@@ -514,16 +514,16 @@ int __thiscall BuildAIModule::loadBuildList(BuildAIModule *this, char *lName, RG
     sprintf(temp, aS_2, Str);
     v6 = fopen(temp, Mode);
     fileIn = v6;
-    if ( !v6 )
+    if( !v6 )
     {
       AIModule::logCommonHistory((AIModule *)&v3->vfptr, aICannotDoItCap);
       return 0;
     }
     AIModule::logCommonHistory((AIModule *)&v3->vfptr, aFileOpenSucces);
-    if ( v3->buildListLengthValue > 0 )
+    if( v3->buildListLengthValue > 0 )
       BuildAIModule::removeOldList(v3);
     v3->buildListLengthValue = 0;
-    if ( fgets(temp, 256, v6) )
+    if( fgets(temp, 256, v6) )
     {
       do
       {
@@ -531,7 +531,7 @@ int __thiscall BuildAIModule::loadBuildList(BuildAIModule *this, char *lName, RG
         ySize = 1.5;
         buildCap = -1;
         sscanf(temp, aCC, &commentTemp1, &commentTemp2);
-        if ( commentTemp1 != 47 || commentTemp2 != 47 )
+        if( commentTemp1 != 47 || commentTemp2 != 47 )
         {
           sscanf(temp, aCDSDD, &buildCategoryAsChar, &typeID, name, &quantity, &buildFrom);
           switch ( buildCategoryAsChar )
@@ -565,11 +565,11 @@ int __thiscall BuildAIModule::loadBuildList(BuildAIModule *this, char *lName, RG
             case 71:
               v8 = 6;
 LABEL_21:
-              if ( v8 )
+              if( v8 )
                 goto LABEL_26;
               v9 = v3->typesToIgnore.numberValue;
               v10 = 0;
-              if ( v9 <= 0 )
+              if( v9 <= 0 )
                 goto LABEL_26;
               break;
             default:
@@ -577,15 +577,15 @@ LABEL_21:
           }
           do
           {
-            if ( v10 >= v3->typesToIgnore.maximumSizeValue )
+            if( v10 >= v3->typesToIgnore.maximumSizeValue )
               break;
-            if ( v3->typesToIgnore.value[v10] == typeID )
+            if( v3->typesToIgnore.value[v10] == typeID )
               goto LABEL_37;
             ++v10;
           }
-          while ( v10 < v9 );
+          while( v10 < v9 );
 LABEL_26:
-          if ( v8 && v8 != 2
+          if( v8 && v8 != 2
             || typeID < 0
             || typeID >= player->master_object_num
             || (v11 = player->master_objects[typeID]) == 0 )
@@ -600,7 +600,7 @@ LABEL_26:
           v13 = 0;
           xSize = v12 + v12;
           ySize = ySize + ySize;
-          if ( quantity > 0 )
+          if( quantity > 0 )
           {
             do
             {
@@ -608,7 +608,7 @@ LABEL_26:
               v32 = v14;
               v15 = 0;
               v35 = 0;
-              if ( v14 )
+              if( v14 )
               {
                 BuildItem::BuildItem(
                   v14,
@@ -640,17 +640,17 @@ LABEL_26:
               v19 = v13 - quantity < 0;
               v3->buildList.prev = v15;
             }
-            while ( v19 ^ v20 );
+            while( v19 ^ v20 );
           }
         }
 LABEL_37:
         v6 = fileIn;
       }
-      while ( fgets(temp, 256, fileIn) );
+      while( fgets(temp, 256, fileIn) );
       v5 = Str;
     }
     fclose(v6);
-    if ( strstr(v5, SubStr) )
+    if( strstr(v5, SubStr) )
       _unlink(v5);
   }
   return 1;
@@ -702,23 +702,23 @@ int __thiscall BuildAIModule::insertItem(BuildAIModule *this, RGE_Player *player
 
   v8 = this;
   v23 = this;
-  if ( insertAfterItemNumber > this->buildListLengthValue )
+  if( insertAfterItemNumber > this->buildListLengthValue )
     return 0;
   v10 = this->buildList.next;
   v11 = (char *)&this->buildList;
   v12 = 0;
-  if ( v10 != &v8->buildList )
+  if( v10 != &v8->buildList )
   {
     do
     {
-      if ( v12 >= insertAfterItemNumber )
+      if( v12 >= insertAfterItemNumber )
         break;
       v10 = v10->next;
       ++v12;
     }
-    while ( (char *)v10 != v11 );
+    while( (char *)v10 != v11 );
   }
-  if ( buildCategory == 6 )
+  if( buildCategory == 6 )
   {
     v22 = Source;
     v21 = name;
@@ -726,7 +726,7 @@ int __thiscall BuildAIModule::insertItem(BuildAIModule *this, RGE_Player *player
   else
   {
     v13 = player->master_objects[typeID];
-    if ( v13 )
+    if( v13 )
     {
       strncpy(name, v13->name, 0x3Fu);
       v14 = player->master_objects[typeID];
@@ -743,19 +743,19 @@ int __thiscall BuildAIModule::insertItem(BuildAIModule *this, RGE_Player *player
 LABEL_12:
   v15 = v8->buildListLengthValue;
   v16 = 0;
-  if ( quantity <= 0 )
+  if( quantity <= 0 )
   {
 LABEL_17:
     result = 1;
   }
   else
   {
-    while ( 1 )
+    while( 1 )
     {
       v17 = (BuildItem *)operator new(0xB0u);
       v18 = 0;
       v25 = 0;
-      if ( v17 )
+      if( v17 )
       {
         BuildItem::BuildItem(
           v17,
@@ -776,7 +776,7 @@ LABEL_17:
         v18 = v19;
       }
       v25 = -1;
-      if ( !v18 )
+      if( !v18 )
         break;
       BuildItem::setBuilt(v18, 0);
       BuildItem::setInProgress(v18, 0);
@@ -798,7 +798,7 @@ LABEL_17:
       v10->next = v18;
       ++v16;
       ++v23->buildListLengthValue;
-      if ( v16 >= quantity )
+      if( v16 >= quantity )
         goto LABEL_17;
     }
     result = 0;
@@ -816,17 +816,17 @@ int __thiscall BuildAIModule::numberItemsBuilt(BuildAIModule *this)
   v1 = this->buildList.next;
   v2 = (char *)&this->buildList;
   v3 = 0;
-  if ( v1 != &this->buildList )
+  if( v1 != &this->buildList )
   {
     do
     {
-      if ( !v1 )
+      if( !v1 )
         break;
-      if ( BuildItem::built(v1) == 1 )
+      if( BuildItem::built(v1) == 1 )
         ++v3;
       v1 = v1->next;
     }
-    while ( (char *)v1 != v2 );
+    while( (char *)v1 != v2 );
   }
   return v3;
 }
@@ -841,17 +841,17 @@ int __thiscall BuildAIModule::numberItemsInProgress(BuildAIModule *this)
   v1 = this->buildList.next;
   v2 = (char *)&this->buildList;
   v3 = 0;
-  if ( v1 != &this->buildList )
+  if( v1 != &this->buildList )
   {
     do
     {
-      if ( !v1 )
+      if( !v1 )
         break;
-      if ( BuildItem::inProgress(v1) == 1 )
+      if( BuildItem::inProgress(v1) == 1 )
         ++v3;
       v1 = v1->next;
     }
-    while ( (char *)v1 != v2 );
+    while( (char *)v1 != v2 );
   }
   return v3;
 }
@@ -866,17 +866,17 @@ int __thiscall BuildAIModule::numberItemsBuiltOrInProgress(BuildAIModule *this)
   v1 = this->buildList.next;
   v2 = (char *)&this->buildList;
   v3 = 0;
-  if ( v1 != &this->buildList )
+  if( v1 != &this->buildList )
   {
     do
     {
-      if ( !v1 )
+      if( !v1 )
         break;
-      if ( BuildItem::inProgress(v1) == 1 || BuildItem::built(v1) == 1 )
+      if( BuildItem::inProgress(v1) == 1 || BuildItem::built(v1) == 1 )
         ++v3;
       v1 = v1->next;
     }
-    while ( (char *)v1 != v2 );
+    while( (char *)v1 != v2 );
   }
   return v3;
 }
@@ -915,17 +915,17 @@ int __thiscall BuildAIModule::numberItemsOfType(BuildAIModule *this, int type, i
   v3 = this->buildList.next;
   v4 = (char *)&this->buildList;
   count = 0;
-  if ( v3 != &this->buildList )
+  if( v3 != &this->buildList )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
-      if ( BaseItem::typeID((BaseItem *)&v3->vfptr) == type && BuildItem::buildCategory(v3) == category )
+      if( BaseItem::typeID((BaseItem *)&v3->vfptr) == type && BuildItem::buildCategory(v3) == category )
         ++count;
       v3 = v3->next;
     }
-    while ( (char *)v3 != v4 );
+    while( (char *)v3 != v4 );
   }
   return count;
 }
@@ -940,13 +940,13 @@ int __thiscall BuildAIModule::numberBuiltItemsOfType(BuildAIModule *this, int ty
   v3 = this->buildList.next;
   v4 = (char *)&this->buildList;
   count = 0;
-  if ( v3 != &this->buildList )
+  if( v3 != &this->buildList )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
-      if ( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
+      if( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
         && BuildItem::buildCategory(v3) == category
         && BuildItem::built(v3) == 1 )
       {
@@ -954,7 +954,7 @@ int __thiscall BuildAIModule::numberBuiltItemsOfType(BuildAIModule *this, int ty
       }
       v3 = v3->next;
     }
-    while ( (char *)v3 != v4 );
+    while( (char *)v3 != v4 );
   }
   return count;
 }
@@ -969,13 +969,13 @@ int __thiscall BuildAIModule::numberUnbuiltItemsOfType(BuildAIModule *this, int 
   v3 = this->buildList.next;
   v4 = (char *)&this->buildList;
   count = 0;
-  if ( v3 != &this->buildList )
+  if( v3 != &this->buildList )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
-      if ( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
+      if( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
         && BuildItem::buildCategory(v3) == category
         && !BuildItem::built(v3) )
       {
@@ -983,7 +983,7 @@ int __thiscall BuildAIModule::numberUnbuiltItemsOfType(BuildAIModule *this, int 
       }
       v3 = v3->next;
     }
-    while ( (char *)v3 != v4 );
+    while( (char *)v3 != v4 );
   }
   return count;
 }
@@ -998,13 +998,13 @@ int __thiscall BuildAIModule::numberBuiltOrInProgressItemsOfType(BuildAIModule *
   v3 = this->buildList.next;
   v4 = (char *)&this->buildList;
   count = 0;
-  if ( v3 != &this->buildList )
+  if( v3 != &this->buildList )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
-      if ( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
+      if( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
         && BuildItem::buildCategory(v3) == category
         && (BuildItem::built(v3) == 1 || BuildItem::inProgress(v3) == 1) )
       {
@@ -1012,7 +1012,7 @@ int __thiscall BuildAIModule::numberBuiltOrInProgressItemsOfType(BuildAIModule *
       }
       v3 = v3->next;
     }
-    while ( (char *)v3 != v4 );
+    while( (char *)v3 != v4 );
   }
   return count;
 }
@@ -1027,13 +1027,13 @@ int __thiscall BuildAIModule::numberInProgressItemsOfType(BuildAIModule *this, i
   v3 = this->buildList.next;
   v4 = (char *)&this->buildList;
   count = 0;
-  if ( v3 != &this->buildList )
+  if( v3 != &this->buildList )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
-      if ( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
+      if( BaseItem::typeID((BaseItem *)&v3->vfptr) == type
         && BuildItem::buildCategory(v3) == category
         && BuildItem::inProgress(v3) == 1 )
       {
@@ -1041,7 +1041,7 @@ int __thiscall BuildAIModule::numberInProgressItemsOfType(BuildAIModule *this, i
       }
       v3 = v3->next;
     }
-    while ( (char *)v3 != v4 );
+    while( (char *)v3 != v4 );
   }
   return count;
 }
@@ -1057,17 +1057,17 @@ void __thiscall BuildAIModule::removeOldList(BuildAIModule *this)
   v1 = this;
   v2 = this->buildList.next;
   v3 = (int)&v1->buildList;
-  if ( v2 != &v1->buildList )
+  if( v2 != &v1->buildList )
   {
     do
     {
-      if ( !v2 )
+      if( !v2 )
         break;
       v4 = v2->next;
       ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
       v2 = v4;
     }
-    while ( v4 != (BuildItem *)v3 );
+    while( v4 != (BuildItem *)v3 );
   }
   v1->buildList.next = (BuildItem *)v3;
   v1->buildList.prev = (BuildItem *)v3;
@@ -1082,17 +1082,17 @@ BuildItem *__thiscall BuildAIModule::anyBuildListItem(BuildAIModule *this, int i
 
   v4 = this->buildList.next;
   v5 = (char *)&this->buildList;
-  if ( v4 != &this->buildList )
+  if( v4 != &this->buildList )
   {
-    while ( v4 )
+    while( v4 )
     {
-      if ( BaseItem::typeID((BaseItem *)&v4->vfptr) == id
+      if( BaseItem::typeID((BaseItem *)&v4->vfptr) == id
         && (!checkBuilt || checkBuilt == 1 && BuildItem::built(v4) == buildStatus) )
       {
         return v4;
       }
       v4 = v4->next;
-      if ( (char *)v4 == v5 )
+      if( (char *)v4 == v5 )
         return 0;
     }
   }
@@ -1107,14 +1107,14 @@ BuildItem *__thiscall BuildAIModule::specificBuildListItem(BuildAIModule *this, 
 
   v2 = this->buildList.next;
   v3 = (char *)&this->buildList;
-  if ( v2 != &this->buildList )
+  if( v2 != &this->buildList )
   {
-    while ( v2 )
+    while( v2 )
     {
-      if ( BaseItem::uniqueID((BaseItem *)&v2->vfptr) == id )
+      if( BaseItem::uniqueID((BaseItem *)&v2->vfptr) == id )
         return v2;
       v2 = v2->next;
-      if ( (char *)v2 == v3 )
+      if( (char *)v2 == v3 )
         return 0;
     }
   }

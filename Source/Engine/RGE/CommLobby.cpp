@@ -9,7 +9,7 @@ void __thiscall RGE_Lobby::RGE_Lobby(RGE_Lobby *this, void *Host)
   v2 = this;
   this->HostHWND = Host;
   v3 = (RGE_Comm_Error *)operator new(8u);
-  if ( v3 )
+  if( v3 )
     RGE_Comm_Error::RGE_Comm_Error(v3, Host);
   else
     v4 = 0;
@@ -29,7 +29,7 @@ void __thiscall RGE_Lobby::~RGE_Lobby(RGE_Lobby *this)
 
   v1 = this;
   v2 = this->Err;
-  if ( v2 )
+  if( v2 )
   {
     RGE_Comm_Error::~RGE_Comm_Error(this->Err);
     operator delete(v2);
@@ -45,13 +45,13 @@ void __thiscall RGE_Lobby::ClearLobbyInfo(RGE_Lobby *this)
   int v3; // eax@4
 
   v1 = this;
-  if ( this->glpdplConnection )
+  if( this->glpdplConnection )
   {
     operator delete(this->glpdplConnection);
     v1->glpdplConnection = 0;
   }
   v2 = v1->glpDPL2;
-  if ( v2 )
+  if( v2 )
   {
     v3 = v2->vfptr->Release((IUnknown *)v1->glpDPL2);
     RGE_Comm_Error::ShowReturn(v1->Err, v3, aRelease);
@@ -77,9 +77,9 @@ int __stdcall EnumPlayersCallbackLobby(unsigned int pidID, unsigned int dwPlayer
   TDebuggingLog::Log(L, aEnumplayerDpid, pidID);
   TDebuggingLog::Log(L, aEnumplayerName, lpName->lpszShortName);
   TDebuggingLog::Log(L, aEnumerationNot);
-  if ( dwFlags & 0x10 )
+  if( dwFlags & 0x10 )
     TDebuggingLog::Log(L, aRemotePlayer);
-  if ( dwFlags & 8 )
+  if( dwFlags & 8 )
     TDebuggingLog::Log(L, aLocalPlayer);
   return 1;
 }
@@ -103,11 +103,11 @@ char __thiscall RGE_Lobby::CheckForLobbyLaunch(RGE_Lobby *this, IDirectPlay3 **d
   RGE_Lobby::ClearLobbyInfo(this);
   v3 = DirectPlayLobbyCreateA(0, &v2->glpDPL, 0, 0, 0);
   RGE_Comm_Error::ShowReturn(v2->Err, v3, aLobbyCreate);
-  if ( v3 >= 0 )
+  if( v3 >= 0 )
   {
     v5 = &v2->glpDPL2;
     v2->glpDPL->vfptr->QueryInterface((IUnknown *)v2->glpDPL, &IID_IDirectPlayLobby2A, (void **)&v2->glpDPL2);
-    if ( v2->glpDPL2 )
+    if( v2->glpDPL2 )
     {
       ((void (__stdcall *)(IDirectPlayLobby2 *, _DWORD, _DWORD, unsigned int *))v2->glpDPL2->vfptr[2].Release)(
         v2->glpDPL2,
@@ -117,7 +117,7 @@ char __thiscall RGE_Lobby::CheckForLobbyLaunch(RGE_Lobby *this, IDirectPlay3 **d
       v6 = (DPLCONNECTION *)operator new(dwSize + 1);
       v7 = *v5;
       v2->glpdplConnection = v6;
-      if ( ((int (__stdcall *)(IDirectPlayLobby2 *, _DWORD, void *, unsigned int *))v7->vfptr[2].Release)(
+      if( ((int (__stdcall *)(IDirectPlayLobby2 *, _DWORD, void *, unsigned int *))v7->vfptr[2].Release)(
              v7,
              0,
              v6,
@@ -138,12 +138,12 @@ char __thiscall RGE_Lobby::CheckForLobbyLaunch(RGE_Lobby *this, IDirectPlay3 **d
                (int)&v2->glpDP,
                0);
         TDebuggingLog::Log(L, aPostConnect);
-        if ( v8 >= 0 )
+        if( v8 >= 0 )
         {
           TDebuggingLog::Log(L, aPreQi);
           v9 = v2->glpDP->vfptr->QueryInterface((IUnknown *)v2->glpDP, &IID_IDirectPlay3A, (void **)direct_play);
           RGE_Comm_Error::ShowReturn(v2->Err, v9, aLobbyQi);
-          if ( v9 >= 0 )
+          if( v9 >= 0 )
           {
             TDebuggingLog::Log(L, aCallingEnumera);
             ((void (__stdcall *)(IDirectPlay3 *, _DWORD, int (__stdcall *)(unsigned int, unsigned int, DPNAME *, unsigned int, void *), RGE_Lobby *, _DWORD))(*direct_play)->vfptr[4].QueryInterface)(
@@ -162,7 +162,7 @@ char __thiscall RGE_Lobby::CheckForLobbyLaunch(RGE_Lobby *this, IDirectPlay3 **d
             result = -1;
           }
         }
-        else if ( v8 == -2005466896 )
+        else if( v8 == -2005466896 )
         {
           result = -1;
         }
@@ -196,7 +196,7 @@ char __thiscall RGE_Lobby::IsThisHost(RGE_Lobby *this)
 {
   char result; // al@2
 
-  if ( this->lobby_game )
+  if( this->lobby_game )
     result = ((unsigned __int8)this->glpdplConnection->dwFlags >> 1) & 1;
   else
     result = 0;
@@ -208,7 +208,7 @@ char __thiscall RGE_Lobby::GetPlayerInfo(RGE_Lobby *this, char **player_name)
 {
   char result; // al@2
 
-  if ( this->lobby_game )
+  if( this->lobby_game )
   {
     *player_name = this->glpdplConnection->lpPlayerName->lpszShortNameA;
     result = 1;
@@ -225,7 +225,7 @@ char __thiscall RGE_Lobby::GetSessionInfo(RGE_Lobby *this, DPSESSIONDESC2 *info)
 {
   char result; // al@2
 
-  if ( this->lobby_game )
+  if( this->lobby_game )
   {
     qmemcpy(info, this->glpdplConnection->lpSessionDesc, sizeof(DPSESSIONDESC2));
     result = 1;
@@ -262,7 +262,7 @@ int __thiscall RGE_Lobby::ReceiveZoneMessages(RGE_Lobby *this)
   char Data[2048]; // [sp+20h] [bp-800h]@2
 
   v1 = this;
-  if ( !this->lobby_game )
+  if( !this->lobby_game )
     goto LABEL_13;
   v2 = this->glpDPL;
   v3 = v2->vfptr;
@@ -275,14 +275,14 @@ int __thiscall RGE_Lobby::ReceiveZoneMessages(RGE_Lobby *this)
          Data,
          &dwDataSize);
   RGE_Comm_Error::ShowReturn(v1->Err, v4, aRxLobbyMessage);
-  if ( v4 == -2005466946 || !dwDataSize )
+  if( v4 == -2005466946 || !dwDataSize )
     goto LABEL_13;
-  if ( v4 )
+  if( v4 )
   {
     RGE_Comm_Error::ShowReturn(v1->Err, v4, aRxlobbyMsg);
     return 0;
   }
-  if ( dwRXFlags == 1 )
+  if( dwRXFlags == 1 )
   {
     TDebuggingLog::Log(L, aLobbySystemMes);
     switch ( *(_DWORD *)Data )
@@ -325,7 +325,7 @@ int __thiscall RGE_Lobby::SendZoneMessage(RGE_Lobby *this, char *Data, unsigned 
   RGE_Lobby *v7; // [sp+0h] [bp-4h]@1
 
   v7 = this;
-  if ( this->lobby_game )
+  if( this->lobby_game )
   {
     TDebuggingLog::Log(L, aSendingDBytesT, dwSize, dwSize + 48);
     v5 = operator new(dwSize + 48);
@@ -342,7 +342,7 @@ int __thiscall RGE_Lobby::SendZoneMessage(RGE_Lobby *this, char *Data, unsigned 
            v5,
            dwSize + 48);
     operator delete(v5);
-    if ( !v6 )
+    if( !v6 )
       TDebuggingLog::Log(L, aSendlobbymessa);
     RGE_Comm_Error::ShowReturn(v7->Err, v6, aSendLobbyMsg);
     result = v6;

@@ -13,7 +13,7 @@ void __thiscall RGE_Random_Map_Module::RGE_Random_Map_Module(RGE_Random_Map_Modu
   this->vfptr = (RGE_Random_Map_ModuleVtbl *)&RGE_Random_Map_Module::`vftable';
   this->parent = parent_module;
   this->map = in_map;
-  if ( in_map )
+  if( in_map )
   {
     v5 = RGE_Map::give_up_map_offsets(in_map);
     v6 = v4->map;
@@ -35,7 +35,7 @@ void __thiscall RGE_Random_Map_Module::RGE_Random_Map_Module(RGE_Random_Map_Modu
   v4->stack_array = 0;
   v4->search_map_rows = 0;
   v4->stack_offsets = 0;
-  if ( v9 )
+  if( v9 )
   {
     RGE_Random_Map_Module::add_module(v9, v4);
     RGE_Random_Map_Module::share_resources(
@@ -45,7 +45,7 @@ void __thiscall RGE_Random_Map_Module::RGE_Random_Map_Module(RGE_Random_Map_Modu
       &v4->stack_array,
       &v4->stack_offsets);
   }
-  else if ( resources_needed )
+  else if( resources_needed )
   {
     RGE_Random_Map_Module::create_shared_resources(v4);
   }
@@ -62,17 +62,17 @@ void __thiscall RGE_Random_Map_Module::~RGE_Random_Map_Module(RGE_Random_Map_Mod
 
   v1 = this;
   v2 = this->list;
-  for ( this->vfptr = (RGE_Random_Map_ModuleVtbl *)&RGE_Random_Map_Module::`vftable'; v2; v2 = v1->list )
+  for( this->vfptr = (RGE_Random_Map_ModuleVtbl *)&RGE_Random_Map_Module::`vftable'; v2; v2 = v1->list )
   {
     v3 = v2->module;
-    if ( v2->module )
+    if( v2->module )
     {
       RGE_Random_Map_Module::~RGE_Random_Map_Module(v2->module);
       operator delete(v3);
     }
   }
   v4 = v1->parent;
-  if ( v4 )
+  if( v4 )
   {
     RGE_Random_Map_Module::remove_module(v4, v1);
     v1->search_map = 0;
@@ -121,21 +121,21 @@ char __thiscall RGE_Random_Map_Module::generate(RGE_Random_Map_Module *this)
   v2 = 0;
   v3 = this->list;
   v12 = this;
-  if ( v3 )
+  if( v3 )
   {
     do
     {
       v4 = v3->next;
-      if ( v2 && (v5 = RGE_Random_Map_Module::get_schedule(v3->module), RGE_Random_Map_Module::get_schedule(*v2) <= v5) )
+      if( v2 && (v5 = RGE_Random_Map_Module::get_schedule(v3->module), RGE_Random_Map_Module::get_schedule(*v2) <= v5) )
       {
         v6 = v2;
-        while ( v6[1] )
+        while( v6[1] )
         {
           v7 = RGE_Random_Map_Module::get_schedule(v3->module);
-          if ( RGE_Random_Map_Module::get_schedule((RGE_Random_Map_Module *)v6[1]->vfptr) > v7 )
+          if( RGE_Random_Map_Module::get_schedule((RGE_Random_Map_Module *)v6[1]->vfptr) > v7 )
             break;
           v6 = (RGE_Random_Map_Module **)v6[1];
-          if ( !v6 )
+          if( !v6 )
             goto LABEL_11;
         }
         v3->next = (RGE_Random_Map_Module_List *)v6[1];
@@ -149,21 +149,21 @@ char __thiscall RGE_Random_Map_Module::generate(RGE_Random_Map_Module *this)
 LABEL_11:
       v3 = v4;
     }
-    while ( v4 );
+    while( v4 );
     v1 = v12;
   }
   v1->list = (RGE_Random_Map_Module_List *)v2;
   v8 = debug_rand(aCMsdevWorkA_20, 138);
   TDebuggingLog::Log(L, aRge_random_map, v8);
   v9 = v1->list;
-  if ( v9 )
+  if( v9 )
   {
-    while ( (unsigned __int8)((int (*)(void))v9->module->vfptr->generate)() )
+    while( (unsigned __int8)((int (*)(void))v9->module->vfptr->generate)() )
     {
       v10 = debug_rand(aCMsdevWorkA_20, 143);
       TDebuggingLog::Log(L, aRge_random_m_1, v10);
       v9 = v9->next;
-      if ( !v9 )
+      if( !v9 )
         return 1;
     }
     result = 0;
@@ -183,7 +183,7 @@ char __thiscall RGE_Random_Map_Module::add_module(RGE_Random_Map_Module *this, R
   RGE_Random_Map_Module_List *v4; // eax@3
 
   v2 = this;
-  if ( module )
+  if( module )
   {
     v4 = (RGE_Random_Map_Module_List *)calloc(1u, 8u);
     v4->next = v2->list;
@@ -209,9 +209,9 @@ char __thiscall RGE_Random_Map_Module::remove_module(RGE_Random_Map_Module *this
 
   v2 = this->list;
   v3 = 0;
-  if ( v2 )
+  if( v2 )
   {
-    if ( v2->module == module )
+    if( v2->module == module )
     {
       v3 = this->list;
       this->list = v2->next;
@@ -220,11 +220,11 @@ char __thiscall RGE_Random_Map_Module::remove_module(RGE_Random_Map_Module *this
     {
       v4 = v2->next;
       v5 = &v2->next;
-      if ( v4 )
+      if( v4 )
       {
         do
         {
-          if ( v4->module == module )
+          if( v4->module == module )
           {
             v3 = v4;
             *v5 = v4->next;
@@ -232,11 +232,11 @@ char __thiscall RGE_Random_Map_Module::remove_module(RGE_Random_Map_Module *this
           v5 = &(*v5)->next;
           v4 = *v5;
         }
-        while ( *v5 );
+        while( *v5 );
       }
     }
   }
-  if ( v3 )
+  if( v3 )
   {
     free(v3);
     result = 1;
@@ -271,23 +271,23 @@ void __thiscall RGE_Random_Map_Module::create_shared_resources(RGE_Random_Map_Mo
   v5 = v1->map_height;
   v1->search_map_rows = v4;
   v6 = 0;
-  if ( v5 > 0 )
+  if( v5 > 0 )
   {
     do
     {
       v1->search_map_rows[v6] = &v1->search_map[v1->map_width * v6];
       ++v6;
     }
-    while ( v6 < v1->map_height );
+    while( v6 < v1->map_height );
   }
   v1->stack_array = (Map_Stack *)calloc(v1->map_width * v1->map_height, 0x18u);
   v1->stack_offsets = (Map_Stack **)calloc(v1->map_height, 4u);
-  for ( i = 0; i < v1->map_height; v1->stack_offsets[i - 1] = &v1->stack_array[v8] )
+  for( i = 0; i < v1->map_height; v1->stack_offsets[i - 1] = &v1->stack_array[v8] )
     v8 = v1->map_width * i++;
-  for ( j = 0; j < v1->map_height; ++j )
+  for( j = 0; j < v1->map_height; ++j )
   {
     v10 = 0;
-    if ( v1->map_width > 0 )
+    if( v1->map_width > 0 )
     {
       v11 = 0;
       do
@@ -296,7 +296,7 @@ void __thiscall RGE_Random_Map_Module::create_shared_resources(RGE_Random_Map_Mo
         v1->stack_offsets[j][v11 - 1].x = v10++;
         *((_DWORD *)&v1->stack_offsets[j][v11] - 5) = j;
       }
-      while ( v10 < v1->map_width );
+      while( v10 < v1->map_width );
     }
   }
 }
@@ -310,19 +310,19 @@ void __thiscall RGE_Random_Map_Module::destroy_shared_resources(RGE_Random_Map_M
   Map_Stack **v4; // eax@7
 
   v1 = this;
-  if ( this->search_map )
+  if( this->search_map )
     free(this->search_map);
   v2 = v1->search_map_rows;
   v1->search_map = 0;
-  if ( v2 )
+  if( v2 )
     free(v2);
   v3 = v1->stack_array;
   v1->search_map_rows = 0;
-  if ( v3 )
+  if( v3 )
     free(v3);
   v4 = v1->stack_offsets;
   v1->stack_array = 0;
-  if ( v4 )
+  if( v4 )
     free(v4);
   v1->stack_offsets = 0;
 }
@@ -332,7 +332,7 @@ void __thiscall RGE_Random_Map_Module::update_child_resources(RGE_Random_Map_Mod
 {
   RGE_Random_Map_Module_List *i; // esi@1
 
-  for ( i = this->list; i; i = i->next )
+  for( i = this->list; i; i = i->next )
     RGE_Random_Map_Module::update_resources(i->module);
 }
 
@@ -358,7 +358,7 @@ void __thiscall RGE_Random_Map_Module::update_child_map_info(RGE_Random_Map_Modu
   RGE_Random_Map_Module_List *i; // esi@1
 
   v1 = this;
-  for ( i = this->list; i; i = i->next )
+  for( i = this->list; i; i = i->next )
     RGE_Random_Map_Module::update_map_info(i->module, v1->map);
 }
 
@@ -373,7 +373,7 @@ void __thiscall RGE_Random_Map_Module::update_map_info(RGE_Random_Map_Module *th
 
   v2 = this;
   this->map = new_map;
-  if ( new_map )
+  if( new_map )
   {
     v3 = RGE_Map::give_up_map_offsets(new_map);
     v4 = v2->map;
@@ -396,13 +396,13 @@ void __thiscall RGE_Random_Map_Module::update_map_info(RGE_Random_Map_Module *th
 //----- (00480C80) --------------------------------------------------------
 void __thiscall RGE_Random_Map_Module::share_resources(RGE_Random_Map_Module *this, char **search_map_pointer, char ***search_map_rows_pointer, Map_Stack **stack_array_pointer, Map_Stack ***stack_offsets_pointer)
 {
-  if ( search_map_pointer )
+  if( search_map_pointer )
     *search_map_pointer = this->search_map;
-  if ( search_map_rows_pointer )
+  if( search_map_rows_pointer )
     *search_map_rows_pointer = this->search_map_rows;
-  if ( stack_array_pointer )
+  if( stack_array_pointer )
     *stack_array_pointer = this->stack_array;
-  if ( stack_offsets_pointer )
+  if( stack_offsets_pointer )
     *stack_offsets_pointer = this->stack_offsets;
 }
 
@@ -423,7 +423,7 @@ void __stdcall RGE_Random_Map_Module::deinit_stack(Map_Stack *stack)
   Map_Stack *v2; // eax@1
 
   v2 = stack->next;
-  if ( v2 )
+  if( v2 )
   {
     v2->prev = 0;
     stack->next = 0;
@@ -440,14 +440,14 @@ void __thiscall RGE_Random_Map_Module::push_stack(RGE_Random_Map_Module *this, M
   v6 = &this->stack_offsets[y][x];
   RGE_Random_Map_Module::remove_stack_node(v6);
   v7 = stack->next;
-  if ( v7 && v7->tot_cost < (double)tot_cost )
+  if( v7 && v7->tot_cost < (double)tot_cost )
   {
     do
     {
       v8 = v7;
       v7 = v7->next;
     }
-    while ( v7 && v7->tot_cost < (double)tot_cost );
+    while( v7 && v7->tot_cost < (double)tot_cost );
     RGE_Random_Map_Module::add_stack_node(v8, v6);
     v6->cost = cost;
     v6->tot_cost = tot_cost;
@@ -468,7 +468,7 @@ Map_Stack *__stdcall RGE_Random_Map_Module::pop_stack(Map_Stack *stack, int *x, 
   Map_Stack *v7; // ST00_4@3
 
   v5 = stack->next;
-  if ( v5 )
+  if( v5 )
   {
     v7 = stack->next;
     *x = v5->x;
@@ -490,13 +490,13 @@ void __stdcall RGE_Random_Map_Module::add_stack_node(Map_Stack *stack, Map_Stack
   Map_Stack *v3; // ecx@4
   Map_Stack *v4; // ecx@4
 
-  if ( new_stack->next || new_stack->prev )
+  if( new_stack->next || new_stack->prev )
     RGE_Random_Map_Module::remove_stack_node(new_stack);
   v3 = stack->next;
   new_stack->prev = stack;
   new_stack->next = v3;
   v4 = stack->next;
-  if ( v4 )
+  if( v4 )
     v4->prev = new_stack;
   stack->next = new_stack;
 }
@@ -508,10 +508,10 @@ void __stdcall RGE_Random_Map_Module::remove_stack_node(Map_Stack *stack)
   Map_Stack *v3; // ecx@3
 
   v2 = stack->prev;
-  if ( v2 )
+  if( v2 )
     v2->next = stack->next;
   v3 = stack->next;
-  if ( v3 )
+  if( v3 )
     v3->prev = stack->prev;
   stack->next = 0;
   stack->prev = 0;
@@ -524,10 +524,10 @@ void __thiscall RGE_Random_Map_Module::clear_stack(RGE_Random_Map_Module *this)
   int v2; // edx@2
   int v3; // eax@3
 
-  for ( i = 0; i < this->map_height; ++i )
+  for( i = 0; i < this->map_height; ++i )
   {
     v2 = 0;
-    if ( this->map_width > 0 )
+    if( this->map_width > 0 )
     {
       v3 = 0;
       do
@@ -537,7 +537,7 @@ void __thiscall RGE_Random_Map_Module::clear_stack(RGE_Random_Map_Module *this)
         *((_DWORD *)&this->stack_offsets[i][v3] - 2) = 0;
         *((_DWORD *)&this->stack_offsets[i][v3] - 1) = 0;
       }
-      while ( v2 < this->map_width );
+      while( v2 < this->map_width );
     }
   }
 }
@@ -571,11 +571,11 @@ void __stdcall RGE_Random_Map_Module::randomize_stack(Map_Stack *stack)
     ++v2;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v10 = 2;
   do
   {
-    while ( stack->next )
+    while( stack->next )
     {
       v4 = debug_rand(aCMsdevWorkA_20, 488);
       RGE_Random_Map_Module::add_stack_node(&sub_stacks[100 * v4 / 0x7FFF], stack->next);
@@ -586,14 +586,14 @@ void __stdcall RGE_Random_Map_Module::randomize_stack(Map_Stack *stack)
     do
     {
       v7 = (Map_Stack **)((char *)&sub_stacks[0].next + v5);
-      while ( *v6 )
+      while( *v6 )
       {
         RGE_Random_Map_Module::add_stack_node(stack, *v6);
 LABEL_12:
-        if ( *v7 )
+        if( *v7 )
           RGE_Random_Map_Module::add_stack_node(stack, *v7);
       }
-      if ( *v7 )
+      if( *v7 )
         goto LABEL_12;
       v6 += 12;
       v5 = v11 + 48;
@@ -601,10 +601,10 @@ LABEL_12:
       v8 = v11 - 2376 < 0;
       v11 += 48;
     }
-    while ( v8 ^ v9 );
+    while( v8 ^ v9 );
     --v10;
   }
-  while ( v10 );
+  while( v10 );
 }
 
 //----- (00480FB0) --------------------------------------------------------
@@ -769,7 +769,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
   v11 = *((_BYTE *)&v7->map_row_offset[v10][*v8] + 5) & 0x1F;
   v12 = terrain;
   v7->search_map_rows[v10][*v8] = 2;
-  if ( v12[v11] <= 0.0 )
+  if( v12[v11] <= 0.0 )
     return 0;
   v13 = x;
   v14 = *v8;
@@ -779,18 +779,18 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
   ty = (y - *v9) * (y - *v9) + v16 * v16;
   v18 = sqrt((double)ty);
   hcost = v18;
-  if ( v18 != 0.0 )
+  if( v18 != 0.0 )
   {
     do
     {
-      if ( v17 >= map_h )
+      if( v17 >= map_h )
       {
         down = 0;
       }
       else
       {
         v19 = hcost;
-        if ( v15 <= v17 )
+        if( v15 <= v17 )
           v20 = v19 - -1.0;
         else
           v20 = v19 - 1.0;
@@ -798,9 +798,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         v22 = v7->search_map_rows[v17 + 1];
         v23 = &v22[v13];
         v24 = v22[v13];
-        if ( v24 )
+        if( v24 )
         {
-          if ( v24 == 2 )
+          if( v24 == 2 )
           {
             v101 = end_x;
             v7->search_map_rows[v21][v13] = 7;
@@ -815,7 +815,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         else
         {
           tile_type = *((_BYTE *)&v7->map_row_offset[v21][v13] + 5) & 0x1F;
-          if ( terrain[tile_type] <= 0.0 )
+          if( terrain[tile_type] <= 0.0 )
           {
             *v23 = 1;
             v17 = y;
@@ -835,7 +835,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           }
         }
       }
-      if ( v17 <= 0 )
+      if( v17 <= 0 )
       {
         up = 0;
       }
@@ -843,7 +843,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
       {
         v28 = end_y;
         v29 = hcost;
-        if ( *end_y >= v17 )
+        if( *end_y >= v17 )
           v30 = v29 - -1.0;
         else
           v30 = v29 - 1.0;
@@ -851,9 +851,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         v32 = v7->search_map_rows[v17 - 1];
         v33 = &v32[v13];
         v34 = v32[v13];
-        if ( v34 )
+        if( v34 )
         {
-          if ( v34 == 2 )
+          if( v34 == 2 )
           {
             v103 = end_x;
             v7->search_map_rows[v31][v13] = 6;
@@ -866,7 +866,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         else
         {
           tile_typea = *((_BYTE *)&v7->map_row_offset[v31][v13] + 5) & 0x1F;
-          if ( terrain[tile_typea] <= 0.0 )
+          if( terrain[tile_typea] <= 0.0 )
           {
             *v33 = 1;
             v17 = y;
@@ -886,10 +886,10 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           }
         }
       }
-      if ( v13 > 0 )
+      if( v13 > 0 )
       {
         v38 = hcost;
-        if ( *end_x >= v13 )
+        if( *end_x >= v13 )
           v39 = v38 - -1.0;
         else
           v39 = v38 - 1.0;
@@ -898,9 +898,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         tcost = v39;
         v42 = &v41[v13 - 1];
         v43 = v41[v13 - 1];
-        if ( v43 )
+        if( v43 )
         {
-          if ( v43 == 2 )
+          if( v43 == 2 )
           {
             v104 = v7->search_map_rows[v17];
             v105 = end_x;
@@ -916,7 +916,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         else
         {
           v44 = *((_BYTE *)&v7->map_row_offset[v17][v40] + 5);
-          if ( terrain[v44 & 0x1F] <= 0.0 )
+          if( terrain[v44 & 0x1F] <= 0.0 )
           {
             *v42 = 1;
             v17 = y;
@@ -935,7 +935,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
             right = 1;
           }
         }
-        if ( v17 > 0 )
+        if( v17 > 0 )
         {
           v48 = v7->search_map_rows;
           v49 = v17 - 1;
@@ -943,9 +943,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           v50 = &v48[v17 - 1][v40];
           calc_cost = v50;
           v51 = *v50;
-          if ( v51 )
+          if( v51 )
           {
-            if ( v51 == 2 )
+            if( v51 == 2 )
             {
               v108 = end_x;
               v7->search_map_rows[v49][v40] = 8;
@@ -958,20 +958,20 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           else
           {
             v52 = &terrain[*((_BYTE *)&v7->map_row_offset[v17 - 1][v40] + 5) & 0x1F];
-            if ( *v52 <= 0.0 )
+            if( *v52 <= 0.0 )
             {
               *calc_cost = 1;
               v17 = y;
               v13 = x;
             }
-            else if ( up && right )
+            else if( up && right )
             {
               v53 = end_y;
               v54 = cost - *v52 * -1.36;
               *calc_cost = 8;
               calc_costa = v54;
               v55 = tcost;
-              if ( *v53 >= y )
+              if( *v53 >= y )
                 v56 = v55 - -0.41;
               else
                 v56 = v55 - 0.41;
@@ -982,7 +982,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
             }
           }
         }
-        if ( v17 < map_h )
+        if( v17 < map_h )
         {
           v58 = v7->search_map_rows;
           v59 = v17 + 1;
@@ -990,9 +990,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           v60 = &v58[v17 + 1][v40];
           calc_costb = v60;
           v61 = *v60;
-          if ( v61 )
+          if( v61 )
           {
-            if ( v61 == 2 )
+            if( v61 == 2 )
             {
               v110 = end_x;
               v7->search_map_rows[v59][v40] = 9;
@@ -1005,20 +1005,20 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           else
           {
             v62 = &terrain[*((_BYTE *)&v7->map_row_offset[v17 + 1][v40] + 5) & 0x1F];
-            if ( *v62 <= 0.0 )
+            if( *v62 <= 0.0 )
             {
               *calc_costb = 1;
               v17 = y;
               v13 = x;
             }
-            else if ( down && right )
+            else if( down && right )
             {
               v63 = end_y;
               v64 = cost - *v62 * -1.36;
               *calc_costb = 9;
               calc_costc = v64;
               v65 = tcost;
-              if ( *v63 <= y )
+              if( *v63 <= y )
                 v66 = v65 - -0.41;
               else
                 v66 = v65 - 0.41;
@@ -1030,11 +1030,11 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           }
         }
       }
-      if ( v13 < map_w )
+      if( v13 < map_w )
       {
         v68 = end_x;
         v69 = hcost;
-        if ( *end_x <= v13 )
+        if( *end_x <= v13 )
           v70 = v69 - -1.0;
         else
           v70 = v69 - 1.0;
@@ -1043,9 +1043,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         v72 = v7->search_map_rows[v17];
         v73 = &v72[v71];
         v74 = v72[v71];
-        if ( v74 )
+        if( v74 )
         {
-          if ( v74 == 2 )
+          if( v74 == 2 )
           {
             v112 = end_y;
             v7->search_map_rows[v17][v71] = 5;
@@ -1059,7 +1059,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
         else
         {
           tile_typeb = *((_BYTE *)&v7->map_row_offset[v17][v71] + 5) & 0x1F;
-          if ( terrain[tile_typeb] <= 0.0 )
+          if( terrain[tile_typeb] <= 0.0 )
           {
             *v73 = 1;
             v17 = y;
@@ -1076,7 +1076,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
             righta = 1;
           }
         }
-        if ( v17 > 0 )
+        if( v17 > 0 )
         {
           v78 = v7->search_map_rows;
           v79 = v17 - 1;
@@ -1084,9 +1084,9 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           v80 = v78[v17 - 1];
           v81 = &v80[v71];
           v82 = v80[v71];
-          if ( v82 )
+          if( v82 )
           {
-            if ( v82 == 2 )
+            if( v82 == 2 )
             {
               v114 = end_x;
               v115 = end_y;
@@ -1099,19 +1099,19 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           else
           {
             v83 = &terrain[*((_BYTE *)&v7->map_row_offset[v17 - 1][v71] + 5) & 0x1F];
-            if ( *v83 <= 0.0 )
+            if( *v83 <= 0.0 )
             {
               *v81 = 1;
               v17 = y;
             }
-            else if ( up && righta )
+            else if( up && righta )
             {
               v84 = end_y;
               v85 = cost - *v83 * -1.36;
               *v81 = 10;
               calc_costd = v85;
               v86 = tcosta;
-              if ( *v84 >= y )
+              if( *v84 >= y )
                 v87 = v86 - -0.40000001;
               else
                 v87 = v86 - 0.40000001;
@@ -1121,15 +1121,15 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
             }
           }
         }
-        if ( v17 < map_h )
+        if( v17 < map_h )
         {
           v89 = v17 + 1;
           v90 = v7->search_map_rows[v89];
           v91 = v90[v71];
           v92 = &v90[v71];
-          if ( v91 )
+          if( v91 )
           {
-            if ( v91 == 2 )
+            if( v91 == 2 )
             {
               v116 = end_x;
               v7->search_map_rows[v89][v71] = 11;
@@ -1142,17 +1142,17 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           else
           {
             v93 = &terrain[*((_BYTE *)&v7->map_row_offset[v89][v71] + 5) & 0x1F];
-            if ( *v93 <= 0.0 )
+            if( *v93 <= 0.0 )
             {
               *v92 = 1;
             }
-            else if ( down && righta )
+            else if( down && righta )
             {
               v94 = cost - *v93 * -1.36;
               *v92 = 11;
               calc_coste = v94;
               v95 = tcosta;
-              if ( *end_y <= y )
+              if( *end_y <= y )
                 v96 = v95 - -0.40000001;
               else
                 v96 = v95 - 0.40000001;
@@ -1162,7 +1162,7 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
           }
         }
       }
-      if ( !RGE_Random_Map_Module::pop_stack(path_stack, &x, &y, &cost) )
+      if( !RGE_Random_Map_Module::pop_stack(path_stack, &x, &y, &cost) )
         return 0;
       v13 = x;
       v15 = *end_y;
@@ -1171,10 +1171,10 @@ char __thiscall RGE_Random_Map_Module::find_path(RGE_Random_Map_Module *this, Ma
       v98 = sqrt((double)ty);
       hcost = v98;
     }
-    while ( v98 != 0.0 );
+    while( v98 != 0.0 );
   }
   v99 = path_stack->next;
-  if ( !v99 )
+  if( !v99 )
     return 1;
   v99->prev = 0;
   return 1;

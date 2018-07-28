@@ -12,7 +12,7 @@ void __thiscall RGE_Doppleganger_Creator::RGE_Doppleganger_Creator(RGE_Dopplegan
   v3->allocated_size = initial_size;
   v3->active_size = 0;
   v3->owner = player;
-  if ( !DDlogf )
+  if( !DDlogf )
     DDlogf = fopen(aCAoedoppl_txt, aW_1);
 }
 
@@ -23,16 +23,16 @@ void __thiscall RGE_Doppleganger_Creator::~RGE_Doppleganger_Creator(RGE_Dopplega
   int *v2; // esi@7
 
   v1 = this;
-  if ( this->Objects )
+  if( this->Objects )
     free(this->Objects);
-  if ( v1->Map_Addresses )
+  if( v1->Map_Addresses )
     free(v1->Map_Addresses);
-  if ( v1->Last_Map_Value )
+  if( v1->Last_Map_Value )
     free(v1->Last_Map_Value);
   v2 = v1->Object_ids;
-  if ( v2 )
+  if( v2 )
     free(v2);
-  if ( DDlogf )
+  if( DDlogf )
   {
     fclose(DDlogf);
     DDlogf = 0;
@@ -49,14 +49,14 @@ int __thiscall RGE_Doppleganger_Creator::add_doppleganger_check(RGE_Doppleganger
   RGE_Static_Object **v7; // ecx@9
 
   v3 = this;
-  if ( DDlogf )
+  if( DDlogf )
     fprintf(DDlogf, aAdc_DPDIdD, this->owner->world->world_time, this->owner->id, theObj->id);
-  if ( v3->active_size >= v3->allocated_size )
+  if( v3->active_size >= v3->allocated_size )
     RGE_Doppleganger_Creator::expand_allocations(v3, 30);
-  if ( theObj->owner->id == v3->owner->id )
+  if( theObj->owner->id == v3->owner->id )
   {
     v5 = v3->active_size;
-    if ( v5 <= 0 || (v6 = 0, v5 <= 0) )
+    if( v5 <= 0 || (v6 = 0, v5 <= 0) )
     {
 LABEL_12:
       v3->Objects[v5] = theObj;
@@ -68,11 +68,11 @@ LABEL_12:
     else
     {
       v7 = v3->Objects;
-      while ( *v7 != theObj )
+      while( *v7 != theObj )
       {
         ++v6;
         ++v7;
-        if ( v6 >= v5 )
+        if( v6 >= v5 )
           goto LABEL_12;
       }
       result = 0;
@@ -97,10 +97,10 @@ int __thiscall RGE_Doppleganger_Creator::remove_doppleganger_check(RGE_Dopplegan
   int v8; // eax@10
 
   v2 = this;
-  if ( DDlogf )
+  if( DDlogf )
     fprintf(DDlogf, aRdc_DPDIdD, this->owner->world->world_time, this->owner->id, theObj->id);
   v3 = v2->active_size;
-  if ( v3 <= 0 || (v4 = 0, v3 <= 0) )
+  if( v3 <= 0 || (v4 = 0, v3 <= 0) )
   {
     result = 0;
   }
@@ -108,15 +108,15 @@ int __thiscall RGE_Doppleganger_Creator::remove_doppleganger_check(RGE_Dopplegan
   {
     v5 = v2->Objects;
     v6 = v2->Objects;
-    while ( *v6 != theObj )
+    while( *v6 != theObj )
     {
       ++v4;
       ++v6;
-      if ( v4 >= v3 )
+      if( v4 >= v3 )
         return 0;
     }
     v2->active_size = v3 - 1;
-    if ( v4 < v3 - 1 )
+    if( v4 < v3 - 1 )
     {
       v8 = v4;
       v5[v8] = v5[v3 - 1];
@@ -158,34 +158,34 @@ void __thiscall RGE_Doppleganger_Creator::perform_doppleganger_checks(RGE_Dopple
   v2 = 0;
   v3 = v1->active_size;
   remove_me = 0;
-  if ( v3 > 0 )
+  if( v3 > 0 )
   {
     v4 = 0;
     x = 0;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
       do
       {
         v5 = v1->Map_Addresses[v4];
         v6 = *v5;
         Unified_Map_Value = *v5;
-        if ( *v5 != v1->Last_Map_Value[v4] )
+        if( *v5 != v1->Last_Map_Value[v4] )
         {
           v7 = v1->Objects;
           v8 = v7[v4];
-          if ( v8 && (v8 = v7[v4], RGE_Game_World::object(v1->owner->world, v1->Object_ids[v4]) == v8) )
+          if( v8 && (v8 = v7[v4], RGE_Game_World::object(v1->owner->world, v1->Object_ids[v4]) == v8) )
           {
             v9 = 1;
-            for ( i = (unsigned __int16)(v1->Last_Map_Value[v4] >> 1) & (unsigned __int16)((v1->Last_Map_Value[v4] ^ v6) >> 1) & 0x7FFF;
+            for( i = (unsigned __int16)(v1->Last_Map_Value[v4] >> 1) & (unsigned __int16)((v1->Last_Map_Value[v4] ^ v6) >> 1) & 0x7FFF;
                   i;
                   i >>= 1 )
             {
-              if ( (i & 1) == 1 )
+              if( (i & 1) == 1 )
               {
                 v17 = v1->owner->id;
-                if ( v9 != v17 )
+                if( v9 != v17 )
                 {
-                  if ( DDlogf )
+                  if( DDlogf )
                   {
                     v11 = v1->Objects[v4];
                     fprintf(
@@ -217,17 +217,17 @@ void __thiscall RGE_Doppleganger_Creator::perform_doppleganger_checks(RGE_Dopple
           else
           {
             remove_me = v8;
-            if ( DDlogf )
+            if( DDlogf )
               fprintf(DDlogf, aRemoveCheck_DB, v1->owner->world->world_time, v1->owner->id, v1->Object_ids[v4]);
           }
           v1->Last_Map_Value[v4] = v6;
         }
         x = ++v4;
       }
-      while ( v4 < v1->active_size );
+      while( v4 < v1->active_size );
       v2 = remove_me;
     }
-    if ( v2 )
+    if( v2 )
       RGE_Doppleganger_Creator::remove_doppleganger_check(v1, v2);
   }
 }
@@ -244,7 +244,7 @@ void __thiscall RGE_Doppleganger_Creator::expand_allocations(RGE_Doppleganger_Cr
   unsigned int **grow_sizea; // [sp+1Ch] [bp+4h]@3
 
   v2 = this;
-  if ( DDlogf )
+  if( DDlogf )
     fprintf(DDlogf, aResize_DPDGrow, this->owner->world->world_time, this->owner->id, grow_size);
   v3 = grow_size + v2->allocated_size;
   v2->allocated_size = v3;

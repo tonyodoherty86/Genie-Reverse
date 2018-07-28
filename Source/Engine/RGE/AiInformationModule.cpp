@@ -24,7 +24,7 @@ InformationAIModule *__thiscall InformationAIModule::`vector deleting destructor
 
   v2 = this;
   InformationAIModule::~InformationAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }

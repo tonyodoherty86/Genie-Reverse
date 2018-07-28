@@ -10,7 +10,7 @@ void __thiscall RGE_Flic_Player::RGE_Flic_Player(RGE_Flic_Player *this, char *fi
   v2 = this;
   v3 = _open(filename, 0x8000);
   v4 = v3;
-  if ( v3 <= -1 )
+  if( v3 <= -1 )
   {
     v2->flic_buffer = 0;
     v2->flic_handle = -1;
@@ -35,7 +35,7 @@ void __thiscall RGE_Flic_Player::RGE_Flic_Player(RGE_Flic_Player *this, int hand
   RGE_Flic_Player *v2; // esi@1
 
   v2 = this;
-  if ( handle <= -1 )
+  if( handle <= -1 )
   {
     this->flic_buffer = 0;
     this->flic_handle = -1;
@@ -53,7 +53,7 @@ void __thiscall RGE_Flic_Player::RGE_Flic_Player(RGE_Flic_Player *this, int hand
 //----- (00449C40) --------------------------------------------------------
 void __thiscall RGE_Flic_Player::~RGE_Flic_Player(RGE_Flic_Player *this)
 {
-  if ( this->flic_buffer )
+  if( this->flic_buffer )
     free(this->flic_buffer);
 }
 
@@ -86,7 +86,7 @@ void __thiscall RGE_Flic_Player::palette(RGE_Flic_Player *this, tagRGBQUAD *pale
   v2 = this;
   v23 = this;
   temp_buffer = 0;
-  if ( this->flic_handle <= -1 )
+  if( this->flic_handle <= -1 )
   {
     framehead = (FrameHead *)this->flichead.oframe2;
     v3 = (char *)&framehead[1];
@@ -102,15 +102,15 @@ void __thiscall RGE_Flic_Player::palette(RGE_Flic_Player *this, tagRGBQUAD *pale
   }
   v4 = framehead;
   index1 = 0;
-  if ( framehead->chunks > 0 )
+  if( framehead->chunks > 0 )
   {
     do
     {
-      if ( *((_WORD *)v3 + 2) == 4 )
+      if( *((_WORD *)v3 + 2) == 4 )
       {
         v5 = 0;
         v6 = (int)(v3 + 8);
-        if ( (signed int)*((_WORD *)v3 + 3) > 0 )
+        if( (signed int)*((_WORD *)v3 + 3) > 0 )
         {
           v7 = *((_WORD *)v3 + 3);
           do
@@ -118,10 +118,10 @@ void __thiscall RGE_Flic_Player::palette(RGE_Flic_Player *this, tagRGBQUAD *pale
             v8 = *(_BYTE *)(v6 + 1);
             v5 += *(_BYTE *)v6;
             v9 = v6 + 1;
-            if ( !v8 )
+            if( !v8 )
               v8 = 256;
             v6 = v9 + 1;
-            if ( v8 > 0 )
+            if( v8 > 0 )
             {
               v10 = v8;
               v11 = &palette[v5].rgbGreen;
@@ -136,18 +136,18 @@ void __thiscall RGE_Flic_Player::palette(RGE_Flic_Player *this, tagRGBQUAD *pale
                 v11 += 4;
                 --v10;
               }
-              while ( v10 );
+              while( v10 );
             }
             --v7;
           }
-          while ( v7 );
+          while( v7 );
         }
       }
-      if ( *((_WORD *)v3 + 2) == 11 )
+      if( *((_WORD *)v3 + 2) == 11 )
       {
         v13 = 0;
         v14 = (int)(v3 + 8);
-        if ( (signed int)*((_WORD *)v3 + 3) > 0 )
+        if( (signed int)*((_WORD *)v3 + 3) > 0 )
         {
           v15 = *((_WORD *)v3 + 3);
           do
@@ -155,10 +155,10 @@ void __thiscall RGE_Flic_Player::palette(RGE_Flic_Player *this, tagRGBQUAD *pale
             v16 = *(_BYTE *)(v14 + 1);
             v13 += *(_BYTE *)v14;
             v17 = v14 + 1;
-            if ( !v16 )
+            if( !v16 )
               v16 = 256;
             v14 = v17 + 1;
-            if ( v16 > 0 )
+            if( v16 > 0 )
             {
               v18 = v16;
               v19 = &palette[v13].rgbGreen;
@@ -172,25 +172,25 @@ void __thiscall RGE_Flic_Player::palette(RGE_Flic_Player *this, tagRGBQUAD *pale
                 v14 += 3;
                 --v18;
               }
-              while ( v18 );
+              while( v18 );
             }
             --v15;
           }
-          while ( v15 );
+          while( v15 );
         }
       }
       v4 = framehead;
       v3 += *(_DWORD *)v3;
       ++index1;
     }
-    while ( index1 < framehead->chunks );
+    while( index1 < framehead->chunks );
     v2 = v23;
   }
-  if ( v2->flic_handle > -1 )
+  if( v2->flic_handle > -1 )
   {
-    if ( v4 )
+    if( v4 )
       free(v4);
-    if ( temp_buffer )
+    if( temp_buffer )
       free(temp_buffer);
   }
 }
@@ -219,13 +219,13 @@ void __thiscall RGE_Flic_Player::start(RGE_Flic_Player *this)
   char *v1; // edx@3
   int v2; // eax@4
 
-  if ( this->flichead.type == 44817 )
+  if( this->flichead.type == 44817 )
   {
     v2 = 5 * this->flichead.speed;
     this->flichead.oframe1 = this->flic_buffer + 132;
     this->flichead.speed = 200 * v2 / 70;
   }
-  else if ( this->flichead.type == 44818 )
+  else if( this->flichead.type == 44818 )
   {
     v1 = &this->flic_buffer[(unsigned int)this->flichead.oframe1];
     this->flichead.oframe1 = v1;
@@ -260,7 +260,7 @@ char __thiscall RGE_Flic_Player::draw(RGE_Flic_Player *this, TDrawArea *drawarea
 
   v4 = this;
   temp_buffer = 0;
-  if ( this->flic_handle <= -1 )
+  if( this->flic_handle <= -1 )
   {
     v5 = this->flichead.oframe2;
     v6 = (char *)v5 + 16;
@@ -283,12 +283,12 @@ char __thiscall RGE_Flic_Player::draw(RGE_Flic_Player *this, TDrawArea *drawarea
   v4->y2 = v8;
   v9 = drawarea_in->Orien * TDrawArea::AlignedWidth(drawarea_in);
   v4->drawarea_width = v9;
-  if ( drawarea_in->Orien >= 1 )
+  if( drawarea_in->Orien >= 1 )
     v4->window_buffer = &drawarea_in->Bits[v4->y1 * v9] + v4->x1;
   else
     v4->window_buffer = &drawarea_in->Bits[v9 * (v4->y1 - drawarea_in->Height + 1)] + v4->x1;
   v10 = 0;
-  for ( v4->save_buffer = v4->window_buffer; v10 < *((_WORD *)v5 + 3); ++v10 )
+  for( v4->save_buffer = v4->window_buffer; v10 < *((_WORD *)v5 + 3); ++v10 )
   {
     v4->chunk = v6 + 6;
     switch ( *((_WORD *)v6 + 2) )
@@ -317,7 +317,7 @@ char __thiscall RGE_Flic_Player::draw(RGE_Flic_Player *this, TDrawArea *drawarea
   v12 = v4->flichead.size;
   v13 = (int)&v4->flichead.oframe2[*(_DWORD *)v5];
   v4->flichead.oframe2 = (char *)v13;
-  if ( v13 - (signed int)v11 < v12 )
+  if( v13 - (signed int)v11 < v12 )
   {
     v15 = 0;
   }
@@ -325,15 +325,15 @@ char __thiscall RGE_Flic_Player::draw(RGE_Flic_Player *this, TDrawArea *drawarea
   {
     v14 = v4->flichead.oframe1;
     v4->flichead.oframe2 = v14;
-    if ( v11 )
+    if( v11 )
       v4->flichead.oframe2 = &v14[*(_DWORD *)v14];
     v15 = 2;
   }
-  if ( v4->flic_handle > -1 )
+  if( v4->flic_handle > -1 )
   {
-    if ( v5 )
+    if( v5 )
       free(v5);
-    if ( temp_buffer )
+    if( temp_buffer )
       free(temp_buffer);
   }
   return v15;
@@ -351,7 +351,7 @@ void __thiscall RGE_Flic_Player::literal(RGE_Flic_Player *this)
 
   v1 = this;
   v2 = 0;
-  if ( this->flic_size_y > 0 )
+  if( this->flic_size_y > 0 )
   {
     do
     {
@@ -364,7 +364,7 @@ void __thiscall RGE_Flic_Player::literal(RGE_Flic_Player *this)
       ++v2;
       v1->chunk = (char *)v5;
     }
-    while ( v2 < v6 );
+    while( v2 < v6 );
   }
 }
 
@@ -399,7 +399,7 @@ void __thiscall RGE_Flic_Player::delta_flc(RGE_Flic_Player *this)
   v2 = this->chunk;
   v3 = *(_WORD *)v2;
   v4 = v2 + 2;
-  if ( v3 <= 0 )
+  if( v3 <= 0 )
     return;
   v22 = v3;
   do
@@ -411,9 +411,9 @@ void __thiscall RGE_Flic_Player::delta_flc(RGE_Flic_Player *this)
       v7 = 0;
       v8 = *(_WORD *)v4;
       v4 += 2;
-      if ( !((unsigned int)v8 >> 14) )
+      if( !((unsigned int)v8 >> 14) )
         goto LABEL_9;
-      if ( (unsigned int)v8 >> 14 == 2 )
+      if( (unsigned int)v8 >> 14 == 2 )
       {
         v1->window_buffer[v1->flic_width - 1] = v8;
         v6 = *(_WORD *)v4;
@@ -423,7 +423,7 @@ LABEL_9:
         v5 = 1;
         continue;
       }
-      if ( (unsigned int)v8 >> 14 == 3 )
+      if( (unsigned int)v8 >> 14 == 3 )
       {
         v9 = (signed __int16)-v6;
         cur_y += v9;
@@ -432,8 +432,8 @@ LABEL_9:
         v1->window_buffer = (char *)v10;
       }
     }
-    while ( !v5 );
-    if ( v7 > 0 )
+    while( !v5 );
+    if( v7 > 0 )
     {
       v21 = v7;
       do
@@ -443,11 +443,11 @@ LABEL_9:
         v1->window_buffer = v11;
         v13 = *v12;
         v14 = v12 + 1;
-        if ( v13 <= 0 )
+        if( v13 <= 0 )
         {
           v16 = -2 * v13;
           v17 = v16 == 1;
-          if ( (signed int)v16 > 1 )
+          if( (signed int)v16 > 1 )
           {
             v18 = v16 >> 1;
             do
@@ -457,10 +457,10 @@ LABEL_9:
               --v18;
               v1->window_buffer += 2;
             }
-            while ( v18 );
+            while( v18 );
             v17 = v16 == 1;
           }
-          if ( v17 )
+          if( v17 )
             *v1->window_buffer++ = *(_BYTE *)v14;
           v4 = (char *)v14 + 2;
         }
@@ -473,7 +473,7 @@ LABEL_9:
         }
         --v21;
       }
-      while ( v21 );
+      while( v21 );
     }
     v19 = (int)&v1->save_buffer[v1->drawarea_width];
     v1->window_buffer = (char *)v19;
@@ -482,7 +482,7 @@ LABEL_9:
     v1->save_buffer = (char *)v19;
     --v22;
   }
-  while ( !v17 );
+  while( !v17 );
 }
 
 //----- (0044A2A0) --------------------------------------------------------
@@ -519,7 +519,7 @@ void __thiscall RGE_Flic_Player::delta_fli(RGE_Flic_Player *this)
   v2 = this->chunk;
   v3 = *(_DWORD *)v2;
   v4 = (int)(v2 + 8);
-  if ( v3 > 0 )
+  if( v3 > 0 )
   {
     v24 = v3;
     do
@@ -527,7 +527,7 @@ void __thiscall RGE_Flic_Player::delta_fli(RGE_Flic_Player *this)
       v5 = *(_BYTE *)v4;
       v6 = 0;
       ++v4;
-      if ( v5 > 0 )
+      if( v5 > 0 )
       {
         v23 = v5;
         do
@@ -536,7 +536,7 @@ void __thiscall RGE_Flic_Player::delta_fli(RGE_Flic_Player *this)
           v8 = *(_BYTE *)(v4 + 1);
           cur_x = v7;
           v9 = (const void *)(v4 + 2);
-          if ( v8 >= 0 )
+          if( v8 >= 0 )
           {
             v10 = v8;
             v18 = &v22->window_buffer[v7];
@@ -571,13 +571,13 @@ void __thiscall RGE_Flic_Player::delta_fli(RGE_Flic_Player *this)
           v6 = v10 + v7;
           --v23;
         }
-        while ( v23 );
+        while( v23 );
       }
       v21 = v24 == 1;
       v1->window_buffer += v1->drawarea_width;
       --v24;
     }
-    while ( !v21 );
+    while( !v21 );
   }
 }
 
@@ -588,7 +588,7 @@ void __thiscall RGE_Flic_Player::black(RGE_Flic_Player *this)
   int v2; // eax@2
 
   v1 = 0;
-  if ( this->flic_size_y > 0 )
+  if( this->flic_size_y > 0 )
   {
     do
     {
@@ -597,7 +597,7 @@ void __thiscall RGE_Flic_Player::black(RGE_Flic_Player *this)
       ++v1;
       this->window_buffer += this->drawarea_width;
     }
-    while ( v1 < v2 );
+    while( v1 < v2 );
   }
 }
 
@@ -628,7 +628,7 @@ void __thiscall RGE_Flic_Player::byte_run(RGE_Flic_Player *this)
   v1 = this;
   v18 = this;
   v2 = this->chunk;
-  if ( this->y1 + this->flic_size_y - 1 >= 0 )
+  if( this->y1 + this->flic_size_y - 1 >= 0 )
   {
     v20 = this->y1 + this->flic_size_y;
     do
@@ -640,7 +640,7 @@ void __thiscall RGE_Flic_Player::byte_run(RGE_Flic_Player *this)
       {
         v4 = *v2;
         v5 = v2 + 1;
-        if ( v4 < 0 )
+        if( v4 < 0 )
         {
           v6 = (char)-v4;
           v14 = &v18->window_buffer[v3];
@@ -675,11 +675,11 @@ void __thiscall RGE_Flic_Player::byte_run(RGE_Flic_Player *this)
         v3 += v6;
         cur_x = v3;
       }
-      while ( v3 < v1->flic_width );
+      while( v3 < v1->flic_width );
       v17 = v20 == 1;
       v1->window_buffer += v1->drawarea_width;
       --v20;
     }
-    while ( !v17 );
+    while( !v17 );
   }
 }

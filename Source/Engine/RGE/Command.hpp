@@ -10,27 +10,27 @@ class RGE_Command
 {
 public:
 
-	// 4
-	RGE_Game_World *world;
+    // 4
+    RGE_Game_World *world;
 
     char *last_order;
     int last_order_size;
     int last_order_time;
 #if ENGINE_AOK
-	// 40
-	short spawnIdsUsed;
-	// 44
-	int validCommandSent;
-	// 48
-	int commandedSpawnIds[40];
-	// 208
-	char lastTimeCommandedSpawnsCount[RGE_PLAYERS_COUNT];
-	// 220
-	int lastTimeCommandedSpawnIds[RGE_PLAYERS_COUNT][40];
+    // 40
+    short spawnIdsUsed;
+    // 44
+    int validCommandSent;
+    // 48
+    int commandedSpawnIds[40];
+    // 208
+    char lastTimeCommandedSpawnsCount[RGE_PLAYERS_COUNT];
+    // 220
+    int lastTimeCommandedSpawnIds[RGE_PLAYERS_COUNT][40];
     // 1660
 #endif
-	// 9664
-	TCommunications_Handler *com_hand;
+    // 9664
+    TCommunications_Handler *com_hand;
 
     RGE_Command(RGE_Game_World *gworld, TCommunications_Handler *com_handler);
 

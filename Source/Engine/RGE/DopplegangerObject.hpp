@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\DopplegangerObject.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/02
  * @version 1.0
  */
 
@@ -22,17 +22,17 @@ public:
 
     RGE_Master_Static_Object *doppled_master_obj;
 
-    int doppled_player;
+    int doppled_player = 0;
 
     unsigned int *MapAddress;
 
-    unsigned int LastMapValue;
-    unsigned int CantSeeBits;
+    unsigned int LastMapValue = 0;
+    unsigned int CantSeeBits = 0;
 
-    char map_draw_level;
-    char map_color;
+    char map_draw_level = 0;
+    char map_color = 0;
 
-    int doppledObjectID;
+    int doppledObjectID = -1;
 
     RGE_Doppleganger_Object(
         RGE_Master_Doppleganger_Object *tobj,

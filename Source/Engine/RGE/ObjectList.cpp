@@ -26,7 +26,7 @@ RGE_Object_List::~RGE_Object_List()
                 v4->vfptr->__vecDelDtor(v4, 1u);
             v2 = v3;
         }
-        while ( v3 );
+        while( v3 );
     }
     if( v1->list )
     {
@@ -36,7 +36,7 @@ RGE_Object_List::~RGE_Object_List()
             free(v5);
             v1->list = v5;
         }
-        while ( v5 );
+        while( v5 );
     }
     v1->number_of_objects = 0;
 }
@@ -60,7 +60,7 @@ void RGE_Object_List::removeAllObjects()
                 v4->vfptr->__vecDelDtor(v4, 1u);
             v2 = v3;
         }
-        while ( v3 );
+        while( v3 );
     }
     v1->list = nullptr;
     v1->number_of_objects = 0;
@@ -119,7 +119,7 @@ LABEL_8:
         --v3->number_of_objects;
         return;
     }
-    while ( 1 )
+    while( 1 )
     {
         v4 = v4->next;
         if( !v4 )
@@ -196,7 +196,7 @@ void RGE_Object_List::draw(TDrawArea *render_area, int x, int y, char fogged_til
                             v10 = i->list;
                             if( v10 )
                             {
-                                while ( v10->node->type != 25 )
+                                while( v10->node->type != 25 )
                                 {
                                     v10 = v10->next;
                                     if( !v10 )
@@ -270,7 +270,7 @@ void RGE_Object_List::normal_draw(TDrawArea *render_area, int x, int y, char fog
                 (*(void (__stdcall **)(TDrawArea *, _DWORD, _DWORD))&v7->vfptr->gap4[16])(render_area, x, y);
             v6 = v6->next;
         }
-        while ( v6 );
+        while( v6 );
     }
     else
     {
@@ -282,7 +282,7 @@ void RGE_Object_List::normal_draw(TDrawArea *render_area, int x, int y, char fog
                 (*(void (__stdcall **)(TDrawArea *, _DWORD, _DWORD))&v6->node->vfptr->gap4[16])(render_area, x, y);
             v6 = v6->next;
         }
-        while ( v6 );
+        while( v6 );
     }
     if( v5 )
     {
@@ -292,7 +292,7 @@ void RGE_Object_List::normal_draw(TDrawArea *render_area, int x, int y, char fog
             free(v5);
             v5 = v8;
         }
-        while ( v8 );
+        while( v8 );
     }
 }
 
@@ -323,7 +323,7 @@ void RGE_Object_List::update()
             }
             v1 = v3;
         }
-        while ( v3 );
+        while( v3 );
     }
 }
 
@@ -375,7 +375,7 @@ RGE_Static_Object *RGE_Object_List::find_by_group(int id)
     result = (RGE_Static_Object *)&this->list->node;
     if( result )
     {
-        while ( !result->vfptr || *(_WORD *)(*(_DWORD *)&result->vfptr->gap4[4] + 20) != id )
+        while( !result->vfptr || *(_WORD *)(*(_DWORD *)&result->vfptr->gap4[4] + 20) != id )
         {
             result = (RGE_Static_Object *)result->id;
             if( !result )
@@ -417,7 +417,7 @@ RGE_Static_Object *RGE_Object_List::find_by_group(int id, float x, float y, char
     *(float *)&zone_obja = -1.0;
     if( v10 )
     {
-        while ( 1 )
+        while( 1 )
         {
             v11 = v10->node;
             if( v10->node && v11->master_obj->object_group == id && (!certain_state || v11->object_state == object_state) )
@@ -457,7 +457,7 @@ RGE_Static_Object *RGE_Object_List::find_by_id(int id)
     result = (RGE_Static_Object *)&this->list->node;
     if( result )
     {
-        while ( !result->vfptr || *(_DWORD *)&result->vfptr->gap4[0] != id )
+        while( !result->vfptr || *(_DWORD *)&result->vfptr->gap4[0] != id )
         {
             result = (RGE_Static_Object *)result->id;
             if( !result )
@@ -499,7 +499,7 @@ RGE_Static_Object *RGE_Object_List::find_by_master_id(int id, float x, float y, 
     *(float *)&zone_obja = -1.0;
     if( v10 )
     {
-        while ( 1 )
+        while( 1 )
         {
             v11 = v10->node;
             if( v10->node && v11->master_obj->id == id && (!certain_state || v11->object_state == object_state) )
@@ -559,7 +559,7 @@ RGE_Static_Object *RGE_Object_List::find_by_master_ids(int id1, int id2, float x
     *(float *)&zone_obja = -1.0;
     if( v11 )
     {
-        while ( 1 )
+        while( 1 )
         {
             v12 = v11->node;
             v13 = v11->node->master_obj->id;
@@ -612,7 +612,7 @@ RGE_Static_Object *RGE_Object_List::find_by_type(char type, float x, float y, ch
     if( v6 )
     {
         v8 = object_state;
-        while ( 1 )
+        while( 1 )
         {
             v9 = v6->node;
             if( v6->node && v9->type == type && (!certain_state || v9->object_state == v8) )

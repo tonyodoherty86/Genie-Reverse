@@ -25,7 +25,7 @@ TechnologyItem *__thiscall TechnologyItem::`scalar deleting destructor'(Technolo
 
   v2 = this;
   TechnologyItem::~TechnologyItem(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -43,7 +43,7 @@ void __thiscall TechnologyItem::TechnologyItem(TechnologyItem *this, int i, char
   this->idValue = i;
   this->vfptr = (TechnologyItemVtbl *)TechnologyItem::`vftable';
   v5 = (ResourceItem *)operator new(0x70u);
-  if ( v5 )
+  if( v5 )
     ResourceItem::ResourceItem(v5, &r);
   else
     v6 = 0;
@@ -68,7 +68,7 @@ void __thiscall TechnologyItem::TechnologyItem(TechnologyItem *this, TechnologyI
   this->vfptr = (TechnologyItemVtbl *)TechnologyItem::`vftable';
   this->idValue = v3;
   v4 = (ResourceItem *)operator new(0x70u);
-  if ( v4 )
+  if( v4 )
     ResourceItem::ResourceItem(v4, ti->resourceCostValue);
   else
     v5 = 0;
@@ -84,7 +84,7 @@ void __thiscall TechnologyItem::~TechnologyItem(TechnologyItem *this)
 
   this->vfptr = (TechnologyItemVtbl *)TechnologyItem::`vftable';
   v1 = this->resourceCostValue;
-  if ( v1 )
+  if( v1 )
     ((void (__stdcall *)(_DWORD))v1->vfptr->__vecDelDtor)(1);
 }
 // 56EA94: using guessed type int (__thiscall *TechnologyItem::`vftable'[2])(void *Memory, unsigned int __flags);

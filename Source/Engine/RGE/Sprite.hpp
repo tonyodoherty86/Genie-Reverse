@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Sprite.hpp
  * @author  Yvan Burrie
- * @date    2018/06/25
+ * @date    2018/07/04
  * @version 1.0
  */
 
@@ -95,7 +95,7 @@ public:
     char hit_test(short x, short y, int facet, int frame);
     char shape_hit_test(short x, short y, int facet, int frame);
 
-    void make_active_sprite();
+    class RGE_Active_Sprite *make_active_sprite();
 
     int check_for_shadows();
 

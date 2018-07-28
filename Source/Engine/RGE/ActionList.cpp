@@ -338,7 +338,7 @@ void RGE_Action_List::add_action_at_end(RGE_Action *action)
         v4 = v2->list;
         if( v4 )
         {
-            while ( 1 )
+            while( 1 )
             {
                 v5 = v4->next;
                 if( !v5 )
@@ -415,7 +415,7 @@ LABEL_14:
         v4->vfptr->first_in_stack(v4, 1);
         return;
     }
-    while ( 1 )
+    while( 1 )
     {
         v10 = &v9->next->action;
         if( !v10 )

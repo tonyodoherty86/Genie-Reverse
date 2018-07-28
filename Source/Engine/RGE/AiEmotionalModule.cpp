@@ -25,7 +25,7 @@ EmotionalAIModule *__thiscall EmotionalAIModule::`scalar deleting destructor'(Em
 
   v2 = this;
   EmotionalAIModule::~EmotionalAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -49,7 +49,7 @@ void __thiscall EmotionalAIModule::EmotionalAIModule(EmotionalAIModule *this, in
     ++v4;
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   strcpy((char *)v3->stateNameValue, aAggressive);
   strcpy(v3->stateNameValue[1], aCompassionate);
   strcpy(v3->stateNameValue[2], aDefensive);
@@ -87,7 +87,7 @@ int __thiscall EmotionalAIModule::save(EmotionalAIModule *this, int outfile)
     v2 += 4;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   return 1;
 }
 
@@ -96,7 +96,7 @@ char *__thiscall EmotionalAIModule::stateName(EmotionalAIModule *this, int s)
 {
   char *result; // eax@3
 
-  if ( s < 0 || s >= 6 )
+  if( s < 0 || s >= 6 )
     result = 0;
   else
     result = this->stateNameValue[s];
@@ -108,7 +108,7 @@ int __thiscall EmotionalAIModule::state(EmotionalAIModule *this, int s)
 {
   int result; // eax@3
 
-  if ( s < 0 || s >= 6 )
+  if( s < 0 || s >= 6 )
     result = -1;
   else
     result = this->stateValue[s];
@@ -118,21 +118,21 @@ int __thiscall EmotionalAIModule::state(EmotionalAIModule *this, int s)
 //----- (0040CB30) --------------------------------------------------------
 void __thiscall EmotionalAIModule::setState(EmotionalAIModule *this, int s, int value)
 {
-  if ( s >= 0 && s < 6 )
+  if( s >= 0 && s < 6 )
     this->stateValue[s] = value;
 }
 
 //----- (0040CB50) --------------------------------------------------------
 void __thiscall EmotionalAIModule::incrementState(EmotionalAIModule *this, int s, int delta)
 {
-  if ( s >= 0 && s < 6 )
+  if( s >= 0 && s < 6 )
     this->stateValue[s] += delta;
 }
 
 //----- (0040CB80) --------------------------------------------------------
 void __thiscall EmotionalAIModule::decrementState(EmotionalAIModule *this, int s, int delta)
 {
-  if ( s >= 0 && s < 6 )
+  if( s >= 0 && s < 6 )
     this->stateValue[s] -= delta;
 }
 
@@ -150,7 +150,7 @@ int __thiscall EmotionalAIModule::overallState(EmotionalAIModule *this)
   v4 = (char *)&this->stateValue[1];
   do
   {
-    if ( v1 < *(_DWORD *)v4 )
+    if( v1 < *(_DWORD *)v4 )
     {
       result = v3;
       v1 = *(_DWORD *)v4;
@@ -158,7 +158,7 @@ int __thiscall EmotionalAIModule::overallState(EmotionalAIModule *this)
     ++v3;
     v4 += 4;
   }
-  while ( v3 < 6 );
+  while( v3 < 6 );
   return result;
 }
 

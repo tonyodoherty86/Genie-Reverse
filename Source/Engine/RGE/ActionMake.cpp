@@ -25,7 +25,7 @@ RGE_Action_Make *__thiscall RGE_Action_Make::`vector deleting destructor'(RGE_Ac
 
   v2 = this;
   RGE_Action_Make::~RGE_Action_Make(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -53,10 +53,10 @@ void __thiscall RGE_Action_Make::first_in_stack(RGE_Action_Make *this, char firs
   v2 = this;
   v3 = ((int (__stdcall *)(_DWORD))this->vfptr->set_state)(6);
   LOWORD(v3) = v2->task->attribute_type;
-  if ( (signed __int16)v3 >= 0 )
+  if( (signed __int16)v3 >= 0 )
   {
     v4 = v2->obj;
-    if ( v4->attribute_type_held != (_WORD)v3 )
+    if( v4->attribute_type_held != (_WORD)v3 )
       ((void (__stdcall *)(int, _DWORD))v4->vfptr->set_attribute)(v3, 0);
   }
 }
@@ -85,22 +85,22 @@ char __thiscall RGE_Action_Make::update(RGE_Action_Make *this)
   float pre_attribute; // [sp+Ch] [bp-4h]@7
 
   v1 = this;
-  if ( this->state == 1 )
+  if( this->state == 1 )
   {
     result = 1;
   }
   else
   {
-    if ( this->state == 6 )
+    if( this->state == 6 )
     {
-      if ( this->timer > 0.0 || (v2 = this->obj, v3 = v2->owner, v3->attributes[36] <= 0.0) )
+      if( this->timer > 0.0 || (v2 = this->obj, v3 = v2->owner, v3->attributes[36] <= 0.0) )
       {
         v5 = this->obj;
         v6 = this->task;
         v7 = v5->owner;
         pre_attribute = v5->attribute_amount_held;
         work = *(float *)&v5->master_obj[1].obj_max * v7->world->world_time_delta_seconds * v6->work_val1;
-        if ( v6->work_flag )
+        if( v6->work_flag )
         {
           LOWORD(v6) = v6->attribute_type;
           ((void (__stdcall *)(RGE_Task *, float, _DWORD))v7->vfptr->add_attribute_num)(
@@ -114,7 +114,7 @@ char __thiscall RGE_Action_Make::update(RGE_Action_Make *this)
         }
         v1->timer = v1->timer - (v1->obj->attribute_amount_held - pre_attribute);
       }
-      else if ( v2->attribute_amount_held <= 0.0 )
+      else if( v2->attribute_amount_held <= 0.0 )
       {
         rge_base_game->vfptr->notification(
           rge_base_game,

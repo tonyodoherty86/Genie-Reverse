@@ -40,19 +40,19 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
   v14->elevation_mode_button = 0;
   v14->command_button = 0;
   v14->dialog = 0;
-  if ( !TPanel::setup((TPanel *)&v14->vfptr, draw_area_in, parent_in, x, y, wid, hgt, 0) )
+  if( !TPanel::setup((TPanel *)&v14->vfptr, draw_area_in, parent_in, x, y, wid, hgt, 0) )
     v14->error_code = 1;
-  if ( v14->view )
+  if( v14->view )
   {
     v15 = (TButtonPanel *)operator new(0x2B8u);
     LOBYTE(v35) = 1;
-    if ( v15 )
+    if( v15 )
       TButtonPanel::TButtonPanel(v15);
     else
       v16 = 0;
     LOBYTE(v35) = 0;
     v14->game_mode_button = (TButtonPanel *)v16;
-    if ( v16 )
+    if( v16 )
     {
       TButtonPanel::setup(
         v16,
@@ -70,13 +70,13 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
       TButtonPanel::set_text(v14->game_mode_button, 1, aGame_1);
       v17 = (TButtonPanel *)operator new(0x2B8u);
       LOBYTE(v35) = 2;
-      if ( v17 )
+      if( v17 )
         TButtonPanel::TButtonPanel(v17);
       else
         v18 = 0;
       LOBYTE(v35) = 0;
       v14->object_mode_button = (TButtonPanel *)v18;
-      if ( v18 )
+      if( v18 )
       {
         TButtonPanel::setup(
           v18,
@@ -94,13 +94,13 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
         TButtonPanel::set_text(v14->object_mode_button, 1, aObj);
         v19 = (TButtonPanel *)operator new(0x2B8u);
         LOBYTE(v35) = 3;
-        if ( v19 )
+        if( v19 )
           TButtonPanel::TButtonPanel(v19);
         else
           v20 = 0;
         LOBYTE(v35) = 0;
         v14->move_mode_button = (TButtonPanel *)v20;
-        if ( v20 )
+        if( v20 )
         {
           TButtonPanel::setup(
             v20,
@@ -118,13 +118,13 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
           TButtonPanel::set_text(v14->move_mode_button, 1, aMove_1);
           v21 = (TButtonPanel *)operator new(0x2B8u);
           LOBYTE(v35) = 4;
-          if ( v21 )
+          if( v21 )
             TButtonPanel::TButtonPanel(v21);
           else
             v22 = 0;
           LOBYTE(v35) = 0;
           v14->delete_mode_button = (TButtonPanel *)v22;
-          if ( v22 )
+          if( v22 )
           {
             TButtonPanel::setup(
               v22,
@@ -142,13 +142,13 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
             TButtonPanel::set_text(v14->delete_mode_button, 1, aDel);
             v23 = (TButtonPanel *)operator new(0x2B8u);
             LOBYTE(v35) = 5;
-            if ( v23 )
+            if( v23 )
               TButtonPanel::TButtonPanel(v23);
             else
               v24 = 0;
             LOBYTE(v35) = 0;
             v14->terrain_mode_button = (TButtonPanel *)v24;
-            if ( v24 )
+            if( v24 )
             {
               TButtonPanel::setup(
                 v24,
@@ -167,13 +167,13 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
               (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v14->terrain_mode_button + 20))(0);
               v25 = (TButtonPanel *)operator new(0x2B8u);
               LOBYTE(v35) = 6;
-              if ( v25 )
+              if( v25 )
                 TButtonPanel::TButtonPanel(v25);
               else
                 v26 = 0;
               LOBYTE(v35) = 0;
               v14->elevation_mode_button = (TButtonPanel *)v26;
-              if ( v26 )
+              if( v26 )
               {
                 TButtonPanel::setup(
                   v26,
@@ -209,13 +209,13 @@ void __thiscall RGE_Panel_Tool_Box::RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this,
                 TButtonPanel::set_radio_info(v14->elevation_mode_button, mode_buttons, 6);
                 v32 = (TButtonPanel *)operator new(0x2B8u);
                 LOBYTE(v35) = 7;
-                if ( v32 )
+                if( v32 )
                   TButtonPanel::TButtonPanel(v32);
                 else
                   v33 = 0;
                 LOBYTE(v35) = 0;
                 v14->command_button = (TButtonPanel *)v33;
-                if ( v33 )
+                if( v33 )
                 {
                   TButtonPanel::setup(
                     v33,
@@ -283,7 +283,7 @@ RGE_Panel_Tool_Box *__thiscall RGE_Panel_Tool_Box::`vector deleting destructor'(
 
   v2 = this;
   RGE_Panel_Tool_Box::~RGE_Panel_Tool_Box(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -303,25 +303,25 @@ void __thiscall RGE_Panel_Tool_Box::~RGE_Panel_Tool_Box(RGE_Panel_Tool_Box *this
   v1 = this;
   this->vfptr = (TPanelVtbl *)&RGE_Panel_Tool_Box::`vftable';
   v2 = this->game_mode_button;
-  if ( v2 )
+  if( v2 )
     (**(void (__stdcall ***)(_DWORD))v2)(1);
   v3 = v1->object_mode_button;
-  if ( v3 )
+  if( v3 )
     (**(void (__stdcall ***)(_DWORD))v3)(1);
   v4 = v1->move_mode_button;
-  if ( v4 )
+  if( v4 )
     (**(void (__stdcall ***)(_DWORD))v4)(1);
   v5 = v1->delete_mode_button;
-  if ( v5 )
+  if( v5 )
     (**(void (__stdcall ***)(_DWORD))v5)(1);
   v6 = v1->terrain_mode_button;
-  if ( v6 )
+  if( v6 )
     (**(void (__stdcall ***)(_DWORD))v6)(1);
   v7 = v1->elevation_mode_button;
-  if ( v7 )
+  if( v7 )
     (**(void (__stdcall ***)(_DWORD))v7)(1);
   v8 = v1->command_button;
-  if ( v8 )
+  if( v8 )
     (**(void (__stdcall ***)(_DWORD))v8)(1);
   TPanel::~TPanel((TPanel *)&v1->vfptr);
 }
@@ -347,34 +347,34 @@ int __thiscall RGE_Panel_Tool_Box::action(RGE_Panel_Tool_Box *this, TPanel *from
   __int16 v19; // ax@35
 
   v5 = this;
-  if ( !from_panel )
+  if( !from_panel )
     return 0;
-  if ( from_panel == (TPanel *)this->game_mode_button && action_in == 1 )
+  if( from_panel == (TPanel *)this->game_mode_button && action_in == 1 )
   {
     (*(void (__stdcall **)(_DWORD, _DWORD))&rge_base_game->vfptr->gap8[8])(0, 0);
     return 1;
   }
-  if ( from_panel != (TPanel *)this->object_mode_button || action_in != 1 )
+  if( from_panel != (TPanel *)this->object_mode_button || action_in != 1 )
   {
-    if ( from_panel == (TPanel *)this->move_mode_button && action_in == 1 )
+    if( from_panel == (TPanel *)this->move_mode_button && action_in == 1 )
     {
       (*(void (__stdcall **)(signed int, _DWORD))&rge_base_game->vfptr->gap8[8])(18, 0);
       return 1;
     }
-    if ( from_panel == (TPanel *)this->delete_mode_button && action_in == 1 )
+    if( from_panel == (TPanel *)this->delete_mode_button && action_in == 1 )
     {
       (*(void (__stdcall **)(signed int, _DWORD))&rge_base_game->vfptr->gap8[8])(14, 0);
       return 1;
     }
-    if ( from_panel == (TPanel *)this->elevation_mode_button && action_in == 1 )
+    if( from_panel == (TPanel *)this->elevation_mode_button && action_in == 1 )
     {
       (*(void (__stdcall **)(signed int, _DWORD))&rge_base_game->vfptr->gap8[8])(3, 0);
       return 1;
     }
-    if ( from_panel == (TPanel *)this->command_button && action_in == 1 )
+    if( from_panel == (TPanel *)this->command_button && action_in == 1 )
     {
       v13 = rge_base_game->vfptr;
-      if ( rge_base_game->prog_mode == 4 )
+      if( rge_base_game->prog_mode == 4 )
       {
         (*(void (__stdcall **)(signed int))&v13->gap8[4])(6);
         result = 1;
@@ -389,12 +389,12 @@ int __thiscall RGE_Panel_Tool_Box::action(RGE_Panel_Tool_Box *this, TPanel *from
     }
     v14 = this->dialog;
     v15 = &v5->dialog;
-    if ( from_panel == v14 )
+    if( from_panel == v14 )
     {
-      if ( !strcmp(TPanel::panelName(v14), aObjectListDial) )
+      if( !strcmp(TPanel::panelName(v14), aObjectListDial) )
       {
         v16 = action_in;
-        if ( action_in == 1 )
+        if( action_in == 1 )
         {
           v17 = ((int (*)(void))(*v15)->vfptr[1].handle_size)();
           rge_base_game->master_obj_id = v17;
@@ -407,10 +407,10 @@ int __thiscall RGE_Panel_Tool_Box::action(RGE_Panel_Tool_Box *this, TPanel *from
       }
       else
       {
-        if ( strcmp(TPanel::panelName(*v15), aTerrainListDia) )
+        if( strcmp(TPanel::panelName(*v15), aTerrainListDia) )
           return 1;
         v16 = action_in;
-        if ( action_in == 1 )
+        if( action_in == 1 )
         {
           v19 = ((int (*)(void))(*v15)->vfptr[1].handle_size)();
           rge_base_game->terrain_id = v19;
@@ -419,7 +419,7 @@ int __thiscall RGE_Panel_Tool_Box::action(RGE_Panel_Tool_Box *this, TPanel *from
           return 1;
         }
       }
-      if ( v16 == 2 )
+      if( v16 == 2 )
       {
         RGE_Base_Game::delete_dialog(&v5->dialog);
         RGE_Panel_Tool_Box::game_mode_changed(v5, rge_base_game->game_mode, rge_base_game->game_mode);
@@ -429,20 +429,20 @@ int __thiscall RGE_Panel_Tool_Box::action(RGE_Panel_Tool_Box *this, TPanel *from
     return 0;
   }
   v7 = (RGE_Dialog_List *)operator new(0x4BCu);
-  if ( v7 )
+  if( v7 )
     RGE_Dialog_List::RGE_Dialog_List(v7, aObjectListDial);
   else
     v8 = 0;
   v5->dialog = v8;
-  if ( !v8 )
+  if( !v8 )
     return 1;
   v9 = TPanel::get_string(9002);
   v10 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&v5->screen_panel->vfptr);
   v11 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&v5->screen_panel->vfptr);
-  if ( RGE_Dialog_List::setup((RGE_Dialog_List *)v5->dialog, v5->screen_panel, v11, v10, 1, v9) )
+  if( RGE_Dialog_List::setup((RGE_Dialog_List *)v5->dialog, v5->screen_panel, v11, v10, 1, v9) )
     return 1;
   v12 = v5->dialog;
-  if ( v12 )
+  if( v12 )
     ((void (__stdcall *)(signed int))v12->vfptr->__vecDelDtor)(1);
   v5->dialog = 0;
   return 1;
@@ -470,14 +470,14 @@ int __thiscall RGE_Panel_Tool_Box::key_down_action(RGE_Panel_Tool_Box *this, int
   int x1; // [sp+18h] [bp-4h]@18
 
   v6 = this;
-  if ( RGE_Base_Game::get_paused(rge_base_game) )
+  if( RGE_Base_Game::get_paused(rge_base_game) )
     return 0;
   v7 = rge_base_game->prog_mode;
-  if ( v7 != 4 && v7 != 6 && v7 != 7 )
+  if( v7 != 4 && v7 != 6 && v7 != 7 )
     return 0;
-  if ( key == 33 )
+  if( key == 33 )
   {
-    if ( rge_base_game->game_mode != 3 )
+    if( rge_base_game->game_mode != 3 )
       return 0;
     RGE_View::get_selection_area(v6->view, &x1, &y1, &x2, &y2, 1);
     RGE_Map::set_elev(rge_base_game->world->map, x1, y1, x2, y2, 0, 1, 1);
@@ -489,9 +489,9 @@ int __thiscall RGE_Panel_Tool_Box::key_down_action(RGE_Panel_Tool_Box *this, int
     v14 = rge_base_game->world->map;
     goto LABEL_21;
   }
-  if ( key == 34 )
+  if( key == 34 )
   {
-    if ( rge_base_game->game_mode != 3 )
+    if( rge_base_game->game_mode != 3 )
       return 0;
     RGE_View::get_selection_area(v6->view, &x1, &y1, &x2, &y2, 1);
     RGE_Map::set_elev(rge_base_game->world->map, x1, y1, x2, y2, 0, -1, 1);
@@ -505,17 +505,17 @@ LABEL_21:
     RGE_Map::clean_elevation(v14, (int)v13, v16, v17, v18, v19, 8);
     ((void (__stdcall *)(signed int))v6->view->vfptr->set_redraw)(2);
     v15 = v6->map;
-    if ( v15 )
+    if( v15 )
       ((void (__stdcall *)(signed int))v15->vfptr->set_redraw)(2);
     return 1;
   }
-  if ( key == 46 && rge_base_game->game_mode == 18 )
+  if( key == 46 && rge_base_game->game_mode == 18 )
   {
     v8 = *(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)[1].sound_num;
-    if ( v8 )
+    if( v8 )
     {
       v9 = *(RGE_Active_Sprite_List **)(v8 + 24);
-      if ( v9 )
+      if( v9 )
       {
         v10 = RGE_Active_Sprite_List::get_lowest_draw_level(v9);
       }
@@ -525,7 +525,7 @@ LABEL_21:
         v10 = v11 ? RGE_Sprite::get_lowest_draw_level(v11) : 20;
       }
       (*(void (__thiscall **)(int))(*(_DWORD *)v8 + 104))(v8);
-      if ( !v10 )
+      if( !v10 )
       {
         ((void (__stdcall *)(signed int))v6->view->vfptr->set_redraw)(2);
         return 1;
@@ -593,9 +593,9 @@ void __thiscall RGE_Panel_Tool_Box::draw(RGE_Panel_Tool_Box *this)
   TPanelVtbl *v2; // edi@4
 
   v1 = this;
-  if ( this->render_area && this->visible )
+  if( this->render_area && this->visible )
   {
-    if ( this->active )
+    if( this->active )
     {
       v2 = this->vfptr;
       ((void (__stdcall *)(_DWORD))this->vfptr->draw_setup)(0);

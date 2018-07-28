@@ -11,7 +11,7 @@ void __thiscall AIModuleID::AIModuleID(AIModuleID *this, char *n, int i)
 {
   this->id = i;
   this->vfptr = (AIModuleIDVtbl *)AIModuleID::`vftable';
-  if ( n )
+  if( n )
     strncpy(this->name, n, 0x3Fu);
   else
     strcpy(this->name, message_in);
@@ -25,7 +25,7 @@ AIModuleID *__thiscall AIModuleID::`vector deleting destructor'(AIModuleID *this
 
   v2 = this;
   AIModuleID::~AIModuleID(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -41,7 +41,7 @@ void __thiscall AIModuleID::~AIModuleID(AIModuleID *this)
 void __thiscall AIModuleID::setID(AIModuleID *this, int i, char *n)
 {
   this->id = i;
-  if ( n )
+  if( n )
     strncpy(this->name, n, 0x3Fu);
   else
     strcpy(this->name, message_in);
@@ -76,7 +76,7 @@ AIModuleMessage *__thiscall AIModuleMessage::`scalar deleting destructor'(AIModu
 
   v2 = this;
   AIModuleMessage::~AIModuleMessage(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -132,7 +132,7 @@ void __thiscall AIModuleMessage::~AIModuleMessage(AIModuleMessage *this)
   v1 = this;
   this->vfptr = (AIModuleMessageVtbl *)AIModuleMessage::`vftable';
   v2 = this->callbackMessage;
-  if ( v2 )
+  if( v2 )
     ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
   AIModuleID::~AIModuleID(&v1->recipient);
   AIModuleID::~AIModuleID(&v1->sender);
@@ -142,7 +142,7 @@ void __thiscall AIModuleMessage::~AIModuleMessage(AIModuleMessage *this)
 //----- (0040E190) --------------------------------------------------------
 void __thiscall AIModuleMessage::setText(AIModuleMessage *this, char *t)
 {
-  if ( t )
+  if( t )
     strncpy(this->text, t, 0x7Fu);
   else
     strcpy(this->text, message_in);
@@ -188,7 +188,7 @@ AIModule *__thiscall AIModule::`scalar deleting destructor'(AIModule *this, unsi
 
   v2 = this;
   AIModule::~AIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -223,7 +223,7 @@ void __thiscall AIModule::~AIModule(AIModule *this)
   v1 = this;
   v2 = this->logCommonHistoryValue;
   this->vfptr = (AIModuleVtbl *)&AIModule::`vftable';
-  if ( v2 && commonHistoryLogFile )
+  if( v2 && commonHistoryLogFile )
   {
     fclose(commonHistoryLogFile);
     commonHistoryLogFile = 0;
@@ -267,7 +267,7 @@ char *__thiscall AIModule::playerName(AIModule *this)
 void __thiscall AIModule::setPlayer(AIModule *this, int i, char *n)
 {
   this->playerNumberValue = i;
-  if ( n )
+  if( n )
     strncpy(this->playerNameValue, n, 0x3Fu);
   else
     strcpy(this->playerNameValue, aUnknown);
@@ -334,11 +334,11 @@ void __thiscall AIModule::setLogCommonHistory(AIModule *this, int v)
   v3 = this;
   v4 = v == 0;
   this->logCommonHistoryValue = v;
-  if ( v4 || commonHistoryLogFile )
+  if( v4 || commonHistoryLogFile )
   {
-    if ( !v2 )
+    if( !v2 )
     {
-      if ( commonHistoryLogFile )
+      if( commonHistoryLogFile )
       {
         fclose(commonHistoryLogFile);
         commonHistoryLogFile = 0;
@@ -368,9 +368,9 @@ int __thiscall AIModule::setIntelligenceLevel(AIModule *this, int v)
   int result; // eax@2
 
   this->intelligenceLevelValue = v;
-  if ( v >= 1 )
+  if( v >= 1 )
   {
-    if ( v <= 10 )
+    if( v <= 10 )
     {
       result = 1;
     }
@@ -400,9 +400,9 @@ int __thiscall AIModule::setPriority(AIModule *this, int v)
   int result; // eax@2
 
   this->priorityValue = v;
-  if ( v >= 1 )
+  if( v >= 1 )
   {
-    if ( v <= 100 )
+    if( v <= 100 )
     {
       result = 1;
     }
@@ -537,10 +537,10 @@ void AIModule::logCommonHistory(AIModule *this, char *textIn, ...)
   va_list va; // [sp+414h] [bp+Ch]@1
 
   va_start(va, textIn);
-  if ( (specificAIPlayerToLog == -1 || specificAIPlayerToLog == this->playerNumberValue) && commonHistoryLogFile )
+  if( (specificAIPlayerToLog == -1 || specificAIPlayerToLog == this->playerNumberValue) && commonHistoryLogFile )
   {
     vsprintf(textOut, textIn, va);
-    if ( strlen(textOut) == 0 )
+    if( strlen(textOut) == 0 )
       fprintf(commonHistoryLogFile, aPD, this->playerNumberValue);
     else
       fprintf(commonHistoryLogFile, aPDSS, this->playerNumberValue, this->idValue.name, textOut);
@@ -562,7 +562,7 @@ void __thiscall AIModule::incrementProcessFrame(AIModule *this)
 
   v1 = this->processFrameValue + 1;
   this->processFrameValue = v1;
-  if ( v1 == 0x7FFFFFFF )
+  if( v1 == 0x7FFFFFFF )
     this->processFrameValue = 0;
 }
 

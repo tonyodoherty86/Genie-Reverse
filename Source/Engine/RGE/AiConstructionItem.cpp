@@ -22,7 +22,7 @@ ConstructionItem *__thiscall ConstructionItem::`vector deleting destructor'(Cons
 
   v2 = this;
   ConstructionItem::~ConstructionItem(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -150,7 +150,7 @@ void __thiscall ConstructionItem::decrementBuildAttempts(ConstructionItem *this)
 
   v1 = this->buildAttemptsValue - 1;
   this->buildAttemptsValue = v1;
-  if ( v1 < 0 )
+  if( v1 < 0 )
     this->buildAttemptsValue = 0;
 }
 

@@ -37,7 +37,7 @@ BaseObject *__thiscall BaseObject::`scalar deleting destructor'(BaseObject *this
 
   v2 = this;
   BaseObject::~BaseObject(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -119,14 +119,14 @@ void __thiscall BaseObject::BaseObject(BaseObject *this, BaseObject *bo)
   v6 = v2->numberGroupsValue;
   v2->groupIDValue = v5;
   v7 = 0;
-  if ( v6 > 0 )
+  if( v6 > 0 )
   {
     do
     {
       v2->groupIDValue[v7] = bo->groupIDValue[v7];
       ++v7;
     }
-    while ( v7 < v2->numberGroupsValue );
+    while( v7 < v2->numberGroupsValue );
   }
   strncpy(v2->nameValue, bo->nameValue, 0x3Fu);
 }
@@ -172,14 +172,14 @@ void __thiscall BaseObject::BaseObject(BaseObject *this, BaseObject *bo)
   v6 = v2->numberGroupsValue;
   v2->groupIDValue = v5;
   v7 = 0;
-  if ( v6 > 0 )
+  if( v6 > 0 )
   {
     do
     {
       v2->groupIDValue[v7] = bo->groupIDValue[v7];
       ++v7;
     }
-    while ( v7 < v2->numberGroupsValue );
+    while( v7 < v2->numberGroupsValue );
   }
   strncpy(v2->nameValue, bo->nameValue, 0x3Fu);
 }
@@ -233,7 +233,7 @@ int __thiscall BaseObject::groupID(BaseObject *this, int v)
   int result; // eax@4
 
   v2 = this->groupIDValue;
-  if ( v2 && v >= 0 && v < this->numberGroupsValue )
+  if( v2 && v >= 0 && v < this->numberGroupsValue )
     result = v2[v];
   else
     result = -1;
@@ -250,18 +250,18 @@ int __thiscall BaseObject::inGroup(BaseObject *this, int v)
 
   v2 = this->numberGroupsValue;
   v3 = 0;
-  if ( v2 <= 0 )
+  if( v2 <= 0 )
   {
     result = 0;
   }
   else
   {
     v4 = this->groupIDValue;
-    while ( *v4 != v )
+    while( *v4 != v )
     {
       ++v3;
       ++v4;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return 0;
     }
     result = 1;
@@ -279,7 +279,7 @@ int *__thiscall BaseObject::addGroup(BaseObject *this, int v)
   int *v6; // ST00_4@6
 
   v2 = this;
-  if ( BaseObject::inGroup(this, v) )
+  if( BaseObject::inGroup(this, v) )
   {
     result = 0;
   }
@@ -287,9 +287,9 @@ int *__thiscall BaseObject::addGroup(BaseObject *this, int v)
   {
     result = (int *)operator new(4 * v2->numberGroupsValue + 4);
     v4 = result;
-    if ( result )
+    if( result )
     {
-      for ( i = 0; i < v2->numberGroupsValue; v4[i - 1] = v2->groupIDValue[i - 1] )
+      for( i = 0; i < v2->numberGroupsValue; v4[i - 1] = v2->groupIDValue[i - 1] )
         ++i;
       v4[v2->numberGroupsValue] = v;
       v6 = v2->groupIDValue;
@@ -315,27 +315,27 @@ int *__thiscall BaseObject::removeGroup(BaseObject *this, int v)
 
   v2 = this;
   result = (int *)BaseObject::inGroup(this, v);
-  if ( result )
+  if( result )
   {
     result = (int *)operator new(4 * v2->numberGroupsValue - 4);
     v4 = result;
-    if ( result )
+    if( result )
     {
       v5 = 0;
-      if ( v2->numberGroupsValue > 0 )
+      if( v2->numberGroupsValue > 0 )
       {
         v6 = result;
         do
         {
           v7 = v2->groupIDValue[v5];
-          if ( v7 != v )
+          if( v7 != v )
           {
             *v6 = v7;
             ++v6;
           }
           ++v5;
         }
-        while ( v5 < v2->numberGroupsValue );
+        while( v5 < v2->numberGroupsValue );
       }
       v8 = v2->groupIDValue;
       --v2->numberGroupsValue;

@@ -18,7 +18,7 @@ RGE_Diamond_Map_View *__thiscall RGE_Diamond_Map_View::`scalar deleting destruct
 
   v2 = this;
   RGE_Diamond_Map_View::~RGE_Diamond_Map_View(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -36,7 +36,7 @@ int __thiscall RGE_Diamond_Map_View::handle_mouse_down(RGE_Diamond_Map_View *thi
   v7 = this;
   v8 = y;
   result = RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile);
-  if ( result )
+  if( result )
     result = TPanel::handle_mouse_down((TPanel *)&v7->vfptr, mouse_button_in, v6, v8, ctrl_key, shift_key);
   return result;
 }
@@ -49,19 +49,19 @@ int __thiscall RGE_Diamond_Map_View::mouse_left_down_action(RGE_Diamond_Map_View
   int result; // eax@7
 
   v5 = this;
-  if ( RGE_Base_Game::get_paused(rge_base_game)
+  if( RGE_Base_Game::get_paused(rge_base_game)
     || (v6 = rge_base_game->prog_mode, v6 != 4) && v6 != 6 && v6 != 7 && v6 != 5 )
   {
     result = 0;
   }
-  else if ( rge_base_game->prog_info->interface_style == 2 )
+  else if( rge_base_game->prog_info->interface_style == 2 )
   {
     RGE_Diamond_Map::start_scroll_view((RGE_Diamond_Map *)&v5->vfptr, x, y);
     result = 1;
   }
   else
   {
-    if ( v6 == 4 || v6 == 6 || v6 == 7 )
+    if( v6 == 4 || v6 == 6 || v6 == 7 )
       TPanel::capture_mouse((TPanel *)&v5->vfptr);
     result = 1;
   }
@@ -79,20 +79,20 @@ int __thiscall RGE_Diamond_Map_View::mouse_left_move_action(RGE_Diamond_Map_View
 
   v5 = this;
   v6 = rge_base_game->prog_mode;
-  if ( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
+  if( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
     return 0;
   v7 = RGE_Base_Game::get_paused(rge_base_game) == 0;
   v8 = v5->scrolling;
-  if ( v7 )
+  if( v7 )
   {
-    if ( v8 )
+    if( v8 )
     {
       RGE_Diamond_Map::handle_scroll_view((RGE_Diamond_Map *)&v5->vfptr, x, y);
       return 1;
     }
     return 0;
   }
-  if ( v8 )
+  if( v8 )
   {
     RGE_Diamond_Map::end_scroll_view((RGE_Diamond_Map *)&v5->vfptr);
     result = 0;
@@ -118,34 +118,34 @@ int __thiscall RGE_Diamond_Map_View::mouse_left_up_action(RGE_Diamond_Map_View *
 
   v5 = rge_base_game->prog_mode;
   v6 = this;
-  if ( v5 == 4 || v5 == 6 || v5 == 7 || v5 == 5 )
+  if( v5 == 4 || v5 == 6 || v5 == 7 || v5 == 5 )
   {
-    if ( this->scrolling )
+    if( this->scrolling )
     {
       RGE_Diamond_Map::end_scroll_view((RGE_Diamond_Map *)&this->vfptr);
       return 1;
     }
     TPanel::release_mouse((TPanel *)&this->vfptr);
-    if ( !RGE_Base_Game::get_paused(rge_base_game)
+    if( !RGE_Base_Game::get_paused(rge_base_game)
       && rge_base_game->prog_mode != 5
       && RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&v6->vfptr, x, y, &col, &row, &tile) )
     {
       v8 = rge_base_game->game_mode;
-      if ( v8 )
+      if( v8 )
       {
         v9 = v8 - 4;
-        if ( !v9 )
+        if( !v9 )
         {
           (*(void (__thiscall **)(RGE_Diamond_Map_View *, int, int))&v6->vfptr[1].gap10[8])(v6, x, y);
           return 1;
         }
-        if ( v9 == 1 )
+        if( v9 == 1 )
         {
           ((void (__thiscall *)(RGE_Diamond_Map_View *, int, int))v6->vfptr[1].set_fixed_position)(v6, x, y);
           return 1;
         }
       }
-      else if ( rge_base_game->prog_info->interface_style != 2
+      else if( rge_base_game->prog_info->interface_style != 2
              && (*(int (__thiscall **)(RGE_Diamond_Map_View *, int, int))&v6->vfptr[1].gap10[4])(v6, x, y) )
       {
         return 1;
@@ -163,16 +163,16 @@ int __thiscall RGE_Diamond_Map_View::mouse_right_down_action(RGE_Diamond_Map_Vie
   int result; // eax@10
 
   v5 = this;
-  if ( RGE_Base_Game::get_paused(rge_base_game)
+  if( RGE_Base_Game::get_paused(rge_base_game)
     || (v6 = rge_base_game->prog_mode, v6 != 4) && v6 != 6 && v6 != 7 && v6 != 5 )
   {
     result = 0;
   }
   else
   {
-    if ( rge_base_game->prog_info->interface_style == 2 )
+    if( rge_base_game->prog_info->interface_style == 2 )
     {
-      if ( v6 == 4 || v6 == 6 || v6 == 7 )
+      if( v6 == 4 || v6 == 6 || v6 == 7 )
       {
         TPanel::capture_mouse((TPanel *)&v5->vfptr);
         return 1;
@@ -198,20 +198,20 @@ int __thiscall RGE_Diamond_Map_View::mouse_right_move_action(RGE_Diamond_Map_Vie
 
   v5 = this;
   v6 = rge_base_game->prog_mode;
-  if ( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
+  if( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
     return 0;
   v7 = RGE_Base_Game::get_paused(rge_base_game) == 0;
   v8 = v5->scrolling;
-  if ( v7 )
+  if( v7 )
   {
-    if ( v8 )
+    if( v8 )
     {
       RGE_Diamond_Map::handle_scroll_view((RGE_Diamond_Map *)&v5->vfptr, x, y);
       return 1;
     }
     return 0;
   }
-  if ( v8 )
+  if( v8 )
   {
     RGE_Diamond_Map::end_scroll_view((RGE_Diamond_Map *)&v5->vfptr);
     result = 0;
@@ -238,24 +238,24 @@ int __thiscall RGE_Diamond_Map_View::mouse_right_up_action(RGE_Diamond_Map_View 
 
   v5 = this;
   v6 = rge_base_game->prog_mode;
-  if ( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
+  if( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
     return 0;
-  if ( this->scrolling )
+  if( this->scrolling )
   {
     RGE_Diamond_Map::end_scroll_view((RGE_Diamond_Map *)&this->vfptr);
     return 1;
   }
   TPanel::release_mouse((TPanel *)&this->vfptr);
-  if ( RGE_Base_Game::get_paused(rge_base_game) )
+  if( RGE_Base_Game::get_paused(rge_base_game) )
     return 0;
   v8 = v5->mouse_action;
-  if ( v8 != 1 && v8 != 2 )
+  if( v8 != 1 && v8 != 2 )
     return 0;
-  if ( rge_base_game->prog_info->interface_style != 2 )
+  if( rge_base_game->prog_info->interface_style != 2 )
   {
-    if ( rge_base_game->prog_mode != 7 )
+    if( rge_base_game->prog_mode != 7 )
     {
-      if ( rge_base_game->game_mode )
+      if( rge_base_game->game_mode )
       {
         (*(void (__stdcall **)(_DWORD, _DWORD))&rge_base_game->vfptr->gap8[8])(0, 0);
         return 0;
@@ -264,15 +264,15 @@ int __thiscall RGE_Diamond_Map_View::mouse_right_up_action(RGE_Diamond_Map_View 
     }
     return 0;
   }
-  if ( rge_base_game->game_mode || rge_base_game->prog_mode == 5 )
+  if( rge_base_game->game_mode || rge_base_game->prog_mode == 5 )
     return 0;
-  if ( !shift_key )
+  if( !shift_key )
   {
-    if ( (*(int (__thiscall **)(RGE_Diamond_Map_View *, int, int))&v5->vfptr[1].gap10[4])(v5, x, y) )
+    if( (*(int (__thiscall **)(RGE_Diamond_Map_View *, int, int))&v5->vfptr[1].gap10[4])(v5, x, y) )
       return 1;
     return 0;
   }
-  if ( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&v5->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
+  if( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&v5->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
   {
     v9 = &v5->player->vfptr;
     shift_key = (signed __int16)y;
@@ -310,10 +310,10 @@ int __thiscall RGE_Diamond_Map_View::command_make_do(RGE_Diamond_Map_View *this,
   RGE_Tile *tile; // [sp+14h] [bp-4h]@3
 
   v3 = this;
-  if ( allow_user_commands )
+  if( allow_user_commands )
   {
     v5 = 0;
-    if ( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
+    if( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
     {
       v6 = (double)(signed __int16)y - -0.5;
       v7 = (double)(signed __int16)x - -0.5;
@@ -340,10 +340,10 @@ int __thiscall RGE_Diamond_Map_View::command_make_move(RGE_Diamond_Map_View *thi
   RGE_Tile *tile; // [sp+14h] [bp-4h]@3
 
   v3 = this;
-  if ( allow_user_commands )
+  if( allow_user_commands )
   {
     v5 = 0;
-    if ( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
+    if( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
     {
       v6 = (double)(signed __int16)y - -0.5;
       v7 = (double)(signed __int16)x - -0.5;
@@ -374,10 +374,10 @@ int __thiscall RGE_Diamond_Map_View::command_make_work(RGE_Diamond_Map_View *thi
   RGE_Tile *tile; // [sp+14h] [bp-4h]@3
 
   v3 = this;
-  if ( allow_user_commands )
+  if( allow_user_commands )
   {
     v5 = 0;
-    if ( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
+    if( RGE_Diamond_Map::pick_tile((RGE_Diamond_Map *)&this->vfptr, x, y, (__int16 *)&x, (__int16 *)&y, &tile) )
     {
       v6 = (double)(signed __int16)y - -0.5;
       v7 = (double)(signed __int16)x - -0.5;

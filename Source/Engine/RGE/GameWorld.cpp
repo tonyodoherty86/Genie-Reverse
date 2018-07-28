@@ -2,11 +2,13 @@
 /**
  * @file    Engine\RGE\GameWorld.cpp
  * @author  Yvan Burrie
- * @date    2018/06/29
+ * @date    2018/07/04
  * @version 1.0
  */
 
 #define RGE_WORLD_DATABASE_VERSION "VER 3.7"
+
+#define RGE_WORLD_RECORD_VERSION "VER 3.7"
 
 #define RGE_WORLD_SAVE_VERSION 11.76
 
@@ -704,7 +706,7 @@ void RGE_Game_World::setup_players(RGE_Player_Info *info)
 
 void RGE_Game_World::setup_player_colors(RGE_Player_Info *info)
 {
-    RGE_Game_World *v2; // esi@1
+    RGE_Game_World *this; // esi@1
     signed int v3; // ebx@1
     signed int v4; // edi@3
     char *v5; // ebp@3
@@ -715,34 +717,34 @@ void RGE_Game_World::setup_player_colors(RGE_Player_Info *info)
     char *players_done; // [sp+14h] [bp-8h]@3
     int info_player_num; // [sp+18h] [bp-4h]@1
 
-    v2 = this;
+    this = this;
     v3 = -1;
     RGE_Player::set_color_table(*this->players, 7);
     info_player_num = info->player_num;
-    if( info_player_num > v2->player_num + 1 )
-        info_player_num = v2->player_num + 1;
+    if( info_player_num > this->player_num + 1 )
+        info_player_num = this->player_num + 1;
     v4 = 1;
-    v5 = (char *)calloc(v2->color_table_num, 1u);
+    v5 = (char *)calloc(this->color_table_num, 1u);
     colors_used = v5;
-    players_done = (char *)calloc(v2->player_num, 1u);
-    if( v2->player_num > 1 )
+    players_done = (char *)calloc(this->player_num, 1u);
+    if( this->player_num > 1 )
     {
         v6 = (char *)info->color;
         do
         {
             if( v4 - 1 < info_player_num && *(_WORD *)v6 >= 0 && !colors_used[*(_WORD *)v6] )
             {
-                RGE_Player::set_color_table(v2->players[v4], *v6);
+                this->players[v4]->set_color_table(*v6);
                 colors_used[*(_WORD *)v6] = 1;
                 players_done[v4] = 1;
             }
             ++v4;
             v6 += 2;
         }
-        while( v4 < v2->player_num );
+        while( v4 < this->player_num );
         v5 = colors_used;
     }
-    for( i = 1; i < v2->player_num; ++i )
+    for( i = 1; i < this->player_num; ++i )
     {
         if( !players_done[i] )
         {
@@ -752,8 +754,8 @@ void RGE_Game_World::setup_player_colors(RGE_Player_Info *info)
                     v8 = v5[v3++ + 1];
                 while( v8 == 1 );
             }
-            while( v2->color_tables[v3]->type != 1 );
-            RGE_Player::set_color_table(v2->players[i], v3);
+            while( this->color_tables[v3]->type != 1 );
+            this->players[i]->set_color_table(v3);
             v5[v3] = 1;
         }
     }
@@ -1131,29 +1133,24 @@ char RGE_Game_World::new_random_game(RGE_Player_Info *info)
     return 1;
 }
 
-void RGE_Game_World::update_sounds(unsigned int time)
+void RGE_Game_World::update_sounds(time_t time)
 {
-    RGE_Game_World *v2; // esi@1
-
-    v2 = this;
-    if( this->sound_update_index >= this->sound_num )
+    if( this->sound_update_index >= this->sound_num ){
         this->sound_update_index = 0;
-    RGE_Sound::update(this->sounds[this->sound_update_index], time);
-    ++v2->sound_update_index;
+    }
+    this->sounds[this->sound_update_index]->update(time);
+    this->sound_update_index++;
 }
 
-void RGE_Game_World::update_sprites(unsigned int time)
+void RGE_Game_World::update_sprites(time_t time)
 {
-    RGE_Game_World *v2; // esi@1
-    RGE_Sprite *v3; // ecx@3
-
-    v2 = this;
-    if( this->sprite_update_index >= this->sprite_num )
+    if( this->sprite_update_index >= this->sprite_num ){
         this->sprite_update_index = 0;
-    v3 = this->sprites[this->sprite_update_index];
-    if( v3 )
-        RGE_Sprite::update(v3, time);
-    ++v2->sprite_update_index;
+    }
+    if( this->sprites[this->sprite_update_index] ){
+        this->sprites[this->sprite_update_index]->update(time);
+    }
+    this->sprite_update_index++;
 }
 
 char RGE_Game_World::update()
@@ -1382,7 +1379,7 @@ bool RGE_Game_World::is_player_turn(int player_id)
     return this->player_turn == player_id;
 }
 
-unsigned int RGE_Game_World::get_accum_time_delta(int player_id)
+time_t RGE_Game_World::get_accum_time_delta(int player_id)
 {
     return this->player_time_delta[player_id];
 }
@@ -1488,69 +1485,52 @@ char RGE_Game_World::check_game_state()
 
 void RGE_Game_World::save(int outfile)
 {
-    RGE_Game_World *v2; // edi@1
-    int v3; // esi@1
-    short *v4; // ebp@1
-    unsigned int *v5; // ebx@1
-    signed int i; // ebx@3
-    signed int j; // ebx@5
-    int v8; // eax@7
-    int *v9; // edi@7
-    int outfilea; // [sp+14h] [bp+4h]@1
+    save_game_version = RGE_WORLD_SAVE_VERSION;
 
-    v2 = this;
-    color_log(36, 36, 1);
-    v3 = outfile;
-    LODWORD(save_game_version) = 1088904233;
-    rge_write(outfile, &v2->world_time, 4);
-    rge_write(outfile, &v2->old_world_time, 4);
-    rge_write(outfile, &v2->world_time_delta, 4);
-    rge_write(outfile, &v2->world_time_delta_seconds, 4);
-    rge_write(outfile, &v2->timer, 4);
-    rge_write(outfile, &v2->game_speed, 4);
-    rge_write(outfile, &v2->temp_pause, 1);
-    rge_write(outfile, &v2->next_object_id, 4);
-    rge_write(outfile, &v2->next_reusable_object_id, 4);
-    rge_write(outfile, &v2->random_seed, 4);
-    rge_write(outfile, &v2->curr_player, 2);
-    v4 = &v2->player_num;
-    rge_write(outfile, &v2->player_num, 2);
-    rge_write(outfile, &v2->game_state, 1);
-    rge_write(outfile, &v2->campaign, 4);
-    rge_write(outfile, &v2->campaign_player, 4);
-    rge_write(outfile, &v2->campaign_scenario, 4);
-    rge_write(outfile, &v2->player_turn, 4);
-    v5 = v2->player_time_delta;
-    outfilea = 9;
-    do
-    {
-        rge_write(v3, v5, 4);
-        ++v5;
-        --outfilea;
+    rge_write(outfile, &this->world_time, 4);
+    rge_write(outfile, &this->old_world_time, 4);
+    rge_write(outfile, &this->world_time_delta, 4);
+    rge_write(outfile, &this->world_time_delta_seconds, 4);
+    rge_write(outfile, &this->timer, 4);
+    rge_write(outfile, &this->game_speed, 4);
+    rge_write(outfile, &this->temp_pause, 1);
+    rge_write(outfile, &this->next_object_id, 4);
+    rge_write(outfile, &this->next_reusable_object_id, 4);
+    rge_write(outfile, &this->random_seed, 4);
+    rge_write(outfile, &this->curr_player, 2);
+    rge_write(outfile, &this->player_num, 2);
+    rge_write(outfile, &this->game_state, 1);
+    rge_write(outfile, &this->campaign, 4);
+    rge_write(outfile, &this->campaign_player, 4);
+    rge_write(outfile, &this->campaign_scenario, 4);
+    rge_write(outfile, &this->player_turn, 4);
+
+    for( int p_id = 0; p_id < RGE_PLAYERS_COUNT; p_id++ ){
+        rge_write(outfile, this->player_time_delta[p_id], 4);
     }
-    while( outfilea );
-    RGE_Map::save_map(v2->map, v3);
-    for( i = 0; i < *v4; ((void (__stdcall *)(int))v2->players[i++]->vfptr->save2)(v3) )
-    {
-        color_log(36, 76, 1);
-        ((void (__stdcall *)(int))v2->players[i]->vfptr->save)(v3);
-        color_log(36, 22, 1);
+
+    this->map->save_map(outfile);
+
+    for( int i = 0; i < this->player_num; i++ ){
+        this->players[i]->save(outfile);
+        this->players[i]->save2(outfile);
     }
-    color_log(36, 50, 1);
-    for( j = 0; j < *v4; ((void (__stdcall *)(int))v2->players[j++]->vfptr->save_info)(v3) )
-        ;
-    color_log(36, 69, 1);
-    ((void (__stdcall *)(int))v2->scenario->vfptr->save)(v3);
-    color_log(36, 95, 1);
-    v8 = v2->difficultyLevelValue;
-    v9 = &v2->difficultyLevelValue;
-    if( v8 == -1 )
-        *v9 = RGE_Base_Game::difficulty(rge_base_game);
-    rge_write(v3, v9, 4);
+
+    for( int j = 0; j < this->player_num; j++ ){
+        this->players[j]->save_info(outfile);
+    }
+
+    this->scenario->save)(outfile);
+
+#if RGE_WORLD_DIFFICULTY_LEVEL_EXISTS
+    int world_difficulty = this->difficultyLevelValue;
+    if( world_difficulty == -1 ){
+        world_difficulty = rge_base_game->difficulty();
+    }
+    rge_write(outfile, world_difficulty, 4);
+#endif
 }
-// 58EBCC: using guessed type float save_game_version;
 
-//----- (00543770) --------------------------------------------------------
 char RGE_Game_World::save_game(char *name)
 {
     RGE_Game_World *v2; // edi@1
@@ -1587,59 +1567,59 @@ char RGE_Game_World::save_game(char *name)
     }
     return result;
 }
-// 58EBCC: using guessed type float save_game_version;
-// 86B284: using guessed type int rge_write_error;
 
-//----- (00543850) --------------------------------------------------------
 void RGE_Game_World::base_save(int outfile)
 {
-    RGE_Game_World *v2; // esi@1
-    short *v3; // ebp@1
-    signed int i; // ebx@3
-    float *v5; // eax@4
-    signed int j; // ebx@7
-    signed int k; // ebx@9
-    signed int l; // ebx@11
-    RGE_Sprite *v9; // ecx@12
-    signed int m; // ebx@15
+    /* write header version: */
+    rge_write(outfile, "VER 3.7", 8);
 
-    v2 = this;
-    rge_write(outfile, aVer3_7, 8);
-    v3 = &v2->terrain_num;
-    rge_write(outfile, &v2->terrain_num, 2);
-    rge_write(outfile, &v2->terrain_size, 2);
-    if( v2->terrain_num > 0 && v2->terrain_size > 0 )
-    {
-        rge_write(outfile, v2->terrains, 4 * v2->terrain_num);
-        for( i = 0; i < *v3; ++i )
-        {
-            v5 = v2->terrains[i];
-            if( v5 )
-                rge_write(outfile, v5, 4 * v2->terrain_size);
+    /* write terrain-tables: */
+    rge_write(outfile, &this->terrain_num, 2);
+    rge_write(outfile, &this->terrain_size, 2);
+    if( this->terrain_num > 0 &&
+        this->terrain_size > 0 ){
+        rge_write(outfile, this->terrains, 4 * this->terrain_num);
+        for( int i = 0; i < this->terrain_num; i++ ){
+            if( this->terrains[i] ){
+                rge_write(outfile, this->terrains[i], 4 * this->terrain_size);
+            }
         }
     }
-    rge_write(outfile, &v2->color_table_num, 2);
-    for( j = 0; j < v2->color_table_num; RGE_Color_Table::save(v2->color_tables[j++], outfile) )
-        ;
-    rge_write(outfile, &v2->sound_num, 2);
-    for( k = 0; k < v2->sound_num; RGE_Sound::save(v2->sounds[k++], outfile) )
-        ;
-    rge_write(outfile, &v2->sprite_num, 2);
-    rge_write(outfile, v2->sprites, 4 * v2->sprite_num);
-    for( l = 0; l < v2->sprite_num; ++l )
-    {
-        v9 = v2->sprites[l];
-        if( v9 )
-            RGE_Sprite::save(v9, outfile);
+
+    /* write color-tables: */
+    rge_write(outfile, &this->color_table_num, 2);
+    for( int color_table_id = 0; color_table_id < this->color_table_num; color_table_id++ ){
+        this->color_tables[color_table_id]->save(outfile);
     }
-    ((void (__stdcall *)(int))v2->map->vfptr->save)(outfile);
-    ((void (__stdcall *)(int))v2->effects->vfptr->save)(outfile);
-    rge_write(outfile, &v2->master_player_num, 2);
-    for( m = 0; m < v2->master_player_num; ((void (__stdcall *)(int))v2->master_players[m++]->vfptr->save)(outfile) )
-        ;
+
+    /* write sounds: */
+    rge_write(outfile, &this->sound_num, 2);
+    for( int sound_id = 0; sound_id < this->sound_num; sound_id++ ){
+        this->sounds[sound_id]->save(outfile);
+    }
+
+    /* write sprites: */
+    rge_write(outfile, &this->sprite_num, 2);
+    rge_write(outfile, this->sprites, 4 * this->sprite_num);
+    for( int sprite_id = 0; sprite_id < this->sprite_num; sprite_id++ ){
+        if( this->sprites[sprite_id] ){
+            this->sprites[sprite_id]->save(outfile);
+        }
+    }
+
+    /* write map: */
+    this->map->save(outfile);
+
+    /* write effects: */
+    this->effects->save(outfile);
+
+    /* write master-players: */
+    rge_write(outfile, &this->master_player_num, 2);
+    for( int m_player_id = 0; m_player_id < this->master_player_num; m_player_id++ ){
+        this->master_players[m_player_id]->save(outfile);
+    }
 }
 
-//----- (005439C0) --------------------------------------------------------
 void RGE_Game_World::base_save(char *name)
 {
     RGE_Game_World *v2; // edi@1
@@ -3755,36 +3735,40 @@ void RGE_Game_World::initializePathingSystem()
     }
 }
 
-bool RGE_Game_World::recycle_object_out_of_game(char object_type, RGE_Static_Object *obj)
+bool RGE_Game_World::recycle_object_out_of_game(
+    char object_type,
+    RGE_Static_Object *obj)
 {
     switch( object_type ){
 
-    case 0xA:
+    case RGE_STATIC_OBJECT_TYPE:
         this->reusable_static_objects->add_node(obj);
         return true;
 
-    case 0x14:
+    case RGE_ANIMATED_OBJECT_TYPE:
         this->reusable_animated_objects->add_node(obj);
         return true;
 
-    case 0x1E:
+#if RGE_DOPPLEGANGER_SYSTEM_EXISTS
+    case RGE_DOPPLEGANGER_OBJECT_TYPE:
+        this->reusable_doppleganger_objects->add_node(obj);
+        return true;
+#endif
+
+    case RGE_MOVING_OBJECT_TYPE:
         this->reusable_moving_objects->add_node(obj);
         return true;
 
-    case 0x28:
+    case RGE_ACTION_OBJECT_TYPE:
         this->reusable_action_objects->add_node(obj);
         return true;
 
-    case 0x32:
+    case RGE_COMBAT_OBJECT_TYPE:
         this->reusable_combat_objects->add_node(obj);
         return true;
 
-    case 0x3C:
+    case RGE_MISSILE_OBJECT_TYPE:
         this->reusable_missile_objects->add_node(obj);
-        return true;
-
-    case 0x19:
-        this->reusable_doppleganger_objects->add_node(obj);
         return true;
 
     default:

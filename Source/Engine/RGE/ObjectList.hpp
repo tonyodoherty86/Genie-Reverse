@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\ObjectList.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/02
  * @version 1.0
  */
 
@@ -20,14 +20,33 @@ public:
 
     void removeAllObjects();
 
-    RGE_Object_Node *add_node(RGE_Static_Object *obj);
-    void remove_node(RGE_Static_Object *obj, RGE_Object_Node *node);
+    RGE_Object_Node *add_node(
+        RGE_Static_Object *obj);
+
+    void remove_node(
+        RGE_Static_Object *obj,
+        RGE_Object_Node *node);
 
     void invert();
 
-    void draw(TDrawArea *render_area, int x, int y, char fogged_tile);
-    void shadow_draw(TDrawArea *render_area, int x, int y, int flag, char fog_flag);
-    void normal_draw(TDrawArea *render_area, int x, int y, char fog_flag);
+    void draw(
+        TDrawArea *render_area,
+        int x,
+        int y,
+        char fogged_tile);
+    
+    void shadow_draw(
+        TDrawArea *render_area,
+        int x,
+        int y,
+        int flag,
+        char fog_flag);
+    
+    void normal_draw(
+        TDrawArea *render_area,
+        int x,
+        int y,
+        char fog_flag);
 
     void update();
 

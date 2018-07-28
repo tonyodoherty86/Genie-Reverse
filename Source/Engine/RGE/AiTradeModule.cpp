@@ -25,7 +25,7 @@ TradeAIModule *__thiscall TradeAIModule::`scalar deleting destructor'(TradeAIMod
 
   v2 = this;
   TradeAIModule::~TradeAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }

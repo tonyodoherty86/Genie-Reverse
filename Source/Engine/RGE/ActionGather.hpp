@@ -18,35 +18,35 @@ public:
     /**
      * Offset: 68, 69.
      */
-	char number_stops = 0,
-	     current_stop = 0;
+    char number_stops = 0,
+         current_stop = 0;
 
     /**
      * Offset: 72.
      */
-	float time_per_stop = 0.0;
+    float time_per_stop = 0.0;
 
     /**
      * Offset: 76.
      */
-	unsigned int current_stop_time = 0;
+    unsigned int current_stop_time = 0;
 
     /**
      * Offset: 80, 81.
      */
-	unsigned char last_stop_x = 0,
+    unsigned char last_stop_x = 0,
                   last_stop_y = 0;
 
     /**
      * Offset: 82.
      */
-	bool depositing = false;
+    bool depositing = false;
 
     /**
      * Offset: 84, 88.
      */
-	float deposit_x = -1.0,
-	      deposit_y = -1.0;
+    float deposit_x = -1.0,
+          deposit_y = -1.0;
 
     RGE_Action_Gather(
         int infile,

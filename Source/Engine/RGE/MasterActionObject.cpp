@@ -10,7 +10,7 @@ void __thiscall RGE_Master_Action_Object::RGE_Master_Action_Object(RGE_Master_Ac
     (RGE_Master_Moving_Object *)&other_object->vfptr,
     0);
   v3->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Action_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Action_Object::setup(v3, other_object);
 }
 // 570448: using guessed type int (__thiscall *RGE_Master_Action_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -22,7 +22,7 @@ RGE_Master_Action_Object *__thiscall RGE_Master_Action_Object::`vector deleting 
 
   v2 = this;
   RGE_Master_Action_Object::~RGE_Master_Action_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -40,7 +40,7 @@ void __thiscall RGE_Master_Action_Object::RGE_Master_Action_Object(RGE_Master_Ac
     sounds,
     0);
   v5->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Action_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Action_Object::setup(v5, infile, sprites, sounds);
 }
 // 570448: using guessed type int (__thiscall *RGE_Master_Action_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -59,7 +59,7 @@ void __thiscall RGE_Master_Action_Object::RGE_Master_Action_Object(RGE_Master_Ac
     in_id,
     0);
   v6->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Action_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Action_Object::setup(v6, infile, sprites, sounds, in_id);
 }
 // 570448: using guessed type int (__thiscall *RGE_Master_Action_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -116,17 +116,17 @@ int __thiscall RGE_Master_Action_Object::setup(RGE_Master_Action_Object *this, i
   rge_read((int)v5, v6, v6, &v7->backup_drop_site, 2);
   rge_read((int)v5, v6, v6, &v7->task_by_group, 1);
   rge_read((int)v5, v6, v6, &sounds, 2);
-  if ( save_game_version < 6.9200001 )
+  if( save_game_version < 6.9200001 )
     sprites = (RGE_Sprite **)sounds;
   else
     rge_read((int)v5, infile, infile, &sprites, 2);
   rge_read((int)v5, infile, infile, &v7->run_pattern, 1);
-  if ( (signed __int16)sounds < 0 )
+  if( (signed __int16)sounds < 0 )
     v8 = 0;
   else
     v8 = v4[(signed __int16)sounds];
   v7->command_sound = v8;
-  if ( (signed __int16)sprites < 0 )
+  if( (signed __int16)sprites < 0 )
     v9 = 0;
   else
     v9 = v4[(signed __int16)sprites];
@@ -177,12 +177,12 @@ int __thiscall RGE_Master_Action_Object::setup(RGE_Master_Action_Object *this, _
   v8->task_by_group = in_id;
   v10 = (signed __int16)sprites;
   v8->run_pattern = v9;
-  if ( v10 < 0 )
+  if( v10 < 0 )
     v11 = 0;
   else
     v11 = v7[v10];
   v8->command_sound = v11;
-  if ( (signed __int16)infile < 0 )
+  if( (signed __int16)infile < 0 )
     v12 = 0;
   else
     v12 = v7[(signed __int16)infile];
@@ -195,14 +195,14 @@ int __thiscall RGE_Master_Action_Object::setup(RGE_Master_Action_Object *this, _
   v8->default_task = -1;
   v16 = 0;
   v17 = v15->list_num;
-  if ( v17 > 0 )
+  if( v17 > 0 )
   {
     v18 = v15->list;
-    while ( !(*v18)->is_default )
+    while( !(*v18)->is_default )
     {
       ++v16;
       ++v18;
-      if ( v16 >= v17 )
+      if( v16 >= v17 )
         return 1;
     }
     v8->default_task = v16;
@@ -218,7 +218,7 @@ void __thiscall RGE_Master_Action_Object::make_new_obj(RGE_Master_Action_Object 
   RGE_Action_Object *v7; // eax@4
 
   v5 = this;
-  if ( this->recyclable && (v6 = RGE_Game_World::recycle_object_in_to_game(owner->world, this->master_type)) != 0 )
+  if( this->recyclable && (v6 = RGE_Game_World::recycle_object_in_to_game(owner->world, this->master_type)) != 0 )
   {
     (*(void (__thiscall **)(RGE_Static_Object *, RGE_Master_Action_Object *, RGE_Player *, _DWORD, _DWORD, _DWORD))&v6->vfptr->gap4[0])(
       v6,
@@ -231,7 +231,7 @@ void __thiscall RGE_Master_Action_Object::make_new_obj(RGE_Master_Action_Object 
   else
   {
     v7 = (RGE_Action_Object *)operator new(0x194u);
-    if ( v7 )
+    if( v7 )
       RGE_Action_Object::RGE_Action_Object(v7, v5, owner, x, y, z, 1);
   }
 }
@@ -244,7 +244,7 @@ void __thiscall RGE_Master_Action_Object::make_new_master(RGE_Master_Action_Obje
 
   v1 = this;
   v2 = (RGE_Master_Action_Object *)operator new(0xFCu);
-  if ( v2 )
+  if( v2 )
     RGE_Master_Action_Object::RGE_Master_Action_Object(v2, v1, 1);
 }
 
@@ -254,7 +254,7 @@ RGE_Task *__thiscall RGE_Master_Action_Object::get_task(RGE_Master_Action_Object
   RGE_Task_List *v2; // eax@2
   RGE_Task *result; // eax@3
 
-  if ( task_id == -1 || (v2 = this->tasks, task_id >= v2->list_num) )
+  if( task_id == -1 || (v2 = this->tasks, task_id >= v2->list_num) )
     result = 0;
   else
     result = v2->list[task_id];
@@ -271,7 +271,7 @@ RGE_Task *__thiscall RGE_Master_Action_Object::getTaskByTaskID(RGE_Master_Action
   RGE_Task **v6; // ecx@3
   RGE_Task *result; // eax@6
 
-  if ( t == -1 || (v2 = this->tasks, v3 = 0, v4 = v2->list_num, v4 <= 0) )
+  if( t == -1 || (v2 = this->tasks, v3 = 0, v4 = v2->list_num, v4 <= 0) )
   {
     result = 0;
   }
@@ -279,11 +279,11 @@ RGE_Task *__thiscall RGE_Master_Action_Object::getTaskByTaskID(RGE_Master_Action
   {
     v5 = v2->list;
     v6 = v2->list;
-    while ( t != (*v6)->action_type )
+    while( t != (*v6)->action_type )
     {
       ++v3;
       ++v6;
-      if ( v3 >= v4 )
+      if( v3 >= v4 )
         return 0;
     }
     result = v5[v3];
@@ -312,7 +312,7 @@ void __thiscall RGE_Master_Action_Object::copy_obj(RGE_Master_Action_Object *thi
 //----- (0044F7F0) --------------------------------------------------------
 void __thiscall RGE_Master_Action_Object::modify(RGE_Master_Action_Object *this, float amount, char flag)
 {
-  if ( flag == 13 )
+  if( flag == 13 )
     this->work_rate = amount;
   else
     RGE_Master_Moving_Object::modify((RGE_Master_Moving_Object *)&this->vfptr, amount, flag);
@@ -321,7 +321,7 @@ void __thiscall RGE_Master_Action_Object::modify(RGE_Master_Action_Object *this,
 //----- (0044F820) --------------------------------------------------------
 void __thiscall RGE_Master_Action_Object::modify_delta(RGE_Master_Action_Object *this, float amount, char flag)
 {
-  if ( flag == 13 )
+  if( flag == 13 )
     this->work_rate = amount + this->work_rate;
   else
     RGE_Master_Moving_Object::modify_delta((RGE_Master_Moving_Object *)&this->vfptr, amount, flag);
@@ -330,7 +330,7 @@ void __thiscall RGE_Master_Action_Object::modify_delta(RGE_Master_Action_Object 
 //----- (0044F850) --------------------------------------------------------
 void __thiscall RGE_Master_Action_Object::modify_percent(RGE_Master_Action_Object *this, float amount, char flag)
 {
-  if ( flag == 13 )
+  if( flag == 13 )
     this->work_rate = amount * this->work_rate;
   else
     RGE_Master_Moving_Object::modify_percent((RGE_Master_Moving_Object *)&this->vfptr, amount, flag);
@@ -351,13 +351,13 @@ void __fastcall RGE_Master_Action_Object::save(RGE_Master_Action_Object *this, i
   move_sound_num = -1;
   RGE_Master_Moving_Object::save((RGE_Master_Moving_Object *)&this->vfptr, a2, outfile);
   v5 = (int)&v3->command_sound->play_at_update_count;
-  if ( v5 )
+  if( v5 )
   {
     LOWORD(v5) = *(_WORD *)(v5 + 12);
     command_sound_num = v5;
   }
   v6 = v3->move_sound;
-  if ( v6 )
+  if( v6 )
   {
     LOWORD(v4) = v6->id;
     move_sound_num = v4;
@@ -380,7 +380,7 @@ void __thiscall RGE_Master_Action_Object::play_command_sound(RGE_Master_Action_O
   RGE_Sound *v1; // ecx@1
 
   v1 = this->command_sound;
-  if ( v1 )
+  if( v1 )
     RGE_Sound::play(v1, 1);
 }
 
@@ -390,6 +390,6 @@ void __thiscall RGE_Master_Action_Object::play_move_sound(RGE_Master_Action_Obje
   RGE_Sound *v1; // ecx@1
 
   v1 = this->move_sound;
-  if ( v1 )
+  if( v1 )
     RGE_Sound::play(v1, 1);
 }

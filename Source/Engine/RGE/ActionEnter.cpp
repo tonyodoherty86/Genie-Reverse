@@ -18,7 +18,7 @@ RGE_Action_Enter *__thiscall RGE_Action_Enter::`scalar deleting destructor'(RGE_
 
   v2 = this;
   RGE_Action_Enter::~RGE_Action_Enter(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -54,19 +54,19 @@ void __thiscall RGE_Action_Enter::RGE_Action_Enter(RGE_Action_Enter *this, RGE_A
   v4->action_type = 3;
   v4->task = task_in;
   RGE_Action::set_target_obj((RGE_Action *)&v4->vfptr, target_obj_in);
-  if ( target_obj_in )
+  if( target_obj_in )
   {
     v4->target_x = target_obj_in->world_x;
     v4->target_y = target_obj_in->world_y;
     v4->target_z = target_obj_in->world_z;
     target_obj_ina = (RGE_Static_Object *)target_obj_in->vfptr;
     v6 = v5->vfptr->actionState;
-    if ( (v6(v5) != 2
+    if( (v6(v5) != 2
        || (RGE_Static_Object::more_room(v5) != 1 || RGE_Player::computerPlayer(v4->obj->owner))
        && RGE_Player::computerPlayer(v4->obj->owner) != 1)
       && (v6(v5) != 11 || RGE_Action_List::get_action((RGE_Action_List *)v5[2].unitAIValue)->target2ID) )
     {
-      if ( v6(v5) == 11 )
+      if( v6(v5) == 11 )
       {
         v14 = RGE_Action_List::get_action((RGE_Action_List *)v5[2].unitAIValue);
         v4->target_x = RGE_Action::targetX(v14);
@@ -85,7 +85,7 @@ void __thiscall RGE_Action_Enter::RGE_Action_Enter(RGE_Action_Enter *this, RGE_A
       v11 = v5->world_y;
       dest.x = v10;
       dest.y = (signed __int64)v11;
-      if ( obj_in->vfptr->firstTileAlongLine((RGE_Static_Object *)obj_in, &start, &dest, &rVal, 2, 2, 1) == 1 )
+      if( obj_in->vfptr->firstTileAlongLine((RGE_Static_Object *)obj_in, &start, &dest, &rVal, 2, 2, 1) == 1 )
       {
         v12 = (double)rVal.x;
         *(float *)&task_ina = v12;
@@ -147,7 +147,7 @@ void __thiscall RGE_Action_Enter::set_state(RGE_Action_Enter *this, char new_sta
   {
     case 4:
       v3 = (RGE_Action_Move_To *)operator new(0x44u);
-      if ( v3 )
+      if( v3 )
       {
         RGE_Action_Move_To::RGE_Action_Move_To(
           v3,
@@ -163,7 +163,7 @@ void __thiscall RGE_Action_Enter::set_state(RGE_Action_Enter *this, char new_sta
       {
         v5 = 0;
       }
-      if ( v5 )
+      if( v5 )
       {
         RGE_Action_List::add_action(v2->sub_actions, v5);
         RGE_Action::setSubAction(v5, 1);
@@ -224,19 +224,19 @@ char __thiscall RGE_Action_Enter::update(RGE_Action_Enter *this)
   XYPoint rVal; // [sp+38h] [bp-8h]@27
 
   v1 = this;
-  if ( this->targetID != -1 && !RGE_Game_World::object(this->obj->owner->world, this->targetID) )
+  if( this->targetID != -1 && !RGE_Game_World::object(this->obj->owner->world, this->targetID) )
     goto LABEL_41;
-  if ( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
+  if( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
     v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
   v2 = v1->target_obj;
-  if ( !v2
+  if( !v2
     || v2->object_state < 3u && (!v2 || (*(int (__stdcall **)(_DWORD))&v1->obj->owner->vfptr->gap4[24])(v2->owner->id)) )
   {
     switch ( v1->state )
     {
       case 4:
         v5 = v1->target_obj;
-        if ( !v5 || RGE_Static_Object::is_dying(v5) )
+        if( !v5 || RGE_Static_Object::is_dying(v5) )
         {
 LABEL_19:
           v6 = v1->vfptr;
@@ -253,7 +253,7 @@ LABEL_19:
               return 0;
             case 1u:
             case 2u:
-              if ( RGE_Static_Object::distance_to_object((RGE_Static_Object *)&v1->obj->vfptr, v1->target_obj) - 1.0 <= v1->task->work_range )
+              if( RGE_Static_Object::distance_to_object((RGE_Static_Object *)&v1->obj->vfptr, v1->target_obj) - 1.0 <= v1->task->work_range )
               {
                 ((void (__stdcall *)(RGE_Static_Object *))v1->obj->vfptr->enter_obj)(v1->target_obj);
                 goto LABEL_23;
@@ -273,11 +273,11 @@ LABEL_19:
         v7 = (RGE_Static_Object *)&v1->obj->vfptr;
         v8 = v1->timer - v7->owner->world->world_time_delta_seconds;
         v1->timer = v8;
-        if ( v8 > 0.0 )
+        if( v8 > 0.0 )
           goto LABEL_38;
-        if ( RGE_Static_Object::distance_to_object(v7, v1->target_obj) - 1.0 > v1->task->work_range )
+        if( RGE_Static_Object::distance_to_object(v7, v1->target_obj) - 1.0 > v1->task->work_range )
         {
-          if ( (unsigned __int8)((int (*)(void))v1->target_obj->vfptr->actionState)() == 2 )
+          if( (unsigned __int8)((int (*)(void))v1->target_obj->vfptr->actionState)() == 2 )
           {
             v9 = v1->obj;
             start.x = (signed __int64)v9->world_x;
@@ -285,7 +285,7 @@ LABEL_19:
             start.y = (signed __int64)v9->world_y;
             dest.x = (signed __int64)v10->world_x;
             dest.y = (signed __int64)v10->world_y;
-            if ( v9->vfptr->firstTileAlongLine((RGE_Static_Object *)v9, &start, &dest, &rVal, 2, 2, 1) == 1 )
+            if( v9->vfptr->firstTileAlongLine((RGE_Static_Object *)v9, &start, &dest, &rVal, 2, 2, 1) == 1 )
             {
               v11 = (double)rVal.x;
               v30 = v11;
@@ -297,7 +297,7 @@ LABEL_19:
               v16 = v13;
               v17 = v15;
               v28 = v13;
-              if ( v19 && v16 == v1->target_y )
+              if( v19 && v16 == v1->target_y )
               {
                 v20 = v1->target_obj;
                 v1->target_x = v20->world_x;
@@ -338,7 +338,7 @@ LABEL_19:
           }
           else
           {
-            if ( (unsigned __int8)((int (*)(void))v1->target_obj->vfptr->actionState)() == 11 )
+            if( (unsigned __int8)((int (*)(void))v1->target_obj->vfptr->actionState)() == 11 )
             {
               v24 = RGE_Action_List::get_action((RGE_Action_List *)v1->target_obj[2].unitAIValue);
               v25 = RGE_Action::targetX(v24);
@@ -355,7 +355,7 @@ LABEL_19:
         {
           ((void (__stdcall *)(RGE_Static_Object *))v1->obj->vfptr->enter_obj)(v1->target_obj);
 LABEL_23:
-          if ( !v1->subActionValue )
+          if( !v1->subActionValue )
             ((void (__stdcall *)(int, int, signed int, signed int, _DWORD, _DWORD))v1->obj->vfptr->notify)(
               v1->obj->id,
               v1->obj->id,

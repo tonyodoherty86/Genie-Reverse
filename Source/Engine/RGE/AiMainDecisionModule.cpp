@@ -29,7 +29,7 @@ MainDecisionAIModule *__thiscall MainDecisionAIModule::`scalar deleting destruct
 
   v2 = this;
   MainDecisionAIModule::~MainDecisionAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -62,27 +62,27 @@ void __userpurge MainDecisionAIModule::MainDecisionAIModule(MainDecisionAIModule
   LOBYTE(v14) = 1;
   v5->vfptr = (AIModuleVtbl *)&MainDecisionAIModule::`vftable';
   rge_read((int)i, 0, v6, &numberUnits, 4);
-  for ( playerIDa = 0; playerIDa < numberUnits; ++playerIDa )
+  for( playerIDa = 0; playerIDa < numberUnits; ++playerIDa )
   {
     rge_read((int)i, 0, infile, &plyr, 4);
     v7 = v5->objects.numberValue;
     v8 = 0;
-    for ( i = plyr; v8 < v7; ++v8 )
+    for( i = plyr; v8 < v7; ++v8 )
     {
-      if ( v8 >= v5->objects.maximumSizeValue )
+      if( v8 >= v5->objects.maximumSizeValue )
         break;
-      if ( (RGE_Player *)v5->objects.value[v8] == plyr )
+      if( (RGE_Player *)v5->objects.value[v8] == plyr )
         goto LABEL_13;
     }
-    if ( v7 > v5->objects.maximumSizeValue - 1 )
+    if( v7 > v5->objects.maximumSizeValue - 1 )
     {
       v9 = v7 + 1;
       v10 = (int *)operator new(4 * (v7 + 1));
-      if ( v10 )
+      if( v10 )
       {
-        for ( j = 0; j < v5->objects.maximumSizeValue; v10[j - 1] = v5->objects.value[j - 1] )
+        for( j = 0; j < v5->objects.maximumSizeValue; v10[j - 1] = v5->objects.value[j - 1] )
         {
-          if ( j >= v9 )
+          if( j >= v9 )
             break;
           ++j;
         }
@@ -107,7 +107,7 @@ void __thiscall MainDecisionAIModule::~MainDecisionAIModule(MainDecisionAIModule
   v1 = this;
   this->vfptr = (AIModuleVtbl *)&MainDecisionAIModule::`vftable';
   v2 = this->objects.value;
-  if ( v2 )
+  if( v2 )
   {
     operator delete(v2);
     v1->objects.value = 0;
@@ -132,17 +132,17 @@ int __thiscall MainDecisionAIModule::save(MainDecisionAIModule *this, int outfil
   v2 = this;
   tempInt = this->objects.numberValue;
   rge_write(outfile, &tempInt, 4);
-  for ( i = 0; i < v2->objects.numberValue; ++i )
+  for( i = 0; i < v2->objects.numberValue; ++i )
   {
-    if ( i > v2->objects.maximumSizeValue - 1 )
+    if( i > v2->objects.maximumSizeValue - 1 )
     {
       v4 = i + 1;
       v5 = (int *)operator new(4 * i + 4);
-      if ( v5 )
+      if( v5 )
       {
-        for ( j = 0; j < v2->objects.maximumSizeValue; v5[j - 1] = v2->objects.value[j - 1] )
+        for( j = 0; j < v2->objects.maximumSizeValue; v5[j - 1] = v2->objects.value[j - 1] )
         {
-          if ( j >= v4 )
+          if( j >= v4 )
             break;
           ++j;
         }
@@ -171,26 +171,26 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::addObject(MainDecisionAIModu
 
   result = obj;
   v3 = this;
-  if ( obj )
+  if( obj )
   {
     v4 = this->objects.numberValue;
     v5 = obj->id;
-    for ( i = 0; i < v4; ++i )
+    for( i = 0; i < v4; ++i )
     {
-      if ( i >= v3->objects.maximumSizeValue )
+      if( i >= v3->objects.maximumSizeValue )
         break;
-      if ( v3->objects.value[i] == v5 )
+      if( v3->objects.value[i] == v5 )
         goto LABEL_13;
     }
-    if ( v4 > v3->objects.maximumSizeValue - 1 )
+    if( v4 > v3->objects.maximumSizeValue - 1 )
     {
       v7 = v4 + 1;
       v8 = (int *)operator new(4 * (v4 + 1));
-      if ( v8 )
+      if( v8 )
       {
-        for ( j = 0; j < v3->objects.maximumSizeValue; v8[j - 1] = v3->objects.value[j - 1] )
+        for( j = 0; j < v3->objects.maximumSizeValue; v8[j - 1] = v3->objects.value[j - 1] )
         {
-          if ( j >= v7 )
+          if( j >= v7 )
             break;
           ++j;
         }
@@ -217,32 +217,32 @@ int __thiscall MainDecisionAIModule::removeObject(MainDecisionAIModule *this, in
 
   v2 = this->objects.maximumSizeValue;
   v3 = 0;
-  if ( v2 > 0 )
+  if( v2 > 0 )
   {
     v4 = this->objects.value;
     do
     {
-      if ( *v4 == id )
+      if( *v4 == id )
         break;
       ++v3;
       ++v4;
     }
-    while ( v3 < v2 );
+    while( v3 < v2 );
   }
-  if ( v3 < v2 )
+  if( v3 < v2 )
   {
-    if ( v3 < v2 - 1 )
+    if( v3 < v2 - 1 )
     {
       do
       {
         ++v3;
         this->objects.value[v3 - 1] = this->objects.value[v3];
       }
-      while ( v3 < this->objects.maximumSizeValue - 1 );
+      while( v3 < this->objects.maximumSizeValue - 1 );
     }
     v6 = this->objects.numberValue - 1;
     this->objects.numberValue = v6;
-    if ( v6 < 0 )
+    if( v6 < 0 )
       this->objects.numberValue = 0;
     result = 1;
   }
@@ -274,17 +274,17 @@ int __thiscall MainDecisionAIModule::numberObjectsWithAction(MainDecisionAIModul
 
   v2 = this;
   v3 = 0;
-  for ( count = 0; v3 < v2->objects.numberValue; ++v3 )
+  for( count = 0; v3 < v2->objects.numberValue; ++v3 )
   {
-    if ( v3 > v2->objects.maximumSizeValue - 1 )
+    if( v3 > v2->objects.maximumSizeValue - 1 )
     {
       v4 = v3 + 1;
       v5 = (int *)operator new(4 * v3 + 4);
-      if ( v5 )
+      if( v5 )
       {
-        for ( i = 0; i < v2->objects.maximumSizeValue; v5[i - 1] = v2->objects.value[i - 1] )
+        for( i = 0; i < v2->objects.maximumSizeValue; v5[i - 1] = v2->objects.value[i - 1] )
         {
-          if ( i >= v4 )
+          if( i >= v4 )
             break;
           ++i;
         }
@@ -295,12 +295,12 @@ int __thiscall MainDecisionAIModule::numberObjectsWithAction(MainDecisionAIModul
     }
     v7 = RGE_Game_World::object(v2->player->world, v2->objects.value[v3]);
     v8 = v7;
-    if ( v7 )
+    if( v7 )
     {
-      if ( RGE_Static_Object::unitAI(v7) )
+      if( RGE_Static_Object::unitAI(v7) )
       {
         v9 = RGE_Static_Object::unitAI(v8);
-        if ( UnitAIModule::currentAction(v9) == aid )
+        if( UnitAIModule::currentAction(v9) == aid )
           ++count;
       }
     }
@@ -321,17 +321,17 @@ int __thiscall MainDecisionAIModule::numberObjectsWithGroup(MainDecisionAIModule
 
   v2 = this;
   v3 = 0;
-  for ( count = 0; v3 < v2->objects.numberValue; ++v3 )
+  for( count = 0; v3 < v2->objects.numberValue; ++v3 )
   {
-    if ( v3 > v2->objects.maximumSizeValue - 1 )
+    if( v3 > v2->objects.maximumSizeValue - 1 )
     {
       v4 = v3 + 1;
       v5 = (int *)operator new(4 * v3 + 4);
-      if ( v5 )
+      if( v5 )
       {
-        for ( i = 0; i < v2->objects.maximumSizeValue; v5[i - 1] = v2->objects.value[i - 1] )
+        for( i = 0; i < v2->objects.maximumSizeValue; v5[i - 1] = v2->objects.value[i - 1] )
         {
-          if ( i >= v4 )
+          if( i >= v4 )
             break;
           ++i;
         }
@@ -341,7 +341,7 @@ int __thiscall MainDecisionAIModule::numberObjectsWithGroup(MainDecisionAIModule
       }
     }
     v7 = RGE_Game_World::object(v2->player->world, v2->objects.value[v3]);
-    if ( v7 && v7->master_obj->object_group == gid )
+    if( v7 && v7->master_obj->object_group == gid )
       ++count;
   }
   return count;
@@ -363,17 +363,17 @@ int __thiscall MainDecisionAIModule::numberObjectsWithActionAndTarget(MainDecisi
 
   v3 = this;
   v4 = 0;
-  for ( count = 0; v4 < v3->objects.numberValue; ++v4 )
+  for( count = 0; v4 < v3->objects.numberValue; ++v4 )
   {
-    if ( v4 > v3->objects.maximumSizeValue - 1 )
+    if( v4 > v3->objects.maximumSizeValue - 1 )
     {
       v5 = v4 + 1;
       v6 = (int *)operator new(4 * v4 + 4);
-      if ( v6 )
+      if( v6 )
       {
-        for ( i = 0; i < v3->objects.maximumSizeValue; v6[i - 1] = v3->objects.value[i - 1] )
+        for( i = 0; i < v3->objects.maximumSizeValue; v6[i - 1] = v3->objects.value[i - 1] )
         {
-          if ( i >= v5 )
+          if( i >= v5 )
             break;
           ++i;
         }
@@ -384,15 +384,15 @@ int __thiscall MainDecisionAIModule::numberObjectsWithActionAndTarget(MainDecisi
     }
     v8 = RGE_Game_World::object(v3->player->world, v3->objects.value[v4]);
     v9 = v8;
-    if ( v8 )
+    if( v8 )
     {
-      if ( RGE_Static_Object::unitAI(v8) )
+      if( RGE_Static_Object::unitAI(v8) )
       {
         v10 = RGE_Static_Object::unitAI(v9);
-        if ( UnitAIModule::currentAction(v10) == action )
+        if( UnitAIModule::currentAction(v10) == action )
         {
           v11 = RGE_Static_Object::unitAI(v9);
-          if ( UnitAIModule::currentTarget(v11) == target )
+          if( UnitAIModule::currentTarget(v11) == target )
             ++count;
         }
       }
@@ -416,17 +416,17 @@ int __thiscall MainDecisionAIModule::numberObjectsWithTargetType(MainDecisionAIM
 
   v2 = this;
   v3 = 0;
-  for ( count = 0; v3 < v2->objects.numberValue; ++v3 )
+  for( count = 0; v3 < v2->objects.numberValue; ++v3 )
   {
-    if ( v3 > v2->objects.maximumSizeValue - 1 )
+    if( v3 > v2->objects.maximumSizeValue - 1 )
     {
       v4 = v3 + 1;
       v5 = (int *)operator new(4 * v3 + 4);
-      if ( v5 )
+      if( v5 )
       {
-        for ( i = 0; i < v2->objects.maximumSizeValue; v5[i - 1] = v2->objects.value[i - 1] )
+        for( i = 0; i < v2->objects.maximumSizeValue; v5[i - 1] = v2->objects.value[i - 1] )
         {
-          if ( i >= v4 )
+          if( i >= v4 )
             break;
           ++i;
         }
@@ -437,12 +437,12 @@ int __thiscall MainDecisionAIModule::numberObjectsWithTargetType(MainDecisionAIM
     }
     v7 = RGE_Game_World::object(v2->player->world, v2->objects.value[v3]);
     v8 = v7;
-    if ( v7 )
+    if( v7 )
     {
-      if ( RGE_Static_Object::unitAI(v7) )
+      if( RGE_Static_Object::unitAI(v7) )
       {
         v9 = RGE_Static_Object::unitAI(v8);
-        if ( UnitAIModule::currentTargetType(v9) == tt )
+        if( UnitAIModule::currentTargetType(v9) == tt )
           ++count;
       }
     }
@@ -466,17 +466,17 @@ int __thiscall MainDecisionAIModule::numberObjectsWithActionAndTargetType(MainDe
 
   v3 = this;
   v4 = 0;
-  for ( count = 0; v4 < v3->objects.numberValue; ++v4 )
+  for( count = 0; v4 < v3->objects.numberValue; ++v4 )
   {
-    if ( v4 > v3->objects.maximumSizeValue - 1 )
+    if( v4 > v3->objects.maximumSizeValue - 1 )
     {
       v5 = v4 + 1;
       v6 = (int *)operator new(4 * v4 + 4);
-      if ( v6 )
+      if( v6 )
       {
-        for ( i = 0; i < v3->objects.maximumSizeValue; v6[i - 1] = v3->objects.value[i - 1] )
+        for( i = 0; i < v3->objects.maximumSizeValue; v6[i - 1] = v3->objects.value[i - 1] )
         {
-          if ( i >= v5 )
+          if( i >= v5 )
             break;
           ++i;
         }
@@ -487,15 +487,15 @@ int __thiscall MainDecisionAIModule::numberObjectsWithActionAndTargetType(MainDe
     }
     v8 = RGE_Game_World::object(v3->player->world, v3->objects.value[v4]);
     v9 = v8;
-    if ( v8 )
+    if( v8 )
     {
-      if ( RGE_Static_Object::unitAI(v8) )
+      if( RGE_Static_Object::unitAI(v8) )
       {
         v10 = RGE_Static_Object::unitAI(v9);
-        if ( UnitAIModule::currentAction(v10) == action )
+        if( UnitAIModule::currentAction(v10) == action )
         {
           v11 = RGE_Static_Object::unitAI(v9);
-          if ( UnitAIModule::currentTargetType(v11) == tt )
+          if( UnitAIModule::currentTargetType(v11) == tt )
             ++count;
         }
       }
@@ -532,23 +532,23 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::object(MainDecisionAIModule 
   v11 = this;
   v12 = 0;
   i = 0;
-  if ( this->objects.numberValue <= 0 )
+  if( this->objects.numberValue <= 0 )
   {
     result = 0;
   }
   else
   {
-    while ( 1 )
+    while( 1 )
     {
-      if ( v12 > v11->objects.maximumSizeValue - 1 )
+      if( v12 > v11->objects.maximumSizeValue - 1 )
       {
         v13 = v12 + 1;
         v14 = (int *)operator new(4 * v12 + 4);
-        if ( v14 )
+        if( v14 )
         {
-          for ( j = 0; j < v11->objects.maximumSizeValue; v14[j - 1] = v11->objects.value[j - 1] )
+          for( j = 0; j < v11->objects.maximumSizeValue; v14[j - 1] = v11->objects.value[j - 1] )
           {
-            if ( j >= v13 )
+            if( j >= v13 )
               break;
             ++j;
           }
@@ -559,27 +559,27 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::object(MainDecisionAIModule 
       }
       v16 = RGE_Game_World::object(v11->player->world, v11->objects.value[v12]);
       v17 = v16;
-      if ( v16 )
+      if( v16 )
       {
-        if ( RGE_Static_Object::unitAI(v16)
+        if( RGE_Static_Object::unitAI(v16)
           && (gameID == -1 || v17->id == gameID)
           && (typeID == -1 || v17->master_obj->id == typeID)
           && (groupID == -1 || v17->master_obj->object_group == groupID) )
         {
-          if ( currentAction == -1
+          if( currentAction == -1
             || (v18 = RGE_Static_Object::unitAI(v17), UnitAIModule::currentAction(v18) == currentAction) )
           {
-            if ( canPerformActionID == -1 )
+            if( canPerformActionID == -1 )
               goto LABEL_42;
-            if ( i > v11->objects.maximumSizeValue - 1 )
+            if( i > v11->objects.maximumSizeValue - 1 )
             {
               v19 = i + 1;
               v20 = (int *)operator new(4 * i + 4);
-              if ( v20 )
+              if( v20 )
               {
-                for ( k = 0; k < v11->objects.maximumSizeValue; v20[k - 1] = v11->objects.value[k - 1] )
+                for( k = 0; k < v11->objects.maximumSizeValue; v20[k - 1] = v11->objects.value[k - 1] )
                 {
-                  if ( k >= v19 )
+                  if( k >= v19 )
                     break;
                   ++k;
                 }
@@ -588,19 +588,19 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::object(MainDecisionAIModule 
                 v11->objects.maximumSizeValue = v19;
               }
             }
-            if ( ((int (__thiscall *)(MainDecisionAIModule *, int, int))v11->vfptr[1].setHistoryFilename)(
+            if( ((int (__thiscall *)(MainDecisionAIModule *, int, int))v11->vfptr[1].setHistoryFilename)(
                    v11,
                    v11->objects.value[i],
                    canPerformActionID) )
             {
 LABEL_42:
-              if ( targetID == -1
+              if( targetID == -1
                 || (v22 = RGE_Static_Object::unitAI(v17), UnitAIModule::currentTarget(v22) == targetID) )
               {
-                if ( targetType == -1
+                if( targetType == -1
                   || (v23 = RGE_Static_Object::unitAI(v17), UnitAIModule::currentTargetType(v23) == targetType) )
                 {
-                  if ( (objectState == -1 || v17->object_state == objectState)
+                  if( (objectState == -1 || v17->object_state == objectState)
                     && (maxAttributeAmount == -1 || (double)maxAttributeAmount >= v17->attribute_amount_held) )
                   {
                     break;
@@ -611,7 +611,7 @@ LABEL_42:
           }
         }
       }
-      if ( ++i >= v11->objects.numberValue )
+      if( ++i >= v11->objects.numberValue )
         return 0;
       v12 = i;
     }
@@ -636,23 +636,23 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::object(MainDecisionAIModule 
 
   v7 = this;
   v8 = 0;
-  if ( this->objects.numberValue <= 0 )
+  if( this->objects.numberValue <= 0 )
   {
     result = 0;
   }
   else
   {
-    while ( 1 )
+    while( 1 )
     {
-      if ( v8 > v7->objects.maximumSizeValue - 1 )
+      if( v8 > v7->objects.maximumSizeValue - 1 )
       {
         v9 = v8 + 1;
         v10 = (int *)operator new(4 * v8 + 4);
-        if ( v10 )
+        if( v10 )
         {
-          for ( i = 0; i < v7->objects.maximumSizeValue; v10[i - 1] = v7->objects.value[i - 1] )
+          for( i = 0; i < v7->objects.maximumSizeValue; v10[i - 1] = v7->objects.value[i - 1] )
           {
-            if ( i >= v9 )
+            if( i >= v9 )
               break;
             ++i;
           }
@@ -663,23 +663,23 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::object(MainDecisionAIModule 
       }
       v12 = RGE_Game_World::object(v7->player->world, v7->objects.value[v8]);
       v13 = v12;
-      if ( v12 )
+      if( v12 )
       {
-        if ( RGE_Static_Object::unitAI(v12)
+        if( RGE_Static_Object::unitAI(v12)
           && (gameID == -1 || v13->id == gameID)
           && (typeID == -1 || v13->master_obj->id == typeID)
           && (groupID == -1 || v13->master_obj->object_group == groupID) )
         {
           v14 = RGE_Static_Object::unitAI(v13);
-          if ( UnitAIModule::currentAction(v14) != action1 )
+          if( UnitAIModule::currentAction(v14) != action1 )
           {
             v15 = RGE_Static_Object::unitAI(v13);
-            if ( UnitAIModule::currentAction(v15) != action2 && (objectState == -1 || v13->object_state == objectState) )
+            if( UnitAIModule::currentAction(v15) != action2 && (objectState == -1 || v13->object_state == objectState) )
               break;
           }
         }
       }
-      if ( ++v8 >= v7->objects.numberValue )
+      if( ++v8 >= v7->objects.numberValue )
         return 0;
     }
     result = v13;
@@ -715,17 +715,17 @@ int __thiscall MainDecisionAIModule::numberBusyObjects(MainDecisionAIModule *thi
 
   v1 = this;
   v2 = 0;
-  for ( count = 0; v2 < v1->objects.numberValue; ++v2 )
+  for( count = 0; v2 < v1->objects.numberValue; ++v2 )
   {
-    if ( v2 > v1->objects.maximumSizeValue - 1 )
+    if( v2 > v1->objects.maximumSizeValue - 1 )
     {
       v3 = v2 + 1;
       v4 = (int *)operator new(4 * v2 + 4);
-      if ( v4 )
+      if( v4 )
       {
-        for ( i = 0; i < v1->objects.maximumSizeValue; v4[i - 1] = v1->objects.value[i - 1] )
+        for( i = 0; i < v1->objects.maximumSizeValue; v4[i - 1] = v1->objects.value[i - 1] )
         {
-          if ( i >= v3 )
+          if( i >= v3 )
             break;
           ++i;
         }
@@ -736,12 +736,12 @@ int __thiscall MainDecisionAIModule::numberBusyObjects(MainDecisionAIModule *thi
     }
     v6 = RGE_Game_World::object(v1->player->world, v1->objects.value[v2]);
     v7 = v6;
-    if ( v6 )
+    if( v6 )
     {
-      if ( RGE_Static_Object::unitAI(v6) )
+      if( RGE_Static_Object::unitAI(v6) )
       {
         v8 = RGE_Static_Object::unitAI(v7);
-        if ( UnitAIModule::currentAction(v8) == -1 )
+        if( UnitAIModule::currentAction(v8) == -1 )
           ++count;
       }
     }
@@ -766,17 +766,17 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::mostDamaged(MainDecisionAIMo
   v3 = this;
   v4 = 0;
   mDB = 0;
-  for ( damagePercentage = 0; v4 < v3->objects.numberValue; ++v4 )
+  for( damagePercentage = 0; v4 < v3->objects.numberValue; ++v4 )
   {
-    if ( v4 > v3->objects.maximumSizeValue - 1 )
+    if( v4 > v3->objects.maximumSizeValue - 1 )
     {
       v5 = v4 + 1;
       v6 = (int *)operator new(4 * v4 + 4);
-      if ( v6 )
+      if( v6 )
       {
-        for ( i = 0; i < v3->objects.maximumSizeValue; v6[i - 1] = v3->objects.value[i - 1] )
+        for( i = 0; i < v3->objects.maximumSizeValue; v6[i - 1] = v3->objects.value[i - 1] )
         {
-          if ( i >= v5 )
+          if( i >= v5 )
             break;
           ++i;
         }
@@ -787,14 +787,14 @@ RGE_Static_Object *__thiscall MainDecisionAIModule::mostDamaged(MainDecisionAIMo
     }
     v8 = RGE_Game_World::object(v3->player->world, v3->objects.value[v4]);
     v9 = v8;
-    if ( v8 )
+    if( v8 )
     {
-      if ( RGE_Static_Object::unitAI(v8) )
+      if( RGE_Static_Object::unitAI(v8) )
       {
-        if ( v9->object_state )
+        if( v9->object_state )
         {
           v10 = v9->master_obj;
-          if ( v10->object_group == oGroup
+          if( v10->object_group == oGroup
             && (double)v10->hp > v9->hp
             && v9->vfptr->canRepair(v9) == 1
             && (oType == -1 || oType == v9->master_obj->id)

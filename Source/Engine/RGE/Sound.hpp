@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Sound.hpp
  * @author  Yvan Burrie
- * @date    2018/06/25
+ * @date    2018/07/03
  * @version 1.0
  */
 
@@ -27,15 +27,15 @@ public:
 
     void restart_sound(TSound_Driver *sound);
 
-    void update(unsigned int curr_time);
+    void update(time_t curr_time);
 
-    void set_cache_time(unsigned int new_cache_time);
+    void set_cache_time(time_t new_cache_time);
 
     void play_at_update();
 
     void update_play();
 
-    void play(int add_to_play_list);
+    void play(bool add_to_play_list);
 
     char *get_file_name();
 

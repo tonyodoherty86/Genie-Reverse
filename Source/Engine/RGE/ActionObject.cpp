@@ -23,7 +23,7 @@ void __thiscall RGE_Action_Object::RGE_Action_Object(RGE_Action_Object *this, RG
   v7->lastActionValue = -1;
   v7->lastActionStateValue = -1;
   v7->vfptr = (RGE_Static_ObjectVtbl *)&RGE_Action_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Action_Object::setup(v7, tobj, obj_owner, x, y, z);
 }
 // 56E420: using guessed type int (__thiscall *RGE_Action_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -35,7 +35,7 @@ RGE_Action_Object *__thiscall RGE_Action_Object::`vector deleting destructor'(RG
 
   v2 = this;
   RGE_Action_Object::~RGE_Action_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -50,7 +50,7 @@ void __userpurge RGE_Action_Object::RGE_Action_Object(RGE_Action_Object *this@<e
   v5->lastActionValue = -1;
   v5->lastActionStateValue = -1;
   v5->vfptr = (RGE_Static_ObjectVtbl *)&RGE_Action_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Action_Object::setup(v5, a2, infile, gworld);
 }
 // 56E420: using guessed type int (__thiscall *RGE_Action_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -87,7 +87,7 @@ int __userpurge RGE_Action_Object::setup@<eax>(RGE_Action_Object *this@<ecx>, in
   RGE_Moving_Object::setup((RGE_Moving_Object *)&this->vfptr, a2, infile, gworld);
   v4->type = 40;
   rge_read(a2, infile, infile, &v4->waiting, 1);
-  if ( save_game_version < 6.5 )
+  if( save_game_version < 6.5 )
     v4->command_flag = 0;
   else
     rge_read(a2, infile, infile, &v4->command_flag, 1);
@@ -106,7 +106,7 @@ void __thiscall RGE_Action_Object::create_action_list(RGE_Action_Object *this)
 
   v1 = this;
   v2 = (RGE_Action_List *)operator new(0xCu);
-  if ( v2 )
+  if( v2 )
     RGE_Action_List::RGE_Action_List(v2, v1);
 }
 
@@ -158,7 +158,7 @@ void __thiscall RGE_Action_Object::do_command(RGE_Action_Object *this, RGE_Stati
   RGE_Action_Object *v5; // esi@1
 
   v5 = this;
-  if ( (RGE_Action_Object *)obj != this )
+  if( (RGE_Action_Object *)obj != this )
   {
     (*(void (__stdcall **)(RGE_Static_Object *, _DWORD, _DWORD, _DWORD, _DWORD))&this->vfptr[1].gap4[12])(
       obj,
@@ -183,12 +183,12 @@ void __thiscall RGE_Action_Object::move_to(RGE_Action_Object *this, RGE_Static_O
 
   v5 = obj;
   v6 = this;
-  if ( (RGE_Action_Object *)obj == this || RGE_Action_List::action_move_to(this->actions, obj, x, y, z) )
+  if( (RGE_Action_Object *)obj == this || RGE_Action_List::action_move_to(this->actions, obj, x, y, z) )
     return;
-  if ( !obj )
+  if( !obj )
   {
     v9 = (RGE_Action_Move_To *)operator new(0x44u);
-    if ( v9 )
+    if( v9 )
     {
       RGE_Action_Move_To::RGE_Action_Move_To(v9, v6, x, y, z, 0.40000001, 0);
       goto LABEL_9;
@@ -198,22 +198,22 @@ LABEL_8:
     goto LABEL_9;
   }
   v7 = (RGE_Action_Move_To *)operator new(0x44u);
-  if ( !v7 )
+  if( !v7 )
     goto LABEL_8;
   RGE_Action_Move_To::RGE_Action_Move_To(v7, v6, obj, 0.40000001, 0);
 LABEL_9:
   v10 = v6->unitAIValue;
   obja = v8;
-  if ( v10 )
+  if( v10 )
   {
     UnitAIModule::setCurrentOrder(v10, 710);
     UnitAIModule::setCurrentAction(v6->unitAIValue, 610);
-    if ( v5 )
+    if( v5 )
       UnitAIModule::setCurrentTarget(v6->unitAIValue, v5->id, v5->master_obj->object_group, x, y, z);
     else
       UnitAIModule::setCurrentTarget(v6->unitAIValue, -1, -1, x, y, z);
   }
-  if ( obja )
+  if( obja )
     (*(void (__thiscall **)(RGE_Action_Object *, RGE_Static_Object *))&v6->vfptr[1].gap4[28])(v6, obja);
   ++v6->command_flag;
 }
@@ -224,7 +224,7 @@ void __thiscall RGE_Action_Object::work(RGE_Action_Object *this, RGE_Static_Obje
   RGE_Action_Object *v5; // esi@1
 
   v5 = this;
-  if ( (RGE_Action_Object *)obj != this )
+  if( (RGE_Action_Object *)obj != this )
   {
     (*(void (__stdcall **)(RGE_Static_Object *, _DWORD, _DWORD, _DWORD, signed int))&this->vfptr[1].gap4[12])(
       obj,
@@ -264,7 +264,7 @@ void __thiscall RGE_Action_Object::work2(RGE_Action_Object *this, RGE_Static_Obj
 
   v6 = obj;
   v7 = this;
-  if ( (RGE_Action_Object *)obj == this )
+  if( (RGE_Action_Object *)obj == this )
     return;
   v8 = z;
   v9 = (*(int (__stdcall **)(RGE_Action_Object *, RGE_Static_Object *, _DWORD, _DWORD, _DWORD))(*(_DWORD *)this->master_obj[1].undead_sprite
@@ -274,22 +274,22 @@ void __thiscall RGE_Action_Object::work2(RGE_Action_Object *this, RGE_Static_Obj
          LODWORD(x),
          LODWORD(y),
          LODWORD(z));
-  if ( v9 )
+  if( v9 )
     goto LABEL_15;
-  if ( !LOBYTE(v7->master_obj[1].radius_y) )
+  if( !LOBYTE(v7->master_obj[1].radius_y) )
     goto LABEL_15;
   v10 = v7->owner;
   v11 = 0;
   obja = 0;
-  if ( v10->master_object_num <= 0 )
+  if( v10->master_object_num <= 0 )
     goto LABEL_15;
-  while ( 1 )
+  while( 1 )
   {
     v12 = v10->master_objects[v11];
-    if ( !v12 )
+    if( !v12 )
       goto LABEL_11;
     v13 = v7->master_obj;
-    if ( v12->object_group != v13->object_group
+    if( v12->object_group != v13->object_group
       || v12->master_type != v13->master_type
       || LOBYTE(v12[1].radius_y) != LOBYTE(v13[1].radius_y) )
     {
@@ -302,13 +302,13 @@ void __thiscall RGE_Action_Object::work2(RGE_Action_Object *this, RGE_Static_Obj
            LODWORD(x),
            LODWORD(y),
            LODWORD(z));
-    if ( v9 )
+    if( v9 )
       break;
     v11 = (signed int)obja;
 LABEL_11:
     v10 = v7->owner;
     obja = (RGE_Static_Object *)++v11;
-    if ( v11 >= v10->master_object_num )
+    if( v11 >= v10->master_object_num )
       goto LABEL_14;
   }
   v7->vfptr->transform((RGE_Static_Object *)v7, v12);
@@ -318,13 +318,13 @@ LABEL_15:
   v14 = RGE_Action_List::get_task(v7->actions);
   skip = 0;
   objb = (RGE_Static_Object *)-1;
-  if ( v14 && (RGE_Task *)v9 == v14 && RGE_Action_List::action_work(v7->actions, v6, x, y, v8) )
+  if( v14 && (RGE_Task *)v9 == v14 && RGE_Action_List::action_work(v7->actions, v6, x, y, v8) )
   {
     v15 = RGE_Action_List::get_action(v7->actions);
     objb = (RGE_Static_Object *)v15->vfptr->type(v15);
     skip = 1;
   }
-  if ( RGE_Action_List::have_action(v7->actions) == 1
+  if( RGE_Action_List::have_action(v7->actions) == 1
     && (v16 = RGE_Action_List::get_action(v7->actions), v16->vfptr->get_target_obj(v16) == v6)
     && (v17 = RGE_Action_List::get_action(v7->actions), v17->vfptr->type(v17) == 9)
     && (v18 = RGE_Action_List::get_action(v7->actions),
@@ -343,9 +343,9 @@ LABEL_15:
   {
     v20 = skip;
   }
-  if ( !v20 )
+  if( !v20 )
   {
-    if ( v9 )
+    if( v9 )
       v21 = ((int (__stdcall *)(int, RGE_Static_Object *, _DWORD, _DWORD, float))v7->actions->vfptr->create_task_action)(
               v9,
               v6,
@@ -354,7 +354,7 @@ LABEL_15:
               COERCE_FLOAT(LODWORD(v8)));
     else
       v21 = 0;
-    if ( v21 )
+    if( v21 )
     {
       objb = (RGE_Static_Object *)(*(int (__thiscall **)(int))(*(_DWORD *)v21 + 24))(v21);
       (*(void (__thiscall **)(RGE_Action_Object *, int))&v7->vfptr[1].gap4[28])(v7, v21);
@@ -371,7 +371,7 @@ LABEL_15:
     }
   }
   v22 = v7->unitAIValue;
-  if ( v22 )
+  if( v22 )
   {
     v23 = -1;
     v24 = -1;
@@ -430,7 +430,7 @@ LABEL_15:
     }
     UnitAIModule::setCurrentOrder(v22, v23);
     UnitAIModule::setCurrentAction(v7->unitAIValue, v24);
-    if ( v6 )
+    if( v6 )
       UnitAIModule::setCurrentTarget(v7->unitAIValue, v6->id, v6->master_obj->object_group, x, y, z);
     else
       UnitAIModule::setCurrentTarget(v7->unitAIValue, -1, -1, x, y, z);
@@ -466,10 +466,10 @@ RGE_Master_Static_Object *__thiscall RGE_Action_Object::get_command_master(RGE_A
 
   v5 = obj;
   v6 = this;
-  if ( (RGE_Action_Object *)obj != this )
+  if( (RGE_Action_Object *)obj != this )
   {
     v7 = this->master_obj;
-    if ( LOBYTE(v7[1].radius_y) )
+    if( LOBYTE(v7[1].radius_y) )
     {
       v8 = (*(int (__stdcall **)(RGE_Action_Object *, RGE_Static_Object *, _DWORD, _DWORD, _DWORD))(*(_DWORD *)v7[1].undead_sprite
                                                                                                   + 4))(
@@ -479,26 +479,26 @@ RGE_Master_Static_Object *__thiscall RGE_Action_Object::get_command_master(RGE_A
              LODWORD(y),
              LODWORD(z)) == 0;
       result = v6->master_obj;
-      if ( !v8 )
+      if( !v8 )
         return result;
-      if ( LOBYTE(result[1].radius_y) )
+      if( LOBYTE(result[1].radius_y) )
       {
         v10 = v6->owner;
         v11 = 0;
         obja = 0;
-        if ( v10->master_object_num > 0 )
+        if( v10->master_object_num > 0 )
         {
-          while ( 1 )
+          while( 1 )
           {
             v12 = v10->master_objects[v11];
-            if ( v12 )
+            if( v12 )
             {
               v13 = v6->master_obj;
-              if ( v12->object_group == v13->object_group
+              if( v12->object_group == v13->object_group
                 && v12->master_type == v13->master_type
                 && LOBYTE(v12[1].radius_y) == LOBYTE(v13[1].radius_y) )
               {
-                if ( (*(int (__stdcall **)(RGE_Action_Object *, RGE_Static_Object *, _DWORD, _DWORD, _DWORD))(*(_DWORD *)v12[1].undead_sprite + 4))(
+                if( (*(int (__stdcall **)(RGE_Action_Object *, RGE_Static_Object *, _DWORD, _DWORD, _DWORD))(*(_DWORD *)v12[1].undead_sprite + 4))(
                        v6,
                        v5,
                        LODWORD(x),
@@ -512,7 +512,7 @@ RGE_Master_Static_Object *__thiscall RGE_Action_Object::get_command_master(RGE_A
             }
             v10 = v6->owner;
             obja = (RGE_Static_Object *)++v11;
-            if ( v11 >= v10->master_object_num )
+            if( v11 >= v10->master_object_num )
               return v6->master_obj;
           }
         }
@@ -531,7 +531,7 @@ void __thiscall RGE_Action_Object::set_task(RGE_Action_Object *this, __int16 tas
 
   v2 = this;
   v3 = RGE_Master_Action_Object::get_task((RGE_Master_Action_Object *)this->master_obj, task_id);
-  if ( v3 )
+  if( v3 )
   {
     v4 = ((int (__stdcall *)(RGE_Task *, _DWORD, signed int, signed int, signed int))v2->actions->vfptr->create_task_action)(
            v3,
@@ -539,7 +539,7 @@ void __thiscall RGE_Action_Object::set_task(RGE_Action_Object *this, __int16 tas
            -1082130432,
            -1082130432,
            -1082130432);
-    if ( v4 )
+    if( v4 )
       (*(void (__thiscall **)(RGE_Action_Object *, int))&v2->vfptr[1].gap4[28])(v2, v4);
   }
 }
@@ -553,7 +553,7 @@ void __thiscall RGE_Action_Object::setTaskByTaskID(RGE_Action_Object *this, int 
 
   v2 = this;
   v3 = RGE_Master_Action_Object::getTaskByTaskID((RGE_Master_Action_Object *)this->master_obj, t);
-  if ( v3 )
+  if( v3 )
   {
     v4 = ((int (__stdcall *)(RGE_Task *, _DWORD, signed int, signed int, signed int))v2->actions->vfptr->create_task_action)(
            v3,
@@ -561,7 +561,7 @@ void __thiscall RGE_Action_Object::setTaskByTaskID(RGE_Action_Object *this, int 
            -1082130432,
            -1082130432,
            -1082130432);
-    if ( v4 )
+    if( v4 )
       (*(void (__thiscall **)(RGE_Action_Object *, int))&v2->vfptr[1].gap4[28])(v2, v4);
   }
 }
@@ -569,7 +569,7 @@ void __thiscall RGE_Action_Object::setTaskByTaskID(RGE_Action_Object *this, int 
 //----- (004069E0) --------------------------------------------------------
 void __thiscall RGE_Action_Object::set_action(RGE_Action_Object *this, RGE_Action *action)
 {
-  if ( action )
+  if( action )
     RGE_Action_List::add_action(this->actions, action);
 }
 
@@ -580,14 +580,14 @@ void __thiscall RGE_Action_Object::set_only_action(RGE_Action_Object *this, RGE_
 
   v2 = this;
   RGE_Action_List::delete_list(this->actions);
-  if ( action )
+  if( action )
     RGE_Action_List::add_action(v2->actions, action);
 }
 
 //----- (00406A30) --------------------------------------------------------
 void __thiscall RGE_Action_Object::set_end_action(RGE_Action_Object *this, RGE_Action *action)
 {
-  if ( action )
+  if( action )
     RGE_Action_List::add_action_at_end(this->actions, action);
 }
 
@@ -597,7 +597,7 @@ void __thiscall RGE_Action_Object::stop(RGE_Action_Object *this)
   RGE_Action_Object *v1; // esi@1
 
   v1 = this;
-  if ( !RGE_Action_List::action_stop(this->actions) )
+  if( !RGE_Action_List::action_stop(this->actions) )
     RGE_Action_List::delete_list(v1->actions);
 }
 
@@ -615,9 +615,9 @@ char __thiscall RGE_Action_Object::update(RGE_Action_Object *this)
   char v10; // al@17
 
   v1 = this;
-  if ( actionFile )
+  if( actionFile )
   {
-    if ( RGE_Action_List::have_action(this->actions) )
+    if( RGE_Action_List::have_action(this->actions) )
     {
       v2 = RGE_Action_List::get_action(v1->actions);
       v3 = v2->vfptr->type(v2);
@@ -629,7 +629,7 @@ char __thiscall RGE_Action_Object::update(RGE_Action_Object *this)
       v4 = -1;
     }
     v5 = v1->lastActionValue;
-    if ( v5 != v3 || v1->lastActionStateValue != v4 )
+    if( v5 != v3 || v1->lastActionStateValue != v4 )
     {
       fprintf(actionFile, Format, v1->owner->world->world_time, v1->id, v5, v1->lastActionStateValue, v3, v4);
       v1->lastActionValue = v3;
@@ -640,30 +640,30 @@ char __thiscall RGE_Action_Object::update(RGE_Action_Object *this)
   v6 = v1->actions;
   v7 = v8;
   LOBYTE(v8) = v1->object_state;
-  if ( (unsigned __int8)v8 <= 2u )
+  if( (unsigned __int8)v8 <= 2u )
   {
-    if ( v6->list )
+    if( v6->list )
     {
-      if ( v1->inside_obj )
+      if( v1->inside_obj )
       {
         ((void (*)(void))v6->vfptr->inside_obj_update)();
         return v7;
       }
       v10 = ((int (*)(void))v6->vfptr->update)();
-      if ( v10 == 3 || v10 == 1 )
+      if( v10 == 3 || v10 == 1 )
         RGE_Action_List::remove_action(v1->actions);
     }
-    else if ( (_BYTE)v8 == 2 )
+    else if( (_BYTE)v8 == 2 )
     {
       LOWORD(v8) = *(_WORD *)&v1->master_obj[1].undead_flag;
-      if ( (_WORD)v8 != -1 )
+      if( (_WORD)v8 != -1 )
       {
         (*(void (__thiscall **)(RGE_Action_Object *, int))&v1->vfptr[1].gap4[16])(v1, v8);
         return v7;
       }
     }
   }
-  else if ( v6->list )
+  else if( v6->list )
   {
     RGE_Action_List::delete_list(v6);
     return v7;
@@ -707,7 +707,7 @@ RGE_Static_Object *__thiscall RGE_Action_Object::get_target_obj(RGE_Action_Objec
   RGE_Static_Object *result; // eax@2
 
   v1 = RGE_Action_List::get_action(this->actions);
-  if ( v1 )
+  if( v1 )
     result = v1->vfptr->get_target_obj(v1);
   else
     result = 0;
@@ -735,22 +735,22 @@ RGE_Task *__thiscall RGE_Action_Object::getTask(RGE_Action_Object *this, RGE_Sta
          LODWORD(targetX),
          LODWORD(targetY),
          LODWORD(targetZ));
-  if ( v7 )
+  if( v7 )
     return (RGE_Task *)v7;
-  if ( !LOBYTE(v6->master_obj[1].radius_y) )
+  if( !LOBYTE(v6->master_obj[1].radius_y) )
     return (RGE_Task *)v7;
   v8 = v6->owner;
   v9 = 0;
   targetZa = 0.0;
-  if ( v8->master_object_num <= 0 )
+  if( v8->master_object_num <= 0 )
     return (RGE_Task *)v7;
-  while ( 1 )
+  while( 1 )
   {
     v10 = v8->master_objects[v9];
-    if ( !v10 )
+    if( !v10 )
       goto LABEL_10;
     v11 = v6->master_obj;
-    if ( v10->object_group != v11->object_group
+    if( v10->object_group != v11->object_group
       || v10->master_type != v11->master_type
       || LOBYTE(v10[1].radius_y) != LOBYTE(v11[1].radius_y) )
     {
@@ -763,14 +763,14 @@ RGE_Task *__thiscall RGE_Action_Object::getTask(RGE_Action_Object *this, RGE_Sta
            LODWORD(targetX),
            LODWORD(targetY),
            COERCE_FLOAT(LODWORD(v5)));
-    if ( v7 )
+    if( v7 )
       break;
     v9 = LODWORD(targetZa);
 LABEL_10:
     v8 = v6->owner;
     ++v9;
     targetZa = *(float *)&v9;
-    if ( v9 >= v8->master_object_num )
+    if( v9 >= v8->master_object_num )
       return (RGE_Task *)v7;
   }
   v6->vfptr->transform((RGE_Static_Object *)v6, v10);
@@ -784,7 +784,7 @@ char __thiscall RGE_Action_Object::actionState(RGE_Action_Object *this)
   char result; // al@2
 
   v1 = this;
-  if ( RGE_Action_List::have_action(this->actions) == 1 )
+  if( RGE_Action_List::have_action(this->actions) == 1 )
     result = RGE_Action_List::get_action(v1->actions)->state;
   else
     result = 0;
@@ -800,10 +800,10 @@ int __thiscall RGE_Action_Object::get_action_checksum(RGE_Action_Object *this)
 
   v1 = this->actions;
   v2 = 0;
-  if ( v1 )
+  if( v1 )
   {
     v3 = RGE_Action_List::get_action(v1);
-    if ( v3 )
+    if( v3 )
       v2 = v3->state + v3->action_type;
   }
   return v2;

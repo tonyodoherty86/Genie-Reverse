@@ -50,35 +50,35 @@ signed int __stdcall AIPlayPhaseCommand::convertToIntType(char *t)
 {
   signed int result; // eax@2
 
-  if ( !strcmp(t, aMove) )
+  if( !strcmp(t, aMove) )
   {
     result = 1;
   }
-  else if ( !strcmp(t, aAttack) )
+  else if( !strcmp(t, aAttack) )
   {
     result = 2;
   }
-  else if ( !strcmp(t, aAttacksavedtar) )
+  else if( !strcmp(t, aAttacksavedtar) )
   {
     result = 3;
   }
-  else if ( !strcmp(t, aRetreat) )
+  else if( !strcmp(t, aRetreat) )
   {
     result = 4;
   }
-  else if ( !strcmp(t, aHeal) )
+  else if( !strcmp(t, aHeal) )
   {
     result = 5;
   }
-  else if ( !strcmp(t, aResethitpoints) )
+  else if( !strcmp(t, aResethitpoints) )
   {
     result = 6;
   }
-  else if ( !strcmp(t, aResetalivecoun) )
+  else if( !strcmp(t, aResetalivecoun) )
   {
     result = 7;
   }
-  else if ( !strcmp(t, aWait) )
+  else if( !strcmp(t, aWait) )
   {
     result = 8;
   }
@@ -173,47 +173,47 @@ signed int __stdcall AIPlayPhaseTrigger::convertToIntType(char *t)
 {
   signed int result; // eax@2
 
-  if ( !strcmp(t, aGather) )
+  if( !strcmp(t, aGather) )
   {
     result = 1;
   }
-  else if ( !strcmp(t, aDeath) )
+  else if( !strcmp(t, aDeath) )
   {
     result = 2;
   }
-  else if ( !strcmp(t, aHealthlost) )
+  else if( !strcmp(t, aHealthlost) )
   {
     result = 3;
   }
-  else if ( !strcmp(t, aDamagetogroup) )
+  else if( !strcmp(t, aDamagetogroup) )
   {
     result = 4;
   }
-  else if ( !strcmp(t, aDamagetoanygro) )
+  else if( !strcmp(t, aDamagetoanygro) )
   {
     result = 5;
   }
-  else if ( !strcmp(t, aLevel1enemysig) )
+  else if( !strcmp(t, aLevel1enemysig) )
   {
     result = 6;
   }
-  else if ( !strcmp(t, aLevel2enemysig) )
+  else if( !strcmp(t, aLevel2enemysig) )
   {
     result = 7;
   }
-  else if ( !strcmp(t, aDeathofgroup) )
+  else if( !strcmp(t, aDeathofgroup) )
   {
     result = 8;
   }
-  else if ( !strcmp(t, aHealofgroup) )
+  else if( !strcmp(t, aHealofgroup) )
   {
     result = 9;
   }
-  else if ( !strcmp(t, aImmediate) )
+  else if( !strcmp(t, aImmediate) )
   {
     result = 10;
   }
-  else if ( !strcmp(t, aTime) )
+  else if( !strcmp(t, aTime) )
   {
     result = 11;
   }
@@ -289,7 +289,7 @@ void __thiscall AIPlayPhase::AIPlayPhase(AIPlayPhase *this)
     v2 = (AIPlayPhase *)((char *)v2 + 16);
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v4 = v1->triggers;
   v5 = 3;
   do
@@ -298,7 +298,7 @@ void __thiscall AIPlayPhase::AIPlayPhase(AIPlayPhase *this)
     ++v4;
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   AIPlayPhase::initialize(v1);
 }
 
@@ -308,7 +308,7 @@ void __stdcall `vector constructor iterator'(void *__t, unsigned int __s, int __
   char *v4; // esi@2
   int v5; // edi@2
 
-  if ( __n - 1 >= 0 )
+  if( __n - 1 >= 0 )
   {
     v4 = (char *)__t;
     v5 = __n;
@@ -318,7 +318,7 @@ void __stdcall `vector constructor iterator'(void *__t, unsigned int __s, int __
       v4 += __s;
       --v5;
     }
-    while ( v5 );
+    while( v5 );
   }
 }
 
@@ -327,7 +327,7 @@ AIPlayPhaseCommand *__thiscall AIPlayPhase::command(AIPlayPhase *this, int v)
 {
   AIPlayPhaseCommand *result; // eax@3
 
-  if ( v < 0 || v >= 5 )
+  if( v < 0 || v >= 5 )
     result = 0;
   else
     result = &this->commands[v];
@@ -339,7 +339,7 @@ AIPlayPhase *__thiscall AIPlayPhase::trigger(AIPlayPhase *this, int v)
 {
   AIPlayPhase *result; // eax@3
 
-  if ( v < 0 || v >= 3 )
+  if( v < 0 || v >= 3 )
     result = 0;
   else
     result = (AIPlayPhase *)((char *)this + 20 * (v + 4));
@@ -355,11 +355,11 @@ int __thiscall AIPlayPhase::addCommand(AIPlayPhase *this, AIPlayPhaseCommand *c)
 
   v2 = 0;
   v3 = &this->commands[0].typeValue;
-  while ( *v3 )
+  while( *v3 )
   {
     ++v2;
     v3 += 16;
-    if ( v2 >= 5 )
+    if( v2 >= 5 )
       return 0;
   }
   v5 = (char *)this + 16 * v2;
@@ -383,11 +383,11 @@ int __thiscall AIPlayPhase::addTrigger(AIPlayPhase *this, AIPlayPhaseTrigger *t)
   v2 = this;
   v3 = 0;
   v4 = (char *)this->triggers;
-  while ( *v4 )
+  while( *v4 )
   {
     ++v3;
     v4 += 20;
-    if ( v3 >= 3 )
+    if( v3 >= 3 )
       return 0;
   }
   v6 = 5 * (v3 + 4);
@@ -417,7 +417,7 @@ void __thiscall AIPlayPhase::initialize(AIPlayPhase *this)
     v1 += 16;
     --v2;
   }
-  while ( v2 );
+  while( v2 );
   v3 = (char *)this->triggers;
   v4 = 3;
   do
@@ -426,7 +426,7 @@ void __thiscall AIPlayPhase::initialize(AIPlayPhase *this)
     v3 += 20;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
 }
 
 //----- (0040F230) --------------------------------------------------------
@@ -440,7 +440,7 @@ char __thiscall AIPlayGroup::minimum(AIPlayGroup *this, int n)
 {
   char result; // al@3
 
-  if ( n < 0 || n >= 6 )
+  if( n < 0 || n >= 6 )
     result = 0;
   else
     result = this->minValue[n];
@@ -450,7 +450,7 @@ char __thiscall AIPlayGroup::minimum(AIPlayGroup *this, int n)
 //----- (0040F260) --------------------------------------------------------
 void __thiscall AIPlayGroup::setMinimum(AIPlayGroup *this, int n, int v)
 {
-  if ( n >= 0 && n < 6 )
+  if( n >= 0 && n < 6 )
     this->minValue[n] = v;
 }
 
@@ -459,7 +459,7 @@ char __thiscall AIPlayGroup::maximum(AIPlayGroup *this, int n)
 {
   char result; // al@3
 
-  if ( n < 0 || n >= 6 )
+  if( n < 0 || n >= 6 )
     result = -1;
   else
     result = this->maxValue[n];
@@ -469,7 +469,7 @@ char __thiscall AIPlayGroup::maximum(AIPlayGroup *this, int n)
 //----- (0040F2A0) --------------------------------------------------------
 void __thiscall AIPlayGroup::setMaximum(AIPlayGroup *this, int n, int v)
 {
-  if ( n >= 0 && n < 6 )
+  if( n >= 0 && n < 6 )
     this->maxValue[n] = v;
 }
 
@@ -484,7 +484,7 @@ void __thiscall AIPlayGroup::initialize(AIPlayGroup *this)
     *(v1 - 6) = 0;
     *v1++ = -2;
   }
-  while ( (signed int)&v1[-6 - (_DWORD)this] < 6 );
+  while( (signed int)&v1[-6 - (_DWORD)this] < 6 );
 }
 
 //----- (0040F2E0) --------------------------------------------------------
@@ -513,7 +513,7 @@ void __thiscall AIPlay::AIPlay(AIPlay *this)
     ++v2;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v4 = v1->phases;
   v5 = 10;
   do
@@ -522,20 +522,20 @@ void __thiscall AIPlay::AIPlay(AIPlay *this)
     ++v4;
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   v6 = v1->targetCharacteristicValue;
   do
   {
     *(v6 - 5) = 5;
     *v6++ = 5;
   }
-  while ( (signed int)&v6[-73 - (_DWORD)v1] < 5 );
+  while( (signed int)&v6[-73 - (_DWORD)v1] < 5 );
 }
 
 //----- (0040F360) --------------------------------------------------------
 void __thiscall AIPlay::setName(AIPlay *this, char *n)
 {
-  if ( n )
+  if( n )
     strncpy(this->nameValue, n, 0x40u);
 }
 
@@ -556,7 +556,7 @@ char __thiscall AIPlay::targetType(AIPlay *this, int n)
 {
   char result; // al@3
 
-  if ( n < 0 || n >= 5 )
+  if( n < 0 || n >= 5 )
     result = 0;
   else
     result = this->targetTypeValue[n];
@@ -569,9 +569,9 @@ int __thiscall AIPlay::isTargetType(AIPlay *this, char v)
   int v2; // eax@1
 
   v2 = 0;
-  while ( this->targetTypeValue[v2] != v )
+  while( this->targetTypeValue[v2] != v )
   {
-    if ( ++v2 >= 5 )
+    if( ++v2 >= 5 )
       return 0;
   }
   return 1;
@@ -584,12 +584,12 @@ int __thiscall AIPlay::addTargetType(AIPlay *this, char v)
   char v3; // al@2
 
   v2 = 0;
-  while ( 1 )
+  while( 1 )
   {
     v3 = this->targetTypeValue[v2];
-    if ( !v3 || v3 == 5 )
+    if( !v3 || v3 == 5 )
       break;
-    if ( ++v2 >= 5 )
+    if( ++v2 >= 5 )
       return 0;
   }
   this->targetTypeValue[v2] = v;
@@ -601,7 +601,7 @@ char __thiscall AIPlay::targetCharacteristic(AIPlay *this, int n)
 {
   char result; // al@3
 
-  if ( n < 0 || n >= 5 )
+  if( n < 0 || n >= 5 )
     result = 0;
   else
     result = this->targetCharacteristicValue[n];
@@ -614,9 +614,9 @@ int __thiscall AIPlay::isTargetCharacteristic(AIPlay *this, char v)
   int v2; // eax@1
 
   v2 = 0;
-  while ( this->targetCharacteristicValue[v2] != v )
+  while( this->targetCharacteristicValue[v2] != v )
   {
-    if ( ++v2 >= 5 )
+    if( ++v2 >= 5 )
       return 0;
   }
   return 1;
@@ -629,12 +629,12 @@ int __thiscall AIPlay::addTargetCharacteristic(AIPlay *this, char v)
   char v3; // al@2
 
   v2 = 0;
-  while ( 1 )
+  while( 1 )
   {
     v3 = this->targetCharacteristicValue[v2];
-    if ( !v3 || v3 == 5 )
+    if( !v3 || v3 == 5 )
       break;
-    if ( ++v2 >= 5 )
+    if( ++v2 >= 5 )
       return 0;
   }
   this->targetCharacteristicValue[v2] = v;
@@ -650,18 +650,18 @@ int __thiscall AIPlay::gatherTolerance(AIPlay *this, int groupID, int phaseID)
   int result; // eax@6
 
   v3 = AIPlay::phase(this, phaseID);
-  if ( v3 )
+  if( v3 )
   {
     v4 = 0;
-    while ( 1 )
+    while( 1 )
     {
       v5 = AIPlayPhase::trigger(v3, v4);
-      if ( v5 )
+      if( v5 )
       {
-        if ( v5->commands[0].groupValue == 1 )
+        if( v5->commands[0].groupValue == 1 )
           break;
       }
-      if ( ++v4 >= 3 )
+      if( ++v4 >= 3 )
         return 2;
     }
     result = v5->commands[0].value1Value;
@@ -678,7 +678,7 @@ AIPlayGroup *__thiscall AIPlay::group(AIPlay *this, int n)
 {
   AIPlayGroup *result; // eax@3
 
-  if ( n < 0 || n >= 5 )
+  if( n < 0 || n >= 5 )
     result = 0;
   else
     result = &this->groups[n];
@@ -690,7 +690,7 @@ AIPlayPhase *__thiscall AIPlay::phase(AIPlay *this, int n)
 {
   AIPlayPhase *result; // eax@3
 
-  if ( n < 0 || n >= 10 )
+  if( n < 0 || n >= 10 )
     result = 0;
   else
     result = &this->phases[n];
@@ -759,18 +759,18 @@ AIPlay *__thiscall AIPlay::fillGroups(AIPlay *this, AIPlayStatus *playStatus, in
   group = (AIPlayGroup *)this;
   result = AIPlayBook::play(world->playbook, playStatus->playNumberValue);
   play = result;
-  if ( !result )
+  if( !result )
     return result;
   rVal = (AIPlay *)1;
   memset(unitsByTypeCount, 0, sizeof(unitsByTypeCount));
-  if ( numberGroupMembers > 0 )
+  if( numberGroupMembers > 0 )
   {
     v6 = groupMembers;
     deviation = numberGroupMembers;
     do
     {
       v7 = RGE_Game_World::object(world, *v6);
-      if ( v7
+      if( v7
         && (v8 = ((int (__stdcall *)(RGE_Static_Object *))world->playbook->vfptr->convertUnitToIntType)(v7), v8 >= 0)
         && v8 < 6 )
       {
@@ -786,41 +786,41 @@ AIPlay *__thiscall AIPlay::fillGroups(AIPlay *this, AIPlayStatus *playStatus, in
       ++v6;
       --deviation;
     }
-    while ( deviation );
+    while( deviation );
   }
   v11 = 0;
   i = 0;
-  if ( play->numberGroupsValue )
+  if( play->numberGroupsValue )
   {
     do
     {
       v12 = AIPlay::group(play, v11);
       a = v12;
-      if ( !v12 )
+      if( !v12 )
         return 0;
       j = 0;
       v45 = 0;
       deviationa = unitsByTypeCount;
-      for ( k = AIPlayGroup::minimum(v12, 0); ; k = AIPlayGroup::minimum(a, j) )
+      for( k = AIPlayGroup::minimum(v12, 0); ; k = AIPlayGroup::minimum(a, j) )
       {
         minUnits = (unsigned __int8)k;
-        if ( k )
+        if( k )
         {
           v14 = 0;
           v15 = 0;
-          for ( l = *deviationa; v15 < l; ++v15 )
+          for( l = *deviationa; v15 < l; ++v15 )
           {
-            if ( v14 >= minUnits )
+            if( v14 >= minUnits )
               break;
             v16 = unitsByType[0][v15 + v45];
-            if ( v16 != -1 )
+            if( v16 != -1 )
             {
-              if ( AIPlayStatus::addGrouping(playStatus, v16, i, j) == 1 )
+              if( AIPlayStatus::addGrouping(playStatus, v16, i, j) == 1 )
               {
                 smallestGroupSize = v14 + 1;
                 v17 = play->maximumNumberUnitsValue;
                 unitsByType[0][v15 + v45] = -1;
-                if ( (unsigned __int8)AIPlayStatus::numberInPlay(playStatus) == v17 )
+                if( (unsigned __int8)AIPlayStatus::numberInPlay(playStatus) == v17 )
                   goto CountDeviation;
                 v14 = smallestGroupSize;
               }
@@ -836,53 +836,53 @@ AIPlay *__thiscall AIPlay::fillGroups(AIPlay *this, AIPlayStatus *playStatus, in
         ++j;
         v45 += 50;
         ++deviationa;
-        if ( !(v18 ^ v19) )
+        if( !(v18 ^ v19) )
           break;
       }
       v11 = i + 1;
       i = v11;
     }
-    while ( v11 < play->numberGroupsValue );
+    while( v11 < play->numberGroupsValue );
   }
   ia = 0;
   v46 = unitsByTypeCount;
   deviationb = unitsByType;
-  while ( 1 )
+  while( 1 )
   {
     aa = 0;
     v55 = *v46;
-    if ( *v46 > 0 )
+    if( *v46 > 0 )
       break;
 LABEL_53:
     v19 = __OFSUB__(ia + 1, 6);
     v18 = ia++ - 5 < 0;
     ++deviationb;
     ++v46;
-    if ( !(v18 ^ v19) )
+    if( !(v18 ^ v19) )
       goto CountDeviation;
   }
   ja = (int *)deviationb;
-  while ( 1 )
+  while( 1 )
   {
     v20 = *ja;
     minUnitsa = *ja;
-    if ( *ja == -1 )
+    if( *ja == -1 )
       goto LABEL_52;
     v21 = group[6].maxValue[1];
-    if ( v21 == 1 )
+    if( v21 == 1 )
     {
       v22 = -1;
       v23 = 0;
       smallestGroupSizea = 0;
-      if ( play->numberGroupsValue )
+      if( play->numberGroupsValue )
       {
         do
         {
           v24 = AIPlay::group(play, v23);
-          if ( v24 )
+          if( v24 )
           {
             v25 = AIPlayStatus::numberOfTypeInGroup(playStatus, v23, ia);
-            if ( (unsigned __int8)AIPlayGroup::maximum(v24, ia) > v25
+            if( (unsigned __int8)AIPlayGroup::maximum(v24, ia) > v25
               && (v22 == -1 || smallestGroupSizea > (unsigned __int8)AIPlayStatus::numberInGroup(playStatus, v23)) )
             {
               v22 = v23;
@@ -891,81 +891,81 @@ LABEL_53:
           }
           ++v23;
         }
-        while ( v23 < play->numberGroupsValue );
+        while( v23 < play->numberGroupsValue );
         v20 = minUnitsa;
       }
-      if ( v22 != -1 )
+      if( v22 != -1 )
       {
-        if ( AIPlayStatus::addGrouping(playStatus, v20, v22, ia) != 1 )
+        if( AIPlayStatus::addGrouping(playStatus, v20, v22, ia) != 1 )
         {
           rVal = 0;
           goto LABEL_52;
         }
         v26 = play->maximumNumberUnitsValue;
         *ja = -1;
-        if ( (unsigned __int8)AIPlayStatus::numberInPlay(playStatus) == v26 )
+        if( (unsigned __int8)AIPlayStatus::numberInPlay(playStatus) == v26 )
           goto CountDeviation;
       }
       goto LABEL_52;
     }
-    if ( v21 == 2 )
+    if( v21 == 2 )
     {
       v27 = 0;
-      if ( play->numberGroupsValue )
+      if( play->numberGroupsValue )
         break;
     }
 LABEL_52:
     v19 = __OFSUB__(aa + 1, v55);
     v18 = aa++ + 1 - v55 < 0;
     ++ja;
-    if ( !(v18 ^ v19) )
+    if( !(v18 ^ v19) )
       goto LABEL_53;
   }
-  while ( 1 )
+  while( 1 )
   {
     v28 = AIPlay::group(play, v27);
-    if ( !v28 )
+    if( !v28 )
       goto LABEL_49;
     v29 = AIPlayStatus::numberOfTypeInGroup(playStatus, v27, ia);
-    if ( (unsigned __int8)AIPlayGroup::maximum(v28, ia) <= v29 )
+    if( (unsigned __int8)AIPlayGroup::maximum(v28, ia) <= v29 )
       goto LABEL_49;
-    if ( AIPlayStatus::addGrouping(playStatus, minUnitsa, v27, ia) == 1 )
+    if( AIPlayStatus::addGrouping(playStatus, minUnitsa, v27, ia) == 1 )
       break;
     rVal = 0;
 LABEL_49:
-    if ( ++v27 >= play->numberGroupsValue )
+    if( ++v27 >= play->numberGroupsValue )
       goto LABEL_52;
   }
   v30 = play->maximumNumberUnitsValue;
   *ja = -1;
-  if ( (unsigned __int8)AIPlayStatus::numberInPlay(playStatus) != v30 )
+  if( (unsigned __int8)AIPlayStatus::numberInPlay(playStatus) != v30 )
     goto LABEL_52;
 CountDeviation:
   v31 = 0;
   deviationc = 0;
-  if ( play->numberGroupsValue )
+  if( play->numberGroupsValue )
   {
     do
     {
       v32 = AIPlay::group(play, v31);
       groupa = v32;
-      if ( v32 )
+      if( v32 )
       {
         v33 = 0;
-        while ( 1 )
+        while( 1 )
         {
           v34 = (unsigned __int8)AIPlayGroup::minimum(v32, v33);
           v35 = (unsigned __int8)AIPlayStatus::numberOfTypeInGroup(playStatus, v31, v33);
-          if ( v34 > v35 )
+          if( v34 > v35 )
             deviationc += v34 - v35;
-          if ( ++v33 >= 6 )
+          if( ++v33 >= 6 )
             break;
           v32 = groupa;
         }
       }
       ++v31;
     }
-    while ( v31 < play->numberGroupsValue );
+    while( v31 < play->numberGroupsValue );
   }
   result = rVal;
   playStatus->deviationValue = deviationc;
@@ -979,7 +979,7 @@ int __thiscall AIPlay::groupGivenCommandOnPhase(AIPlay *this, int gID, int cType
   AIPlayPhase *v5; // edi@5
   int result; // eax@9
 
-  if ( gID < 0 || gID >= 5 || pID < 0 || pID >= 10 )
+  if( gID < 0 || gID >= 5 || pID < 0 || pID >= 10 )
   {
     result = -1;
   }
@@ -987,9 +987,9 @@ int __thiscall AIPlay::groupGivenCommandOnPhase(AIPlay *this, int gID, int cType
   {
     v4 = 0;
     v5 = &this->phases[pID];
-    while ( AIPlayPhase::command(v5, v4)->groupValue != gID || AIPlayPhase::command(v5, v4)->typeValue != cType )
+    while( AIPlayPhase::command(v5, v4)->groupValue != gID || AIPlayPhase::command(v5, v4)->typeValue != cType )
     {
-      if ( ++v4 >= 5 )
+      if( ++v4 >= 5 )
         return -1;
     }
     result = v4;
@@ -1002,19 +1002,19 @@ signed int __stdcall AIPlay::convertToIntType(char *t)
 {
   signed int result; // eax@2
 
-  if ( !strcmp(t, aAttack) )
+  if( !strcmp(t, aAttack) )
   {
     result = 1;
   }
-  else if ( !strcmp(t, aAnnoy) )
+  else if( !strcmp(t, aAnnoy) )
   {
     result = 2;
   }
-  else if ( !strcmp(t, aFlank) )
+  else if( !strcmp(t, aFlank) )
   {
     result = 3;
   }
-  else if ( !strcmp(t, aRecon) )
+  else if( !strcmp(t, aRecon) )
   {
     result = 4;
   }
@@ -1065,26 +1065,26 @@ int __thiscall AIPlay::locationsOnMap(AIPlay *this, int targetX, int targetY, in
 
   p = 0;
   v5 = this->phases;
-  while ( 2 )
+  while( 2 )
   {
     v6 = 0;
     do
     {
       v7 = AIPlayPhase::command(v5, v6);
-      if ( v7->typeValue == 1 )
+      if( v7->typeValue == 1 )
       {
         v8 = targetX + v7->value1Value;
         v9 = targetY + v7->value2Value;
-        if ( v8 < 0 || v9 < 0 || v8 >= mapXSize || v9 >= mapYSize )
+        if( v8 < 0 || v9 < 0 || v8 >= mapXSize || v9 >= mapYSize )
           return 0;
       }
       ++v6;
     }
-    while ( v6 < 5 );
+    while( v6 < 5 );
     ++v5;
     v11 = __OFSUB__(p + 1, 10);
     v10 = p++ - 9 < 0;
-    if ( v10 ^ v11 )
+    if( v10 ^ v11 )
       continue;
     break;
   }
@@ -1116,7 +1116,7 @@ void __thiscall AIPlayStatus::AIPlayStatus(AIPlayStatus *this)
     v2 += 8;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v1->originalHitPointsValue[0] = -1;
   v1->originalHitPointsValue[1] = -1;
   v1->originalHitPointsValue[2] = -1;
@@ -1129,7 +1129,7 @@ int __thiscall AIPlayStatus::originalHitPoints(AIPlayStatus *this, int n)
 {
   int result; // eax@3
 
-  if ( n < 0 || n >= 5 )
+  if( n < 0 || n >= 5 )
     result = -1;
   else
     result = this->originalHitPointsValue[n];
@@ -1139,7 +1139,7 @@ int __thiscall AIPlayStatus::originalHitPoints(AIPlayStatus *this, int n)
 //----- (0040FCD0) --------------------------------------------------------
 void __thiscall AIPlayStatus::setOriginalHitPoints(AIPlayStatus *this, int n, int v)
 {
-  if ( n >= 0 && n < 5 )
+  if( n >= 0 && n < 5 )
     this->originalHitPointsValue[n] = v;
 }
 
@@ -1153,12 +1153,12 @@ int __thiscall AIPlayStatus::numberInPlay(AIPlayStatus *this)
   v2 = 50;
   do
   {
-    if ( this->groupings[0].id != -1 )
+    if( this->groupings[0].id != -1 )
       LOBYTE(result) = result + 1;
     this = (AIPlayStatus *)((char *)this + 8);
     --v2;
   }
-  while ( v2 );
+  while( v2 );
   return result;
 }
 
@@ -1172,12 +1172,12 @@ int __thiscall AIPlayStatus::numberInGroup(AIPlayStatus *this, int n)
   v3 = 50;
   do
   {
-    if ( this->groupings[0].id != -1 && this->groupings[0].groupID == n )
+    if( this->groupings[0].id != -1 && this->groupings[0].groupID == n )
       LOBYTE(result) = result + 1;
     this = (AIPlayStatus *)((char *)this + 8);
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   return result;
 }
 
@@ -1193,12 +1193,12 @@ int __thiscall AIPlayStatus::numberOfTypeInGroup(AIPlayStatus *this, int n, int 
   v5 = 50;
   do
   {
-    if ( *(_DWORD *)(v4 - 5) != -1 && (unsigned __int8)*(v4 - 1) == n && (unsigned __int8)*v4 == type )
+    if( *(_DWORD *)(v4 - 5) != -1 && (unsigned __int8)*(v4 - 1) == n && (unsigned __int8)*v4 == type )
       LOBYTE(result) = result + 1;
     v4 += 8;
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   return result;
 }
 
@@ -1209,7 +1209,7 @@ char __thiscall AIPlayStatus::group(AIPlayStatus *this, int uID)
   AIPlayStatus *v3; // edx@2
   char result; // al@5
 
-  if ( uID < 0 )
+  if( uID < 0 )
   {
     result = -1;
   }
@@ -1217,11 +1217,11 @@ char __thiscall AIPlayStatus::group(AIPlayStatus *this, int uID)
   {
     v2 = 0;
     v3 = this;
-    while ( v3->groupings[0].id != uID )
+    while( v3->groupings[0].id != uID )
     {
       ++v2;
       v3 = (AIPlayStatus *)((char *)v3 + 8);
-      if ( v2 >= 50 )
+      if( v2 >= 50 )
         return -1;
     }
     result = this->groupings[v2].groupID;
@@ -1237,11 +1237,11 @@ int __thiscall AIPlayStatus::addGrouping(AIPlayStatus *this, int uID, char gID, 
 
   v4 = 0;
   v5 = this;
-  while ( v5->groupings[0].id != -1 )
+  while( v5->groupings[0].id != -1 )
   {
     ++v4;
     v5 = (AIPlayStatus *)((char *)v5 + 8);
-    if ( v4 >= 50 )
+    if( v4 >= 50 )
       return 0;
   }
   this->groupings[v4].id = uID;
@@ -1258,11 +1258,11 @@ int __thiscall AIPlayStatus::removeGrouping(AIPlayStatus *this, int uID)
 
   v2 = 0;
   v3 = this;
-  while ( v3->groupings[0].id != uID )
+  while( v3->groupings[0].id != uID )
   {
     ++v2;
     v3 = (AIPlayStatus *)((char *)v3 + 8);
-    if ( v2 >= 50 )
+    if( v2 >= 50 )
       return 0;
   }
   this->groupings[v2].id = -1;
@@ -1287,7 +1287,7 @@ void __thiscall AIPlayStatus::zeroAllGroupings(AIPlayStatus *this)
     v1 += 8;
     --v2;
   }
-  while ( v2 );
+  while( v2 );
 }
 
 //----- (0040FE50) --------------------------------------------------------
@@ -1299,12 +1299,12 @@ void __thiscall AIPlayStatus::copyUnits(AIPlayStatus *this, int *array, int *cou
   v3 = 50;
   do
   {
-    if ( this->groupings[0].id != -1 )
+    if( this->groupings[0].id != -1 )
       array[(*count)++] = this->groupings[0].id;
     this = (AIPlayStatus *)((char *)this + 8);
     --v3;
   }
-  while ( v3 );
+  while( v3 );
 }
 
 //----- (0040FE90) --------------------------------------------------------
@@ -1390,7 +1390,7 @@ void __thiscall AIPlayStatus::copy(AIPlayStatus *this, AIPlayStatus *ps)
     v6 += 8;
     --v2;
   }
-  while ( v2 );
+  while( v2 );
   v9 = (char *)this->originalHitPointsValue;
   v10 = 5;
   do
@@ -1399,7 +1399,7 @@ void __thiscall AIPlayStatus::copy(AIPlayStatus *this, AIPlayStatus *ps)
     v9 += 4;
     --v10;
   }
-  while ( v10 );
+  while( v10 );
 }
 
 //----- (00410100) --------------------------------------------------------
@@ -1413,10 +1413,10 @@ void __thiscall AIPlayStatus::removeDeadUnits(AIPlayStatus *this, int gID, RGE_G
   v4 = 50;
   do
   {
-    if ( v3->groupings[0].id != -1 )
+    if( v3->groupings[0].id != -1 )
     {
       v5 = RGE_Game_World::object(world, v3->groupings[0].id);
-      if ( !v5 || v5->object_state > 2u )
+      if( !v5 || v5->object_state > 2u )
       {
         v3->groupings[0].id = -1;
         v3->groupings[0].groupID = -1;
@@ -1426,7 +1426,7 @@ void __thiscall AIPlayStatus::removeDeadUnits(AIPlayStatus *this, int gID, RGE_G
     v3 = (AIPlayStatus *)((char *)v3 + 8);
     --v4;
   }
-  while ( v4 );
+  while( v4 );
 }
 
 //----- (00410150) --------------------------------------------------------
@@ -1444,16 +1444,16 @@ void __thiscall AIPlayStatus::resetHitPoints(AIPlayStatus *this, int gID, RGE_Ga
   v5 = 50;
   do
   {
-    if ( v4->groupings[0].id != -1 && v4->groupings[0].groupID == gID )
+    if( v4->groupings[0].id != -1 && v4->groupings[0].groupID == gID )
     {
       v6 = RGE_Game_World::object(world, v4->groupings[0].id);
-      if ( v6 )
+      if( v6 )
         v3 += (signed __int64)v6->hp;
     }
     v4 = (AIPlayStatus *)((char *)v4 + 8);
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   AIPlayStatus::setOriginalHitPoints(v7, gID, v3);
 }
 
@@ -1473,7 +1473,7 @@ AIPlayBook *__thiscall AIPlayBook::`vector deleting destructor'(AIPlayBook *this
 
   v2 = this;
   AIPlayBook::~AIPlayBook(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -1487,7 +1487,7 @@ void __thiscall AIPlayBook::~AIPlayBook(AIPlayBook *this)
   v1 = this;
   v2 = this->plays;
   this->vfptr = (AIPlayBookVtbl *)&AIPlayBook::`vftable';
-  if ( v2 )
+  if( v2 )
   {
     this->numberPlaysValue = 0;
     operator delete(v2);
@@ -1582,11 +1582,11 @@ int __thiscall AIPlayBook::loadPlays(AIPlayBook *this, char *filename)
   int v83; // [sp+3C0h] [bp-4h]@13
 
   v2 = this;
-  if ( !filename )
+  if( !filename )
     goto LABEL_134;
-  if ( !strcmp(filename, aNone_2) )
+  if( !strcmp(filename, aNone_2) )
   {
-    if ( filename )
+    if( filename )
     {
       v52 = v2->nameValue;
       v53 = aNone_2;
@@ -1603,24 +1603,24 @@ LABEL_136:
   sprintf(temp, aS_2, v2->nameValue);
   v3 = fopen(temp, Mode);
   fileIn = v3;
-  if ( v3 )
+  if( v3 )
   {
-    if ( v2->plays )
+    if( v2->plays )
     {
       operator delete(v2->plays);
       v2->plays = 0;
     }
     v2->numberPlaysValue = 0;
-    while ( fgets(temp, 256, v3) )
+    while( fgets(temp, 256, v3) )
     {
-      if ( strlen(temp) != 0 )
+      if( strlen(temp) != 0 )
       {
         sscanf(temp, aS, temp2);
-        if ( !strcmp(aPlay, temp2) )
+        if( !strcmp(aPlay, temp2) )
           v2->numberPlaysValue += 8;
       }
     }
-    if ( v2->numberPlaysValue > 16000 )
+    if( v2->numberPlaysValue > 16000 )
       v2->numberPlaysValue = 16000;
     v4 = v2->numberPlaysValue;
     v5 = (AIPlayPhase *)operator new(1544 * v4);
@@ -1628,10 +1628,10 @@ LABEL_136:
     refPhase = v5;
     v7 = 0;
     v83 = 0;
-    if ( refPhase )
+    if( refPhase )
     {
       v8 = (AIPlay *)v6;
-      if ( v4 - 1 >= 0 )
+      if( v4 - 1 >= 0 )
       {
         do
         {
@@ -1639,27 +1639,27 @@ LABEL_136:
           ++v8;
           --v4;
         }
-        while ( v4 );
+        while( v4 );
       }
       v7 = (AIPlay *)v6;
     }
     v83 = -1;
     v2->plays = v7;
-    if ( v7 )
+    if( v7 )
     {
       rewind(fileIn);
       v9 = -1;
       currentPlay = -1;
       currentPhase = -1;
-      while ( 1 )
+      while( 1 )
       {
-        if ( !fgets(temp, 256, fileIn) )
+        if( !fgets(temp, 256, fileIn) )
         {
 LABEL_132:
           fclose(fileIn);
           return 1;
         }
-        if ( strlen(temp) != 0 )
+        if( strlen(temp) != 0 )
         {
           strcpy(temp2, message_in);
           strcpy(temp6, message_in);
@@ -1668,21 +1668,21 @@ LABEL_132:
           temp5 = 0;
           temp7 = 0;
           temp8 = 0;
-          if ( sscanf(temp, aCC, &commentTemp1, &commentTemp2) != -1 && (commentTemp1 != 47 || commentTemp2 != 47) )
+          if( sscanf(temp, aCC, &commentTemp1, &commentTemp2) != -1 && (commentTemp1 != 47 || commentTemp2 != 47) )
           {
             sscanf(temp, aS, temp2);
-            if ( !strcmp(temp2, aPlay) )
+            if( !strcmp(temp2, aPlay) )
             {
               v10 = 0;
               v11 = 0;
-              if ( temp[0] != 34 )
+              if( temp[0] != 34 )
               {
                 do
                 {
                   v12 = temp[v11++ + 1];
                   ++v10;
                 }
-                while ( v12 != 34 );
+                while( v12 != 34 );
               }
               v13 = v11 + 1;
               v14 = v10 + 1;
@@ -1691,18 +1691,18 @@ LABEL_132:
               v17 = &temp[v13];
               temp3 = v14;
               temp4 = v14;
-              if ( !v15 )
+              if( !v15 )
               {
                 do
                 {
                   ++v17;
                   ++v16;
                 }
-                while ( *v17 != 34 );
+                while( *v17 != 34 );
                 temp4 = v16;
               }
               v18 = 0;
-              if ( v14 < v16 )
+              if( v14 < v16 )
               {
                 v18 = v16 - v14;
                 qmemcpy(temp2, &temp[v14], v16 - v14);
@@ -1710,49 +1710,49 @@ LABEL_132:
               ++v9;
               temp2[v18] = 0;
               currentPlay = v9;
-              if ( v9 >= 16000 )
+              if( v9 >= 16000 )
                 goto LABEL_132;
               AIPlay::setName(&v2->plays[v9], temp2);
             }
-            else if ( !strcmp(temp2, aPlaytype) && v9 != -1 )
+            else if( !strcmp(temp2, aPlaytype) && v9 != -1 )
             {
               sscanf(temp, aSS_3, temp2);
               v19 = (int)&v2->plays[v9];
               *(_BYTE *)(v19 + 67) = AIPlay::convertToIntType(temp2);
             }
-            else if ( !strcmp(temp2, aMinunits) && v9 != -1 )
+            else if( !strcmp(temp2, aMinunits) && v9 != -1 )
             {
               sscanf(temp, aSD, &temp3);
               v2->plays[v9].minimumNumberUnitsValue = temp3;
             }
-            else if ( !strcmp(temp2, aMaxunits) && v9 != -1 )
+            else if( !strcmp(temp2, aMaxunits) && v9 != -1 )
             {
               sscanf(temp, aSD, &temp3);
               v2->plays[v9].maximumNumberUnitsValue = temp3;
             }
-            else if ( !strcmp(temp2, aPower) && v9 != -1 )
+            else if( !strcmp(temp2, aPower) && v9 != -1 )
             {
               sscanf(temp, aSD, &temp3);
               v2->plays[v9].powerValue = temp3;
             }
-            else if ( !strcmp(temp2, aOverflow) && v9 != -1 )
+            else if( !strcmp(temp2, aOverflow) && v9 != -1 )
             {
               sscanf(temp, aSS_3, temp2);
-              if ( !strcmp(temp2, aBalance) )
+              if( !strcmp(temp2, aBalance) )
               {
                 v2->plays[v9].overflowValue = 1;
               }
-              else if ( !strcmp(temp2, aFirstgroup) )
+              else if( !strcmp(temp2, aFirstgroup) )
               {
                 v2->plays[v9].overflowValue = 2;
               }
             }
-            else if ( !strcmp(temp2, aDeathpercentag) && v9 != -1 )
+            else if( !strcmp(temp2, aDeathpercentag) && v9 != -1 )
             {
               sscanf(temp, aSD, &temp3);
-              if ( temp3 >= 0 )
+              if( temp3 >= 0 )
               {
-                if ( temp3 <= 100 )
+                if( temp3 <= 100 )
                   v2->plays[v9].deathPercentageValue = temp3;
                 else
                   v2->plays[v9].deathPercentageValue = 100;
@@ -1762,12 +1762,12 @@ LABEL_132:
                 v2->plays[v9].deathPercentageValue = 0;
               }
             }
-            else if ( !strcmp(temp2, aIntelligence) && v9 != -1 )
+            else if( !strcmp(temp2, aIntelligence) && v9 != -1 )
             {
               sscanf(temp, aSD, &temp3);
-              if ( temp3 >= 0 )
+              if( temp3 >= 0 )
               {
-                if ( temp3 <= 100 )
+                if( temp3 <= 100 )
                   v2->plays[v9].intelligenceValue = temp3;
                 else
                   v2->plays[v9].intelligenceValue = 100;
@@ -1777,47 +1777,47 @@ LABEL_132:
                 v2->plays[v9].intelligenceValue = 0;
               }
             }
-            else if ( !strcmp(temp2, aTargetchar) && v9 != -1 )
+            else if( !strcmp(temp2, aTargetchar) && v9 != -1 )
             {
               sscanf(temp, aSS_3, temp6);
               v20 = v2->vfptr->convertTargetCharacteristicNameToIntType(v2, temp6);
-              if ( v20 )
+              if( v20 )
                 AIPlay::addTargetCharacteristic(&v2->plays[v9], v20);
             }
-            else if ( !strcmp(temp2, aTargettype) && v9 != -1 )
+            else if( !strcmp(temp2, aTargettype) && v9 != -1 )
             {
               sscanf(temp, aSS_3, temp6);
               v21 = v2->vfptr->convertTargetNameToIntType(v2, temp6);
-              if ( v21 )
+              if( v21 )
                 AIPlay::addTargetType(&v2->plays[v9], v21);
             }
-            else if ( !strcmp(temp2, aNumbergroups) && v9 != -1 )
+            else if( !strcmp(temp2, aNumbergroups) && v9 != -1 )
             {
               sscanf(temp, aSD, &temp3);
               v2->plays[v9].numberGroupsValue = temp3;
             }
             else
             {
-              if ( strcmp(temp2, aGroup) || v9 == -1 )
+              if( strcmp(temp2, aGroup) || v9 == -1 )
               {
                 v22 = currentPhase;
 LABEL_91:
-                if ( !strcmp(temp2, aPhase) && v9 != -1 )
+                if( !strcmp(temp2, aPhase) && v9 != -1 )
                 {
                   sscanf(temp, aSD, &temp3);
                   currentPhase = temp3;
                 }
-                else if ( !strcmp(temp2, aGroup) && v9 != -1 && v22 != -1 )
+                else if( !strcmp(temp2, aGroup) && v9 != -1 && v22 != -1 )
                 {
                   sscanf(temp, aSDSDDD, &temp3, temp6, &temp4, &temp5, &temp7);
-                  if ( temp3 >= 0 && temp3 < 5 )
+                  if( temp3 >= 0 && temp3 < 5 )
                   {
                     v27 = AIPlay::phase(&v2->plays[v9], currentPhase);
                     AIPlayPhaseCommand::AIPlayPhaseCommand(&command, temp3, temp6, temp4, temp5, temp7);
                     AIPlayPhase::addCommand(v27, &command);
                   }
                 }
-                else if ( !strcmp(temp2, aTrigger) && v9 != -1 && v22 != -1 )
+                else if( !strcmp(temp2, aTrigger) && v9 != -1 && v22 != -1 )
                 {
                   sscanf(temp, aSDSDD_1, &temp3, temp6, &temp4, &temp8);
                   v28 = currentPhase;
@@ -1825,7 +1825,7 @@ LABEL_91:
                   AIPlayPhaseTrigger::AIPlayPhaseTrigger(&trigger, temp6, temp4, temp8, v28, temp3, 0);
                   AIPlayPhase::addTrigger(v29, &trigger);
                 }
-                else if ( !strcmp(temp2, aRtrigger) && v9 != -1 && v22 != -1 )
+                else if( !strcmp(temp2, aRtrigger) && v9 != -1 && v22 != -1 )
                 {
                   sscanf(temp, aSDSDDD, &temp3, temp6, &temp4, &temp8, &temp7);
                   v30 = currentPhase;
@@ -1833,14 +1833,14 @@ LABEL_91:
                   AIPlayPhaseTrigger::AIPlayPhaseTrigger(&t, temp6, temp4, temp8, v30, temp3, temp7);
                   AIPlayPhase::addTrigger(v31, &t);
                 }
-                else if ( !strcmp(temp2, aEndplay) && v9 != -1 )
+                else if( !strcmp(temp2, aEndplay) && v9 != -1 )
                 {
                   v32 = currentPlay;
                   v33 = v2->plays;
                   currentPhase = -1;
                   v34 = currentPlay;
                   refPhase = (AIPlayPhase *)strcpy(temp2, v33[currentPlay].nameValue);
-                  if ( temp2[0] != 72 || temp2[1] != 80 )
+                  if( temp2[0] != 72 || temp2[1] != 80 )
                   {
                     i = 1;
                     v35 = v34 * 1544;
@@ -1866,7 +1866,7 @@ LABEL_91:
                         AIPlay::addTargetCharacteristic((AIPlay *)((char *)v2->plays + v35), v38);
                         ++v36;
                       }
-                      while ( v36 < 5 );
+                      while( v36 < 5 );
                       v39 = v2->plays;
                       j = 0;
                       *(&v39->numberGroupsValue + v35) = v39[v34].numberGroupsValue;
@@ -1883,11 +1883,11 @@ LABEL_91:
                           v43 = AIPlayGroup::maximum((AIPlayGroup *)curPhase, v41);
                           AIPlayGroup::setMaximum((AIPlayGroup *)a, v41++, (unsigned __int8)v43);
                         }
-                        while ( v41 < 6 );
+                        while( v41 < 6 );
                         v45 = __OFSUB__(j + 1, 5);
                         v44 = j++ - 4 < 0;
                       }
-                      while ( v44 ^ v45 );
+                      while( v44 ^ v45 );
                       j = 0;
                       do
                       {
@@ -1899,7 +1899,7 @@ LABEL_91:
                         {
                           v47 = AIPlayPhase::command(refPhase, a);
                           v48 = v47;
-                          if ( v47->typeValue == 1 )
+                          if( v47->typeValue == 1 )
                           {
                             XYZ::XYZ(&origin, 0, 0, 0);
                             XYZ::XYZ(&rotatedPoint);
@@ -1921,7 +1921,7 @@ LABEL_91:
                           v45 = __OFSUB__(a + 1, 5);
                           v44 = a++ - 4 < 0;
                         }
-                        while ( v44 ^ v45 );
+                        while( v44 ^ v45 );
                         v49 = 0;
                         do
                         {
@@ -1929,15 +1929,15 @@ LABEL_91:
                           AIPlayPhase::addTrigger(curPhase, v50);
                           ++v49;
                         }
-                        while ( v49 < 3 );
+                        while( v49 < 3 );
                         v45 = __OFSUB__(j + 1, 10);
                         v44 = j++ - 9 < 0;
                       }
-                      while ( v44 ^ v45 );
+                      while( v44 ^ v45 );
                       v45 = __OFSUB__(i + 1, 8);
                       v44 = i++ - 7 < 0;
                     }
-                    while ( v44 ^ v45 );
+                    while( v44 ^ v45 );
                   }
                   else
                   {
@@ -1948,15 +1948,15 @@ LABEL_91:
                 goto LABEL_131;
               }
               v22 = currentPhase;
-              if ( currentPhase != -1 )
+              if( currentPhase != -1 )
                 goto LABEL_91;
               sscanf(temp, aSDSDD, &temp3, temp6, &temp4, &temp5);
-              if ( temp3 >= 0 && temp3 < 5 )
+              if( temp3 >= 0 && temp3 < 5 )
               {
                 v23 = v2->vfptr->convertUnitNameToIntType(v2, temp6);
-                if ( v23 != -1 )
+                if( v23 != -1 )
                 {
-                  if ( temp5 < 0 )
+                  if( temp5 < 0 )
                   {
                     v56 = 0;
                     v54 = v23;
@@ -1971,7 +1971,7 @@ LABEL_91:
                     v25 = AIPlay::group(&v2->plays[v9], temp3);
                   }
                   AIPlayGroup::setMinimum(v25, v54, v56);
-                  if ( temp5 > 50 )
+                  if( temp5 > 50 )
                   {
                     v57 = 50;
                     v55 = v23;
@@ -1990,7 +1990,7 @@ LABEL_91:
           }
         }
 LABEL_131:
-        if ( v9 >= 16000 )
+        if( v9 >= 16000 )
           goto LABEL_132;
       }
     }
@@ -2005,7 +2005,7 @@ AIPlay *__thiscall AIPlayBook::play(AIPlayBook *this, int n)
   AIPlay *result; // eax@4
 
   v2 = this->plays;
-  if ( v2 && n >= 0 && n < this->numberPlaysValue )
+  if( v2 && n >= 0 && n < this->numberPlaysValue )
     result = &v2[n];
   else
     result = 0;
@@ -2021,13 +2021,13 @@ AIPlay *__thiscall AIPlayBook::play(AIPlayBook *this, char *name)
   AIPlay *result; // eax@5
 
   v2 = this->plays;
-  if ( v2 && (v3 = this->numberPlaysValue, v4 = 0, v3 > 0) )
+  if( v2 && (v3 = this->numberPlaysValue, v4 = 0, v3 > 0) )
   {
-    while ( strcmp(v2->nameValue, name) )
+    while( strcmp(v2->nameValue, name) )
     {
       ++v4;
       ++v2;
-      if ( v4 >= v3 )
+      if( v4 >= v3 )
         return 0;
     }
     result = &this->plays[v4];
@@ -2047,14 +2047,14 @@ int __thiscall AIPlayBook::playNumber(AIPlayBook *this, char *name)
   AIPlay *v4; // edi@3
   int result; // eax@6
 
-  if ( this->plays && (v2 = this->numberPlaysValue, v3 = 0, v2 > 0) )
+  if( this->plays && (v2 = this->numberPlaysValue, v3 = 0, v2 > 0) )
   {
     v4 = this->plays;
-    while ( strcmp(v4->nameValue, name) )
+    while( strcmp(v4->nameValue, name) )
     {
       ++v3;
       ++v4;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return -1;
     }
     result = v3;
@@ -2071,7 +2071,7 @@ int __stdcall AIPlayBook::convertTargetNameToIntType(char *t)
 {
   int result; // eax@2
 
-  if ( !strcmp(t, aAny) )
+  if( !strcmp(t, aAny) )
     result = 5;
   else
     result = 0;
@@ -2083,23 +2083,23 @@ int __stdcall AIPlayBook::convertTargetCharacteristicNameToIntType(char *t)
 {
   int result; // eax@2
 
-  if ( !strcmp(t, aStationary) )
+  if( !strcmp(t, aStationary) )
   {
     result = 1;
   }
-  else if ( !strcmp(t, aMoving) )
+  else if( !strcmp(t, aMoving) )
   {
     result = 2;
   }
-  else if ( !strcmp(t, aSlow) )
+  else if( !strcmp(t, aSlow) )
   {
     result = 3;
   }
-  else if ( !strcmp(t, aFast) )
+  else if( !strcmp(t, aFast) )
   {
     result = 4;
   }
-  else if ( !strcmp(t, aAny) )
+  else if( !strcmp(t, aAny) )
   {
     result = 5;
   }

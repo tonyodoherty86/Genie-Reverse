@@ -25,7 +25,7 @@ RGE_Action_Transport *__thiscall RGE_Action_Transport::`scalar deleting destruct
 
   v2 = this;
   RGE_Action_Transport::~RGE_Action_Transport(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -49,9 +49,9 @@ void __thiscall RGE_Action_Transport::RGE_Action_Transport(RGE_Action_Transport 
 //----- (00406E00) --------------------------------------------------------
 void __thiscall RGE_Action_Transport::first_in_stack(RGE_Action_Transport *this, char first_time)
 {
-  if ( first_time )
+  if( first_time )
   {
-    if ( this->target_x < 0.0 || this->target_y < 0.0 )
+    if( this->target_x < 0.0 || this->target_y < 0.0 )
       ((void (__stdcall *)(_DWORD))this->vfptr->set_state)(2);
     else
       ((void (__stdcall *)(_DWORD))this->vfptr->set_state)(11);
@@ -74,17 +74,17 @@ void __thiscall RGE_Action_Transport::set_state(RGE_Action_Transport *this, char
   v2 = this;
   RGE_Action_List::delete_list(this->sub_actions);
   v2->state = new_state;
-  if ( new_state == 2 )
+  if( new_state == 2 )
   {
     (*(void (__stdcall **)(_DWORD))&v2->obj->vfptr->gap4[52])(v2->obj->master_obj->sprite);
     return;
   }
-  if ( new_state == 4 || new_state == 11 )
+  if( new_state == 4 || new_state == 11 )
   {
-    if ( v2->task )
+    if( v2->task )
     {
       v3 = (RGE_Action_Move_To *)operator new(0x44u);
-      if ( v3 )
+      if( v3 )
       {
         RGE_Action_Move_To::RGE_Action_Move_To(
           v3,
@@ -100,7 +100,7 @@ void __thiscall RGE_Action_Transport::set_state(RGE_Action_Transport *this, char
     else
     {
       v5 = (RGE_Action_Move_To *)operator new(0x44u);
-      if ( v5 )
+      if( v5 )
       {
         RGE_Action_Move_To::RGE_Action_Move_To(
           v5,
@@ -116,7 +116,7 @@ void __thiscall RGE_Action_Transport::set_state(RGE_Action_Transport *this, char
     v4 = 0;
 LABEL_10:
     v6 = v4;
-    if ( v4 )
+    if( v4 )
     {
       RGE_Action_List::add_action(v2->sub_actions, v4);
       RGE_Action::setSubAction(v6, 1);
@@ -150,30 +150,30 @@ char __thiscall RGE_Action_Transport::update(RGE_Action_Transport *this)
   {
     case 0xB:
       v2 = ((int (*)(void))this->sub_actions->vfptr->update)();
-      if ( !v2 || v2 > 5u )
+      if( !v2 || v2 > 5u )
         return 0;
       v1->vfptr->set_state((RGE_Action *)v1, 2);
       return 0;
     case 4:
       v4 = ((int (*)(void))this->sub_actions->vfptr->update)();
-      if ( !v4 || v4 > 5u )
+      if( !v4 || v4 > 5u )
         return 0;
       v1->vfptr->set_state((RGE_Action *)v1, 6);
       return 0;
     case 6:
       v5 = RGE_Action_Transport::targetZone(this);
-      if ( v5 != -1 && !RGE_Static_Object::withinRangeOfZone((RGE_Static_Object *)&v1->obj->vfptr, v5, 2.0) )
+      if( v5 != -1 && !RGE_Static_Object::withinRangeOfZone((RGE_Static_Object *)&v1->obj->vfptr, v5, 2.0) )
         goto LABEL_18;
-      if ( v1->obj->objects->number_of_objects <= 0 )
+      if( v1->obj->objects->number_of_objects <= 0 )
         goto LABEL_21;
-      if ( ((int (__thiscall *)(RGE_Action_Transport *))v1->vfptr[1].__vecDelDtor)(v1) )
+      if( ((int (__thiscall *)(RGE_Action_Transport *))v1->vfptr[1].__vecDelDtor)(v1) )
       {
         v6 = RGE_Action_Transport::targetZone(v1);
         v7 = RGE_Static_Object::drop_held_objects((RGE_Static_Object *)&v1->obj->vfptr, v6) == 0;
         v8 = v1->obj;
-        if ( !v7 )
+        if( !v7 )
         {
-          if ( v8->objects->number_of_objects <= 0 )
+          if( v8->objects->number_of_objects <= 0 )
           {
 LABEL_21:
             v1->vfptr->set_state((RGE_Action *)v1, 2);
@@ -191,7 +191,7 @@ LABEL_20:
       else
       {
         v12 = v1->obj->owner->world->map;
-        if ( LODWORD(v1->target_x) != -1082130432
+        if( LODWORD(v1->target_x) != -1082130432
           && (RGE_Map::get_terrain(v12, (signed __int64)v1->target_x, (signed __int64)v1->target_y) == 1
            || RGE_Map::get_terrain(v12, (signed __int64)v1->target_x, (signed __int64)v1->target_y) == 22) )
         {
@@ -259,7 +259,7 @@ int __thiscall RGE_Action_Transport::work(RGE_Action_Transport *this, RGE_Static
                           (signed __int64)x,
                           (signed __int64)y);
   distance = RGE_Static_Object::distance_to_position((RGE_Static_Object *)&v5->obj->vfptr, x, y, v5->obj->world_z);
-  if ( v6 != -1
+  if( v6 != -1
     && RGE_Static_Object::withinRangeOfZone((RGE_Static_Object *)&v5->obj->vfptr, v6, 2.0) == 1
     && distance <= 2.0 )
   {
@@ -270,13 +270,13 @@ int __thiscall RGE_Action_Transport::work(RGE_Action_Transport *this, RGE_Static
     v7->set_state((RGE_Action *)v5, 6);
     return 1;
   }
-  if ( x >= 0.0 && y >= 0.0 )
+  if( x >= 0.0 && y >= 0.0 )
   {
     v5->target_x = x;
     v5->target_y = y;
     v9 = (RGE_Static_Object *)&v5->obj->vfptr;
     v5->target_z = z;
-    if ( obj_in != v9 )
+    if( obj_in != v9 )
     {
       v5->vfptr->set_state((RGE_Action *)v5, 11);
       return 1;
@@ -308,7 +308,7 @@ int __thiscall RGE_Action_Transport::next_to_drop_off_terrain(RGE_Action_Transpo
 
   v1 = this->task;
   v14 = this;
-  if ( v1 && v1->terrain_id == -1 )
+  if( v1 && v1->terrain_id == -1 )
   {
     result = 1;
   }
@@ -323,42 +323,42 @@ int __thiscall RGE_Action_Transport::next_to_drop_off_terrain(RGE_Action_Transpo
     v7 = (signed __int64)(v4->radius_y + v3->world_y - -1.0);
     y2 = v7;
     v8 = v3->owner->world->map;
-    if ( v5 < 0 )
+    if( v5 < 0 )
       x1 = 0;
     v9 = v8->map_width;
-    if ( x2 >= v9 )
+    if( x2 >= v9 )
       x2 = v9 - 1;
-    if ( v6 < 0 )
+    if( v6 < 0 )
       v6 = 0;
     v10 = v8->map_height;
-    if ( (signed int)v7 >= v10 )
+    if( (signed int)v7 >= v10 )
       y2 = v10 - 1;
     v11 = RGE_Action_Transport::targetZone(v14);
-    if ( LODWORD(v14->target_x) != -1082130432 )
+    if( LODWORD(v14->target_x) != -1082130432 )
       v11 = (unsigned __int8)RGE_Static_Object::lookupZone(
                                (RGE_Static_Object *)&v14->obj->vfptr,
                                (signed __int64)v14->target_x,
                                (signed __int64)v14->target_y);
-    if ( v6 > y2 )
+    if( v6 > y2 )
     {
       result = 0;
     }
     else
     {
-      while ( 1 )
+      while( 1 )
       {
         v12 = x1;
-        if ( x1 <= x2 )
+        if( x1 <= x2 )
           break;
 LABEL_21:
-        if ( ++v6 > y2 )
+        if( ++v6 > y2 )
           return 0;
       }
-      while ( v11 != -1
+      while( v11 != -1
            && (unsigned __int8)RGE_Static_Object::lookupZone((RGE_Static_Object *)&v14->obj->vfptr, v12, v6) != v11
            || RGE_Map::get_terrain(v8, v12, v6) != 2 && RGE_Map::get_terrain(v8, v12, v6) != 4 )
       {
-        if ( ++v12 > x2 )
+        if( ++v12 > x2 )
           goto LABEL_21;
       }
       result = 1;
@@ -372,7 +372,7 @@ int __thiscall RGE_Action_Transport::targetZone(RGE_Action_Transport *this)
 {
   int result; // eax@2
 
-  if ( LODWORD(this->target_x) == -1082130432 )
+  if( LODWORD(this->target_x) == -1082130432 )
     result = -1;
   else
     result = (unsigned __int8)RGE_Static_Object::lookupZone(

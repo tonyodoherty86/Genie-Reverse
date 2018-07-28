@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\MasterCombatObject.hpp
  * @author  Yvan Burrie
- * @date    2018/06/29
+ * @date    2018/07/07
  * @version 1.0
  */
 
@@ -12,6 +12,10 @@
 
 #ifndef RGE_MASTER_COMBAT_OBJECT_BASE_ARMOR_CAST
     #define RGE_MASTER_COMBAT_OBJECT_BASE_ARMOR_CAST TRUE
+#endif
+
+#ifndef RGE_MASTER_COMBAT_OBJECT_GARRISON_RECOVERY_EXISTS
+    #define RGE_MASTER_COMBAT_OBJECT_GARRISON_RECOVERY_EXISTS TRUE
 #endif
 
 class RGE_Master_Combat_Object : public RGE_Master_Action_Object
@@ -63,7 +67,9 @@ public:
     float orig_weapon_range;
     float orig_speed_of_attack;
 
+#if RGE_MASTER_COMBAT_OBJECT_GARRISON_RECOVERY_EXISTS
     float garrison_recovery = 0.0;
+#endif
 
     RGE_Master_Combat_Object(
         RGE_Master_Combat_Object *other_object,
@@ -95,6 +101,19 @@ public:
 
     void copy_obj(
         RGE_Master_Static_Object *source);
+
+    enum ModifyFlag
+    {
+        TurnSpeed           = 6,
+        ArmorValue          = 8,
+        WeaponValue         = 9,
+        AttackSpeed         = 10,
+        BaseHitChance       = 11,
+        WeaponRange         = 12,
+        BaseArmor           = 15,
+        MissileId           = 16,
+        DefenseTerrainBonus = 18,
+    };
 
     void modify(
         float amount,

@@ -40,7 +40,7 @@ void __thiscall RGE_Moving_Object::RGE_Moving_Object(RGE_Moving_Object *this, RG
   LODWORD(v7->targetRadiusY) = 0;
   v7->continueCounter = 0;
   LODWORD(v7->closestDistanceToWaypoint) = 1203982336;
-  if ( do_setup )
+  if( do_setup )
     RGE_Moving_Object::setup(v7, tobj, obj_owner, x, y, z);
 }
 // 570948: using guessed type int (__thiscall *RGE_Moving_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -52,7 +52,7 @@ RGE_Moving_Object *__thiscall RGE_Moving_Object::`vector deleting destructor'(RG
 
   v2 = this;
   RGE_Moving_Object::~RGE_Moving_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -91,7 +91,7 @@ void __thiscall RGE_Moving_Object::RGE_Moving_Object(RGE_Moving_Object *this, in
   LODWORD(v4->targetRadiusY) = 0;
   v4->continueCounter = 0;
   LODWORD(v4->closestDistanceToWaypoint) = 1203982336;
-  if ( do_setup )
+  if( do_setup )
     RGE_Moving_Object::setup(v4, (int)gworld, infile, gworld);
 }
 // 570948: using guessed type int (__thiscall *RGE_Moving_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -105,7 +105,7 @@ void __thiscall RGE_Moving_Object::~RGE_Moving_Object(RGE_Moving_Object *this)
   v1 = this;
   this->vfptr = (RGE_Static_ObjectVtbl *)&RGE_Moving_Object::`vftable';
   v2 = this->userDefinedWaypoints;
-  if ( v2 )
+  if( v2 )
   {
     operator delete(v2);
     v1->userDefinedWaypoints = 0;
@@ -161,15 +161,15 @@ void __thiscall RGE_Moving_Object::recycle_in_to_game(RGE_Moving_Object *this, R
   LODWORD(v6->angle) = 0;
   LODWORD(v6->turn_towards_time) = 0;
   LODWORD(v6->trail_remainder) = 0;
-  if ( v7 && v7->flag & 2 && v7->facet_num > 1 )
+  if( v7 && v7->flag & 2 && v7->facet_num > 1 )
   {
     v8 = v7->facet_num;
     LODWORD(ya) = v7->facet_num;
     v9 = (double)(v8 * debug_rand(aCMsdevWorkA_24, 197) / 0x7FFF) * (6.2831853 / (double)SLODWORD(ya));
     v6->angle = v9;
-    if ( v9 >= 0.0 )
+    if( v9 >= 0.0 )
     {
-      if ( v9 > 6.2831855 )
+      if( v9 > 6.2831855 )
         v6->angle = v9 - 6.2831855;
     }
     else
@@ -206,19 +206,19 @@ int __thiscall RGE_Moving_Object::setup(RGE_Moving_Object *this, RGE_Master_Movi
   LODWORD(v6->angle) = 0;
   LODWORD(v6->turn_towards_time) = 0;
   LODWORD(v6->trail_remainder) = 0;
-  if ( !v7 || !(v7->flag & 2) || v7->facet_num <= 1 )
+  if( !v7 || !(v7->flag & 2) || v7->facet_num <= 1 )
     goto LABEL_11;
   v8 = v7->facet_num;
   LODWORD(ya) = v7->facet_num;
   v9 = (double)(v8 * debug_rand(aCMsdevWorkA_24, 222) / 0x7FFF) * (6.2831853 / (double)SLODWORD(ya));
   v6->angle = v9;
-  if ( v9 < 0.0 )
+  if( v9 < 0.0 )
   {
     v6->angle = v9 - -6.2831855;
     RGE_Moving_Object::set_angle(v6);
     return 1;
   }
-  if ( v9 > 6.2831855 )
+  if( v9 > 6.2831855 )
   {
     v6->angle = v9 - 6.2831855;
     RGE_Moving_Object::set_angle(v6);
@@ -262,7 +262,7 @@ int __userpurge RGE_Moving_Object::setup@<eax>(RGE_Moving_Object *this@<ecx>, in
   rge_read(a2, v4, v4, &v5->turn_towards_time, 4);
   rge_read(a2, v4, v4, &infile, 4);
   v6 = 0;
-  if ( infile > 0 )
+  if( infile > 0 )
   {
     a2 = (int)&v5->pathValue;
     do
@@ -273,20 +273,20 @@ int __userpurge RGE_Moving_Object::setup@<eax>(RGE_Moving_Object *this@<ecx>, in
       Path::insertAtEnd(&v5->pathValue, v7);
       ++v6;
     }
-    while ( v6 < infile );
+    while( v6 < infile );
   }
   rge_read(a2, v4, v4, &currentWaypoint, 4);
   v8 = (int)&v5->pathValue;
   v9 = 0;
   Path::initToStart(&v5->pathValue);
-  if ( currentWaypoint > 0 )
+  if( currentWaypoint > 0 )
   {
     do
     {
       Path::moveToNextWaypoint(&v5->pathValue);
       ++v9;
     }
-    while ( v9 < currentWaypoint );
+    while( v9 < currentWaypoint );
   }
   rge_read(v8, v4, v4, &v5->startValue, 16);
   rge_read(v8, v4, v4, &v5->goalValue, 16);
@@ -305,7 +305,7 @@ int __userpurge RGE_Moving_Object::setup@<eax>(RGE_Moving_Object *this@<ecx>, in
   rge_read((int)&v5->numberUserDefinedWaypointsValue, v4, v4, &v5->maxUserDefinedWaypointsValue, 4);
   v5->userDefinedWaypoints = (XYZBYTEPoint *)operator new(3 * v5->maxUserDefinedWaypointsValue);
   v11 = 0;
-  if ( v5->numberUserDefinedWaypointsValue > 0 )
+  if( v5->numberUserDefinedWaypointsValue > 0 )
   {
     gworld = 0;
     do
@@ -315,10 +315,10 @@ int __userpurge RGE_Moving_Object::setup@<eax>(RGE_Moving_Object *this@<ecx>, in
       v12 = v11 - *v10 < 0;
       gworld = (RGE_Game_World *)((char *)gworld + 3);
     }
-    while ( v12 ^ v13 );
+    while( v12 ^ v13 );
   }
   rge_read((int)v10, v4, v4, &v5->finalUserDefinedWaypoint, 1);
-  if ( save_game_version < 1.3 )
+  if( save_game_version < 1.3 )
   {
     v5->minInitialPointValue.x = -1;
     v5->minInitialPointValue.y = -1;
@@ -330,7 +330,7 @@ int __userpurge RGE_Moving_Object::setup@<eax>(RGE_Moving_Object *this@<ecx>, in
     rge_read((int)v10, v4, v4, &v5->minInitialPointValue, 8);
     rge_read((int)v10, v4, v4, &v5->maxInitialPointValue, 8);
   }
-  if ( save_game_version < 7.2199998 )
+  if( save_game_version < 7.2199998 )
   {
     LODWORD(v5->closestDistanceToWaypoint) = 1203982336;
     v5->lastFacet = -1;
@@ -340,7 +340,7 @@ int __userpurge RGE_Moving_Object::setup@<eax>(RGE_Moving_Object *this@<ecx>, in
     rge_read((int)v10, v4, v4, &v5->closestDistanceToWaypoint, 4);
     rge_read((int)v10, v4, v4, &v5->lastFacet, 1);
   }
-  if ( save_game_version < 7.23 )
+  if( save_game_version < 7.23 )
   {
     v5->lastFacet2 = -1;
     result = 1;
@@ -376,7 +376,7 @@ void __thiscall RGE_Moving_Object::save(RGE_Moving_Object *this, int outfile)
   rge_write(v2, &v3->turn_towards_time, 4);
   outfile = Path::numberOfWaypoints(&v3->pathValue);
   rge_write(v2, &outfile, 4);
-  for ( i = 0; i < outfile; ++i )
+  for( i = 0; i < outfile; ++i )
   {
     v5 = Path::waypoint(&v3->pathValue, i);
     rge_write(v2, v5, 16);
@@ -398,7 +398,7 @@ void __thiscall RGE_Moving_Object::save(RGE_Moving_Object *this, int outfile)
   rge_write(v2, &v3->numberUserDefinedWaypointsValue, 4);
   rge_write(v2, &v3->maxUserDefinedWaypointsValue, 4);
   v6 = 0;
-  if ( v3->numberUserDefinedWaypointsValue > 0 )
+  if( v3->numberUserDefinedWaypointsValue > 0 )
   {
     v7 = 0;
     do
@@ -407,7 +407,7 @@ void __thiscall RGE_Moving_Object::save(RGE_Moving_Object *this, int outfile)
       ++v6;
       ++v7;
     }
-    while ( v6 < v3->numberUserDefinedWaypointsValue );
+    while( v6 < v3->numberUserDefinedWaypointsValue );
   }
   rge_write(v2, &v3->finalUserDefinedWaypoint, 1);
   rge_write(v2, &v3->minInitialPointValue, 8);
@@ -426,10 +426,10 @@ void __thiscall RGE_Moving_Object::new_sprite(RGE_Moving_Object *this, RGE_Sprit
 
   v2 = nsprite;
   v3 = this;
-  if ( !nsprite )
+  if( !nsprite )
     v2 = this->master_obj->sprite;
   v4 = this->sprite;
-  if ( v4 != v2 )
+  if( v4 != v2 )
   {
     v3->old_sprite = v4;
     RGE_Static_Object::new_sprite((RGE_Static_Object *)&v3->vfptr, v2);
@@ -447,7 +447,7 @@ RGE_Static_Object *__thiscall RGE_Moving_Object::spawn_death_obj(RGE_Moving_Obje
   v1 = this;
   v2 = RGE_Static_Object::spawn_death_obj((RGE_Static_Object *)&this->vfptr);
   v3 = v2;
-  if ( v2 && v2->master_obj->master_type >= 0x1Eu )
+  if( v2 && v2->master_obj->master_type >= 0x1Eu )
     ((void (__thiscall *)(RGE_Static_Object *, _DWORD))v2->vfptr->new_angle)(v2, LODWORD(v1->angle));
   return v3;
 }
@@ -492,9 +492,9 @@ double __thiscall RGE_Moving_Object::angle_to_object(RGE_Moving_Object *this, RG
   double result; // st7@13
 
   v4 = this->sprite;
-  if ( v4 && v4->flag & 2 && (v5 = v4->facet_num, v5 > 0) )
+  if( v4 && v4->flag & 2 && (v5 = v4->facet_num, v5 > 0) )
   {
-    if ( to_object )
+    if( to_object )
     {
       v6 = to_object->world_y;
       v7 = to_object->world_x;
@@ -505,12 +505,12 @@ double __thiscall RGE_Moving_Object::angle_to_object(RGE_Moving_Object *this, RG
       v7 = x;
     }
     v8 = atan2(v7 - this->world_x, v6 - this->world_y);
-    if ( v8 < 0.0 )
+    if( v8 < 0.0 )
       v8 = v8 - -6.2831855;
     v9 = v8 - this->angle;
-    if ( v9 > 3.14159265 )
+    if( v9 > 3.14159265 )
       v9 = v9 - 6.2831855;
-    if ( v9 < -3.14159265 )
+    if( v9 < -3.14159265 )
       v9 = v9 - -6.2831855;
     result = v9 * ((double)v5 * 0.15915494);
   }
@@ -543,27 +543,27 @@ char __thiscall RGE_Moving_Object::turn_towards(RGE_Moving_Object *this, RGE_Sta
   v6 = this;
   v7 = RGE_Moving_Object::angle_to_object(this, obj, x, y);
   world_time = v7;
-  if ( v7 <= 0.5 && world_time >= -0.5 )
+  if( v7 <= 0.5 && world_time >= -0.5 )
     return 1;
   v9 = (double)v6->owner->world->world_time * 0.001;
   xa = v9;
-  if ( v9 - v6->turn_towards_time < *(float *)&v6->master_obj[1].string_id )
+  if( v9 - v6->turn_towards_time < *(float *)&v6->master_obj[1].string_id )
     return 0;
-  if ( world_time >= 0.0 )
+  if( world_time >= 0.0 )
     v10 = 6.2831853 / (double)v6->sprite->facet_num + v6->angle;
   else
     v10 = v6->angle - 6.2831853 / (double)v6->sprite->facet_num;
   v6->angle = v10;
   v11 = v6->angle;
   v13 = v6->angle;
-  if ( v14 )
+  if( v14 )
   {
     v15 = v13 - -6.2831855;
 LABEL_12:
     v6->angle = v15;
     goto LABEL_13;
   }
-  if ( v13 > 6.2831855 )
+  if( v13 > 6.2831855 )
   {
     v15 = v6->angle - 6.2831855;
     goto LABEL_12;
@@ -572,7 +572,7 @@ LABEL_13:
   RGE_Moving_Object::set_angle(v6);
   v6->turn_towards_time = xa;
   v16 = RGE_Moving_Object::angle_to_object(v6, obj, v4, v5);
-  if ( v16 <= 0.5 && v16 >= -0.5 )
+  if( v16 <= 0.5 && v16 >= -0.5 )
     return 1;
   return 0;
 }
@@ -586,11 +586,11 @@ void __thiscall RGE_Moving_Object::set_angle(RGE_Moving_Object *this)
   float v4; // [sp+4h] [bp-4h]@4
 
   v1 = this->sprite;
-  if ( v1 && v1->flag & 2 && (v2 = v1->facet_num, v2 > 0) )
+  if( v1 && v1->flag & 2 && (v2 = v1->facet_num, v2 > 0) )
   {
     v4 = (double)v2;
     v3 = (this->angle - 0.78539819) * v4 * 0.15915494 - -0.5;
-    if ( v3 < 0.0 )
+    if( v3 < 0.0 )
       v3 = v3 + v4;
     this->facet = (signed __int64)v3;
   }
@@ -628,15 +628,15 @@ double __thiscall RGE_Moving_Object::teleport(RGE_Moving_Object *this, float x, 
 
   v4 = this;
   v5 = this->master_obj;
-  if ( LOBYTE(v5[1].object_group) )
+  if( LOBYTE(v5[1].object_group) )
   {
-    if ( this->tile )
+    if( this->tile )
     {
       v6 = this->owner;
       v7 = v6->master_objects[v5[1].copy_id];
-      if ( v7 )
+      if( v7 )
       {
-        if ( LOBYTE(v5[1].object_group) == 1 )
+        if( LOBYTE(v5[1].object_group) == 1 )
         {
           v17 = ((int (__thiscall *)(RGE_Master_Static_Object *, RGE_Player *, _DWORD, _DWORD, _DWORD))v7->vfptr->make_new_obj)(
                   v7,
@@ -644,10 +644,10 @@ double __thiscall RGE_Moving_Object::teleport(RGE_Moving_Object *this, float x, 
                   LODWORD(v4->world_x),
                   LODWORD(v4->world_y),
                   LODWORD(v4->world_z));
-          if ( *(_WORD *)(*(_DWORD *)(v17 + 8) + 16) > 30 )
+          if( *(_WORD *)(*(_DWORD *)(v17 + 8) + 16) > 30 )
             (*(void (__thiscall **)(int, _DWORD))(*(_DWORD *)v17 + 180))(v17, LODWORD(v4->angle));
         }
-        else if ( LOBYTE(v5[1].object_group) == 2 )
+        else if( LOBYTE(v5[1].object_group) == 2 )
         {
           v8 = x - v4->world_x;
           v9 = y - v4->world_y;
@@ -655,7 +655,7 @@ double __thiscall RGE_Moving_Object::teleport(RGE_Moving_Object *this, float x, 
           v10 = sqrt(v8 * v8 + v9 * v9 + dz * dz) + v4->trail_remainder;
           d = v10;
           v11 = (signed __int64)(v10 / *(float *)&v5[1].sprite);
-          if ( (signed __int16)v11 <= 0 )
+          if( (signed __int16)v11 <= 0 )
           {
             v4->trail_remainder = d + v4->trail_remainder;
           }
@@ -666,7 +666,7 @@ double __thiscall RGE_Moving_Object::teleport(RGE_Moving_Object *this, float x, 
             tx = v4->world_x;
             tz = v4->world_z;
             dza = dz / v21;
-            if ( (signed __int16)v11 > 0 )
+            if( (signed __int16)v11 > 0 )
             {
               v26 = (signed __int16)v11;
               v14 = v7->vfptr->make_new_obj;
@@ -678,7 +678,7 @@ double __thiscall RGE_Moving_Object::teleport(RGE_Moving_Object *this, float x, 
                         LODWORD(tx),
                         LODWORD(ty),
                         LODWORD(tz));
-                if ( *(_WORD *)(*(_DWORD *)(v15 + 8) + 16) > 30 )
+                if( *(_WORD *)(*(_DWORD *)(v15 + 8) + 16) > 30 )
                   (*(void (__thiscall **)(int, _DWORD))(*(_DWORD *)v15 + 180))(v15, LODWORD(v4->angle));
                 v12 = v8 / v21;
                 tx = tx + v12;
@@ -688,7 +688,7 @@ double __thiscall RGE_Moving_Object::teleport(RGE_Moving_Object *this, float x, 
                 tz = tz + dza;
                 --v26;
               }
-              while ( !v16 );
+              while( !v16 );
             }
             v4->trail_remainder = d - *(float *)&v4->master_obj[1].sprite * v21;
           }
@@ -727,7 +727,7 @@ char __thiscall RGE_Moving_Object::facetToNextWaypoint(RGE_Moving_Object *this)
   char result; // al@2
 
   v1 = &this->pathValue;
-  if ( Path::currentWaypoint(&this->pathValue) )
+  if( Path::currentWaypoint(&this->pathValue) )
     result = Path::currentWaypoint(v1)->facetToNextWaypoint;
   else
     result = -1;
@@ -799,17 +799,17 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
   int v33; // [sp+38h] [bp-Ch]@26
 
   v1 = this;
-  if ( this->master_obj->radius_z > 0.0 )
+  if( this->master_obj->radius_z > 0.0 )
   {
-    if (  __thiscall `vcall'{456,{flat}} )
+    if(  __thiscall `vcall'{456,{flat}} )
     {
-      if ( RGE_Player::availablePathingAttempts(this->owner, this->numberWaitDelays) )
+      if( RGE_Player::availablePathingAttempts(this->owner, this->numberWaitDelays) )
       {
         RGE_Player::incrementPathingAttempts(v1->owner);
         v4 = v1->vfptr;
         v1->numberWaitDelays = 0;
         v4->setWaitingToMove((RGE_Static_Object *)v1, 0);
-        if ( RGE_Player::computerPlayer(v1->owner) )
+        if( RGE_Player::computerPlayer(v1->owner) )
           v1->continueCounter = v1->numberUserDefinedWaypointsValue + 15;
         else
           v1->continueCounter = v1->numberUserDefinedWaypointsValue + 25;
@@ -818,7 +818,7 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
         v1->startValue.z = v1->world_z;
         LODWORD(v1->closestDistanceToWaypoint) = 1203982336;
         PathingSystem::incrementInitialPaths(&pathSystem);
-        if ( v1->numberUserDefinedWaypointsValue <= 0 )
+        if( v1->numberUserDefinedWaypointsValue <= 0 )
         {
           *(_QWORD *)&v31 = 4294967297i64;
           v30 = 4294967297i64;
@@ -858,7 +858,7 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
                SHIDWORD(v31),
                -1,
                -1);
-        if ( actionFile )
+        if( actionFile )
         {
           fprintf(
             actionFile,
@@ -871,7 +871,7 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
             v1->goalValue.y);
           Path::initToStart(&v1->pathValue);
           v7 = 0;
-          while ( v7 < Path::numberOfWaypoints(&v1->pathValue) )
+          while( v7 < Path::numberOfWaypoints(&v1->pathValue) )
           {
             newY = Path::currentWaypoint(&v1->pathValue)->y;
             v9 = Path::currentWaypoint(&v1->pathValue)->x;
@@ -882,7 +882,7 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
           Path::initToStart(&v1->pathValue);
           Path::moveToNextWaypoint(&v1->pathValue);
         }
-        if ( v6
+        if( v6
           || Path::numberOfWaypoints(&v1->pathValue) != 1
           || (v10 = floor(v1->world_y) - -0.5,
               v11 = floor(v1->world_x) - -0.5,
@@ -891,11 +891,11 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
         {
           Path::setTimeStamp(&v1->pathValue, v1->owner->world->world_time);
           v17 = displayPathObjectID;
-          if ( displayPathingFlags && v1->selected & 1 )
+          if( displayPathingFlags && v1->selected & 1 )
           {
             Path::initToStart(&v1->pathValue);
             v32 = 0;
-            if ( Path::numberOfWaypoints(&v1->pathValue) > 0 )
+            if( Path::numberOfWaypoints(&v1->pathValue) > 0 )
             {
               v18 = 4 * v17;
               v33 = v17;
@@ -916,7 +916,7 @@ signed int __thiscall RGE_Moving_Object::findPath(RGE_Moving_Object *this)
                 ++v32;
                 Path::moveToNextWaypoint(&v1->pathValue);
               }
-              while ( v32 < Path::numberOfWaypoints(&v1->pathValue) );
+              while( v32 < Path::numberOfWaypoints(&v1->pathValue) );
             }
             Path::initToStart(&v1->pathValue);
             Path::moveToNextWaypoint(&v1->pathValue);
@@ -1092,21 +1092,21 @@ int __thiscall RGE_Moving_Object::doMove(RGE_Moving_Object *this)
   ((void (__stdcall *)(_DWORD))this->vfptr->setWaitingToMove)(0);
   v3 = v1->goalValue.x - v1->world_x;
   v4 = v1->goalValue.y - v1->world_y;
-  if ( v3 < 0.0 )
+  if( v3 < 0.0 )
     v3 = -v3;
-  if ( v4 < 0.0 )
+  if( v4 < 0.0 )
     v4 = -v4;
   v5 = v1->master_obj;
   v6 = v3 - (v1->targetRadiusX + v5->radius_x);
   v7 = v4 - (v1->targetRadiusY + v5->radius_y);
   distanceToGoal = v6;
-  if ( v6 < 0.0 )
+  if( v6 < 0.0 )
     distanceToGoal = 0.0;
-  if ( v7 < 0.0 )
+  if( v7 < 0.0 )
     v7 = 0.0;
   v8 = v1->actionRange;
   distanceToGoala = sqrt(distanceToGoal * distanceToGoal + v7 * v7);
-  if ( !(v10 | v11) && distanceToGoala <= (double)v1->actionRange )
+  if( !(v10 | v11) && distanceToGoala <= (double)v1->actionRange )
   {
     LODWORD(v1->speed) = 0;
 LABEL_76:
@@ -1115,9 +1115,9 @@ LABEL_76:
     v1->pathingGroupMembers.numberValue = 0;
     return 2;
   }
-  if ( distanceToGoala < 0.5 )
+  if( distanceToGoala < 0.5 )
   {
-    if ( Path::currentWaypoint(&v1->pathValue) )
+    if( Path::currentWaypoint(&v1->pathValue) )
     {
       v12 = Path::currentWaypoint(&v1->pathValue)->x - v1->world_x;
       v13 = Path::currentWaypoint(&v1->pathValue)->y - v1->world_y;
@@ -1128,27 +1128,27 @@ LABEL_76:
     {
       v15 = distanceToGoala;
     }
-    if ( v15 == 0.0 )
+    if( v15 == 0.0 )
     {
       v1->pathingGroupMembers.numberValue = 0;
       return 2;
     }
     v17 = RGE_Moving_Object::doTrivialMove(v1, v1->goalValue.x, v1->goalValue.y);
-    if ( v17 == 5 )
+    if( v17 == 5 )
       goto LABEL_76;
-    if ( !v17 )
+    if( !v17 )
     {
       v1->rangeStatusValue = 2;
       return 1;
     }
-    if ( v17 == 1 || v17 == 6 )
+    if( v17 == 1 || v17 == 6 )
     {
 LABEL_80:
       LODWORD(v1->speed) = 0;
       v1->rangeStatusValue = 2;
       return 1;
     }
-    if ( v17 == 2 || v17 == 3 || v17 == 4 )
+    if( v17 == 2 || v17 == 3 || v17 == 4 )
     {
       LODWORD(v1->speed) = 0;
       goto LABEL_76;
@@ -1156,17 +1156,17 @@ LABEL_80:
   }
   v18 = 1;
   dY = sqrt(v1->master_obj->radius_x * v1->master_obj->radius_x + v1->master_obj->radius_y * v1->master_obj->radius_y);
-  if ( Path::currentWaypoint(&v1->pathValue) )
+  if( Path::currentWaypoint(&v1->pathValue) )
   {
     v19 = Path::currentWaypoint(&v1->pathValue)->x - v1->world_x;
     v20 = Path::currentWaypoint(&v1->pathValue)->y - v1->world_y;
     v21 = v19;
     v22 = v20;
-    if ( sqrt(v21 * v21 + v20 * v22) == 0.0 )
+    if( sqrt(v21 * v21 + v20 * v22) == 0.0 )
     {
       newY = Path::currentWaypoint(&v1->pathValue)->y;
       v24 = Path::currentWaypoint(&v1->pathValue);
-      if ( PathingSystem::passable(&pathSystem, v1, v24->x, newY, 1) )
+      if( PathingSystem::passable(&pathSystem, v1, v24->x, newY, 1) )
       {
         newY_4 = Path::currentWaypoint(&v1->pathValue)->z;
         v26 = Path::currentWaypoint(&v1->pathValue)->y;
@@ -1186,39 +1186,39 @@ LABEL_80:
     v18 = 0;
   }
   dY_4 = 0.0;
-  if ( v1->numberUserDefinedWaypointsValue > 1 && distanceToGoala > 4.0 )
+  if( v1->numberUserDefinedWaypointsValue > 1 && distanceToGoala > 4.0 )
   {
     v28 = RGE_Static_Object::lookupZone(
             (RGE_Static_Object *)&v1->vfptr,
             v1->userDefinedWaypoints->x,
             v1->userDefinedWaypoints->y);
-    if ( v28 == RGE_Static_Object::lookupZone(
+    if( v28 == RGE_Static_Object::lookupZone(
                   (RGE_Static_Object *)&v1->vfptr,
                   v1->userDefinedWaypoints[1].x,
                   v1->userDefinedWaypoints[1].y) )
       dY_4 = 3.0;
     v2 = v103;
   }
-  if ( v18 )
+  if( v18 )
   {
-    if ( !Path::currentWaypoint(&v1->pathValue) )
+    if( !Path::currentWaypoint(&v1->pathValue) )
       goto LABEL_122;
 LABEL_74:
     v56 = Path::currentWaypoint(&v1->pathValue)->y;
     v57 = Path::currentWaypoint(&v1->pathValue);
     v58 = RGE_Moving_Object::doTrivialMove(v1, v57->x, v56);
-    if ( v58 == 5 )
+    if( v58 == 5 )
       goto LABEL_76;
-    if ( !v58 )
+    if( !v58 )
     {
       v1->rangeStatusValue = 2;
       return 1;
     }
-    if ( v58 == 1 )
+    if( v58 == 1 )
       goto LABEL_80;
-    if ( v58 == 2 )
+    if( v58 == 2 )
     {
-      if ( Path::moveToNextWaypoint(&v1->pathValue) )
+      if( Path::moveToNextWaypoint(&v1->pathValue) )
       {
 LABEL_114:
         v1->rangeStatusValue = 2;
@@ -1226,20 +1226,20 @@ LABEL_114:
       }
       v59 = 0;
       v60 = v103->removeUserDefinedWaypoint;
-      while ( 1 )
+      while( 1 )
       {
         v60((RGE_Static_Object *)&v1->vfptr, 0);
-        if ( v1->numberUserDefinedWaypointsValue <= 0 )
+        if( v1->numberUserDefinedWaypointsValue <= 0 )
           break;
         v61 = v1->userDefinedWaypoints;
         v62 = (double)v61->y - v1->world_y;
         v63 = (double)v61->x - v1->world_x;
         v64 = v62;
-        if ( dY + v1->actionRange - -0.30000001 < sqrt(v63 * v63 + v62 * v64) )
+        if( dY + v1->actionRange - -0.30000001 < sqrt(v63 * v63 + v62 * v64) )
           v59 = 1;
-        if ( v59 )
+        if( v59 )
         {
-          if ( !RGE_Player::availablePathingAttempts(v1->owner, v1->numberWaitDelays) )
+          if( !RGE_Player::availablePathingAttempts(v1->owner, v1->numberWaitDelays) )
           {
             v65 = v1->numberWaitDelays;
             LODWORD(v1->speed) = 0;
@@ -1252,7 +1252,7 @@ LABEL_114:
           v1->startValue.z = v1->world_z;
           v1->numberWaitDelays = 0;
           PathingSystem::incrementContinuePaths(&pathSystem);
-          if ( v1->numberUserDefinedWaypointsValue <= 0 )
+          if( v1->numberUserDefinedWaypointsValue <= 0 )
           {
             *(_QWORD *)&v102 = 4294967297i64;
             v100 = 4294967297i64;
@@ -1291,7 +1291,7 @@ LABEL_114:
                   -1,
                   -1);
           v1->pathingGroupMembers.numberValue = 0;
-          if ( actionFile )
+          if( actionFile )
           {
             fprintf(
               actionFile,
@@ -1304,7 +1304,7 @@ LABEL_114:
               v1->goalValue.y);
             Path::initToStart(&v1->pathValue);
             v68 = 0;
-            while ( v68 < Path::numberOfWaypoints(&v1->pathValue) )
+            while( v68 < Path::numberOfWaypoints(&v1->pathValue) )
             {
               v69 = Path::currentWaypoint(&v1->pathValue)->y;
               v70 = Path::currentWaypoint(&v1->pathValue)->x;
@@ -1315,22 +1315,22 @@ LABEL_114:
             Path::initToStart(&v1->pathValue);
             Path::moveToNextWaypoint(&v1->pathValue);
           }
-          if ( !v67 && Path::numberOfWaypoints(&v1->pathValue) == 1 )
+          if( !v67 && Path::numberOfWaypoints(&v1->pathValue) == 1 )
           {
             v71 = floor(v1->world_y) - -0.5;
             v72 = floor(v1->world_x) - -0.5;
-            if ( PathingSystem::passable(&pathSystem, v1, v72, v71, 1) )
+            if( PathingSystem::passable(&pathSystem, v1, v72, v71, 1) )
             {
               v73 = v1->world_x;
-              if ( v73 - floor(v73) == 0.5 )
+              if( v73 - floor(v73) == 0.5 )
               {
                 v74 = v1->world_y;
-                if ( v74 - floor(v74) == 0.5 )
+                if( v74 - floor(v74) == 0.5 )
                 {
                   v75 = v1->numberUserDefinedWaypointsValue;
                   LODWORD(v1->speed) = 0;
                   v1->rangeStatusValue = 2;
-                  if ( v75 <= 1 )
+                  if( v75 <= 1 )
                     return 0;
                   v1->continueCounter += 5;
                   return 1;
@@ -1346,11 +1346,11 @@ LABEL_114:
             }
           }
           v79 = displayPathObjectID;
-          if ( displayPathingFlags && v1->selected & 1 )
+          if( displayPathingFlags && v1->selected & 1 )
           {
             Path::initToStart(&v1->pathValue);
             dY_4b = 0;
-            if ( Path::numberOfWaypoints(&v1->pathValue) > 0 )
+            if( Path::numberOfWaypoints(&v1->pathValue) > 0 )
             {
               v80 = 4 * v79;
               v111 = v80;
@@ -1371,19 +1371,19 @@ LABEL_114:
                 ++dY_4b;
                 Path::moveToNextWaypoint(&v1->pathValue);
               }
-              while ( dY_4b < Path::numberOfWaypoints(&v1->pathValue) );
+              while( dY_4b < Path::numberOfWaypoints(&v1->pathValue) );
             }
             Path::initToStart(&v1->pathValue);
             Path::moveToNextWaypoint(&v1->pathValue);
           }
           Path::initToStart(&v1->pathValue);
-          if ( Path::moveToNextWaypoint(&v1->pathValue) )
+          if( Path::moveToNextWaypoint(&v1->pathValue) )
             goto LABEL_114;
           v86 = v1->numberUserDefinedWaypointsValue;
           LODWORD(v1->speed) = 0;
           result = 1;
           v1->rangeStatusValue = 2;
-          if ( v86 <= 1 )
+          if( v86 <= 1 )
             return 0;
           v1->continueCounter += 5;
           return result;
@@ -1397,7 +1397,7 @@ LABEL_122:
       result = 1;
       LODWORD(v1->speed) = 0;
       v1->rangeStatusValue = 2;
-      if ( v87 > 1 )
+      if( v87 > 1 )
       {
         v1->continueCounter += 5;
         return result;
@@ -1405,7 +1405,7 @@ LABEL_122:
     }
     return 0;
   }
-  if ( distanceToGoala <= dY_4 + dY + v1->actionRange )
+  if( distanceToGoala <= dY_4 + dY + v1->actionRange )
   {
     LODWORD(v1->speed) = 0;
     v1->rangeStatusValue = 1;
@@ -1417,29 +1417,29 @@ LABEL_122:
   do
   {
     v29((RGE_Static_Object *)&v1->vfptr, 0);
-    if ( v1->numberUserDefinedWaypointsValue <= 0 )
+    if( v1->numberUserDefinedWaypointsValue <= 0 )
       return 0;
     v30 = v1->userDefinedWaypoints;
     v31 = (double)v30->y - v1->world_y;
     v32 = (double)v30->x - v1->world_x;
     v33 = v31;
-    if ( dY + v1->actionRange - -0.30000001 < sqrt(v32 * v32 + v31 * v33) )
+    if( dY + v1->actionRange - -0.30000001 < sqrt(v32 * v32 + v31 * v33) )
       v18 = 1;
   }
-  while ( !v18 );
+  while( !v18 );
   v34 = v1->continueCounter - 1;
   v1->continueCounter = v34;
-  if ( v34 <= 0 )
+  if( v34 <= 0 )
   {
     v35 = v1->numberUserDefinedWaypointsValue;
     LODWORD(v1->speed) = 0;
     v1->rangeStatusValue = 2;
-    if ( v35 <= 1 )
+    if( v35 <= 1 )
       return 0;
     v1->continueCounter = v34 + 5;
     return 1;
   }
-  if ( !RGE_Player::availablePathingAttempts(v1->owner, v1->numberWaitDelays) )
+  if( !RGE_Player::availablePathingAttempts(v1->owner, v1->numberWaitDelays) )
   {
     LODWORD(v1->speed) = 0;
     ++v1->numberWaitDelays;
@@ -1451,7 +1451,7 @@ LABEL_122:
   v1->startValue.z = v1->world_z;
   v1->numberWaitDelays = 0;
   PathingSystem::incrementContinuePaths(&pathSystem);
-  if ( v1->numberUserDefinedWaypointsValue <= 0 )
+  if( v1->numberUserDefinedWaypointsValue <= 0 )
   {
     *(_QWORD *)&v101 = 4294967297i64;
     v99 = 4294967297i64;
@@ -1490,7 +1490,7 @@ LABEL_122:
           -1,
           -1);
   v1->pathingGroupMembers.numberValue = 0;
-  if ( actionFile )
+  if( actionFile )
   {
     fprintf(
       actionFile,
@@ -1503,7 +1503,7 @@ LABEL_122:
       v1->goalValue.y);
     Path::initToStart(&v1->pathValue);
     v38 = 0;
-    while ( v38 < Path::numberOfWaypoints(&v1->pathValue) )
+    while( v38 < Path::numberOfWaypoints(&v1->pathValue) )
     {
       v39 = Path::currentWaypoint(&v1->pathValue)->y;
       v40 = Path::currentWaypoint(&v1->pathValue)->x;
@@ -1514,15 +1514,15 @@ LABEL_122:
     Path::initToStart(&v1->pathValue);
     Path::moveToNextWaypoint(&v1->pathValue);
   }
-  if ( v37 || Path::numberOfWaypoints(&v1->pathValue) != 1 )
+  if( v37 || Path::numberOfWaypoints(&v1->pathValue) != 1 )
   {
 LABEL_64:
     v48 = displayPathObjectID;
-    if ( displayPathingFlags && v1->selected & 1 )
+    if( displayPathingFlags && v1->selected & 1 )
     {
       Path::initToStart(&v1->pathValue);
       dY_4a = 0;
-      if ( Path::numberOfWaypoints(&v1->pathValue) > 0 )
+      if( Path::numberOfWaypoints(&v1->pathValue) > 0 )
       {
         v49 = 4 * v48;
         distanceToGoalb = *(float *)&v49;
@@ -1543,13 +1543,13 @@ LABEL_64:
           ++dY_4a;
           Path::moveToNextWaypoint(&v1->pathValue);
         }
-        while ( dY_4a < Path::numberOfWaypoints(&v1->pathValue) );
+        while( dY_4a < Path::numberOfWaypoints(&v1->pathValue) );
       }
       Path::initToStart(&v1->pathValue);
       Path::moveToNextWaypoint(&v1->pathValue);
     }
     Path::initToStart(&v1->pathValue);
-    if ( Path::moveToNextWaypoint(&v1->pathValue) )
+    if( Path::moveToNextWaypoint(&v1->pathValue) )
     {
       v2 = v103;
       LODWORD(v1->closestDistanceToWaypoint) = 1203982336;
@@ -1559,17 +1559,17 @@ LABEL_64:
     result = 1;
     LODWORD(v1->speed) = 0;
     v1->rangeStatusValue = 2;
-    if ( v55 <= 1 )
+    if( v55 <= 1 )
       return 0;
     v1->continueCounter += 5;
     return result;
   }
   v41 = floor(v1->world_y) - -0.5;
   v42 = floor(v1->world_x) - -0.5;
-  if ( PathingSystem::passable(&pathSystem, v1, v42, v41, 1) )
+  if( PathingSystem::passable(&pathSystem, v1, v42, v41, 1) )
   {
     v43 = v1->world_x;
-    if ( v43 - floor(v43) != 0.5 || (v44 = v1->world_y, v44 - floor(v44) != 0.5) )
+    if( v43 - floor(v43) != 0.5 || (v44 = v1->world_y, v44 - floor(v44) != 0.5) )
     {
       v45 = v1->world_z;
       v46 = floor(v1->world_y) - -0.5;
@@ -1584,7 +1584,7 @@ LABEL_64:
   v88 = v1->numberUserDefinedWaypointsValue;
   LODWORD(v1->speed) = 0;
   v1->rangeStatusValue = 2;
-  if ( v88 <= 1 )
+  if( v88 <= 1 )
     return 0;
   v1->continueCounter += 5;
   return 1;
@@ -1752,42 +1752,42 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
   v4 = 1;
   v5 = this->speed;
   HIDWORD(curDistance) = 1;
-  if ( v5 == 0.0 )
+  if( v5 == 0.0 )
   {
     v6 = this->sprite;
     v4 = 0;
     HIDWORD(curDistance) = 0;
-    if ( v6 && v6->base_speed > 0.0 )
+    if( v6 && v6->base_speed > 0.0 )
       v3->speed = *(float *)&v3->master_obj[1].vfptr * v6->base_speed;
     else
       LODWORD(v3->speed) = v3->master_obj[1].vfptr;
   }
   v7 = v3->owner;
   distanceToCover = v7->world->world_time_delta_seconds * v3->speed;
-  if ( v3->collisionAvoidanceDistance > 0.0 )
+  if( v3->collisionAvoidanceDistance > 0.0 )
   {
     v3->collisionAvoidanceDistance = v3->collisionAvoidanceDistance - distanceToCover;
-    if ( !(v9 | v10) )
+    if( !(v9 | v10) )
     {
       LODWORD(v3->speed) = 0;
       return 0;
     }
     LODWORD(v3->collisionAvoidanceDistance) = -1082130432;
   }
-  if ( *(float *)&v3->master_obj[1].string_id > 0.0 )
+  if( *(float *)&v3->master_obj[1].string_id > 0.0 )
   {
-    if ( v3->turnTimer >= 0.0 )
+    if( v3->turnTimer >= 0.0 )
       v3->turnTimer = v3->turnTimer - v7->world->world_time_delta_seconds;
     else
       LODWORD(v3->turnTimer) = 0;
   }
   v12 = v3->sprite;
-  if ( v12 )
+  if( v12 )
     v13 = v12->facet_num;
   else
     v13 = 8;
   numFacets_4 = v13;
-  if ( v4 == 1 )
+  if( v4 == 1 )
   {
     v14 = y - v3->world_y;
     targetDY = x - v3->world_x;
@@ -1800,30 +1800,30 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
   newAngle = atan2(targetDY, v14);
   RGE_Moving_Object::boundAngle(&newAngle, -1);
   v15 = newAngle - v3->angle;
-  if ( v17 )
+  if( v17 )
   {
     do
       v15 = v15 - -6.2831855;
-    while ( v15 < -3.14159265 );
+    while( v15 < -3.14159265 );
   }
-  for ( ; v15 > 3.14159265; v15 = v15 - 6.2831855 )
+  for( ; v15 > 3.14159265; v15 = v15 - 6.2831855 )
     ;
   v18 = v13;
   v19 = &v3->angle;
   dY = (double)numFacets_4;
   *(float *)&curDistance = v15 * dY * 0.15915494;
   RGE_Moving_Object::boundAngle(&v3->angle, v18);
-  if ( v3->turnTimer <= 0.0 )
+  if( v3->turnTimer <= 0.0 )
   {
     v20 = *(float *)&curDistance;
     do
     {
-      if ( v20 <= 0.8 && v20 >= -0.8 )
+      if( v20 <= 0.8 && v20 >= -0.8 )
         break;
       v3->turnTimer = *(float *)&v3->master_obj[1].string_id + v3->turnTimer;
       v22 = v20;
       v23 = (double)numFacets_4;
-      if ( v24 )
+      if( v24 )
       {
         v25 = v22 - -1.0;
         v26 = v23;
@@ -1839,7 +1839,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
       }
       *v19 = v27;
     }
-    while ( v3->turnTimer <= 0.0 );
+    while( v3->turnTimer <= 0.0 );
   }
   RGE_Moving_Object::boundAngle(&v3->angle, numFacets_4);
   RGE_Moving_Object::set_angle(v3);
@@ -1862,13 +1862,13 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
   *(float *)&curDistance = v35 + v38;
   v42 = LODWORD(curDistance);
   newY = v37 + targetDX;
-  if ( !(v44 | v45) )
+  if( !(v44 | v45) )
     v31 = PathingSystem::passable(&pathSystem, v3, *(float *)&curDistance, newY, 1);
-  if ( !v31 )
+  if( !v31 )
   {
-    if ( v3->collisionAvoidanceDistance == 0.0 )
+    if( v3->collisionAvoidanceDistance == 0.0 )
     {
-      if ( v3->speed <= 0.0 )
+      if( v3->speed <= 0.0 )
       {
         v48 = debug_rand(aCMsdevWorkA_24, 1745) % 6;
         LODWORD(v3->speed) = 0;
@@ -1891,7 +1891,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     LODWORD(v3->collisionAvoidanceDistance) = 0;
     v50 = floor(v49) - -0.5;
     v51 = floor(v3->world_x) - -0.5;
-    if ( PathingSystem::passable(&pathSystem, v3, v51, v50, 1) )
+    if( PathingSystem::passable(&pathSystem, v3, v51, v50, 1) )
     {
       v52 = v3->vfptr;
       v53 = v3->world_z;
@@ -1902,10 +1902,10 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
         LODWORD(v54),
         COERCE_FLOAT(LODWORD(v53)));
     }
-    if ( v3->targetIDValue != -1 )
+    if( v3->targetIDValue != -1 )
     {
       v56 = RGE_Game_World::object(v3->owner->world, v3->targetIDValue);
-      if ( v56 )
+      if( v56 )
       {
         v57 = v3->master_obj;
         v58 = v57->radius_y;
@@ -1923,17 +1923,17 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
         v67 = sqrt(v65 + v62 * v64);
         v68 = v66 + v3->actionRange;
         targetDX = v67;
-        if ( v68 - -0.30000001 > v67 )
+        if( v68 - -0.30000001 > v67 )
           return 5;
       }
     }
-    if ( !PathingSystem::passable(&pathSystem, v3, x, y, 1) )
+    if( !PathingSystem::passable(&pathSystem, v3, x, y, 1) )
       return 2;
     v69 = v3->continueCounter - 1;
     v3->continueCounter = v69;
-    if ( v69 <= 0 )
+    if( v69 <= 0 )
       return 4;
-    if ( !RGE_Player::availablePathingAttempts(v3->owner, v3->numberWaitDelays) )
+    if( !RGE_Player::availablePathingAttempts(v3->owner, v3->numberWaitDelays) )
     {
       ++v3->numberWaitDelays;
       return 1;
@@ -1944,7 +1944,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     v3->startValue.z = v3->world_z;
     v3->numberWaitDelays = 0;
     PathingSystem::incrementContinuePaths(&pathSystem);
-    if ( v3->numberUserDefinedWaypointsValue <= 0 )
+    if( v3->numberUserDefinedWaypointsValue <= 0 )
     {
       v150 = -3.595386269724631e308/*NaN*/;
       *(_QWORD *)&v149 = 4294967297i64;
@@ -1968,7 +1968,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
       v143 = v70->x;
     }
     targetDX = COERCE_FLOAT(PathingSystem::findTilePath(&pathSystem, (signed __int64)v3->startValue.x, (signed __int64)v3->startValue.y, v143, v144, v145, v146, v147, 1, 0, v148, SHIDWORD(v148), SLODWORD(v149), SHIDWORD(v149), SLODWORD(v150), SHIDWORD(v150)));
-    if ( actionFile )
+    if( actionFile )
     {
       fprintf(
         actionFile,
@@ -1981,7 +1981,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
         v3->goalValue.y);
       Path::initToStart(&v3->pathValue);
       v71 = 0;
-      while ( v71 < Path::numberOfWaypoints(&v3->pathValue) )
+      while( v71 < Path::numberOfWaypoints(&v3->pathValue) )
       {
         v72 = Path::currentWaypoint(&v3->pathValue)->y;
         v73 = Path::currentWaypoint(&v3->pathValue)->x;
@@ -1992,19 +1992,19 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
       Path::initToStart(&v3->pathValue);
       Path::moveToNextWaypoint(&v3->pathValue);
     }
-    if ( targetDX == 0.0 && Path::numberOfWaypoints(&v3->pathValue) == 1 )
+    if( targetDX == 0.0 && Path::numberOfWaypoints(&v3->pathValue) == 1 )
     {
       v74 = floor(v3->world_y) - -0.5;
       v75 = floor(v3->world_x) - -0.5;
-      if ( PathingSystem::passable(&pathSystem, v3, v75, v74, 1) )
+      if( PathingSystem::passable(&pathSystem, v3, v75, v74, 1) )
       {
         v161 = v3->world_x;
         v76 = floor(v161);
-        if ( v161 - v76 == 0.5 )
+        if( v161 - v76 == 0.5 )
         {
           v161 = v3->world_y;
           v77 = floor(v161);
-          if ( v161 - v77 == 0.5 )
+          if( v161 - v77 == 0.5 )
             return 4;
         }
         v78 = v3->vfptr;
@@ -2018,11 +2018,11 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
       }
     }
     v82 = displayPathObjectID;
-    if ( displayPathingFlags && v3->selected & 1 )
+    if( displayPathingFlags && v3->selected & 1 )
     {
       Path::initToStart(&v3->pathValue);
       targetDX = 0.0;
-      if ( Path::numberOfWaypoints(&v3->pathValue) > 0 )
+      if( Path::numberOfWaypoints(&v3->pathValue) > 0 )
       {
         v83 = 4 * v82;
         LODWORD(v161) = v83;
@@ -2046,18 +2046,18 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
           Path::moveToNextWaypoint(&v3->pathValue);
           v91 = Path::numberOfWaypoints(&v3->pathValue);
         }
-        while ( SLODWORD(targetDX) < v91 );
+        while( SLODWORD(targetDX) < v91 );
       }
       Path::initToStart(&v3->pathValue);
       Path::moveToNextWaypoint(&v3->pathValue);
     }
     Path::initToStart(&v3->pathValue);
-    if ( !Path::moveToNextWaypoint(&v3->pathValue) )
+    if( !Path::moveToNextWaypoint(&v3->pathValue) )
       return 4;
     v92 = HIDWORD(curDistance);
     LODWORD(v3->closestDistanceToWaypoint) = 1203982336;
     v93 = &v3->pathValue;
-    if ( v92 == 1 )
+    if( v92 == 1 )
     {
       targetDYa = Path::currentWaypoint(v93)->x - v3->world_x;
       v94 = Path::currentWaypoint(&v3->pathValue)->y - v3->world_y;
@@ -2074,19 +2074,19 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     v97 = v3->turnTimer;
     v98 = &v3->angle;
     v100 = (newAngle - v3->angle) * dY * 0.15915494;
-    if ( !(v101 | v102) )
+    if( !(v101 | v102) )
     {
       LODWORD(v3->speed) = 0;
       return 0;
     }
     do
     {
-      if ( v100 <= 0.9 && v100 >= -0.9 )
+      if( v100 <= 0.9 && v100 >= -0.9 )
         break;
       v3->turnTimer = *(float *)&v3->master_obj[1].string_id + v3->turnTimer;
       v104 = v100;
       v105 = (double)numFacets_4;
-      if ( v106 )
+      if( v106 )
       {
         v107 = v104 - -1.0;
         v108 = v105;
@@ -2102,7 +2102,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
       }
       *v98 = v109;
     }
-    while ( v3->turnTimer <= 0.0 );
+    while( v3->turnTimer <= 0.0 );
     RGE_Moving_Object::boundAngle(&v3->angle, numFacets_4);
     RGE_Moving_Object::set_angle(v3);
     v112 = sin(*v98);
@@ -2121,15 +2121,15 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     v3->velocity_x = v116;
     v3->velocity_y = v119;
     *(float *)&curDistance = v118;
-    if ( !PathingSystem::passable(&pathSystem, v3, v118, v117, 1) )
+    if( !PathingSystem::passable(&pathSystem, v3, v118, v117, 1) )
     {
-      if ( RGE_Player::computerPlayer(v3->owner) == 1 )
+      if( RGE_Player::computerPlayer(v3->owner) == 1 )
       {
         result = 4;
       }
       else
       {
-        if ( v3->speed <= 0.0 )
+        if( v3->speed <= 0.0 )
         {
           LODWORD(v161) = debug_rand(aCMsdevWorkA_24, 2005) % 6;
           v120 = (double)SLODWORD(v161) * 0.1 - -0.5;
@@ -2148,7 +2148,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     v42 = LODWORD(curDistance);
   }
   HIDWORD(curDistance) = LODWORD(v3->world_z);
-  if ( Path::currentWaypoint(&v3->pathValue) )
+  if( Path::currentWaypoint(&v3->pathValue) )
   {
     targetDX = Path::currentWaypoint(&v3->pathValue)->x - v3->world_x;
     v121 = Path::currentWaypoint(&v3->pathValue)->y - v3->world_y;
@@ -2160,7 +2160,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     v123 = v3->closestDistanceToWaypoint;
     v124 = sqrt(targetDX * targetDX + v122 * v122);
     *(float *)&v161 = v124;
-    if ( (v123 >= v124 || *(float *)&curDistance >= 0.25)
+    if( (v123 >= v124 || *(float *)&curDistance >= 0.25)
       && ((v125 = v3->lastFacet2, v125 != v3->facet) || v125 == v3->lastFacet || *(float *)&curDistance >= 0.5) )
     {
       v132 = v3->velocity_z + v3->world_z;
@@ -2174,7 +2174,7 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     {
       v126 = Path::currentWaypoint(&v3->pathValue)->y;
       v127 = Path::currentWaypoint(&v3->pathValue);
-      if ( !PathingSystem::passable(&pathSystem, v3, v127->x, v126, 1) )
+      if( !PathingSystem::passable(&pathSystem, v3, v127->x, v126, 1) )
         return 2;
       v128 = v3->vfptr;
       v129 = Path::currentWaypoint(&v3->pathValue)->z;
@@ -2208,14 +2208,14 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
   v3->lastFacet = v3->facet;
   v3->lastFacet2 = v138;
   v3->closestDistanceToWaypoint = v137;
-  if ( v140 )
+  if( v140 )
   {
     targetDYb = 0.89999998;
   }
-  else if ( v136 <= 0.02 )
+  else if( v136 <= 0.02 )
   {
     v141 = v3->sprite;
-    if ( v141 && v141->base_speed > 0.0 )
+    if( v141 && v141->base_speed > 0.0 )
       v3->speed = *(float *)&v3->master_obj[1].vfptr * v141->base_speed;
     else
       LODWORD(v3->speed) = v3->master_obj[1].vfptr;
@@ -2225,10 +2225,10 @@ int __thiscall RGE_Moving_Object::doTrivialMove(RGE_Moving_Object *this, float x
     targetDYb = 1.03;
   }
   v142 = v3->tile;
-  if ( v142 )
+  if( v142 )
     targetDYb = RGE_Static_Object::get_terrain_speed((RGE_Static_Object *)&v3->vfptr, *((_BYTE *)v142 + 5) & 0x1F)
               * targetDYb;
-  if ( targetDYb > 0.0 )
+  if( targetDYb > 0.0 )
     v3->speed = targetDYb * v3->speed;
   return 0;
 }
@@ -2243,7 +2243,7 @@ int __thiscall RGE_Moving_Object::passableTile(RGE_Moving_Object *this, float x,
 
   v6 = this;
   v4 = &aiPathSystem;
-  if ( !aiCheck )
+  if( !aiCheck )
     v4 = &pathSystem;
   return PathingSystem::passable(v4, v6, x, y, 1);
 }
@@ -2260,22 +2260,22 @@ int __thiscall RGE_Moving_Object::canPath(RGE_Moving_Object *this, XYZPoint p, f
 
   v8 = p.x;
   v9 = this;
-  if ( p.x < 0 )
+  if( p.x < 0 )
     goto LABEL_16;
-  if ( p.y < 0 )
+  if( p.y < 0 )
     goto LABEL_16;
   v10 = this->owner->world;
   v11 = v10->map;
-  if ( p.x >= v11->map_width || p.y >= v11->map_height )
+  if( p.x >= v11->map_width || p.y >= v11->map_height )
     goto LABEL_16;
-  if ( v9->zoneMapIndex == -1 )
+  if( v9->zoneMapIndex == -1 )
     RGE_Zone_Map_List::get_zone_map(
       v11->map_zones,
       v10->terrains[v9->master_obj->terrain],
       v10->terrain_size,
       &v9->zoneMapIndex);
   v12 = RGE_Zone_Map_List::get_zone_map(v9->owner->world->map->map_zones, v9->zoneMapIndex);
-  if ( v12
+  if( v12
     && ((p.x = (unsigned __int8)RGE_Zone_Map::get_zone_info(
                                   v12,
                                   (signed __int64)v9->world_x,
@@ -2287,7 +2287,7 @@ int __thiscall RGE_Moving_Object::canPath(RGE_Moving_Object *this, XYZPoint p, f
           (XYPoint)__PAIR__(p.y, v8),
           aRange)) )
   {
-    if ( aiCheck )
+    if( aiCheck )
     {
       PathingSystem::incrementCanPaths(&aiPathSystem);
       result = PathingSystem::findTilePath(
@@ -2351,9 +2351,9 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPath(RGE_Moving_Object *this, int
   v7 = this;
   result = (RGE_Zone_Map *)RGE_Game_World::object(this->owner->world, targetID);
   v9 = result;
-  if ( result )
+  if( result )
   {
-    if ( v7->zoneMapIndex == -1 )
+    if( v7->zoneMapIndex == -1 )
       RGE_Zone_Map_List::get_zone_map(
         v7->owner->world->map->map_zones,
         v7->owner->world->terrains[v7->master_obj->terrain],
@@ -2361,13 +2361,13 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPath(RGE_Moving_Object *this, int
         &v7->zoneMapIndex);
     result = RGE_Zone_Map_List::get_zone_map(v7->owner->world->map->map_zones, v7->zoneMapIndex);
     v10 = result;
-    if ( result )
+    if( result )
     {
       v11 = (unsigned __int8)RGE_Zone_Map::get_zone_info(
                                result,
                                (signed __int64)v7->world_x,
                                (signed __int64)v7->world_y);
-      if ( (unsigned __int8)RGE_Zone_Map::get_zone_info(
+      if( (unsigned __int8)RGE_Zone_Map::get_zone_info(
                               v10,
                               (signed __int64)*(float *)&v9->numberTilesInZoneValue[14],
                               (signed __int64)*(float *)&v9->numberTilesInZoneValue[15]) == v11
@@ -2381,7 +2381,7 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPath(RGE_Moving_Object *this, int
                                                    (unsigned int)(signed __int64)*(float *)&v9->numberTilesInZoneValue[14]),
                                         aRange)) != 0) )
       {
-        if ( aiCheck )
+        if( aiCheck )
         {
           PathingSystem::incrementCanPaths(&aiPathSystem);
           result = (RGE_Zone_Map *)PathingSystem::findTilePath(
@@ -2453,16 +2453,16 @@ int __thiscall RGE_Moving_Object::canBidirectionPath(RGE_Moving_Object *this, in
   v9 = RGE_Game_World::object(this->owner->world, targetID);
   v10 = RGE_Game_World::object(v8->owner->world, targetID2);
   v11 = v10;
-  if ( !v9 || !v10 )
+  if( !v9 || !v10 )
     goto LABEL_18;
-  if ( v8->zoneMapIndex == -1 )
+  if( v8->zoneMapIndex == -1 )
     RGE_Zone_Map_List::get_zone_map(
       v8->owner->world->map->map_zones,
       v8->owner->world->terrains[v8->master_obj->terrain],
       v8->owner->world->terrain_size,
       &v8->zoneMapIndex);
   v12 = RGE_Zone_Map_List::get_zone_map(v8->owner->world->map->map_zones, v8->zoneMapIndex);
-  if ( v12
+  if( v12
     && ((start = (unsigned __int8)RGE_Zone_Map::get_zone_info(
                                     v12,
                                     (signed __int64)v8->world_x,
@@ -2477,7 +2477,7 @@ int __thiscall RGE_Moving_Object::canBidirectionPath(RGE_Moving_Object *this, in
            aRange))) )
   {
     v8->storePathInExceptionPath = 1;
-    if ( aiCheck )
+    if( aiCheck )
     {
       PathingSystem::incrementCanPaths(&aiPathSystem);
       result = PathingSystem::findTilePath(
@@ -2497,7 +2497,7 @@ int __thiscall RGE_Moving_Object::canBidirectionPath(RGE_Moving_Object *this, in
                  1,
                  unobstructiblePlayerID,
                  unobstructibleGroupID);
-      if ( result )
+      if( result )
       {
         v16 = (signed __int64)v11->world_y;
         v17 = (signed __int64)v11->world_x;
@@ -2547,7 +2547,7 @@ int __thiscall RGE_Moving_Object::canBidirectionPath(RGE_Moving_Object *this, in
                  1,
                  unobstructiblePlayerID,
                  unobstructibleGroupID);
-      if ( result )
+      if( result )
       {
         v20 = (signed __int64)v11->world_y;
         v21 = (signed __int64)v11->world_x;
@@ -2600,9 +2600,9 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPathWithObstructions(RGE_Moving_O
   v8 = this;
   result = (RGE_Zone_Map *)RGE_Game_World::object(this->owner->world, targetID);
   v10 = result;
-  if ( result )
+  if( result )
   {
-    if ( v8->zoneMapIndex == -1 )
+    if( v8->zoneMapIndex == -1 )
       RGE_Zone_Map_List::get_zone_map(
         v8->owner->world->map->map_zones,
         v8->owner->world->terrains[v8->master_obj->terrain],
@@ -2610,13 +2610,13 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPathWithObstructions(RGE_Moving_O
         &v8->zoneMapIndex);
     result = RGE_Zone_Map_List::get_zone_map(v8->owner->world->map->map_zones, v8->zoneMapIndex);
     v11 = result;
-    if ( result )
+    if( result )
     {
       v12 = (unsigned __int8)RGE_Zone_Map::get_zone_info(
                                result,
                                (signed __int64)v8->world_x,
                                (signed __int64)v8->world_y);
-      if ( (unsigned __int8)RGE_Zone_Map::get_zone_info(
+      if( (unsigned __int8)RGE_Zone_Map::get_zone_info(
                               v11,
                               (signed __int64)*(float *)&v10->numberTilesInZoneValue[14],
                               (signed __int64)*(float *)&v10->numberTilesInZoneValue[15]) == v12
@@ -2631,7 +2631,7 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPathWithObstructions(RGE_Moving_O
                                         aRange)) != 0) )
       {
         v8->storePathInExceptionPath = 1;
-        if ( aiCheck )
+        if( aiCheck )
         {
           PathingSystem::incrementCanPaths(&aiPathSystem);
           v14 = (RGE_Zone_Map *)PathingSystem::findTilePath(
@@ -2651,7 +2651,7 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPathWithObstructions(RGE_Moving_O
                                   1,
                                   unobstructiblePlayerID,
                                   unobstructibleGroupID);
-          if ( unobstructibleGroupID != -1 )
+          if( unobstructibleGroupID != -1 )
             PathingSystem::copyUnobstructibles(&aiPathSystem, obstructions);
         }
         else
@@ -2674,7 +2674,7 @@ RGE_Zone_Map *__thiscall RGE_Moving_Object::canPathWithObstructions(RGE_Moving_O
                                   1,
                                   unobstructiblePlayerID,
                                   unobstructibleGroupID);
-          if ( unobstructibleGroupID != -1 )
+          if( unobstructibleGroupID != -1 )
             PathingSystem::copyUnobstructibles(&pathSystem, obstructions);
         }
         result = v14;
@@ -2704,7 +2704,7 @@ int __thiscall RGE_Moving_Object::canPathWithAdditionalPassability(RGE_Moving_Ob
   int v23; // [sp-4h] [bp-10h]@6
 
   v10 = this;
-  if ( p.x < 0 || p.y < 0 || (v11 = this->owner->world->map, p.x >= v11->map_width) || p.y >= v11->map_height )
+  if( p.x < 0 || p.y < 0 || (v11 = this->owner->world->map, p.x >= v11->map_width) || p.y >= v11->map_height )
   {
     result = 0;
   }
@@ -2713,7 +2713,7 @@ int __thiscall RGE_Moving_Object::canPathWithAdditionalPassability(RGE_Moving_Ob
     this->currentTerrainException2 = eTerrain2;
     this->currentTerrainException1 = eTerrain1;
     this->storePathInExceptionPath = 1;
-    if ( aiCheck )
+    if( aiCheck )
     {
       PathingSystem::incrementCanPaths(&aiPathSystem);
       v23 = unobstructibleGroupID;
@@ -2766,20 +2766,20 @@ int __thiscall RGE_Moving_Object::findFirstTerrainAlongExceptionPath(RGE_Moving_
 
   v4 = this;
   v5 = &this->exceptionPathValue;
-  if ( Path::numberOfWaypoints(&this->exceptionPathValue) < 2 )
+  if( Path::numberOfWaypoints(&this->exceptionPathValue) < 2 )
     return 0;
   Path::initToStart(v5);
-  if ( !Path::currentWaypoint(v5) )
+  if( !Path::currentWaypoint(v5) )
     return 0;
   p1.x = (signed __int64)Path::currentWaypoint(v5)->x;
   p1.y = (signed __int64)Path::currentWaypoint(v5)->y;
   Path::moveToNextWaypoint(v5);
-  if ( !Path::currentWaypoint(v5) )
+  if( !Path::currentWaypoint(v5) )
     return 0;
   p2.x = (signed __int64)Path::currentWaypoint(v5)->x;
   p2.y = (signed __int64)Path::currentWaypoint(v5)->y;
   i = 1;
-  if ( Path::numberOfWaypoints(v5) <= 1 )
+  if( Path::numberOfWaypoints(v5) <= 1 )
   {
 LABEL_9:
     *(_DWORD *)rX = -1082130432;
@@ -2787,16 +2787,16 @@ LABEL_9:
     return 0;
   }
   v6 = v4->vfptr->firstTileAlongLine;
-  while ( v6((RGE_Static_Object *)&v4->vfptr, &p1, &p2, &rVal, eTerrain, eTerrain, 1) != 1 )
+  while( v6((RGE_Static_Object *)&v4->vfptr, &p1, &p2, &rVal, eTerrain, eTerrain, 1) != 1 )
   {
     p1.x = (signed __int64)Path::currentWaypoint(v5)->x;
     p1.y = (signed __int64)Path::currentWaypoint(v5)->y;
     Path::moveToNextWaypoint(v5);
-    if ( !Path::currentWaypoint(v5) )
+    if( !Path::currentWaypoint(v5) )
       return 0;
     p2.x = (signed __int64)Path::currentWaypoint(v5)->x;
     p2.y = (signed __int64)Path::currentWaypoint(v5)->y;
-    if ( ++i >= Path::numberOfWaypoints(v5) )
+    if( ++i >= Path::numberOfWaypoints(v5) )
       goto LABEL_9;
   }
   v8 = (double)rVal.x - -0.5;
@@ -2835,9 +2835,9 @@ int __thiscall RGE_Moving_Object::canLinePath(RGE_Moving_Object *this, XYPoint *
   v7 = (double)(d->x - s->x);
   yTile = s->y;
   v8 = (double)(d->y - yTile);
-  if ( v7 == 0.0 && v8 == 0.0 )
+  if( v7 == 0.0 && v8 == 0.0 )
     return 0;
-  if ( fabs(v7) >= fabs(v8) )
+  if( fabs(v7) >= fabs(v8) )
   {
     v10 = 2 * abs((signed __int64)v7);
     numSteps = v10;
@@ -2856,20 +2856,20 @@ int __thiscall RGE_Moving_Object::canLinePath(RGE_Moving_Object *this, XYPoint *
   yStep = v8 / v12;
   *(float *)&sa = (double)s->x;
   yTilea = (double)yTile;
-  if ( v10 > 0 )
+  if( v10 > 0 )
   {
-    while ( 1 )
+    while( 1 )
     {
       v14 = *(float *)&sa + xStep;
       *(float *)&sa = v14;
       yTilea = yTilea + yStep;
       v15 = (signed __int64)v14;
       v16 = (signed __int64)yTilea;
-      if ( v15 != v13 || (_DWORD)v16 != priorY )
+      if( v15 != v13 || (_DWORD)v16 != priorY )
       {
         v13 = (signed __int64)v14;
         priorY = (signed __int64)yTilea;
-        if ( !((int (__thiscall *)(RGE_Moving_Object *, XYPoint *, float, int))v6->vfptr->passableTile)(
+        if( !((int (__thiscall *)(RGE_Moving_Object *, XYPoint *, float, int))v6->vfptr->passableTile)(
                 v6,
                 sa,
                 COERCE_FLOAT(LODWORD(yTilea)),
@@ -2882,10 +2882,10 @@ int __thiscall RGE_Moving_Object::canLinePath(RGE_Moving_Object *this, XYPoint *
         v17 = (double)d->x - *(float *)&sa;
         v18 = (double)d->y - yTilea;
         v19 = v17;
-        if ( sqrt(v17 * v19 + v18 * v18) <= range )
+        if( sqrt(v17 * v19 + v18 * v18) <= range )
           return 1;
       }
-      if ( ++i >= numSteps )
+      if( ++i >= numSteps )
         return 1;
     }
   }
@@ -2917,9 +2917,9 @@ int __thiscall RGE_Moving_Object::canLinePath(RGE_Moving_Object *this, int sX, i
   v7 = this;
   v8 = (double)(dX - sX);
   v9 = (double)(dY - sY);
-  if ( v8 == 0.0 && v9 == 0.0 )
+  if( v8 == 0.0 && v9 == 0.0 )
     return 0;
-  if ( fabs(v8) >= fabs(v9) )
+  if( fabs(v8) >= fabs(v9) )
   {
     v11 = 2 * abs((signed __int64)v8);
     numSteps = v11;
@@ -2937,20 +2937,20 @@ int __thiscall RGE_Moving_Object::canLinePath(RGE_Moving_Object *this, int sX, i
   yStep = v9 / v13;
   *(float *)&sXa = (double)sX;
   xTile = (double)sY;
-  if ( v11 > 0 )
+  if( v11 > 0 )
   {
-    while ( 1 )
+    while( 1 )
     {
       xStep = v12 / v13;
       v17 = *(float *)&sXa + xStep;
       *(float *)&sXa = v17;
       xTile = xTile + yStep;
       v18 = (signed __int64)xTile;
-      if ( (unsigned int)(signed __int64)v17 != v14 || (_DWORD)v18 != v15 )
+      if( (unsigned int)(signed __int64)v17 != v14 || (_DWORD)v18 != v15 )
       {
         v15 = v18;
         v14 = (signed __int64)v17;
-        if ( !((int (__thiscall *)(RGE_Moving_Object *, int, float, int))v7->vfptr->passableTile)(
+        if( !((int (__thiscall *)(RGE_Moving_Object *, int, float, int))v7->vfptr->passableTile)(
                 v7,
                 sXa,
                 COERCE_FLOAT(LODWORD(xTile)),
@@ -2958,10 +2958,10 @@ int __thiscall RGE_Moving_Object::canLinePath(RGE_Moving_Object *this, int sX, i
           return 0;
         v19 = (double)dX - *(float *)&sXa;
         v20 = v19;
-        if ( sqrt(v19 * v20 + ((double)dY - xTile) * ((double)dY - xTile)) <= range )
+        if( sqrt(v19 * v20 + ((double)dY - xTile) * ((double)dY - xTile)) <= range )
           return 1;
       }
-      if ( ++i >= numSteps )
+      if( ++i >= numSteps )
         return 1;
     }
   }
@@ -2997,9 +2997,9 @@ int __thiscall RGE_Moving_Object::firstTileAlongLine(RGE_Moving_Object *this, XY
   v7 = (double)(d->x - s->x);
   v26 = this;
   v8 = (double)(d->y - s->y);
-  if ( v7 != 0.0 || v8 != 0.0 )
+  if( v7 != 0.0 || v8 != 0.0 )
   {
-    if ( fabs(v7) >= fabs(v8) )
+    if( fabs(v7) >= fabs(v8) )
     {
       v10 = 2 * abs((signed __int64)v7);
       numSteps = v10;
@@ -3020,13 +3020,13 @@ int __thiscall RGE_Moving_Object::firstTileAlongLine(RGE_Moving_Object *this, XY
     xStep = v13;
     yTile = (double)s->x;
     *(float *)&sa = (double)s->y;
-    if ( v10 <= 0 )
+    if( v10 <= 0 )
     {
       result = 0;
     }
     else
     {
-      while ( 1 )
+      while( 1 )
       {
         v18 = yTile + xStep;
         yTile = v18;
@@ -3034,12 +3034,12 @@ int __thiscall RGE_Moving_Object::firstTileAlongLine(RGE_Moving_Object *this, XY
         *(float *)&sa = *(float *)&sa + yStep;
         v19 = (signed __int64)v18;
         v20 = (signed __int64)*(float *)&sa;
-        if ( v19 != v15 || (_DWORD)v20 != v16 )
+        if( v19 != v15 || (_DWORD)v20 != v16 )
         {
           v15 = (signed __int64)v18;
           v16 = (signed __int64)*(float *)&sa;
           v21 = RGE_Map::get_terrain(map, v19, v20);
-          if ( (v21 == tType1 || v21 == tType2)
+          if( (v21 == tType1 || v21 == tType2)
             && checkPassability == 1
             && ((int (__stdcall *)(float, XYPoint *, _DWORD))v26->vfptr->passableTile)(
                  COERCE_FLOAT(LODWORD(yTile)),
@@ -3049,7 +3049,7 @@ int __thiscall RGE_Moving_Object::firstTileAlongLine(RGE_Moving_Object *this, XY
             break;
           }
         }
-        if ( ++i >= numSteps )
+        if( ++i >= numSteps )
           return 0;
       }
       rPoint->x = v19;
@@ -3071,7 +3071,7 @@ double __thiscall RGE_Moving_Object::maximumSpeed(RGE_Moving_Object *this)
   double result; // st7@3
 
   v1 = this->sprite;
-  if ( v1 && v1->base_speed > 0.0 )
+  if( v1 && v1->base_speed > 0.0 )
     result = *(float *)&this->master_obj[1].vfptr * v1->base_speed;
   else
     result = *(float *)&this->master_obj[1].vfptr;
@@ -3087,7 +3087,7 @@ char __thiscall RGE_Moving_Object::waitingToMove(RGE_Moving_Object *this)
 
   v1 = this;
   v2 = (unsigned __int8)((int (*)(void))this->vfptr->actionState)();
-  if ( v2 == 6 || v2 == 7 )
+  if( v2 == 6 || v2 == 7 )
     result = 0;
   else
     result = v1->waitingToMoveValue;
@@ -3105,7 +3105,7 @@ XYZBYTEPoint *__thiscall RGE_Moving_Object::userDefinedWaypoint(RGE_Moving_Objec
 {
   XYZBYTEPoint *result; // eax@3
 
-  if ( v < 0 || v >= this->numberUserDefinedWaypointsValue )
+  if( v < 0 || v >= this->numberUserDefinedWaypointsValue )
     result = 0;
   else
     result = &this->userDefinedWaypoints[v];
@@ -3127,22 +3127,22 @@ int __thiscall RGE_Moving_Object::addUserDefinedWaypoint(RGE_Moving_Object *this
   char *v13; // ecx@13
 
   v3 = this;
-  if ( this->finalUserDefinedWaypoint == 1 )
+  if( this->finalUserDefinedWaypoint == 1 )
   {
     ((void (__stdcall *)(int))this->vfptr->removeAllUserDefinedWaypoints)(stopObject);
     v3->finalUserDefinedWaypoint = 0;
   }
   v4 = v3->maxUserDefinedWaypointsValue;
   v5 = v3->numberUserDefinedWaypointsValue;
-  if ( v4 <= v5 )
+  if( v4 <= v5 )
   {
-    if ( v4 )
+    if( v4 )
     {
       v6 = (char *)operator new(6 * v4);
-      if ( !v6 )
+      if( !v6 )
         return 0;
       v8 = 0;
-      if ( v3->numberUserDefinedWaypointsValue > 0 )
+      if( v3->numberUserDefinedWaypointsValue > 0 )
       {
         v9 = 0;
         v10 = (int)(v6 + 2);
@@ -3156,11 +3156,11 @@ int __thiscall RGE_Moving_Object::addUserDefinedWaypoint(RGE_Moving_Object *this
           *(_BYTE *)(v10 - 4) = *((_BYTE *)&v3->userDefinedWaypoints[v9] - 2);
           *(_BYTE *)(v10 - 3) = *((_BYTE *)&v3->userDefinedWaypoints[v9] - 1);
         }
-        while ( v8 < v3->numberUserDefinedWaypointsValue );
+        while( v8 < v3->numberUserDefinedWaypointsValue );
       }
       v12 = 2 * v3->maxUserDefinedWaypointsValue;
       v3->maxUserDefinedWaypointsValue = v12;
-      if ( v8 < v12 )
+      if( v8 < v12 )
       {
         v13 = &v6[2 * v8 + 2] + v8;
         do
@@ -3171,7 +3171,7 @@ int __thiscall RGE_Moving_Object::addUserDefinedWaypoint(RGE_Moving_Object *this
           ++v8;
           v13 += 3;
         }
-        while ( v8 < v3->maxUserDefinedWaypointsValue );
+        while( v8 < v3->maxUserDefinedWaypointsValue );
       }
       operator delete(v3->userDefinedWaypoints);
       v3->userDefinedWaypoints = (XYZBYTEPoint *)v6;
@@ -3203,9 +3203,9 @@ void __thiscall RGE_Moving_Object::removeAllUserDefinedWaypoints(RGE_Moving_Obje
 
   v2 = this;
   this->numberUserDefinedWaypointsValue = 0;
-  if ( stopObject == 1 && this->unitAIValue )
+  if( stopObject == 1 && this->unitAIValue )
   {
-    if ( actionFile )
+    if( actionFile )
       fprintf(actionFile, aDCallStopobjec, this->id, aCMsdevWorkA_24, 2905);
     ((void (__stdcall *)(_DWORD))v2->unitAIValue->vfptr->stopObject)(0);
   }
@@ -3218,22 +3218,22 @@ void __thiscall RGE_Moving_Object::removeUserDefinedWaypoint(RGE_Moving_Object *
   int i; // edi@3
   int v4; // eax@7
 
-  if ( v >= 0 )
+  if( v >= 0 )
   {
     v2 = this->numberUserDefinedWaypointsValue;
-    if ( v < v2 )
+    if( v < v2 )
     {
-      for ( i = 0; i < v2; ++i )
+      for( i = 0; i < v2; ++i )
       {
-        if ( i >= v )
+        if( i >= v )
           break;
       }
-      if ( i < v2 )
+      if( i < v2 )
       {
         v4 = i;
         do
         {
-          if ( v4 * 3 )
+          if( v4 * 3 )
           {
             this->userDefinedWaypoints[v4 - 1].x = this->userDefinedWaypoints[v4].x;
             *((_BYTE *)&this->userDefinedWaypoints[v4] - 2) = this->userDefinedWaypoints[v4].y;
@@ -3242,7 +3242,7 @@ void __thiscall RGE_Moving_Object::removeUserDefinedWaypoint(RGE_Moving_Object *
           ++i;
           ++v4;
         }
-        while ( i < this->numberUserDefinedWaypointsValue );
+        while( i < this->numberUserDefinedWaypointsValue );
       }
       --this->numberUserDefinedWaypointsValue;
     }
@@ -3267,7 +3267,7 @@ Path *__thiscall RGE_Moving_Object::findAvoidancePath(RGE_Moving_Object *this, X
 
   v4 = this;
   v5 = &this->zoneMapIndex;
-  if ( this->zoneMapIndex == -1 )
+  if( this->zoneMapIndex == -1 )
     RGE_Zone_Map_List::get_zone_map(
       this->owner->world->map->map_zones,
       this->owner->world->terrains[this->master_obj->terrain],
@@ -3275,7 +3275,7 @@ Path *__thiscall RGE_Moving_Object::findAvoidancePath(RGE_Moving_Object *this, X
       &this->zoneMapIndex);
   v6 = RGE_Zone_Map_List::get_zone_map(v4->owner->world->map->map_zones, *v5);
   v7 = (unsigned __int8)RGE_Zone_Map::get_zone_info(v6, (signed __int64)v4->world_x, (signed __int64)v4->world_y);
-  if ( (unsigned __int8)RGE_Zone_Map::get_zone_info(v6, goalPoint->x, goalPoint->y) == v7
+  if( (unsigned __int8)RGE_Zone_Map::get_zone_info(v6, goalPoint->x, goalPoint->y) == v7
     || (result = (Path *)RGE_Zone_Map::withinRange(
                            v6,
                            (XYPoint)__PAIR__((signed __int64)v4->world_y, (unsigned int)(signed __int64)v4->world_x),
@@ -3327,15 +3327,15 @@ void __thiscall RGE_Moving_Object::copy_obj(RGE_Moving_Object *this, RGE_Master_
   v3 = 0;
   v4 = this->master_obj;
   v5 = this->sprite;
-  if ( v5 == *(RGE_Sprite **)&v4[1].master_type )
+  if( v5 == *(RGE_Sprite **)&v4[1].master_type )
   {
     v3 = *(char **)&source2[1].master_type;
   }
-  else if ( v5 == (RGE_Sprite *)v4[1].name )
+  else if( v5 == (RGE_Sprite *)v4[1].name )
   {
     v3 = source2[1].name;
   }
-  if ( v3 )
+  if( v3 )
     (*(void (__thiscall **)(RGE_Moving_Object *, char *))&v2->vfptr->gap4[52])(v2, v3);
   RGE_Static_Object::copy_obj((RGE_Static_Object *)&v2->vfptr, source2);
 }
@@ -3358,42 +3358,42 @@ void __stdcall RGE_Moving_Object::boundAngle(float *x, int numFacets)
 
   v3 = x;
   v5 = *x;
-  if ( v6 )
+  if( v6 )
   {
     do
       v5 = v5 - -6.2831855;
-    while ( v5 < 0.0 );
+    while( v5 < 0.0 );
     *x = v5;
   }
-  else if ( v5 > 6.2831855 )
+  else if( v5 > 6.2831855 )
   {
     do
       *x = *x - 6.2831855;
-    while ( !(v8 | v9) );
+    while( !(v8 | v9) );
   }
   v10 = numFacets;
-  if ( numFacets != -1 )
+  if( numFacets != -1 )
   {
     *(float *)&xa = 0.78539819;
-    if ( numFacets != 8 )
+    if( numFacets != 8 )
       *(float *)&xa = 0.39269909;
     v11 = 0;
     bestDifference = -1;
-    for ( i = 0; v11 <= v10; i = ++v11 )
+    for( i = 0; v11 <= v10; i = ++v11 )
     {
       v12 = *v3 - (double)i * *(float *)&xa;
-      if ( v12 < 0.0 )
+      if( v12 < 0.0 )
         v12 = -v12;
-      if ( v12 < *(float *)&xa )
+      if( v12 < *(float *)&xa )
       {
         *(float *)&xa = v12;
         bestDifference = v11;
       }
-      if ( *(float *)&xa < 0.1 )
+      if( *(float *)&xa < 0.1 )
         break;
     }
     v13 = (double)bestDifference;
-    if ( v10 == 8 )
+    if( v10 == 8 )
       *v3 = v13 * 0.78539819;
     else
       *v3 = v13 * 0.39269909;
@@ -3410,14 +3410,14 @@ void __thiscall RGE_Moving_Object::rotate(RGE_Moving_Object *this, int amount)
 
   v2 = (double)amount * 6.2831853 / (double)this->sprite->facet_num + this->angle;
   *(float *)&amounta = v2;
-  if ( v4 )
+  if( v4 )
   {
     do
       v2 = v2 - -6.2831855;
-    while ( v2 < 0.0 );
+    while( v2 < 0.0 );
     *(float *)&amounta = v2;
   }
-  if ( v2 < 6.2831853 )
+  if( v2 < 6.2831853 )
   {
     ((void (__stdcall *)(int))this->vfptr->new_angle)(amounta);
   }
@@ -3425,7 +3425,7 @@ void __thiscall RGE_Moving_Object::rotate(RGE_Moving_Object *this, int amount)
   {
     do
       v2 = v2 - 6.2831855;
-    while ( v2 >= 6.2831853 );
+    while( v2 >= 6.2831853 );
     *(float *)&amountb = v2;
     ((void (__stdcall *)(int))this->vfptr->new_angle)(amountb);
   }
@@ -3445,7 +3445,7 @@ signed __int64 __thiscall RGE_Moving_Object::get_waypoint_checksum(RGE_Moving_Ob
   v2 = Path::currentWaypointNumber(&this->pathValue);
   Path::initToStart(v1);
   v3 = 0;
-  while ( v3 < Path::numberOfWaypoints(v1) )
+  while( v3 < Path::numberOfWaypoints(v1) )
   {
     v4 = Path::currentWaypoint(v1);
     ++v3;

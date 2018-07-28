@@ -19,7 +19,7 @@ void __thiscall DiplomacyAIModule::DiplomacyAIModule(DiplomacyAIModule *this, vo
     v3->changeableTable[v4++] = 1;
     ++v5;
   }
-  while ( v4 <= 9 );
+  while( v4 <= 9 );
 }
 // 56E818: using guessed type int (__thiscall *DiplomacyAIModule::`vftable')(void *Memory, unsigned int __flags);
 
@@ -30,7 +30,7 @@ DiplomacyAIModule *__thiscall DiplomacyAIModule::`vector deleting destructor'(Di
 
   v2 = this;
   DiplomacyAIModule::~DiplomacyAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -59,7 +59,7 @@ void __thiscall DiplomacyAIModule::DiplomacyAIModule(DiplomacyAIModule *this, in
     ++v4;
     --v6;
   }
-  while ( v6 );
+  while( v6 );
 }
 // 56E818: using guessed type int (__thiscall *DiplomacyAIModule::`vftable')(void *Memory, unsigned int __flags);
 
@@ -87,21 +87,21 @@ int __thiscall DiplomacyAIModule::update(DiplomacyAIModule *this, int timeLimit)
   v2 = this;
   v3 = 1;
   v4 = this->md->player;
-  if ( v4->world->player_num > 1 )
+  if( v4->world->player_num > 1 )
   {
     do
     {
-      if ( v3 != v4->id )
+      if( v3 != v4->id )
       {
-        if ( DiplomacyAIModule::isAlly(v2, v3) && !DiplomacyAIModule::isAlliedWithMe(v2, v3) )
+        if( DiplomacyAIModule::isAlly(v2, v3) && !DiplomacyAIModule::isAlliedWithMe(v2, v3) )
           DiplomacyAIModule::changeStance(v2, v3, 0, 1);
-        if ( !DiplomacyAIModule::isAlly(v2, v3) && DiplomacyAIModule::isAlliedWithMe(v2, v3) )
+        if( !DiplomacyAIModule::isAlly(v2, v3) && DiplomacyAIModule::isAlliedWithMe(v2, v3) )
           DiplomacyAIModule::changeStance(v2, v3, 2, 1);
       }
       ++v3;
       v4 = v2->md->player;
     }
-    while ( v3 < v4->world->player_num );
+    while( v3 < v4->world->player_num );
   }
   return 1;
 }
@@ -125,7 +125,7 @@ int __thiscall DiplomacyAIModule::save(DiplomacyAIModule *this, int outfile)
     ++v2;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
   return 1;
 }
 
@@ -136,24 +136,24 @@ int __thiscall DiplomacyAIModule::stance(DiplomacyAIModule *this, int playerID, 
   int v4; // esi@7
   int v5; // edx@9
 
-  if ( playerID <= 0 || playerID >= this->md->player->world->player_num )
+  if( playerID <= 0 || playerID >= this->md->player->world->player_num )
     return -1;
-  if ( !likeType )
+  if( !likeType )
     return this->dislikeTable[playerID];
-  if ( likeType != 1 )
+  if( likeType != 1 )
   {
-    if ( likeType == 2 )
+    if( likeType == 2 )
       return this->likeTable[playerID];
     return -1;
   }
   v4 = 49 - this->dislikeTable[playerID];
-  if ( v4 < 0 )
+  if( v4 < 0 )
     v4 = -v4;
   v5 = 49 - this->likeTable[playerID];
-  if ( v5 < 0 )
+  if( v5 < 0 )
     v5 = -v5;
   result = 100 - v4 - v5;
-  if ( result < 0 )
+  if( result < 0 )
     result = 0;
   return result;
 }
@@ -164,19 +164,19 @@ void __thiscall DiplomacyAIModule::changeStance(DiplomacyAIModule *this, int pla
   int v4; // esi@5
   int v5; // esi@14
 
-  if ( playerID > 0 && playerID < this->md->player->world->player_num )
+  if( playerID > 0 && playerID < this->md->player->world->player_num )
   {
-    if ( likeType )
+    if( likeType )
     {
-      if ( likeType == 2 )
+      if( likeType == 2 )
       {
         v4 = delta + this->likeTable[playerID];
         this->likeTable[playerID] = v4;
-        if ( this->changeableTable[playerID] )
+        if( this->changeableTable[playerID] )
         {
-          if ( v4 >= 0 )
+          if( v4 >= 0 )
           {
-            if ( v4 > 100 )
+            if( v4 > 100 )
               this->likeTable[playerID] = 100;
           }
           else
@@ -184,9 +184,9 @@ void __thiscall DiplomacyAIModule::changeStance(DiplomacyAIModule *this, int pla
             this->likeTable[playerID] = 0;
           }
         }
-        else if ( v4 >= 0 )
+        else if( v4 >= 0 )
         {
-          if ( v4 > 48 )
+          if( v4 > 48 )
             this->likeTable[playerID] = 48;
         }
         else
@@ -199,11 +199,11 @@ void __thiscall DiplomacyAIModule::changeStance(DiplomacyAIModule *this, int pla
     {
       v5 = delta + this->dislikeTable[playerID];
       this->dislikeTable[playerID] = v5;
-      if ( this->changeableTable[playerID] )
+      if( this->changeableTable[playerID] )
       {
-        if ( v5 >= 0 )
+        if( v5 >= 0 )
         {
-          if ( v5 > 100 )
+          if( v5 > 100 )
             this->dislikeTable[playerID] = 100;
         }
         else
@@ -211,9 +211,9 @@ void __thiscall DiplomacyAIModule::changeStance(DiplomacyAIModule *this, int pla
           this->dislikeTable[playerID] = 0;
         }
       }
-      else if ( v5 >= 50 )
+      else if( v5 >= 50 )
       {
-        if ( v5 > 100 )
+        if( v5 > 100 )
           this->dislikeTable[playerID] = 100;
       }
       else
@@ -227,18 +227,18 @@ void __thiscall DiplomacyAIModule::changeStance(DiplomacyAIModule *this, int pla
 //----- (0040C2B0) --------------------------------------------------------
 void __thiscall DiplomacyAIModule::setStance(DiplomacyAIModule *this, int playerID, int likeType, int value)
 {
-  if ( playerID > 0 && playerID < this->md->player->world->player_num )
+  if( playerID > 0 && playerID < this->md->player->world->player_num )
   {
-    if ( likeType )
+    if( likeType )
     {
-      if ( likeType == 2 )
+      if( likeType == 2 )
       {
         this->likeTable[playerID] = value;
-        if ( this->changeableTable[playerID] )
+        if( this->changeableTable[playerID] )
         {
-          if ( value >= 0 )
+          if( value >= 0 )
           {
-            if ( value > 100 )
+            if( value > 100 )
               this->likeTable[playerID] = 100;
           }
           else
@@ -246,9 +246,9 @@ void __thiscall DiplomacyAIModule::setStance(DiplomacyAIModule *this, int player
             this->likeTable[playerID] = 0;
           }
         }
-        else if ( value >= 0 )
+        else if( value >= 0 )
         {
-          if ( value > 48 )
+          if( value > 48 )
             this->likeTable[playerID] = 48;
         }
         else
@@ -260,11 +260,11 @@ void __thiscall DiplomacyAIModule::setStance(DiplomacyAIModule *this, int player
     else
     {
       this->dislikeTable[playerID] = value;
-      if ( this->changeableTable[playerID] )
+      if( this->changeableTable[playerID] )
       {
-        if ( value >= 0 )
+        if( value >= 0 )
         {
-          if ( value > 100 )
+          if( value > 100 )
             this->dislikeTable[playerID] = 100;
         }
         else
@@ -272,9 +272,9 @@ void __thiscall DiplomacyAIModule::setStance(DiplomacyAIModule *this, int player
           this->dislikeTable[playerID] = 0;
         }
       }
-      else if ( value >= 50 )
+      else if( value >= 50 )
       {
-        if ( value > 100 )
+        if( value > 100 )
           this->dislikeTable[playerID] = 100;
       }
       else
@@ -315,7 +315,7 @@ BOOL __thiscall DiplomacyAIModule::isChangeable(DiplomacyAIModule *this, int pla
 //----- (0040C4A0) --------------------------------------------------------
 void __thiscall DiplomacyAIModule::setChangeable(DiplomacyAIModule *this, int playerID, char v)
 {
-  if ( playerID > 0 && playerID < this->md->player->world->player_num )
+  if( playerID > 0 && playerID < this->md->player->world->player_num )
     this->changeableTable[playerID] = v;
 }
 
@@ -338,26 +338,26 @@ int __thiscall DiplomacyAIModule::mostHated(DiplomacyAIModule *this, int tribute
   v6 = 1;
   v7 = this->md->player;
   v8 = v7->world;
-  if ( v8->player_num > 1 )
+  if( v8->player_num > 1 )
   {
     v9 = &v5->dislikeTable[1];
     do
     {
-      if ( v6 != v7->id
+      if( v6 != v7->id
         && v8->players[v6]->game_status != 2
         && (tributeOn <= 0 || tributePlayer != v6 || !DiplomacyAIModule::isAlly(v5, v6)) )
       {
         LODWORD(v10) = RGE_Victory_Conditions::get_victory_points(v5->md->player->world->players[v6]->victory_conditions);
         v11 = *v9;
-        if ( attackWinningPlayerFactor > 1 )
+        if( attackWinningPlayerFactor > 1 )
         {
           v10 = (signed int)v10;
-          if ( attackWinningPlayer == 1 )
+          if( attackWinningPlayer == 1 )
             v11 += v10 / attackWinningPlayerFactor;
           else
             v11 -= v10 / attackWinningPlayerFactor;
         }
-        if ( v11 > highestValue )
+        if( v11 > highestValue )
         {
           highest = v6;
           highestValue = v11;
@@ -368,7 +368,7 @@ int __thiscall DiplomacyAIModule::mostHated(DiplomacyAIModule *this, int tribute
       v7 = v5->md->player;
       v8 = v7->world;
     }
-    while ( v6 < v8->player_num );
+    while( v6 < v8->player_num );
   }
   return highest;
 }
@@ -391,13 +391,13 @@ int __thiscall DiplomacyAIModule::mostLiked(DiplomacyAIModule *this, int tribute
   highest = -1;
   v6 = this->md->player;
   v7 = v6->world;
-  if ( v7->player_num > 1 )
+  if( v7->player_num > 1 )
   {
     v8 = -284 - (_DWORD)v3;
     v9 = &v3->likeTable[1];
-    while ( 1 )
+    while( 1 )
     {
-      if ( v4 != v6->id
+      if( v4 != v6->id
         && (*(RGE_Player **)((char *)v7->players + v8 + (unsigned int)v9))->game_status != 2
         && (tributeOn <= 0 || tributePlayer != v4 || !DiplomacyAIModule::isEnemy(v3, v4))
         && *v9 > v5 )
@@ -409,7 +409,7 @@ int __thiscall DiplomacyAIModule::mostLiked(DiplomacyAIModule *this, int tribute
       ++v9;
       v6 = v3->md->player;
       v7 = v6->world;
-      if ( v4 >= v7->player_num )
+      if( v4 >= v7->player_num )
         break;
       v8 = -284 - (_DWORD)v3;
     }
@@ -424,10 +424,10 @@ int __thiscall DiplomacyAIModule::isEnemy(DiplomacyAIModule *this, int playerID)
   int result; // eax@5
 
   result = 0;
-  if ( playerID > 0 )
+  if( playerID > 0 )
   {
     v2 = this->md->player;
-    if ( playerID <= v2->world->player_num && playerID != v2->id && v2->relations[playerID] == 3 )
+    if( playerID <= v2->world->player_num && playerID != v2->id && v2->relations[playerID] == 3 )
       result = 1;
   }
   return result;
@@ -440,10 +440,10 @@ int __thiscall DiplomacyAIModule::isNeutral(DiplomacyAIModule *this, int playerI
   int result; // eax@5
 
   result = 0;
-  if ( playerID > 0 )
+  if( playerID > 0 )
   {
     v2 = this->md->player;
-    if ( playerID <= v2->world->player_num && playerID != v2->id && v2->relations[playerID] == 1 )
+    if( playerID <= v2->world->player_num && playerID != v2->id && v2->relations[playerID] == 1 )
       result = 1;
   }
   return result;
@@ -456,7 +456,7 @@ int __thiscall DiplomacyAIModule::isAlly(DiplomacyAIModule *this, int playerID)
   int result; // eax@2
 
   v2 = this->md->player;
-  if ( playerID == v2->id )
+  if( playerID == v2->id )
     result = 1;
   else
     result = playerID > 0 && playerID <= v2->world->player_num && !v2->relations[playerID];
@@ -472,16 +472,16 @@ int __thiscall DiplomacyAIModule::isAlliedWithMe(DiplomacyAIModule *this, int pl
   int result; // eax@5
 
   result = 0;
-  if ( playerID > 0 )
+  if( playerID > 0 )
   {
     v2 = this->md->player;
     v3 = v2->world;
-    if ( playerID < v3->player_num )
+    if( playerID < v3->player_num )
     {
       v4 = v3->players[playerID];
-      if ( v4 )
+      if( v4 )
       {
-        if ( (*(int (__stdcall **)(_DWORD))&v4->vfptr->gap4[24])(v2->id) )
+        if( (*(int (__stdcall **)(_DWORD))&v4->vfptr->gap4[24])(v2->id) )
           result = 1;
       }
     }
@@ -494,12 +494,12 @@ void __thiscall DiplomacyAIModule::setRelation(DiplomacyAIModule *this, int play
 {
   RGE_Player *v3; // edx@2
 
-  if ( playerID > 0 )
+  if( playerID > 0 )
   {
     v3 = this->md->player;
-    if ( playerID < v3->world->player_num )
+    if( playerID < v3->world->player_num )
     {
-      if ( this->changeableTable[playerID] )
+      if( this->changeableTable[playerID] )
         v3->vfptr->setDiplomaticStance(v3, playerID, newRelation);
     }
   }

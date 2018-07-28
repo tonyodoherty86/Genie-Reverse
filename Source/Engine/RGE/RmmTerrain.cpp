@@ -39,11 +39,11 @@ char __thiscall RGE_RMM_Terrain_Generator::generate(RGE_RMM_Terrain_Generator *t
     index = v2;
     *(v3 - 1) = v4;
   }
-  while ( v2 < 99 );
+  while( v2 < 99 );
   v5 = RGE_Zone_Map_List::create_zone_map(v1->map->map_zones, terrain_table, 99);
   v1->map_zone = RGE_Zone_Map_List::get_zone_map(v1->map->map_zones, v5);
   v6 = 0;
-  if ( v1->info.terrain_num > 0 )
+  if( v1->info.terrain_num > 0 )
   {
     index = (int)&v1->info;
     do
@@ -54,7 +54,7 @@ char __thiscall RGE_RMM_Terrain_Generator::generate(RGE_RMM_Terrain_Generator *t
       ++v6;
       index += 32;
     }
-    while ( v6 < v7 );
+    while( v6 < v7 );
   }
   RGE_RMM_Terrain_Generator::check_borders(v1);
   return 1;
@@ -66,9 +66,9 @@ char __stdcall RGE_RMM_Terrain_Generator::water(char terrain)
   char result; // al@1
 
   result = terrain;
-  if ( terrain != 1 )
+  if( terrain != 1 )
   {
-    if ( terrain == 4 )
+    if( terrain == 4 )
       result = 1;
     else
       result = terrain == 22;
@@ -96,29 +96,29 @@ void __thiscall RGE_RMM_Terrain_Generator::check_borders(RGE_RMM_Terrain_Generat
   max_y = v3 - 1;
   v4 = v1->map_width;
   max_x = v4 - 1;
-  if ( v3 > 0 )
+  if( v3 > 0 )
   {
     do
     {
       v5 = 0;
-      for ( x = 0; x < v4; ++x )
+      for( x = 0; x < v4; ++x )
       {
-        if ( !RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2][v5] + 5) & 0x1F) )
+        if( !RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2][v5] + 5) & 0x1F) )
         {
           v6 = 0;
-          if ( v2 > 0 && RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2 - 1][v5] + 5) & 0x1F)
+          if( v2 > 0 && RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2 - 1][v5] + 5) & 0x1F)
             || v2 < max_y && RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2 + 1][v5] + 5) & 0x1F) )
           {
             v6 = 1;
           }
-          if ( v5 > 0
+          if( v5 > 0
             && (RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2][v5] - 19) & 0x1F)
              || v2 > 0 && RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2 - 1][v5] - 19) & 0x1F)
              || v2 < max_y && RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2 + 1][v5] - 19) & 0x1F)) )
           {
             v6 = 1;
           }
-          if ( x < max_x
+          if( x < max_x
             && (RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2][v5 + 1] + 5) & 0x1F)
              || v2 > 0 && RGE_RMM_Terrain_Generator::water(*((_BYTE *)&v1->map_row_offset[v2 - 1][v5 + 1] + 5) & 0x1F)
              || v2 < max_y
@@ -126,7 +126,7 @@ void __thiscall RGE_RMM_Terrain_Generator::check_borders(RGE_RMM_Terrain_Generat
           {
             v6 = 1;
           }
-          if ( v6 == 1 )
+          if( v6 == 1 )
           {
             v7 = v1->map_row_offset[v2];
             *((_BYTE *)&v7[v5] + 5) = *((_BYTE *)&v7[v5] + 5) & 0xE2 | 2;
@@ -137,7 +137,7 @@ void __thiscall RGE_RMM_Terrain_Generator::check_borders(RGE_RMM_Terrain_Generat
       }
       ++v2;
     }
-    while ( v2 < v1->map_height );
+    while( v2 < v1->map_height );
   }
 }
 
@@ -181,27 +181,27 @@ char __thiscall RGE_RMM_Terrain_Generator::check_terrain(RGE_RMM_Terrain_Generat
   count = 1;
   v6 = spacing;
   i_base_terrain = this->map->terrain_types[(unsigned __int8)base_terrain].impassable_terrain;
-  if ( spacing <= 0 )
+  if( spacing <= 0 )
     goto LABEL_22;
   v7 = x - spacing;
   v8 = y - spacing;
   v9 = spacing + x;
   v10 = spacing + y;
   spacinga = spacing + y;
-  if ( x - v6 < 0 )
+  if( x - v6 < 0 )
     v7 = 0;
-  if ( v8 < 0 )
+  if( v8 < 0 )
     v8 = 0;
   v11 = this->map_width;
-  if ( v9 >= v11 )
+  if( v9 >= v11 )
     v9 = v11 - 1;
   v12 = this->map_height;
-  if ( v10 >= v12 )
+  if( v10 >= v12 )
     spacinga = v12 - 1;
   v13 = v7;
   v14 = &this->map_row_offset[v8][v7];
   index1 = v8;
-  if ( v8 > spacinga )
+  if( v8 > spacinga )
   {
 LABEL_22:
     v19 = x - 2;
@@ -209,38 +209,38 @@ LABEL_22:
     v21 = x + 2;
     v22 = y + 2;
     y1 = x + 2;
-    if ( x - 2 < 0 )
+    if( x - 2 < 0 )
       v19 = 0;
-    if ( v20 < 0 )
+    if( v20 < 0 )
       v20 = 0;
     v23 = this->map_width;
-    if ( v21 >= v23 )
+    if( v21 >= v23 )
     {
       v21 = v23 - 1;
       y1 = v23 - 1;
     }
     v24 = this->map_height;
-    if ( v22 >= v24 )
+    if( v22 >= v24 )
       v22 = v24 - 1;
     v25 = &this->map_row_offset[v20];
     v26 = (int)&(*v25)[v19].screen_xpos;
-    if ( v20 <= v22 )
+    if( v20 <= v22 )
     {
       xa = v22 - v20 + 1;
       do
       {
-        if ( v19 <= v21 )
+        if( v19 <= v21 )
         {
           v27 = (_BYTE *)(v26 + 5);
           v28 = v21 - v19 + 1;
           do
           {
-            if ( (*v27 & 0x1F) == target )
+            if( (*v27 & 0x1F) == target )
               ++count;
             v27 += 24;
             --v28;
           }
-          while ( v28 );
+          while( v28 );
           v21 = y1;
         }
         v29 = v25[1];
@@ -248,33 +248,33 @@ LABEL_22:
         v26 = (int)&v29[v19].screen_xpos;
         --xa;
       }
-      while ( xa );
+      while( xa );
     }
     result = count;
   }
   else
   {
     v33 = &this->map_row_offset[v8];
-    while ( 1 )
+    while( 1 )
     {
       v15 = v7;
-      if ( v7 <= v9 )
+      if( v7 <= v9 )
         break;
 LABEL_19:
       ++v33;
       v14 = &(*v33)[v13];
-      if ( ++index1 > spacinga )
+      if( ++index1 > spacinga )
         goto LABEL_22;
     }
     v16 = (char *)v14 + 5;
-    while ( 1 )
+    while( 1 )
     {
       v17 = *v16 & 0x1F;
-      if ( v17 != base_terrain && (*v16 & 0x1F) != i_base_terrain && v17 != target )
+      if( v17 != base_terrain && (*v16 & 0x1F) != i_base_terrain && v17 != target )
         break;
       ++v15;
       v16 += 24;
-      if ( v15 > v9 )
+      if( v15 > v9 )
       {
         v13 = v7;
         this = v30;
@@ -303,15 +303,15 @@ void __thiscall RGE_RMM_Terrain_Generator::generate_modifiers(RGE_RMM_Terrain_Ge
   v1 = this;
   v2 = 0;
   memset(this->search_map, 0, this->map_height * this->map_width);
-  if ( this->map_height > 0 )
+  if( this->map_height > 0 )
   {
     do
     {
-      for ( i = 0; i < v1->map_width; ++i )
+      for( i = 0; i < v1->map_width; ++i )
       {
         v4 = 0;
         modifier = 0;
-        if ( v1->info.hot_spot_num > 0 )
+        if( v1->info.hot_spot_num > 0 )
         {
           v5 = (int)&v1->info.hot_spots[0].y;
           v10 = v1->info.hot_spot_num;
@@ -319,27 +319,27 @@ void __thiscall RGE_RMM_Terrain_Generator::generate_modifiers(RGE_RMM_Terrain_Ge
           {
             v6 = i - *(_DWORD *)(v5 - 4);
             v7 = v2 - *(_DWORD *)v5;
-            if ( v6 < 0 )
+            if( v6 < 0 )
               v6 = -v6;
-            if ( v7 < 0 )
+            if( v7 < 0 )
               v7 = -v7;
             v8 = *(_DWORD *)(v5 + 4) - (unsigned __int64)(signed __int64)sqrt((double)(v7 * v7 + v6 * v6));
-            if ( v8 > 0 )
+            if( v8 > 0 )
               modifier += v8 * *(_DWORD *)(v5 + 8);
             v5 += 16;
             --v10;
           }
-          while ( v10 );
+          while( v10 );
           v4 = modifier;
         }
-        if ( v4 <= 100 )
+        if( v4 <= 100 )
           v1->search_map_rows[v2][i] = v4;
         else
           v1->search_map_rows[v2][i] = 101;
       }
       ++v2;
     }
-    while ( v2 < v1->map_height );
+    while( v2 < v1->map_height );
   }
 }
 
@@ -358,9 +358,9 @@ int __thiscall RGE_RMM_Terrain_Generator::count_map_tiles(RGE_RMM_Terrain_Genera
 
   v2 = 0;
   v3 = *this->map_row_offset;
-  for ( i = (unsigned int)&v3[this->map_height * this->map_width]; (unsigned int)v3 < i; ++v3 )
+  for( i = (unsigned int)&v3[this->map_height * this->map_width]; (unsigned int)v3 < i; ++v3 )
   {
-    if ( (*((_BYTE *)v3 + 5) & 0x1F) == terrain )
+    if( (*((_BYTE *)v3 + 5) & 0x1F) == terrain )
       ++v2;
   }
   return v2;
@@ -401,7 +401,7 @@ void __thiscall RGE_RMM_Terrain_Generator::link_stack_randomly(RGE_RMM_Terrain_G
   loc_stack->next = v7;
   *(_DWORD *)(v11 + 16) = 0;
   *(_DWORD *)(v11 + 20) = v11 - 24;
-  if ( (unsigned int)&v7[1] < v11 )
+  if( (unsigned int)&v7[1] < v11 )
   {
     do
     {
@@ -409,11 +409,11 @@ void __thiscall RGE_RMM_Terrain_Generator::link_stack_randomly(RGE_RMM_Terrain_G
       *(_DWORD *)(v10 + 20) = v10 - 24;
       v10 += 24;
     }
-    while ( v10 < v11 );
+    while( v10 < v11 );
   }
   v12 = v3->map_width * v3->map_height;
   v13 = ((BYTE4(v12) & 7) + (signed int)v12) >> 3;
-  if ( v13 > 0 )
+  if( v13 > 0 )
   {
     loc_stacka = (Map_Stack *)v13;
     do
@@ -424,7 +424,7 @@ void __thiscall RGE_RMM_Terrain_Generator::link_stack_randomly(RGE_RMM_Terrain_G
       RGE_Random_Map_Module::add_stack_node(v4, &v3->stack_offsets[(v16 >> 31) + v16][v14]);
       loc_stacka = (Map_Stack *)((char *)loc_stacka - 1);
     }
-    while ( loc_stacka );
+    while( loc_stacka );
   }
 }
 
@@ -453,25 +453,25 @@ void __thiscall RGE_RMM_Terrain_Generator::remove_area_from_lists(RGE_RMM_Terrai
   v9 = x - spacing < 0;
   y_index = spacing + x;
   xa = v8;
-  if ( v9 )
+  if( v9 )
     v5 = 0;
-  if ( v6 < 0 )
+  if( v6 < 0 )
     v6 = 0;
   v10 = v4->map_width;
-  if ( v7 >= v10 )
+  if( v7 >= v10 )
   {
     y_index = v10 - 1;
     v7 = v10 - 1;
   }
   v11 = v4->map_height;
-  if ( v8 >= v11 )
+  if( v8 >= v11 )
   {
     xa = v11 - 1;
     v8 = v11 - 1;
   }
-  for ( y1 = v6; y1 <= v8; ++y1 )
+  for( y1 = v6; y1 <= v8; ++y1 )
   {
-    if ( v5 <= v7 )
+    if( v5 <= v7 )
     {
       v12 = v5;
       v13 = v7 - v5 + 1;
@@ -481,7 +481,7 @@ void __thiscall RGE_RMM_Terrain_Generator::remove_area_from_lists(RGE_RMM_Terrai
         ++v12;
         --v13;
       }
-      while ( v13 );
+      while( v13 );
       v8 = xa;
       v7 = y_index;
     }
@@ -560,7 +560,7 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
   max_x = v4;
   max_y = this->map_height - 1;
   chance = 0.0;
-  if ( info_line.avoid_hot_spots == 2 && this->info.hot_spot_num > 0 )
+  if( info_line.avoid_hot_spots == 2 && this->info.hot_spot_num > 0 )
   {
     v5 = (char *)this->info.hot_spots;
     do
@@ -570,7 +570,7 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
       terrain_fairness_zones_visited[v3++] = 0;
       v5 += 16;
     }
-    while ( v3 < v6 );
+    while( v3 < v6 );
   }
   v7 = stack;
   v8 = 99;
@@ -580,22 +580,22 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
     ++v7;
     --v8;
   }
-  while ( v8 );
+  while( v8 );
   loc_stack.next = 0;
   loc_stack.prev = 0;
   RGE_RMM_Terrain_Generator::link_stack_randomly(v2, &loc_stack, info_line.base_terrain_type);
   base_area = 2 * (unsigned __int64)(signed __int64)sqrt((double)info_line.terrain_size / (double)info_line.clumps);
-  if ( base_area < 2 )
+  if( base_area < 2 )
     base_area = 2;
   index1 = 0;
-  if ( info_line.clumps > 0 )
+  if( info_line.clumps > 0 )
   {
     v9 = stack;
     do
     {
-      if ( !RGE_Random_Map_Module::pop_stack(&loc_stack, &x, &y, &in_zone) )
+      if( !RGE_Random_Map_Module::pop_stack(&loc_stack, &x, &y, &in_zone) )
         break;
-      if ( (*((_BYTE *)&v2->map_row_offset[y][x] + 5) & 0x1F) == info_line.base_terrain_type
+      if( (*((_BYTE *)&v2->map_row_offset[y][x] + 5) & 0x1F) == info_line.base_terrain_type
         && RGE_RMM_Terrain_Generator::check_terrain(
              v2,
              info_line.terrain_type,
@@ -609,25 +609,25 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
         v10 = v2->map_row_offset[y];
         *((_BYTE *)&v10[x] + 5) ^= (*((_BYTE *)&v10[x] + 5) ^ LOBYTE(info_line.terrain_type)) & 0x1F;
         v11 = x;
-        if ( x > 0 )
+        if( x > 0 )
         {
           RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v9, x - 1, y, 0.0, 0.0);
           v11 = x;
         }
         v12 = y;
-        if ( y > 0 )
+        if( y > 0 )
         {
           RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v9, v11, y - 1, 0.0, 0.0);
           v12 = y;
           v11 = x;
         }
-        if ( v11 < v2->map_width - 1 )
+        if( v11 < v2->map_width - 1 )
         {
           RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v9, v11 + 1, v12, 0.0, 0.0);
           v12 = y;
           v11 = x;
         }
-        if ( v12 < v2->map_height - 1 )
+        if( v12 < v2->map_height - 1 )
         {
           RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v9, v11, v12 + 1, 0.0, 0.0);
           v12 = y;
@@ -639,38 +639,38 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
         ++index1;
         ++v9;
         v15 = RGE_Zone_Map::get_zone_info(v14, v11, tot_cost);
-        if ( info_line.avoid_hot_spots == 2 )
+        if( info_line.avoid_hot_spots == 2 )
         {
           v16 = v2->info.hot_spot_num;
           v17 = 0;
-          if ( v16 > 0 )
+          if( v16 > 0 )
           {
             v18 = chance;
             do
             {
-              if ( terrain_fairness_zones[v17] == v15 && !terrain_fairness_zones_visited[v17] )
+              if( terrain_fairness_zones[v17] == v15 && !terrain_fairness_zones_visited[v17] )
               {
                 terrain_fairness_zones_visited[v17] = 1;
                 ++LODWORD(v18);
               }
               ++v17;
             }
-            while ( v17 < v16 );
+            while( v17 < v16 );
             chance = v18;
           }
         }
       }
     }
-    while ( index1 < info_line.clumps );
+    while( index1 < info_line.clumps );
   }
-  if ( info_line.avoid_hot_spots == 2 && SLODWORD(chance) < v2->info.hot_spot_num )
+  if( info_line.avoid_hot_spots == 2 && SLODWORD(chance) < v2->info.hot_spot_num )
   {
     v19 = &stack[index1];
     do
     {
-      if ( !RGE_Random_Map_Module::pop_stack(&loc_stack, &x, &y, &in_zone) )
+      if( !RGE_Random_Map_Module::pop_stack(&loc_stack, &x, &y, &in_zone) )
         break;
-      if ( (*((_BYTE *)&v2->map_row_offset[y][x] + 5) & 0x1F) == info_line.base_terrain_type
+      if( (*((_BYTE *)&v2->map_row_offset[y][x] + 5) & 0x1F) == info_line.base_terrain_type
         && RGE_RMM_Terrain_Generator::check_terrain(
              v2,
              info_line.terrain_type,
@@ -682,12 +682,12 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
       {
         v20 = RGE_Zone_Map::get_zone_info(v2->map_zone, x, y);
         v21 = v2->info.hot_spot_num;
-        for ( i = 0; i < v21; ++i )
+        for( i = 0; i < v21; ++i )
         {
-          if ( terrain_fairness_zones[i] == v20 && !terrain_fairness_zones_visited[i] )
+          if( terrain_fairness_zones[i] == v20 && !terrain_fairness_zones_visited[i] )
             break;
         }
-        if ( i != v21 )
+        if( i != v21 )
         {
           v23 = base_area;
           LODWORD(v24) = LODWORD(chance) + 1;
@@ -697,25 +697,25 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
           v25 = v2->map_row_offset[y];
           *((_BYTE *)&v25[x] + 5) ^= (*((_BYTE *)&v25[x] + 5) ^ LOBYTE(info_line.terrain_type)) & 0x1F;
           v26 = x;
-          if ( x > 0 )
+          if( x > 0 )
           {
             RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v19, x - 1, y, 0.0, 0.0);
             v26 = x;
           }
           v27 = y;
-          if ( y > 0 )
+          if( y > 0 )
           {
             RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v19, v26, y - 1, 0.0, 0.0);
             v27 = y;
             v26 = x;
           }
-          if ( v26 < v2->map_width - 1 )
+          if( v26 < v2->map_width - 1 )
           {
             RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v19, v26 + 1, v27, 0.0, 0.0);
             v27 = y;
             v26 = x;
           }
-          if ( v27 < v2->map_height - 1 )
+          if( v27 < v2->map_height - 1 )
             RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v19, v26, v27 + 1, 0.0, 0.0);
           ++clump_size;
           ++index1;
@@ -723,21 +723,21 @@ char __thiscall RGE_RMM_Terrain_Generator::base_terrain_generate(RGE_RMM_Terrain
         }
       }
     }
-    while ( SLODWORD(chance) < v2->info.hot_spot_num );
+    while( SLODWORD(chance) < v2->info.hot_spot_num );
   }
   do
   {
     done = 1;
-    if ( index1 > 0 )
+    if( index1 > 0 )
     {
       v28 = stack;
       base_area = index1;
       do
       {
-        if ( clump_size < info_line.terrain_size && RGE_Random_Map_Module::pop_stack(v28, &x, &y, &in_zone) )
+        if( clump_size < info_line.terrain_size && RGE_Random_Map_Module::pop_stack(v28, &x, &y, &in_zone) )
         {
           done = 0;
-          if ( !info_line.avoid_hot_spots )
+          if( !info_line.avoid_hot_spots )
           {
             v30 = y;
             v32 = x;
@@ -750,23 +750,23 @@ LABEL_63:
                                      v30,
                                      info_line.spacing,
                                      info_line.base_terrain_type);
-            if ( (*(_BYTE *)(v33 + 5) & 0x1F) == info_line.base_terrain_type && v34 > 0 )
+            if( (*(_BYTE *)(v33 + 5) & 0x1F) == info_line.base_terrain_type && v34 > 0 )
             {
               chance = RGE_RMM_Terrain_Generator::fig_chance(v34, x, y, info_line.clumpiness_factor);
-              if ( info_line.avoid_hot_spots )
+              if( info_line.avoid_hot_spots )
               {
                 v54 = v2->search_map_rows[y][x];
                 chance = (double)v54 + chance;
               }
               *(_BYTE *)(v33 + 5) ^= (*(_BYTE *)(v33 + 5) ^ LOBYTE(info_line.terrain_type)) & 0x1F;
-              if ( x <= 0 )
+              if( x <= 0 )
               {
                 v35 = info_line.base_terrain_type;
               }
               else
               {
                 v35 = info_line.base_terrain_type;
-                if ( (*(_BYTE *)(v33 - 19) & 0x1F) == info_line.base_terrain_type )
+                if( (*(_BYTE *)(v33 - 19) & 0x1F) == info_line.base_terrain_type )
                 {
                   v36 = debug_rand(aCMsdevWorkA_55, 469);
                   v37 = (signed int)(100 * v36 + ((unsigned __int64)(-214741810900i64 * v36) >> 32)) >> 14;
@@ -775,19 +775,19 @@ LABEL_63:
                   RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v28, x - 1, y, 0.0, v38);
                 }
               }
-              if ( x < max_x && (*(_BYTE *)(v33 + 29) & 0x1F) == v35 )
+              if( x < max_x && (*(_BYTE *)(v33 + 29) & 0x1F) == v35 )
               {
                 v54 = 100 * debug_rand(aCMsdevWorkA_55, 471) / 0x7FFF;
                 v39 = (double)v54 + chance;
                 RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v28, x + 1, y, 0.0, v39);
               }
-              if ( y > 0 && (*(_BYTE *)(v33 - 24 * v2->map_width + 5) & 0x1F) == v35 )
+              if( y > 0 && (*(_BYTE *)(v33 - 24 * v2->map_width + 5) & 0x1F) == v35 )
               {
                 v54 = 100 * debug_rand(aCMsdevWorkA_55, 473) / 0x7FFF;
                 v40 = (double)v54 + chance;
                 RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v2->vfptr, v28, x, y - 1, 0.0, v40);
               }
-              if ( y < max_y && (*(_BYTE *)(v33 + 24 * v2->map_width + 5) & 0x1F) == v35 )
+              if( y < max_y && (*(_BYTE *)(v33 + 24 * v2->map_width + 5) & 0x1F) == v35 )
               {
                 v54 = 100 * debug_rand(aCMsdevWorkA_55, 475) / 0x7FFF;
                 v41 = (double)v54 + chance;
@@ -801,38 +801,38 @@ LABEL_63:
           v30 = y;
           v31 = 100 * v29 / 0x7FFF;
           v32 = x;
-          if ( v2->search_map_rows[y][x] <= v31 )
+          if( v2->search_map_rows[y][x] <= v31 )
             goto LABEL_63;
         }
 LABEL_81:
         ++v28;
         --base_area;
       }
-      while ( base_area );
+      while( base_area );
     }
   }
-  while ( !done );
-  if ( info_line.clumps > 0 )
+  while( !done );
+  if( info_line.clumps > 0 )
   {
     v42 = stack;
     base_area = info_line.clumps;
-    while ( !RGE_Random_Map_Module::pop_stack(v42, &x, &y, &in_zone) )
+    while( !RGE_Random_Map_Module::pop_stack(v42, &x, &y, &in_zone) )
     {
 LABEL_98:
       ++v42;
-      if ( !--base_area )
+      if( !--base_area )
         goto LABEL_99;
     }
-    while ( 2 )
+    while( 2 )
     {
       v43 = (int)&v2->map_row_offset[y][x].screen_xpos;
-      if ( x <= 0 )
+      if( x <= 0 )
       {
         v44 = info_line.terrain_type;
         goto LABEL_92;
       }
       v44 = info_line.terrain_type;
-      if ( (*(_BYTE *)(v43 - 19) & 0x1F) == LOBYTE(info_line.terrain_type)
+      if( (*(_BYTE *)(v43 - 19) & 0x1F) == LOBYTE(info_line.terrain_type)
         && x < max_x
         && (*(_BYTE *)(v43 + 29) & 0x1F) == LOBYTE(info_line.terrain_type) )
       {
@@ -842,14 +842,14 @@ LABEL_96:
       else
       {
 LABEL_92:
-        if ( y > 0 )
+        if( y > 0 )
         {
           v45 = 24 * v2->map_width;
-          if ( (*(_BYTE *)(v43 - v45 + 5) & 0x1F) == v44 && y > max_y && (*(_BYTE *)(v43 + v45 + 5) & 0x1F) == v44 )
+          if( (*(_BYTE *)(v43 - v45 + 5) & 0x1F) == v44 && y > max_y && (*(_BYTE *)(v43 + v45 + 5) & 0x1F) == v44 )
             goto LABEL_96;
         }
       }
-      if ( !RGE_Random_Map_Module::pop_stack(v42, &x, &y, &in_zone) )
+      if( !RGE_Random_Map_Module::pop_stack(v42, &x, &y, &in_zone) )
         goto LABEL_98;
       continue;
     }
@@ -863,6 +863,6 @@ LABEL_99:
     ++v46;
     --v47;
   }
-  while ( v47 );
+  while( v47 );
   return 1;
 }

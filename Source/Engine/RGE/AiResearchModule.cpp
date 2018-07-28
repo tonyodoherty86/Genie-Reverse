@@ -30,7 +30,7 @@ ResearchAIModule *__thiscall ResearchAIModule::`scalar deleting destructor'(Rese
 
   v2 = this;
   ResearchAIModule::~ResearchAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -82,7 +82,7 @@ void __thiscall ResearchAIModule::ResearchAIModule(ResearchAIModule *this, int p
   rge_read(v5, (int)&v3->techTree, v5, v3->techTreeNameValue, tempInt);
   i = 0;
   v3->techTreeNameValue[tempInt] = 0;
-  if ( v3->techTreeLengthValue > 0 )
+  if( v3->techTreeLengthValue > 0 )
   {
     do
     {
@@ -102,13 +102,13 @@ void __thiscall ResearchAIModule::ResearchAIModule(ResearchAIModule *this, int p
         ++v6;
         --v7;
       }
-      while ( v7 );
+      while( v7 );
       ResourceItem::ResourceItem(&newRCost, 4, rc);
       LOBYTE(v24) = 2;
       v4 = (TechnologyItem *)operator new(0x54u);
       v18 = v4;
       LOBYTE(v24) = 3;
-      if ( v4 )
+      if( v4 )
       {
         v20 = &v11;
         ResourceItem::ResourceItem(&v11, &newRCost);
@@ -128,7 +128,7 @@ void __thiscall ResearchAIModule::ResearchAIModule(ResearchAIModule *this, int p
       v10 = v3->techTreeLengthValue;
       ++i;
     }
-    while ( i < v10 );
+    while( i < v10 );
   }
 }
 // 56E988: using guessed type int (__thiscall *ResearchAIModule::`vftable')(void *Memory, unsigned int __flags);
@@ -140,7 +140,7 @@ void __thiscall ResearchAIModule::~ResearchAIModule(ResearchAIModule *this)
 
   v1 = this;
   this->vfptr = (AIModuleVtbl *)&ResearchAIModule::`vftable';
-  if ( this->techTreeLengthValue > 0 )
+  if( this->techTreeLengthValue > 0 )
     ResearchAIModule::removeOldTechTree(this);
   TechnologyItem::~TechnologyItem(&v1->techTree);
   AIModule::~AIModule((AIModule *)&v1->vfptr);
@@ -175,11 +175,11 @@ int __thiscall ResearchAIModule::save(ResearchAIModule *this, int outfile)
   v3 = v2->techTree.next;
   v4 = v3 == &v9->techTree;
   v9 = (ResearchAIModule *)((char *)v9 + 244);
-  if ( !v4 )
+  if( !v4 )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
       strcpy(tempString, TechnologyItem::name(v3));
       tempInt = strlen(tempString);
@@ -195,10 +195,10 @@ int __thiscall ResearchAIModule::save(ResearchAIModule *this, int outfile)
         rge_write(outfile, &tempInt, 4);
         ++v6;
       }
-      while ( v6 < 4 );
+      while( v6 < 4 );
       v3 = v3->next;
     }
-    while ( (ResearchAIModule *)v3 != v9 );
+    while( (ResearchAIModule *)v3 != v9 );
   }
   return 1;
 }
@@ -209,7 +209,7 @@ TechnologyItem *__thiscall ResearchAIModule::resourceCost(ResearchAIModule *this
   TechnologyItem *result; // eax@1
 
   result = ResearchAIModule::item(this, id);
-  if ( result )
+  if( result )
     result = (TechnologyItem *)TechnologyItem::resourceCost(result);
   return result;
 }
@@ -249,14 +249,14 @@ FILE *__thiscall ResearchAIModule::loadTechnologyTree(ResearchAIModule *this, ch
   int v25; // [sp+1E8h] [bp-4h]@7
 
   v2 = this;
-  if ( this->techTreeLengthValue > 0 )
+  if( this->techTreeLengthValue > 0 )
     ResearchAIModule::removeOldTechTree(this);
   v3 = v2->techTreeNameValue;
   v17 = v2->techTreeNameValue;
   strcpy(v2->techTreeNameValue, lName);
-  if ( !strcmp(v2->techTreeNameValue, aNone_2) )
+  if( !strcmp(v2->techTreeNameValue, aNone_2) )
   {
-    if ( v2 != (ResearchAIModule *)-332 )
+    if( v2 != (ResearchAIModule *)-332 )
     {
 LABEL_16:
       AIModule::logCommonHistory((AIModule *)&v2->vfptr, aThereIsNoTechT);
@@ -266,15 +266,15 @@ LABEL_15:
     strcpy(0, aNull);
     goto LABEL_16;
   }
-  if ( v2 == (ResearchAIModule *)-332 )
+  if( v2 == (ResearchAIModule *)-332 )
     goto LABEL_15;
   AIModule::logCommonHistory((AIModule *)&v2->vfptr, aLoadingTechTre, lName);
   sprintf(temp, aS_2, v2->techTreeNameValue);
   result = fopen(temp, Mode);
   v5 = result;
-  if ( !result )
+  if( !result )
     return result;
-  if ( fgets(temp, 256, result) )
+  if( fgets(temp, 256, result) )
   {
     do
     {
@@ -290,7 +290,7 @@ LABEL_15:
       v6 = (TechnologyItem *)operator new(0x54u);
       v21 = v6;
       LOBYTE(v25) = 1;
-      if ( v6 )
+      if( v6 )
       {
         v20 = &v10;
         ResourceItem::ResourceItem(&v10, &newRCost);
@@ -310,11 +310,11 @@ LABEL_15:
       v2->techTreeLengthValue = v9;
       ResourceItem::~ResourceItem(&newRCost);
     }
-    while ( fgets(temp, 256, v5) );
+    while( fgets(temp, 256, v5) );
     v3 = v17;
   }
   fclose(v5);
-  if ( strstr(v3, SubStr) )
+  if( strstr(v3, SubStr) )
     _unlink(v3);
   return (FILE *)1;
 }
@@ -342,17 +342,17 @@ void __thiscall ResearchAIModule::removeOldTechTree(ResearchAIModule *this)
   v1 = this;
   v2 = this->techTree.next;
   v3 = (int)&v1->techTree;
-  if ( v2 != &v1->techTree )
+  if( v2 != &v1->techTree )
   {
     do
     {
-      if ( !v2 )
+      if( !v2 )
         break;
       v4 = v2->next;
       ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
       v2 = v4;
     }
-    while ( v4 != (TechnologyItem *)v3 );
+    while( v4 != (TechnologyItem *)v3 );
   }
   v1->techTree.next = (TechnologyItem *)v3;
   v1->techTree.prev = (TechnologyItem *)v3;
@@ -367,14 +367,14 @@ TechnologyItem *__thiscall ResearchAIModule::item(ResearchAIModule *this, int id
 
   v2 = this->techTree.next;
   v3 = (char *)&this->techTree;
-  if ( v2 != &this->techTree )
+  if( v2 != &this->techTree )
   {
-    while ( v2 )
+    while( v2 )
     {
-      if ( TechnologyItem::id(v2) == id )
+      if( TechnologyItem::id(v2) == id )
         return v2;
       v2 = v2->next;
-      if ( (char *)v2 == v3 )
+      if( (char *)v2 == v3 )
         return 0;
     }
   }

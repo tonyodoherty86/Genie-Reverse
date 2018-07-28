@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Map.cpp
  * @author  Yvan Burrie
- * @date    2018/06/28
+ * @date    2018/07/05
  * @version 1.0
  */
 
@@ -163,7 +163,7 @@ RGE_Map::RGE_Map(
             ++v11;
             --v12;
         }
-        while ( v12 );
+        while( v12 );
         v13 = (void *)(v9 + 4);
         v9 += 408;
         memset(v13, 0, 0x40u);
@@ -171,7 +171,7 @@ RGE_Map::RGE_Map(
         *(_DWORD *)(v9 - 558) = 0;
         --v10;
     }
-    while ( v10 );
+    while( v10 );
     v14 = &this->border_types[15].sound;
     v15 = 16;
     do
@@ -181,7 +181,7 @@ RGE_Map::RGE_Map(
         v14 -= 360;
         --v15;
     }
-    while ( v15 );
+    while( v15 );
 
     this->load_terrain_types(terrain_tbl, sounds);
     this->load_border_types(border_tbl, sounds);
@@ -380,11 +380,11 @@ void RGE_Map::new_map(int width, int height)
             v4->search_map_rows[v18] = &v4->search_map[v4->map_width * v18];
             ++v18;
         }
-        while ( v18 < v4->map_height );
+        while( v18 < v4->map_height );
     }
     v19 = 0;
     v4->map_row_offset[v4->map_height] = v4->map;
-    for ( v4->search_map_rows[v4->map_height] = v4->search_map; v19 < v4->map_height; ++v19 )
+    for( v4->search_map_rows[v4->map_height] = v4->search_map; v19 < v4->map_height; ++v19 )
     {
         v20 = 0;
         if( v4->map_width > 0 )
@@ -397,7 +397,7 @@ void RGE_Map::new_map(int width, int height)
                 ++v20;
                 *(_BYTE *)(v22 + 5) = *(_BYTE *)(v22 + 5) & 0x1F | 0x20;
             }
-            while ( v20 < v4->map_width );
+            while( v20 < v4->map_width );
         }
     }
     RGE_Map::set_map_screen_pos(v4, 0, 0, v4->map_width - 1, v4->map_height - 1);
@@ -445,9 +445,9 @@ void RGE_Map::clear_map(char terrain, char elev)
     int v4; // esi@2
     char v6; // bl@3
 
-    for ( int i = 0; i < this->map_height; ++i ){
+    for( int i = 0; i < this->map_height; ++i ){
         v4 = 0;
-        for ( RGE_Tile *j = this->map_row_offset[i]; v4 < this->map_width; v4++ ){
+        for( RGE_Tile *j = this->map_row_offset[i]; v4 < this->map_width; v4++ ){
             v6 = *((_BYTE *)j + 5);
             j->tile_type = 0;
             *((_BYTE *)j + 6) = 0;
@@ -536,11 +536,11 @@ void RGE_Map::request_redraw(int x1, int y1, int x2, int y2, char attribute)
                                 v14 += 24;
                                 --v15;
                             }
-                            while ( v15 );
+                            while( v15 );
                         }
                         ++v13;
                     }
-                    while ( v13 <= y2 );
+                    while( v13 <= y2 );
                 }
             }
         }
@@ -553,7 +553,7 @@ void RGE_Map::clear_map_view_info()
     int v2; // edx@2
     char *v3; // eax@3
 
-    for ( i = 0; i < this->map_height; ++i ){
+    for( i = 0; i < this->map_height; ++i ){
         v2 = 0;
         if( this->map_width > 0 ){
             v3 = &this->map_row_offset[i]->last_drawn_shape;
@@ -566,7 +566,7 @@ void RGE_Map::clear_map_view_info()
                 v3 += 24;
                 ++v2;
             }
-            while ( v2 < this->map_width );
+            while( v2 < this->map_width );
         }
     }
 }
@@ -663,13 +663,13 @@ LABEL_6:
                     v9 += 24;
                     ++v5;
                 }
-                while ( v5 <= v7 );
+                while( v5 <= v7 );
                 v5 = x1;
                 v8 = y1a;
             }
             ++v6;
         }
-        while ( v6 <= y2 );
+        while( v6 <= y2 );
     }
 }
 
@@ -725,7 +725,7 @@ void RGE_Map::scenario_save(int outfile)
                     rge_write(v3, &overlay_info, 1);
                     v11 = (signed short)++v9;
                 }
-                while ( (signed short)v9 < *v4 );
+                while( (signed short)v9 < *v4 );
                 v6 = y;
             }
             v5 = *v4;
@@ -733,7 +733,7 @@ void RGE_Map::scenario_save(int outfile)
             v8 = (signed short)v6 - *v4 < 0;
             y = v6;
         }
-        while ( v8 ^ v14 );
+        while( v8 ^ v14 );
     }
 }
 
@@ -782,13 +782,13 @@ void RGE_Map::scenario_load(int infile, char *zone_terrain)
                     *v9 = *v9 & 0x1F | 32 * height_info;
                     v7 = (signed short)++x;
                 }
-                while ( (signed short)x < v4->map_height );
+                while( (signed short)x < v4->map_height );
                 v6 = y;
             }
             v5 = v4->map_height;
             y = ++v6;
         }
-        while ( (signed short)v6 < v5 );
+        while( (signed short)v6 < v5 );
     }
     LOWORD(v5) = LOWORD(v4->map_height) - 1;
     LOWORD(v6) = LOWORD(v4->map_width) - 1;
@@ -877,7 +877,7 @@ char RGE_Map::postclean_elevation(int x1, int y1, int x2, int y2, char elevation
         if( v9 > v12 )
             goto LABEL_72;
         v17 = (unsigned __int8)elevation_height;
-        while ( 1 )
+        while( 1 )
         {
             BYTE1(v15) = 0;
             y1a = v16[5];
@@ -968,7 +968,7 @@ LABEL_68:
 LABEL_72:
         index1 = ++v14;
     }
-    while ( v14 <= y2 );
+    while( v14 <= y2 );
     return was_bad;
 }
 
@@ -1034,13 +1034,13 @@ void RGE_Map::preclean_elevation(int x1, int y1, int x2, int y2, char elevation_
         v11 = y2;
         if( y2 < v7->map_height - 1 )
             v11 = y2++ + 1;
-        for ( index1 = v10; v10 <= v11; index1 = v10 )
+        for( index1 = v10; v10 <= v11; index1 = v10 )
         {
             index2 = v8;
             v12 = (int)&v7->map_row_offset[v10]->screen_xpos + v9;
             if( v8 <= x2 )
             {
-                while ( 1 )
+                while( 1 )
                 {
                     v13 = 0;
                     place1 = 0;
@@ -1121,7 +1121,7 @@ void RGE_Map::preclean_elevation(int x1, int y1, int x2, int y2, char elevation_
             ++v10;
         }
     }
-    while ( change_flag );
+    while( change_flag );
 }
 
 void RGE_Map::clean_elevation(int x1, int y1, int x2, int y2, int elevation_height)
@@ -1187,7 +1187,7 @@ void RGE_Map::clean_elevation(int x1, int y1, int x2, int y2, int elevation_heig
     v12 = y2;
     if( y2 >= this->map_height )
         v12 = this->map_height - 1;
-    while ( 1 )
+    while( 1 )
     {
         v7 -= 2;
         v8 -= 2;
@@ -1225,7 +1225,7 @@ void RGE_Map::clean_elevation(int x1, int y1, int x2, int y2, int elevation_heig
         if( v8 <= v12 )
         {
             v15 = 24 * v7;
-            for ( i = 24 * v7; ; v15 = i )
+            for( i = 24 * v7; ; v15 = i )
             {
                 index2 = v7;
                 v16 = (int)&this->map_row_offset[index1]->screen_xpos + v15;
@@ -1353,7 +1353,7 @@ LABEL_107:
                         v16 += 24;
                         ++index2;
                     }
-                    while ( index2 <= x2a );
+                    while( index2 <= x2a );
                 }
                 if( ++index1 > y2a )
                     break;
@@ -1559,7 +1559,7 @@ LABEL_115:
                     v15 += 24;
                     ++index2;
                 }
-                while ( index2 <= x2 );
+                while( index2 <= x2 );
                 v8 = x1;
                 v11 = y2;
                 v7 = v32;
@@ -1568,15 +1568,15 @@ LABEL_115:
 LABEL_117:
                 index1 = ++v13;
             }
-            while ( v13 <= v11 );
+            while( v13 <= v11 );
             v13 = y1;
 LABEL_119:
             v23 = __OFSUB__(pass_index + 1, 2);
             v22 = pass_index++ - 1 < 0;
         }
-        while ( v22 ^ v23 );
+        while( v22 ^ v23 );
     }
-    while ( replacement_terraina );
+    while( replacement_terraina );
 }
 
 int RGE_Map::clean_border_tile(int this_terrain, int other_terrain, int (*matrix)[32])
@@ -1621,13 +1621,13 @@ char RGE_Map::do_terrain_brush(int x, int y, int brush_size, char terrain_id)
         brush_sizea = v12 - 1;
         v9 = v12 - 1;
     }
-    for ( ; v8 <= v9; ++v8 )
+    for( ; v8 <= v9; ++v8 )
     {
         if( v7 <= v6 )
         {
             do
                 RGE_Map::set_terrain(v5, v5->game_world, v7++, v8, terrain_id, 0, 0);
-            while ( v7 <= v6 );
+            while( v7 <= v6 );
             v7 = xa;
             v9 = brush_sizea;
         }
@@ -1686,7 +1686,7 @@ char RGE_Map::do_terrain_brush_stroke(int x1, int y1, int x2, int y2, int brush_
                 terrain_id);
             --index;
         }
-        while ( index );
+        while( index );
     }
     if( (double)x2 != x || (double)y2 != y )
         v14(v7, x2, y2, brush_sizea, terrain_id);
@@ -1734,7 +1734,7 @@ char RGE_Map::do_elevation_brush(int x, int y, int brush_size, char elevation_he
         v8 = v11 - 1;
         brush_sizea = v11 - 1;
     }
-    for ( xa = v7; xa <= v8; ++xa )
+    for( xa = v7; xa <= v8; ++xa )
     {
         if( v6 <= v5 )
         {
@@ -1749,7 +1749,7 @@ char RGE_Map::do_elevation_brush(int x, int y, int brush_size, char elevation_he
                 --v13;
                 *(_BYTE *)(v16 + 5) = 32 * elevation_height | v15 & 0x1F;
             }
-            while ( v13 );
+            while( v13 );
             v8 = brush_sizea;
             v5 = x2;
         }
@@ -1812,7 +1812,7 @@ char RGE_Map::do_elevation_brush_stroke(int x1, int y1, int x2, int y2, int brus
                 elevation_height);
             --index;
         }
-        while ( index );
+        while( index );
     }
     if( (double)x2 != x || (double)y2 != y )
         v15(v7, x2, y2, v8, elevation_height);
@@ -1894,7 +1894,7 @@ char RGE_Map::do_cliff_brush_stroke(int x1, int y1, int x2, int y2, int cliff_id
                 delete_cliff);
             --index;
         }
-        while ( index );
+        while( index );
     }
     if( (double)x2 != x || (double)y2 != y )
         v14(v7, x2, y2, cliff_id, delete_cliff);
@@ -1984,7 +1984,7 @@ void RGE_Map::load_map(int infile)
     {
         rge_read(0, v3, v3, v4->map, 24 * v4->map_height * v4->map_width);
         v13 = 0;
-        for ( ya = 0; v13 < v4->map_height; ya = v13 )
+        for( ya = 0; v13 < v4->map_height; ya = v13 )
         {
             v14 = 0;
             if( v4->map_width > 0 )
@@ -1997,7 +1997,7 @@ void RGE_Map::load_map(int infile)
                     ++v16;
                     *((_DWORD *)&v4->map_row_offset[v15][v16] - 2) = 0;
                 }
-                while ( v14 < v4->map_width );
+                while( v14 < v4->map_width );
                 v13 = ya;
             }
             ++v13;
@@ -2006,7 +2006,7 @@ void RGE_Map::load_map(int infile)
     else
     {
         v9 = 0;
-        for ( y = 0; v9 < v4->map_height; y = v9 )
+        for( y = 0; v9 < v4->map_height; y = v9 )
         {
             x = 0;
             v10 = v4->map_row_offset[v9];
@@ -2038,7 +2038,7 @@ void RGE_Map::load_map(int infile)
                     ++v10;
                     ++x;
                 }
-                while ( x < v4->map_width );
+                while( x < v4->map_width );
                 v9 = y;
                 v6 = 0;
             }
@@ -2108,13 +2108,13 @@ void RGE_Map::save_map(int outfile)
                         ++v8;
                         ++v7;
                     }
-                    while ( v7 < *(_DWORD *)v9 );
+                    while( v7 < *(_DWORD *)v9 );
                     v6 = y;
                     v2 = v11;
                 }
                 y = ++v6;
             }
-            while ( v6 < *v12 );
+            while( v6 < *v12 );
         }
     }
     RGE_Unified_Visible_Map::save(v2->unified_vis_map, v3);
@@ -2152,7 +2152,7 @@ void RGE_Map::save(int outfile)
         v5 += 408;
         --v7;
     }
-    while ( v7 );
+    while( v7 );
     v8 = (int)&v2->border_types[0].sound;
     v9 = 16;
     do
@@ -2164,7 +2164,7 @@ void RGE_Map::save(int outfile)
         v8 += 1440;
         --v9;
     }
-    while ( v9 );
+    while( v9 );
     rge_write(outfile, v4, 36304);
     RGE_RMM_Database_Controller::save(v2->random_map, outfile);
     free(v4);
@@ -2208,7 +2208,7 @@ void RGE_Map::load_terrain_types(RGE_Sound **sounds)
         v2 -= 408;
         --v3;
     }
-    while ( v3 );
+    while( v3 );
     if( filename2 )
         free(filename2);
 }
@@ -2267,7 +2267,7 @@ void RGE_Map::load_terrain_types(char *terrain_table, RGE_Sound **sounds)
         v4 -= 408;
         --v5;
     }
-    while ( v5 );
+    while( v5 );
     v6 = fopen(terrain_table, Mode);
     v7 = v6;
     infile = v6;
@@ -2320,7 +2320,7 @@ void RGE_Map::load_terrain_types(char *terrain_table, RGE_Sound **sounds)
                         v11 += 6;
                         --v36;
                     }
-                    while ( v36 );
+                    while( v36 );
                     v13 = 0;
                     if( border_num > 0 )
                     {
@@ -2330,7 +2330,7 @@ void RGE_Map::load_terrain_types(char *terrain_table, RGE_Sound **sounds)
                             ++v13;
                             *(_WORD *)(v10 + 2 * (signed short)terrain_table + 190) = border;
                         }
-                        while ( (signed short)v13 < border_num );
+                        while( (signed short)v13 < border_num );
                     }
                     if( sound_id < 0 )
                         v14 = 0;
@@ -2373,7 +2373,7 @@ void RGE_Map::load_terrain_types(char *terrain_table, RGE_Sound **sounds)
                 }
                 --v38;
             }
-            while ( v38 );
+            while( v38 );
         }
     }
     fclose(v7);
@@ -2417,7 +2417,7 @@ void RGE_Map::load_border_types(RGE_Sound **sounds)
         v2 -= 1440;
         --v3;
     }
-    while ( v3 );
+    while( v3 );
     if( filename2 )
         free(filename2);
 }
@@ -2475,7 +2475,7 @@ void RGE_Map::load_border_types(char *border_table, RGE_Sound **sounds)
         v5 -= 1440;
         --v4;
     }
-    while ( v4 );
+    while( v4 );
     v6 = fopen(border_table, Mode);
     v7 = v6;
     infile = v6;
@@ -2515,7 +2515,7 @@ void RGE_Map::load_border_types(char *border_table, RGE_Sound **sounds)
                     v10 = (signed short)border_table;
                     v11 = (int)&v3->border_types[v10].loaded;
                     v12 = (int)v3->border_types[v10].borders;
-                    for ( i = v3->border_types[v10].borders; ; v12 = (int)i )
+                    for( i = v3->border_types[v10].borders; ; v12 = (int)i )
                     {
                         v13 = (_WORD *)v12;
                         v14 = v12 + 2;
@@ -2531,7 +2531,7 @@ void RGE_Map::load_border_types(char *border_table, RGE_Sound **sounds)
                             v14 += 6;
                             v33 = v15 - 1;
                         }
-                        while ( v15 != 1 );
+                        while( v15 != 1 );
                         v17 = v34 == 1;
                         ++i;
                         --v34;
@@ -2574,7 +2574,7 @@ void RGE_Map::load_border_types(char *border_table, RGE_Sound **sounds)
                 }
                 --v37;
             }
-            while ( v37 );
+            while( v37 );
         }
     }
     fclose(v7);
@@ -2598,7 +2598,7 @@ void RGE_Map::load_terrain_obj_types(char *terr_obj_tbl)
     if( v3 )
     {
         fscanf(v3, aHd, &num);
-        while ( fscanf(v4, aHdHdHdHd_1, &terr_obj_tbl, &obj_id, &density, &flag) != -1 )
+        while( fscanf(v4, aHdHdHdHd_1, &terr_obj_tbl, &obj_id, &density, &flag) != -1 )
         {
             if( v2->terrain_types[(signed short)terr_obj_tbl].loaded )
             {
@@ -2642,7 +2642,7 @@ void RGE_Map::delete_objects_on_tile(RGE_Player *obj_owner, RGE_Game_World *gwor
                 }
                 v7 = v9;
             }
-            while ( v9 );
+            while( v9 );
         }
     }
 }
@@ -2667,7 +2667,7 @@ void RGE_Map::delete_all_objects_on_tile(int x, int y)
                     v5->vfptr->__vecDelDtor(v5, 1u);
                 v3 = v4;
             }
-            while ( v4 );
+            while( v4 );
         }
     }
 }
@@ -2741,7 +2741,7 @@ void RGE_Map::create_terrain_object(RGE_Player *obj_owner, RGE_Game_World *gworl
                                     break;
                                 --v19;
                             }
-                            while ( v19 >= 0 );
+                            while( v19 >= 0 );
                             if( v19 >= 0 )
                             {
                                 if( delete_obj )
@@ -2768,7 +2768,7 @@ void RGE_Map::create_terrain_object(RGE_Player *obj_owner, RGE_Game_World *gworl
                 }
                 v13 = v15;
             }
-            while ( v15 );
+            while( v15 );
             v12 = v35;
             v11 = end_i;
         }
@@ -2779,7 +2779,7 @@ void RGE_Map::create_terrain_object(RGE_Player *obj_owner, RGE_Game_World *gworl
             old_terraina = (char *)v20;
             delete_obja = (int)v21;
             no_delete_starta = v11;
-            while ( 1 )
+            while( 1 )
             {
                 v22 = *(v21 - 30);
                 if( v22 != -1 )
@@ -2804,7 +2804,7 @@ LABEL_41:
             }
             v25 = no_delete_enda;
             v26 = v23;
-            while ( 1 )
+            while( 1 )
             {
                 if( v25 )
                 {
@@ -2883,7 +2883,7 @@ int RGE_Map::clear_terrain_object(RGE_Game_World *gworld, short row, short col, 
     rowa = v10[col].objects.list;
     if( v11 )
     {
-        while ( 1 )
+        while( 1 )
         {
             v12 = v11->node;
             list = v11->next;
@@ -2914,7 +2914,7 @@ int RGE_Map::clear_terrain_object(RGE_Game_World *gworld, short row, short col, 
                         break;
                     --v15;
                 }
-                while ( v15 >= 0 );
+                while( v15 >= 0 );
                 v11 = rowa;
                 if( v15 >= 0 )
                     break;
@@ -3011,7 +3011,7 @@ void RGE_Map::place_terrain_object(RGE_Player *obj_owner, RGE_Game_World *gworld
     if( v11 > 0 )
     {
         v34 = (_WORD *)(v12 + 394);
-        while ( 1 )
+        while( 1 )
         {
             v14 = *v34;
             if( v14 != -1 )
@@ -3067,7 +3067,7 @@ void RGE_Map::place_terrain_object(RGE_Player *obj_owner, RGE_Game_World *gworld
                     else if( (signed short)v8 > 0 )
                     {
                         v33 = (signed short)v8;
-                        while ( 1 )
+                        while( 1 )
                         {
                             if( v16 )
                             {
@@ -3150,11 +3150,11 @@ void RGE_Map::create_terrain_objects(RGE_Player *obj_owner, RGE_Game_World *gwor
             {
                 do
                     RGE_Map::create_terrain_object(v3, obj_owner, gworld, v4, v5++, -1, 0, -1, -1);
-                while ( v5 < v3->map_width );
+                while( v5 < v3->map_width );
             }
             ++v4;
         }
-        while ( v4 < v3->map_height );
+        while( v4 < v3->map_height );
     }
 }
 
@@ -3419,7 +3419,7 @@ void RGE_Map::set_terrain_passablity(int mapcol1, short maprow1, int mapcol2, sh
                     *(_BYTE *)(v15 + 5) = v14 ^ (v14 ^ v18) & 0x1F;
                     --maprow2a;
                 }
-                while ( maprow2a );
+                while( maprow2a );
                 LOWORD(v9) = mapcol1;
                 LOWORD(v10) = mapcol2;
             }
@@ -3427,7 +3427,7 @@ void RGE_Map::set_terrain_passablity(int mapcol1, short maprow1, int mapcol2, sh
             ++maprow1a;
             --v20;
         }
-        while ( !v19 );
+        while( !v19 );
     }
 }
 
@@ -3542,14 +3542,14 @@ void RGE_Map::set_elev(int mapcol1, int maprow1, int mapcol2, int maprow2, short
                     ++v17;
                     --v18;
                 }
-                while ( v18 );
+                while( v18 );
                 v11 = mapcol2;
                 v10 = mapcol1;
             }
             ++v16;
             --eleva;
         }
-        while ( eleva );
+        while( eleva );
         goto LABEL_38;
     }
     if( (unsigned __int8)elev > 8u )
@@ -3573,14 +3573,14 @@ void RGE_Map::set_elev(int mapcol1, int maprow1, int mapcol2, int maprow2, short
                     --v24;
                     *(_BYTE *)(v25 + 5) = 32 * elev | *(_BYTE *)(v25 + 5) & 0x1F;
                 }
-                while ( v24 );
+                while( v24 );
                 v11 = mapcol2;
                 v10 = mapcol1;
             }
             ++v22;
             --set_flaga;
         }
-        while ( set_flaga );
+        while( set_flaga );
 LABEL_38:
         v14 = maprow1;
         v15 = maprow2;
@@ -3609,7 +3609,7 @@ LABEL_39:
                 {
                     v27 = (int)&v8->map_row_offset[v34][v26].screen_xpos;
                     *(_BYTE *)(v27 + 4) = RGE_Map::get_tile_type(v8, v10, v10, set_flagb);
-                    for ( i = *(_DWORD *)(v27 + 16); i; i = *(_DWORD *)(i + 4) )
+                    for( i = *(_DWORD *)(v27 + 16); i; i = *(_DWORD *)(i + 4) )
                         (*(void (__stdcall **)(_DWORD, _DWORD, _DWORD))(**(_DWORD **)i + 52))(
                             *(_DWORD *)(*(_DWORD *)i + 56),
                             *(_DWORD *)(*(_DWORD *)i + 60),
@@ -3620,7 +3620,7 @@ LABEL_39:
                     ++v26;
                     ++elevb;
                 }
-                while ( (signed short)v10 <= (signed short)mapcol2 );
+                while( (signed short)v10 <= (signed short)mapcol2 );
                 LOWORD(v11) = mapcol2;
                 v10 = mapcol1;
             }
@@ -3631,7 +3631,7 @@ LABEL_39:
             v30 = (signed short)(set_flagb++ + 1 - maprow2) < 0;
             ++v34;
         }
-        while ( (unsigned __int8)(v30 ^ v31) | v29 );
+        while( (unsigned __int8)(v30 ^ v31) | v29 );
         LOWORD(v14) = maprow1;
     }
     v32 = (signed short)v15;
@@ -3785,7 +3785,7 @@ LABEL_35:
                     ++v20;
                     v21 += 24;
                 }
-                while ( v20 <= (signed short)mapcol2 );
+                while( v20 <= (signed short)mapcol2 );
                 v19 = v24;
                 v18 = (signed short)mapcol1;
                 v16 = mapcol1;
@@ -3794,7 +3794,7 @@ LABEL_35:
             ++maprow;
             v24 = v19;
         }
-        while ( maprow <= (signed short)maprow2 );
+        while( maprow <= (signed short)maprow2 );
         goto LABEL_35;
     }
     v17 = mapcol2;
@@ -3818,13 +3818,13 @@ LABEL_36:
                     RGE_Map::get_border_type(v10, v16, v15);
                     LOWORD(v16) = v16 + 1;
                 }
-                while ( (signed short)v16 <= (signed short)mapcol2 );
+                while( (signed short)v16 <= (signed short)mapcol2 );
             }
             LOWORD(v16) = mapcol1;
             LOWORD(v17) = mapcol2;
             LOWORD(v15) = v15 + 1;
         }
-        while ( (signed short)v15 <= (signed short)maprow2 );
+        while( (signed short)v15 <= (signed short)maprow2 );
     }
     RGE_Map::request_redraw(
         v10,
@@ -3835,8 +3835,7 @@ LABEL_36:
         0);
 }
 
-//----- (00459D20) --------------------------------------------------------
-char __userpurge RGE_Map::get_tile_type@<al>(RGE_Map *this@<ecx>, int a2@<edi>, short map_col, short map_row)
+char RGE_Map::get_tile_type(short map_col, short map_row)
 {
     short v4; // bx@3
     int v5; // edx@4
@@ -4256,7 +4255,7 @@ void RGE_Map::update(unsigned int world_time)
                 }
                 i = ++v3;
             }
-            while ( (signed short)v3 < v2->num_terrain );
+            while( (signed short)v3 < v2->num_terrain );
         }
         v9 = 0;
         ia = 0;
@@ -4292,7 +4291,7 @@ void RGE_Map::update(unsigned int world_time)
                 }
                 ia = ++v9;
             }
-            while ( (signed short)v9 < v2->num_borders );
+            while( (signed short)v9 < v2->num_borders );
         }
         last_world_time = world_time;
     }

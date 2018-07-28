@@ -26,7 +26,7 @@ RGE_Main_View *__thiscall RGE_Main_View::`scalar deleting destructor'(RGE_Main_V
 
   v2 = this;
   RGE_Main_View::~RGE_Main_View(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -83,7 +83,7 @@ int __thiscall RGE_Main_View::do_auto_scroll(RGE_Main_View *this)
 
   v1 = this;
   v2 = rge_base_game->prog_mode;
-  if ( v2 != 4 && v2 != 6 && v2 != 7 && v2 != 5
+  if( v2 != 4 && v2 != 6 && v2 != 7 && v2 != 5
     || RGE_Base_Game::get_paused(rge_base_game)
     || (v3 = 0, !rge_base_game->prog_info->auto_scroll)
     || GetForegroundWindow() != v1->render_area->Wnd
@@ -98,39 +98,39 @@ int __thiscall RGE_Main_View::do_auto_scroll(RGE_Main_View *this)
   GetCursorPos(&point);
   vert_scroll = 0;
   v4 = rge_base_game->prog_info;
-  if ( GetAsyncKeyState(1) >= 0 && GetAsyncKeyState(2) >= 0 )
+  if( GetAsyncKeyState(1) >= 0 && GetAsyncKeyState(2) >= 0 )
   {
     v5 = v4->mouse_scroll_edge;
-    if ( point.x >= v5 + rect.left )
+    if( point.x >= v5 + rect.left )
     {
-      if ( point.x > rect.right - v5 )
+      if( point.x > rect.right - v5 )
         v3 = 1;
     }
     else
     {
       v3 = -1;
     }
-    if ( point.y >= rect.top + v5 )
+    if( point.y >= rect.top + v5 )
     {
-      if ( point.y > rect.bottom - v5 )
+      if( point.y > rect.bottom - v5 )
         vert_scroll = 1;
     }
     else
     {
       vert_scroll = -1;
     }
-    if ( v3 || vert_scroll )
+    if( v3 || vert_scroll )
     {
       v6 = debug_timeGetTime();
       v7 = v6 - v1->last_mouse_scroll_time;
-      if ( v1->mouse_scrolling )
+      if( v1->mouse_scrolling )
       {
         v28 = v4->key_scroll_interval;
         v29 = 0;
         v9 = (double)(unsigned int)v7 / (double)(signed int)v28;
         v10 = v9;
         v11 = (double)(signed int)(signed __int64)v9;
-        if ( v10 - v11 >= 0.5 )
+        if( v10 - v11 >= 0.5 )
           v12 = 0.5;
         else
           v12 = 0.0;
@@ -141,12 +141,12 @@ int __thiscall RGE_Main_View::do_auto_scroll(RGE_Main_View *this)
         v8 = 1.0;
         v1->mouse_scrolling = 1;
       }
-      if ( v8 > v4->mouse_scroll_max_dist )
+      if( v8 > v4->mouse_scroll_max_dist )
         v8 = v4->mouse_scroll_max_dist;
-      if ( v8 > 0.0 )
+      if( v8 > 0.0 )
       {
         scroll_dist2 = v8 + v8;
-        if ( v3 == -1 )
+        if( v3 == -1 )
         {
           v13 = v1->player;
           v14 = v13->view_y - v8;
@@ -154,7 +154,7 @@ int __thiscall RGE_Main_View::do_auto_scroll(RGE_Main_View *this)
         }
         else
         {
-          if ( v3 != 1 )
+          if( v3 != 1 )
             goto LABEL_38;
           v13 = v1->player;
           v14 = v13->view_y + v8;
@@ -164,7 +164,7 @@ int __thiscall RGE_Main_View::do_auto_scroll(RGE_Main_View *this)
         x = v15;
         RGE_Player::set_view_loc(v13, x, y);
 LABEL_38:
-        if ( vert_scroll == -1 )
+        if( vert_scroll == -1 )
         {
           v18 = v1->player;
           v19 = v18->view_y - scroll_dist2;
@@ -172,12 +172,12 @@ LABEL_38:
         }
         else
         {
-          if ( vert_scroll != 1 )
+          if( vert_scroll != 1 )
           {
 LABEL_43:
             v1->vfptr->set_redraw((TPanel *)v1, RedrawNormal);
             v23 = v1->map_view;
-            if ( v23 )
+            if( v23 )
               ((void (__stdcall *)(signed int))v23->vfptr->set_redraw)(1);
             v1->last_mouse_scroll_time = v6;
             goto LABEL_46;
@@ -194,7 +194,7 @@ LABEL_43:
     }
   }
 LABEL_46:
-  if ( !v3 && !vert_scroll )
+  if( !v3 && !vert_scroll )
     v1->mouse_scrolling = 0;
   return v1->mouse_scrolling;
 }
@@ -239,7 +239,7 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
   char pbKeyState[256]; // [sp+58h] [bp-100h]@8
 
   v1 = this;
-  if ( RGE_Base_Game::get_paused(rge_base_game)
+  if( RGE_Base_Game::get_paused(rge_base_game)
     || (v2 = rge_base_game->prog_mode, v2 != 4) && v2 != 6 && v2 != 7 && v2 != 5
     || GetForegroundWindow() != v1->render_area->Wnd
     || (v3 = 0, !v1->have_focus) )
@@ -251,22 +251,22 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
   horz_scroll = 0;
   vert_scroll = 0;
   v4 = rge_base_game->prog_info;
-  if ( rge_base_game->game_mode == 18 )
+  if( rge_base_game->game_mode == 18 )
   {
     v5 = v1->player;
-    if ( v5 )
+    if( v5 )
     {
       v6 = v5->selected_obj;
-      if ( v6 )
+      if( v6 )
       {
-        if ( pbKeyState[38] > 1u )
+        if( pbKeyState[38] > 1u )
         {
           x = v6->world_y - v4->key_scroll_object_move;
           v8 = v6->world_x + v4->key_scroll_object_move;
           (*(void (__stdcall **)(_DWORD, _DWORD, _DWORD))&v6->vfptr->gap4[48])(LODWORD(v8), LODWORD(x), 0);
           v3 = 1;
         }
-        if ( pbKeyState[40] > 1u )
+        if( pbKeyState[40] > 1u )
         {
           v9 = v6->world_y + v4->key_scroll_object_move;
           v10 = v6->world_x - v4->key_scroll_object_move;
@@ -276,7 +276,7 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
             0);
           v3 = 1;
         }
-        if ( pbKeyState[37] > 1u )
+        if( pbKeyState[37] > 1u )
         {
           v11 = v6->world_y - v4->key_scroll_object_move;
           v12 = v6->world_x - v4->key_scroll_object_move;
@@ -286,7 +286,7 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
             0);
           v3 = 1;
         }
-        if ( pbKeyState[39] > 1u )
+        if( pbKeyState[39] > 1u )
         {
           v13 = v6->world_y + v4->key_scroll_object_move;
           v14 = v6->world_x + v4->key_scroll_object_move;
@@ -300,35 +300,35 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
       }
     }
   }
-  if ( !v1->player )
+  if( !v1->player )
     goto LABEL_50;
-  if ( pbKeyState[37] <= 1u )
+  if( pbKeyState[37] <= 1u )
   {
-    if ( pbKeyState[39] > 1u )
+    if( pbKeyState[39] > 1u )
       horz_scroll = 1;
   }
   else
   {
     horz_scroll = -1;
   }
-  if ( pbKeyState[38] <= 1u )
+  if( pbKeyState[38] <= 1u )
   {
-    if ( pbKeyState[40] > 1u )
+    if( pbKeyState[40] > 1u )
       vert_scroll = 1;
   }
   else
   {
     vert_scroll = -1;
   }
-  if ( !horz_scroll && !vert_scroll )
+  if( !horz_scroll && !vert_scroll )
     goto LABEL_50;
   v15 = debug_timeGetTime();
-  if ( v1->key_scrolling )
+  if( v1->key_scrolling )
   {
     v17 = (double)(v15 - v1->last_key_scroll_time) / (double)(signed int)v4->key_scroll_interval;
     v18 = v17;
     v19 = (double)(signed int)(signed __int64)v17;
-    if ( v18 - v19 >= 0.5 )
+    if( v18 - v19 >= 0.5 )
       v20 = 0.5;
     else
       v20 = 0.0;
@@ -339,12 +339,12 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
     v16 = 1.0;
     v1->key_scrolling = 1;
   }
-  if ( v16 > v4->key_scroll_max_dist )
+  if( v16 > v4->key_scroll_max_dist )
     v16 = v4->key_scroll_max_dist;
-  if ( v16 <= 0.0 )
+  if( v16 <= 0.0 )
     goto LABEL_50;
   scroll_dist2 = v16 + v16;
-  if ( horz_scroll == -1 )
+  if( horz_scroll == -1 )
   {
     v21 = v1->player;
     v22 = v21->view_y - v16;
@@ -352,7 +352,7 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
   }
   else
   {
-    if ( horz_scroll != 1 )
+    if( horz_scroll != 1 )
       goto LABEL_44;
     v21 = v1->player;
     v22 = v21->view_y + v16;
@@ -362,7 +362,7 @@ int __thiscall RGE_Main_View::handle_keys(RGE_Main_View *this)
   v25 = v23;
   RGE_Player::set_view_loc(v21, v25, y);
 LABEL_44:
-  if ( vert_scroll == -1 )
+  if( vert_scroll == -1 )
   {
     v26 = v1->player;
     v27 = v26->view_y - scroll_dist2;
@@ -373,7 +373,7 @@ LABEL_48:
     RGE_Player::set_view_loc(v26, v30, v29);
     goto LABEL_49;
   }
-  if ( vert_scroll == 1 )
+  if( vert_scroll == 1 )
   {
     v26 = v1->player;
     v27 = v26->view_y + scroll_dist2;
@@ -384,13 +384,13 @@ LABEL_49:
   v1->last_key_scroll_time = v15;
   v3 = 1;
 LABEL_50:
-  if ( !horz_scroll && !vert_scroll )
+  if( !horz_scroll && !vert_scroll )
     v1->key_scrolling = 0;
-  if ( v3 )
+  if( v3 )
   {
     v1->vfptr->set_redraw((TPanel *)v1, RedrawNormal);
     v31 = v1->map_view;
-    if ( v31 )
+    if( v31 )
       v31->vfptr->set_redraw(v31, RedrawNormal);
   }
   return v3;
@@ -420,10 +420,10 @@ int __thiscall RGE_Main_View::mouse_move_action(RGE_Main_View *this, int x, int 
   int v7; // eax@6
 
   v5 = rge_base_game->prog_mode;
-  if ( v5 == 4 || v5 == 6 || v5 == 7 || v5 == 5 )
+  if( v5 == 4 || v5 == 6 || v5 == 7 || v5 == 5 )
   {
     v7 = rge_base_game->game_mode;
-    if ( v7 == 1 || v7 > 6 && v7 <= 8 )
+    if( v7 == 1 || v7 > 6 && v7 <= 8 )
       ((void (__stdcall *)(signed int))this->vfptr->set_redraw)(1);
     result = 1;
   }
@@ -467,7 +467,7 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
   RGE_Pick_Info pick_info; // [sp+20h] [bp-14h]@7
 
   v5 = this;
-  if ( RGE_Base_Game::get_paused(rge_base_game)
+  if( RGE_Base_Game::get_paused(rge_base_game)
     || (v6 = rge_base_game->prog_mode, v6 != 4) && v6 != 6 && v6 != 7 && v6 != 5 )
   {
     result = 0;
@@ -479,13 +479,13 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
     switch ( v7 )
     {
       case 18:
-        if ( RGE_Main_View::pick1(v5, 41, 0, x, y, &pick_info, v5->player->selected_obj, 1) == 52 )
+        if( RGE_Main_View::pick1(v5, 41, 0, x, y, &pick_info, v5->player->selected_obj, 1) == 52 )
         {
           RGE_Player::unselect_object(v5->player);
           RGE_Player::select_one_object(v5->player, pick_info.object, 1);
           v8 = v5->vfptr;
           v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
-          if ( pick_info.object->sprite )
+          if( pick_info.object->sprite )
           {
             RGE_Static_Object::get_frame(
               pick_info.object,
@@ -498,14 +498,14 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
             v11 = v5->render_area;
             point.x = pick_info.scr_x - (signed __int16)min_x;
             point.y = pick_info.scr_y - SHIWORD(min_x);
-            if ( v11->DrawSystem->ScreenMode == 1 )
+            if( v11->DrawSystem->ScreenMode == 1 )
             {
               ClientToScreen(v11->Wnd, &point);
               v10 = point.y;
               v9 = point.x;
             }
             v12 = v5->render_area;
-            if ( v12->DrawSystem->ScreenMode == 1 )
+            if( v12->DrawSystem->ScreenMode == 1 )
             {
               ScreenToClient(v12->Wnd, &point);
               v10 = point.y;
@@ -522,14 +522,14 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
         }
         break;
       case 1:
-        if ( RGE_Main_View::pick1(v5, 40, 0, x, y, &pick_info, 0, 1) == 51 )
+        if( RGE_Main_View::pick1(v5, 40, 0, x, y, &pick_info, 0, 1) == 51 )
         {
           RGE_Main_View::fixup_pick_info(v5, &pick_info);
           v13 = rge_base_game->master_obj_id;
-          if ( v13 != -1 )
+          if( v13 != -1 )
           {
             v14 = v5->player->master_objects[v13];
-            if ( v14 )
+            if( v14 )
             {
               ((void (__stdcall *)(RGE_Pick_Info *, float *, RGE_Game_World *, _DWORD))v14->vfptr->alignment)(
                 &pick_info,
@@ -542,11 +542,11 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
                 LODWORD(pick_info.y),
                 0);
             }
-            else if ( v13 != -1 )
+            else if( v13 != -1 )
             {
               v15 = v5->world;
               v16 = (*v15->players)->master_objects[v13];
-              if ( v16 )
+              if( v16 )
               {
                 ((void (__stdcall *)(RGE_Pick_Info *, float *, RGE_Game_World *, _DWORD))v16->vfptr->alignment)(
                   &pick_info,
@@ -567,12 +567,12 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
       case 10:
       case 19:
         v17 = v5->player;
-        if ( v17->selected_obj )
+        if( v17->selected_obj )
         {
           RGE_Player::unselect_object(v17);
           v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
         }
-        if ( v7 == 19 )
+        if( v7 == 19 )
           (*(void (__stdcall **)(signed int, _DWORD))&rge_base_game->vfptr->gap8[8])(19, 0);
         (*(void (__thiscall **)(RGE_Main_View *, signed int, int, int, int, int))&v5->vfptr[1].gap4[4])(
           v5,
@@ -586,7 +586,7 @@ int __thiscall RGE_Main_View::mouse_left_down_action(RGE_Main_View *this, int x,
       case 3:
       case 17:
         v18 = v5->player;
-        if ( v18->selected_obj )
+        if( v18->selected_obj )
         {
           RGE_Player::unselect_object(v18);
           v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
@@ -603,18 +603,18 @@ LABEL_28:
           shift_key);
         break;
       case 15:
-        if ( RGE_Main_View::pick1(v5, 41, 0, x, y, &pick_info, v5->player->selected_obj, 1) == 52
+        if( RGE_Main_View::pick1(v5, 41, 0, x, y, &pick_info, v5->player->selected_obj, 1) == 52
           && pick_info.object->master_obj->object_group != 34 )
         {
           v19 = pick_info.object->sprite_list;
-          if ( v19 )
+          if( v19 )
           {
             v20 = RGE_Active_Sprite_List::get_lowest_draw_level(v19);
           }
           else
           {
             v21 = pick_info.object->sprite;
-            if ( v21 )
+            if( v21 )
               v20 = RGE_Sprite::get_lowest_draw_level(v21);
             else
               v20 = 20;
@@ -629,11 +629,11 @@ LABEL_28:
           v25 = pick_info.object;
           v5->movable_object = pick_info.object;
           v25->object_state = 7;
-          if ( !v20 )
+          if( !v20 )
             v5->vfptr->set_redraw((TPanel *)v5, RedrawFull);
           (*(void (__stdcall **)(signed int, signed int))&rge_base_game->vfptr->gap8[8])(8, 1);
           v26 = v5->movable_object;
-          if ( v26->sprite )
+          if( v26->sprite )
           {
             RGE_Static_Object::get_frame(
               v26,
@@ -644,7 +644,7 @@ LABEL_28:
             point.x = pick_info.scr_x - (signed __int16)min_x;
             point.y = pick_info.scr_y - SHIWORD(min_x);
             v27 = v5->render_area;
-            if ( v27->DrawSystem->ScreenMode == 1 )
+            if( v27->DrawSystem->ScreenMode == 1 )
               ClientToScreen(v27->Wnd, &point);
           }
           (*(void (__thiscall **)(RGE_Main_View *, signed int, int, int, int, int))&v5->vfptr[1].gap4[4])(
@@ -678,13 +678,13 @@ int __thiscall RGE_Main_View::mouse_left_move_action(RGE_Main_View *this, int x,
 
   v5 = this;
   v6 = rge_base_game->prog_mode;
-  if ( v6 == 4 || v6 == 6 || v6 == 7 || v6 == 5 )
+  if( v6 == 4 || v6 == 6 || v6 == 7 || v6 == 5 )
   {
     v8 = RGE_Base_Game::get_paused(rge_base_game) == 0;
     v9 = v5->scroll_action;
-    if ( v8 )
+    if( v8 )
     {
-      if ( v9 )
+      if( v9 )
       {
         ((void (__thiscall *)(RGE_Main_View *, int, int))v5->vfptr[1].set_rect)(v5, x, y);
         result = 1;
@@ -718,7 +718,7 @@ LABEL_15:
         }
       }
     }
-    else if ( v9 )
+    else if( v9 )
     {
       (*(void (__thiscall **)(RGE_Main_View *))&v5->vfptr[1].gap10[0])(v5);
       result = 0;
@@ -774,14 +774,14 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
 
   v5 = rge_base_game->prog_mode;
   v6 = this;
-  if ( v5 != 4 && v5 != 6 && v5 != 7 && v5 != 5 )
+  if( v5 != 4 && v5 != 6 && v5 != 7 && v5 != 5 )
     return 0;
   color_log(76, 22, 1);
-  if ( v6->scroll_action )
+  if( v6->scroll_action )
   {
     v8 = v6->vfptr;
     (*(void (__thiscall **)(RGE_Main_View *))&v6->vfptr[1].gap10[0])(v6);
-    if ( rge_base_game->game_mode == 21 )
+    if( rge_base_game->game_mode == 21 )
     {
       v9 = !ctrl_key && !shift_key;
       ((void (__thiscall *)(RGE_Main_View *, int, int, int, int, int))v8[1].draw_finish)(
@@ -792,16 +792,16 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
         v6->sel_row2,
         v9);
     }
-    if ( rge_base_game->game_mode == 8 )
+    if( rge_base_game->game_mode == 8 )
     {
       ((void (__thiscall *)(RGE_Main_View *, int, int, signed int))v8[1].set_fixed_position)(v6, x, y, 1);
-      if ( rge_base_game->sub_game_mode == 1 )
+      if( rge_base_game->sub_game_mode == 1 )
       {
         v6->movable_object->object_state = 2;
         v6->movable_object = 0;
         (*(void (__stdcall **)(signed int, _DWORD))&rge_base_game->vfptr->gap8[8])(15, 0);
         v10 = v6->save_player;
-        if ( v10 )
+        if( v10 )
         {
           LOWORD(v10) = v10->id;
           (*(void (__stdcall **)(RGE_Player *))&rge_base_game->vfptr->gap8[12])(v10);
@@ -812,19 +812,19 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
     goto LABEL_120;
   }
   TPanel::release_mouse((TPanel *)&v6->vfptr);
-  if ( RGE_Base_Game::get_paused(rge_base_game) )
+  if( RGE_Base_Game::get_paused(rge_base_game) )
   {
     color_log(76, 95, 1);
     return 0;
   }
   v11 = rge_base_game;
   v12 = rge_base_game->game_mode;
-  if ( (shift_key || ctrl_key) && v12 != 7 && v12 != 21 )
+  if( (shift_key || ctrl_key) && v12 != 7 && v12 != 21 )
   {
-    if ( RGE_Main_View::pick1(v6, 41, 2, x, y, &pick_info, 0, 0) == 52 )
+    if( RGE_Main_View::pick1(v6, 41, 2, x, y, &pick_info, 0, 0) == 52 )
     {
       v13 = pick_info.object;
-      if ( pick_info.object->selected & 1 )
+      if( pick_info.object->selected & 1 )
       {
         RGE_Player::unselect_one_object(v6->player, pick_info.object);
       }
@@ -832,9 +832,9 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
       {
         v14 = v6->player;
         v15 = v14->selected_obj;
-        if ( v15 )
+        if( v15 )
         {
-          if ( v15->owner != v14
+          if( v15->owner != v14
             || (v16 = RGE_Player::get_select_level(v14, v15),
                 v13 = pick_info.object,
                 v16 != pick_info.object->master_obj->select_level) )
@@ -843,17 +843,17 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
             v13 = pick_info.object;
           }
         }
-        if ( ctrl_key )
+        if( ctrl_key )
           RGE_Player::select_one_object(v6->player, v13, 1);
         else
           RGE_Player::select_object(v6->player, v13);
       }
       v6->vfptr->set_redraw((TPanel *)v6, RedrawNormal);
     }
-    if ( ctrl_key )
+    if( ctrl_key )
       goto LABEL_120;
     v11 = rge_base_game;
-    if ( rge_base_game->prog_info->interface_style == 2 )
+    if( rge_base_game->prog_info->interface_style == 2 )
       goto LABEL_120;
   }
   switch ( v12 )
@@ -865,20 +865,20 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
       ((void (__thiscall *)(RGE_Main_View *, int, int))v6->vfptr[1].draw_setup)(v6, x, y);
       goto LABEL_120;
     case 7:
-      if ( ctrl_key || shift_key )
+      if( ctrl_key || shift_key )
         ((void (__thiscall *)(RGE_Main_View *, int, int, _DWORD))v6->vfptr[1].set_fixed_position)(v6, x, y, 0);
       else
         ((void (__thiscall *)(RGE_Main_View *, int, int, signed int))v6->vfptr[1].set_fixed_position)(v6, x, y, 1);
       goto LABEL_120;
     case 8:
       ((void (__thiscall *)(RGE_Main_View *, int, int, signed int))v6->vfptr[1].set_fixed_position)(v6, x, y, 1);
-      if ( rge_base_game->sub_game_mode == 1 )
+      if( rge_base_game->sub_game_mode == 1 )
       {
         v6->movable_object->object_state = 2;
         v6->movable_object = 0;
         (*(void (__stdcall **)(signed int, _DWORD))&rge_base_game->vfptr->gap8[8])(15, 0);
         v17 = v6->save_player;
-        if ( v17 )
+        if( v17 )
         {
           LOWORD(v17) = v17->id;
           (*(void (__stdcall **)(RGE_Player *))&rge_base_game->vfptr->gap8[12])(v17);
@@ -887,11 +887,11 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
       }
       goto LABEL_120;
     case 14:
-      if ( RGE_Main_View::pick1(v6, 41, 0, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
+      if( RGE_Main_View::pick1(v6, 41, 0, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
       {
         v18 = pick_info.object;
         v19 = pick_info.object->sprite_list;
-        if ( v19 )
+        if( v19 )
         {
           v20 = RGE_Active_Sprite_List::get_lowest_draw_level(v19);
           v18 = pick_info.object;
@@ -899,7 +899,7 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
         else
         {
           v21 = pick_info.object->sprite;
-          if ( v21 )
+          if( v21 )
           {
             v20 = RGE_Sprite::get_lowest_draw_level(v21);
             v18 = pick_info.object;
@@ -909,24 +909,24 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
             v20 = 20;
           }
         }
-        if ( rge_base_game->prog_mode == 7 )
+        if( rge_base_game->prog_mode == 7 )
         {
-          if ( v18 )
+          if( v18 )
             v18->vfptr->__vecDelDtor(v18, 1u);
         }
         else
         {
           v18->vfptr->destroy_obj(v18);
         }
-        if ( !v20 )
+        if( !v20 )
           v6->vfptr->set_redraw((TPanel *)v6, RedrawFull);
       }
       goto LABEL_120;
     case 16:
-      if ( RGE_Main_View::pick1(v6, 41, 1, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
+      if( RGE_Main_View::pick1(v6, 41, 1, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
       {
         v22 = v6->parent_panel;
-        if ( v22 )
+        if( v22 )
         {
           ((void (__stdcall *)(RGE_Main_View *, signed int, RGE_Static_Object *, _DWORD))v22->vfptr->action)(
             v6,
@@ -940,20 +940,20 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
       }
       goto LABEL_120;
     case 20:
-      if ( RGE_Main_View::pick1(v6, 41, 2, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
+      if( RGE_Main_View::pick1(v6, 41, 2, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
         ((void (__stdcall *)(signed int))pick_info.object->vfptr->rotate)(1);
       goto LABEL_120;
     case 0:
     case 6:
-      if ( v12 == 6 )
+      if( v12 == 6 )
       {
         (*(void (__stdcall **)(_DWORD, _DWORD))&v11->vfptr->gap8[8])(0, 0);
         v11 = rge_base_game;
       }
       v23 = v6->mouse_last_x;
-      if ( v11->prog_info->interface_style == 2 )
+      if( v11->prog_info->interface_style == 2 )
       {
-        if ( x != v23 || y != v6->mouse_last_y )
+        if( x != v23 || y != v6->mouse_last_y )
         {
           v35 = 0;
           v33 = &pick_info;
@@ -966,12 +966,12 @@ int __thiscall RGE_Main_View::mouse_left_up_action(RGE_Main_View *this, int x, i
         v24 = RGE_Main_View::pick1(v6, 41, 2, x, y, v33, v35, 0);
         v6->mouse_last_x = -1;
         v6->mouse_last_y = -1;
-        if ( v24 == 52 )
+        if( v24 == 52 )
         {
           v25 = v6->player;
-          if ( pick_info.object->selected & 1 )
+          if( pick_info.object->selected & 1 )
           {
-            if ( v25->sel_count <= 1 )
+            if( v25->sel_count <= 1 )
               goto LABEL_120;
             RGE_Player::unselect_object(v25);
             RGE_Player::select_one_object(v6->player, pick_info.object, 1);
@@ -993,7 +993,7 @@ LABEL_119:
         v6->vfptr->set_redraw((TPanel *)v6, RedrawNormal);
         goto LABEL_120;
       }
-      if ( x != v23 || y != v6->mouse_last_y )
+      if( x != v23 || y != v6->mouse_last_y )
       {
         v36 = 0;
         v34 = &pick_info;
@@ -1004,11 +1004,11 @@ LABEL_119:
         v34 = &pick_info;
       }
       LOBYTE(ctrl_key) = RGE_Main_View::pick1(v6, 42, 1, x, y, v34, v36, 1);
-      if ( (_BYTE)ctrl_key != 52 || x != v6->mouse_last_x || y != v6->mouse_last_y )
+      if( (_BYTE)ctrl_key != 52 || x != v6->mouse_last_x || y != v6->mouse_last_y )
         goto LABEL_87;
       v26 = v6->player;
       v27 = pick_info.object;
-      if ( pick_info.object != v26->selected_obj )
+      if( pick_info.object != v26->selected_obj )
       {
         RGE_Player::unselect_object(v26);
         v6->vfptr->set_redraw((TPanel *)v6, RedrawNormal);
@@ -1017,12 +1017,12 @@ LABEL_87:
       }
       v6->mouse_last_x = -1;
       v6->mouse_last_y = -1;
-      if ( (_BYTE)ctrl_key != 52 )
+      if( (_BYTE)ctrl_key != 52 )
         goto LABEL_111;
       v28 = rge_base_game->prog_mode;
-      if ( v28 != 5 && v6->player->sel_count > 0 && v28 != 7 )
+      if( v28 != 5 && v6->player->sel_count > 0 && v28 != 7 )
       {
-        if ( ((int (__thiscall *)(RGE_Main_View *, int, int, _DWORD, signed int))v6->vfptr[1].set_redraw)(
+        if( ((int (__thiscall *)(RGE_Main_View *, int, int, _DWORD, signed int))v6->vfptr[1].set_redraw)(
                v6,
                x,
                y,
@@ -1033,12 +1033,12 @@ LABEL_87:
         }
         v27 = pick_info.object;
       }
-      if ( !(v27->selected & 1) )
+      if( !(v27->selected & 1) )
       {
         v30 = v6->player;
-        if ( v27->owner == v30 || !v30->sel_count )
+        if( v27->owner == v30 || !v30->sel_count )
         {
-          if ( v27->master_obj->select_level >= 2u
+          if( v27->master_obj->select_level >= 2u
             && (v6->map->map_visible_flag
              || RGE_Visible_Map::get_visible(
                   v6->player->visible,
@@ -1054,9 +1054,9 @@ LABEL_87:
           goto LABEL_120;
         }
         v31 = rge_base_game->prog_mode;
-        if ( v31 != 5 && v31 != 7 )
+        if( v31 != 5 && v31 != 7 )
         {
-          if ( ((int (__thiscall *)(RGE_Main_View *, int, int, signed int, signed int))v6->vfptr[1].set_redraw)(
+          if( ((int (__thiscall *)(RGE_Main_View *, int, int, signed int, signed int))v6->vfptr[1].set_redraw)(
                  v6,
                  x,
                  y,
@@ -1067,7 +1067,7 @@ LABEL_87:
           }
           v27 = pick_info.object;
         }
-        if ( v27->master_obj->select_level >= 2u
+        if( v27->master_obj->select_level >= 2u
           && (v6->map->map_visible_flag
            || RGE_Visible_Map::get_visible(
                 v6->player->visible,
@@ -1082,12 +1082,12 @@ LABEL_87:
           goto LABEL_120;
         }
 LABEL_111:
-        if ( (_BYTE)ctrl_key != 51 )
+        if( (_BYTE)ctrl_key != 51 )
           goto LABEL_120;
         v32 = rge_base_game->prog_mode;
-        if ( v32 == 5 || v32 == 7 )
+        if( v32 == 5 || v32 == 7 )
           goto LABEL_120;
-        if ( !shift_key )
+        if( !shift_key )
         {
           ((void (__thiscall *)(RGE_Main_View *, int, int, signed int, signed int))v6->vfptr[1].set_redraw)(
             v6,
@@ -1097,7 +1097,7 @@ LABEL_111:
             -1);
           goto LABEL_120;
         }
-        if ( !RGE_Player::get_selected_objects_to_command(
+        if( !RGE_Player::get_selected_objects_to_command(
                 v6->player,
                 (RGE_Static_Object ***)&shift_key,
                 (__int16 *)&ctrl_key,
@@ -1107,7 +1107,7 @@ LABEL_111:
                 -1) )
           goto LABEL_120;
         free((void *)shift_key);
-        if ( !allow_user_commands )
+        if( !allow_user_commands )
           goto LABEL_120;
         RGE_Main_View::fixup_pick_info(v6, &pick_info);
         ((void (__stdcall *)(_DWORD, _DWORD, signed int))v6->player->vfptr->command_add_waypoint)(
@@ -1129,7 +1129,7 @@ LABEL_111:
         goto LABEL_119;
       }
       v29 = v6->player;
-      if ( v29->sel_count <= 1 )
+      if( v29->sel_count <= 1 )
         return 1;
       RGE_Player::unselect_object(v29);
       RGE_Player::select_one_object(v6->player, pick_info.object, 1);
@@ -1153,7 +1153,7 @@ int __thiscall RGE_Main_View::mouse_right_down_action(RGE_Main_View *this, int x
   int result; // eax@11
 
   v5 = this;
-  if ( RGE_Base_Game::get_paused(rge_base_game)
+  if( RGE_Base_Game::get_paused(rge_base_game)
     || (v6 = rge_base_game->prog_mode, v6 != 4) && v6 != 6 && v6 != 7 && v6 != 5 )
   {
     result = 0;
@@ -1162,10 +1162,10 @@ int __thiscall RGE_Main_View::mouse_right_down_action(RGE_Main_View *this, int x
   {
     color_log(76, 36, 1);
     v7 = rge_base_game;
-    if ( rge_base_game->game_mode == 19 )
+    if( rge_base_game->game_mode == 19 )
     {
       v8 = v5->player;
-      if ( v8->selected_obj )
+      if( v8->selected_obj )
       {
         RGE_Player::unselect_object(v8);
         v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
@@ -1202,18 +1202,18 @@ int __thiscall RGE_Main_View::mouse_right_move_action(RGE_Main_View *this, int x
 
   v5 = this;
   v6 = rge_base_game->prog_mode;
-  if ( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
+  if( v6 != 4 && v6 != 6 && v6 != 7 && v6 != 5 )
     return 0;
   v7 = RGE_Base_Game::get_paused(rge_base_game) == 0;
   v8 = v5->scroll_action;
-  if ( v7 )
+  if( v7 )
   {
-    if ( v8 )
+    if( v8 )
     {
       ((void (__thiscall *)(RGE_Main_View *, int, int))v5->vfptr[1].set_rect)(v5, x, y);
       return 1;
     }
-    if ( !v5->player->sel_count )
+    if( !v5->player->sel_count )
     {
       TPanel::release_mouse((TPanel *)&v5->vfptr);
       v10 = v5->vfptr;
@@ -1229,7 +1229,7 @@ int __thiscall RGE_Main_View::mouse_right_move_action(RGE_Main_View *this, int x
     }
     return 0;
   }
-  if ( v8 )
+  if( v8 )
   {
     (*(void (__thiscall **)(RGE_Main_View *))&v5->vfptr[1].gap10[0])(v5);
     result = 0;
@@ -1256,33 +1256,33 @@ int __thiscall RGE_Main_View::mouse_right_up_action(RGE_Main_View *this, int x, 
 
   v5 = rge_base_game->prog_mode;
   v6 = this;
-  if ( v5 != 4 && v5 != 6 && v5 != 7 && v5 != 5 )
+  if( v5 != 4 && v5 != 6 && v5 != 7 && v5 != 5 )
     return 0;
   color_log(76, 50, 1);
-  if ( !v6->scroll_action )
+  if( !v6->scroll_action )
   {
     TPanel::release_mouse((TPanel *)&v6->vfptr);
-    if ( rge_base_game->game_mode == 20 )
+    if( rge_base_game->game_mode == 20 )
     {
-      if ( RGE_Main_View::pick1(v6, 41, 2, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
+      if( RGE_Main_View::pick1(v6, 41, 2, x, y, &pick_info, v6->player->selected_obj, 1) == 52 )
         ((void (__stdcall *)(signed int))pick_info.object->vfptr->rotate)(-1);
       goto LABEL_33;
     }
-    if ( RGE_Base_Game::get_paused(rge_base_game) || (v8 = v6->mouse_action, v8 != 1) && v8 != 2 )
+    if( RGE_Base_Game::get_paused(rge_base_game) || (v8 = v6->mouse_action, v8 != 1) && v8 != 2 )
     {
       color_log(76, 95, 1);
       return 0;
     }
     v9 = rge_base_game;
     v10 = rge_base_game->prog_mode;
-    if ( rge_base_game->prog_info->interface_style == 2 )
+    if( rge_base_game->prog_info->interface_style == 2 )
     {
-      if ( v10 == 5 || v10 == 7 )
+      if( v10 == 5 || v10 == 7 )
         goto LABEL_33;
       v11 = rge_base_game->game_mode;
-      if ( v11 )
+      if( v11 )
       {
-        if ( v11 == 21 )
+        if( v11 == 21 )
         {
           RGE_View::set_selection_area((RGE_View *)&v6->vfptr, -1, -1, -1, -1);
           v6->vfptr->set_redraw((TPanel *)v6, RedrawNormal);
@@ -1291,7 +1291,7 @@ int __thiscall RGE_Main_View::mouse_right_up_action(RGE_Main_View *this, int x, 
         (*(void (__stdcall **)(_DWORD, _DWORD))&v9->vfptr->gap8[8])(0, 0);
         goto LABEL_33;
       }
-      if ( !shift_key )
+      if( !shift_key )
       {
         ((void (__thiscall *)(RGE_Main_View *, int, int, signed int, signed int))v6->vfptr[1].set_redraw)(
           v6,
@@ -1301,10 +1301,10 @@ int __thiscall RGE_Main_View::mouse_right_up_action(RGE_Main_View *this, int x, 
           -1);
         goto LABEL_33;
       }
-      if ( !RGE_Player::get_selected_objects_to_command(v6->player, &list, (__int16 *)&shift_key, -1, -1, -1, -1) )
+      if( !RGE_Player::get_selected_objects_to_command(v6->player, &list, (__int16 *)&shift_key, -1, -1, -1, -1) )
         goto LABEL_33;
       free(list);
-      if ( !allow_user_commands || RGE_Main_View::pick1(v6, 40, 0, x, y, &pick_info, 0, 1) != 51 )
+      if( !allow_user_commands || RGE_Main_View::pick1(v6, 40, 0, x, y, &pick_info, 0, 1) != 51 )
         goto LABEL_33;
       RGE_Main_View::fixup_pick_info(v6, &pick_info);
       ((void (__stdcall *)(_DWORD, _DWORD, signed int))v6->player->vfptr->command_add_waypoint)(
@@ -1326,9 +1326,9 @@ int __thiscall RGE_Main_View::mouse_right_up_action(RGE_Main_View *this, int x, 
     }
     else
     {
-      if ( v10 == 7 )
+      if( v10 == 7 )
         goto LABEL_33;
-      if ( rge_base_game->game_mode )
+      if( rge_base_game->game_mode )
       {
         (*(void (__stdcall **)(_DWORD, _DWORD))&rge_base_game->vfptr->gap8[8])(0, 0);
         goto LABEL_33;
@@ -1353,10 +1353,10 @@ int __thiscall RGE_Main_View::start_scroll_view(RGE_Main_View *this, char scroll
   int result; // eax@4
 
   v6 = this;
-  if ( RGE_View::start_scroll_view((RGE_View *)&this->vfptr, scroll_action_in, x, y, ctrl_key, shift_key) )
+  if( RGE_View::start_scroll_view((RGE_View *)&this->vfptr, scroll_action_in, x, y, ctrl_key, shift_key) )
   {
     v7 = v6->map_view;
-    if ( v7 )
+    if( v7 )
       ((void (__stdcall *)(signed int))v7->vfptr->set_redraw)(1);
     result = 1;
   }
@@ -1375,10 +1375,10 @@ int __thiscall RGE_Main_View::handle_scroll_view(RGE_Main_View *this, int x, int
   int result; // eax@4
 
   v3 = this;
-  if ( RGE_View::handle_scroll_view((RGE_View *)&this->vfptr, x, y) )
+  if( RGE_View::handle_scroll_view((RGE_View *)&this->vfptr, x, y) )
   {
     v4 = v3->map_view;
-    if ( v4 )
+    if( v4 )
       ((void (__stdcall *)(signed int))v4->vfptr->set_redraw)(1);
     result = 1;
   }
@@ -1402,14 +1402,14 @@ void __thiscall RGE_Main_View::draw(RGE_Main_View *this)
   v1 = this;
   v2 = debug_timeGetTime();
   v3 = RGE_Base_Game::get_accum_time(rge_base_game, 11);
-  if ( v1->world && v1->player )
+  if( v1->world && v1->player )
   {
-    if ( do_draw_log )
+    if( do_draw_log )
       write_draw_log2(aVs);
     color_log(76, 76, 1);
     RGE_View::draw((RGE_View *)&v1->vfptr);
     color_log(76, 95, 1);
-    if ( do_draw_log )
+    if( do_draw_log )
       write_draw_log2(aVf);
   }
   else
@@ -1451,20 +1451,20 @@ int __thiscall RGE_Main_View::command_place_object(RGE_Main_View *this, int x, i
   RGE_Pick_Info pick_info; // [sp+38h] [bp-14h]@2
 
   v4 = this;
-  if ( allow_user_commands )
+  if( allow_user_commands )
   {
-    if ( RGE_Main_View::pick1(this, 40, 0, x, y, &pick_info, 0, 1) == 51 )
+    if( RGE_Main_View::pick1(this, 40, 0, x, y, &pick_info, 0, 1) == 51 )
     {
       RGE_Main_View::fixup_pick_info(v4, &pick_info);
       v5 = rge_base_game->master_obj_id;
-      if ( v5 != -1 )
+      if( v5 != -1 )
       {
-        if ( *(_DWORD *)(RGE_Base_Game::get_player(rge_base_game)->sprite_update_index + 4 * v5) )
+        if( *(_DWORD *)(RGE_Base_Game::get_player(rge_base_game)->sprite_update_index + 4 * v5) )
         {
           v6 = RGE_Base_Game::get_player(rge_base_game)->sprite_update_index;
           v7 = 1;
           v8 = *(_DWORD *)(v6 + 4 * v5);
-          if ( rge_base_game->sub_game_mode == 3 )
+          if( rge_base_game->sub_game_mode == 3 )
             v7 = 0;
           v9 = *(_DWORD *)v8;
           (*(void (__thiscall **)(int, RGE_Pick_Info *, float *, RGE_Game_World *, signed int))(*(_DWORD *)v8 + 36))(
@@ -1478,7 +1478,7 @@ int __thiscall RGE_Main_View::command_place_object(RGE_Main_View *this, int x, i
           v12 = pick_info.y;
           v13 = pick_info.x;
           v14 = RGE_Base_Game::get_player(rge_base_game);
-          if ( !((*(int (__thiscall **)(int, RGE_Game_World *, float, float, _DWORD, signed int, int, _DWORD, signed int, signed int, signed int))(v9 + 32))(
+          if( !((*(int (__thiscall **)(int, RGE_Game_World *, float, float, _DWORD, signed int, int, _DWORD, signed int, signed int, signed int))(v9 + 32))(
                    v8,
                    v14,
                    COERCE_FLOAT(LODWORD(v13)),
@@ -1492,17 +1492,17 @@ int __thiscall RGE_Main_View::command_place_object(RGE_Main_View *this, int x, i
                    1) & 0xFF) )
           {
             v15 = rge_base_game->game_mode;
-            if ( v15 == 1 )
+            if( v15 == 1 )
             {
               v16 = RGE_Base_Game::get_player(rge_base_game);
-              if ( (unsigned __int8)((int (__thiscall *)(RGE_Game_World *, int, _DWORD, _DWORD, _DWORD))v16->vfptr->init)(
+              if( (unsigned __int8)((int (__thiscall *)(RGE_Game_World *, int, _DWORD, _DWORD, _DWORD))v16->vfptr->init)(
                                       v16,
                                       v5,
                                       LODWORD(pick_info.x),
                                       LODWORD(pick_info.y),
                                       0) )
               {
-                if ( reset_mode )
+                if( reset_mode )
                 {
                   (*(void (__stdcall **)(_DWORD, _DWORD))&rge_base_game->vfptr->gap8[8])(0, 0);
                   return 1;
@@ -1510,9 +1510,9 @@ int __thiscall RGE_Main_View::command_place_object(RGE_Main_View *this, int x, i
                 return 1;
               }
             }
-            else if ( v15 == 8 )
+            else if( v15 == 8 )
             {
-              if ( rge_base_game->sub_game_mode == 1 )
+              if( rge_base_game->sub_game_mode == 1 )
               {
                 v18 = (int)v4->movable_object;
                 (*(void (__thiscall **)(RGE_Static_Object *, _DWORD, _DWORD, _DWORD))(*(_DWORD *)v18 + 52))(
@@ -1532,22 +1532,22 @@ int __thiscall RGE_Main_View::command_place_object(RGE_Main_View *this, int x, i
                         0,
                         1);
               }
-              if ( v18 )
+              if( v18 )
               {
                 v20 = *(RGE_Active_Sprite_List **)(v18 + 24);
-                if ( v20 )
+                if( v20 )
                 {
                   v21 = RGE_Active_Sprite_List::get_lowest_draw_level(v20);
                 }
                 else
                 {
                   v22 = *(RGE_Sprite **)(v18 + 16);
-                  if ( v22 )
+                  if( v22 )
                     v21 = RGE_Sprite::get_lowest_draw_level(v22);
                   else
                     v21 = 20;
                 }
-                if ( !v21 )
+                if( !v21 )
                 {
                   v4->vfptr->set_redraw((TPanel *)v4, RedrawFull);
                   return 1;
@@ -1579,7 +1579,7 @@ int __thiscall RGE_Main_View::command_make_do(RGE_Main_View *this, int x, int y,
   RGE_Pick_Info pick_info; // [sp+1Ch] [bp-14h]@8
 
   v5 = this;
-  if ( !allow_user_commands
+  if( !allow_user_commands
     || !RGE_Player::get_selected_objects_to_command(this->player, &list, &list_num, -1, -1, -1, -1) )
   {
     return 0;
@@ -1588,20 +1588,20 @@ int __thiscall RGE_Main_View::command_make_do(RGE_Main_View *this, int x, int y,
   color_log(76, -70, 2);
   v6 = RGE_Main_View::pick_best_target(v5, x, y, &attacking, action_type);
   v7 = v6;
-  if ( v6 )
+  if( v6 )
   {
     v8 = ((int (__stdcall *)(RGE_Static_Object *, _DWORD, _DWORD))v5->player->vfptr->command_make_do)(
            v6,
            LODWORD(v6->world_x),
            LODWORD(v6->world_y)) & 0xFF;
-    if ( v8 )
+    if( v8 )
       RGE_View::display_object_selection((RGE_View *)&v5->vfptr, v7->id, 1500, 2, 2);
     RGE_View::reset_overlay_sprites((RGE_View *)&v5->vfptr);
     v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
     color_log(76, 95, 2);
     return v8;
   }
-  if ( !work_on_tile || RGE_Main_View::pick1(v5, 40, 0, x, y, &pick_info, 0, 1) != 51 )
+  if( !work_on_tile || RGE_Main_View::pick1(v5, 40, 0, x, y, &pick_info, 0, 1) != 51 )
   {
     RGE_View::reset_overlay_sprites((RGE_View *)&v5->vfptr);
     v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
@@ -1613,7 +1613,7 @@ int __thiscall RGE_Main_View::command_make_do(RGE_Main_View *this, int x, int y,
           0,
           LODWORD(pick_info.x),
           LODWORD(pick_info.y)) & 0xFF;
-  if ( v10 )
+  if( v10 )
   {
     RGE_Main_View::reset_display_object_selection(v5, 2);
     RGE_View::add_overlay_sprite(
@@ -1665,9 +1665,9 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
   RGE_Static_Object *last_picked_objecta; // [sp+30h] [bp+18h]@8
 
   v8 = this;
-  if ( pick_mode_in != 41 )
+  if( pick_mode_in != 41 )
   {
-    if ( pick_mode_in != 42
+    if( pick_mode_in != 42
       || (result = RGE_Main_View::pick1(this, 41, select_level, x, y, pick_info, last_picked_object, 1), result != 52) )
     {
       result = RGE_View::pick((RGE_View *)&v8->vfptr, 40, select_level, x, y, pick_info, last_picked_object);
@@ -1681,33 +1681,33 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
   pick_info->scr_y = 0;
   pick_info->object = 0;
   pick_info->tile = 0;
-  if ( select_level )
+  if( select_level )
     v10 = RGE_View::pick_objects((RGE_View *)&this->vfptr, x, y, 10, 20, 15, 4, 1);
   else
     v10 = RGE_View::pick_objects((RGE_View *)&this->vfptr, x, y, 0, 40, 15, 4, 1);
   v11 = v10;
   target_count = v10;
-  if ( !v10 )
+  if( !v10 )
     return 50;
-  if ( !last_picked_object )
+  if( !last_picked_object )
   {
     v13 = 0;
     v14 = 0;
     pick_mode_ina = 0;
     last_picked_objecta = 0;
     xa = 0;
-    if ( v11 > 0 )
+    if( v11 > 0 )
     {
       v15 = &Picked_Objects;
       i = v11;
       do
       {
-        if ( *(_DWORD *)v15 >= 0 )
+        if( *(_DWORD *)v15 >= 0 )
         {
           v16 = v8->world->objectsValue[*(_DWORD *)v15];
-          if ( v16 )
+          if( v16 )
           {
-            if ( v16->object_state < 7u
+            if( v16->object_state < 7u
               && v16->master_obj->select_level >= (unsigned __int8)select_level
               && (pick_dopples
                || v8->map->map_visible_flag
@@ -1721,7 +1721,7 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
                       v8,
                       v16,
                       *((_WORD *)v15 + 2));
-              if ( v17 > xa )
+              if( v17 > xa )
               {
                 v14 = *((_WORD *)v15 + 4) + LOWORD(v8->render_rect.left);
                 LOWORD(v18) = *((_WORD *)v15 + 5) + LOWORD(v8->render_rect.top);
@@ -1735,11 +1735,11 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
         v15 = (char *)v15 + 12;
         --i;
       }
-      while ( i );
+      while( i );
       v13 = pick_mode_ina;
       v9 = pick_info;
     }
-    if ( v13 )
+    if( v13 )
     {
       v9->object = v13;
       v9->scr_x = v14;
@@ -1753,7 +1753,7 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
   found_last = 0;
   pick_mode_inb = 0;
   xb = 0;
-  if ( v10 <= 0 )
+  if( v10 <= 0 )
   {
     v19 = (signed __int16)last_picked_object;
     v20 = 0;
@@ -1763,12 +1763,12 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
   v20 = 0;
   v21 = &Picked_Objects;
   ia = &Picked_Objects;
-  while ( 1 )
+  while( 1 )
   {
-    if ( *(_DWORD *)v21 < 0 )
+    if( *(_DWORD *)v21 < 0 )
       goto LABEL_40;
     v22 = v8->world->objectsValue[*(_DWORD *)v21];
-    if ( !v22
+    if( !v22
       || v22->object_state >= 7u
       || v22->master_obj->select_level < (unsigned __int8)select_level
       || (*(int (__thiscall **)(RGE_Main_View *, RGE_Static_Object *, _DWORD))&v8->vfptr[1].gap4[0])(v8, v22, v21[2]) <= 0
@@ -1779,7 +1779,7 @@ char __thiscall RGE_Main_View::pick1(RGE_Main_View *this, char pick_mode_in, cha
     {
       goto LABEL_40;
     }
-    if ( v22 != last_picked_object )
+    if( v22 != last_picked_object )
       break;
     found_last = 1;
 LABEL_40:
@@ -1787,12 +1787,12 @@ LABEL_40:
     v24 = __OFSUB__(xb + 1, target_count);
     v23 = xb++ + 1 - target_count < 0;
     ia = (char *)ia + 12;
-    if ( !(v23 ^ v24) )
+    if( !(v23 ^ v24) )
       goto LABEL_44;
   }
-  if ( !found_last )
+  if( !found_last )
   {
-    if ( !pick_mode_inb )
+    if( !pick_mode_inb )
     {
       pick_mode_inb = v22;
       v20 = *((_WORD *)ia + 4) + LOWORD(v8->render_rect.left);
@@ -1804,13 +1804,13 @@ LABEL_40:
   v20 = LOWORD(v8->render_rect.left) + word_87D4A8[6 * xb];
   v19 = LOWORD(v8->render_rect.top) + word_87D4AA[6 * xb];
 LABEL_44:
-  if ( found_last && !pick_mode_inb )
+  if( found_last && !pick_mode_inb )
   {
     pick_mode_inb = last_picked_object;
     v20 = LOWORD(v8->render_rect.left) + word_87D4A8[6 * xb];
     v19 = LOWORD(v8->render_rect.top) + word_87D4AA[6 * xb];
   }
-  if ( pick_mode_inb )
+  if( pick_mode_inb )
   {
     pick_info->object = pick_mode_inb;
     pick_info->scr_x = v20;
@@ -1837,12 +1837,12 @@ int __thiscall RGE_Main_View::pick_objects1(RGE_Main_View *this, int x, int y, R
   v6 = object_list;
   v7 = this;
   v8 = 0;
-  while ( v8 != max_objects )
+  while( v8 != max_objects )
   {
-    if ( (unsigned __int8)RGE_View::pick((RGE_View *)&v7->vfptr, 41, 0, x, y, &pick_info, v5) != 52 )
+    if( (unsigned __int8)RGE_View::pick((RGE_View *)&v7->vfptr, 41, 0, x, y, &pick_info, v5) != 52 )
       break;
     v5 = pick_info.object;
-    if ( v8 > 0 && pick_info.object == *object_list )
+    if( v8 > 0 && pick_info.object == *object_list )
       break;
     *v6 = pick_info.object;
     ++v8;
@@ -1893,42 +1893,42 @@ RGE_Static_Object *__thiscall RGE_Main_View::pick_best_target(RGE_Main_View *thi
 
   v5 = this;
   v32 = this;
-  if ( attacking_in )
+  if( attacking_in )
     *attacking_in = 0;
   result = (RGE_Static_Object *)RGE_View::pick_objects((RGE_View *)&this->vfptr, x, y, 10, 20, 15, 4, 1);
   v7 = (int)result;
   target_count = (int)result;
-  if ( result )
+  if( result )
   {
-    if ( !RGE_Player::get_selected_objects_to_command(v5->player, &selected_objects, &selected_count, -1, -1, -1, -1) )
+    if( !RGE_Player::get_selected_objects_to_command(v5->player, &selected_objects, &selected_count, -1, -1, -1, -1) )
       return 0;
-    if ( v7 > 0 )
+    if( v7 > 0 )
     {
       memset(attacking, 0, 4 * ((unsigned int)(4 * v7) >> 2));
       memset(valid_target_count, 0, 4 * ((unsigned int)(4 * v7) >> 2));
     }
     v8 = 0;
     i = 0;
-    if ( selected_count <= 0 )
+    if( selected_count <= 0 )
       goto LABEL_40;
-    while ( 1 )
+    while( 1 )
     {
       j = 0;
       v9 = selected_objects[v8];
       v10 = (RGE_Master_Action_Object *)v9->master_obj;
       master_obj = (RGE_Master_Action_Object *)v9->master_obj;
-      if ( v7 <= 0 )
+      if( v7 <= 0 )
         goto LABEL_39;
       v30 = word_87D4A4;
-      while ( 1 )
+      while( 1 )
       {
         v11 = *((_DWORD *)v30 - 1);
-        if ( v11 >= 0 )
+        if( v11 >= 0 )
         {
           v12 = v5->world->objectsValue[v11];
-          if ( v12 )
+          if( v12 )
           {
-            if ( v12->object_state < 7u )
+            if( v12->object_state < 7u )
             {
               v13 = ((int (__stdcall *)(RGE_Static_Object *, RGE_Static_Object *, _DWORD, _DWORD, _DWORD))v10->tasks->vfptr->get_target_task)(
                       selected_objects[v8],
@@ -1936,11 +1936,11 @@ RGE_Static_Object *__thiscall RGE_Main_View::pick_best_target(RGE_Main_View *thi
                       0,
                       0,
                       0);
-              if ( v13 )
+              if( v13 )
               {
-                if ( action_type != -1 && *(_WORD *)(v13 + 6) != action_type )
+                if( action_type != -1 && *(_WORD *)(v13 + 6) != action_type )
                   v13 = 0;
-                if ( v13 )
+                if( v13 )
                 {
                   v14 = v5->vfptr;
                   v38 = 4 * j;
@@ -1951,25 +1951,25 @@ RGE_Static_Object *__thiscall RGE_Main_View::pick_best_target(RGE_Main_View *thi
                   v16 = v38;
                   v17 = v10->tasks->vfptr;
                   valid_target_count[v38 / 4] += v15;
-                  if ( !((int (__stdcall *)(int))v17->is_attack_task)(v13) )
+                  if( !((int (__stdcall *)(int))v17->is_attack_task)(v13) )
                     goto LABEL_37;
 LABEL_36:
                   *(int *)((char *)attacking + v16) = 1;
                   goto LABEL_37;
                 }
               }
-              if ( v10->task_by_group )
+              if( v10->task_by_group )
               {
                 v18 = 0;
                 v19 = v32->player;
-                if ( v19->master_object_num > 0 )
+                if( v19->master_object_num > 0 )
                 {
-                  while ( 1 )
+                  while( 1 )
                   {
                     v20 = v19->master_objects[v18];
-                    if ( v20 )
+                    if( v20 )
                     {
-                      if ( v20->object_group == master_obj->object_group
+                      if( v20->object_group == master_obj->object_group
                         && v20->master_type == master_obj->master_type
                         && LOBYTE(v20[1].radius_y) == master_obj->task_by_group )
                       {
@@ -1979,18 +1979,18 @@ LABEL_36:
                                 0,
                                 0,
                                 0);
-                        if ( v21 )
+                        if( v21 )
                         {
-                          if ( action_type != -1 && *(_WORD *)(v21 + 6) != action_type )
+                          if( action_type != -1 && *(_WORD *)(v21 + 6) != action_type )
                             v21 = 0;
-                          if ( v21 )
+                          if( v21 )
                             break;
                         }
                       }
                     }
                     ++v18;
                     v19 = v32->player;
-                    if ( v18 >= v19->master_object_num )
+                    if( v18 >= v19->master_object_num )
                       goto LABEL_37;
                   }
                   v16 = 4 * j;
@@ -1998,7 +1998,7 @@ LABEL_36:
                       + *(int *)((char *)valid_target_count + v16);
                   v23 = *(_DWORD *)v20[1].undead_sprite;
                   *(int *)((char *)valid_target_count + v16) = v22;
-                  if ( (*(int (__stdcall **)(int))(v23 + 8))(v21) )
+                  if( (*(int (__stdcall **)(int))(v23 + 8))(v21) )
                     goto LABEL_36;
                 }
               }
@@ -2010,7 +2010,7 @@ LABEL_37:
         v25 = __OFSUB__(j + 1, target_count);
         v24 = j++ + 1 - target_count < 0;
         v30 += 6;
-        if ( !(v24 ^ v25) )
+        if( !(v24 ^ v25) )
           break;
         v10 = master_obj;
         v8 = i;
@@ -2020,23 +2020,23 @@ LABEL_37:
       v5 = v32;
 LABEL_39:
       i = ++v8;
-      if ( v8 >= selected_count )
+      if( v8 >= selected_count )
       {
 LABEL_40:
         free(selected_objects);
         v26 = 0;
         result = 0;
         v27 = 0;
-        if ( v7 > 0 )
+        if( v7 > 0 )
         {
           v28 = &Picked_Objects;
           do
           {
             v29 = valid_target_count[v27];
-            if ( v29 > v26 )
+            if( v29 > v26 )
             {
               result = v5->world->objectsValue[*v28];
-              if ( attacking_in )
+              if( attacking_in )
               {
                 *attacking_in = attacking[v27];
                 v7 = target_count;
@@ -2046,7 +2046,7 @@ LABEL_40:
             ++v27;
             v28 += 3;
           }
-          while ( v27 < v7 );
+          while( v27 < v7 );
         }
         return result;
       }
@@ -2067,12 +2067,12 @@ int __thiscall RGE_Main_View::command_make_move(RGE_Main_View *this, int x, int 
   RGE_Pick_Info pick_info; // [sp+10h] [bp-14h]@3
 
   v3 = this;
-  if ( allow_user_commands
+  if( allow_user_commands
     && RGE_Player::get_selected_objects_to_command(this->player, &list, &list_num, -1, -1, -1, -1) )
   {
     free(list);
     v4 = 0;
-    if ( RGE_Main_View::pick1(v3, 42, 1, x, y, &pick_info, 0, 1) != 50 )
+    if( RGE_Main_View::pick1(v3, 42, 1, x, y, &pick_info, 0, 1) != 50 )
     {
       RGE_Main_View::fixup_pick_info(v3, &pick_info);
       v4 = (unsigned __int8)((int (__stdcall *)(RGE_Static_Object *, _DWORD, _DWORD))v3->player->vfptr->command_make_move)(
@@ -2106,7 +2106,7 @@ int __thiscall RGE_Main_View::command_make_work(RGE_Main_View *this, int x, int 
   RGE_Pick_Info pick_info; // [sp+1Ch] [bp-14h]@7
 
   v3 = this;
-  if ( !allow_user_commands
+  if( !allow_user_commands
     || !RGE_Player::get_selected_objects_to_command(this->player, &list, &list_num, -1, -1, -1, -1) )
   {
     return 0;
@@ -2114,20 +2114,20 @@ int __thiscall RGE_Main_View::command_make_work(RGE_Main_View *this, int x, int 
   free(list);
   v4 = RGE_Main_View::pick_best_target(v3, x, y, &attacking, -1);
   v5 = v4;
-  if ( v4 )
+  if( v4 )
   {
     v6 = ((int (__stdcall *)(RGE_Static_Object *, _DWORD, _DWORD))v3->player->vfptr->command_make_work)(
            v4,
            LODWORD(v4->world_x),
            LODWORD(v4->world_y)) & 0xFF;
-    if ( v6 )
+    if( v6 )
       RGE_View::display_object_selection((RGE_View *)&v3->vfptr, v5->id, 1500, 2, 2);
     RGE_View::reset_overlay_sprites((RGE_View *)&v3->vfptr);
     v3->vfptr->set_redraw((TPanel *)v3, RedrawNormal);
     (*(void (__stdcall **)(_DWORD, _DWORD))&rge_base_game->vfptr->gap8[8])(0, 0);
     return v6;
   }
-  if ( RGE_Main_View::pick1(v3, 40, 0, x, y, &pick_info, 0, 1) != 51 )
+  if( RGE_Main_View::pick1(v3, 40, 0, x, y, &pick_info, 0, 1) != 51 )
   {
     RGE_View::reset_overlay_sprites((RGE_View *)&v3->vfptr);
     v3->vfptr->set_redraw((TPanel *)v3, RedrawNormal);
@@ -2139,7 +2139,7 @@ int __thiscall RGE_Main_View::command_make_work(RGE_Main_View *this, int x, int 
          0,
          LODWORD(pick_info.x),
          LODWORD(pick_info.y)) & 0xFF;
-  if ( v8 )
+  if( v8 )
   {
     RGE_Main_View::reset_display_object_selection(v3, 2);
     RGE_View::add_overlay_sprite(
@@ -2180,7 +2180,7 @@ char __thiscall RGE_Main_View::get_help_info(RGE_Main_View *this, char **string,
   RGE_Pick_Info pick_info; // [sp+Ch] [bp-14h]@1
 
   v5 = this;
-  if ( RGE_Main_View::pick1(this, 41, 2, x, y, &pick_info, 0, 1) == 52 )
+  if( RGE_Main_View::pick1(this, 41, 2, x, y, &pick_info, 0, 1) == 52 )
   {
     v6 = RGE_Master_Static_Object::get_help_message(pick_info.object->master_obj);
     strcpy(*string, TPanel::get_string(v6));
@@ -2200,20 +2200,20 @@ void __thiscall RGE_Main_View::fixup_pick_info(RGE_Main_View *this, RGE_Pick_Inf
   double v2; // st7@3
   double v3; // st7@7
 
-  if ( pick_info->x >= 0.0 )
+  if( pick_info->x >= 0.0 )
   {
     v2 = (double)this->map->map_width;
-    if ( v2 <= pick_info->x )
+    if( v2 <= pick_info->x )
       pick_info->x = v2 - 1.0;
   }
   else
   {
     LODWORD(pick_info->x) = 0;
   }
-  if ( pick_info->y >= 0.0 )
+  if( pick_info->y >= 0.0 )
   {
     v3 = (double)this->map->map_height;
-    if ( v3 <= pick_info->y )
+    if( v3 <= pick_info->y )
       pick_info->y = v3 - 1.0;
   }
   else
@@ -2230,17 +2230,17 @@ void __thiscall RGE_Main_View::reset_display_object_selection(RGE_Main_View *thi
   DisplaySelectedObjRec *v4; // eax@3
 
   v2 = 0;
-  if ( this->DispSel_List_Max > 0 )
+  if( this->DispSel_List_Max > 0 )
   {
     v3 = 0;
     do
     {
       v4 = &this->DispSel_List[v3];
-      if ( v4->active == 1 && v4->select_type == reset_type )
+      if( v4->active == 1 && v4->select_type == reset_type )
         v4->start_time -= v4->duration;
       ++v2;
       ++v3;
     }
-    while ( v2 < this->DispSel_List_Max );
+    while( v2 < this->DispSel_List_Max );
   }
 }

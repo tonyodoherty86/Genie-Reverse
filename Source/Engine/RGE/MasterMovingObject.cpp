@@ -10,7 +10,7 @@ void __thiscall RGE_Master_Moving_Object::RGE_Master_Moving_Object(RGE_Master_Mo
     (RGE_Master_Animated_Object *)&other_object->vfptr,
     0);
   v3->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Moving_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Moving_Object::setup(v3, other_object);
 }
 // 5705A0: using guessed type int (__thiscall *RGE_Master_Moving_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -22,7 +22,7 @@ RGE_Master_Moving_Object *__thiscall RGE_Master_Moving_Object::`scalar deleting 
 
   v2 = this;
   RGE_Master_Moving_Object::~RGE_Master_Moving_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -40,7 +40,7 @@ void __thiscall RGE_Master_Moving_Object::RGE_Master_Moving_Object(RGE_Master_Mo
     sounds,
     0);
   v5->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Moving_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Moving_Object::setup(v5, infile, infile, sprites, sounds);
 }
 // 5705A0: using guessed type int (__thiscall *RGE_Master_Moving_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -59,7 +59,7 @@ void __thiscall RGE_Master_Moving_Object::RGE_Master_Moving_Object(RGE_Master_Mo
     in_id,
     0);
   v6->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Moving_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     RGE_Master_Moving_Object::setup(v6, infile, sprites, sounds, in_id);
 }
 // 5705A0: using guessed type int (__thiscall *RGE_Master_Moving_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -107,12 +107,12 @@ int __userpurge RGE_Master_Moving_Object::setup@<eax>(RGE_Master_Moving_Object *
   rge_read(a2, v6, v6, &v7->obj_trail_options, 1);
   rge_read(a2, v6, v6, &v7->obj_trail_spacing, 4);
   rge_read(a2, v6, v6, &v7->move_algorithem, 1);
-  if ( (signed __int16)sounds < 0 )
+  if( (signed __int16)sounds < 0 )
     v8 = 0;
   else
     v8 = v5[(signed __int16)sounds];
   v7->move_sprite = v8;
-  if ( (signed __int16)sprites < 0 )
+  if( (signed __int16)sprites < 0 )
   {
     v7->run_sprite = 0;
     result = 1;
@@ -162,12 +162,12 @@ int __thiscall RGE_Master_Moving_Object::setup(RGE_Master_Moving_Object *this, _
   v11 = (signed __int16)infile < 0;
   v6->size_class = v8;
   v6->move_algorithem = v9;
-  if ( v11 )
+  if( v11 )
     v12 = 0;
   else
     v12 = v5[v10];
   v6->move_sprite = v12;
-  if ( temp_run_sprite < 0 )
+  if( temp_run_sprite < 0 )
   {
     v6->run_sprite = 0;
     result = 1;
@@ -196,7 +196,7 @@ void __thiscall RGE_Master_Moving_Object::make_new_obj(RGE_Master_Moving_Object 
   RGE_Moving_Object *v7; // eax@4
 
   v5 = this;
-  if ( this->recyclable && (v6 = RGE_Game_World::recycle_object_in_to_game(owner->world, this->master_type)) != 0 )
+  if( this->recyclable && (v6 = RGE_Game_World::recycle_object_in_to_game(owner->world, this->master_type)) != 0 )
   {
     (*(void (__thiscall **)(RGE_Static_Object *, RGE_Master_Moving_Object *, RGE_Player *, _DWORD, _DWORD, _DWORD))&v6->vfptr->gap4[0])(
       v6,
@@ -209,7 +209,7 @@ void __thiscall RGE_Master_Moving_Object::make_new_obj(RGE_Master_Moving_Object 
   else
   {
     v7 = (RGE_Moving_Object *)operator new(0x180u);
-    if ( v7 )
+    if( v7 )
       RGE_Moving_Object::RGE_Moving_Object(v7, v5, owner, x, y, z, 1);
   }
 }
@@ -222,7 +222,7 @@ void __thiscall RGE_Master_Moving_Object::make_new_master(RGE_Master_Moving_Obje
 
   v1 = this;
   v2 = (RGE_Master_Moving_Object *)operator new(0xD8u);
-  if ( v2 )
+  if( v2 )
     RGE_Master_Moving_Object::RGE_Master_Moving_Object(v2, v1, 1);
 }
 
@@ -246,7 +246,7 @@ void __thiscall RGE_Master_Moving_Object::copy_obj(RGE_Master_Moving_Object *thi
 //----- (00451FB0) --------------------------------------------------------
 void __thiscall RGE_Master_Moving_Object::modify(RGE_Master_Moving_Object *this, float amount, char flag)
 {
-  if ( flag == 6 )
+  if( flag == 6 )
     this->turn_speed = amount;
   else
     RGE_Master_Animated_Object::modify((RGE_Master_Animated_Object *)&this->vfptr, amount, flag);
@@ -255,7 +255,7 @@ void __thiscall RGE_Master_Moving_Object::modify(RGE_Master_Moving_Object *this,
 //----- (00451FE0) --------------------------------------------------------
 void __thiscall RGE_Master_Moving_Object::modify_delta(RGE_Master_Moving_Object *this, float amount, char flag)
 {
-  if ( flag == 6 )
+  if( flag == 6 )
     this->turn_speed = amount + this->turn_speed;
   else
     RGE_Master_Animated_Object::modify_delta((RGE_Master_Animated_Object *)&this->vfptr, amount, flag);
@@ -264,7 +264,7 @@ void __thiscall RGE_Master_Moving_Object::modify_delta(RGE_Master_Moving_Object 
 //----- (00452010) --------------------------------------------------------
 void __thiscall RGE_Master_Moving_Object::modify_percent(RGE_Master_Moving_Object *this, float amount, char flag)
 {
-  if ( flag == 6 )
+  if( flag == 6 )
     this->turn_speed = amount * this->turn_speed;
   else
     RGE_Master_Animated_Object::modify_percent((RGE_Master_Animated_Object *)&this->vfptr, amount, flag);
@@ -283,7 +283,7 @@ void __fastcall RGE_Master_Moving_Object::save(RGE_Master_Moving_Object *this, i
   v3 = this;
   v4 = -1;
   v5 = (int)v3->move_sprite;
-  if ( v5 )
+  if( v5 )
   {
     LOWORD(v5) = *(_WORD *)(v5 + 114);
     temp_move_sprite = v5;
@@ -293,7 +293,7 @@ void __fastcall RGE_Master_Moving_Object::save(RGE_Master_Moving_Object *this, i
     temp_move_sprite = -1;
   }
   v6 = v3->run_sprite;
-  if ( v6 )
+  if( v6 )
     LOWORD(v4) = v6->id;
   temp_run_sprite = v4;
   RGE_Master_Animated_Object::save((RGE_Master_Animated_Object *)&v3->vfptr, a2, outfile);

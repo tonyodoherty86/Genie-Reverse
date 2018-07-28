@@ -13,7 +13,7 @@ void __thiscall RGE_Communications_Addresses::RGE_Communications_Addresses(RGE_C
   RGE_Communications_Addresses::EraseInformation(this);
   v3 = WSAStartup(0x101u, &v2->wsaData);
   v4 = operator new(0x504u);
-  if ( v4 )
+  if( v4 )
   {
     v5 = (int)v4 + 4;
     *(_DWORD *)v4 = 8;
@@ -29,7 +29,7 @@ void __thiscall RGE_Communications_Addresses::RGE_Communications_Addresses(RGE_C
     v5 = 0;
   }
   v2->pIPAD = (IPAD *)v5;
-  if ( v3 )
+  if( v3 )
   {
     v2->Status = 0;
   }
@@ -51,7 +51,7 @@ IPAD *__thiscall IPAD::`vector deleting destructor'(IPAD *this, unsigned int __f
   IPAD *result; // eax@2
 
   v2 = this;
-  if ( __flags & 2 )
+  if( __flags & 2 )
   {
     `eh vector destructor iterator'(
       (int)this,
@@ -63,7 +63,7 @@ IPAD *__thiscall IPAD::`vector deleting destructor'(IPAD *this, unsigned int __f
   }
   else
   {
-    if ( __flags & 1 )
+    if( __flags & 1 )
       operator delete(this);
     result = v2;
   }
@@ -79,10 +79,10 @@ void __thiscall RGE_Communications_Addresses::~RGE_Communications_Addresses(RGE_
 
   v1 = this;
   RGE_Communications_Addresses::EraseInformation(this);
-  if ( v1->Status )
+  if( v1->Status )
     WSACleanup();
   v2 = (int)v1->pIPAD;
-  if ( v2 )
+  if( v2 )
   {
     v3 = (void *)(v2 - 4);
     `eh vector destructor iterator'(v2, 0xA0u, *(_DWORD *)(v2 - 4), (void (__thiscall *)(void *))IPAD::~IPAD);
@@ -110,15 +110,15 @@ void *__thiscall RGE_Communications_Addresses::SetIPAliases(RGE_Communications_A
 
   v2 = this;
   result = this->hostname;
-  if ( this != (RGE_Communications_Addresses *)-404 )
+  if( this != (RGE_Communications_Addresses *)-404 )
   {
     result = gethostbyname(this->hostname);
-    if ( result )
+    if( result )
     {
       *sz = 0;
       v4 = (const char **)*((_DWORD *)result + 1);
       v2->AliasesAvailable = 0;
-      for ( i = *v4; *v4; i = *v4 )
+      for( i = *v4; *v4; i = *v4 )
       {
         ++v4;
         strcpy(v2->pIPAD[v2->AliasesAvailable++].Alias, i);
@@ -135,7 +135,7 @@ char *__thiscall RGE_Communications_Addresses::GetAddress(RGE_Communications_Add
   char *result; // eax@1
 
   result = this->pIPAD[Num].DottedIPAddress;
-  if ( !result || Num > this->AddressesAvailable )
+  if( !result || Num > this->AddressesAvailable )
     result = text_in;
   return result;
 }
@@ -145,7 +145,7 @@ char *__thiscall RGE_Communications_Addresses::GetAlias(RGE_Communications_Addre
 {
   char *result; // eax@2
 
-  if ( Num > this->AliasesAvailable || (result = this->pIPAD[Num].Alias, &this->pIPAD[Num] == (IPAD *)-32) )
+  if( Num > this->AliasesAvailable || (result = this->pIPAD[Num].Alias, &this->pIPAD[Num] == (IPAD *)-32) )
     result = text_in;
   return result;
 }
@@ -161,15 +161,15 @@ _DWORD *__thiscall RGE_Communications_Addresses::SetIPAddresses(RGE_Communicatio
 
   v2 = this;
   result = (_DWORD *)this->hostname;
-  if ( this != (RGE_Communications_Addresses *)-404 )
+  if( this != (RGE_Communications_Addresses *)-404 )
   {
     result = gethostbyname(this->hostname);
-    if ( result )
+    if( result )
     {
       *sz = 0;
       v4 = (int *)result[3];
       v2->AddressesAvailable = 0;
-      for ( i = *v4; *v4; i = *v4 )
+      for( i = *v4; *v4; i = *v4 )
       {
         sprintf(temp, aD_D_D_D, *(_BYTE *)i, *(_BYTE *)(i + 1), *(_BYTE *)(i + 2), *(_BYTE *)(i + 3));
         ++v4;

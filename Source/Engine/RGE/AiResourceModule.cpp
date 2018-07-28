@@ -35,7 +35,7 @@ void __thiscall ResourceAIModule::ResourceAIModule(ResourceAIModule *this, void 
   v13 = v7->numberResourcesValue;
   v7->numberResourceTypesValue = v12;
   v14 = 0;
-  if ( v13 > 0 )
+  if( v13 > 0 )
   {
     do
     {
@@ -45,7 +45,7 @@ void __thiscall ResourceAIModule::ResourceAIModule(ResourceAIModule *this, void 
       v7->numberResourceTypesValue[v14 - 1] = 0;
       v7->resourceTypesValue[v14 - 1] = 0;
     }
-    while ( v14 < v7->numberResourcesValue );
+    while( v14 < v7->numberResourcesValue );
   }
 }
 // 56E9D8: using guessed type int (__thiscall *ResourceAIModule::`vftable')(void *Memory, unsigned int __flags);
@@ -57,7 +57,7 @@ ResourceAIModule *__thiscall ResourceAIModule::`vector deleting destructor'(Reso
 
   v2 = this;
   ResourceAIModule::~ResourceAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -91,7 +91,7 @@ int __thiscall ResourceAIModule::resource(ResourceAIModule *this, int n)
 {
   int result; // eax@3
 
-  if ( n < 0 || n >= this->numberResourcesValue )
+  if( n < 0 || n >= this->numberResourcesValue )
     result = -1;
   else
     result = this->resourceValue[n];
@@ -106,20 +106,20 @@ int __thiscall ResourceAIModule::resourcesAvailable(ResourceAIModule *this, Reso
   int v4; // esi@5
 
   v2 = this;
-  if ( ri )
+  if( ri )
   {
-    if ( this->numberResourcesValue == ResourceItem::number(ri) )
+    if( this->numberResourcesValue == ResourceItem::number(ri) )
     {
       v4 = 0;
-      if ( ResourceItem::number(ri) <= 0 )
+      if( ResourceItem::number(ri) <= 0 )
       {
         result = 1;
       }
       else
       {
-        while ( v2->resourceValue[v4] >= ResourceItem::value(ri, v4) )
+        while( v2->resourceValue[v4] >= ResourceItem::value(ri, v4) )
         {
-          if ( ++v4 >= ResourceItem::number(ri) )
+          if( ++v4 >= ResourceItem::number(ri) )
             return 1;
         }
         result = 0;
@@ -145,17 +145,17 @@ int __thiscall ResourceAIModule::unavailableResource(ResourceAIModule *this, Res
   int v4; // esi@4
 
   v2 = this;
-  if ( ri )
+  if( ri )
   {
-    if ( this->numberResourcesValue != ResourceItem::number(ri) || (v4 = 0, ResourceItem::number(ri) <= 0) )
+    if( this->numberResourcesValue != ResourceItem::number(ri) || (v4 = 0, ResourceItem::number(ri) <= 0) )
     {
       result = -1;
     }
     else
     {
-      while ( v2->resourceValue[v4] >= ResourceItem::value(ri, v4) )
+      while( v2->resourceValue[v4] >= ResourceItem::value(ri, v4) )
       {
-        if ( ++v4 >= ResourceItem::number(ri) )
+        if( ++v4 >= ResourceItem::number(ri) )
           return -1;
       }
       result = v4;
@@ -173,7 +173,7 @@ int __thiscall ResourceAIModule::minValueOfResource(ResourceAIModule *this, int 
 {
   int result; // eax@3
 
-  if ( n < 0 || n >= this->numberResourcesValue )
+  if( n < 0 || n >= this->numberResourcesValue )
     result = -1;
   else
     result = this->minValue[n];
@@ -185,7 +185,7 @@ int __thiscall ResourceAIModule::maxValueOfResource(ResourceAIModule *this, int 
 {
   int result; // eax@3
 
-  if ( n < 0 || n >= this->numberResourcesValue )
+  if( n < 0 || n >= this->numberResourcesValue )
     result = -1;
   else
     result = this->maxValue[n];
@@ -199,7 +199,7 @@ void __thiscall ResourceAIModule::setResource(ResourceAIModule *this, int n, int
 
   v3 = this;
   AIModule::logCommonHistory((AIModule *)&this->vfptr, aSetresourceNDV, n, v);
-  if ( n >= 0 && n < v3->numberResourcesValue )
+  if( n >= 0 && n < v3->numberResourcesValue )
   {
     v3->resourceValue[n] = v;
     AIModule::logCommonHistory((AIModule *)&v3->vfptr, aSetresourceRDD, n, v3->resourceValue[n]);
@@ -214,11 +214,11 @@ void __thiscall ResourceAIModule::setResources(ResourceAIModule *this, ResourceI
   int v4; // eax@4
 
   v2 = this;
-  if ( ri )
+  if( ri )
   {
-    if ( this->numberResourcesValue == ResourceItem::number(ri) )
+    if( this->numberResourcesValue == ResourceItem::number(ri) )
     {
-      for ( i = 0; i < ResourceItem::number(ri); ++i )
+      for( i = 0; i < ResourceItem::number(ri); ++i )
       {
         v4 = ResourceItem::value(ri, i);
         ResourceAIModule::setResource(v2, i, v4);
@@ -234,10 +234,10 @@ void __thiscall ResourceAIModule::incrementResource(ResourceAIModule *this, int 
 
   v3 = this;
   AIModule::logCommonHistory((AIModule *)&this->vfptr, aIncrementresou, n, v);
-  if ( n >= 0 && n < v3->numberResourcesValue )
+  if( n >= 0 && n < v3->numberResourcesValue )
   {
     v3->resourceValue[n] += v;
-    if ( v )
+    if( v )
       AIModule::logCommonHistory((AIModule *)&v3->vfptr, aIncrementres_1, n, v3->resourceValue[n]);
   }
 }
@@ -250,11 +250,11 @@ void __thiscall ResourceAIModule::incrementResources(ResourceAIModule *this, Res
   int v4; // eax@4
 
   v2 = this;
-  if ( ri )
+  if( ri )
   {
-    if ( this->numberResourcesValue == ResourceItem::number(ri) )
+    if( this->numberResourcesValue == ResourceItem::number(ri) )
     {
-      for ( i = 0; i < ResourceItem::number(ri); ++i )
+      for( i = 0; i < ResourceItem::number(ri); ++i )
       {
         v4 = ResourceItem::value(ri, i);
         ResourceAIModule::incrementResource(v2, i, v4);
@@ -270,10 +270,10 @@ void __thiscall ResourceAIModule::decrementResource(ResourceAIModule *this, int 
 
   v3 = this;
   AIModule::logCommonHistory((AIModule *)&this->vfptr, aDecrementresou, n, v);
-  if ( n >= 0 && n < v3->numberResourcesValue )
+  if( n >= 0 && n < v3->numberResourcesValue )
   {
     v3->resourceValue[n] -= v;
-    if ( v )
+    if( v )
       AIModule::logCommonHistory((AIModule *)&v3->vfptr, aDecrementres_1, n, v3->resourceValue[n]);
   }
 }
@@ -286,11 +286,11 @@ void __thiscall ResourceAIModule::decrementResources(ResourceAIModule *this, Res
   int v4; // eax@4
 
   v2 = this;
-  if ( ri )
+  if( ri )
   {
-    if ( this->numberResourcesValue == ResourceItem::number(ri) )
+    if( this->numberResourcesValue == ResourceItem::number(ri) )
     {
-      for ( i = 0; i < ResourceItem::number(ri); ++i )
+      for( i = 0; i < ResourceItem::number(ri); ++i )
       {
         v4 = ResourceItem::value(ri, i);
         ResourceAIModule::decrementResource(v2, i, v4);
@@ -302,14 +302,14 @@ void __thiscall ResourceAIModule::decrementResources(ResourceAIModule *this, Res
 //----- (00412920) --------------------------------------------------------
 void __thiscall ResourceAIModule::setResourceMin(ResourceAIModule *this, int n, int v)
 {
-  if ( n >= 0 && n < this->numberResourcesValue )
+  if( n >= 0 && n < this->numberResourcesValue )
     this->minValue[n] = v;
 }
 
 //----- (00412940) --------------------------------------------------------
 void __thiscall ResourceAIModule::setResourceMax(ResourceAIModule *this, int n, int v)
 {
-  if ( n >= 0 && n < this->numberResourcesValue )
+  if( n >= 0 && n < this->numberResourcesValue )
     this->maxValue[n] = v;
 }
 
@@ -330,10 +330,10 @@ void __thiscall ResourceAIModule::addResourceType(ResourceAIModule *this, int r,
   v3 = this;
   v4 = r;
   v5 = (int *)operator new(4 * this->numberResourceTypesValue[r] + 4);
-  for ( i = 0; i < v3->numberResourceTypesValue[v4]; v5[i - 1] = v3->resourceTypesValue[v4][i - 1] )
+  for( i = 0; i < v3->numberResourceTypesValue[v4]; v5[i - 1] = v3->resourceTypesValue[v4][i - 1] )
     ++i;
   v5[i] = t;
-  if ( v3->resourceTypesValue[v4] )
+  if( v3->resourceTypesValue[v4] )
     operator delete(v3->resourceTypesValue[v4]);
   v3->resourceTypesValue[v4] = v5;
   ++v3->numberResourceTypesValue[v4];
@@ -353,7 +353,7 @@ int __thiscall ResourceAIModule::isResourceType(ResourceAIModule *this, int r, i
   v4 = r;
   AIModule::logCommonHistory((AIModule *)&v3->vfptr, aThereAreDResou, v3->numberResourceTypesValue[r], r);
   v5 = 0;
-  if ( v3->numberResourceTypesValue[r] <= 0 )
+  if( v3->numberResourceTypesValue[r] <= 0 )
   {
 LABEL_5:
     AIModule::logCommonHistory((AIModule *)&v3->vfptr, aNoMatchReturni);
@@ -362,13 +362,13 @@ LABEL_5:
   else
   {
     v6 = v3->resourceTypesValue[v4];
-    while ( 1 )
+    while( 1 )
     {
       AIModule::logCommonHistory((AIModule *)&v3->vfptr, aCheckingAgains, v6[v5]);
       v6 = v3->resourceTypesValue[v4];
-      if ( v6[v5] == t )
+      if( v6[v5] == t )
         break;
-      if ( ++v5 >= v3->numberResourceTypesValue[v4] )
+      if( ++v5 >= v3->numberResourceTypesValue[v4] )
         goto LABEL_5;
     }
     AIModule::logCommonHistory((AIModule *)&v3->vfptr, aMatchReturning);

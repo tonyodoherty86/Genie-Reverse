@@ -36,7 +36,7 @@ void __thiscall RGE_Communications_Synchronize::RGE_Communications_Synchronize(R
     v3 += 36;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
 }
 
 //----- (00433070) --------------------------------------------------------
@@ -61,7 +61,7 @@ void __thiscall RGE_Communications_Synchronize::~RGE_Communications_Synchronize(
     v1 += 36;
     --v2;
   }
-  while ( v2 );
+  while( v2 );
 }
 
 //----- (004330A0) --------------------------------------------------------
@@ -70,11 +70,11 @@ int __thiscall RGE_Communications_Synchronize::Add(RGE_Communications_Synchroniz
   int result; // eax@2
   unsigned int v11; // eax@3
 
-  if ( this->DoChecksums )
+  if( this->DoChecksums )
   {
     v11 = this->Offset + 1;
     this->Offset = v11;
-    if ( v11 >= 0x36 )
+    if( v11 >= 0x36 )
       this->Offset = 0;
     this->Check[this->Offset].WTime = worldtime;
     this->Check[this->Offset].WTurn = worldturn;
@@ -116,24 +116,24 @@ int __thiscall RGE_Communications_Synchronize::ValidateChecksums(RGE_Communicati
 
   v10 = this;
   v11 = 0;
-  if ( !this->NewData )
+  if( !this->NewData )
     return this->LastResult;
   this->NewData = 0;
   this->LastResult = 0;
   v13 = 1;
   v14 = (int)&v10->Check[1].WTime;
-  while ( 1 )
+  while( 1 )
   {
-    if ( *(_DWORD *)(v14 + 4) != worldturn )
+    if( *(_DWORD *)(v14 + 4) != worldturn )
       goto LABEL_7;
-    if ( *(_DWORD *)v14 != worldtime )
+    if( *(_DWORD *)v14 != worldtime )
     {
       v11 = 1;
 LABEL_7:
-      if ( *(_DWORD *)v14 != worldtime )
+      if( *(_DWORD *)v14 != worldtime )
         goto LABEL_15;
     }
-    if ( *(_DWORD *)(v14 + 8) != cs1
+    if( *(_DWORD *)(v14 + 8) != cs1
       || *(_DWORD *)(v14 + 12) != cs2
       || *(_DWORD *)(v14 + 16) != cs3
       || *(_DWORD *)(v14 + 20) != cs4
@@ -143,11 +143,11 @@ LABEL_7:
       v11 = 1;
     }
 LABEL_15:
-    if ( v11 )
+    if( v11 )
       break;
     ++v13;
     v14 += 36;
-    if ( v13 > 0x36 )
+    if( v13 > 0x36 )
     {
       TDebuggingLog::Log(L, aPDInSync_Wtime, player, worldtime, worldturn, worldrandom, cs1);
       result = 1;
@@ -188,12 +188,12 @@ signed int __thiscall RGE_Communications_Synchronize::DoChecksum(RGE_Communicati
 
   v2 = this;
   v3 = 0;
-  if ( this->DoChecksums )
+  if( this->DoChecksums )
   {
     v5 = rge_base_game->world;
-    if ( v5 )
+    if( v5 )
       v3 = v5->world_time;
-    if ( turn >= this->CheckTurn )
+    if( turn >= this->CheckTurn )
     {
       TDebuggingLog::Log(L, aSyncCheckAtTur, this->CheckTurn);
       v2->CheckTurn += 4;
@@ -201,7 +201,7 @@ signed int __thiscall RGE_Communications_Synchronize::DoChecksum(RGE_Communicati
       cs3 = 0;
       cs4 = 0;
       RGE_Base_Game::GetWorldChecksums(rge_base_game, &cs2, &cs3, &cs4);
-      if ( v2->SendChatMsgs )
+      if( v2->SendChatMsgs )
       {
         sprintf(tmp, aWorldtimeLdRan, v3, v2->LastWorldRandom, v2->GameWorldChecksum);
         TCommunications_Handler::SendChatMsgAll(v2->Comm, tmp);
@@ -209,7 +209,7 @@ signed int __thiscall RGE_Communications_Synchronize::DoChecksum(RGE_Communicati
       UnifiedVisibleChecksum = RGE_Visible_Map::checksumUnifiedVisible((*rge_base_game->world->players)->visible);
       v6 = 1;
       v7 = rge_base_game->world;
-      if ( v7->player_num > 1 )
+      if( v7->player_num > 1 )
       {
         do
         {
@@ -218,7 +218,7 @@ signed int __thiscall RGE_Communications_Synchronize::DoChecksum(RGE_Communicati
           VisibleChecksum[v6++] = v8;
           v7 = v9->world;
         }
-        while ( v6 < v7->player_num );
+        while( v6 < v7->player_num );
       }
       v10 = UnifiedVisibleChecksum;
       v11 = PathingSystem::checksum(&pathSystem);
@@ -275,14 +275,14 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
   v11 = fopen(aCAoesync_txt, aWt);
   sprintf(TBuff, aAddingPDWtimeD, player, worldtime, worldturn, cs1, cs2, cs3, cs4, cs5, random);
   TDebuggingLog::Log(L, TBuff);
-  if ( v11 )
+  if( v11 )
   {
     fputs(TBuff, v11);
     fputs(Str, v11);
   }
   sprintf(TBuff, aPlrWrldtimeCom);
   TDebuggingLog::Log(L, TBuff);
-  if ( v11 )
+  if( v11 )
   {
     fputs(TBuff, v11);
     fputs(Str, v11);
@@ -304,78 +304,78 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
       *(_DWORD *)(v12 + 20),
       *(_DWORD *)(v12 + 24));
     TDebuggingLog::Log(L, TBuff);
-    if ( v11 )
+    if( v11 )
     {
       fputs(TBuff, v11);
       fputs(Str, v11);
     }
-    if ( *(_DWORD *)(v12 + 4) == worldturn && *(_DWORD *)v12 != worldtime )
+    if( *(_DWORD *)(v12 + 4) == worldturn && *(_DWORD *)v12 != worldtime )
     {
       sprintf(TBuff, aWorldTimeIsOut, worldtime, *(_DWORD *)v12, worldturn);
       TDebuggingLog::Log(L, TBuff);
-      if ( v11 )
+      if( v11 )
       {
         fputs(TBuff, v11);
         fputs(Str, v11);
       }
     }
-    if ( *(_DWORD *)v12 == worldtime )
+    if( *(_DWORD *)v12 == worldtime )
     {
-      if ( *(_DWORD *)(v12 + 28) != random )
+      if( *(_DWORD *)(v12 + 28) != random )
       {
         sprintf(TBuff, aMismatchedRand, random, *(_DWORD *)(v12 + 28));
         TDebuggingLog::Log(L, TBuff);
-        if ( v11 )
+        if( v11 )
         {
           fputs(TBuff, v11);
           fputs(Str, v11);
         }
       }
-      if ( *(_DWORD *)(v12 + 8) != cs1 )
+      if( *(_DWORD *)(v12 + 8) != cs1 )
       {
         sprintf(TBuff, aMismatchedUnif);
         TDebuggingLog::Log(L, TBuff);
-        if ( v11 )
+        if( v11 )
         {
           fputs(TBuff, v11);
           fputs(Str, v11);
         }
       }
-      if ( *(_DWORD *)(v12 + 12) != cs2 )
+      if( *(_DWORD *)(v12 + 12) != cs2 )
       {
         sprintf(TBuff, aMismatchedChec);
         TDebuggingLog::Log(L, TBuff);
-        if ( v11 )
+        if( v11 )
         {
           fputs(TBuff, v11);
           fputs(Str, v11);
         }
       }
-      if ( *(_DWORD *)(v12 + 16) != cs3 )
+      if( *(_DWORD *)(v12 + 16) != cs3 )
       {
         sprintf(TBuff, aMismatched__po);
         TDebuggingLog::Log(L, TBuff);
-        if ( v11 )
+        if( v11 )
         {
           fputs(TBuff, v11);
           fputs(Str, v11);
         }
       }
-      if ( *(_DWORD *)(v12 + 20) != cs4 )
+      if( *(_DWORD *)(v12 + 20) != cs4 )
       {
         sprintf(TBuff, aMismatched___a);
         TDebuggingLog::Log(L, TBuff);
-        if ( v11 )
+        if( v11 )
         {
           fputs(TBuff, v11);
           fputs(Str, v11);
         }
       }
-      if ( *(_DWORD *)(v12 + 24) != cs5 )
+      if( *(_DWORD *)(v12 + 24) != cs5 )
       {
         sprintf(TBuff, aMismatched___o);
         TDebuggingLog::Log(L, TBuff);
-        if ( v11 )
+        if( v11 )
         {
           fputs(TBuff, v11);
           fputs(Str, v11);
@@ -385,11 +385,11 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
     v12 += 36;
     --v19;
   }
-  while ( v19 );
+  while( v19 );
   v13 = L;
   strcpy(TBuff, aPlayerChecksum);
   TDebuggingLog::Log(v13, TBuff);
-  if ( v11 )
+  if( v11 )
   {
     fputs(TBuff, v11);
     fputs(Str, v11);
@@ -398,13 +398,13 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
   v20 = VisibleChecksum;
   do
   {
-    if ( TCommunications_Handler::IsPlayerHuman(v21->Comm, v14)
+    if( TCommunications_Handler::IsPlayerHuman(v21->Comm, v14)
       || TCommunications_Handler::IsPlayerComputer(v21->Comm, v14) )
     {
       v15 = L;
       strcpy(TBuff, asc_5837C4);
       TDebuggingLog::Log(v15, TBuff);
-      if ( v11 )
+      if( v11 )
       {
         fputs(TBuff, v11);
         fputs(Str, v11);
@@ -412,7 +412,7 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
       v16 = TCommunications_Handler::GetPlayerName(v21->Comm, v14);
       sprintf(TBuff, aPlayerS, v16);
       TDebuggingLog::Log(L, TBuff);
-      if ( v11 )
+      if( v11 )
       {
         fputs(TBuff, v11);
         fputs(Str, v11);
@@ -420,14 +420,14 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
       v17 = RGE_Base_Game::GetChecksum(rge_base_game, v14);
       sprintf(TBuff, aPDCsumD, v14, v17);
       TDebuggingLog::Log(L, TBuff);
-      if ( v11 )
+      if( v11 )
       {
         fputs(TBuff, v11);
         fputs(Str, v11);
       }
       sprintf(TBuff, aVisibleChecksu, *v20);
       TDebuggingLog::Log(L, TBuff);
-      if ( v11 )
+      if( v11 )
       {
         fputs(TBuff, v11);
         fputs(Str, v11);
@@ -436,11 +436,11 @@ void __thiscall RGE_Communications_Synchronize::LogChecksums(RGE_Communications_
     ++v14;
     ++v20;
   }
-  while ( (unsigned int)v20 < 0x62D22C );
+  while( (unsigned int)v20 < 0x62D22C );
   v18 = L;
   strcpy(TBuff, a___endOfLog);
   TDebuggingLog::Log(v18, TBuff);
-  if ( v11 )
+  if( v11 )
   {
     fputs(TBuff, v11);
     fputs(Str, v11);
@@ -513,11 +513,11 @@ int __thiscall RGE_Communications_Synchronize::IsPlayerOutOfSync(RGE_Communicati
   NumPlayers = 0;
   v7 = 1;
   v8 = v5;
-  while ( *((_DWORD *)v8 - 2) != pnum || *(_DWORD *)v8 != worldturn )
+  while( *((_DWORD *)v8 - 2) != pnum || *(_DWORD *)v8 != worldturn )
   {
     ++v7;
     v8 += 36;
-    if ( v7 > 0x36 )
+    if( v7 > 0x36 )
       goto LABEL_7;
   }
   foundMine = 1;
@@ -530,7 +530,7 @@ int __thiscall RGE_Communications_Synchronize::IsPlayerOutOfSync(RGE_Communicati
   mycs5 = *(_DWORD *)(v9 + 76);
   myRandom = *(_DWORD *)(v9 + 80);
 LABEL_7:
-  if ( !foundMine )
+  if( !foundMine )
   {
     TDebuggingLog::Log(L, aOutofsyncDidnT);
     return 0;
@@ -539,16 +539,16 @@ LABEL_7:
   v11 = 1;
   do
   {
-    if ( *((_DWORD *)v5 - 2) != pnum && *(_DWORD *)v5 == worldturn )
+    if( *((_DWORD *)v5 - 2) != pnum && *(_DWORD *)v5 == worldturn )
     {
-      if ( v4 != *((_DWORD *)v5 - 1) || v6 != *((_DWORD *)v5 + 1) )
+      if( v4 != *((_DWORD *)v5 - 1) || v6 != *((_DWORD *)v5 + 1) )
       {
         v12 = mycs2;
       }
       else
       {
         v12 = mycs2;
-        if ( mycs2 == *((_DWORD *)v5 + 2)
+        if( mycs2 == *((_DWORD *)v5 + 2)
           && mycs3 == *((_DWORD *)v5 + 3)
           && mycs4 == *((_DWORD *)v5 + 4)
           && mycs5 == *((_DWORD *)v5 + 5)
@@ -566,19 +566,19 @@ LABEL_22:
     ++v11;
     v5 += 36;
   }
-  while ( v11 <= 0x36 );
+  while( v11 <= 0x36 );
   v13 = 1;
   do
   {
-    if ( TCommunications_Handler::GetPlayerHumanity(v23->Comm, v13) == 2 )
+    if( TCommunications_Handler::GetPlayerHumanity(v23->Comm, v13) == 2 )
       ++NumPlayers;
     ++v13;
   }
-  while ( v13 <= 9 );
+  while( v13 <= 9 );
   TDebuggingLog::Log(L, aOutofsyncNumpl, NumPlayers, NumDiff, NumSame);
-  if ( NumSame + NumDiff >= NumPlayers - 1 )
+  if( NumSame + NumDiff >= NumPlayers - 1 )
   {
-    if ( NumDiff <= NumSame )
+    if( NumDiff <= NumSame )
     {
       TDebuggingLog::Log(L, aOutofsyncRet_2);
       result = 0;

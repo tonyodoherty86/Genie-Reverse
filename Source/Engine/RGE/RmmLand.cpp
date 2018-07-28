@@ -86,57 +86,57 @@ char __thiscall RGE_RMM_Land_Generator::check_terrain_and_zone(RGE_RMM_Land_Gene
   cx1 = v6 + 2;
   cy0 = y + 2;
   v10 = this->search_map_rows;
-  if ( (unsigned __int8)v10[v5][v6] != octogon_y1->info.land_num )
+  if( (unsigned __int8)v10[v5][v6] != octogon_y1->info.land_num )
     return 0;
   v12 = v9;
-  if ( v9 <= y1 )
+  if( v9 <= y1 )
   {
     v13 = &v10[v9];
-    while ( 1 )
+    while( 1 )
     {
-      if ( v12 >= 0 )
+      if( v12 >= 0 )
       {
-        if ( v12 < octogon_y1->map_height )
+        if( v12 < octogon_y1->map_height )
         {
-          for ( i = x0; i <= x1; ++i )
+          for( i = x0; i <= x1; ++i )
           {
-            if ( i >= 0 )
+            if( i >= 0 )
             {
-              if ( i < octogon_y1->map_width )
+              if( i < octogon_y1->map_width )
               {
-                if ( (*v13)[i] == v7[72] )
+                if( (*v13)[i] == v7[72] )
                 {
-                  if ( v12 >= zone && v12 <= cy0 && i >= cx0 && i <= cx1 )
+                  if( v12 >= zone && v12 <= cy0 && i >= cx0 && i <= cx1 )
                     ++count;
                 }
-                else if ( (unsigned __int8)(*v13)[i] < octogon_y1->info.land_num )
+                else if( (unsigned __int8)(*v13)[i] < octogon_y1->info.land_num )
                 {
                   return 0;
                 }
               }
-              else if ( i < cx1 )
+              else if( i < cx1 )
               {
                 ++count;
               }
             }
-            else if ( i > cx0 )
+            else if( i > cx0 )
             {
               ++count;
             }
           }
         }
-        else if ( v12 < cy0 )
+        else if( v12 < cy0 )
         {
           count += 5;
         }
       }
-      else if ( v12 > zone )
+      else if( v12 > zone )
       {
         count += 5;
       }
       ++v12;
       ++v13;
-      if ( v12 > y1 )
+      if( v12 > y1 )
         return count;
     }
   }
@@ -159,18 +159,18 @@ char __thiscall RGE_RMM_Land_Generator::chance(RGE_RMM_Land_Generator *this, int
 
   v4 = (char *)this + 52 * land_type;
   land_typea = this->info.land[land_type].wall_fade;
-  if ( land_typea )
+  if( land_typea )
   {
     v5 = *((_DWORD *)v4 + 22);
     v6 = *((_DWORD *)v4 + 20) - x;
     v7 = *((_DWORD *)v4 + 20) - x;
-    if ( v6 <= x - v5 )
+    if( v6 <= x - v5 )
       v7 = x - v5;
     v8 = *((_DWORD *)v4 + 20) + v6;
-    if ( v8 <= this->map_width - v5 + x - v5 )
+    if( v8 <= this->map_width - v5 + x - v5 )
       v8 = this->map_width - v5 + x - v5;
     v9 = *((_DWORD *)v4 + 21);
-    if ( v8 <= 0 )
+    if( v8 <= 0 )
     {
       v10 = v9 - y;
       v11 = y - *((_DWORD *)v4 + 23);
@@ -180,14 +180,14 @@ char __thiscall RGE_RMM_Land_Generator::chance(RGE_RMM_Land_Generator *this, int
       v10 = v8 + v9 - y;
       v11 = y + v8 - *((_DWORD *)v4 + 23);
     }
-    if ( v10 > v11 )
+    if( v10 > v11 )
       v11 = v10;
-    if ( v7 < 0 )
+    if( v7 < 0 )
       v7 = 0;
-    if ( v11 < 0 )
+    if( v11 < 0 )
       v11 = 0;
     v12 = (unsigned __int8)land_typea * (v7 + v11);
-    if ( v12 >= 100 )
+    if( v12 >= 100 )
       LOBYTE(v12) = 101;
   }
   else
@@ -268,12 +268,12 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
   index1 = 0;
   max_x = this->map_width - 1;
   max_y = this->map_height - 1;
-  if ( this->info.land_num > 0 )
+  if( this->info.land_num > 0 )
   {
     v2 = (Map_Stack *)&this->info.land[0].base_size;
     v50 = stack;
     terrain = land_size;
-    for ( i = (Map_Stack *)&this->info.land[0].base_size; ; v2 = i )
+    for( i = (Map_Stack *)&this->info.land[0].base_size; ; v2 = i )
     {
       RGE_Random_Map_Module::init_stack(v50);
       v3 = v2[-1].next;
@@ -286,37 +286,37 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
       v9 = (int)&v3->x + v6;
       v10 = (int)&v4->x + v6;
       x1 = v7;
-      if ( v7 < 0 )
+      if( v7 < 0 )
       {
         x1 = 0;
         v7 = 0;
       }
-      if ( v8 < 0 )
+      if( v8 < 0 )
         v8 = 0;
       v11 = v1->map_width;
-      if ( v9 >= v11 )
+      if( v9 >= v11 )
         v9 = v11 - 1;
       v12 = v1->map_height;
-      if ( v10 >= v12 )
+      if( v10 >= v12 )
         v10 = v12 - 1;
       RGE_Map::set_terrain(v1->map, 0, 0, v7, v8, v9, v10, LOBYTE(i[-1].tot_cost), 1, 0);
       v13 = x1;
       index3 = v8;
       LOBYTE(zone) = LOBYTE(i->cost);
-      for ( land_size[(unsigned __int8)zone] = (v10 - v8 + 1) * (v9 - x1 + 1); index3 <= v10; ++index3 )
+      for( land_size[(unsigned __int8)zone] = (v10 - v8 + 1) * (v9 - x1 + 1); index3 <= v10; ++index3 )
       {
-        if ( v13 <= v9 )
+        if( v13 <= v9 )
         {
           do
             v1->search_map_rows[index3][++v13 - 1] = (char)zone;
-          while ( v13 <= v9 );
+          while( v13 <= v9 );
           v13 = x1;
         }
       }
-      if ( v13 > 0 )
+      if( v13 > 0 )
       {
         index2 = v8;
-        if ( v8 <= v10 )
+        if( v8 <= v10 )
         {
           tile = (RGE_Tile *)(v13 - 1);
           *(float *)&index3 = (double)index1;
@@ -328,14 +328,14 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
               index2++,
               *(float *)&index3,
               0.0);
-          while ( index2 <= v10 );
+          while( index2 <= v10 );
           v13 = x1;
         }
       }
-      if ( v8 > 0 )
+      if( v8 > 0 )
       {
         index2 = v13;
-        if ( v13 <= v9 )
+        if( v13 <= v9 )
         {
           *(float *)&index3 = (double)index1;
           do
@@ -346,11 +346,11 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
               v8 - 1,
               *(float *)&index3,
               0.0);
-          while ( index2 <= v9 );
+          while( index2 <= v9 );
           v13 = x1;
         }
       }
-      if ( v9 < v1->map_width - 1 && v8 <= v10 )
+      if( v9 < v1->map_width - 1 && v8 <= v10 )
       {
         *(float *)&index3 = (double)index1;
         do
@@ -361,13 +361,13 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
             v8++,
             *(float *)&index3,
             0.0);
-        while ( v8 <= v10 );
+        while( v8 <= v10 );
         v13 = x1;
       }
-      if ( v10 < v1->map_height - 1 )
+      if( v10 < v1->map_height - 1 )
       {
         v14 = v13;
-        if ( v13 <= v9 )
+        if( v13 <= v9 )
         {
           v15 = v10 + 1;
           *(float *)&index3 = (double)index1;
@@ -379,7 +379,7 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
               v15,
               *(float *)&index3,
               0.0);
-          while ( v14 <= v9 );
+          while( v14 <= v9 );
         }
       }
       v16 = v1->info.land_num;
@@ -388,7 +388,7 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
       ++terrain;
       i = (Map_Stack *)((char *)i + 52);
       ++v50;
-      if ( !(v17 ^ v18) )
+      if( !(v17 ^ v18) )
         break;
     }
   }
@@ -398,7 +398,7 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
     v20 = 0;
     done = 1;
     index1 = 0;
-    if ( v19 > 0 )
+    if( v19 > 0 )
     {
       i = (Map_Stack *)land_size;
       v50 = stack;
@@ -407,13 +407,13 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
       {
         v22 = *(v21 - 7);
         zone = (char *)i->x;
-        if ( (signed int)zone < v22 && RGE_Random_Map_Module::pop_stack(v50, &x, &y, &in_zone) )
+        if( (signed int)zone < v22 && RGE_Random_Map_Module::pop_stack(v50, &x, &y, &in_zone) )
         {
           done = 0;
           v23 = (unsigned __int8)RGE_RMM_Land_Generator::chance(v1, x, y, v20);
           v24 = debug_rand(aCMsdevWorkA_53, 299);
           v25 = (signed int)(100 * v24 + ((unsigned __int64)(-214741810900i64 * v24) >> 32)) >> 14;
-          if ( v23 > (signed int)((v25 >> 31) + v25) )
+          if( v23 > (signed int)((v25 >> 31) + v25) )
           {
             v1->search_map_rows[y][x] = -1;
           }
@@ -424,12 +424,12 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
             LOBYTE(terrain) = *((_BYTE *)v21 - 24);
             tile = v26;
             v28 = (unsigned __int8)RGE_RMM_Land_Generator::check_terrain_and_zone(v1, (char)terrain, v20, x, y);
-            if ( v1->search_map_rows[y][x] == v1->info.land_num && v28 > 0 )
+            if( v1->search_map_rows[y][x] == v1->info.land_num && v28 > 0 )
             {
               *((_BYTE *)tile + 5) ^= (*((_BYTE *)tile + 5) ^ v27) & 0x1F;
               v1->search_map_rows[y][x] = *((_BYTE *)v21 - 4);
               v29 = x;
-              if ( x <= 0 || v1->search_map_rows[y][x - 1] != v1->info.land_num )
+              if( x <= 0 || v1->search_map_rows[y][x - 1] != v1->info.land_num )
               {
                 v31 = v50;
               }
@@ -442,21 +442,21 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
                 RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v1->vfptr, v50, x - 1, y, 0.0, tot_cost);
                 v29 = x;
               }
-              if ( v29 < max_x && v1->search_map_rows[y][v29 + 1] == v1->info.land_num )
+              if( v29 < max_x && v1->search_map_rows[y][v29 + 1] == v1->info.land_num )
               {
                 tile = (RGE_Tile *)(100 * debug_rand(aCMsdevWorkA_53, 315) / 0x7FFF - *v21 * v28 + 250);
                 v33 = (double)(signed int)tile;
                 RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v1->vfptr, v31, x + 1, y, 0.0, v33);
                 v29 = x;
               }
-              if ( y > 0 && v1->search_map_rows[y - 1][v29] == v1->info.land_num )
+              if( y > 0 && v1->search_map_rows[y - 1][v29] == v1->info.land_num )
               {
                 tile = (RGE_Tile *)(100 * debug_rand(aCMsdevWorkA_53, 318) / 0x7FFF - *v21 * v28 + 250);
                 v34 = (double)(signed int)tile;
                 RGE_Random_Map_Module::push_stack((RGE_Random_Map_Module *)&v1->vfptr, v31, x, y - 1, 0.0, v34);
                 v29 = x;
               }
-              if ( y < max_y && v1->search_map_rows[y + 1][v29] == v1->info.land_num )
+              if( y < max_y && v1->search_map_rows[y + 1][v29] == v1->info.land_num )
               {
                 tile = (RGE_Tile *)(100 * debug_rand(aCMsdevWorkA_53, 321) / 0x7FFF - *v21 * v28 + 250);
                 v35 = (double)(signed int)tile;
@@ -474,13 +474,13 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
         ++v50;
         i = (Map_Stack *)((char *)i + 4);
       }
-      while ( v20 < v36 );
+      while( v20 < v36 );
     }
   }
-  while ( !done );
+  while( !done );
   v37 = v1->info.land_num;
   index1 = 0;
-  if ( v37 > 0 )
+  if( v37 > 0 )
   {
     v38 = stack;
     v39 = &v1->info.land[0].zone;
@@ -490,11 +490,11 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
     {
       v40 = *v39;
       LOBYTE(terrain) = *(v39 - 20);
-      if ( RGE_Random_Map_Module::pop_stack(v38, &x, &y, &in_zone) )
+      if( RGE_Random_Map_Module::pop_stack(v38, &x, &y, &in_zone) )
       {
         do
         {
-          if ( x >= 1
+          if( x >= 1
             && (v42 = (int)&v1->search_map_rows[y][x], *(_BYTE *)(v42 - 1) == v40)
             && x < max_x
             && *(_BYTE *)(v42 + 1) == v40
@@ -505,7 +505,7 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
           }
           v38 = i;
         }
-        while ( RGE_Random_Map_Module::pop_stack(i, &x, &y, &in_zone) );
+        while( RGE_Random_Map_Module::pop_stack(i, &x, &y, &in_zone) );
         v39 = zone;
       }
       v44 = v1->info.land_num;
@@ -516,10 +516,10 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
       zone = v39;
       i = v38;
     }
-    while ( v17 ^ v18 );
+    while( v17 ^ v18 );
   }
   v45 = 0;
-  if ( v1->info.land_num > 0 )
+  if( v1->info.land_num > 0 )
   {
     v46 = stack;
     do
@@ -528,7 +528,7 @@ char __thiscall RGE_RMM_Land_Generator::base_land_generate(RGE_RMM_Land_Generato
       ++v45;
       ++v46;
     }
-    while ( v45 < v1->info.land_num );
+    while( v45 < v1->info.land_num );
   }
   return 1;
 }

@@ -29,10 +29,10 @@ void __thiscall InfluenceMap::InfluenceMap(InfluenceMap *this, int x, int y, cha
   memset(&v6[4 * v8], initialValue, (_BYTE)x * (_BYTE)y & 3);
   v9 = (char **)operator new(4 * v4->ySizeValue);
   v4->rowValue = v9;
-  if ( v9 )
+  if( v9 )
   {
     v10 = 0;
-    for ( i = 0; v10 < v4->ySizeValue; i += v4->xSizeValue )
+    for( i = 0; v10 < v4->ySizeValue; i += v4->xSizeValue )
       v4->rowValue[v10++] = &v4->valueValue[i];
   }
 }
@@ -45,7 +45,7 @@ InfluenceMap *__thiscall InfluenceMap::`vector deleting destructor'(InfluenceMap
 
   v2 = this;
   InfluenceMap::~InfluenceMap(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -72,10 +72,10 @@ void __thiscall InfluenceMap::~InfluenceMap(InfluenceMap *this)
   v1 = this;
   v2 = this->valueValue;
   this->vfptr = (InfluenceMapVtbl *)InfluenceMap::`vftable';
-  if ( v2 )
+  if( v2 )
     operator delete(v2);
   v3 = v1->rowValue;
-  if ( v3 )
+  if( v3 )
     operator delete(v3);
 }
 // 570444: using guessed type int (__thiscall *InfluenceMap::`vftable'[2])(void *Memory, unsigned int __flags);
@@ -115,9 +115,9 @@ void __thiscall InfluenceMap::save(InfluenceMap *this, int outfile)
   rge_write(outfile, &v3->xReferencePointValue, 4);
   rge_write(outfile, &v3->yReferencePointValue, 4);
   rge_write(outfile, &v3->unchangeableLimitValue, 1);
-  for ( outfilea = 0; outfilea < v3->ySizeValue; ++outfilea )
+  for( outfilea = 0; outfilea < v3->ySizeValue; ++outfilea )
   {
-    for ( i = 0; i < *(_DWORD *)v4; ++i )
+    for( i = 0; i < *(_DWORD *)v4; ++i )
       rge_write(v2, &v3->rowValue[outfilea][i], 1);
   }
 }
@@ -139,9 +139,9 @@ void __thiscall InfluenceMap::load(InfluenceMap *this, int infile)
   rge_read((int)v4, (int)v3, v2, &v3->xReferencePointValue, 4);
   rge_read((int)v4, (int)v3, v2, &v3->yReferencePointValue, 4);
   rge_read((int)v4, (int)v3, v2, &v3->unchangeableLimitValue, 1);
-  for ( j = 0; j < v3->ySizeValue; ++j )
+  for( j = 0; j < v3->ySizeValue; ++j )
   {
-    for ( i = 0; i < *(_DWORD *)v4; v3->rowValue[j][i - 1] = infile )
+    for( i = 0; i < *(_DWORD *)v4; v3->rowValue[j][i - 1] = infile )
     {
       rge_read((int)v4, (int)v3, v2, &infile, 1);
       ++i;
@@ -166,29 +166,29 @@ void __thiscall InfluenceMap::printToFile(InfluenceMap *this, char *filename)
   char *filenamea; // [sp+10h] [bp+4h]@13
 
   v2 = this;
-  if ( filename )
+  if( filename )
   {
     v3 = fopen(filename, aWa);
     v4 = v3;
-    if ( v3 )
+    if( v3 )
     {
       fprintf(v3, aFilenameS, filename);
       fprintf(v4, aDimensionsDXD, v2->xSizeValue, v2->ySizeValue);
       fprintf(v4, aReferencePoint, v2->xReferencePointValue, v2->yReferencePointValue);
       fprintf(v4, Str);
       fprintf(v4, asc_584818);
-      for ( i = 0; i < v2->xSizeValue; ++i )
+      for( i = 0; i < v2->xSizeValue; ++i )
       {
-        if ( i % 5 )
+        if( i % 5 )
           fprintf(v4, a03d_1, i);
         else
           fprintf(v4, a03d, i);
       }
       fprintf(v4, Str);
       fprintf(v4, asc_584818);
-      for ( j = 0; j < v2->xSizeValue; ++j )
+      for( j = 0; j < v2->xSizeValue; ++j )
       {
-        if ( j % 5 )
+        if( j % 5 )
           fprintf(v4, asc_5847F8, j);
         else
           fprintf(v4, asc_584800, j);
@@ -196,43 +196,43 @@ void __thiscall InfluenceMap::printToFile(InfluenceMap *this, char *filename)
       fprintf(v4, Str);
       v7 = 0;
       filenamea = 0;
-      if ( v2->ySizeValue > 0 )
+      if( v2->ySizeValue > 0 )
       {
         do
         {
           fprintf(v4, aR03d, v7);
-          for ( k = 0; k < v2->xSizeValue; ++k )
+          for( k = 0; k < v2->xSizeValue; ++k )
           {
             v9 = v2->rowValue[(_DWORD)v7][k];
-            if ( k % 5 )
+            if( k % 5 )
               fprintf(v4, a03d_1, v9);
             else
               fprintf(v4, a03d, v9);
             v7 = filenamea;
           }
           v10 = (int)(v7 + 1);
-          if ( (signed int)(v7 + 1) % 5 )
+          if( (signed int)(v7 + 1) % 5 )
             fprintf(v4, aR03d_3, v7);
           else
             fprintf(v4, aR03d_0, v7);
           ++v7;
           filenamea = (char *)v10;
         }
-        while ( v10 < v2->ySizeValue );
+        while( v10 < v2->ySizeValue );
       }
       fprintf(v4, asc_584818);
-      for ( l = 0; l < v2->xSizeValue; ++l )
+      for( l = 0; l < v2->xSizeValue; ++l )
       {
-        if ( l % 5 )
+        if( l % 5 )
           fprintf(v4, asc_5847F8, l);
         else
           fprintf(v4, asc_584800, l);
       }
       fprintf(v4, Str);
       fprintf(v4, asc_584818);
-      for ( m = 0; m < v2->xSizeValue; ++m )
+      for( m = 0; m < v2->xSizeValue; ++m )
       {
-        if ( m % 5 )
+        if( m % 5 )
           fprintf(v4, a03d_1, m);
         else
           fprintf(v4, a03d, m);
@@ -265,7 +265,7 @@ int __thiscall InfluenceMap::setValue(InfluenceMap *this, int x, int y, char v)
 
   v4 = x - this->xReferencePointValue;
   v5 = y - this->yReferencePointValue;
-  if ( v4 < 0 || v5 < 0 || v4 >= this->xSizeValue || v5 >= this->ySizeValue )
+  if( v4 < 0 || v5 < 0 || v4 >= this->xSizeValue || v5 >= this->ySizeValue )
   {
     result = 0;
   }
@@ -302,7 +302,7 @@ int __thiscall InfluenceMap::setValue(InfluenceMap *this, int minX, int minY, in
   v10 = minY - v9;
   v11 = maxY - v9;
   maxYa = maxY - v9;
-  if ( v8 < 0
+  if( v8 < 0
     || v10 < 0
     || (v12 = this->xSizeValue, v8 >= v12)
     || (v13 = this->ySizeValue, v10 >= v13)
@@ -316,15 +316,15 @@ int __thiscall InfluenceMap::setValue(InfluenceMap *this, int minX, int minY, in
   else
   {
     v14 = v10;
-    for ( minXa = v10; v14 <= v11; minXa = v14 )
+    for( minXa = v10; v14 <= v11; minXa = v14 )
     {
       v15 = v8;
-      if ( v8 <= v7 )
+      if( v8 <= v7 )
       {
         v16 = v14;
         do
           this->rowValue[v16][++v15 - 1] = v;
-        while ( v15 <= v7 );
+        while( v15 <= v7 );
         v11 = maxYa;
         v14 = minXa;
       }
@@ -348,7 +348,7 @@ int __thiscall InfluenceMap::incrementValue(InfluenceMap *this, int x, int y, ch
 
   v4 = x - this->xReferencePointValue;
   v5 = y - this->yReferencePointValue;
-  if ( v4 < 0 || v5 < 0 || v4 >= this->xSizeValue || v5 >= this->ySizeValue )
+  if( v4 < 0 || v5 < 0 || v4 >= this->xSizeValue || v5 >= this->ySizeValue )
   {
     result = 0;
   }
@@ -357,10 +357,10 @@ int __thiscall InfluenceMap::incrementValue(InfluenceMap *this, int x, int y, ch
     v6 = this->rowValue;
     v7 = this->unchangeableLimitValue;
     v8 = &v6[v5][v4];
-    if ( (unsigned __int8)*v8 < (unsigned __int8)v7 )
+    if( (unsigned __int8)*v8 < (unsigned __int8)v7 )
     {
       v10 = (unsigned __int8)*v8 + (unsigned __int8)v;
-      if ( v10 < (unsigned __int8)v7 )
+      if( v10 < (unsigned __int8)v7 )
       {
         *v8 = v10;
         result = 1;
@@ -414,10 +414,10 @@ int __thiscall InfluenceMap::incrementValue(InfluenceMap *this, int minX, int mi
   v11 = minY - v10;
   v12 = maxY - v10;
   maxXa = v9;
-  if ( v8 >= 0 )
+  if( v8 >= 0 )
   {
     v13 = v6->xSizeValue;
-    if ( v8 < v13 )
+    if( v8 < v13 )
       goto LABEL_6;
     v8 = v13 - 1;
   }
@@ -427,20 +427,20 @@ int __thiscall InfluenceMap::incrementValue(InfluenceMap *this, int minX, int mi
   }
   minXa = v8;
 LABEL_6:
-  if ( v11 >= 0 )
+  if( v11 >= 0 )
   {
     v14 = v6->xSizeValue;
-    if ( v11 >= v14 )
+    if( v11 >= v14 )
       v11 = v14 - 1;
   }
   else
   {
     v11 = 0;
   }
-  if ( v9 >= 0 )
+  if( v9 >= 0 )
   {
     v15 = v6->xSizeValue;
-    if ( v9 < v15 )
+    if( v9 < v15 )
       goto LABEL_15;
     v9 = v15 - 1;
   }
@@ -450,35 +450,35 @@ LABEL_6:
   }
   maxXa = v9;
 LABEL_15:
-  if ( v12 >= 0 )
+  if( v12 >= 0 )
   {
     v16 = v6->xSizeValue;
-    if ( v12 >= v16 )
+    if( v12 >= v16 )
       v12 = v16 - 1;
   }
   else
   {
     v12 = 0;
   }
-  if ( v11 <= v12 )
+  if( v11 <= v12 )
   {
     minYa = v11;
     maxYa = v12 - v11 + 1;
     do
     {
-      if ( v8 <= v9 )
+      if( v8 <= v9 )
       {
         do
         {
           v17 = &v6->rowValue[minYa];
           v18 = v6->unchangeableLimitValue;
           v19 = *v17;
-          if ( (unsigned __int8)(*v17)[v8] < (unsigned __int8)v18 )
+          if( (unsigned __int8)(*v17)[v8] < (unsigned __int8)v18 )
           {
             v20 = (unsigned __int8)v19[v8];
             v21 = &v19[v8];
             v22 = v20 + (unsigned __int8)v;
-            if ( v22 < (unsigned __int8)v18 )
+            if( v22 < (unsigned __int8)v18 )
               *v21 = v22;
             else
               *v21 = v18 - 1;
@@ -486,14 +486,14 @@ LABEL_15:
           v9 = maxXa;
           ++v8;
         }
-        while ( v8 <= maxXa );
+        while( v8 <= maxXa );
         v8 = minXa;
       }
       v23 = maxYa == 1;
       ++minYa;
       --maxYa;
     }
-    while ( !v23 );
+    while( !v23 );
   }
   return 1;
 }
@@ -511,14 +511,14 @@ int __thiscall InfluenceMap::decrementValue(InfluenceMap *this, int x, int y, ch
 
   v4 = x - this->xReferencePointValue;
   v5 = y - this->yReferencePointValue;
-  if ( v4 < 0 || v5 < 0 || v4 >= this->xSizeValue || v5 >= this->ySizeValue )
+  if( v4 < 0 || v5 < 0 || v4 >= this->xSizeValue || v5 >= this->ySizeValue )
   {
     result = 0;
   }
   else
   {
     v6 = &this->rowValue[v5][v4];
-    if ( (unsigned __int8)*v6 < this->unchangeableLimitValue )
+    if( (unsigned __int8)*v6 < this->unchangeableLimitValue )
     {
       v8 = (unsigned __int8)v;
       v9 = (unsigned __int8)*v6 - (unsigned __int8)v;
@@ -565,62 +565,62 @@ int __thiscall InfluenceMap::decrementValue(InfluenceMap *this, int minX, int mi
   v11 = minY - v10;
   v12 = maxY - v10;
   maxXa = v9;
-  if ( v8 >= 0 )
+  if( v8 >= 0 )
   {
     v13 = v6->xSizeValue;
-    if ( v8 >= v13 )
+    if( v8 >= v13 )
       minXa = v13 - 1;
   }
   else
   {
     minXa = 0;
   }
-  if ( v11 >= 0 )
+  if( v11 >= 0 )
   {
     v14 = v6->xSizeValue;
-    if ( v11 >= v14 )
+    if( v11 >= v14 )
       v11 = v14 - 1;
   }
   else
   {
     v11 = 0;
   }
-  if ( v9 >= 0 )
+  if( v9 >= 0 )
   {
     v15 = v6->xSizeValue;
-    if ( v9 >= v15 )
+    if( v9 >= v15 )
       maxXa = v15 - 1;
   }
   else
   {
     maxXa = 0;
   }
-  if ( v12 >= 0 )
+  if( v12 >= 0 )
   {
     v16 = v6->xSizeValue;
-    if ( v12 >= v16 )
+    if( v12 >= v16 )
       v12 = v16 - 1;
   }
   else
   {
     v12 = 0;
   }
-  if ( v11 <= v12 )
+  if( v11 <= v12 )
   {
     v17 = v11;
     minYa = v12 - v11 + 1;
     do
     {
-      for ( i = minXa; i <= maxXa; ++i )
+      for( i = minXa; i <= maxXa; ++i )
       {
         v19 = &v6->rowValue[v17];
-        if ( (unsigned __int8)(*v19)[i] < v6->unchangeableLimitValue )
+        if( (unsigned __int8)(*v19)[i] < v6->unchangeableLimitValue )
           (*v19)[i] = ((*v19)[i] - v) & (((unsigned __int8)(*v19)[i] - (unsigned __int8)v < 0) - 1);
       }
       ++v17;
       --minYa;
     }
-    while ( minYa );
+    while( minYa );
   }
   return 1;
 }
@@ -651,7 +651,7 @@ int __thiscall InfluenceMap::setCoverageCount(InfluenceMap *this, XYPoint *min, 
   this->coverageCountValue = 0;
   v20 = this;
   v5 = min->x;
-  if ( min->x < 0
+  if( min->x < 0
     || (v6 = min->y, v6 < 0)
     || (v7 = this->xSizeValue, v5 >= v7)
     || v6 >= this->ySizeValue
@@ -665,12 +665,12 @@ int __thiscall InfluenceMap::setCoverageCount(InfluenceMap *this, XYPoint *min, 
   else
   {
     i = min->x;
-    if ( v5 <= v9 )
+    if( v5 <= v9 )
     {
       do
       {
         v11 = v4->y;
-        if ( v11 <= v10 )
+        if( v11 <= v10 )
         {
           v12 = this->rowValue;
           v13 = v5 - this->xReferencePointValue;
@@ -682,20 +682,20 @@ int __thiscall InfluenceMap::setCoverageCount(InfluenceMap *this, XYPoint *min, 
             v18 = __OFSUB__(v16, valueLevel);
             v17 = v16 - valueLevel < 0;
             this = v20;
-            if ( !(v17 ^ v18) )
+            if( !(v17 ^ v18) )
               ++v20->coverageCountValue;
             ++v11;
             v14 += 4;
             v10 = max->y;
           }
-          while ( v11 <= v10 );
+          while( v11 <= v10 );
           v5 = i;
           v4 = min;
           v8 = max;
         }
         i = ++v5;
       }
-      while ( v5 <= v8->x );
+      while( v5 <= v8->x );
     }
     result = this->coverageCountValue;
   }
@@ -734,34 +734,34 @@ int __thiscall InfluenceMap::setConnectionCount(InfluenceMap *this, XYPoint *min
   v23 = this;
   this->connectionCountValue = 0;
   v8 = min->x;
-  if ( min->x >= 0 )
+  if( min->x >= 0 )
   {
     v9 = min->y;
-    if ( v9 >= 0 )
+    if( v9 >= 0 )
     {
       v10 = this->xSizeValue;
       v28 = this->xSizeValue;
-      if ( v8 < v10 )
+      if( v8 < v10 )
       {
         v11 = this->ySizeValue;
         v29 = v7->ySizeValue;
-        if ( v9 < v11 )
+        if( v9 < v11 )
         {
           v12 = max;
           v13 = max->x;
-          if ( max->x >= 0 )
+          if( max->x >= 0 )
           {
             v14 = max->y;
-            if ( v14 >= 0 && v13 < v10 && v14 < v11 )
+            if( v14 >= 0 && v13 < v10 && v14 < v11 )
             {
               i = min->x;
-              if ( v8 > v13 )
+              if( v8 > v13 )
                 return v7->connectionCountValue;
-              while ( 1 )
+              while( 1 )
               {
                 v15 = min->y;
                 j = min->y;
-                if ( v15 > v14 )
+                if( v15 > v14 )
                   goto LABEL_33;
                 v26 = v7->rowValue;
                 v30 = v7->xReferencePointValue;
@@ -771,7 +771,7 @@ int __thiscall InfluenceMap::setConnectionCount(InfluenceMap *this, XYPoint *min
                 v17 = 4 * v7->yReferencePointValue;
                 do
                 {
-                  if ( (unsigned __int8)(*(char **)((char *)v26 + v24 - v17))[v16] < valueLevel )
+                  if( (unsigned __int8)(*(char **)((char *)v26 + v24 - v17))[v16] < valueLevel )
                     goto LABEL_32;
                   v18 = j;
                   v19 = v8;
@@ -805,17 +805,17 @@ LABEL_16:
                       default:
                         break;
                     }
-                    if ( countDiagonalConnections || (char)v21 % -2 )
+                    if( countDiagonalConnections || (char)v21 % -2 )
                     {
-                      if ( v19 >= 0 && v19 < v28 && v18 >= 0 && v18 < v29 )
+                      if( v19 >= 0 && v19 < v28 && v18 >= 0 && v18 < v29 )
                       {
-                        if ( (unsigned __int8)*(&(*(char **)((char *)v26 + v20 - v17))[v19] - v30) < valueLevel )
+                        if( (unsigned __int8)*(&(*(char **)((char *)v26 + v20 - v17))[v19] - v30) < valueLevel )
                           goto LABEL_30;
 LABEL_29:
                         ++v23->connectionCountValue;
                         goto LABEL_30;
                       }
-                      if ( countOrthogonalEdgesAsConnections == 1
+                      if( countOrthogonalEdgesAsConnections == 1
                         && (((unsigned __int64)v21 >> 32) ^ abs(v21) & 1) - ((unsigned __int64)v21 >> 32) == 1
                         || countDiagonalEdgesAsConnections == 1 && !((char)v21 % -2) )
                       {
@@ -825,7 +825,7 @@ LABEL_29:
 LABEL_30:
                     ++v21;
                   }
-                  while ( v21 < 8 );
+                  while( v21 < 8 );
                   v12 = max;
                   v7 = v23;
                   v8 = i;
@@ -835,10 +835,10 @@ LABEL_32:
                   v14 = v12->y;
                   ++j;
                 }
-                while ( j <= v14 );
+                while( j <= v14 );
 LABEL_33:
                 i = ++v8;
-                if ( v8 > v12->x )
+                if( v8 > v12->x )
                   return v7->connectionCountValue;
               }
             }
@@ -876,7 +876,7 @@ int __thiscall InfluenceMap::coverageIncluding(InfluenceMap *this, XYPoint *min,
   rVal = this->coverageCountValue;
   v5 = min->x;
   v19 = this;
-  if ( min->x < 0
+  if( min->x < 0
     || (v6 = min->y, v20 = min->y, v6 < 0)
     || (v7 = this->xSizeValue, v5 >= v7)
     || (v8 = this->ySizeValue, v6 >= v8)
@@ -889,9 +889,9 @@ int __thiscall InfluenceMap::coverageIncluding(InfluenceMap *this, XYPoint *min,
   }
   else
   {
-    for ( mina = (XYPoint *)min->x; v5 <= v10; mina = (XYPoint *)v5 )
+    for( mina = (XYPoint *)min->x; v5 <= v10; mina = (XYPoint *)v5 )
     {
-      if ( v6 <= v11 )
+      if( v6 <= v11 )
       {
         v12 = this->rowValue;
         v13 = v5 - this->xReferencePointValue;
@@ -900,7 +900,7 @@ int __thiscall InfluenceMap::coverageIncluding(InfluenceMap *this, XYPoint *min,
         v16 = v11 - v6 + 1;
         do
         {
-          if ( (unsigned __int8)(*(char **)((char *)v12 + v14 - v15))[v13] < (unsigned __int8)valueLevel
+          if( (unsigned __int8)(*(char **)((char *)v12 + v14 - v15))[v13] < (unsigned __int8)valueLevel
             && (unsigned __int8)newValueLevel + (unsigned __int8)(*(char **)((char *)v12 + v14 - v15))[v13] >= (unsigned __int8)valueLevel )
           {
             ++rVal;
@@ -908,7 +908,7 @@ int __thiscall InfluenceMap::coverageIncluding(InfluenceMap *this, XYPoint *min,
           v14 += 4;
           --v16;
         }
-        while ( v16 );
+        while( v16 );
         this = v19;
         v5 = (int)mina;
         v6 = v20;
@@ -967,37 +967,37 @@ int __thiscall InfluenceMap::connectionsIncluding(InfluenceMap *this, XYPoint *m
   v10 = this->connectionCountValue;
   v40 = this;
   rVal = this->connectionCountValue;
-  if ( min->x >= 0 )
+  if( min->x >= 0 )
   {
     v11 = min->y;
     v38 = min->y;
-    if ( v11 >= 0 )
+    if( v11 >= 0 )
     {
       v12 = this->xSizeValue;
       v35 = this->xSizeValue;
-      if ( v8 < v12 )
+      if( v8 < v12 )
       {
         v13 = this->ySizeValue;
         v36 = v9->ySizeValue;
-        if ( v11 < v13 )
+        if( v11 < v13 )
         {
           v37 = max->x;
-          if ( max->x >= 0 )
+          if( max->x >= 0 )
           {
             v14 = max->y;
             v41 = max->y;
-            if ( v14 >= 0 )
+            if( v14 >= 0 )
             {
               v15 = max->x;
-              if ( v37 < v12 && v14 < v13 )
+              if( v37 < v12 && v14 < v13 )
               {
                 i = min->x;
-                if ( v8 > v37 )
+                if( v8 > v37 )
                   return v10;
-                while ( 1 )
+                while( 1 )
                 {
                   mina = (XYPoint *)v38;
-                  if ( v38 > v14 )
+                  if( v38 > v14 )
                     goto LABEL_57;
                   v34 = v9->rowValue;
                   v16 = v9->xReferencePointValue;
@@ -1009,9 +1009,9 @@ int __thiscall InfluenceMap::connectionsIncluding(InfluenceMap *this, XYPoint *m
                   v19 = 4 * v9->yReferencePointValue;
                   do
                   {
-                    if ( (unsigned __int8)newValueLevel + (unsigned __int8)(*(char **)((char *)v34 + v18 - v19))[v17] < (unsigned __int8)valueLevel )
+                    if( (unsigned __int8)newValueLevel + (unsigned __int8)(*(char **)((char *)v34 + v18 - v19))[v17] < (unsigned __int8)valueLevel )
                       goto LABEL_55;
-                    if ( (unsigned __int8)(*(char **)((char *)v34 + j - v19))[v17] >= (unsigned __int8)valueLevel )
+                    if( (unsigned __int8)(*(char **)((char *)v34 + j - v19))[v17] >= (unsigned __int8)valueLevel )
                     {
                       v20 = i;
                       v21 = mina;
@@ -1042,21 +1042,21 @@ LABEL_17:
                           default:
                             break;
                         }
-                        if ( countDiagonalConnections || (char)v22 % -2 )
+                        if( countDiagonalConnections || (char)v22 % -2 )
                         {
-                          if ( (v20 < 0 || v20 >= v35 || (signed int)v21 < 0 || (signed int)v21 >= v36)
+                          if( (v20 < 0 || v20 >= v35 || (signed int)v21 < 0 || (signed int)v21 >= v36)
                             && (countOrthogonalEdgesAsConnections == 1
                              && (((unsigned __int64)v22 >> 32) ^ abs(v22) & 1) - ((unsigned __int64)v22 >> 32) == 1
                              || countDiagonalEdgesAsConnections == 1 && !((char)v22 % -2)) )
                           {
                             --v10;
                           }
-                          if ( v10 <= 0 )
+                          if( v10 <= 0 )
                             break;
                         }
                         ++v22;
                       }
-                      while ( v22 < 8 );
+                      while( v22 < 8 );
                       rVal = v10;
                     }
                     v23 = i;
@@ -1091,16 +1091,16 @@ LABEL_38:
                         default:
                           break;
                       }
-                      if ( countDiagonalConnections || (char)v26 % -2 )
+                      if( countDiagonalConnections || (char)v26 % -2 )
                       {
-                        if ( v23 >= 0 && v23 < v35 && (signed int)v24 >= 0 && (signed int)v24 < v36 )
+                        if( v23 >= 0 && v23 < v35 && (signed int)v24 >= 0 && (signed int)v24 < v36 )
                         {
-                          if ( (unsigned __int8)*(&(*(char **)((char *)v34 + v25 - v19))[v23] - v39) < (unsigned __int8)valueLevel )
+                          if( (unsigned __int8)*(&(*(char **)((char *)v34 + v25 - v19))[v23] - v39) < (unsigned __int8)valueLevel )
                             goto LABEL_53;
                           v27 = rVal + 2;
                           goto LABEL_52;
                         }
-                        if ( countOrthogonalEdgesAsConnections == 1
+                        if( countOrthogonalEdgesAsConnections == 1
                           && (((unsigned __int64)v26 >> 32) ^ abs(v26) & 1) - ((unsigned __int64)v26 >> 32) == 1
                           || countDiagonalEdgesAsConnections == 1 && !((char)v26 % -2) )
                         {
@@ -1113,7 +1113,7 @@ LABEL_52:
 LABEL_53:
                       ++v26;
                     }
-                    while ( v26 < 8 );
+                    while( v26 < 8 );
                     v9 = v40;
                     v10 = rVal;
                     v14 = v41;
@@ -1126,12 +1126,12 @@ LABEL_55:
                     mina = (XYPoint *)((char *)mina + 1);
                     j += 4;
                   }
-                  while ( (unsigned __int8)(v29 ^ v30) | v28 );
+                  while( (unsigned __int8)(v29 ^ v30) | v28 );
                   v15 = v37;
                   v8 = i;
 LABEL_57:
                   i = ++v8;
-                  if ( v8 > v15 )
+                  if( v8 > v15 )
                     return v10;
                 }
               }
@@ -1147,7 +1147,7 @@ LABEL_57:
 //----- (0044F030) --------------------------------------------------------
 void __thiscall InfluenceMap::setUnchangeableLimit(InfluenceMap *this, char uL)
 {
-  if ( uL )
+  if( uL )
     this->unchangeableLimitValue = uL;
 }
 
@@ -1161,15 +1161,15 @@ int __thiscall InfluenceMap::maxValue(InfluenceMap *this)
   v1 = this->ySizeValue * this->xSizeValue;
   v2 = this->valueValue;
   v3 = (unsigned __int8)*v2;
-  if ( v1 > 0 )
+  if( v1 > 0 )
   {
     do
     {
-      if ( (unsigned __int8)v2[HIDWORD(v3)] > (signed int)v3 )
+      if( (unsigned __int8)v2[HIDWORD(v3)] > (signed int)v3 )
         LODWORD(v3) = (unsigned __int8)v2[HIDWORD(v3)];
       ++HIDWORD(v3);
     }
-    while ( SHIDWORD(v3) < v1 );
+    while( SHIDWORD(v3) < v1 );
   }
   return v3;
 }

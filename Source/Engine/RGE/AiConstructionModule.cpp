@@ -32,7 +32,7 @@ ConstructionAIModule *__thiscall ConstructionAIModule::`scalar deleting destruct
 
   v2 = this;
   ConstructionAIModule::~ConstructionAIModule(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -110,7 +110,7 @@ void __thiscall ConstructionAIModule::ConstructionAIModule(ConstructionAIModule 
   v6 = v3->numberConstructionLotsValue == 0;
   v7 = v3->numberConstructionLotsValue < 0;
   i = 0;
-  if ( !v7 && !v6 )
+  if( !v7 && !v6 )
   {
     do
     {
@@ -133,7 +133,7 @@ void __thiscall ConstructionAIModule::ConstructionAIModule(ConstructionAIModule 
       v8 = (ConstructionItem *)operator new(0x80u);
       v34 = v8;
       LOBYTE(v37) = 3;
-      if ( v8 )
+      if( v8 )
       {
         ConstructionItem::ConstructionItem(v8, x, y, z, xSize, ySize, zSize, typeID, name);
         v5 = v9;
@@ -159,12 +159,12 @@ void __thiscall ConstructionAIModule::ConstructionAIModule(ConstructionAIModule 
       v3->constructionLots.prev = v5;
       i = v11;
     }
-    while ( v7 ^ v12 );
+    while( v7 ^ v12 );
   }
   v13 = (ConstructionItem *)&v3->numberRandomConstructionLotsValue;
   rge_read((int)&v3->numberRandomConstructionLotsValue, (int)v3, infile, &v3->numberRandomConstructionLotsValue, 4);
   v14 = 0;
-  if ( v3->numberRandomConstructionLotsValue > 0 )
+  if( v3->numberRandomConstructionLotsValue > 0 )
   {
     do
     {
@@ -187,7 +187,7 @@ void __thiscall ConstructionAIModule::ConstructionAIModule(ConstructionAIModule 
       v15 = (ConstructionItem *)operator new(0x80u);
       v34 = v15;
       LOBYTE(v37) = 4;
-      if ( v15 )
+      if( v15 )
       {
         ConstructionItem::ConstructionItem(
           v15,
@@ -220,7 +220,7 @@ void __thiscall ConstructionAIModule::ConstructionAIModule(ConstructionAIModule 
       v18 = v3->numberRandomConstructionLotsValue;
       v3->randomConstructionLots.prev = v13;
     }
-    while ( v14 < v18 );
+    while( v14 < v18 );
   }
 }
 // 56E7A0: using guessed type int (__thiscall *ConstructionAIModule::`vftable')(void *Memory, unsigned int __flags);
@@ -232,7 +232,7 @@ void __thiscall ConstructionAIModule::~ConstructionAIModule(ConstructionAIModule
 
   v1 = this;
   this->vfptr = (AIModuleVtbl *)&ConstructionAIModule::`vftable';
-  if ( this->numberConstructionLotsValue > 0 )
+  if( this->numberConstructionLotsValue > 0 )
     ConstructionAIModule::removeOldLots(this);
   ConstructionItem::~ConstructionItem(&v1->randomConstructionLots);
   ConstructionItem::~ConstructionItem(&v1->constructionLots);
@@ -268,11 +268,11 @@ int __thiscall ConstructionAIModule::save(ConstructionAIModule *this, int outfil
   rge_write(outfile, &v2->mapYSizeValue, 4);
   v3 = (BaseItem *)&v2->constructionLots.next->vfptr;
   v10 = &v11->constructionLots;
-  if ( (ConstructionItem *)v3 != &v11->constructionLots )
+  if( (ConstructionItem *)v3 != &v11->constructionLots )
   {
     do
     {
-      if ( !v3 )
+      if( !v3 )
         break;
       strcpy(tempString, BaseItem::name(v3));
       tempInt = strlen(tempString);
@@ -306,17 +306,17 @@ int __thiscall ConstructionAIModule::save(ConstructionAIModule *this, int outfil
       rge_write(outfile, &tempInt, 4);
       v3 = (BaseItem *)v3[1].vfptr;
     }
-    while ( (ConstructionItem *)v3 != v10 );
+    while( (ConstructionItem *)v3 != v10 );
   }
   v4 = v11;
   rge_write(outfile, &v11->numberRandomConstructionLotsValue, 4);
   v5 = (BaseItem *)&v4->randomConstructionLots.next->vfptr;
   v10 = &v4->randomConstructionLots;
-  if ( (ConstructionItem *)v5 != &v4->randomConstructionLots )
+  if( (ConstructionItem *)v5 != &v4->randomConstructionLots )
   {
     do
     {
-      if ( !v5 )
+      if( !v5 )
         break;
       strcpy(tempString, BaseItem::name(v5));
       tempInt = strlen(tempString);
@@ -350,7 +350,7 @@ int __thiscall ConstructionAIModule::save(ConstructionAIModule *this, int outfil
       rge_write(outfile, &tempInt, 4);
       v5 = (BaseItem *)v5[1].vfptr;
     }
-    while ( (ConstructionItem *)v5 != v10 );
+    while( (ConstructionItem *)v5 != v10 );
   }
   return 1;
 }
@@ -382,14 +382,14 @@ FILE *__thiscall ConstructionAIModule::loadConstructionPlan(ConstructionAIModule
 
   v7 = this;
   ConstructionAIModule::setReferencePoint(this, mXSize, mYSize, xRef, yRef, zRef);
-  if ( v7->numberConstructionLotsValue > 0 )
+  if( v7->numberConstructionLotsValue > 0 )
     ConstructionAIModule::removeOldLots(v7);
   v8 = v7->constructionPlanNameValue;
   v20 = v7->constructionPlanNameValue;
   strncpy(v7->constructionPlanNameValue, pName, 0x3Fu);
-  if ( !strcmp(v7->constructionPlanNameValue, aNone_2) )
+  if( !strcmp(v7->constructionPlanNameValue, aNone_2) )
   {
-    if ( v7 != (ConstructionAIModule *)-504 )
+    if( v7 != (ConstructionAIModule *)-504 )
     {
 LABEL_20:
       AIModule::logCommonHistory((AIModule *)&v7->vfptr, aThereIsNoConst);
@@ -399,31 +399,31 @@ LABEL_19:
     strcpy(0, aNull);
     goto LABEL_20;
   }
-  if ( v7 == (ConstructionAIModule *)-504 )
+  if( v7 == (ConstructionAIModule *)-504 )
     goto LABEL_19;
   AIModule::logCommonHistory((AIModule *)&v7->vfptr, aLoadingConstru, pName);
   sprintf(temp, aS_2, v7->constructionPlanNameValue);
   result = fopen(temp, Mode);
   v10 = result;
-  if ( !result )
+  if( !result )
     return result;
-  if ( fgets(temp, 256, result) )
+  if( fgets(temp, 256, result) )
   {
     do
     {
       sscanf(temp, aCC, &commentTemp1, &commentTemp2);
-      if ( commentTemp1 != 47 || commentTemp2 != 47 )
+      if( commentTemp1 != 47 || commentTemp2 != 47 )
       {
         sscanf(temp, aFFFFFFDS, &x, &y, &z, &xSize, &ySize, &zSize, &id, name);
         x = v7->xReferencePointValue + x;
         y = v7->yReferencePointValue + y;
         z = v7->zReferencePointValue + z;
-        if ( !ConstructionAIModule::lot(v7, x, y) )
+        if( !ConstructionAIModule::lot(v7, x, y) )
         {
           v11 = (ConstructionItem *)operator new(0x80u);
           v24 = v11;
           v27 = 0;
-          if ( v11 )
+          if( v11 )
             ConstructionItem::ConstructionItem(v11, x, y, z, xSize, ySize, zSize, id, name);
           else
             v12 = 0;
@@ -437,11 +437,11 @@ LABEL_19:
         }
       }
     }
-    while ( fgets(temp, 256, v10) );
+    while( fgets(temp, 256, v10) );
     v8 = v20;
   }
   fclose(v10);
-  if ( strstr(v8, SubStr) )
+  if( strstr(v8, SubStr) )
     _unlink(v8);
   return (FILE *)1;
 }
@@ -472,18 +472,18 @@ void __thiscall ConstructionAIModule::setReferencePoint(ConstructionAIModule *th
   this->mapYSizeValue = mYSize;
   this->xReferencePointValue = x;
   this->zReferencePointValue = z;
-  if ( x <= 0.0 || y <= 0.0 || (double)mXSize <= x || (double)mYSize <= y )
+  if( x <= 0.0 || y <= 0.0 || (double)mXSize <= x || (double)mYSize <= y )
   {
     ConstructionAIModule::removeOldLots(this);
   }
   else
   {
     v7 = this->constructionLots.next;
-    if ( v7 != &this->constructionLots )
+    if( v7 != &this->constructionLots )
     {
       do
       {
-        if ( !v7 )
+        if( !v7 )
           break;
         v = BaseItem::x((BaseItem *)&v7->vfptr) + x;
         BaseItem::setX((BaseItem *)&v7->vfptr, v);
@@ -492,7 +492,7 @@ void __thiscall ConstructionAIModule::setReferencePoint(ConstructionAIModule *th
         v10 = BaseItem::z((BaseItem *)&v7->vfptr) + z;
         BaseItem::setZ((BaseItem *)&v7->vfptr, v10);
         *(float *)&mXSizea = BaseItem::x((BaseItem *)&v7->vfptr);
-        if ( *(float *)&mXSizea - BaseItem::xSize((BaseItem *)&v7->vfptr) * 0.5 < 0.0
+        if( *(float *)&mXSizea - BaseItem::xSize((BaseItem *)&v7->vfptr) * 0.5 < 0.0
           || (*(float *)&mXSizeb = BaseItem::y((BaseItem *)&v7->vfptr),
               *(float *)&mXSizeb - BaseItem::ySize((BaseItem *)&v7->vfptr) * 0.5 < 0.0)
           || (*(float *)&mXSizec = BaseItem::x((BaseItem *)&v7->vfptr),
@@ -512,7 +512,7 @@ void __thiscall ConstructionAIModule::setReferencePoint(ConstructionAIModule *th
           v7 = v7->next;
         }
       }
-      while ( v7 != &v6->constructionLots );
+      while( v7 != &v6->constructionLots );
     }
   }
 }
@@ -549,17 +549,17 @@ void __thiscall ConstructionAIModule::setBuilt(ConstructionAIModule *this, Const
 
   v3 = this->constructionLots.next;
   v4 = (char *)&this->constructionLots;
-  if ( v3 != &this->constructionLots )
+  if( v3 != &this->constructionLots )
   {
-    while ( v3 )
+    while( v3 )
     {
-      if ( operator==(v3, ci) )
+      if( operator==(v3, ci) )
       {
         ConstructionItem::setBuilt(v3, v);
         return;
       }
       v3 = v3->next;
-      if ( (char *)v3 == v4 )
+      if( (char *)v3 == v4 )
         return;
     }
   }
@@ -574,22 +574,22 @@ int __thiscall ConstructionAIModule::unplaceStructure(ConstructionAIModule *this
 
   v3 = this->constructionLots.next;
   v4 = (char *)&this->constructionLots;
-  if ( v3 != &this->constructionLots )
+  if( v3 != &this->constructionLots )
   {
-    while ( v3 )
+    while( v3 )
     {
-      if ( operator==(v3, ci) )
+      if( operator==(v3, ci) )
       {
         ConstructionItem::setInProgress(v3, 0);
         ConstructionItem::setBuilt(v3, 0);
         v6 = BaseItem::uniqueID((BaseItem *)&v3->vfptr);
         BaseItem::setUniqueID((BaseItem *)&v3->vfptr, -1);
-        if ( decBA == 1 )
+        if( decBA == 1 )
           ConstructionItem::decrementBuildAttempts(v3);
         return v6;
       }
       v3 = v3->next;
-      if ( (char *)v3 == v4 )
+      if( (char *)v3 == v4 )
         return -1;
     }
   }
@@ -605,22 +605,22 @@ int __thiscall ConstructionAIModule::unplaceStructure(ConstructionAIModule *this
 
   v4 = this->constructionLots.next;
   v5 = (char *)&this->constructionLots;
-  if ( v4 != &this->constructionLots )
+  if( v4 != &this->constructionLots )
   {
-    while ( v4 )
+    while( v4 )
     {
-      if ( BaseItem::x((BaseItem *)&v4->vfptr) == x && BaseItem::y((BaseItem *)&v4->vfptr) == y )
+      if( BaseItem::x((BaseItem *)&v4->vfptr) == x && BaseItem::y((BaseItem *)&v4->vfptr) == y )
       {
         ConstructionItem::setInProgress(v4, 0);
         ConstructionItem::setBuilt(v4, 0);
         v7 = BaseItem::uniqueID((BaseItem *)&v4->vfptr);
         BaseItem::setUniqueID((BaseItem *)&v4->vfptr, -1);
-        if ( decBA == 1 )
+        if( decBA == 1 )
           ConstructionItem::decrementBuildAttempts(v4);
         return v7;
       }
       v4 = v4->next;
-      if ( (char *)v4 == v5 )
+      if( (char *)v4 == v5 )
         return -1;
     }
   }
@@ -634,17 +634,17 @@ void __thiscall ConstructionAIModule::decrementBuildAttempts(ConstructionAIModul
   int v5; // edi@2
 
   v4 = ConstructionAIModule::lot(this, x, y);
-  if ( v4 )
+  if( v4 )
   {
     v5 = n;
-    if ( n > 0 )
+    if( n > 0 )
     {
       do
       {
         ConstructionItem::decrementBuildAttempts(v4);
         --v5;
       }
-      while ( v5 );
+      while( v5 );
     }
   }
 }
@@ -656,17 +656,17 @@ void __thiscall ConstructionAIModule::incrementBuildAttempts(ConstructionAIModul
   int v5; // edi@2
 
   v4 = ConstructionAIModule::lot(this, x, y);
-  if ( v4 )
+  if( v4 )
   {
     v5 = n;
-    if ( n > 0 )
+    if( n > 0 )
     {
       do
       {
         ConstructionItem::incrementBuildAttempts(v4);
         --v5;
       }
-      while ( v5 );
+      while( v5 );
     }
   }
 }
@@ -681,26 +681,26 @@ ConstructionItem *__thiscall ConstructionAIModule::lot(ConstructionAIModule *thi
   v3 = this;
   v4 = this->constructionLots.next;
   v5 = (char *)&this->constructionLots;
-  if ( v4 != &this->constructionLots )
+  if( v4 != &this->constructionLots )
   {
-    while ( v4 )
+    while( v4 )
     {
-      if ( BaseItem::x((BaseItem *)&v4->vfptr) == x && BaseItem::y((BaseItem *)&v4->vfptr) == y )
+      if( BaseItem::x((BaseItem *)&v4->vfptr) == x && BaseItem::y((BaseItem *)&v4->vfptr) == y )
         return v4;
       v4 = v4->next;
-      if ( (char *)v4 == v5 )
+      if( (char *)v4 == v5 )
         break;
     }
   }
   v4 = v3->randomConstructionLots.next;
-  if ( v4 != &v3->randomConstructionLots )
+  if( v4 != &v3->randomConstructionLots )
   {
-    while ( v4 )
+    while( v4 )
     {
-      if ( BaseItem::x((BaseItem *)&v4->vfptr) == x && BaseItem::y((BaseItem *)&v4->vfptr) == y )
+      if( BaseItem::x((BaseItem *)&v4->vfptr) == x && BaseItem::y((BaseItem *)&v4->vfptr) == y )
         return v4;
       v4 = v4->next;
-      if ( v4 == &v3->randomConstructionLots )
+      if( v4 == &v3->randomConstructionLots )
         return 0;
     }
   }
@@ -715,14 +715,14 @@ ConstructionItem *__thiscall ConstructionAIModule::randomLot(ConstructionAIModul
 
   v3 = this->randomConstructionLots.next;
   v4 = (char *)&this->randomConstructionLots;
-  if ( v3 != &this->randomConstructionLots )
+  if( v3 != &this->randomConstructionLots )
   {
-    while ( v3 )
+    while( v3 )
     {
-      if ( BaseItem::x((BaseItem *)&v3->vfptr) == x && BaseItem::y((BaseItem *)&v3->vfptr) == y )
+      if( BaseItem::x((BaseItem *)&v3->vfptr) == x && BaseItem::y((BaseItem *)&v3->vfptr) == y )
         return v3;
       v3 = v3->next;
-      if ( (char *)v3 == v4 )
+      if( (char *)v3 == v4 )
         return 0;
     }
   }
@@ -740,17 +740,17 @@ void __thiscall ConstructionAIModule::removeOldLots(ConstructionAIModule *this)
   v1 = this;
   v2 = this->constructionLots.next;
   v3 = (int)&v1->constructionLots;
-  if ( v2 != &v1->constructionLots )
+  if( v2 != &v1->constructionLots )
   {
     do
     {
-      if ( !v2 )
+      if( !v2 )
         break;
       v4 = v2->next;
       ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
       v2 = v4;
     }
-    while ( v4 != (ConstructionItem *)v3 );
+    while( v4 != (ConstructionItem *)v3 );
   }
   v1->constructionLots.next = (ConstructionItem *)v3;
   v1->constructionLots.prev = (ConstructionItem *)v3;

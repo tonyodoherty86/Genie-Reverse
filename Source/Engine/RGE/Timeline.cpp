@@ -36,7 +36,7 @@ void __userpurge RGE_Timeline::RGE_Timeline(RGE_Timeline *this@<ecx>, _WORD *a2@
   v4->time_list = 0;
   gworld = (RGE_Game_World *)&v4->time_list;
   index = 0;
-  if ( !v9 && !v8 )
+  if( !v9 && !v8 )
   {
     do
     {
@@ -54,13 +54,13 @@ void __userpurge RGE_Timeline::RGE_Timeline(RGE_Timeline *this@<ecx>, _WORD *a2@
       a2 = (char *)v10 + 40;
       rge_read((int)v10 + 40, v5, v5, (char *)v10 + 40, 2);
       rge_read((int)v10 + 40, v5, v5, &target_player_id, 2);
-      if ( (signed __int16)infile >= 0 && (v11 = v18->world) != 0 )
+      if( (signed __int16)infile >= 0 && (v11 = v18->world) != 0 )
         *((_DWORD *)v10 + 7) = RGE_Object_List::find_by_id(
                                  v11->players[(signed __int16)infile]->objects,
                                  *((_WORD *)v10 + 16));
       else
         *((_DWORD *)v10 + 7) = 0;
-      if ( target_player_id >= 0 && (v12 = v18->world) != 0 )
+      if( target_player_id >= 0 && (v12 = v18->world) != 0 )
         *((_DWORD *)v10 + 9) = RGE_Object_List::find_by_id(v12->players[(signed __int16)infile]->objects, *a2);
       else
         *((_DWORD *)v10 + 9) = 0;
@@ -73,7 +73,7 @@ void __userpurge RGE_Timeline::RGE_Timeline(RGE_Timeline *this@<ecx>, _WORD *a2@
       v16 = *v14;
       index = v15 + 1;
     }
-    while ( v15 + 1 < v16 );
+    while( v15 + 1 < v16 );
   }
 }
 // 5766F4: using guessed type int (__thiscall *RGE_Timeline::`vftable')(void *Memory, unsigned int __flags);
@@ -85,7 +85,7 @@ RGE_Timeline *__thiscall RGE_Timeline::`vector deleting destructor'(RGE_Timeline
 
   v2 = this;
   RGE_Timeline::~RGE_Timeline(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -112,7 +112,7 @@ void __thiscall RGE_Timeline::~RGE_Timeline(RGE_Timeline *this)
   v1 = this;
   v2 = this->time_list;
   this->vfptr = (RGE_TimelineVtbl *)&RGE_Timeline::`vftable';
-  if ( v2 )
+  if( v2 )
   {
     do
     {
@@ -120,7 +120,7 @@ void __thiscall RGE_Timeline::~RGE_Timeline(RGE_Timeline *this)
       free(v1->time_list);
       v1->time_list = v3;
     }
-    while ( v3 );
+    while( v3 );
   }
   v1->avail_id = 0;
   LODWORD(v1->old_time) = -1082130432;
@@ -154,14 +154,14 @@ void __thiscall RGE_Timeline::save(RGE_Timeline *this, int outfile)
   rge_write(v3, &v2->avail_id, 2);
   rge_write(v3, &v2->old_time, 4);
   v6 = 0;
-  if ( *(_WORD *)v4 > 0 )
+  if( *(_WORD *)v4 > 0 )
   {
     v7 = 0;
-    while ( 1 )
+    while( 1 )
     {
       v8 = (int)&v2->time_list[v7];
       v9 = *(_DWORD *)(v8 + 28);
-      if ( v9 )
+      if( v9 )
       {
         v5 = *(_DWORD *)(v9 + 12);
         LOWORD(v9) = *(_WORD *)(v5 + 74);
@@ -172,7 +172,7 @@ void __thiscall RGE_Timeline::save(RGE_Timeline *this, int outfile)
         outfile = -1;
       }
       v10 = *(_DWORD *)(v8 + 36);
-      if ( v10 )
+      if( v10 )
       {
         LOWORD(v5) = *(_WORD *)(*(_DWORD *)(v10 + 12) + 74);
         target_player_id = v5;
@@ -196,7 +196,7 @@ void __thiscall RGE_Timeline::save(RGE_Timeline *this, int outfile)
       ++v6;
       ++v7;
       v5 = *v13;
-      if ( v6 >= v5 )
+      if( v6 >= v5 )
         break;
       v2 = v12;
     }
@@ -226,57 +226,57 @@ void __fastcall RGE_Timeline::update(RGE_Timeline *this, RGE_Master_Static_Objec
   v4 = 0;
   v5 = this->time_list;
   time = (double)v3->world_time * 0.001;
-  if ( v5 )
+  if( v5 )
   {
     LOBYTE(a2) = 8;
     do
     {
-      if ( !v4 && v5->time > (double)v2->old_time )
+      if( !v4 && v5->time > (double)v2->old_time )
         v4 = v5;
       v6 = v5->this_obj;
-      if ( v6 && v6->object_state >= 8u )
+      if( v6 && v6->object_state >= 8u )
         v5->this_obj = 0;
       v7 = v5->target_obj;
-      if ( v7 && v7->object_state >= 8u )
+      if( v7 && v7->object_state >= 8u )
         v5->target_obj = 0;
       v5 = v5->next;
     }
-    while ( v5 );
-    for ( ; v4; v4 = v4->next )
+    while( v5 );
+    for( ; v4; v4 = v4->next )
     {
-      if ( v4->time > (double)time )
+      if( v4->time > (double)time )
         break;
       switch ( v4->command )
       {
         case 0:
           v8 = v4->this_obj;
-          if ( v8 && v4->target_obj )
+          if( v8 && v4->target_obj )
             ((void (__stdcall *)(RGE_Static_Object *))v8->vfptr->set_attack)(v4->target_obj);
           break;
         case 1:
           v9 = v2->world->players[v4->player];
           a2 = v9->master_objects;
           v10 = a2[v4->obj_type];
-          if ( v10 )
+          if( v10 )
           {
             v11 = ((int (__stdcall *)(RGE_Player *, _DWORD, _DWORD, _DWORD))v10->vfptr->make_new_obj)(
                     v9,
                     LODWORD(v4->x),
                     LODWORD(v4->y),
                     0);
-            for ( i = v2->time_list; i; i = i->next )
+            for( i = v2->time_list; i; i = i->next )
             {
-              if ( v4->this_obj_id == i->this_obj_id )
+              if( v4->this_obj_id == i->this_obj_id )
                 i->this_obj = (RGE_Static_Object *)v11;
               LOWORD(a2) = v4->this_obj_id;
-              if ( (_WORD)a2 == i->target_obj_id )
+              if( (_WORD)a2 == i->target_obj_id )
                 i->target_obj = (RGE_Static_Object *)v11;
             }
           }
           break;
         case 2:
           v13 = v4->this_obj;
-          if ( v13 )
+          if( v13 )
             ((void (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD))v13->vfptr->move_to)(
               0,
               LODWORD(v4->x),
@@ -285,7 +285,7 @@ void __fastcall RGE_Timeline::update(RGE_Timeline *this, RGE_Master_Static_Objec
           break;
         case 4:
           v14 = v4->this_obj;
-          if ( v14 )
+          if( v14 )
             ((void (__fastcall *)(RGE_Static_Object *, _WORD))v14->vfptr->destroy_obj)(v14, (_WORD)a2);
           break;
         default:
@@ -320,127 +320,127 @@ void __thiscall RGE_Timeline::mock_update(RGE_Timeline *this, float time)
   RGE_Time_Entry *l; // ecx@51
 
   v2 = this;
-  if ( time < (double)this->old_time )
+  if( time < (double)this->old_time )
   {
     v3 = this->time_list;
     v4 = this->time_list;
-    if ( v4 )
+    if( v4 )
     {
       do
       {
         v5 = &v4->next->time;
-        if ( !v5 )
+        if( !v5 )
           break;
-        if ( *v5 > (double)v2->old_time )
+        if( *v5 > (double)v2->old_time )
           break;
         v4 = v4->next;
       }
-      while ( v5 );
-      while ( v4 )
+      while( v5 );
+      while( v4 )
       {
-        if ( v4->time <= (double)time )
+        if( v4->time <= (double)time )
           break;
-        if ( v4->time <= (double)v2->old_time )
+        if( v4->time <= (double)v2->old_time )
         {
-          if ( v4->command == 1 )
+          if( v4->command == 1 )
           {
             v10 = v4->this_obj;
-            if ( v10 )
+            if( v10 )
             {
-              for ( i = v3; i; i = i->next )
+              for( i = v3; i; i = i->next )
               {
-                if ( v10 == i->this_obj )
+                if( v10 == i->this_obj )
                   i->this_obj = 0;
-                if ( v10 == i->target_obj )
+                if( v10 == i->target_obj )
                   i->target_obj = 0;
               }
-              if ( v10 )
+              if( v10 )
                 ((void (__stdcall *)(_DWORD))v10->vfptr->__vecDelDtor)(1);
             }
           }
-          else if ( v4->command == 4 )
+          else if( v4->command == 4 )
           {
             v6 = v2->world->players[v4->player];
             v7 = v6->master_objects[v4->obj_type];
-            if ( v7 )
+            if( v7 )
             {
               v8 = ((int (__stdcall *)(RGE_Player *, _DWORD, _DWORD, _DWORD))v7->vfptr->make_new_obj)(
                      v6,
                      LODWORD(v4->x),
                      LODWORD(v4->y),
                      0);
-              for ( j = v2->time_list; j; j = j->next )
+              for( j = v2->time_list; j; j = j->next )
               {
-                if ( v4->this_obj_id == j->this_obj_id )
+                if( v4->this_obj_id == j->this_obj_id )
                   j->this_obj = (RGE_Static_Object *)v8;
-                if ( v4->this_obj_id == j->target_obj_id )
+                if( v4->this_obj_id == j->target_obj_id )
                   j->target_obj = (RGE_Static_Object *)v8;
               }
             }
           }
         }
         v3 = v2->time_list;
-        if ( v4 == v3 )
+        if( v4 == v3 )
         {
           v4 = 0;
         }
         else
         {
           v12 = v2->time_list;
-          if ( v3 )
+          if( v3 )
           {
             do
             {
               v13 = v12->next;
-              if ( v13 == v4 )
+              if( v13 == v4 )
                 v4 = v12;
               v12 = v12->next;
             }
-            while ( v13 );
+            while( v13 );
           }
         }
       }
     }
   }
-  if ( v2->old_time < (double)time )
+  if( v2->old_time < (double)time )
   {
-    for ( k = v2->time_list; k; k = k->next )
+    for( k = v2->time_list; k; k = k->next )
     {
-      if ( k->time > (double)v2->old_time && k->time <= (double)time )
+      if( k->time > (double)v2->old_time && k->time <= (double)time )
       {
-        if ( k->command == 1 )
+        if( k->command == 1 )
         {
           v17 = v2->world->players[k->player];
           v18 = v17->master_objects[k->obj_type];
-          if ( v18 )
+          if( v18 )
           {
             v19 = ((int (__stdcall *)(RGE_Player *, _DWORD, _DWORD, _DWORD))v18->vfptr->make_new_obj)(
                     v17,
                     LODWORD(k->x),
                     LODWORD(k->y),
                     0);
-            for ( l = v2->time_list; l; l = l->next )
+            for( l = v2->time_list; l; l = l->next )
             {
-              if ( k->this_obj_id == l->this_obj_id )
+              if( k->this_obj_id == l->this_obj_id )
                 l->this_obj = (RGE_Static_Object *)v19;
-              if ( k->this_obj_id == l->target_obj_id )
+              if( k->this_obj_id == l->target_obj_id )
                 l->target_obj = (RGE_Static_Object *)v19;
             }
           }
         }
-        else if ( k->command == 4 )
+        else if( k->command == 4 )
         {
           v15 = k->this_obj;
-          if ( v15 )
+          if( v15 )
           {
-            for ( m = v2->time_list; m; m = m->next )
+            for( m = v2->time_list; m; m = m->next )
             {
-              if ( v15 == m->this_obj )
+              if( v15 == m->this_obj )
                 m->this_obj = 0;
-              if ( v15 == m->target_obj )
+              if( v15 == m->target_obj )
                 m->target_obj = 0;
             }
-            if ( v15 )
+            if( v15 )
               ((void (__stdcall *)(_DWORD))v15->vfptr->__vecDelDtor)(1);
           }
         }
@@ -457,12 +457,12 @@ __int16 __thiscall RGE_Timeline::find_id(RGE_Timeline *this, RGE_Static_Object *
   __int16 result; // ax@5
 
   v2 = this->time_list;
-  if ( v2 )
+  if( v2 )
   {
-    while ( v2->command != 1 || v2->this_obj != obj )
+    while( v2->command != 1 || v2->this_obj != obj )
     {
       v2 = v2->next;
-      if ( !v2 )
+      if( !v2 )
         return -1;
     }
     result = v2->this_obj_id;
@@ -486,13 +486,13 @@ RGE_Time_Entry *__thiscall RGE_Timeline::add(RGE_Timeline *this, float time)
   v2 = this;
   v3 = this->time_list;
   v4 = (char *)&this->time_list;
-  if ( v3 )
+  if( v3 )
   {
-    while ( v3->time <= (double)time )
+    while( v3->time <= (double)time )
     {
       v4 = (char *)&v3->next;
       v3 = v3->next;
-      if ( !v3 )
+      if( !v3 )
       {
         result = (RGE_Time_Entry *)calloc(1u, 0x30u);
         result->time = time;
@@ -529,7 +529,7 @@ RGE_Time_Entry *__thiscall RGE_Timeline::add_attack(RGE_Timeline *this, float ti
   v4 = this;
   v5 = RGE_Timeline::add(this, time);
   v6 = v5;
-  if ( v5 )
+  if( v5 )
   {
     v5->this_obj = obj;
     v5->player = obj->owner->id;
@@ -555,14 +555,14 @@ RGE_Time_Entry *__thiscall RGE_Timeline::add_create(RGE_Timeline *this, float ti
   v9 = RGE_Timeline::add(this, time);
   v10 = v7->world->players[(unsigned __int8)player];
   v11 = v10->master_objects[obj_id];
-  if ( v11 )
+  if( v11 )
     v8 = ((int (__thiscall *)(RGE_Master_Static_Object *, RGE_Player *, _DWORD, _DWORD, _DWORD))v11->vfptr->make_new_obj)(
            v11,
            v10,
            LODWORD(x),
            LODWORD(y),
            0);
-  if ( v9 && v11 )
+  if( v9 && v11 )
   {
     v9->player = player;
     v9->obj_type = obj_id;
@@ -584,7 +584,7 @@ RGE_Time_Entry *__thiscall RGE_Timeline::add_move(RGE_Timeline *this, float time
 
   v6 = this;
   v7 = RGE_Timeline::add(this, time);
-  if ( v7 )
+  if( v7 )
   {
     v7->player = obj->owner->id;
     v7->this_obj = obj;
@@ -609,21 +609,21 @@ RGE_Time_Entry *__thiscall RGE_Timeline::add_delete(RGE_Timeline *this, float ti
   RGE_Static_ObjectVtbl *v9; // eax@11
 
   v3 = this;
-  if ( obj )
+  if( obj )
   {
     v5 = RGE_Timeline::add(this, time);
-    if ( v5 )
+    if( v5 )
     {
-      for ( i = v3->time_list; i; i = i->next )
+      for( i = v3->time_list; i; i = i->next )
       {
-        if ( obj == i->this_obj )
+        if( obj == i->this_obj )
         {
           v7 = i->command;
           i->this_obj = 0;
-          if ( v7 == 1 )
+          if( v7 == 1 )
             v5->this_obj_id = i->this_obj_id;
         }
-        if ( obj == i->target_obj )
+        if( obj == i->target_obj )
           i->target_obj = 0;
       }
       v5->player = obj->owner->id;
@@ -656,22 +656,22 @@ void __thiscall RGE_Timeline::sub(RGE_Timeline *this, RGE_Time_Entry *entry)
   v2 = this;
   v3 = this->time_list;
   v4 = &this->time_list;
-  if ( v3 )
+  if( v3 )
   {
     v5 = v4;
-    if ( v3 )
+    if( v3 )
     {
-      while ( v3 != entry )
+      while( v3 != entry )
       {
         v5 = &v3->next;
         v3 = v3->next;
-        if ( !v3 )
+        if( !v3 )
           return;
       }
       *v5 = v3->next;
-      if ( v3->command == 1 )
+      if( v3->command == 1 )
       {
-        for ( i = *v4; i; i = i->next )
+        for( i = *v4; i; i = i->next )
           ;
       }
       else

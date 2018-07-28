@@ -26,7 +26,7 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this)
     v2 += 4;
     --v1;
   }
-  while ( v1 );
+  while( v1 );
 }
 // 56E9D0: using guessed type int (__thiscall *ResourceItem::`vftable')(void *Memory, unsigned int __flags);
 
@@ -37,7 +37,7 @@ ResourceItem *__thiscall ResourceItem::`scalar deleting destructor'(ResourceItem
 
   v2 = this;
   ResourceItem::~ResourceItem(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -55,10 +55,10 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this, int n)
   this->prev = 0;
   this->numberValue = n;
   this->vfptr = (ResourceItemVtbl *)&ResourceItem::`vftable';
-  if ( n <= 0 )
+  if( n <= 0 )
   {
 LABEL_5:
-    if ( v2 < 8 )
+    if( v2 < 8 )
     {
       v4 = (char *)&this->sortedValue[v2];
       v5 = 8 - v2;
@@ -70,20 +70,20 @@ LABEL_5:
         v4 += 4;
         --v5;
       }
-      while ( v5 );
+      while( v5 );
     }
   }
   else
   {
     v3 = (char *)this->sortedValue;
-    while ( v2 < 8 )
+    while( v2 < 8 )
     {
       *((_DWORD *)v3 - 8) = 0;
       *(_DWORD *)v3 = -1;
       *((_DWORD *)v3 + 8) = -1;
       ++v2;
       v3 += 4;
-      if ( v2 >= this->numberValue )
+      if( v2 >= this->numberValue )
         goto LABEL_5;
     }
   }
@@ -106,10 +106,10 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this, int n, int *v)
   this->prev = 0;
   this->numberValue = n;
   this->vfptr = (ResourceItemVtbl *)&ResourceItem::`vftable';
-  if ( n <= 0 )
+  if( n <= 0 )
   {
 LABEL_5:
-    if ( v4 < 8 )
+    if( v4 < 8 )
     {
       v7 = (int)&v3->sortedValue[v4];
       v8 = 8 - v4;
@@ -121,14 +121,14 @@ LABEL_5:
         v7 += 4;
         --v8;
       }
-      while ( v8 );
+      while( v8 );
     }
   }
   else
   {
     v5 = v;
     v6 = (int)v3->sortedValue;
-    while ( v4 < 8 )
+    while( v4 < 8 )
     {
       ++v4;
       *(_DWORD *)(v6 - 32) = *v5;
@@ -136,7 +136,7 @@ LABEL_5:
       *(_DWORD *)(v6 + 32) = -1;
       ++v5;
       v6 += 4;
-      if ( v4 >= v3->numberValue )
+      if( v4 >= v3->numberValue )
         goto LABEL_5;
     }
   }
@@ -157,13 +157,13 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this, ResourceItem *ri)
   v3 = ri->numberValue;
   this->vfptr = (ResourceItemVtbl *)&ResourceItem::`vftable';
   this->numberValue = v3;
-  if ( v3 > 0 )
+  if( v3 > 0 )
   {
     v4 = (char *)ri->sortedIndexValue;
     v5 = (char *)this->valueValue;
     do
     {
-      if ( v2 >= 8 )
+      if( v2 >= 8 )
         break;
       ++v2;
       *(_DWORD *)v5 = *(_DWORD *)&v5[(char *)ri - (char *)this];
@@ -172,7 +172,7 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this, ResourceItem *ri)
       v5 += 4;
       v4 += 4;
     }
-    while ( v2 < this->numberValue );
+    while( v2 < this->numberValue );
   }
 }
 // 56E9D0: using guessed type int (__thiscall *ResourceItem::`vftable')(void *Memory, unsigned int __flags);
@@ -191,13 +191,13 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this, ResourceItem *ri)
   v3 = ri->numberValue;
   this->vfptr = (ResourceItemVtbl *)&ResourceItem::`vftable';
   this->numberValue = v3;
-  if ( v3 > 0 )
+  if( v3 > 0 )
   {
     v4 = (char *)ri->sortedIndexValue;
     v5 = (char *)this->valueValue;
     do
     {
-      if ( v2 >= 8 )
+      if( v2 >= 8 )
         break;
       ++v2;
       *(_DWORD *)v5 = *(_DWORD *)&v5[(char *)ri - (char *)this];
@@ -206,7 +206,7 @@ void __thiscall ResourceItem::ResourceItem(ResourceItem *this, ResourceItem *ri)
       v5 += 4;
       v4 += 4;
     }
-    while ( v2 < this->numberValue );
+    while( v2 < this->numberValue );
   }
 }
 // 56E9D0: using guessed type int (__thiscall *ResourceItem::`vftable')(void *Memory, unsigned int __flags);
@@ -228,10 +228,10 @@ ResourceItem *__thiscall ResourceItem::operator+=(ResourceItem *this, ResourceIt
 
   result = this;
   v3 = this->numberValue;
-  if ( v3 == ri->numberValue )
+  if( v3 == ri->numberValue )
   {
     v4 = 0;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
       v5 = (char *)this->valueValue;
       do
@@ -240,7 +240,7 @@ ResourceItem *__thiscall ResourceItem::operator+=(ResourceItem *this, ResourceIt
         *(_DWORD *)v5 += *(_DWORD *)&v5[(char *)ri - (char *)this];
         v5 += 4;
       }
-      while ( v4 < this->numberValue );
+      while( v4 < this->numberValue );
     }
   }
   return result;
@@ -254,17 +254,17 @@ int __cdecl operator==(ResourceItem *one, ResourceItem *two)
   char *v4; // eax@3
 
   v2 = one->numberValue;
-  if ( v2 == two->numberValue )
+  if( v2 == two->numberValue )
   {
     v3 = 0;
-    if ( v2 <= 0 )
+    if( v2 <= 0 )
       return 1;
     v4 = (char *)one->valueValue;
-    while ( *(_DWORD *)v4 == *(_DWORD *)&v4[(char *)two - (char *)one] )
+    while( *(_DWORD *)v4 == *(_DWORD *)&v4[(char *)two - (char *)one] )
     {
       ++v3;
       v4 += 4;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return 1;
     }
   }
@@ -279,17 +279,17 @@ int __cdecl operator!=(ResourceItem *one, ResourceItem *two)
   char *v4; // eax@3
 
   v2 = one->numberValue;
-  if ( v2 == two->numberValue )
+  if( v2 == two->numberValue )
   {
     v3 = 0;
-    if ( v2 <= 0 )
+    if( v2 <= 0 )
       return 0;
     v4 = (char *)one->valueValue;
-    while ( *(_DWORD *)v4 == *(_DWORD *)&v4[(char *)two - (char *)one] )
+    while( *(_DWORD *)v4 == *(_DWORD *)&v4[(char *)two - (char *)one] )
     {
       ++v3;
       v4 += 4;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return 0;
     }
   }
@@ -301,7 +301,7 @@ int __thiscall ResourceItem::value(ResourceItem *this, int n)
 {
   int result; // eax@3
 
-  if ( n < 0 || n >= this->numberValue )
+  if( n < 0 || n >= this->numberValue )
     result = -1;
   else
     result = this->valueValue[n];
@@ -311,14 +311,14 @@ int __thiscall ResourceItem::value(ResourceItem *this, int n)
 //----- (004121A0) --------------------------------------------------------
 void __thiscall ResourceItem::setValue(ResourceItem *this, int n, int v)
 {
-  if ( n >= 0 && n < this->numberValue )
+  if( n >= 0 && n < this->numberValue )
     this->valueValue[n] = v;
 }
 
 //----- (004121C0) --------------------------------------------------------
 void __thiscall ResourceItem::incrementValue(ResourceItem *this, int n, int v)
 {
-  if ( n >= 0 && n < this->numberValue )
+  if( n >= 0 && n < this->numberValue )
     this->valueValue[n] += v;
 }
 
@@ -341,7 +341,7 @@ int __thiscall ResourceItem::largestValueIndex(ResourceItem *this, int num)
   int result; // eax@3
 
   v2 = this;
-  if ( this->numberValue < num || ResourceItem::sortLarge(this) != 1 )
+  if( this->numberValue < num || ResourceItem::sortLarge(this) != 1 )
     result = -1;
   else
     result = v2->sortedValue[num + 7];
@@ -366,7 +366,7 @@ int __thiscall ResourceItem::sortLarge(ResourceItem *this)
   int v14; // [sp+1Ch] [bp-4h]@6
 
   v1 = 0;
-  if ( this->numberValue > 0 )
+  if( this->numberValue > 0 )
   {
     v2 = (char *)this->sortedValue;
     do
@@ -375,12 +375,12 @@ int __thiscall ResourceItem::sortLarge(ResourceItem *this)
       *((_DWORD *)v2 + 8) = v1++;
       v2 += 4;
     }
-    while ( v1 < this->numberValue );
+    while( v1 < this->numberValue );
   }
   v3 = this->numberValue;
   v4 = 0;
   i = 0;
-  if ( v3 > 0 )
+  if( v3 > 0 )
   {
     v5 = (char *)this->sortedValue;
     do
@@ -388,13 +388,13 @@ int __thiscall ResourceItem::sortLarge(ResourceItem *this)
       v6 = v4 + 1;
       v7 = v4;
       v14 = v4 + 1;
-      if ( v4 + 1 < v3 )
+      if( v4 + 1 < v3 )
       {
         v8 = (int)&v5[-44 - (_DWORD)this];
         v12 = v5 + 4;
         do
         {
-          if ( *v12 > *(int *)((char *)this->sortedValue + v8) )
+          if( *v12 > *(int *)((char *)this->sortedValue + v8) )
           {
             v7 = v6;
             v8 = 4 * v6;
@@ -402,11 +402,11 @@ int __thiscall ResourceItem::sortLarge(ResourceItem *this)
           ++v6;
           ++v12;
         }
-        while ( v6 < v3 );
+        while( v6 < v3 );
         v6 = v14;
         v4 = i;
       }
-      if ( v7 != v4 )
+      if( v7 != v4 )
       {
         v9 = *(_DWORD *)v5;
         *(_DWORD *)v5 = this->sortedValue[v7];
@@ -420,7 +420,7 @@ int __thiscall ResourceItem::sortLarge(ResourceItem *this)
       v5 += 4;
       i = v6;
     }
-    while ( v6 < v3 );
+    while( v6 < v3 );
   }
   return 1;
 }

@@ -21,12 +21,12 @@ void __thiscall Path::Path(Path *this, int v)
   LODWORD(this->goalValue.x) = 0;
   LODWORD(this->goalValue.y) = 0;
   LODWORD(this->goalValue.z) = 0;
-  if ( !v || v >= 0 )
+  if( !v || v >= 0 )
   {
     this->maxSizeValue = v;
     v3 = (char *)operator new(16 * v);
     v4 = 0;
-    if ( v2->currentSizeValue > 0 )
+    if( v2->currentSizeValue > 0 )
     {
       v5 = 0;
       v6 = (int)(v3 + 8);
@@ -41,9 +41,9 @@ void __thiscall Path::Path(Path *this, int v)
         *(_DWORD *)(v6 - 16) = *((_DWORD *)&v2->pathValue[v5] - 2);
         *(_BYTE *)(v6 - 12) = *((_BYTE *)&v2->pathValue[v5] - 4);
       }
-      while ( v4 < v2->currentSizeValue );
+      while( v4 < v2->currentSizeValue );
     }
-    if ( v2->pathValue )
+    if( v2->pathValue )
       operator delete(v2->pathValue);
     v2->pathValue = (Waypoint *)v3;
   }
@@ -52,7 +52,7 @@ void __thiscall Path::Path(Path *this, int v)
 //----- (0046A7F0) --------------------------------------------------------
 void __thiscall Path::~Path(Path *this)
 {
-  if ( this->pathValue )
+  if( this->pathValue )
     operator delete(this->pathValue);
 }
 
@@ -75,7 +75,7 @@ ostream *__cdecl operator<<(ostream *out, Path *p)
   int v16; // [sp+4h] [bp-14h]@0
 
   v2 = 0;
-  if ( p->currentSizeValue > 0 )
+  if( p->currentSizeValue > 0 )
   {
     v3 = 0;
     do
@@ -98,7 +98,7 @@ ostream *__cdecl operator<<(ostream *out, Path *p)
       ++v2;
       ++v3;
     }
-    while ( v2 < p->currentSizeValue );
+    while( v2 < p->currentSizeValue );
   }
   return out;
 }
@@ -126,7 +126,7 @@ Path *__thiscall Path::operator+(Path *this, Path *result, Path *__$ReturnUdt)
   v5 = v3->currentSizeValue;
   v6 = 0;
   v15 = 1;
-  if ( v5 > 0 )
+  if( v5 > 0 )
   {
     do
     {
@@ -137,10 +137,10 @@ Path *__thiscall Path::operator+(Path *this, Path *result, Path *__$ReturnUdt)
       ++v6;
       ++v4;
     }
-    while ( v6 < v3->currentSizeValue );
+    while( v6 < v3->currentSizeValue );
   }
   v9 = 0;
-  if ( __$ReturnUdt->currentSizeValue > 0 )
+  if( __$ReturnUdt->currentSizeValue > 0 )
   {
     v10 = v6;
     do
@@ -152,7 +152,7 @@ Path *__thiscall Path::operator+(Path *this, Path *result, Path *__$ReturnUdt)
       ++v10;
       ++v9;
     }
-    while ( v9 < __$ReturnUdt->currentSizeValue );
+    while( v9 < __$ReturnUdt->currentSizeValue );
   }
   qmemcpy(result, &newPath, sizeof(Path));
   LOBYTE(v15) = 0;
@@ -178,13 +178,13 @@ Path *__thiscall Path::operator=(Path *this, Path *p)
   v2 = this;
   v3 = this->maxSizeValue;
   v4 = p->maxSizeValue;
-  if ( v3 < v4 )
+  if( v3 < v4 )
   {
-    if ( !v4 )
+    if( !v4 )
       goto LABEL_19;
-    if ( v3 > v4 )
+    if( v3 > v4 )
       goto LABEL_13;
-    if ( v4 )
+    if( v4 )
       v5 = v3 + v4;
     else
 LABEL_19:
@@ -192,7 +192,7 @@ LABEL_19:
     v2->maxSizeValue = v5;
     v6 = (char *)operator new(16 * v5);
     v7 = 0;
-    if ( v2->currentSizeValue > 0 )
+    if( v2->currentSizeValue > 0 )
     {
       v8 = 0;
       v9 = (int)(v6 + 8);
@@ -207,15 +207,15 @@ LABEL_19:
         *(_DWORD *)(v9 - 16) = *((_DWORD *)&v2->pathValue[v8] - 2);
         *(_BYTE *)(v9 - 12) = *((_BYTE *)&v2->pathValue[v8] - 4);
       }
-      while ( v7 < v2->currentSizeValue );
+      while( v7 < v2->currentSizeValue );
     }
-    if ( v2->pathValue )
+    if( v2->pathValue )
       operator delete(v2->pathValue);
     v2->pathValue = (Waypoint *)v6;
   }
 LABEL_13:
   v11 = 0;
-  if ( p->currentSizeValue > 0 )
+  if( p->currentSizeValue > 0 )
   {
     v12 = 0;
     do
@@ -227,7 +227,7 @@ LABEL_13:
       v2->pathValue[v12].facetToNextWaypoint = p->pathValue[v12].facetToNextWaypoint;
       ++v12;
     }
-    while ( v11 < p->currentSizeValue );
+    while( v11 < p->currentSizeValue );
   }
   v2->currentWaypointValue = p->currentWaypointValue;
   v2->currentSizeValue = p->currentSizeValue;
@@ -247,7 +247,7 @@ int __thiscall Path::operator==(Path *this, Path *p)
 
   v2 = this->currentSizeValue;
   v3 = 0;
-  if ( v2 <= 0 )
+  if( v2 <= 0 )
   {
     result = 1;
   }
@@ -257,7 +257,7 @@ int __thiscall Path::operator==(Path *this, Path *p)
     v5 = p->pathValue;
     v6 = (int)&v4->z;
     v7 = (char *)v4 - (char *)v5;
-    while ( *(float *)((char *)&v5->x + v7) == v5->x
+    while( *(float *)((char *)&v5->x + v7) == v5->x
          && *(float *)(v6 - 4) == v5->y
          && *(float *)v6 == v5->z
          && *(_BYTE *)(v6 + 4) == v5->facetToNextWaypoint )
@@ -265,7 +265,7 @@ int __thiscall Path::operator==(Path *this, Path *p)
       ++v3;
       v6 += 16;
       ++v5;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return 1;
     }
     result = 0;
@@ -288,12 +288,12 @@ int __thiscall Path::insertAtCurrent(Path *this, Waypoint *w)
 
   v2 = this;
   v3 = this->currentSizeValue;
-  if ( v3 <= 1000 )
+  if( v3 <= 1000 )
   {
     v5 = (Waypoint *)operator new(16 * (v3 + 1));
     v6 = 0;
     *v5 = *w;
-    if ( v2->currentSizeValue > 0 )
+    if( v2->currentSizeValue > 0 )
     {
       v7 = 0;
       v8 = (int)&v5[1].y;
@@ -308,9 +308,9 @@ int __thiscall Path::insertAtCurrent(Path *this, Waypoint *w)
         *(_DWORD *)(v8 - 12) = *((_DWORD *)&v2->pathValue[v7] - 2);
         *(_BYTE *)(v8 - 8) = *((_BYTE *)&v2->pathValue[v7] - 4);
       }
-      while ( v6 < v2->currentSizeValue );
+      while( v6 < v2->currentSizeValue );
     }
-    if ( v2->pathValue )
+    if( v2->pathValue )
       operator delete(v2->pathValue);
     v10 = v2->currentSizeValue;
     v2->pathValue = v5;
@@ -338,13 +338,13 @@ int __thiscall Path::insertAtEnd(Path *this, Waypoint w)
 
   v2 = this;
   v3 = this->maxSizeValue;
-  if ( this->currentSizeValue == v3 )
+  if( this->currentSizeValue == v3 )
   {
     v4 = 2 * v3;
     this->maxSizeValue = v4;
     v5 = (char *)operator new(16 * v4);
     v6 = 0;
-    if ( v2->currentSizeValue > 0 )
+    if( v2->currentSizeValue > 0 )
     {
       v7 = 0;
       v8 = (int)(v5 + 8);
@@ -359,9 +359,9 @@ int __thiscall Path::insertAtEnd(Path *this, Waypoint w)
         *(_DWORD *)(v8 - 16) = *((_DWORD *)&v2->pathValue[v7] - 2);
         *(_BYTE *)(v8 - 12) = *((_BYTE *)&v2->pathValue[v7] - 4);
       }
-      while ( v6 < v2->currentSizeValue );
+      while( v6 < v2->currentSizeValue );
     }
-    if ( v2->pathValue )
+    if( v2->pathValue )
       operator delete(v2->pathValue);
     v2->pathValue = (Waypoint *)v5;
   }
@@ -384,25 +384,25 @@ int __thiscall Path::contains(Path *this, Waypoint *w)
 
   v2 = this;
   v3 = 0;
-  if ( this->currentSizeValue <= 0 )
+  if( this->currentSizeValue <= 0 )
   {
     result = 0;
   }
   else
   {
     v4 = 0;
-    while ( 1 )
+    while( 1 )
     {
       v5 = floor(v2->pathValue[v4].x);
-      if ( v5 == floor(w->x) )
+      if( v5 == floor(w->x) )
       {
         v6 = floor(v2->pathValue[v4].y);
-        if ( v6 == floor(w->y) )
+        if( v6 == floor(w->y) )
           break;
       }
       ++v3;
       ++v4;
-      if ( v3 >= v2->currentSizeValue )
+      if( v3 >= v2->currentSizeValue )
         return 0;
     }
     result = 1;
@@ -458,7 +458,7 @@ long double __thiscall Path::length(Path *this)
 
   v1 = this->currentSizeValue;
   result = 0.0;
-  if ( v1 > 1 )
+  if( v1 > 1 )
   {
     v3 = this->pathValue;
     v4 = v1 - 1;
@@ -475,7 +475,7 @@ long double __thiscall Path::length(Path *this)
       --v4;
       result = result + sqrt(v7 * v11 + v6 * v6 + v10 * v9);
     }
-    while ( v4 );
+    while( v4 );
   }
   return result;
 }
@@ -499,7 +499,7 @@ Waypoint *__thiscall Path::waypoint(Path *this, int w)
   Waypoint *result; // eax@4
 
   v2 = this->pathValue;
-  if ( v2 && w > -1 && w < this->currentSizeValue )
+  if( v2 && w > -1 && w < this->currentSizeValue )
     result = &v2[w];
   else
     result = 0;
@@ -514,7 +514,7 @@ Waypoint *__thiscall Path::currentWaypoint(Path *this)
   Waypoint *result; // eax@4
 
   v1 = this->pathValue;
-  if ( v1 && (v2 = this->currentWaypointValue, v2 > -1) && v2 < this->currentSizeValue )
+  if( v1 && (v2 = this->currentWaypointValue, v2 > -1) && v2 < this->currentSizeValue )
     result = &v1[v2];
   else
     result = 0;
@@ -542,7 +542,7 @@ Waypoint *__thiscall Path::nextWaypoint(Path *this)
   Waypoint *result; // eax@4
 
   v1 = this->pathValue;
-  if ( v1 && (v2 = this->currentWaypointValue, v2 > -1) && (v3 = v2 + 1, v3 < this->currentSizeValue) )
+  if( v1 && (v2 = this->currentWaypointValue, v2 > -1) && (v3 = v2 + 1, v3 < this->currentSizeValue) )
     result = &v1[v3];
   else
     result = 0;
@@ -557,7 +557,7 @@ Waypoint *__thiscall Path::previousWaypoint(Path *this)
   Waypoint *result; // eax@4
 
   v1 = this->pathValue;
-  if ( v1 && (v2 = this->currentWaypointValue, v2 + 1 > 0) && v2 < this->currentSizeValue )
+  if( v1 && (v2 = this->currentWaypointValue, v2 + 1 > 0) && v2 < this->currentSizeValue )
     result = &v1[v2 - 1];
   else
     result = 0;
@@ -570,7 +570,7 @@ Waypoint *__thiscall Path::firstWaypoint(Path *this)
   Waypoint *result; // eax@1
 
   result = this->pathValue;
-  if ( !result || this->currentSizeValue <= 0 )
+  if( !result || this->currentSizeValue <= 0 )
     result = 0;
   return result;
 }
@@ -583,7 +583,7 @@ Waypoint *__thiscall Path::lastWaypoint(Path *this)
   Waypoint *result; // eax@3
 
   v1 = this->pathValue;
-  if ( v1 && (v2 = this->currentSizeValue, v2 > 0) )
+  if( v1 && (v2 = this->currentSizeValue, v2 > 0) )
     result = &v1[v2 - 1];
   else
     result = 0;
@@ -611,7 +611,7 @@ int __thiscall Path::moveToNextWaypoint(Path *this)
 
   v1 = this->currentWaypointValue;
   v2 = this->currentSizeValue - 1;
-  if ( v1 >= v2 )
+  if( v1 >= v2 )
   {
     this->currentWaypointValue = v2;
     result = 0;
@@ -631,7 +631,7 @@ int __thiscall Path::moveToLastWaypoint(Path *this)
   int result; // eax@2
 
   v1 = this->currentWaypointValue;
-  if ( v1 <= 0 )
+  if( v1 <= 0 )
   {
     result = 0;
   }
@@ -660,10 +660,10 @@ long double __thiscall Path::distanceToNextWaypoint(Path *this)
 
   v1 = this->pathValue;
   result = 0.0;
-  if ( v1 )
+  if( v1 )
   {
     v3 = this->currentWaypointValue;
-    if ( v3 >= 0 && v3 < this->currentSizeValue - 1 )
+    if( v3 >= 0 && v3 < this->currentSizeValue - 1 )
     {
       v4 = v3 + 1;
       v5 = (int)&v1[v3];

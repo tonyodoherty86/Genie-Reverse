@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\GameWorld.hpp
  * @author  Yvan Burrie
- * @date    2018/06/28
+ * @date    2018/07/04
  * @version 1.0
  */
 
@@ -11,97 +11,109 @@
 class RGE_Game_World
 {
 public:
-	/**
-	 * Offset: 0
-	 */
-	//struct vfptr{
-		/**
-		 * Offset: 164.
-		 */
-		//void *load_unit_groups;
-	//}
-	//*table;
+    /**
+     * Offset: 0
+     */
+    //struct vfptr{
+        /**
+         * Offset: 164.
+         */
+        //void *load_unit_groups;
+    //}
+    //*table;
 
     /* TODO: unknown structures */
 
-	/**
-	 * Offset: 4
-	 */
+    /**
+     * Offset: 4
+     */
     void *unk4;
 
-	/**
-	 * Offset: 8
-	 */
+    /**
+     * Offset: 8
+     */
     void *unk8;
 
-	/**
-	 * Offset: 12
-	 */
+    /**
+     * Offset: 12
+     */
     void *unk12;
 
-	/* Timers and conditions */
+    /* Timers and conditions */
 
-	/**
-	 * Offset: 16
-	 */
-    unsigned int world_time;
+    /**
+     * Offset: 16
+     */
+    time_t world_time;
 
-	/**
-	 * Offset: 20
-	 */
-    unsigned int old_world_time;
+    /**
+     * Offset: 20
+     */
+    time_t old_world_time;
 
-	/**
-	 * Offset: 24
-	 */
-    unsigned int world_time_delta;
+    /**
+     * Offset: 24
+     */
+    time_t world_time_delta;
 
-	/**
-	 * Offset: 28
-	 */
+    /**
+     * Offset: 28
+     */
     float timer;
 
-    unsigned int old_time;// 32 (saved_time)
-    float game_speed;// 36
-    char temp_pause;// 40
-    char game_state;// 41
-    char game_end_condition;// 42
+    /**
+     * (aka saved_time)
+     * Offset: 32.
+     */
+    time_t old_time;
 
-	/* Update indexes */
+    /**
+     * Offset: 36.
+     */
+    float game_speed;
+
+    /**
+     * Offset: 40, 41, 42.
+     */
+    char temp_pause,
+         game_state,
+         game_end_condition;
+
+    /* Update indexes */
     int sound_update_index,
         sprite_update_index;
 
-	/* World Map */
+    /* World Map */
     class RGE_Map *map;
 
-	/* World Sounds */
+    /* World Sounds */
     short sound_num;
     class RGE_Sound **sounds;
 
-	/* World Sprites */
+    /* World Sprites */
     short sprite_num;
     class RGE_Sprite **sprites;
 
-	/* World Players */
+    /* World Players */
     short player_num;
     class RGE_Player **players;
 
-	/* World Master-Players */
+    /* World Master-Players */
     int master_player_num;
     class RGE_Master_Player **master_players;
 
-	/* World Effects */
+    /* World Effects */
     class RGE_Effects *effects;
 
-	/* World Terrains */
+    /* World Terrains */
     int terrain_num;
     int terrain_size;
     float **terrains;
 
-	/* World Commands */
+    /* World Commands */
     class RGE_Command *commands;
 
-	/* World Scenario */
+    /* World Scenario */
     class RGE_Scenario *scenario;
 
     /* TODO: ?? */
@@ -110,11 +122,11 @@ public:
 
     // 118
     // unit_groups ???
-	/* World Color-Tables */
+    /* World Color-Tables */
     int color_table_num;
     class RGE_Color_Table **color_tables;
 
-	/* World incremental object-IDs */
+    /* World incremental object-IDs */
     int next_object_id;
 
     /**
@@ -122,7 +134,7 @@ public:
      */
     int next_reusable_object_id = -1;
 
-	/* World Scenario properties */
+    /* World Scenario properties */
     int scenario_object_id;
     char scenario_object_flag;
 
@@ -157,7 +169,7 @@ public:
 
 #if RGE_WORLD_PLAY_BOOK_EXISTS
     /**
-     * TODO: This field was removed in AOK.
+     * This field was removed in AOK.
      */
     class AIPlayBook *playbook;
 #endif
@@ -178,7 +190,7 @@ public:
     /**
      * Offset: 212 (AOC).
      */
-    unsigned int player_time_delta[RGE_PLAYERS_COUNT];
+    time_t player_time_delta[RGE_PLAYERS_COUNT];
 
     /**
      * Below are objects-lists that provide the recyclage and reusability of each type of object for memory-management purposes.
@@ -202,9 +214,9 @@ public:
     unsigned int maximumComputerPlayerUpdateTime,
                  availableComputerPlayerUpdateTime;
 
-	/**
-	 * Offset: 284.
-	 */
+    /**
+     * Offset: 284.
+     */
     int currentUpdateComputerPlayer = -1;
 
     // 476
@@ -244,7 +256,7 @@ public:
 
     /* TODO: Added in AOK.
      * Used when reading RGE_Action_Object structures.
-	 */
+     */
     class RGE_Task_List **actors;
     int actors_num;
 
@@ -268,19 +280,6 @@ public:
     void pause(char flag);
     void set_map_visible(char flag);
     void set_map_fog(char flag);
-
-    char data_load_sounds(char *file_name);
-    char data_load_terrain_tables(char *file_name);
-    char data_load_color_tables(char *file_name);
-    char data_load_sprites(char *file_name);
-    void data_load_players_type(short id, short type, FILE *infile);
-    char data_load_players(char *file_name);
-    char data_load_objects(char *file_name);
-    void data_load_effects(char *effects_file);
-    void data_load_map(char *border_file, char *overlay_file, char *terrain_file, char *map_file, short tile_width, short tile_height, short elev_height, RGE_Sound **sounds, char *terr_obj_file);
-    void data_load_random_map(char *rmm_map_file, char *rmm_land_file, char *rmm_terr_file, char *rmm_obj_file);
-    char data_load_world(FILE *infile);
-    char data_load(char *base_name, char *world_info);
 
     char init_player_type(int infile, short index, char type);
     char init_player(int infile);
@@ -317,12 +316,12 @@ public:
     char new_scenario(RGE_Player_Info *info, int random_seed_in);
     char new_random_game(RGE_Player_Info *info);
 
-    void update_sounds(unsigned int time);
-    void update_sprites(unsigned int time);
+    void update_sounds(time_t time);
+    void update_sprites(time_t time);
     char update();
 
     int is_player_turn(int player_id);
-    unsigned int get_accum_time_delta(int player_id);
+    time_t get_accum_time_delta(int player_id);
     char get_game_state();
     char check_game_state();
 
@@ -351,7 +350,7 @@ public:
 #endif
 
     void selectNextComputerPlayer(int cPType);
-    void useComputerPlayerUpdateTime(unsigned int usedTime);
+    void useComputerPlayerUpdateTime(time_t usedTime);
     int computerPlayerUpdateTimeAvailable();
     int objectGroupOnTile(int ownerID, int groupID, int x, int y, int *objectCount);
     int difficultyLevel();
@@ -366,8 +365,13 @@ public:
     int get_next_reusable_object_id();
     RGE_Static_Object **addObject(RGE_Static_Object *newObject);
     int removeObject(int oID);
+
     RGE_Map *initializePathingSystem();
-    char recycle_object_out_of_game(char object_type, RGE_Static_Object *obj);
+
+    bool recycle_object_out_of_game(
+        char object_type,
+        RGE_Static_Object *obj);
+
     RGE_Static_Object *recycle_object_in_to_game(char object_type);
     void update_mutual_allies();
 };

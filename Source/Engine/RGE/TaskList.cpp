@@ -8,7 +8,7 @@ void __thiscall RGE_Tile_List::add_node(RGE_Tile_List *this, int col, int row)
   int v6; // eax@3
 
   v3 = this;
-  if ( this->num_active >= this->list_size )
+  if( this->num_active >= this->list_size )
   {
     v4 = (RGE_Tile_List_Node *)calloc(2 * this->list_size, 8u);
     qmemcpy(v4, v3->list, 8 * v3->list_size);
@@ -34,7 +34,7 @@ void __thiscall RGE_Tile_List::del_list(RGE_Tile_List *this)
   v2 = this->collapse_list;
   this->num_active = 0;
   this->new_count = 0;
-  if ( v2 )
+  if( v2 )
   {
     free(this->list);
     v1->list_size = 8;
@@ -59,7 +59,7 @@ void __thiscall RGE_Tile_List::RGE_Tile_List(RGE_Tile_List *this, int Initial_Si
 //----- (00471E70) --------------------------------------------------------
 void __thiscall RGE_Tile_List::~RGE_Tile_List(RGE_Tile_List *this)
 {
-  if ( this->list )
+  if( this->list )
     free(this->list);
 }
 

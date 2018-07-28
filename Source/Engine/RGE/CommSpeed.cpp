@@ -46,16 +46,16 @@ void __thiscall RGE_Communications_Speed::RGE_Communications_Speed(RGE_Communica
     v5 += 4;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v2->HighestLatencyMsec = 500;
   v6 = (RGE_TimeSinceLastCall *)operator new(0x2B4u);
-  if ( v6 )
+  if( v6 )
     RGE_TimeSinceLastCall::RGE_TimeSinceLastCall(v6);
   else
     v7 = 0;
   v2->FrameTSLC = v7;
   v8 = (RGE_TimeSinceLastCall *)operator new(0x2B4u);
-  if ( v8 )
+  if( v8 )
     RGE_TimeSinceLastCall::RGE_TimeSinceLastCall(v8);
   else
     v9 = 0;
@@ -71,13 +71,13 @@ void __thiscall RGE_Communications_Speed::~RGE_Communications_Speed(RGE_Communic
 
   v1 = this;
   v2 = this->FrameTSLC;
-  if ( v2 )
+  if( v2 )
   {
     RGE_TimeSinceLastCall::~RGE_TimeSinceLastCall(this->FrameTSLC);
     operator delete(v2);
   }
   v3 = v1->TurnTSLC;
-  if ( v3 )
+  if( v3 )
   {
     RGE_TimeSinceLastCall::~RGE_TimeSinceLastCall(v3);
     operator delete(v3);
@@ -87,7 +87,7 @@ void __thiscall RGE_Communications_Speed::~RGE_Communications_Speed(RGE_Communic
 //----- (004327C0) --------------------------------------------------------
 void __thiscall RGE_Communications_Speed::SetPlayerTurnSpeed(RGE_Communications_Speed *this, unsigned int PlayerNo, char AvgFramesMsec, char HiLatencyCenti)
 {
-  if ( PlayerNo >= 1 && PlayerNo <= 9 )
+  if( PlayerNo >= 1 && PlayerNo <= 9 )
   {
     this->PlayerAvgFramesMsec[PlayerNo] = (unsigned __int8)AvgFramesMsec;
     this->PlayerHighLatencyMsec[PlayerNo] = 10 * (unsigned __int8)HiLatencyCenti;
@@ -99,12 +99,12 @@ void __thiscall RGE_Communications_Speed::SetActualLatency(RGE_Communications_Sp
 {
   unsigned int v3; // eax@3
 
-  if ( PlayerNo >= 1 && PlayerNo <= 9 )
+  if( PlayerNo >= 1 && PlayerNo <= 9 )
   {
     v3 = Msec;
-    if ( Msec < 0x1E )
+    if( Msec < 0x1E )
       v3 = 30;
-    if ( v3 > 0x1770 )
+    if( v3 > 0x1770 )
       v3 = 6000;
     this->ActualLatency[PlayerNo] = v3;
   }
@@ -113,7 +113,7 @@ void __thiscall RGE_Communications_Speed::SetActualLatency(RGE_Communications_Sp
 //----- (00432840) --------------------------------------------------------
 void __thiscall RGE_Communications_Speed::SetFutureSpeedChange(RGE_Communications_Speed *this, unsigned int BuffCount, unsigned int BuffGran, unsigned int ExecTurn)
 {
-  if ( !this->NextLatencyChangeTurn )
+  if( !this->NextLatencyChangeTurn )
   {
     this->FutureBufferFrames = BuffCount;
     this->FutureBufferGranularity = BuffGran;
@@ -173,11 +173,11 @@ void __thiscall RGE_Communications_Speed::AdjustLocalSpeed(RGE_Communications_Sp
   unsigned int v3; // eax@3
 
   v1 = this->NextLatencyChangeTurn;
-  if ( v1 )
+  if( v1 )
   {
     v2 = this->Comm;
     this->LastAdjusted = 0;
-    if ( v2->current_turn >= v1 )
+    if( v2->current_turn >= v1 )
     {
       v3 = this->AdjustmentCount;
       this->NextLatencyChangeTurn = 0;
@@ -220,32 +220,32 @@ unsigned int __thiscall RGE_Communications_Speed::BufferTimeToUse(RGE_Communicat
   v2 = this;
   v3 = this->LastFrameHadTime;
   v4 = this->FrameTSLC;
-  if ( v3 )
+  if( v3 )
     RGE_TimeSinceLastCall::Set(v4);
   else
     RGE_TimeSinceLastCall::Skip(v4);
   v5 = v2->TotalBufferFramesRemaining;
   v2->LastFrameHadTime = 0;
-  if ( v5 )
+  if( v5 )
   {
     v7 = RGE_TimeSinceLastCall::Get(v2->TurnTSLC);
     v8 = v2->Comm;
     v2->RealTimePassed = v7;
-    if ( TCommunications_Handler::AllPlayersAcknowledged(v8) )
+    if( TCommunications_Handler::AllPlayersAcknowledged(v8) )
       v2->AllAcknowledgedBuffersRemaining += v2->TotalBufferFramesRemaining;
     v9 = v2->TotalBufferFramesRemaining;
     result = v2->CurrentBufferGranularity;
     v10 = result * (v2->CurrentBufferFrames - v9);
     v11 = v2->RealTimePassed + v2->OverheadFactor;
     v2->BufferTimePassed = v10;
-    if ( v11 >= v10 )
+    if( v11 >= v10 )
     {
       v2->LastFrameHadTime = 1;
       v2->TotalBufferFramesRemaining = v9 - 1;
     }
     else
     {
-      if ( current_turn > 6 )
+      if( current_turn > 6 )
       {
         v12 = v2->DroppedFramesTurn + 1;
         ++v2->DroppedFrames;
@@ -288,17 +288,17 @@ unsigned int __thiscall RGE_Communications_Speed::GetHighLatencyCenti(RGE_Commun
   v4 = (char *)&this->ActualLatency[1];
   do
   {
-    if ( TCommunications_Handler::IsPlayerHuman(v1->Comm, v3) && v2 <= *(_DWORD *)v4 )
+    if( TCommunications_Handler::IsPlayerHuman(v1->Comm, v3) && v2 <= *(_DWORD *)v4 )
       v2 = *(_DWORD *)v4;
     ++v3;
     v4 += 4;
   }
-  while ( v3 <= 9 );
+  while( v3 <= 9 );
   v1->HighestLatencyMsec = v2;
   result = (v2 + 5) / 0xA;
-  if ( result <= 1 )
+  if( result <= 1 )
     result = 1;
-  if ( result >= 0xFF )
+  if( result >= 0xFF )
     result = 255;
   return result;
 }
@@ -308,7 +308,7 @@ unsigned int __thiscall RGE_Communications_Speed::GetPlayerLatency(RGE_Communica
 {
   unsigned int result; // eax@3
 
-  if ( PlayerNo < 1 || PlayerNo > 9 )
+  if( PlayerNo < 1 || PlayerNo > 9 )
     result = 0;
   else
     result = this->ActualLatency[PlayerNo];
@@ -329,16 +329,16 @@ RGE_Communications_Speed *__thiscall RGE_Communications_Speed::GetLatencyInfo(RG
   v2 = 1;
   strcpy(this->TBuff, aLatency);
   v3 = (char *)&this->ActualLatency[1];
-  while ( 1 )
+  while( 1 )
   {
-    if ( TCommunications_Handler::IsPlayerHuman(v1->Comm, v2) )
+    if( TCommunications_Handler::IsPlayerHuman(v1->Comm, v2) )
     {
       sprintf(buf, aPDD, v2, *(_DWORD *)v3);
       strcat(v5->TBuff, buf);
     }
     ++v2;
     v3 += 4;
-    if ( v2 > 9 )
+    if( v2 > 9 )
       break;
     v1 = v5;
   }
@@ -369,7 +369,7 @@ char *__thiscall RGE_Communications_Speed::GetPlayerSpeedStatusStr(RGE_Communica
   char *result; // eax@3
 
   v2 = this;
-  if ( PlayerNo < 0 || PlayerNo > 9 )
+  if( PlayerNo < 0 || PlayerNo > 9 )
   {
     result = 0;
   }
@@ -398,16 +398,16 @@ char *__thiscall RGE_Communications_Speed::GetMachineSpeedInfo(RGE_Communication
   v2 = 1;
   strcpy(Info, aPlrspeed);
   v3 = (char *)&this->PlayerAvgFramesMsec[1];
-  while ( 1 )
+  while( 1 )
   {
-    if ( TCommunications_Handler::IsPlayerHuman(v1->Comm, v2) )
+    if( TCommunications_Handler::IsPlayerHuman(v1->Comm, v2) )
     {
       sprintf(buf, aP1dFrDLatD, v2, *(_DWORD *)v3, *((_DWORD *)v3 + 10));
       strcat(Info, buf);
     }
     ++v2;
     v3 += 4;
-    if ( v2 > 9 )
+    if( v2 > 9 )
       break;
     v1 = v5;
   }
@@ -430,18 +430,18 @@ int __thiscall RGE_Communications_Speed::GetRecommendedBufferFrames(RGE_Communic
   v4 = (char *)&this->ActualLatency[1];
   do
   {
-    if ( TCommunications_Handler::IsPlayerHuman(v1->Comm, v3) && v2 <= *(_DWORD *)v4 )
+    if( TCommunications_Handler::IsPlayerHuman(v1->Comm, v3) && v2 <= *(_DWORD *)v4 )
       v2 = *(_DWORD *)v4;
     ++v3;
     v4 += 4;
   }
-  while ( v3 <= 9 );
+  while( v3 <= 9 );
   v5 = v2 / v1->CurrentBufferGranularity;
   v1->OptimalBufferFrames = v5;
-  if ( v5 >= 0x14 )
+  if( v5 >= 0x14 )
     v5 = 20;
   v1->OptimalBufferFrames = v5;
-  if ( v5 <= 4 )
+  if( v5 <= 4 )
     v5 = 4;
   result = v5 + 1;
   v1->OptimalBufferFrames = result;
@@ -463,10 +463,10 @@ unsigned int __thiscall RGE_Communications_Speed::GetRecommendedBufferGranularit
   v1 = this;
   result = RGE_TimeSinceLastCall::GetAvg(this->FrameTSLC, 50);
   v1->OptimalBufferGranularity = result;
-  if ( result > 0x96 )
+  if( result > 0x96 )
     result = 150;
   v1->OptimalBufferGranularity = result;
-  if ( result < 0xA )
+  if( result < 0xA )
     result = 10;
   v1->OptimalBufferGranularity = result;
   return result;
@@ -494,20 +494,20 @@ int __thiscall RGE_Communications_Speed::AnalyzeGameSpeed(RGE_Communications_Spe
   v4 = this;
   v16 = this;
   result = TCommunications_Handler::IsHost(this->Comm);
-  if ( result )
+  if( result )
   {
-    if ( v4->NextLatencyChangeTurn )
+    if( v4->NextLatencyChangeTurn )
     {
       result = 0;
     }
     else
     {
       SyncTurn = v4->Comm->PlayerOptions.CommandTurnIncrement + v4->Comm->current_turn;
-      if ( SyncTurn >= 0x14 )
+      if( SyncTurn >= 0x14 )
       {
         v6 = v4->LastAdjusted + 1;
         v4->LastAdjusted = v6;
-        if ( v6 >= 5 )
+        if( v6 >= 5 )
         {
           v7 = 10;
           v8 = 30;
@@ -515,42 +515,42 @@ int __thiscall RGE_Communications_Speed::AnalyzeGameSpeed(RGE_Communications_Spe
           v10 = &v4->PlayerHighLatencyMsec[1];
           do
           {
-            if ( TCommunications_Handler::IsPlayerHuman(v16->Comm, v9) )
+            if( TCommunications_Handler::IsPlayerHuman(v16->Comm, v9) )
             {
-              if ( v7 <= *(v10 - 10) )
+              if( v7 <= *(v10 - 10) )
                 v7 = *(v10 - 10);
-              if ( v8 <= *v10 )
+              if( v8 <= *v10 )
                 v8 = *v10;
             }
             ++v9;
             ++v10;
           }
-          while ( v9 <= 9 );
+          while( v9 <= 9 );
           v11 = 10 * ((v7 + 5) / 0xA);
-          if ( v11 > 0x96 )
+          if( v11 > 0x96 )
             v11 = 150;
           v17 = v16->CurrentBufferGranularity;
-          if ( abs(v11 - v17) < 0xAu )
+          if( abs(v11 - v17) < 0xAu )
             v11 = v16->CurrentBufferGranularity;
           v12 = v8 / v11 + 2;
-          if ( v12 >= 0x14 )
+          if( v12 >= 0x14 )
             v12 = 20;
-          if ( v12 <= 4 )
+          if( v12 <= 4 )
             v12 = 4;
-          if ( v12 * v11 < 0xFA )
+          if( v12 * v11 < 0xFA )
             v12 = 0xFA / v11 + 1;
           v13 = v16->CurrentBufferFrames;
           v14 = v17 * v16->CurrentBufferFrames;
           v15 = abs(v12 * v11 - v14);
-          if ( v15 > 0xA )
+          if( v15 > 0xA )
           {
-            if ( v12 * v11 < v14 && v15 > 0x64 && v13 > 4 )
+            if( v12 * v11 < v14 && v15 > 0x64 && v13 > 4 )
               v12 = v13 - 1;
             *NewGranularity = v11;
             *NewBufferFrames = v12;
-            if ( ChangeAlso )
+            if( ChangeAlso )
             {
-              if ( v16->SpeedControlEnabled )
+              if( v16->SpeedControlEnabled )
               {
                 RGE_Communications_Speed::SetFutureSpeedChange(v16, v12, v11, SyncTurn);
                 TCommunications_Handler::SendSpeedChange(v16->Comm, v12, v11);

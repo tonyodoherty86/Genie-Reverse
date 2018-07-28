@@ -32,7 +32,7 @@ RGE_Action_Missile *__thiscall RGE_Action_Missile::`scalar deleting destructor'(
 
   v2 = this;
   RGE_Action_Missile::~RGE_Action_Missile(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -57,9 +57,9 @@ void __thiscall RGE_Action_Missile::RGE_Action_Missile(RGE_Action_Missile *this,
 //----- (00404D10) --------------------------------------------------------
 void __thiscall RGE_Action_Missile::first_in_stack(RGE_Action_Missile *this, char first_time)
 {
-  if ( first_time )
+  if( first_time )
   {
-    if ( this->target_obj || LODWORD(this->target_x) != -1082130432 && LODWORD(this->target_y) != -1082130432 )
+    if( this->target_obj || LODWORD(this->target_x) != -1082130432 && LODWORD(this->target_y) != -1082130432 )
       ((void (__stdcall *)(_DWORD))this->vfptr->set_state)(3);
     else
       ((void (__stdcall *)(_DWORD))this->vfptr->set_state)(1);
@@ -76,7 +76,7 @@ void __thiscall RGE_Action_Missile::intercept(RGE_Action_Missile *this, float *t
   RGE_Static_Object *v4; // eax@1
 
   v4 = this->target_obj;
-  if ( v4 )
+  if( v4 )
   {
     *tx = v4->world_x;
     *ty = this->target_obj->world_y;
@@ -144,11 +144,11 @@ void __thiscall RGE_Action_Missile::set_state(RGE_Action_Missile *this, char new
 
   v2 = this;
   this->state = new_state;
-  if ( new_state == 1 )
+  if( new_state == 1 )
   {
     ((void (*)(void))this->obj->vfptr->die_die_die)();
   }
-  else if ( new_state == 3 )
+  else if( new_state == 3 )
   {
     RGE_Action_Missile::intercept(this, &tx, &ty, &tz);
     v3 = v2->obj;
@@ -161,24 +161,24 @@ void __thiscall RGE_Action_Missile::set_state(RGE_Action_Missile *this, char new
     v42 = v6 * dz;
     v7 = sqrt(v5 * v38 + v4 * new_statea + v42);
     d = v7;
-    if ( v3->master_obj[1].attack_reaction == 1 )
+    if( v3->master_obj[1].attack_reaction == 1 )
     {
       v8 = v2->target_obj;
-      if ( v8 )
+      if( v8 )
       {
         ((void (*)(void))v8->vfptr->getSpeed)();
-        if ( v7 > 0.0 )
+        if( v7 > 0.0 )
         {
           ((void (*)(void))v2->target_obj->vfptr->getSpeed)();
           v9 = v2->target_obj2;
           speed = v7;
-          if ( v9 )
+          if( v9 )
           {
             v10 = v9->master_obj->id;
-            if ( v10 == 35 || v10 == 36 || v10 == 280 )
+            if( v10 == 35 || v10 == 36 || v10 == 280 )
             {
               v7 = speed;
-              if ( speed > 1.0 )
+              if( speed > 1.0 )
                 speed = 1.0;
             }
           }
@@ -195,7 +195,7 @@ void __thiscall RGE_Action_Missile::set_state(RGE_Action_Missile *this, char new
           v17 = v15 * v16;
           v18 = v14;
           v19 = d - sqrt(v17 + v14 * v18 + v42) + *(float *)&v12[1].vfptr;
-          if ( v19 > *(float *)&v12[1].vfptr * 0.5 )
+          if( v19 > *(float *)&v12[1].vfptr * 0.5 )
           {
             v20 = v19;
             v21 = d / v20;
@@ -241,7 +241,7 @@ void __thiscall RGE_Action_Missile::set_state(RGE_Action_Missile *this, char new
         break;
     }
     v32 = v2->obj->master_obj;
-    if ( *(float *)&v32[1].help_string_id <= 0.0 )
+    if( *(float *)&v32[1].help_string_id <= 0.0 )
     {
       v37 = v2->vfptr;
       LODWORD(v2->ballistic_velocity) = 0;
@@ -250,7 +250,7 @@ void __thiscall RGE_Action_Missile::set_state(RGE_Action_Missile *this, char new
     }
     else
     {
-      if ( *(float *)&v32[1].vfptr <= 0.0 )
+      if( *(float *)&v32[1].vfptr <= 0.0 )
         v33 = 0.0;
       else
         v33 = d / *(float *)&v32[1].vfptr;
@@ -325,25 +325,25 @@ char __thiscall RGE_Action_Missile::update(RGE_Action_Missile *this)
   v4 = v2->owner->world;
   t = v4->world_time_delta_seconds;
   s = *(float *)&v2->master_obj[1].vfptr * t;
-  if ( v3 != -1 && !RGE_Game_World::object(v4, v3) )
+  if( v3 != -1 && !RGE_Game_World::object(v4, v3) )
     v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
-  if ( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
+  if( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
     v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
   v5 = v1->target_obj;
-  if ( v5 && RGE_Static_Object::is_dying(v5) )
+  if( v5 && RGE_Static_Object::is_dying(v5) )
     v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
   v6 = v1->target_obj2;
-  if ( v6 && RGE_Static_Object::is_dying(v6) )
+  if( v6 && RGE_Static_Object::is_dying(v6) )
     v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
-  if ( v1->state == 1 )
+  if( v1->state == 1 )
     return 1;
-  if ( v1->state != 4 )
+  if( v1->state != 4 )
     return 0;
   v7 = v1->obj;
   v8 = v7->master_obj[1].map_color;
-  if ( v8 )
+  if( v8 )
   {
-    if ( v8 == 3 )
+    if( v8 == 3 )
     {
       bounds = (RGE_Check_List *)LODWORD(v1->velocity_x);
       vy = v1->velocity_y;
@@ -361,11 +361,11 @@ char __thiscall RGE_Action_Missile::update(RGE_Action_Missile *this)
     *(float *)&bounds = v9 * s;
     vy = v10 * s;
     vz = v11 * s;
-    if ( !v15 )
+    if( !v15 )
       v1->vfptr->set_state((RGE_Action *)v1, 1);
   }
   v16 = (RGE_Moving_Object *)&v1->obj->vfptr;
-  if ( *(float *)&v16->master_obj[1].help_string_id > 0.0 )
+  if( *(float *)&v16->master_obj[1].help_string_id > 0.0 )
   {
     v17 = v1->ballistic_acceleration * t;
     v18 = v17 * 0.5 + v1->ballistic_velocity;
@@ -378,12 +378,12 @@ char __thiscall RGE_Action_Missile::update(RGE_Action_Missile *this)
   v21 = (RGE_Missile_Object *)v1->obj;
   hit_ground = v20;
   v22 = v21->master_obj[1].map_color;
-  if ( (unsigned __int8)v22 > 2u )
+  if( (unsigned __int8)v22 > 2u )
   {
-    if ( v22 == 3 )
+    if( v22 == 3 )
     {
       v23 = v1->target_obj2;
-      if ( v23 )
+      if( v23 )
       {
         ((void (__thiscall *)(RGE_Static_Object *, RGE_Static_Object *, RGE_Static_Object *, _DWORD, _DWORD, _DWORD))v23->vfptr[1].remove_overlay_sprite)(
           v23,
@@ -410,34 +410,34 @@ char __thiscall RGE_Action_Missile::update(RGE_Action_Missile *this)
   v24 = RGE_Missile_Object::make_object_collision_list(v21, s);
   v25 = v24;
   boundsa = v24;
-  if ( !v24 )
+  if( !v24 )
     goto LABEL_52;
   v26 = v24->list;
-  if ( !v24->list )
+  if( !v24->list )
     goto LABEL_51;
   do
   {
     v27 = v1->obj;
-    if ( !v27->master_obj[1].convert_terrain_flag )
+    if( !v27->master_obj[1].convert_terrain_flag )
     {
       v29 = v1->target_obj;
-      if ( v26->node != v29 )
+      if( v26->node != v29 )
         goto LABEL_49;
       v28 = v1->target_obj2;
-      if ( !v28 )
+      if( !v28 )
         goto LABEL_47;
       goto LABEL_46;
     }
-    if ( v27->master_obj[1].convert_terrain_flag != 1 )
+    if( v27->master_obj[1].convert_terrain_flag != 1 )
     {
-      if ( v27->master_obj[1].convert_terrain_flag != 2 )
+      if( v27->master_obj[1].convert_terrain_flag != 2 )
         goto LABEL_49;
       v28 = v1->target_obj2;
       v29 = v26->node;
-      if ( !v28 )
+      if( !v28 )
       {
         v31 = v29->owner;
-        if ( v31 != v27->owner && v31->id )
+        if( v31 != v27->owner && v31->id )
           goto LABEL_47;
         (*(void (__thiscall **)(RGE_Action_Object *, _DWORD, _DWORD, _DWORD, RGE_Action_Object *, _DWORD))&v27->vfptr[1].gap4[48])(
           v27,
@@ -450,10 +450,10 @@ LABEL_48:
         v1->vfptr->set_state((RGE_Action *)v1, 1);
         goto LABEL_49;
       }
-      if ( v29 == v28 )
+      if( v29 == v28 )
         goto LABEL_49;
       v30 = v29->owner;
-      if ( v30 == v27->owner || !v30->id )
+      if( v30 == v27->owner || !v30->id )
       {
         (*(void (__stdcall **)(_DWORD, _DWORD, _DWORD, RGE_Static_Object *, _DWORD))&v28->vfptr[1].gap4[48])(
           LODWORD(v27->world_x),
@@ -475,10 +475,10 @@ LABEL_46:
     }
     v29 = v26->node;
     v32 = v26->node->owner;
-    if ( v32 != v27->owner && v32->id )
+    if( v32 != v27->owner && v32->id )
     {
       v33 = v1->target_obj2;
-      if ( v33 )
+      if( v33 )
       {
         ((void (__thiscall *)(RGE_Action_Object *, RGE_Static_Object *, RGE_Action_Object *, _DWORD, _DWORD, _DWORD))v33->vfptr[1].remove_overlay_sprite)(
           (RGE_Action_Object *)v33,
@@ -502,16 +502,16 @@ LABEL_47:
 LABEL_49:
     v26 = v26->next;
   }
-  while ( v26 );
+  while( v26 );
   v25 = boundsa;
 LABEL_51:
   RGE_Check_List::~RGE_Check_List(v25);
   operator delete(v25);
 LABEL_52:
-  if ( hit_ground && v1->state != 1 )
+  if( hit_ground && v1->state != 1 )
   {
     v34 = &v1->target_obj2->vfptr;
-    if ( v34 )
+    if( v34 )
     {
       v35 = v1->obj;
       v36 = *v34;

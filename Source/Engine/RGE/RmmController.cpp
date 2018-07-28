@@ -122,21 +122,21 @@ void __thiscall RGE_RMM_Controller::add_land_module(RGE_RMM_Controller *this, RG
   mid_x2 = (signed __int64)(v14 - v16);
   v17 = (signed __int64)(v15 - v16);
   mid_y2 = v17;
-  if ( mid_x1 <= 8 )
+  if( mid_x1 <= 8 )
     mid_x1 = 9;
-  if ( mid_y1 <= 8 )
+  if( mid_y1 <= 8 )
     mid_y1 = 9;
-  if ( mid_x2 >= v10 - 9 )
+  if( mid_x2 >= v10 - 9 )
     mid_x2 = v10 - 10;
   v18 = this->map_height;
-  if ( (signed int)v17 >= v18 - 9 )
+  if( (signed int)v17 >= v18 - 9 )
     mid_y2 = v18 - 10;
   v19 = 0;
   index = 0;
-  if ( player_num > 0 )
+  if( player_num > 0 )
   {
     v20 = (char *)&info->land[0].area;
-    while ( 1 )
+    while( 1 )
     {
       switch ( type )
       {
@@ -171,24 +171,24 @@ LABEL_23:
                          + ((unsigned __int64)(-2147418109i64 * (v5->map_width - 16) * v21) >> 32)) >> 14;
         v23 = v22 + (v22 >> 31) + 8;
         v24 = (v5->map_height - 16) * debug_rand(aCMsdevWorkA_15, 210) / 0x7FFF + 8;
-        if ( v23 <= mid_x1 || v23 >= mid_x2 || v24 <= mid_y1 || v24 >= mid_y2 )
+        if( v23 <= mid_x1 || v23 >= mid_x2 || v24 <= mid_y1 || v24 >= mid_y2 )
         {
           index2 = 0;
-          if ( index > 0 )
+          if( index > 0 )
           {
             v25 = (char *)&info->land[0].x;
             do
             {
               v26 = v23 - *(_DWORD *)v25;
-              if ( v23 - *(_DWORD *)v25 < 0 )
+              if( v23 - *(_DWORD *)v25 < 0 )
                 v26 = -v26;
               v27 = v24 - *((_DWORD *)v25 + 1);
-              if ( v27 < 0 )
+              if( v27 < 0 )
                 v27 = -v27;
               bound_square = v12 * v12;
-              if ( (double)(v27 * v27 + v26 * v26) <= bound_square )
+              if( (double)(v27 * v27 + v26 * v26) <= bound_square )
               {
-                if ( !player_numa && index2 == index - 1 )
+                if( !player_numa && index2 == index - 1 )
                 {
                   *((_DWORD *)v25 + 1) = v24;
                   *(_DWORD *)v25 = v23;
@@ -198,7 +198,7 @@ LABEL_23:
               v25 += 52;
               ++index2;
             }
-            while ( index2 < index );
+            while( index2 < index );
             v5 = v35;
           }
         }
@@ -207,19 +207,19 @@ LABEL_23:
           player_numa = 1;
         }
       }
-      while ( player_numa );
+      while( player_numa );
       *((_DWORD *)v20 - 3) = v23;
       *((_DWORD *)v20 - 2) = v24;
       v20 += 52;
       *((_DWORD *)v20 - 18) = land_tile_num / info->land_num;
-      if ( ++index >= info->land_num )
+      if( ++index >= info->land_num )
         break;
       v19 = index;
     }
     v4 = info;
   }
   v28 = (RGE_RMM_Land_Generator *)operator new(0x1468u);
-  if ( v28 )
+  if( v28 )
     RGE_RMM_Land_Generator::RGE_RMM_Land_Generator(v28, v5->map, (RGE_Random_Map_Module *)&v5->vfptr, v4);
 }
 
@@ -284,7 +284,7 @@ LABEL_4:
   v11 = 0;
   v12 = land_info->land_num;
   info->hot_spot_num = v12;
-  if ( v12 > 0 )
+  if( v12 > 0 )
   {
     v13 = (char *)&info->hot_spots[0].y;
     v14 = (char *)&land_info->land[0].y;
@@ -298,10 +298,10 @@ LABEL_4:
       v14 += 52;
       v13 += 16;
     }
-    while ( v11 < info->hot_spot_num );
+    while( v11 < info->hot_spot_num );
   }
   v15 = (RGE_RMM_Terrain_Generator *)operator new(0x12CCu);
-  if ( v15 )
+  if( v15 )
     RGE_RMM_Terrain_Generator::RGE_RMM_Terrain_Generator(v15, v4->map, (RGE_Random_Map_Module *)&v4->vfptr, info);
 }
 
@@ -405,7 +405,7 @@ void __userpurge RGE_RMM_Controller::add_object_module(RGE_RMM_Controller *this@
   in_info.objects[5].land_id = 0;
   in_info.objects[5].land_outer_radius = 15;
   in_info.land_num = v5;
-  if ( v5 > 0 )
+  if( v5 > 0 )
   {
     v7 = (char *)&in_info.lands[0].y;
     v8 = (char *)&land_info->land[0].y;
@@ -419,11 +419,11 @@ void __userpurge RGE_RMM_Controller::add_object_module(RGE_RMM_Controller *this@
       v8 += 52;
       v7 += 16;
     }
-    while ( v6 < v5 );
+    while( v6 < v5 );
   }
   v9 = (RGE_RMM_Object_Generator *)operator new(0x1920u);
   v14 = 0;
-  if ( v9 )
+  if( v9 )
     RGE_RMM_Object_Generator::RGE_RMM_Object_Generator(
       v9,
       parent_module->map,

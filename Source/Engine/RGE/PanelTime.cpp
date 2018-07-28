@@ -12,7 +12,7 @@ void __thiscall RGE_Panel_Time::RGE_Panel_Time(RGE_Panel_Time *this, TDrawArea *
   v4->last_game_time = 0;
   v4->vfptr = (TPanelVtbl *)&RGE_Panel_Time::`vftable';
   v4->old_time = -1;
-  if ( !TPanel::setup((TPanel *)&v4->vfptr, draw_area_in, parent_in, 0, 0, 0, 0, 0) )
+  if( !TPanel::setup((TPanel *)&v4->vfptr, draw_area_in, parent_in, 0, 0, 0, 0, 0) )
     v4->error_code = 1;
 }
 // 572040: using guessed type int (__thiscall *RGE_Panel_Time::`vftable')(void *Memory, unsigned int __flags);
@@ -24,7 +24,7 @@ RGE_Panel_Time *__thiscall RGE_Panel_Time::`scalar deleting destructor'(RGE_Pane
 
   v2 = this;
   RGE_Panel_Time::~RGE_Panel_Time(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -53,18 +53,18 @@ void __thiscall RGE_Panel_Time::draw(RGE_Panel_Time *this)
   char str[100]; // [sp+34h] [bp-64h]@6
 
   v1 = this;
-  if ( this->render_area && this->visible && this->active )
+  if( this->render_area && this->visible && this->active )
   {
     v2 = this->vfptr;
     v16 = v2;
     ((void (__stdcall *)(_DWORD))v2->draw_setup)(0);
     v3 = v1->render_area;
     ++v1->display_changed_count;
-    if ( TDrawArea::GetDc(v3, aRpnl_timDraw) )
+    if( TDrawArea::GetDc(v3, aRpnl_timDraw) )
     {
       SelectClipRgn(v1->render_area->DrawDc, v1->clip_rgn);
       old_font = SelectObject(v1->render_area->DrawDc, v1->font);
-      if ( RGE_Base_Game::get_paused(rge_base_game) )
+      if( RGE_Base_Game::get_paused(rge_base_game) )
       {
         SetBkColor(v1->render_area->DrawDc, 0xFFFFFFu);
         SetBkMode(v1->render_area->DrawDc, 2);
@@ -79,11 +79,11 @@ void __thiscall RGE_Panel_Time::draw(RGE_Panel_Time *this)
         v4 = v1->game_time;
         v5 = 0;
         v6 = 0;
-        if ( v4 > 59 )
+        if( v4 > 59 )
         {
           v5 = v4 / 60;
           v4 %= 60;
-          if ( v5 > 59 )
+          if( v5 > 59 )
           {
             v6 = v5 / 60;
             v5 %= 60;
@@ -95,13 +95,13 @@ void __thiscall RGE_Panel_Time::draw(RGE_Panel_Time *this)
         v8 = rge_base_game->world;
         v9 = v8->player_num;
         player_num = v8->player_num;
-        if ( v9 > 1 )
+        if( v9 > 1 )
         {
           v10 = 13;
           do
           {
             RGE_Base_Game::get_countdown_timer(rge_base_game, v7, &countdown_timer);
-            if ( countdown_timer >= 0 )
+            if( countdown_timer >= 0 )
             {
               GetPaletteEntries(
                 rge_base_game->draw_system->Pal,
@@ -120,7 +120,7 @@ void __thiscall RGE_Panel_Time::draw(RGE_Panel_Time *this)
             }
             ++v7;
           }
-          while ( v7 < v9 );
+          while( v7 < v9 );
           v2 = v16;
         }
       }
@@ -145,10 +145,10 @@ int __thiscall RGE_Panel_Time::handle_idle(RGE_Panel_Time *this)
   TPanel::handle_idle((TPanel *)&this->vfptr);
   v1->game_time = rge_base_game->world->world_time / 0x3E8;
   v2 = rge_base_game->world->old_time / 0x3E8;
-  if ( v2 > 0 )
+  if( v2 > 0 )
   {
     v3 = v1->old_time;
-    if ( v3 == -1 )
+    if( v3 == -1 )
     {
       v1->old_time = v2;
       v1->real_time = 0;
@@ -158,11 +158,11 @@ int __thiscall RGE_Panel_Time::handle_idle(RGE_Panel_Time *this)
       v1->real_time = v2 - v3;
     }
   }
-  if ( v1->game_time != v1->last_game_time )
+  if( v1->game_time != v1->last_game_time )
   {
     v1->vfptr->set_redraw((TPanel *)v1, RedrawNormal);
     v4 = v1->parent_panel;
-    if ( v4 )
+    if( v4 )
       ((void (__stdcall *)(signed int))v4->vfptr->set_redraw)(1);
     v1->last_game_time = v1->game_time;
   }
