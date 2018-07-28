@@ -19,7 +19,7 @@ void TCommunications_Services::TCommunications_Services()
         *((_DWORD *)v1 - 25) = 0;
         *((_DWORD *)v1 - 26) = 0;
     }
-    while ( v2 );
+    while( v2 );
     DirectPlayEnumerateA(DPEnumCallback, this);
 }
 
@@ -41,7 +41,7 @@ char *TCommunications_Services::GetServiceName(int id)
 {
     char *result; // eax@3
 
-    if ( id < 0 || id > this->ServiceCount )
+    if( id < 0 || id > this->ServiceCount )
         result = 0;
     else
         result = (char *)this + 96 * id;
@@ -86,7 +86,7 @@ GUID *TCommunications_Services::GetServiceGUID(GUID *result, int __$ReturnUdt)
 
 void TCommunications_Services::EnumServiceGUID(int id, GUID *gid)
 {
-    if ( id >= 0 && id <= this->ServiceCount )
+    if( id >= 0 && id <= this->ServiceCount )
         this->Service[id].GUID = gid;
 }
 
@@ -94,7 +94,7 @@ int TCommunications_Services::GetServiceActive(int id)
 {
     int result; // eax@3
 
-    if ( id < 0 || id > this->ServiceCount )
+    if( id < 0 || id > this->ServiceCount )
         result = 0;
     else
         result = this->Service[id].Active;
@@ -103,7 +103,7 @@ int TCommunications_Services::GetServiceActive(int id)
 
 void TCommunications_Services::SetServiceActive(int id, int state)
 {
-    if ( id >= 0 && id <= this->ServiceCount )
+    if( id >= 0 && id <= this->ServiceCount )
         this->Service[id].Active = state;
 }
 
@@ -117,7 +117,7 @@ static int DPEnumCallback(GUID *pid, char *szName, unsigned int major_ver, unsig
     v6 = TCommunications_Services::GetServiceCount((TCommunications_Services *)lpx);
     TCommunications_Services::SetServiceName(v5, v6, szName);
     TCommunications_Services::EnumServiceGUID(v5, v6, pid);
-    if ( DirectPlayCreate(pid, (LPDIRECTPLAY *)&lpx, 0) )
+    if( DirectPlayCreate(pid, (LPDIRECTPLAY *)&lpx, 0) )
     {
         TCommunications_Services::SetServiceActive(v5, v6, 0);
         TCommunications_Services::IncServiceCount(v5);

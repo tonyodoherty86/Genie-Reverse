@@ -14,33 +14,33 @@ class TChat
 {
 public:
 
-	HWND *HostWnd;
+    HWND *HostWnd;
 
-	int chatGroupPlayers[PLAYERS_ITERATIONS + 1];
+    int chatGroupPlayers[PLAYERS_ITERATIONS + 1];
 
-	char *Chat[CHAT_MAX_ARRAY_SIZE + 1];
+    char *Chat[CHAT_MAX_ARRAY_SIZE + 1];
 
-	int CurrentMsgNo;
+    int CurrentMsgNo;
 
-	class TTaunt *taunt;
+    class TTaunt *taunt;
 
-	TChat(HWND *HostWndIn);
+    TChat(HWND *HostWndIn);
 
-	~TChat();
+    ~TChat();
 
-	char *AddChatMsg(char *PlayerName, char *Text, char Local);
-	char *GetChatMsg(int lineno);
+    char *AddChatMsg(char *PlayerName, char *Text, char Local);
+    char *GetChatMsg(int lineno);
 
-	void ClearChat();
+    void ClearChat();
 
-	static int MaxArraySize();
+    static int MaxArraySize();
 
-	void setWindowHandle(HWND *newHandle);
-	void setInChatGroup(int playerNum, int status);
+    void setWindowHandle(HWND *newHandle);
+    void setInChatGroup(int playerNum, int status);
 
-	int inChatGroup(int playerNum);
+    int inChatGroup(int playerNum);
 
-	void StopSoundSystem();
+    void StopSoundSystem();
 
-	int RestartSoundSystem(TSound_Driver *driver);
+    int RestartSoundSystem(TSound_Driver *driver);
 };
