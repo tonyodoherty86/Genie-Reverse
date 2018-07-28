@@ -1,4 +1,11 @@
 
+/**
+ * @file    Engine\RGE\Picture.cpp
+ * @author  Yvan Burrie
+ * @date    2018/07/04
+ * @version 1.0
+ */
+
 TPicture::TPicture(
     char *FileName,
     int res_id,
@@ -130,61 +137,61 @@ void TPicture::Load(
     this->OwnMemory = 1;
     if( shape_file_first )
     this->Dib = DibOpenFile(FileName);
-    if( !this->Dib && res_id != -1 && RESFILE_Extract_to_File(0x62696E61u, res_id, temp_file_name, &temp_file) )
+    if( !this->Dib && res_id != -1 && RESFILE_Extract_to_File("anib", res_id, temp_file_name, &temp_file) )
     {
-    fclose(temp_file);
-    this->Dib = DibOpenFile(temp_file_name);
-    unlink(temp_file_name);
+        fclose(temp_file);
+        this->Dib = DibOpenFile(temp_file_name);
+        unlink(temp_file_name);
     }
     if( !shape_file_first && !this->Dib )
-    this->Dib = DibOpenFile(FileName);
+        this->Dib = DibOpenFile(FileName);
     v7 = this->Dib;
     if( !this->Dib )
     {
-    this->Dib = 0;
-    this->BitmapInfo = 0;
-    this->Bits = 0;
-    this->TransInfo = 0;
-    goto LABEL_26;
+        this->Dib = 0;
+        this->BitmapInfo = 0;
+        this->Bits = 0;
+        this->TransInfo = 0;
+        goto LABEL_26;
     }
     this->BitmapInfo = (BITMAPINFO256 *)v7;
     if( v7->biCompression == 3 )
-    v8 = (int)&v7->biPlanes + v7->biSize;
+        v8 = (int)&v7->biPlanes + v7->biSize;
     else
-    v8 = (int)v7 + 4 * v7->biClrUsed + v7->biSize;
+        v8 = (int)v7 + 4 * v7->biClrUsed + v7->biSize;
     this->Bits = (char *)v8;
     this->Width = v7->biWidth;
     v9 = v7->biHeight;
     this->Height = v9;
     if( v9 >= 0 )
     {
-    this->Orien = -1;
+        this->Orien = -1;
     }
     else
     {
-    this->Orien = 1;
-    this->Height = -v9;
+        this->Orien = 1;
+        this->Height = -v9;
     }
     if( MapToPal )
-    DibMapToPalette(v7, MapToPal, UseTrans, ZeroIsTrans);
+        DibMapToPalette(v7, MapToPal, UseTrans, ZeroIsTrans);
     if( UseTrans )
     {
-    if( this->TransInfo = new TRANSINFO ){
-        v11 = (BITMAPINFO256 *)this->Dib;
-        if( v11->bmiHeader.biCompression == 3 )
-        DibCheckTrans(v11, this->TransInfo, (char *)&v11->bmiHeader.biPlanes + v11->bmiHeader.biSize);
-        else
-        DibCheckTrans(v11, this->TransInfo, (char *)v11 + 4 * v11->bmiHeader.biClrUsed + v11->bmiHeader.biSize);
-        return;
-    }
-    DibFree(this->Dib);
-    this->Dib = 0;
-    this->BitmapInfo = 0;
-LABEL_26:
-    this->OwnMemory = 0;
-    this->Width = 0;
-    this->Height = 0;
-    this->Orien = 1;
+        if( this->TransInfo = new TRANSINFO ){
+            v11 = (BITMAPINFO256 *)this->Dib;
+            if( v11->bmiHeader.biCompression == 3 )
+                DibCheckTrans(v11, this->TransInfo, (char *)&v11->bmiHeader.biPlanes + v11->bmiHeader.biSize);
+            else
+                DibCheckTrans(v11, this->TransInfo, (char *)v11 + 4 * v11->bmiHeader.biClrUsed + v11->bmiHeader.biSize);
+            return;
+        }
+        DibFree(this->Dib);
+        this->Dib = 0;
+        this->BitmapInfo = 0;
+        LABEL_26:
+        this->OwnMemory = 0;
+        this->Width = 0;
+        this->Height = 0;
+        this->Orien = 1;
     }
 }
 

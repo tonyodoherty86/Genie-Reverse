@@ -5,7 +5,7 @@ void __thiscall ManagedArray<int>::~ManagedArray<int>(ManagedArray<int> *this)
   ManagedArray<int> *v1; // esi@1
 
   v1 = this;
-  if ( this->value )
+  if( this->value )
   {
     operator delete(this->value);
     v1->value = 0;
@@ -26,11 +26,11 @@ int *__thiscall ManagedArray<int>::resize(ManagedArray<int> *this, int s)
   v2 = this;
   result = (int *)operator new(4 * s);
   v4 = result;
-  if ( result )
+  if( result )
   {
-    for ( i = 0; i < v2->maximumSizeValue; v4[i - 1] = v2->value[i - 1] )
+    for( i = 0; i < v2->maximumSizeValue; v4[i - 1] = v2->value[i - 1] )
     {
-      if ( i >= s )
+      if( i >= s )
         break;
       ++i;
     }
@@ -50,13 +50,13 @@ int __thiscall ManagedArray<int>::contains(ManagedArray<int> *this, const int *r
 
   v2 = this->numberValue;
   v3 = 0;
-  if ( v2 > 0 )
+  if( v2 > 0 )
   {
-    while ( v3 < this->maximumSizeValue )
+    while( v3 < this->maximumSizeValue )
     {
-      if ( this->value[v3] == *r )
+      if( this->value[v3] == *r )
         return 1;
-      if ( ++v3 >= v2 )
+      if( ++v3 >= v2 )
         return 0;
     }
   }
@@ -76,25 +76,25 @@ int __thiscall ManagedArray<int>::add(ManagedArray<int> *this, int r)
   v2 = this;
   v3 = 0;
   v4 = this->numberValue;
-  if ( v4 > 0 )
+  if( v4 > 0 )
   {
-    while ( v3 < v2->maximumSizeValue )
+    while( v3 < v2->maximumSizeValue )
     {
-      if ( v2->value[v3] == r )
+      if( v2->value[v3] == r )
         return 0;
-      if ( ++v3 >= v4 )
+      if( ++v3 >= v4 )
         break;
     }
   }
-  if ( v4 > v2->maximumSizeValue - 1 )
+  if( v4 > v2->maximumSizeValue - 1 )
   {
     v5 = v4 + 1;
     v6 = (int *)operator new(4 * (v4 + 1));
-    if ( v6 )
+    if( v6 )
     {
-      for ( i = 0; i < v2->maximumSizeValue; v6[i - 1] = v2->value[i - 1] )
+      for( i = 0; i < v2->maximumSizeValue; v6[i - 1] = v2->value[i - 1] )
       {
-        if ( i >= v5 )
+        if( i >= v5 )
           break;
         ++i;
       }
@@ -116,15 +116,15 @@ int *__thiscall ManagedArray<int>::operator[](ManagedArray<int> *this, int v)
   int i; // eax@3
 
   v2 = this;
-  if ( v > this->maximumSizeValue - 1 )
+  if( v > this->maximumSizeValue - 1 )
   {
     v3 = v + 1;
     v4 = (int *)operator new(4 * (v + 1));
-    if ( v4 )
+    if( v4 )
     {
-      for ( i = 0; i < v2->maximumSizeValue; v4[i - 1] = v2->value[i - 1] )
+      for( i = 0; i < v2->maximumSizeValue; v4[i - 1] = v2->value[i - 1] )
       {
-        if ( i >= v3 )
+        if( i >= v3 )
           break;
         ++i;
       }
@@ -147,32 +147,32 @@ int __thiscall ManagedArray<int>::remove(ManagedArray<int> *this, int r)
 
   v2 = this->maximumSizeValue;
   v3 = 0;
-  if ( v2 > 0 )
+  if( v2 > 0 )
   {
     v4 = this->value;
     do
     {
-      if ( *v4 == r )
+      if( *v4 == r )
         break;
       ++v3;
       ++v4;
     }
-    while ( v3 < v2 );
+    while( v3 < v2 );
   }
-  if ( v3 < v2 )
+  if( v3 < v2 )
   {
-    if ( v3 < v2 - 1 )
+    if( v3 < v2 - 1 )
     {
       do
       {
         ++v3;
         this->value[v3 - 1] = this->value[v3];
       }
-      while ( v3 < this->maximumSizeValue - 1 );
+      while( v3 < this->maximumSizeValue - 1 );
     }
     v6 = this->numberValue - 1;
     this->numberValue = v6;
-    if ( v6 < 0 )
+    if( v6 < 0 )
       this->numberValue = 0;
     result = 1;
   }

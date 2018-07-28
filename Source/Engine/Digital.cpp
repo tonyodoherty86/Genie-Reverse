@@ -8,7 +8,7 @@ void __thiscall TDigital::TDigital(TDigital *this, TSound_Driver *in_sound_syste
   TDigital::init_vars(this);
   v4->sound_system = in_sound_system;
   v4->resource_id = res_id;
-  if ( file_name )
+  if( file_name )
   {
     strncpy(v4->sound_file, file_name, 0xCu);
     v4->sound_file[12] = 0;
@@ -55,12 +55,12 @@ void __thiscall TDigital::exit(TDigital *this)
 
   v1 = this;
   v2 = this->owner;
-  if ( v2 )
+  if( v2 )
   {
     TDigital::exit(v2);
     TDigital::init_vars(v1);
   }
-  else if ( v1->loaded )
+  else if( v1->loaded )
   {
     TDigital::stop(v1);
     TDigital::unload(v1);
@@ -123,40 +123,40 @@ int __thiscall TDigital::load(TDigital *this, char *file_name, int res_id)
   buffer_desc.lpwfxFormat = 0;
   v4 = this->failed;
   buffer_desc.dwSize = 0;
-  if ( v4 )
+  if( v4 )
     return 0;
   v5 = this->owner;
-  if ( v5 )
+  if( v5 )
     return TDigital::load(v5, file_name, -1);
-  if ( !v3->sound_system )
+  if( !v3->sound_system )
     return 0;
   color_log(-70, -70, 1);
-  if ( v3->loaded )
+  if( v3->loaded )
     TDigital::unload(v3);
-  if ( file_name )
+  if( file_name )
   {
     strncpy(v3->sound_file, file_name, 0xCu);
     v3->sound_file[12] = 0;
   }
-  if ( v3->sound_file[0] )
+  if( v3->sound_file[0] )
   {
     v7 = res_id;
-    if ( res_id <= -1 )
+    if( res_id <= -1 )
       v7 = v3->resource_id;
-    if ( sound_file_first || v7 < 0 )
+    if( sound_file_first || v7 < 0 )
     {
       sprintf(file_with_path, aSS, v3->sound_system->path, v3->sound_file);
       v8 = _open(file_with_path, 0, 0);
       v9 = v8;
-      if ( v8 != -1 )
+      if( v8 != -1 )
       {
-        if ( (unsigned int)read(v8, &wave_hdr, 0x2Cu) <= 0 )
+        if( (unsigned int)read(v8, &wave_hdr, 0x2Cu) <= 0 )
         {
           v3->failed = 1;
           _close(v9);
           goto LABEL_54;
         }
-        if ( strncmp(wave_hdr.szRIFF, aRiff, 4u) || wave_hdr.wFormatTag != 1 )
+        if( strncmp(wave_hdr.szRIFF, aRiff, 4u) || wave_hdr.wFormatTag != 1 )
         {
           v3->failed = 1;
           _close(v9);
@@ -166,13 +166,13 @@ int __thiscall TDigital::load(TDigital *this, char *file_name, int res_id)
         v3->data_size = wave_hdr.dwDataLength;
         v11 = (char *)malloc(v10);
         v3->wave_data = v11;
-        if ( !v11 )
+        if( !v11 )
         {
           v3->failed = 1;
           _close(v9);
           goto LABEL_54;
         }
-        if ( (unsigned int)read(v9, v11, v3->data_size) <= 0 )
+        if( (unsigned int)read(v9, v11, v3->data_size) <= 0 )
         {
           v12 = v3->wave_data;
           v3->failed = 1;
@@ -184,7 +184,7 @@ int __thiscall TDigital::load(TDigital *this, char *file_name, int res_id)
         _close(v9);
         v13 = (tWAVEFORMATEX *)malloc(0x12u);
         v3->wave_info = v13;
-        if ( !v13 )
+        if( !v13 )
         {
           v14 = v3->wave_data;
           v3->failed = 1;
@@ -208,7 +208,7 @@ int __thiscall TDigital::load(TDigital *this, char *file_name, int res_id)
         buffer_desc.dwBufferBytes = v16;
         buffer_desc.dwReserved = 0;
         buffer_desc.lpwfxFormat = v17;
-        if ( ((int (__stdcall *)(IDirectSound *, _DSBUFFERDESC *, int, _DWORD))v18->direct_sound->vfptr[1].QueryInterface)(
+        if( ((int (__stdcall *)(IDirectSound *, _DSBUFFERDESC *, int, _DWORD))v18->direct_sound->vfptr[1].QueryInterface)(
                v18->direct_sound,
                &buffer_desc,
                (int)&v3->sound_buffer,
@@ -224,7 +224,7 @@ int __thiscall TDigital::load(TDigital *this, char *file_name, int res_id)
           v3->wave_data = 0;
           goto LABEL_54;
         }
-        if ( ((int (__stdcall *)(IDirectSoundBuffer *, _DWORD, unsigned int, void **, unsigned int *, void **, unsigned int *, _DWORD))(*v15)->vfptr[3].Release)(
+        if( ((int (__stdcall *)(IDirectSoundBuffer *, _DWORD, unsigned int, void **, unsigned int *, void **, unsigned int *, _DWORD))(*v15)->vfptr[3].Release)(
                *v15,
                0,
                v3->data_size,
@@ -248,7 +248,7 @@ int __thiscall TDigital::load(TDigital *this, char *file_name, int res_id)
         }
         qmemcpy(mem1, v3->wave_data, size1);
         v21 = size2;
-        if ( size2 )
+        if( size2 )
         {
           qmemcpy(mem2, &v3->wave_data[size1], size2);
           v21 = size2;
@@ -270,7 +270,7 @@ LABEL_50:
         return 1;
       }
     }
-    if ( v7 <= -1 || (v26 = RESFILE_load(0x77617620u, v7, &load_type, &resDataSize)) == 0 )
+    if( v7 <= -1 || (v26 = RESFILE_load(0x77617620u, v7, &load_type, &resDataSize)) == 0 )
     {
       v3->failed = 1;
       goto LABEL_54;
@@ -280,24 +280,24 @@ LABEL_50:
     v3->data_size = wave_hdr.dwDataLength;
     v28 = (char *)malloc(v27);
     v3->wave_data = v28;
-    if ( !v28 )
+    if( !v28 )
     {
       v29 = load_type;
       v3->failed = 1;
-      if ( v29 == 1 )
+      if( v29 == 1 )
         free(v26);
       goto LABEL_54;
     }
     qmemcpy(v28, v26 + 44, v3->data_size);
-    if ( load_type == 1 )
+    if( load_type == 1 )
       free(v26);
     v30 = (tWAVEFORMATEX *)malloc(0x12u);
     v3->wave_info = v30;
-    if ( !v30 )
+    if( !v30 )
     {
       v31 = load_type;
       v3->failed = 1;
-      if ( v31 == 1 )
+      if( v31 == 1 )
         free(v26);
       goto LABEL_54;
     }
@@ -317,7 +317,7 @@ LABEL_50:
     buffer_desc.dwFlags = 226;
     buffer_desc.dwBufferBytes = v33;
     buffer_desc.lpwfxFormat = v34;
-    if ( ((int (__stdcall *)(IDirectSound *, _DSBUFFERDESC *, int, _DWORD))v35->direct_sound->vfptr[1].QueryInterface)(
+    if( ((int (__stdcall *)(IDirectSound *, _DSBUFFERDESC *, int, _DWORD))v35->direct_sound->vfptr[1].QueryInterface)(
            v35->direct_sound,
            &buffer_desc,
            (int)&v3->sound_buffer,
@@ -327,7 +327,7 @@ LABEL_50:
     }
     else
     {
-      if ( !((int (__stdcall *)(IDirectSoundBuffer *, _DWORD, unsigned int, void **, unsigned int *, void **, unsigned int *, _DWORD))(*v32)->vfptr[3].Release)(
+      if( !((int (__stdcall *)(IDirectSoundBuffer *, _DWORD, unsigned int, void **, unsigned int *, void **, unsigned int *, _DWORD))(*v32)->vfptr[3].Release)(
               *v32,
               0,
               v3->data_size,
@@ -339,7 +339,7 @@ LABEL_50:
       {
         qmemcpy(mem1, v3->wave_data, size1);
         v36 = size2;
-        if ( size2 )
+        if( size2 )
         {
           qmemcpy(mem2, &v3->wave_data[size1], size2);
           v36 = size2;
@@ -377,23 +377,23 @@ void __thiscall TDigital::unload(TDigital *this)
   IDirectSoundBuffer *v3; // eax@4
 
   v1 = this;
-  for ( i = this->owner; i; i = i->owner )
+  for( i = this->owner; i; i = i->owner )
     v1 = i;
-  if ( v1->loaded )
+  if( v1->loaded )
   {
     TDigital::stop(v1);
     v3 = v1->sound_buffer;
-    if ( v3 )
+    if( v3 )
     {
       v3->vfptr->Release((IUnknown *)v1->sound_buffer);
       v1->sound_buffer = 0;
     }
-    if ( v1->wave_data )
+    if( v1->wave_data )
     {
       free(v1->wave_data);
       v1->wave_data = 0;
     }
-    if ( v1->wave_info )
+    if( v1->wave_info )
     {
       free(v1->wave_info);
       v1->wave_info = 0;
@@ -415,15 +415,15 @@ IDirectSoundBuffer *__thiscall TDigital::play(TDigital *this)
 
   v1 = this;
   v2 = this->owner;
-  if ( !v2 )
+  if( !v2 )
     v2 = this;
   v3 = v2->sound_system;
-  if ( !v2->sound_system || !v3->ready || v3->mute )
+  if( !v2->sound_system || !v3->ready || v3->mute )
     return (IDirectSoundBuffer *)1;
-  if ( v2->loaded || (result = (IDirectSoundBuffer *)TDigital::load(v2, this->sound_file, -1)) != 0 )
+  if( v2->loaded || (result = (IDirectSoundBuffer *)TDigital::load(v2, this->sound_file, -1)) != 0 )
   {
     result = v2->sound_buffer;
-    if ( !result )
+    if( !result )
     {
       v2->failed = 1;
       return result;
@@ -438,14 +438,14 @@ IDirectSoundBuffer *__thiscall TDigital::play(TDigital *this)
       v1->pitch);
     ((void (__stdcall *)(IDirectSoundBuffer *, int))v2->sound_buffer->vfptr[5].AddRef)(v2->sound_buffer, v1->pan);
     ((void (__stdcall *)(IDirectSoundBuffer *, _DWORD))v2->sound_buffer->vfptr[4].AddRef)(v2->sound_buffer, 0);
-    if ( ((int (__stdcall *)(IDirectSoundBuffer *, _DWORD, _DWORD, int))v2->sound_buffer->vfptr[4].QueryInterface)(
+    if( ((int (__stdcall *)(IDirectSoundBuffer *, _DWORD, _DWORD, int))v2->sound_buffer->vfptr[4].QueryInterface)(
            v2->sound_buffer,
            0,
            0,
            v5) == -2005401450 )
     {
       result = (IDirectSoundBuffer *)TDigital::load(v2, 0, -1);
-      if ( !result )
+      if( !result )
         return result;
       ((void (__stdcall *)(IDirectSoundBuffer *, int))v2->sound_buffer->vfptr[5].QueryInterface)(
         v2->sound_buffer,
@@ -472,12 +472,12 @@ void __thiscall TDigital::stop(TDigital *this)
   TDigital *i; // eax@1
   IDirectSoundBuffer *v2; // ecx@6
 
-  for ( i = this->owner; i; i = i->owner )
+  for( i = this->owner; i; i = i->owner )
     this = i;
-  if ( this->sound_system && this->sound_system->ready && this->loaded )
+  if( this->sound_system && this->sound_system->ready && this->loaded )
   {
     v2 = this->sound_buffer;
-    if ( v2 )
+    if( v2 )
       ((void (__stdcall *)(IDirectSoundBuffer *))v2->vfptr[6].QueryInterface)(v2);
   }
 }
@@ -485,7 +485,7 @@ void __thiscall TDigital::stop(TDigital *this)
 //----- (004BD4C0) --------------------------------------------------------
 void __thiscall TDigital::set_loop(TDigital *this, __int16 loop_count)
 {
-  if ( loop_count )
+  if( loop_count )
     this->loop = 1;
   else
     this->loop = 0;
@@ -498,9 +498,9 @@ void __thiscall TDigital::set_volume(TDigital *this, int in_vol)
 
   v2 = this->owner;
   this->volume = in_vol;
-  if ( !v2 )
+  if( !v2 )
     v2 = this;
-  if ( v2->loaded )
+  if( v2->loaded )
     ((void (__stdcall *)(_DWORD, int))v2->sound_buffer->vfptr[5].QueryInterface)(v2->sound_buffer, in_vol);
 }
 
@@ -511,9 +511,9 @@ void __thiscall TDigital::set_pitch(TDigital *this, unsigned int in_pitch)
 
   v2 = this->owner;
   this->pitch = in_pitch;
-  if ( !v2 )
+  if( !v2 )
     v2 = this;
-  if ( v2->loaded )
+  if( v2->loaded )
     ((void (__stdcall *)(_DWORD, unsigned int))v2->sound_buffer->vfptr[5].Release)(v2->sound_buffer, in_pitch);
 }
 
@@ -524,9 +524,9 @@ void __thiscall TDigital::set_pan(TDigital *this, int in_pan)
 
   v2 = this->owner;
   this->pan = in_pan;
-  if ( !v2 )
+  if( !v2 )
     v2 = this;
-  if ( v2->loaded )
+  if( v2->loaded )
     ((void (__stdcall *)(_DWORD, int))v2->sound_buffer->vfptr[5].AddRef)(v2->sound_buffer, in_pan);
 }
 
@@ -540,17 +540,17 @@ int __thiscall TDigital::is_playing(TDigital *this)
 
   status = (unsigned int)this;
   v1 = this->owner;
-  if ( !v1 )
+  if( !v1 )
     v1 = this;
   result = 0;
-  if ( this->sound_system )
+  if( this->sound_system )
   {
-    if ( v1->loaded )
+    if( v1->loaded )
     {
       v2 = v1->sound_buffer;
-      if ( v2 )
+      if( v2 )
       {
-        if ( !((int (__stdcall *)(IDirectSoundBuffer *, unsigned int *))v2->vfptr[3].QueryInterface)(v2, &status)
+        if( !((int (__stdcall *)(IDirectSoundBuffer *, unsigned int *))v2->vfptr[3].QueryInterface)(v2, &status)
           && (status == 1 || status == 4) )
         {
           result = 1;
@@ -568,7 +568,7 @@ int __thiscall TDigital::add_to_play_list(TDigital *this)
   int result; // eax@3
 
   v1 = this->sound_system;
-  if ( !this->sound_system || v1->mute )
+  if( !this->sound_system || v1->mute )
     result = 0;
   else
     result = TSound_Driver::add_to_play_list(v1, this);

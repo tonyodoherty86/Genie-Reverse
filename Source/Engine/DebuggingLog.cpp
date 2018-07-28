@@ -26,7 +26,7 @@ void __thiscall TDebuggingLog::LogFile(TDebuggingLog *this, int DoLog)
   char *v3; // eax@4
 
   v2 = this;
-  if ( DoLog )
+  if( DoLog )
     this->LogToFile = 1;
   else
     this->LogToFile = 0;
@@ -41,7 +41,7 @@ void __thiscall TDebuggingLog::LogOutput(TDebuggingLog *this, int DoLog)
   char *v3; // eax@4
 
   v2 = this;
-  if ( DoLog )
+  if( DoLog )
     this->LogToOutput = 1;
   else
     this->LogToOutput = 0;
@@ -68,7 +68,7 @@ void __thiscall TDebuggingLog::LogDateTimestamp(TDebuggingLog *this, int DoTimes
   char *v3; // eax@4
 
   v2 = this;
-  if ( DoTimestamp )
+  if( DoTimestamp )
     this->DateTimestamp = 1;
   else
     this->DateTimestamp = 0;
@@ -92,7 +92,7 @@ void __thiscall TDebuggingLog::Time(TDebuggingLog *this)
   v3 = localtime(&ltime);
   fTicksElapsed = v2 - v1->LogStartTickCount;
   *(float *)&fTicksElapsed = (double)fTicksElapsed * 0.001;
-  if ( v3 )
+  if( v3 )
     v4 = asctime(v3);
   else
     v4 = a_;
@@ -106,7 +106,7 @@ void __thiscall TDebuggingLog::FlushToDisk(TDebuggingLog *this, int DoFlush)
   char *v3; // eax@4
 
   v2 = this;
-  if ( DoFlush )
+  if( DoFlush )
     this->Flush = 1;
   else
     this->Flush = 0;
@@ -121,7 +121,7 @@ void __thiscall TDebuggingLog::LogSequence(TDebuggingLog *this, int DoSequence)
   char *v3; // eax@4
 
   v2 = this;
-  if ( DoSequence )
+  if( DoSequence )
   {
     this->Sequence = 1;
     this->SeqNo = 0;
@@ -145,23 +145,23 @@ void __thiscall TDebuggingLog::OpenLog(TDebuggingLog *this)
   int nLoop; // [sp+10h] [bp-4h]@4
 
   v1 = this;
-  if ( this->LogToFile && (!this->LogIsOpen || this->LogError) )
+  if( this->LogToFile && (!this->LogIsOpen || this->LogError) )
   {
     this->LogStartTickCount = debug_timeGetTime();
     v2 = 1;
-    for ( nLoop = 1; ; v2 = nLoop )
+    for( nLoop = 1; ; v2 = nLoop )
     {
-      if ( v2 == 1 )
+      if( v2 == 1 )
         strcpy(v1->Filename, aCAoelog_txt);
       else
         sprintf(v1->Filename, aCAoelog_2d_txt, v2 - 1);
       logstream = fopen(v1->Filename, aWt);
-      if ( logstream )
+      if( logstream )
         break;
       v5 = __OFSUB__(nLoop + 1, 25);
       v3 = nLoop == 24;
       v4 = nLoop++ - 24 < 0;
-      if ( !((unsigned __int8)(v4 ^ v5) | v3) )
+      if( !((unsigned __int8)(v4 ^ v5) | v3) )
       {
         v1->LogError = 1;
         v1->LogIsOpen = 0;
@@ -177,7 +177,7 @@ void __thiscall TDebuggingLog::OpenLog(TDebuggingLog *this)
 //----- (004365A0) --------------------------------------------------------
 void __thiscall TDebuggingLog::FlushLog(TDebuggingLog *this)
 {
-  if ( this->LogToFile )
+  if( this->LogToFile )
     fflush(logstream);
 }
 
@@ -187,9 +187,9 @@ void __thiscall TDebuggingLog::CloseLog(TDebuggingLog *this)
   TDebuggingLog *v1; // esi@1
 
   v1 = this;
-  if ( this->LogToFile )
+  if( this->LogToFile )
   {
-    if ( this != (TDebuggingLog *)-1840 )
+    if( this != (TDebuggingLog *)-1840 )
       TDebuggingLog::Log(this, aClosingDebugLo, this->Filename);
     TDebuggingLog::Time(v1);
     TDebuggingLog::Log(v1, aLogFileIsClose);
@@ -217,11 +217,11 @@ void TDebuggingLog::Log(TDebuggingLog *this, char *fmt, ...)
 
   va_start(va, fmt);
   v2 = this->LogToFile;
-  if ( (v2 || this->LogToOutput) && !this->LogError )
+  if( (v2 || this->LogToOutput) && !this->LogError )
   {
-    if ( !this->LogIsOpen && v2 )
+    if( !this->LogIsOpen && v2 )
       TDebuggingLog::OpenLog(this);
-    if ( this->LogIsOpen || !this->LogToFile )
+    if( this->LogIsOpen || !this->LogToFile )
     {
       ++this->SeqNo;
       vsprintf(this->TBuff, fmt, va);
@@ -234,25 +234,25 @@ void TDebuggingLog::Log(TDebuggingLog *this, char *fmt, ...)
       s2[0] = 0;
       s1[0] = 0;
       *(double *)&v7 = ((double)v5 - (double)(signed int)v4) * 0.001;
-      if ( v6 )
+      if( v6 )
         sprintf(s1, a_2f, (_DWORD)v7, (_DWORD)(v7 >> 32));
-      if ( this->DateTimestamp )
+      if( this->DateTimestamp )
       {
         time(&ltime);
         v8 = ctime(&ltime);
         strncat(s2, v8, 0x14u);
         strcat(s2, asc_5840F4);
       }
-      if ( this->Sequence )
+      if( this->Sequence )
         sprintf(s3, aLd, this->SeqNo);
       strcpy(s4, asc_580464);
       sprintf(this->osbuf, aSSSSS, s1, s2, s3, s4, this->TBuff);
-      if ( this->LogToOutput )
+      if( this->LogToOutput )
         OutputDebugStringA(this->osbuf);
-      if ( this->LogToFile && this->LogIsOpen )
+      if( this->LogToFile && this->LogIsOpen )
       {
         fputs(this->osbuf, logstream);
-        if ( this->Flush )
+        if( this->Flush )
           fflush(logstream);
       }
     }
@@ -269,7 +269,7 @@ char *__stdcall TDebuggingLog::YesOrNo(int TorF)
   char *result; // eax@1
 
   result = aIsNowActive_;
-  if ( !TorF )
+  if( !TorF )
     result = aHasBeenDeactiv;
   return result;
 }

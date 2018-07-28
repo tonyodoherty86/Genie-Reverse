@@ -29,7 +29,7 @@ void __thiscall DString::DString(DString *this, DString *d)
   this->indexValue = d->indexValue;
   this->currentWordValue = d->currentWordValue;
   v3 = this->lengthValue;
-  if ( v3 <= 0 )
+  if( v3 <= 0 )
   {
     this->stringValue = 0;
   }
@@ -54,7 +54,7 @@ void __thiscall DString::DString(DString *this, char *s)
   v2->lengthValue = v3 - 1;
   v2->indexValue = 0;
   v2->currentWordValue = 0;
-  if ( (signed int)(v3 - 1) <= 0 )
+  if( (signed int)(v3 - 1) <= 0 )
   {
     v2->stringValue = 0;
   }
@@ -69,14 +69,14 @@ void __thiscall DString::DString(DString *this, char *s)
 //----- (00446700) --------------------------------------------------------
 void __thiscall DString::~DString(DString *this)
 {
-  if ( this->stringValue )
+  if( this->stringValue )
     free(this->stringValue);
 }
 
 //----- (00446710) --------------------------------------------------------
 ostream *__cdecl operator<<(ostream *out, DString *d)
 {
-  if ( d->stringValue )
+  if( d->stringValue )
     ostream::operator<<(out, d->stringValue);
   return out;
 }
@@ -105,14 +105,14 @@ DString *__thiscall DString::operator=(DString *this, char *s)
   DString *result; // eax@4
 
   v2 = this;
-  if ( this->stringValue )
+  if( this->stringValue )
     free(this->stringValue);
   v2->numWordsValue = -1;
   v2->indexValue = 0;
   v2->currentWordValue = 0;
   v3 = strlen(s) + 1;
   v2->lengthValue = v3 - 1;
-  if ( (signed int)(v3 - 1) <= 0 )
+  if( (signed int)(v3 - 1) <= 0 )
   {
     v2->stringValue = 0;
     result = v2;
@@ -148,14 +148,14 @@ DString *__thiscall DString::operator=(DString *this, DString *d)
   DString *result; // eax@4
 
   v2 = this;
-  if ( this->stringValue )
+  if( this->stringValue )
     free(this->stringValue);
   v2->numWordsValue = d->numWordsValue;
   v2->indexValue = d->indexValue;
   v2->currentWordValue = d->currentWordValue;
   v3 = d->lengthValue;
   v2->lengthValue = v3;
-  if ( v3 <= 0 )
+  if( v3 <= 0 )
   {
     v2->stringValue = 0;
     result = v2;
@@ -220,7 +220,7 @@ int __cdecl operator<(DString *one, DString *two)
   int result; // eax@1
 
   result = strcmp(one->stringValue, two->stringValue);
-  if ( result )
+  if( result )
     result = -(result < 0) - ((result < 0) - 1) < 0;
   return result;
 }
@@ -231,7 +231,7 @@ int __cdecl operator<(DString *one, char *two)
   int result; // eax@1
 
   result = strcmp(one->stringValue, two);
-  if ( result )
+  if( result )
     result = -(result < 0) - ((result < 0) - 1) < 0;
   return result;
 }
@@ -242,7 +242,7 @@ int __cdecl operator<(char *one, DString *two)
   int result; // eax@1
 
   result = strcmp(one, two->stringValue);
-  if ( result )
+  if( result )
     result = -(result < 0) - ((result < 0) - 1) < 0;
   return result;
 }
@@ -253,7 +253,7 @@ int __cdecl operator>(DString *one, DString *two)
   int result; // eax@1
 
   result = strcmp(one->stringValue, two->stringValue);
-  if ( result )
+  if( result )
     result = -(result < 0) - ((result < 0) - 1) > 0;
   return result;
 }
@@ -264,7 +264,7 @@ int __cdecl operator>(DString *one, char *two)
   int result; // eax@1
 
   result = strcmp(one->stringValue, two);
-  if ( result )
+  if( result )
     result = -(result < 0) - ((result < 0) - 1) > 0;
   return result;
 }
@@ -275,7 +275,7 @@ int __cdecl operator>(char *one, DString *two)
   int result; // eax@1
 
   result = strcmp(one, two->stringValue);
-  if ( result )
+  if( result )
     result = -(result < 0) - ((result < 0) - 1) > 0;
   return result;
 }
@@ -307,7 +307,7 @@ char *__thiscall DString::operator[](DString *this, int i)
 {
   char *result; // eax@3
 
-  if ( i < 0 || this->lengthValue < i + 1 )
+  if( i < 0 || this->lengthValue < i + 1 )
     result = this->stringValue;
   else
     result = &this->stringValue[i];
@@ -341,7 +341,7 @@ int __thiscall DString::contains(DString *this, DString s)
 
   v2 = this;
   v3 = DString::operator char *(&s);
-  if ( strstr(v2->stringValue, v3) )
+  if( strstr(v2->stringValue, v3) )
   {
     DString::~DString(&s);
     result = 1;
@@ -370,12 +370,12 @@ int __thiscall DString::numWords(DString *this)
 
   v1 = this;
   result = this->numWordsValue;
-  if ( result == -1 )
+  if( result == -1 )
   {
     result = this->lengthValue;
-    if ( result )
+    if( result )
     {
-      if ( *this->stringValue == 32 )
+      if( *this->stringValue == 32 )
       {
         this->numWordsValue = 0;
         v3 = 0;
@@ -386,13 +386,13 @@ int __thiscall DString::numWords(DString *this)
         v3 = 1;
       }
       v4 = 0;
-      if ( result > 0 )
+      if( result > 0 )
       {
         do
         {
-          if ( v3 || isspace(v1->stringValue[v4]) )
+          if( v3 || isspace(v1->stringValue[v4]) )
           {
-            if ( isspace(v1->stringValue[v4]) )
+            if( isspace(v1->stringValue[v4]) )
               v3 = 0;
           }
           else
@@ -402,7 +402,7 @@ int __thiscall DString::numWords(DString *this)
           }
           ++v4;
         }
-        while ( v4 < v1->lengthValue );
+        while( v4 < v1->lengthValue );
       }
       result = v1->numWordsValue;
     }
@@ -425,10 +425,10 @@ DString *__thiscall DString::word(DString *this, DString *result, int __$ReturnU
 
   v3 = 0;
   v4 = this;
-  if ( __$ReturnUdt > DString::numWords(this) || __$ReturnUdt < 1 )
+  if( __$ReturnUdt > DString::numWords(this) || __$ReturnUdt < 1 )
     goto LABEL_22;
   v5 = v4->currentWordValue + 1;
-  if ( __$ReturnUdt == v5 )
+  if( __$ReturnUdt == v5 )
   {
     v6 = result;
     v4->currentWordValue = v5;
@@ -437,15 +437,15 @@ DString *__thiscall DString::word(DString *this, DString *result, int __$ReturnU
   }
   v7 = 0;
   v8 = 0;
-  if ( __$ReturnUdt )
+  if( __$ReturnUdt )
   {
     do
     {
-      if ( v7 >= v4->lengthValue )
+      if( v7 >= v4->lengthValue )
         break;
-      if ( v8 || isspace(v4->stringValue[v7]) )
+      if( v8 || isspace(v4->stringValue[v7]) )
       {
-        if ( isspace(v4->stringValue[v7]) )
+        if( isspace(v4->stringValue[v7]) )
           v8 = 0;
       }
       else
@@ -455,18 +455,18 @@ DString *__thiscall DString::word(DString *this, DString *result, int __$ReturnU
       }
       ++v7;
     }
-    while ( v3 != __$ReturnUdt );
+    while( v3 != __$ReturnUdt );
   }
-  if ( v3 != __$ReturnUdt )
+  if( v3 != __$ReturnUdt )
   {
 LABEL_22:
     v6 = result;
     DString::DString(result, message_in);
     return v6;
   }
-  for ( i = v7 - 1; !isspace(v4->stringValue[v7]); ++v7 )
+  for( i = v7 - 1; !isspace(v4->stringValue[v7]); ++v7 )
   {
-    if ( v7 >= v4->lengthValue )
+    if( v7 >= v4->lengthValue )
       break;
   }
   DString::subString(v4, &rStr, i, v7 - i);
@@ -489,22 +489,22 @@ DString *__thiscall DString::nextWord(DString *this, DString *result, int __$Ret
 
   v3 = this;
   v4 = this->indexValue;
-  if ( isspace(this->stringValue[v4]) )
+  if( isspace(this->stringValue[v4]) )
   {
     do
     {
-      if ( v4 >= v3->lengthValue )
+      if( v4 >= v3->lengthValue )
         break;
       ++v4;
     }
-    while ( isspace(v3->stringValue[v4]) );
+    while( isspace(v3->stringValue[v4]) );
   }
-  for ( i = v4; !isspace(v3->stringValue[v4]); ++v4 )
+  for( i = v4; !isspace(v3->stringValue[v4]); ++v4 )
   {
-    if ( v4 >= v3->lengthValue )
+    if( v4 >= v3->lengthValue )
       break;
   }
-  if ( __$ReturnUdt )
+  if( __$ReturnUdt )
     v3->indexValue = v4;
   DString::subString(v3, &rStr, i, v4 - i);
   v8 = 1;
@@ -533,31 +533,31 @@ void __thiscall DString::moveToNextWord(DString *this)
   int v7; // eax@6
 
   v1 = this;
-  if ( isspace(this->stringValue[this->indexValue]) )
+  if( isspace(this->stringValue[this->indexValue]) )
   {
     do
     {
       v2 = v1->indexValue;
-      if ( v2 >= v1->lengthValue )
+      if( v2 >= v1->lengthValue )
         break;
       v3 = v1->stringValue;
       v4 = v2 + 1;
       v1->indexValue = v4;
     }
-    while ( isspace(v3[v4]) );
+    while( isspace(v3[v4]) );
   }
-  if ( !isspace(v1->stringValue[v1->indexValue]) )
+  if( !isspace(v1->stringValue[v1->indexValue]) )
   {
     do
     {
       v5 = v1->indexValue;
-      if ( v5 >= v1->lengthValue )
+      if( v5 >= v1->lengthValue )
         break;
       v6 = v1->stringValue;
       v7 = v5 + 1;
       v1->indexValue = v7;
     }
-    while ( !isspace(v6[v7]) );
+    while( !isspace(v6[v7]) );
   }
 }
 
@@ -577,9 +577,9 @@ DString *__thiscall DString::subString(DString *this, DString *result, int __$Re
   v5 = (char *)malloc(start + 1);
   v6 = __$ReturnUdt;
   v7 = v5;
-  for ( i = 0; v6 < v4->lengthValue; v7[i - 1] = v9 )
+  for( i = 0; v6 < v4->lengthValue; v7[i - 1] = v9 )
   {
-    if ( i >= start )
+    if( i >= start )
       break;
     ++i;
     v9 = v4->stringValue[v6++];
@@ -605,9 +605,9 @@ void __thiscall DString::append(DString *this, DString d)
   v2 = this;
   v3 = 0;
   v4 = DString::length(&d);
-  for ( i = (char *)malloc(v4 + v2->lengthValue + 1); v3 < v2->lengthValue; i[v3 - 1] = v2->stringValue[v3 - 1] )
+  for( i = (char *)malloc(v4 + v2->lengthValue + 1); v3 < v2->lengthValue; i[v3 - 1] = v2->stringValue[v3 - 1] )
     ++v3;
-  for ( j = v2->lengthValue; v3 < j + DString::length(&d); ++v3 )
+  for( j = v2->lengthValue; v3 < j + DString::length(&d); ++v3 )
   {
     i[v3] = *DString::operator[](&d, v3 - j);
     j = v2->lengthValue;
@@ -636,17 +636,17 @@ DString *__thiscall DString::stripTrailing(DString *this, DString *result, char 
   v3 = this;
   v4 = this->lengthValue;
   v5 = &this->stringValue[v4];
-  if ( *(v5 - 1) == __$ReturnUdt )
+  if( *(v5 - 1) == __$ReturnUdt )
   {
     do
     {
-      if ( v4 <= 0 )
+      if( v4 <= 0 )
         break;
       v6 = *(v5 - 2);
       --v4;
       --v5;
     }
-    while ( v6 == __$ReturnUdt );
+    while( v6 == __$ReturnUdt );
   }
   v7 = DString::subString(v3, &v9, 0, v4);
   v10 = 0;
@@ -670,15 +670,15 @@ DString *__thiscall DString::stripLeading(DString *this, DString *result, char _
   v3 = this;
   v4 = 0;
   v5 = this->stringValue;
-  if ( *v5 == __$ReturnUdt )
+  if( *v5 == __$ReturnUdt )
   {
     do
     {
-      if ( v4 >= v3->lengthValue )
+      if( v4 >= v3->lengthValue )
         break;
       ++v4;
     }
-    while ( v5[v4] == __$ReturnUdt );
+    while( v5[v4] == __$ReturnUdt );
   }
   v6 = DString::subString(v3, &v8, v4, v3->lengthValue);
   v9 = 0;
@@ -708,7 +708,7 @@ void __thiscall DString::uppercase(DString *this)
   int i; // esi@1
 
   v1 = this;
-  for ( i = 0; i < DString::length(v1); ++i )
+  for( i = 0; i < DString::length(v1); ++i )
     v1->stringValue[i] = toupper(v1->stringValue[i]);
 }
 
@@ -734,7 +734,7 @@ void __thiscall DString::lowercase(DString *this)
   int i; // esi@1
 
   v1 = this;
-  for ( i = 0; i < DString::length(v1); ++i )
+  for( i = 0; i < DString::length(v1); ++i )
     v1->stringValue[i] = tolower(v1->stringValue[i]);
 }
 
@@ -759,10 +759,10 @@ void __thiscall DString::change(DString *this, char o, char n)
   int i; // edx@1
   char *v4; // eax@2
 
-  for ( i = 0; i < this->lengthValue; ++i )
+  for( i = 0; i < this->lengthValue; ++i )
   {
     v4 = &this->stringValue[i];
-    if ( *v4 == o )
+    if( *v4 == o )
       *v4 = n;
   }
 }

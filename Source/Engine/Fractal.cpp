@@ -239,32 +239,32 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
   v4 = x;
   v5 = this;
   v6 = this->Width;
-  if ( x <= v6 )
+  if( x <= v6 )
   {
     v7 = this->Height;
     v8 = y;
-    if ( y <= v7 && size + x + 2 >= 0 && size + y + 2 >= 0 )
+    if( y <= v7 && size + x + 2 >= 0 && size + y + 2 >= 0 )
     {
       len = size + 2;
-      if ( size == 2 )
+      if( size == 2 )
       {
-        if ( x + 4 <= v6 && x < 0 )
+        if( x + 4 <= v6 && x < 0 )
           v4 = 0;
-        if ( y + 4 <= v7 && y < 0 )
+        if( y + 4 <= v7 && y < 0 )
           v8 = 0;
       }
-      else if ( size == 3 )
+      else if( size == 3 )
       {
-        if ( x + 5 <= v6 && x < 0 )
+        if( x + 5 <= v6 && x < 0 )
           v4 = 0;
         v8 = (v7 < 5) + y;
       }
-      if ( size == 4 )
+      if( size == 4 )
       {
         xa = this->Mask_4x4;
-        if ( v4 + 6 <= v6 )
+        if( v4 + 6 <= v6 )
         {
-          if ( v4 >= 0 )
+          if( v4 >= 0 )
           {
             maskptr = (char *)6;
           }
@@ -283,9 +283,9 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
           maskptr = (char *)(v6 - v4);
         }
         v11 = v8 + 6;
-        if ( v8 + 6 <= v7 )
+        if( v8 + 6 <= v7 )
         {
-          if ( v8 >= 0 )
+          if( v8 >= 0 )
           {
             v12 = 6;
           }
@@ -305,9 +305,9 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
       else
       {
         xa = this->Mask_5x5;
-        if ( v4 + 7 <= v6 )
+        if( v4 + 7 <= v6 )
         {
-          if ( v4 >= 0 )
+          if( v4 >= 0 )
           {
             maskptr = (char *)7;
           }
@@ -324,9 +324,9 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
           maskptr = (char *)(v6 - v4);
         }
         v15 = v8 + 7;
-        if ( v8 + 7 <= v7 )
+        if( v8 + 7 <= v7 )
         {
-          if ( v8 >= 0 )
+          if( v8 >= 0 )
           {
             v12 = 7;
           }
@@ -348,27 +348,27 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
       v18 = v12;
       v19 = v12 - 1;
       mapptr = v17;
-      if ( v18 )
+      if( v18 )
       {
         v28 = v19 + 1;
         do
         {
-          if ( v9 > 0 )
+          if( v9 > 0 )
           {
             v20 = v17;
             v21 = (int)&xa[-v17];
             w = v9;
-            for ( i = (int)&xa[-v17]; ; v21 = i )
+            for( i = (int)&xa[-v17]; ; v21 = i )
             {
               v22 = *(_BYTE *)(v21 + v20);
-              if ( v20 >= 1 && v20 < v5->SizeArrays - 1 )
+              if( v20 >= 1 && v20 < v5->SizeArrays - 1 )
               {
                 v23 = v5->ProbArray;
                 v24 = v23[v20];
                 v25 = &v23[v20];
-                if ( v24 )
+                if( v24 )
                 {
-                  if ( v24 + v22 >= 255 )
+                  if( v24 + v22 >= 255 )
                     *v25 = -1;
                   else
                     *v25 = v24 + v22;
@@ -380,7 +380,7 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
                 }
               }
               ++v20;
-              if ( !--w )
+              if( !--w )
                 break;
             }
             v9 = (int)maskptr;
@@ -392,7 +392,7 @@ void __thiscall PointMaker::DrawMask(PointMaker *this, int x, int y, int size)
           mapptr = v17;
           --v28;
         }
-        while ( !v26 );
+        while( !v26 );
       }
     }
   }
@@ -404,14 +404,14 @@ void __thiscall PointMaker::ClearArrays(PointMaker *this)
   char *v1; // edi@2
   char *v2; // edi@4
 
-  if ( !this->DrawToOneArrayFlag )
+  if( !this->DrawToOneArrayFlag )
   {
     v1 = this->PlacementArray;
-    if ( v1 )
+    if( v1 )
       memset(v1, 0, this->SizeArrays);
   }
   v2 = this->ProbArray;
-  if ( v2 )
+  if( v2 )
     memset(v2, 0, this->SizeArrays);
 }
 
@@ -421,9 +421,9 @@ void __thiscall PointMaker::DeleteArrays(PointMaker *this)
   PointMaker *v1; // esi@1
 
   v1 = this;
-  if ( this->ProbArray )
+  if( this->ProbArray )
     operator delete(this->ProbArray);
-  if ( v1->PlacementArray )
+  if( v1->PlacementArray )
     operator delete(v1->PlacementArray);
   v1->ProbArray = 0;
   v1->PlacementArray = 0;
@@ -445,23 +445,23 @@ void __thiscall PointMaker::MakeArrays(PointMaker *this)
   this->SizeArrays = this->Width * this->Height;
   do
   {
-    if ( v1->ProbArray )
+    if( v1->ProbArray )
       break;
     v3 = (char *)operator new(v1->SizeArrays);
     v4 = v2--;
     v1->ProbArray = v3;
   }
-  while ( v4 );
+  while( v4 );
   v5 = 9;
   do
   {
-    if ( v1->PlacementArray )
+    if( v1->PlacementArray )
       break;
     v6 = (char *)operator new(v1->SizeArrays);
     v7 = v5--;
     v1->PlacementArray = v6;
   }
-  while ( v7 );
+  while( v7 );
 }
 
 //----- (0044B320) --------------------------------------------------------
@@ -506,12 +506,12 @@ int __thiscall PointMaker::CreateShape(PointMaker *this)
   v10 = v1->ProbabilityTiles;
   v11 = 0;
   v1->NumTilesActuallyChosen = 0;
-  if ( v10 < v9 )
+  if( v10 < v9 )
   {
     do
     {
       v12 = v11++;
-      if ( v12 >= 1500 )
+      if( v12 >= 1500 )
         break;
       v13 = v1->Prime.x;
       v14 = v1->MaxNumberOfBranchLevels;
@@ -522,7 +522,7 @@ int __thiscall PointMaker::CreateShape(PointMaker *this)
       v15 = PointMaker::MakeFirstLink(v1);
       PointMaker::Branch(v1, v15);
     }
-    while ( v1->ProbabilityTiles < v9 );
+    while( v1->ProbabilityTiles < v9 );
   }
   PointMaker::CreateMapBasedOnProbabilityArray(v1);
   PointMaker::MapCleanUpEliminatingSinglesOnly(v1);
@@ -557,12 +557,12 @@ int __thiscall PointMaker::CreateShape(PointMaker *this, int xt, int yt)
   v5 = v3->ProbabilityTiles;
   v6 = 0;
   v3->NumTilesActuallyChosen = 0;
-  if ( v5 < v4 )
+  if( v5 < v4 )
   {
     do
     {
       v7 = v6++;
-      if ( v7 >= 1500 )
+      if( v7 >= 1500 )
         break;
       v8 = v3->Prime.y;
       v9 = v3->MaxNumberOfBranchLevels;
@@ -573,7 +573,7 @@ int __thiscall PointMaker::CreateShape(PointMaker *this, int xt, int yt)
       v10 = PointMaker::MakeFirstLink(v3);
       PointMaker::Branch(v3, v10);
     }
-    while ( v3->ProbabilityTiles < v4 );
+    while( v3->ProbabilityTiles < v4 );
   }
   PointMaker::CreateMapBasedOnProbabilityArray(v3);
   PointMaker::MapCleanUpEliminatingSinglesOnly(v3);
@@ -591,14 +591,14 @@ void __thiscall PointMaker::Branch(PointMaker *this, const int which)
   int v7; // eax@7
 
   v2 = this;
-  if ( this->CurrentNumberOfBranchLevels > 1
+  if( this->CurrentNumberOfBranchLevels > 1
     && debug_rand(aCMsdevWorkA_34, 278) % 100 < 10 * this->ChanceOfNextNode
     && v2->ProbabilityTiles < 2 * v2->MinimumNumTiles )
   {
     v3 = v2->NumSplitsPerBranch;
     v4 = 0;
     --v2->CurrentNumberOfBranchLevels;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
       do
       {
@@ -609,10 +609,10 @@ void __thiscall PointMaker::Branch(PointMaker *this, const int which)
         PointMaker::Branch(v2, v5);
         ++v4;
       }
-      while ( v4 < v2->NumSplitsPerBranch );
+      while( v4 < v2->NumSplitsPerBranch );
     }
   }
-  for ( i = 0; i < v2->NumberOfSatellites; ++i )
+  for( i = 0; i < v2->NumberOfSatellites; ++i )
   {
     v7 = PointMaker::MakeSatelliteLink(v2);
     PointMaker::DrawCurrentSatelliteIntoProbArray(v2, v7);
@@ -639,10 +639,10 @@ int __thiscall PointMaker::MakeFirstLink(PointMaker *this)
 
   v1 = this;
   v2 = debug_rand(aCMsdevWorkA_34, 308) % this->BranchDistance + 2;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 308) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 308) % -2 )
     v2 = -v2;
   v3 = debug_rand(aCMsdevWorkA_34, 309) % v1->BranchDistance + 2;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 309) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 309) % -2 )
     v3 = -v3;
   v4 = v1->x;
   v5 = v1->y;
@@ -651,32 +651,32 @@ int __thiscall PointMaker::MakeFirstLink(PointMaker *this)
   v7 = v5 + v3;
   v8 = v1->LeftLimit;
   v1->DirY = v3;
-  if ( v6 < v8 )
+  if( v6 < v8 )
   {
     v6 = v8;
-    if ( v2 < 0 )
+    if( v2 < 0 )
       v1->DirX = -v2;
   }
-  if ( v7 < v1->TopLimit )
+  if( v7 < v1->TopLimit )
   {
     v7 = v1->TopLimit;
-    if ( v3 < 0 )
+    if( v3 < 0 )
       v1->DirY = -v3;
   }
   v9 = v1->RightLimit;
-  if ( v6 >= v9 )
+  if( v6 >= v9 )
   {
     v6 = v9 - 1;
     v10 = v1->DirX;
-    if ( v10 > 0 )
+    if( v10 > 0 )
       v1->DirX = -v10;
   }
   v11 = v1->BottomLimit;
-  if ( v7 >= v11 )
+  if( v7 >= v11 )
   {
     v7 = v11 - 1;
     v12 = v1->DirY;
-    if ( v12 > 0 )
+    if( v12 > 0 )
       v1->DirY = -v12;
   }
   v1->y = v7;
@@ -710,49 +710,49 @@ int __thiscall PointMaker::MakeNewLink(PointMaker *this)
 
   v1 = this;
   v2 = debug_rand(aCMsdevWorkA_34, 330) % this->BranchDistance + 1;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 330) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 330) % -2 )
     v2 = -v2;
   v3 = debug_rand(aCMsdevWorkA_34, 331) % v1->BranchDistance + 1;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 331) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 331) % -2 )
     v3 = -v3;
   v4 = v1->DirX;
   v5 = v1->x;
   v6 = v1->DirY;
   v7 = v4 + v2;
   v8 = v6 + v3;
-  if ( v7 + v5 < 5 )
+  if( v7 + v5 < 5 )
   {
     v7 = -v7;
     v1->DirX = -v4;
   }
   v15 = v1->Width - 5;
-  if ( v7 + v5 >= v15 )
+  if( v7 + v5 >= v15 )
   {
     v7 = -v7;
     v1->DirX = -v1->DirX;
   }
   v9 = v1->y;
-  if ( v8 + v9 < 5 )
+  if( v8 + v9 < 5 )
   {
     v8 = -v7;
     v1->DirY = -v6;
   }
   v10 = v1->Height - 5;
-  if ( v8 + v9 >= v10 )
+  if( v8 + v9 >= v10 )
     v8 = -v8;
   v11 = v5 + v7;
   v12 = v9 + v8;
-  if ( v11 < 5 )
+  if( v11 < 5 )
     v11 = 5;
-  if ( v11 >= v15 )
+  if( v11 >= v15 )
     v11 = v15;
-  if ( v12 < 5 )
+  if( v12 < 5 )
     v12 = 5;
-  if ( v12 >= v10 )
+  if( v12 >= v10 )
     v12 = v1->Height - 5;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 346) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 346) % -2 )
     v1->DirX += debug_rand(aCMsdevWorkA_34, 346) % 3 - 1;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 347) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 347) % -2 )
     v1->DirY += debug_rand(aCMsdevWorkA_34, 347) % 3 - 1;
   v13 = v1->NumNodes;
   v1->x = v11;
@@ -781,32 +781,32 @@ int __thiscall PointMaker::MakeSatelliteLink(PointMaker *this)
 
   v1 = this;
   v2 = debug_rand(aCMsdevWorkA_34, 357) % this->SatelliteDistance + 1;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 357) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 357) % -2 )
     v2 = -v2;
   v3 = debug_rand(aCMsdevWorkA_34, 358) % v1->SatelliteDistance + 1;
-  if ( (char)debug_rand(aCMsdevWorkA_34, 358) % -2 )
+  if( (char)debug_rand(aCMsdevWorkA_34, 358) % -2 )
     v3 = -v3;
   v4 = v1->DirX;
   v5 = v1->DirY;
   v6 = v4 + v2;
   v7 = v5 + v3;
-  if ( v1->x + v6 < 3 )
+  if( v1->x + v6 < 3 )
   {
     v6 = -v6;
     v1->DirX = -v4;
   }
-  if ( v1->x + v6 >= v1->Width - 3 )
+  if( v1->x + v6 >= v1->Width - 3 )
   {
     v6 = -v6;
     v1->DirX = -v1->DirX;
   }
   v8 = v1->y;
-  if ( v7 + v8 < 3 )
+  if( v7 + v8 < 3 )
   {
     v7 = -v6;
     v1->DirY = -v5;
   }
-  if ( v7 + v8 >= v1->Height - 3 )
+  if( v7 + v8 >= v1->Height - 3 )
   {
     v7 = -v7;
     v1->DirY = -v1->DirY;
@@ -848,19 +848,19 @@ void __thiscall PointMaker::DrawPrimaryIntoProbabilityArray(PointMaker *this)
   v6 = v3 - v4;
   v7 = v4 + v3;
   v8 = v4 + v2;
-  if ( v2 - v4 < 0 )
+  if( v2 - v4 < 0 )
     v5 = 0;
-  if ( v6 < 0 )
+  if( v6 < 0 )
     v6 = 0;
-  if ( v8 > v1->Width - 1 )
+  if( v8 > v1->Width - 1 )
     v8 = v1->Width - 1;
-  if ( v7 > v1->Height - 1 )
+  if( v7 > v1->Height - 1 )
     v7 = v1->Height - 1;
   v1->ProbabilityAdd = 1;
   i = 0;
-  if ( v4 > 0 )
+  if( v4 > 0 )
   {
-    while ( 1 )
+    while( 1 )
     {
       v9 = v5;
       y1 = v6;
@@ -872,7 +872,7 @@ void __thiscall PointMaker::DrawPrimaryIntoProbabilityArray(PointMaker *this)
       PointMaker::AddingRect(v1, v9, y1, x2, v7);
       v12 = v1->PrimaryRadius;
       ++v1->ProbabilityAdd;
-      if ( ++i >= v12 )
+      if( ++i >= v12 )
         break;
       v7 = desty;
     }
@@ -907,52 +907,52 @@ void __thiscall PointMaker::DrawCurrentBranchIntoProbArray(PointMaker *this, int
   v7 = v2->Point[which].y - v4;
   v8 = v4 + v2->Point[which].y;
   desty = v4 + v2->Point[which].y;
-  if ( v4 + v3 >= 0 && v8 >= 0 && v6 < v2->Width && v7 < v2->Height )
+  if( v4 + v3 >= 0 && v8 >= 0 && v6 < v2->Width && v7 < v2->Height )
   {
-    if ( v6 < 0 )
+    if( v6 < 0 )
       v6 = 0;
-    if ( v7 < 0 )
+    if( v7 < 0 )
       v7 = 0;
     v9 = v2->Width;
-    if ( v5 >= v9 )
+    if( v5 >= v9 )
       v5 = v9 - 1;
     v10 = v2->Height;
-    if ( v8 >= v10 )
+    if( v8 >= v10 )
     {
       desty = v10 - 1;
       v8 = v10 - 1;
     }
     v2->ProbabilityAdd = 1;
     i = 0;
-    if ( v4 > 0 )
+    if( v4 > 0 )
     {
-      while ( 1 )
+      while( 1 )
       {
         PointMaker::AddingRect(v2, v6, v7, v5, v8);
-        if ( ++v6 >= v2->Width )
+        if( ++v6 >= v2->Width )
           break;
-        if ( ++v7 >= v2->Height )
+        if( ++v7 >= v2->Height )
           break;
-        if ( --v5 < 0 )
+        if( --v5 < 0 )
           break;
-        if ( --desty < 0 )
+        if( --desty < 0 )
           break;
         v11 = v2->BranchRadius;
         ++v2->ProbabilityAdd;
-        if ( ++i >= v11 )
+        if( ++i >= v11 )
           break;
         v8 = desty;
       }
     }
     v12 = v2->ProbabilityAdd;
     v13 = v2->Point[which].x + v2->Point[which].y * v2->Width;
-    if ( v13 >= 1 && v13 < v2->SizeArrays - 1 )
+    if( v13 >= 1 && v13 < v2->SizeArrays - 1 )
     {
       v14 = &v2->ProbArray[v13];
       v15 = *v14;
-      if ( *v14 )
+      if( *v14 )
       {
-        if ( v15 + v12 >= 255 )
+        if( v15 + v12 >= 255 )
           *v14 = -1;
         else
           *v14 = v15 + v12;
@@ -978,17 +978,17 @@ void __thiscall PointMaker::DrawCurrentSatelliteIntoProbArray(PointMaker *this, 
 
   v2 = this;
   v3 = this->SatelliteRadius;
-  for ( this->ProbabilityAdd = 2; v3 >= 0; ++v2->ProbabilityAdd )
+  for( this->ProbabilityAdd = 2; v3 >= 0; ++v2->ProbabilityAdd )
     PointMaker::AddingCircle(v2, v2->Point[which].x, v2->Point[which].y, v3--);
   v4 = v2->Point[which].x + v2->Width * v2->Point[which].y;
   v5 = v2->ProbabilityAdd;
-  if ( v4 >= 1 && v4 < v2->SizeArrays - 1 )
+  if( v4 >= 1 && v4 < v2->SizeArrays - 1 )
   {
     v6 = &v2->ProbArray[v4];
     v7 = *v6;
-    if ( *v6 )
+    if( *v6 )
     {
-      if ( v7 + v5 >= 255 )
+      if( v7 + v5 >= 255 )
         *v6 = -1;
       else
         *v6 = v7 + v5;
@@ -1044,23 +1044,23 @@ void __thiscall PointMaker::AddingRect(PointMaker *this, int x1, int y1, int x2,
   v9 = v8 - 1;
   y2a = v8 - 1;
   v10 = v6 + v5 * (v8 - 1);
-  if ( x2 - x1 >= 0 && v8 >= 0 )
+  if( x2 - x1 >= 0 && v8 >= 0 )
   {
     v11 = v6;
     x1a = v6;
-    if ( v7 >= 0 )
+    if( v7 >= 0 )
     {
       start = v7 + 1;
       do
       {
         v12 = this->ProbabilityAdd;
-        if ( v11 >= 1 && v11 < this->SizeArrays - 1 )
+        if( v11 >= 1 && v11 < this->SizeArrays - 1 )
         {
           v13 = &this->ProbArray[v11];
           v14 = *v13;
-          if ( *v13 )
+          if( *v13 )
           {
-            if ( v14 + v12 >= 255 )
+            if( v14 + v12 >= 255 )
               *v13 = -1;
             else
               *v13 = v14 + v12;
@@ -1073,14 +1073,14 @@ void __thiscall PointMaker::AddingRect(PointMaker *this, int x1, int y1, int x2,
           }
         }
         v15 = this->ProbabilityAdd;
-        if ( v10 >= 1 && v10 < this->SizeArrays - 1 )
+        if( v10 >= 1 && v10 < this->SizeArrays - 1 )
         {
           v16 = this->ProbArray;
           v17 = &v16[v10];
           v18 = v16[v10];
-          if ( v18 )
+          if( v18 )
           {
-            if ( v18 + v15 >= 255 )
+            if( v18 + v15 >= 255 )
               *v17 = -1;
             else
               *v17 = v18 + v15;
@@ -1098,24 +1098,24 @@ void __thiscall PointMaker::AddingRect(PointMaker *this, int x1, int y1, int x2,
         ++x1a;
         --start;
       }
-      while ( !v19 );
+      while( !v19 );
       v9 = y2a;
     }
     v20 = this->Width + v6;
-    if ( v9 >= 0 && v9 )
+    if( v9 >= 0 && v9 )
     {
       topa = v9;
       do
       {
         v21 = this->ProbabilityAdd;
-        if ( v20 >= 1 && v20 < this->SizeArrays - 1 )
+        if( v20 >= 1 && v20 < this->SizeArrays - 1 )
         {
           v22 = this->ProbArray;
           v23 = &v22[v20];
           v24 = v22[v20];
-          if ( v24 )
+          if( v24 )
           {
-            if ( v24 + v21 >= 255 )
+            if( v24 + v21 >= 255 )
               *v23 = -1;
             else
               *v23 = v24 + v21;
@@ -1128,13 +1128,13 @@ void __thiscall PointMaker::AddingRect(PointMaker *this, int x1, int y1, int x2,
         }
         v25 = w + v20;
         v26 = this->ProbabilityAdd;
-        if ( w + v20 >= 1 && v25 < this->SizeArrays - 1 )
+        if( w + v20 >= 1 && v25 < this->SizeArrays - 1 )
         {
           v27 = &this->ProbArray[v25];
           v28 = *v27;
-          if ( *v27 )
+          if( *v27 )
           {
-            if ( v28 + v26 >= 255 )
+            if( v28 + v26 >= 255 )
               *v27 = -1;
             else
               *v27 = v28 + v26;
@@ -1148,7 +1148,7 @@ void __thiscall PointMaker::AddingRect(PointMaker *this, int x1, int y1, int x2,
         v20 += this->Width;
         --topa;
       }
-      while ( topa );
+      while( topa );
     }
   }
 }
@@ -1178,7 +1178,7 @@ void __thiscall PointMaker::AddingCircle(PointMaker *this, int x1, int y1, int r
 
   v4 = radius;
   v5 = this;
-  if ( !radius )
+  if( !radius )
   {
     v4 = 1;
     radius = 1;
@@ -1192,17 +1192,17 @@ void __thiscall PointMaker::AddingCircle(PointMaker *this, int x1, int y1, int r
   {
     curx = TRIGONOMETRY::sin360(&trig, v6) * *(float *)&radiusa;
     v8 = TRIGONOMETRY::cos360(&trig, v6) * *(float *)&radiusa;
-    if ( !v9 || v8 != lasty )
+    if( !v9 || v8 != lasty )
     {
       v10 = (signed __int64)(W * v8 + curx);
       HIDWORD(v10) = v5->ProbabilityAdd;
-      if ( (signed int)v10 >= 1 && (signed int)v10 < v5->SizeArrays - 1 )
+      if( (signed int)v10 >= 1 && (signed int)v10 < v5->SizeArrays - 1 )
       {
         LODWORD(v10) = &v5->ProbArray[v10];
         v11 = *(_BYTE *)v10;
-        if ( *(_BYTE *)v10 )
+        if( *(_BYTE *)v10 )
         {
-          if ( (signed int)v11 + HIDWORD(v10) >= 255 )
+          if( (signed int)v11 + HIDWORD(v10) >= 255 )
             *(_BYTE *)v10 = -1;
           else
             *(_BYTE *)v10 = v11 + BYTE4(v10);
@@ -1214,7 +1214,7 @@ void __thiscall PointMaker::AddingCircle(PointMaker *this, int x1, int y1, int r
         }
       }
       lasty = v8;
-      if ( (char)debug_rand(aCMsdevWorkA_34, 497) % -2 )
+      if( (char)debug_rand(aCMsdevWorkA_34, 497) % -2 )
       {
         v12 = TRIGONOMETRY::sin360(&trig, v6) * *(float *)&radiusa;
         x = (double)(unsigned __int8)((char)debug_rand(aCMsdevWorkA_34, 499) % -2) + v12 - -1.0;
@@ -1222,13 +1222,13 @@ void __thiscall PointMaker::AddingCircle(PointMaker *this, int x1, int y1, int r
         v15 = (signed __int64)(((double)(unsigned __int8)((char)debug_rand(aCMsdevWorkA_34, 500) % -2) + v14 - -1.0) * W
                              + x);
         v16 = v5->ProbabilityAdd + 1;
-        if ( (signed int)v15 >= 1 && (signed int)v15 < v5->SizeArrays - 1 )
+        if( (signed int)v15 >= 1 && (signed int)v15 < v5->SizeArrays - 1 )
         {
           v17 = &v5->ProbArray[v15];
           v18 = *v17;
-          if ( *v17 )
+          if( *v17 )
           {
-            if ( v18 + v16 >= 255 )
+            if( v18 + v16 >= 255 )
               *v17 = -1;
             else
               *v17 = v18 + v16;
@@ -1243,7 +1243,7 @@ void __thiscall PointMaker::AddingCircle(PointMaker *this, int x1, int y1, int r
     }
     v6 += step;
   }
-  while ( v6 < 360 );
+  while( v6 < 360 );
 }
 
 //----- (0044C1B0) --------------------------------------------------------
@@ -1253,9 +1253,9 @@ void __thiscall PointMaker::CreateMapBasedOnProbabilityArray(PointMaker *this)
   int i; // eax@1
 
   v1 = 0;
-  for ( i = 0; i < this->SizeArrays; ++i )
+  for( i = 0; i < this->SizeArrays; ++i )
   {
-    if ( this->ProbArray[i] )
+    if( this->ProbArray[i] )
     {
       ++v1;
       this->PlacementArray[i] = 1;
@@ -1355,9 +1355,9 @@ void __thiscall PointMaker::SetDrawToOneArray(PointMaker *this)
 void __thiscall PointMaker::SetBorderDepthPercentage(PointMaker *this, int num)
 {
   this->BorderDepthPercentage = num;
-  if ( num > 30 )
+  if( num > 30 )
     this->BorderDepthPercentage = 30;
-  if ( this->BorderDepthPercentage < 5 )
+  if( this->BorderDepthPercentage < 5 )
     this->BorderDepthPercentage = 5;
   PointMaker::PrepareLimits(this);
 }
@@ -1388,30 +1388,30 @@ void __thiscall PointMaker::ErrorCheckingAndCorrection(PointMaker *this)
   v2 = v1 * this->Height;
   v3 = this->BranchRadius;
   this->SizeArrays = v2;
-  if ( v3 > v1 )
+  if( v3 > v1 )
     this->BranchRadius = 2 * v1 / 3;
-  if ( this->SatelliteRadius > v1 )
+  if( this->SatelliteRadius > v1 )
     this->SatelliteRadius = 2 * v1 / 3;
-  if ( this->PrimaryRadius > v1 )
+  if( this->PrimaryRadius > v1 )
     this->PrimaryRadius = 2 * v1 / 3;
-  if ( this->NumSplitsPerBranch > 4 )
+  if( this->NumSplitsPerBranch > 4 )
     this->NumSplitsPerBranch = 4;
-  if ( this->NumberOfSatellites > 4 )
+  if( this->NumberOfSatellites > 4 )
     this->NumberOfSatellites = 4;
   v4 = v2 / this->MinimumNumTiles;
   this->DrawToOneArrayFlag = 0;
   v5 = v4;
   v6 = 10 * (10 - v4);
   this->ChanceOfNextNode = v6;
-  if ( v6 < 35 )
+  if( v6 < 35 )
     this->ChanceOfNextNode = 35;
-  if ( this->ChanceOfNextNode > 80 )
+  if( this->ChanceOfNextNode > 80 )
     this->ChanceOfNextNode = 80;
-  if ( !this->MaxBranchFlag )
+  if( !this->MaxBranchFlag )
     this->MaxNumberOfBranchLevels = v5 - this->ChanceOfNextNode / 5;
-  if ( this->MaxNumberOfBranchLevels < 10 )
+  if( this->MaxNumberOfBranchLevels < 10 )
     this->MaxNumberOfBranchLevels = 10;
-  if ( this->MaxNumberOfBranchLevels > 30 )
+  if( this->MaxNumberOfBranchLevels > 30 )
     this->MaxNumberOfBranchLevels = 30;
   this->MaxBranchFlag = 0;
 }
@@ -1453,33 +1453,33 @@ void __thiscall PointMaker::MapCleanUpEliminatingSinglesOnly(PointMaker *this)
   v2 = 1;
   v3 = this->Width - 1;
   h = this->Height - 1;
-  for ( w = this->Width - 1; v2 < v1; ++v2 )
+  for( w = this->Width - 1; v2 < v1; ++v2 )
   {
     v4 = 1;
-    if ( v3 > 1 )
+    if( v3 > 1 )
     {
       do
       {
         v5 = this->Width;
         v6 = &this->PlacementArray[v4] + v5 * v2;
         v7 = 0;
-        if ( v6[-v5] > 0 )
+        if( v6[-v5] > 0 )
           v7 = 1;
-        if ( *(v6 - 1) > 0 )
+        if( *(v6 - 1) > 0 )
           ++v7;
-        if ( v6[1] > 0 )
+        if( v6[1] > 0 )
           ++v7;
-        if ( v6[v5] > 0 )
+        if( v6[v5] > 0 )
           ++v7;
-        if ( *v6 )
+        if( *v6 )
         {
-          if ( !v7 )
+          if( !v7 )
             *v6 = 0;
         }
         v3 = w;
         ++v4;
       }
-      while ( v4 < w );
+      while( v4 < w );
       v1 = h;
     }
   }

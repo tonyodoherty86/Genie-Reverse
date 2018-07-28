@@ -2,7 +2,7 @@
 /**
  * @file    Engine\DIB.c
  * @author  Yvan Burrie
- * @date    2018/06/23
+ * @date    2018/07/04
  * @version 1.0
  */
 
@@ -1194,7 +1194,7 @@ HPALETTE *ReadPalette(char *FileName, int ResourceId, bool MakeIdentity)
     }
     if( !data && ResourceId != -1 )
     {
-        v8 = RESFILE_load(0x62696E61u, ResourceId, &own_mem, &resDataSize);
+        v8 = RESFILE_load("anib", ResourceId, &own_mem, &resDataSize);
         if( own_mem )
         {
             data = v8;
@@ -2217,9 +2217,9 @@ void DibMapToPalette(BITMAPINFOHEADER *pdib, HPALETTE *hpal, bool TransLogic, bo
         v4 = hpal;
         v8 = nDibColors;
     }
+    RGBQUAD *v18 = lpRgb;
+    COLORREF hrgb;
     if( v8 > 0 ){
-        RGBQUAD *v18 = lpRgb;
-        COLORREF hrgb;
         for( int v17 = 0; v17 < nDibColors; v17++ ){
             *(char *)(hrgb + 0) = v18->rgbRed;
             *(char *)(hrgb + 1) = v18->rgbGreen;

@@ -23,17 +23,17 @@ void __thiscall TRegistry::~TRegistry(TRegistry *this)
   TRegistry *v1; // esi@1
 
   v1 = this;
-  if ( this->ghUserKey )
+  if( this->ghUserKey )
   {
     RegCloseKey(this->ghUserKey);
     v1->ghUserKey = 0;
   }
-  if ( v1->ghMachineKey )
+  if( v1->ghMachineKey )
   {
     RegCloseKey(v1->ghMachineKey);
     v1->ghMachineKey = 0;
   }
-  if ( v1->ghMachineKeyRead )
+  if( v1->ghMachineKeyRead )
   {
     RegCloseKey(v1->ghMachineKeyRead);
     v1->ghMachineKeyRead = 0;
@@ -45,7 +45,7 @@ int __thiscall TRegistry::RegSet(TRegistry *this, int UseUserKey, char *lptszNam
 {
   int result; // eax@2
 
-  if ( UseUserKey )
+  if( UseUserKey )
     result = RegSetValueExA(this->ghUserKey, lptszName, 0, 4u, lpData, dwSize) == 0;
   else
     result = RegSetValueExA(this->ghMachineKey, lptszName, 0, 4u, lpData, dwSize) == 0;
@@ -57,7 +57,7 @@ int __thiscall TRegistry::RegSetInt(TRegistry *this, int UseUserKey, char *lptsz
 {
   int result; // eax@2
 
-  if ( UseUserKey )
+  if( UseUserKey )
     result = RegSetValueExA(this->ghUserKey, lptszName, 0, 4u, (const BYTE *)&Value, 4u) == 0;
   else
     result = RegSetValueExA(this->ghMachineKey, lptszName, 0, 4u, (const BYTE *)&Value, 4u) == 0;
@@ -69,7 +69,7 @@ int __thiscall TRegistry::RegSetAscii(TRegistry *this, int UseUserKey, char *lpt
 {
   int result; // eax@2
 
-  if ( UseUserKey )
+  if( UseUserKey )
     result = RegSetValueExA(this->ghUserKey, lptszName, 0, 1u, lpData, dwSize) == 0;
   else
     result = RegSetValueExA(this->ghMachineKey, lptszName, 0, 1u, lpData, dwSize) == 0;
@@ -89,7 +89,7 @@ char *__thiscall TRegistry::RegGetAscii(TRegistry *this, int UseUserKey, char *l
 
   dwType = 1;
   dwSize = 255;
-  if ( UseUserKey )
+  if( UseUserKey )
   {
     v8 = &dwSize;
     v7 = this->Data;
@@ -113,7 +113,7 @@ int __thiscall TRegistry::RegGet(TRegistry *this, int UseUserKey, char *lptszNam
 {
   int result; // eax@2
 
-  if ( UseUserKey )
+  if( UseUserKey )
     result = RegQueryValueExA(this->ghUserKey, lptszName, 0, (LPDWORD)&lpdwDataSize, lpData, lpdwDataSize);
   else
     result = RegQueryValueExA(this->ghMachineKeyRead, lptszName, 0, (LPDWORD)&lpdwDataSize, lpData, lpdwDataSize);
@@ -134,7 +134,7 @@ char *__thiscall TRegistry::RegGetInt(TRegistry *this, int UseUserKey, char *lpt
 
   Size = 4;
   dwType = 4;
-  if ( UseUserKey )
+  if( UseUserKey )
   {
     v8 = &Size;
     v7 = (char *)&lptszName;
@@ -150,7 +150,7 @@ char *__thiscall TRegistry::RegGetInt(TRegistry *this, int UseUserKey, char *lpt
     v5 = lptszName;
     v4 = this->ghMachineKeyRead;
   }
-  if ( RegQueryValueExA(v4, v5, 0, v6, v7, v8) )
+  if( RegQueryValueExA(v4, v5, 0, v6, v7, v8) )
     result = (char *)-1;
   else
     result = lptszName;
