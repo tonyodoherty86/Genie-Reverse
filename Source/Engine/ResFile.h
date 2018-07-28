@@ -2,7 +2,7 @@
 /**
  * @file    Engine\ResFile.h
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/07/04
  * @version 1.0
  */
 
@@ -37,11 +37,11 @@ void RESFILE_open_new_resource_file(char *resFileName, char *password, char *pat
 
 void RESFILE_close_new_resource_file(char *res_file);
 
-bool RESFILE_locate_resource(unsigned int rType, unsigned int rId, int *file, int *offset, char **mapped_file, int *size);
+bool RESFILE_locate_resource(char *rType, unsigned int rId, int *file, int *offset, char **mapped_file, int *size);
 
-char *RESFILE_load(unsigned int rType, unsigned int rId, int *rLoadType, int *rDataSize);
+char *RESFILE_load(char *rType, unsigned int rId, int *rLoadType, int *rDataSize);
 
-char *RESFILE_Extract_to_File(unsigned int rType, unsigned int rId, char *file_name, _iobuf **file);
+char *RESFILE_Extract_to_File(char *rType, unsigned int rId, char *file_name, FILE **file);
 
 void RESFILE_Set_Missing_Flag(int FlagVal);
 
