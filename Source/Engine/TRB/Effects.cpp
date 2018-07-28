@@ -42,7 +42,7 @@ void TRIBE_Effects::do_effect(short current_effect, RGE_Player *player)
                     ++v4;
                     ++v5;
                 }
-                while ( v4 < v3->effect_list_num );
+                while( v4 < v3->effect_list_num );
                 this = v7;
             }
             RGE_Effects::do_effect((RGE_Effects *)&this->vfptr, current_effect, player);

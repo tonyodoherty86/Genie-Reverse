@@ -24,11 +24,11 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
   v16 = 0;
   v1->vfptr = (TPanelVtbl *)&TRIBE_Screen_Campaign_Selection::`vftable';
   TRIBE_Screen_Campaign_Selection::init_vars(v1);
-  if ( TScreenPanel::setup((TScreenPanel *)&v1->vfptr, rge_base_game->draw_area, aScr2, 50052, 1) )
+  if( TScreenPanel::setup((TScreenPanel *)&v1->vfptr, rge_base_game->draw_area, aScr2, 50052, 1) )
   {
     TEasy_Panel::setup_shadow_area((TEasy_Panel *)&v1->vfptr, 0);
     TEasy_Panel::set_ideal_size((TEasy_Panel *)&v1->vfptr, 640, 480);
-    if ( TEasy_Panel::create_text(
+    if( TEasy_Panel::create_text(
            (TEasy_Panel *)&v1->vfptr,
            (TPanel *)&v1->vfptr,
            &v1->title,
@@ -47,7 +47,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
       v1->campaignListY = 70;
       v1->campaignListWidth = 600;
       v1->campaignListHeight = 130;
-      if ( TEasy_Panel::create_list(
+      if( TEasy_Panel::create_list(
              (TEasy_Panel *)&v1->vfptr,
              (TPanel *)&v1->vfptr,
              &v1->campaignList,
@@ -57,9 +57,9 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
              130,
              11) )
       {
-        if ( TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v1->vfptr, &v1->campaignScrollbar, *v2, 20) )
+        if( TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v1->vfptr, &v1->campaignScrollbar, *v2, 20) )
         {
-          if ( TEasy_Panel::create_text(
+          if( TEasy_Panel::create_text(
                  (TEasy_Panel *)&v1->vfptr,
                  (TPanel *)&v1->vfptr,
                  &v1->campaignTitle,
@@ -80,7 +80,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
             v1->scenarioListY = v3;
             v1->scenarioListWidth = 600;
             v1->scenarioListHeight = 130;
-            if ( TEasy_Panel::create_list(
+            if( TEasy_Panel::create_list(
                    (TEasy_Panel *)&v1->vfptr,
                    (TPanel *)&v1->vfptr,
                    &v1->scenarioList,
@@ -90,9 +90,9 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
                    130,
                    11) )
             {
-              if ( TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v1->vfptr, &v1->scenarioScrollbar, *v4, 20) )
+              if( TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v1->vfptr, &v1->scenarioScrollbar, *v4, 20) )
               {
-                if ( TEasy_Panel::create_text(
+                if( TEasy_Panel::create_text(
                        (TEasy_Panel *)&v1->vfptr,
                        (TPanel *)&v1->vfptr,
                        &v1->scenarioTitle,
@@ -107,7 +107,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
                        0) )
                 {
                   (*v4)->sorted = 0;
-                  if ( TEasy_Panel::create_text(
+                  if( TEasy_Panel::create_text(
                          (TEasy_Panel *)&v1->vfptr,
                          (TPanel *)&v1->vfptr,
                          &v1->difficultyTitle,
@@ -122,7 +122,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
                          0) )
                   {
                     v5 = &v1->difficultyDrop;
-                    if ( TEasy_Panel::create_drop_down(
+                    if( TEasy_Panel::create_drop_down(
                            (TEasy_Panel *)&v1->vfptr,
                            (TPanel *)&v1->vfptr,
                            &v1->difficultyDrop,
@@ -144,7 +144,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
                       v7 = TDropDownPanel::get_line(*v5, v6);
                       TDropDownPanel::set_line(*v5, v7);
                       v8 = (TPanel **)&v1->okButton;
-                      if ( TEasy_Panel::create_button(
+                      if( TEasy_Panel::create_button(
                              (TEasy_Panel *)&v1->vfptr,
                              (TPanel *)&v1->vfptr,
                              &v1->okButton,
@@ -158,7 +158,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
                              0,
                              0) )
                       {
-                        if ( TEasy_Panel::create_button(
+                        if( TEasy_Panel::create_button(
                                (TEasy_Panel *)&v1->vfptr,
                                (TPanel *)&v1->vfptr,
                                &v1->cancelButton,
@@ -176,7 +176,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::TRIBE_Screen_Campaign_Selection
                           *((_DWORD *)v9 + 166) = 27;
                           *((_DWORD *)v9 + 167) = 0;
                           v10 = (int)&v1->close_button;
-                          if ( TEasy_Panel::create_button(
+                          if( TEasy_Panel::create_button(
                                  (TEasy_Panel *)&v1->vfptr,
                                  (TPanel *)&v1->vfptr,
                                  &v1->close_button,
@@ -247,7 +247,7 @@ TRIBE_Screen_Campaign_Selection *__thiscall TRIBE_Screen_Campaign_Selection::`ve
 
   v2 = this;
   TRIBE_Screen_Campaign_Selection::~TRIBE_Screen_Campaign_Selection(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -303,13 +303,13 @@ int __thiscall TRIBE_Screen_Campaign_Selection::handle_idle(TRIBE_Screen_Campaig
   TRIBE_Screen_Campaign_Selection *v1; // esi@1
 
   v1 = this;
-  if ( this->campaignsLoaded
+  if( this->campaignsLoaded
     || (TRIBE_Screen_Campaign_Selection::fillCampaigns(this),
         TRIBE_Screen_Campaign_Selection::fillScenarios(v1),
         TPanel::set_curr_child((TPanel *)&v1->vfptr, (TPanel *)&v1->campaignList->vfptr),
         (v1->campaignsLoaded = 1) != 0) )
   {
-    if ( !rge_base_game->input_enabled )
+    if( !rge_base_game->input_enabled )
       RGE_Base_Game::enable_input(rge_base_game);
   }
   return TPanel::handle_idle((TPanel *)&v1->vfptr);
@@ -326,23 +326,23 @@ int __thiscall TRIBE_Screen_Campaign_Selection::action(TRIBE_Screen_Campaign_Sel
   int v11; // eax@16
 
   v5 = this;
-  if ( !fromPanel || !this->campaignsLoaded )
+  if( !fromPanel || !this->campaignsLoaded )
     return TEasy_Panel::action((TEasy_Panel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
   v6 = this->okButton;
-  if ( (TButtonPanel *)fromPanel == v6 && actionIn == 1 )
+  if( (TButtonPanel *)fromPanel == v6 && actionIn == 1 )
   {
     TRIBE_Screen_Campaign_Selection::startGame(this);
     return 1;
   }
-  if ( fromPanel != (TPanel *)this->cancelButton || actionIn != 1 )
+  if( fromPanel != (TPanel *)this->cancelButton || actionIn != 1 )
   {
-    if ( fromPanel == (TPanel *)this->close_button && actionIn == 1 )
+    if( fromPanel == (TPanel *)this->close_button && actionIn == 1 )
     {
       RGE_Base_Game::close(rge_base_game);
       return 1;
     }
     v9 = this->campaignList;
-    if ( (TListPanel *)fromPanel == v9 && actionIn == 1 )
+    if( (TListPanel *)fromPanel == v9 && actionIn == 1 )
     {
       v10 = rge_base_game->player_game_info;
       v11 = TTextPanel::get_id((TTextPanel *)&v9->vfptr);
@@ -350,7 +350,7 @@ int __thiscall TRIBE_Screen_Campaign_Selection::action(TRIBE_Screen_Campaign_Sel
       TRIBE_Screen_Campaign_Selection::fillScenarios(v5);
       return 1;
     }
-    if ( fromPanel == (TPanel *)v5->scenarioList && actionIn == 3 )
+    if( fromPanel == (TPanel *)v5->scenarioList && actionIn == 3 )
     {
       v5->vfptr->action((TPanel *)v5, (TPanel *)v6, 1, 0, 0);
       return 1;
@@ -359,7 +359,7 @@ int __thiscall TRIBE_Screen_Campaign_Selection::action(TRIBE_Screen_Campaign_Sel
   }
   RGE_Base_Game::disable_input(rge_base_game);
   v8 = (TRIBE_Screen_Name *)operator new(0x4A0u);
-  if ( v8 )
+  if( v8 )
     TRIBE_Screen_Name::TRIBE_Screen_Name(v8);
   TPanelSystem::setCurrentPanel(&panel_system, aNameSelectionS, 0);
   TPanelSystem::destroyPanel(&panel_system, aCampaignSelect);
@@ -387,25 +387,25 @@ void __thiscall TRIBE_Screen_Campaign_Selection::fillCampaigns(TRIBE_Screen_Camp
   campaigns = 0;
   v3 = RGE_Game_Info::get_campaign_list(v2, &campaigns, &currentCampaign);
   v4 = v3;
-  if ( v3 )
+  if( v3 )
   {
     v5 = 0;
     v1->campaignList->sorted = 1;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
       do
       {
         TTextPanel::append_line((TTextPanel *)&v1->campaignList->vfptr, campaigns[v5], v5);
         ++v5;
       }
-      while ( v5 < v4 );
+      while( v5 < v4 );
     }
     v6 = TTextPanel::get_line((TTextPanel *)&v1->campaignList->vfptr, currentCampaign);
     TTextPanel::set_line((TTextPanel *)&v1->campaignList->vfptr, v6);
-    for ( i = 0; i < v4; ++i )
+    for( i = 0; i < v4; ++i )
       free(campaigns[i]);
     free(campaigns);
-    if ( TTextPanel::get_line((TTextPanel *)&v1->campaignList->vfptr) != -1 )
+    if( TTextPanel::get_line((TTextPanel *)&v1->campaignList->vfptr) != -1 )
     {
       v8 = rge_base_game->player_game_info;
       v9 = TTextPanel::get_id((TTextPanel *)&v1->campaignList->vfptr);
@@ -433,21 +433,21 @@ void __thiscall TRIBE_Screen_Campaign_Selection::fillScenarios(TRIBE_Screen_Camp
   scenarios = 0;
   v3 = RGE_Game_Info::get_scenario_list(v2, &scenarios, &currentScenario);
   v4 = v3;
-  if ( v3 )
+  if( v3 )
   {
     v5 = 0;
-    if ( v3 > 0 )
+    if( v3 > 0 )
     {
       do
       {
         TTextPanel::append_line((TTextPanel *)&v1->scenarioList->vfptr, scenarios[v5], v5);
         ++v5;
       }
-      while ( v5 < v4 );
+      while( v5 < v4 );
     }
     v6 = TTextPanel::get_line((TTextPanel *)&v1->scenarioList->vfptr, currentScenario);
     TTextPanel::set_line((TTextPanel *)&v1->scenarioList->vfptr, v6);
-    for ( i = 0; i < v4; ++i )
+    for( i = 0; i < v4; ++i )
       free(scenarios[i]);
     free(scenarios);
     TListPanel::scroll_cur_line(v1->scenarioList, 7, 0, 1);
@@ -479,7 +479,7 @@ void __thiscall TRIBE_Screen_Campaign_Selection::startGame(TRIBE_Screen_Campaign
 
   v1 = this;
   v19 = this;
-  if ( TTextPanel::get_line((TTextPanel *)&this->scenarioList->vfptr) != -1 )
+  if( TTextPanel::get_line((TTextPanel *)&this->scenarioList->vfptr) != -1 )
   {
     v2 = rge_base_game->player_game_info;
     v3 = TTextPanel::get_line((TTextPanel *)&v1->scenarioList->vfptr);
@@ -511,38 +511,38 @@ void __thiscall TRIBE_Screen_Campaign_Selection::startGame(TRIBE_Screen_Campaign
     first_any_color = 0;
     v8 = RGE_Base_Game::get_scenario_info(rge_base_game, -1, v1, 0, 1);
     scenario_info = (T_Scenario *)v8;
-    if ( v8 )
+    if( v8 )
     {
       v9 = 0;
-      while ( 1 )
+      while( 1 )
       {
-        if ( RGE_Scenario::Get_player_Active(v8, v9) )
+        if( RGE_Scenario::Get_player_Active(v8, v9) )
         {
           TRIBE_Game::setScenarioPlayer((TRIBE_Game *)rge_base_game, v4, v9);
           TRIBE_Game::setPlayerColor((TRIBE_Game *)rge_base_game, v4, v9 + 1);
           RGE_Base_Game::setPlayerTeam(rge_base_game, v4++, 1);
-          if ( v7 == -1 && RGE_Scenario::Get_player_Type((RGE_Scenario *)&scenario_info->vfptr, v9) == 1 )
+          if( v7 == -1 && RGE_Scenario::Get_player_Type((RGE_Scenario *)&scenario_info->vfptr, v9) == 1 )
           {
             v7 = v9;
             first_any_color = v9 + 1;
           }
         }
-        if ( ++v9 >= 9 )
+        if( ++v9 >= 9 )
           break;
         v8 = (RGE_Scenario *)scenario_info;
       }
       ((void (__stdcall *)(signed int))scenario_info->vfptr->~RGE_Scenario)(1);
-      if ( v4 )
+      if( v4 )
       {
         RGE_Base_Game::setNumberPlayers(rge_base_game, v4);
-        if ( v7 != -1 )
+        if( v7 != -1 )
         {
           v10 = 1;
-          if ( v4 > 1 )
+          if( v4 > 1 )
           {
-            while ( TRIBE_Game::scenarioPlayer((TRIBE_Game *)rge_base_game, v10) != v7 )
+            while( TRIBE_Game::scenarioPlayer((TRIBE_Game *)rge_base_game, v10) != v7 )
             {
-              if ( ++v10 >= v4 )
+              if( ++v10 >= v4 )
                 goto LABEL_18;
             }
             v11 = TRIBE_Game::scenarioPlayer((TRIBE_Game *)rge_base_game, 0);
@@ -556,7 +556,7 @@ LABEL_18:
         }
         TCommunications_Handler::SetPlayerHumanity(comm, 1u, ME_HUMAN);
         v13 = 1;
-        if ( v4 > 1 )
+        if( v4 > 1 )
         {
           do
           {
@@ -564,10 +564,10 @@ LABEL_18:
             TCommunications_Handler::SetPlayerHumanity(comm, v13 + 1, ME_COMPUTER);
             v13 = v14;
           }
-          while ( v14 < v4 );
+          while( v14 < v4 );
         }
         v15 = v4;
-        if ( v4 < 9 )
+        if( v4 < 9 )
         {
           do
           {
@@ -575,9 +575,9 @@ LABEL_18:
             TCommunications_Handler::SetPlayerHumanity(comm, v15 + 1, 0);
             v15 = v16;
           }
-          while ( v16 < 9 );
+          while( v16 < 9 );
         }
-        if ( !TRIBE_Game::start_game((TRIBE_Game *)rge_base_game, 0) )
+        if( !TRIBE_Game::start_game((TRIBE_Game *)rge_base_game, 0) )
           TEasy_Panel::popupOKDialog((TEasy_Panel *)&v19->vfptr, 2401, 0, 450, 100);
       }
     }

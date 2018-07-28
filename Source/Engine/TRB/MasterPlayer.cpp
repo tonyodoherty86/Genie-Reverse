@@ -18,7 +18,7 @@ TRIBE_Master_Player *__thiscall TRIBE_Master_Player::`vector deleting destructor
 
   v2 = this;
   TRIBE_Master_Player::~TRIBE_Master_Player(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -54,10 +54,10 @@ void __userpurge TRIBE_Master_Player::load_master_object(TRIBE_Master_Player *th
   TRIBE_Master_Combat_Object *v12; // eax@10
 
   v7 = this;
-  if ( obj_type == 70 )
+  if( obj_type == 70 )
   {
     v12 = (TRIBE_Master_Combat_Object *)operator new(0x164u);
-    if ( v12 )
+    if( v12 )
     {
       TRIBE_Master_Combat_Object::TRIBE_Master_Combat_Object(v12, infile, sprites, sounds, 1);
       goto LABEL_13;
@@ -66,9 +66,9 @@ LABEL_12:
     v9 = 0;
     goto LABEL_13;
   }
-  if ( obj_type != 80 )
+  if( obj_type != 80 )
   {
-    if ( obj_type != 90 )
+    if( obj_type != 90 )
     {
       RGE_Master_Player::load_master_object(
         (RGE_Master_Player *)&this->vfptr,
@@ -81,7 +81,7 @@ LABEL_12:
       return;
     }
     v8 = (TRIBE_Master_Tree_Object *)operator new(0xB8u);
-    if ( v8 )
+    if( v8 )
     {
       TRIBE_Master_Tree_Object::TRIBE_Master_Tree_Object(v8, infile, sprites, sounds, 1);
 LABEL_13:
@@ -91,7 +91,7 @@ LABEL_13:
     goto LABEL_12;
   }
   v10 = (TRIBE_Master_Building_Object *)operator new(0x17Cu);
-  if ( v10 )
+  if( v10 )
   {
     TRIBE_Master_Building_Object::TRIBE_Master_Building_Object(v10, infile, sprites, sounds, 1);
     v7->master_objects[index] = v11;
@@ -114,11 +114,11 @@ void __thiscall TRIBE_Master_Player::load_object(TRIBE_Master_Player *this, _iob
   TRIBE_Master_Combat_Object *v12; // eax@10
 
   v6 = this;
-  if ( obj_type == 70 )
+  if( obj_type == 70 )
   {
     v12 = (TRIBE_Master_Combat_Object *)operator new(0x164u);
     v8 = index;
-    if ( v12 )
+    if( v12 )
     {
       TRIBE_Master_Combat_Object::TRIBE_Master_Combat_Object(v12, infile, sprites, sounds, index, 1);
       goto LABEL_13;
@@ -127,16 +127,16 @@ LABEL_12:
     v9 = 0;
     goto LABEL_13;
   }
-  if ( obj_type != 80 )
+  if( obj_type != 80 )
   {
-    if ( obj_type != 90 )
+    if( obj_type != 90 )
     {
       RGE_Master_Player::load_object((RGE_Master_Player *)&this->vfptr, infile, obj_type, sprites, sounds, index);
       return;
     }
     v7 = (TRIBE_Master_Tree_Object *)operator new(0xB8u);
     v8 = index;
-    if ( v7 )
+    if( v7 )
     {
       TRIBE_Master_Tree_Object::TRIBE_Master_Tree_Object(v7, infile, sprites, sounds, index, 1);
 LABEL_13:
@@ -146,7 +146,7 @@ LABEL_13:
     goto LABEL_12;
   }
   v10 = (TRIBE_Master_Building_Object *)operator new(0x17Cu);
-  if ( v10 )
+  if( v10 )
   {
     TRIBE_Master_Building_Object::TRIBE_Master_Building_Object(v10, infile, sprites, sounds, index, 1);
     v6->master_objects[index] = v11;

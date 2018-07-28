@@ -103,10 +103,10 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
     ++v6;
     --v46;
   }
-  while ( v46 );
-  if ( v3->end_game_flag )
+  while( v46 );
+  if( v3->end_game_flag )
   {
-    if ( LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) == 1 )
+    if( LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) == 1 )
     {
       v8 = strlen(aScr7) + 1;
       v9 = v8;
@@ -143,7 +143,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
     v12 = 50061;
     qmemcpy(v19, v20, v17 & 3);
   }
-  if ( !TScreenPanel::setup((TScreenPanel *)&v3->vfptr, rge_base_game->draw_area, info_file, v12, 1) )
+  if( !TScreenPanel::setup((TScreenPanel *)&v3->vfptr, rge_base_game->draw_area, info_file, v12, 1) )
   {
     v3->error_code = 1;
     return;
@@ -152,11 +152,11 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
   v21 = 0;
   v22 = 0;
   v23 = rge_base_game->world->world_time / 0x3E8;
-  if ( v23 > 59 )
+  if( v23 > 59 )
   {
     v21 = v23 / 60;
     v23 %= 60;
-    if ( v21 > 59 )
+    if( v21 > 59 )
     {
       v22 = v21 / 60;
       v21 %= 60;
@@ -204,7 +204,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
     1,
     0,
     0);
-  if ( v3->end_game_flag )
+  if( v3->end_game_flag )
   {
     v24 = LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) == 1 ? RGE_Scenario::Get_message(
                                                                                   rge_base_game->world->scenario,
@@ -212,9 +212,9 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
                                                                                          rge_base_game->world->scenario,
                                                                                          3);
     v25 = v24;
-    if ( v24 )
+    if( v24 )
     {
-      if ( *v24 )
+      if( *v24 )
       {
         v26 = &v3->win_loss_text;
         TEasy_Panel::create_text(
@@ -230,7 +230,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
           0,
           0,
           1);
-        if ( v3->win_loss_text )
+        if( v3->win_loss_text )
         {
           TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v3->vfptr, &v3->win_loss_text_bar, v3->win_loss_text, 20);
           ((void (__stdcall *)(signed int, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))(*v26)->vfptr[1].set_rect)(
@@ -268,7 +268,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
     v3->bevel_color5,
     v3->bevel_color6);
   Time_Line_Panel::set_special_events(v3->time_line, aTimeline_slp);
-  if ( TEasy_Panel::create_button(
+  if( TEasy_Panel::create_button(
          (TEasy_Panel *)&v3->vfptr,
          (TPanel *)&v3->vfptr,
          &v3->close_button,
@@ -464,7 +464,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
     do
     {
       v29 = rge_base_game->world;
-      if ( v47 >= v29->player_num )
+      if( v47 >= v29->player_num )
         v30 = 0;
       else
         v30 = v29->players[v50]->name;
@@ -574,7 +574,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
         1,
         0);
       v32 = rge_base_game->world;
-      if ( v47 < v32->player_num )
+      if( v47 < v32->player_num )
       {
         switch ( v32->players[v50]->color_table->id )
         {
@@ -622,7 +622,7 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
           ++v31;
           --v48;
         }
-        while ( v48 );
+        while( v48 );
       }
       v27 += 30;
       v28 += 28;
@@ -630,10 +630,10 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
       ++v47;
       ++text_panel;
     }
-    while ( v47 - 1 < 8 );
-    if ( v3->end_game_flag && RGE_Base_Game::singlePlayerGame(rge_base_game) )
+    while( v47 - 1 < 8 );
+    if( v3->end_game_flag && RGE_Base_Game::singlePlayerGame(rge_base_game) )
     {
-      if ( v3->win_loss_text )
+      if( v3->win_loss_text )
       {
         TEasy_Panel::create_button(
           (TEasy_Panel *)&v3->vfptr,
@@ -777,11 +777,11 @@ void __thiscall TribeAchievementsScreen::TribeAchievementsScreen(TribeAchievemen
     v35 = v3->okButton;
     *((_DWORD *)v35 + 166) = 27;
     *((_DWORD *)v35 + 167) = 0;
-    if ( LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) == 1 )
+    if( LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) == 1 )
     {
       v36 = (TShape *)operator new(0x20u);
       LOBYTE(v55) = 1;
-      if ( v36 )
+      if( v36 )
       {
         TShape::TShape(v36, aViccheck_slp, 52001);
 LABEL_52:
@@ -789,23 +789,23 @@ LABEL_52:
         v3->win_decal = v37;
         v40 = 0;
         LOBYTE(v55) = 0;
-        if ( v39 )
+        if( v39 )
         {
           tabList[0] = v39;
           v40 = 1;
         }
         v41 = (TPanel *)v3->timelineButton;
-        if ( v41 )
+        if( v41 )
           tabList[v40++] = v41;
         v42 = (TPanel *)v3->restartButton;
-        if ( v42 )
+        if( v42 )
           tabList[v40++] = v42;
         tabList[v40] = (TPanel *)v3->okButton;
         TPanel::set_tab_order(tabList, v40 + 1);
         TPanel::set_curr_child((TPanel *)&v3->vfptr, (TPanel *)v3->okButton);
         (*(void (__stdcall **)(_DWORD, _DWORD))(*(_DWORD *)v3->backButton + 196))(0, 0);
         (*(void (__stdcall **)(_DWORD, _DWORD))(*(_DWORD *)v3->backButton2 + 196))(0, 0);
-        if ( v3->win_loss_text )
+        if( v3->win_loss_text )
           TribeAchievementsScreen::set_mode(v3, 5);
         else
           TribeAchievementsScreen::set_mode(v3, 0);
@@ -816,7 +816,7 @@ LABEL_52:
     {
       v38 = (TShape *)operator new(0x20u);
       LOBYTE(v55) = 2;
-      if ( v38 )
+      if( v38 )
       {
         TShape::TShape(v38, aDefcheck_slp, 52002);
         goto LABEL_52;
@@ -835,7 +835,7 @@ TribeAchievementsScreen *__thiscall TribeAchievementsScreen::`vector deleting de
 
   v2 = this;
   TribeAchievementsScreen::~TribeAchievementsScreen(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -875,97 +875,97 @@ void __thiscall TribeAchievementsScreen::~TribeAchievementsScreen(TribeAchieveme
   this->vfptr = (TPanelVtbl *)&TribeAchievementsScreen::`vftable';
   TPanelSystem::destroyPanel(&panel_system, aYesnodialog);
   v2 = v1->win_decal;
-  if ( v2 )
+  if( v2 )
   {
     TShape::~TShape(v1->win_decal);
     operator delete(v2);
   }
   v3 = v1->title;
-  if ( v3 )
+  if( v3 )
     ((void (__stdcall *)(_DWORD))v3->vfptr->__vecDelDtor)(1);
   v4 = v1->summary_text;
-  if ( v4 )
+  if( v4 )
     ((void (__stdcall *)(_DWORD))v4->vfptr->__vecDelDtor)(1);
   v5 = v1->time;
-  if ( v5 )
+  if( v5 )
     ((void (__stdcall *)(_DWORD))v5->vfptr->__vecDelDtor)(1);
   v6 = v1->win_loss_text;
-  if ( v6 )
+  if( v6 )
     ((void (__stdcall *)(_DWORD))v6->vfptr->__vecDelDtor)(1);
   v7 = v1->instruction;
-  if ( v7 )
+  if( v7 )
     ((void (__stdcall *)(_DWORD))v7->vfptr->__vecDelDtor)(1);
   v8 = v1->restartButton;
-  if ( v8 )
+  if( v8 )
     (**(void (__stdcall ***)(_DWORD))v8)(1);
   v9 = v1->okButton;
-  if ( v9 )
+  if( v9 )
     (**(void (__stdcall ***)(_DWORD))v9)(1);
   v10 = v1->backButton;
-  if ( v10 )
+  if( v10 )
     (**(void (__stdcall ***)(_DWORD))v10)(1);
   v11 = v1->backButton2;
-  if ( v11 )
+  if( v11 )
     (**(void (__stdcall ***)(_DWORD))v11)(1);
   v12 = v1->aftermathButton;
-  if ( v12 )
+  if( v12 )
     (**(void (__stdcall ***)(_DWORD))v12)(1);
   v13 = v1->timelineButton;
-  if ( v13 )
+  if( v13 )
     (**(void (__stdcall ***)(_DWORD))v13)(1);
   v14 = v1->time_line;
-  if ( v14 )
+  if( v14 )
     ((void (__stdcall *)(_DWORD))v14->vfptr->__vecDelDtor)(1);
   v15 = v1->win_loss_text_bar;
-  if ( v15 )
+  if( v15 )
     ((void (__stdcall *)(_DWORD))v15->vfptr->__vecDelDtor)(1);
   v16 = v1->summary_text_bar;
-  if ( v16 )
+  if( v16 )
     ((void (__stdcall *)(_DWORD))v16->vfptr->__vecDelDtor)(1);
   v17 = v1->instruction_bar;
-  if ( v17 )
+  if( v17 )
     ((void (__stdcall *)(_DWORD))v17->vfptr->__vecDelDtor)(1);
   TPanel::delete_panel((TPanel **)&v1->close_button);
   v18 = v1->title_bar;
   v19 = 7;
   do
   {
-    if ( *v18 )
+    if( *v18 )
       ((void (__stdcall *)(_DWORD))(*v18)->vfptr->__vecDelDtor)(1);
     ++v18;
     --v19;
   }
-  while ( v19 );
+  while( v19 );
   v20 = v1->achievement_choice;
   v21 = 5;
   do
   {
-    if ( *v20 )
+    if( *v20 )
       ((void (__stdcall *)(_DWORD))(*v20)->vfptr->__vecDelDtor)(1);
     ++v20;
     --v21;
   }
-  while ( v21 );
+  while( v21 );
   v22 = v1->statistics;
   v23 = v1->player_names;
   v24 = 8;
   do
   {
-    if ( *v23 )
+    if( *v23 )
       ((void (__stdcall *)(_DWORD))(*v23)->vfptr->__vecDelDtor)(1);
     v25 = 7;
     do
     {
-      if ( (*v22)[0] )
+      if( (*v22)[0] )
         ((void (__stdcall *)(_DWORD))(*v22)[0]->vfptr->__vecDelDtor)(1);
       v22 = (TTextPanel *(*)[7])((char *)v22 + 4);
       --v25;
     }
-    while ( v25 );
+    while( v25 );
     ++v23;
     --v24;
   }
-  while ( v24 );
+  while( v24 );
   TScreenPanel::~TScreenPanel((TScreenPanel *)&v26->vfptr);
 }
 // 572180: using guessed type int (__thiscall *TribeAchievementsScreen::`vftable')(void *Memory, unsigned int __flags);
@@ -1083,7 +1083,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
   temptxt[49] = 0;
   RGE_Base_Game::disable_input(rge_base_game);
   v5 = v2->win_loss_text;
-  if ( v5 )
+  if( v5 )
     (*(void (__stdcall **)(_DWORD))&v5->vfptr->gap10[4])(0);
   v6 = v2->time_line;
   v2->current_mode = new_mode;
@@ -1091,22 +1091,22 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
   (*(void (__stdcall **)(_DWORD))&v2->instruction->vfptr->gap10[4])(0);
   (*(void (__stdcall **)(signed int))&v2->time->vfptr->gap10[4])(1);
   v7 = v2->restartButton;
-  if ( v7 )
+  if( v7 )
     (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v7 + 20))(0);
   v8 = v2->okButton;
-  if ( v8 )
+  if( v8 )
     (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v8 + 20))(0);
   v9 = v2->aftermathButton;
-  if ( v9 )
+  if( v9 )
     (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v9 + 20))(0);
   v10 = v2->timelineButton;
-  if ( v10 )
+  if( v10 )
     (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v10 + 20))(0);
   v11 = v2->backButton;
-  if ( v11 )
+  if( v11 )
     (*(void (__stdcall **)(signed int))(*(_DWORD *)v11 + 20))(1);
   v12 = v2->backButton2;
-  if ( v12 )
+  if( v12 )
     (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v12 + 20))(0);
   TPanel::set_curr_child((TPanel *)&v2->vfptr, (TPanel *)v2->backButton);
   switch ( new_mode )
@@ -1116,19 +1116,19 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       v2->size = 7;
       TPanel::set_curr_child((TPanel *)&v2->vfptr, v13);
       v14 = v2->restartButton;
-      if ( v14 )
+      if( v14 )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v14 + 20))(1);
       v15 = v2->okButton;
-      if ( v15 )
+      if( v15 )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v15 + 20))(1);
       v16 = v2->aftermathButton;
-      if ( v16 )
+      if( v16 )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v16 + 20))(1);
       v17 = v2->timelineButton;
-      if ( v17 )
+      if( v17 )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v17 + 20))(1);
       v18 = v2->backButton;
-      if ( v18 )
+      if( v18 )
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v18 + 20))(0);
       (*(void (__stdcall **)(signed int))&v2->instruction->vfptr->gap10[4])(1);
       (*(void (__stdcall **)(signed int))&v2->summary_text->vfptr[1].gap4[0])(9945);
@@ -1139,7 +1139,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       (*(void (__stdcall **)(signed int))&v2->title_bar[4]->vfptr[1].gap4[0])(9942);
       (*(void (__stdcall **)(signed int))&v2->title_bar[5]->vfptr[1].gap4[0])(9943);
       (*(void (__stdcall **)(signed int))&v2->title_bar[6]->vfptr[1].gap4[0])(9905);
-      if ( v4 > 0 )
+      if( v4 > 0 )
       {
         v19 = 1;
         v20 = (int)&v2->statistics[0][1];
@@ -1161,13 +1161,13 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           (*(void (__stdcall **)(char *))(**(_DWORD **)(v20 + 8) + 232))(temptxt);
           v26 = RGE_Victory_Conditions::get_victory_points_id(v21->victory_conditions, 22);
           v27 = *(_DWORD *)(v20 + 12);
-          if ( v26 <= 0 )
+          if( v26 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v27 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v27 + 228))(4003);
           v28 = RGE_Victory_Conditions::get_victory_points_id(v21->victory_conditions, 23);
           v29 = *(_DWORD *)(v20 + 16);
-          if ( v28 <= 0 )
+          if( v28 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v29 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v29 + 228))(4003);
@@ -1178,7 +1178,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           v20 += 28;
           --new_modea;
         }
-        while ( new_modea );
+        while( new_modea );
       }
       break;
     case 1:
@@ -1191,7 +1191,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       (*(void (__stdcall **)(signed int))&v2->title_bar[3]->vfptr[1].gap4[0])(9912);
       (*(void (__stdcall **)(signed int))&v2->title_bar[4]->vfptr[1].gap4[0])(9914);
       (*(void (__stdcall **)(signed int))&v2->title_bar[5]->vfptr[1].gap4[0])(9909);
-      if ( v4 > 0 )
+      if( v4 > 0 )
       {
         v32 = 1;
         v33 = (int)&v2->statistics[0][1];
@@ -1212,7 +1212,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           (*(void (__stdcall **)(char *))(**(_DWORD **)(v33 + 8) + 232))(temptxt);
           v38 = RGE_Victory_Conditions::get_victory_points_id(v34->victory_conditions, 3);
           v39 = *(_DWORD *)(v33 + 12);
-          if ( v38 <= 0 )
+          if( v38 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v39 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v39 + 228))(4003);
@@ -1223,7 +1223,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           v33 += 28;
           --new_modeb;
         }
-        while ( new_modeb );
+        while( new_modeb );
       }
       break;
     case 2:
@@ -1237,7 +1237,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       (*(void (__stdcall **)(signed int))&v2->title_bar[4]->vfptr[1].gap4[0])(9922);
       (*(void (__stdcall **)(signed int))&v2->title_bar[5]->vfptr[1].gap4[0])(9923);
       (*(void (__stdcall **)(signed int))&v2->title_bar[6]->vfptr[1].gap4[0])(9909);
-      if ( v4 > 0 )
+      if( v4 > 0 )
       {
         v42 = 1;
         v43 = (int)&v2->statistics[0][2];
@@ -1253,7 +1253,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           (*(void (__stdcall **)(char *))(**(_DWORD **)(v43 - 4) + 232))(temptxt);
           v47 = RGE_Victory_Conditions::get_victory_points_id(v44->victory_conditions, 6);
           v48 = *(_DWORD *)v43;
-          if ( v47 <= 0 )
+          if( v47 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v48 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v48 + 228))(4003);
@@ -1262,7 +1262,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           (*(void (__stdcall **)(char *))(**(_DWORD **)(v43 + 4) + 232))(temptxt);
           v50 = RGE_Victory_Conditions::get_victory_points_id(v44->victory_conditions, 8);
           v51 = *(_DWORD *)(v43 + 8);
-          if ( v50 <= 0 )
+          if( v50 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v51 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v51 + 228))(4003);
@@ -1276,7 +1276,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           v43 += 28;
           --new_modec;
         }
-        while ( new_modec );
+        while( new_modec );
       }
       break;
     case 3:
@@ -1290,7 +1290,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       (*(void (__stdcall **)(signed int))&v2->title_bar[4]->vfptr[1].gap4[0])(9930);
       (*(void (__stdcall **)(signed int))&v2->title_bar[5]->vfptr[1].gap4[0])(9948);
       (*(void (__stdcall **)(signed int))&v2->title_bar[6]->vfptr[1].gap4[0])(9909);
-      if ( v4 > 0 )
+      if( v4 > 0 )
       {
         new_moded = 1;
         v55 = (int)&v2->statistics[0][1];
@@ -1304,7 +1304,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           (*(void (__stdcall **)(char *))(**(_DWORD **)(v55 - 4) + 232))(temptxt);
           v58 = RGE_Victory_Conditions::get_victory_points_id(v56->victory_conditions, 11);
           v59 = *(_DWORD *)v55;
-          if ( v58 <= 0 )
+          if( v58 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v59 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v59 + 228))(4003);
@@ -1328,7 +1328,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           ++new_moded;
           --v91;
         }
-        while ( v91 );
+        while( v91 );
       }
       break;
     case 4:
@@ -1340,7 +1340,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       (*(void (__stdcall **)(signed int))&v2->title_bar[2]->vfptr[1].gap4[0])(9935);
       (*(void (__stdcall **)(signed int))&v2->title_bar[3]->vfptr[1].gap4[0])(9936);
       (*(void (__stdcall **)(signed int))&v2->title_bar[4]->vfptr[1].gap4[0])(9909);
-      if ( v4 > 0 )
+      if( v4 > 0 )
       {
         v67 = 1;
         v68 = (int)&v2->statistics[0][1];
@@ -1353,19 +1353,19 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           (*(void (__stdcall **)(char *))(**(_DWORD **)(v68 - 4) + 232))(temptxt);
           v71 = RGE_Victory_Conditions::get_victory_points_id(v69->victory_conditions, 18);
           v72 = *(_DWORD *)v68;
-          if ( v71 <= 0 )
+          if( v71 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v72 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v72 + 228))(4003);
           v73 = RGE_Victory_Conditions::get_victory_points_id(v69->victory_conditions, 19);
           v74 = *(_DWORD *)(v68 + 4);
-          if ( v73 <= 0 )
+          if( v73 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v74 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v74 + 228))(4003);
           v75 = RGE_Victory_Conditions::get_victory_points_id(v69->victory_conditions, 20);
           v76 = *(_DWORD *)(v68 + 8);
-          if ( v75 <= 0 )
+          if( v75 <= 0 )
             (*(void (__stdcall **)(char *))(*(_DWORD *)v76 + 232))(message_in);
           else
             (*(void (__stdcall **)(signed int))(*(_DWORD *)v76 + 228))(4003);
@@ -1376,7 +1376,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
           v68 += 28;
           --new_modee;
         }
-        while ( new_modee );
+        while( new_modee );
       }
       break;
     case 6:
@@ -1391,14 +1391,14 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       v2->size = 0;
       (*(void (__stdcall **)(signed int))&v79->vfptr[1].gap4[0])(9906);
       v80 = v2->win_loss_text;
-      if ( v80 )
+      if( v80 )
         (*(void (__stdcall **)(signed int))&v80->vfptr->gap10[4])(1);
       (*(void (__stdcall **)(_DWORD))&v2->time->vfptr->gap10[4])(0);
       v81 = v2->backButton;
-      if ( v81 )
+      if( v81 )
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v81 + 20))(0);
       v82 = v2->backButton2;
-      if ( v82 )
+      if( v82 )
       {
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v82 + 20))(1);
         TPanel::set_curr_child((TPanel *)&v2->vfptr, (TPanel *)v2->backButton2);
@@ -1407,7 +1407,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
     default:
       break;
   }
-  if ( v2->size )
+  if( v2->size )
   {
     v85 = 0;
     v86 = (int)v2->player_names;
@@ -1416,7 +1416,7 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       (*(void (__stdcall **)(_DWORD))(**(_DWORD **)v86 + 20))(v85++ < player_num);
       v86 += 4;
     }
-    while ( v85 < 8 );
+    while( v85 < 8 );
   }
   else
   {
@@ -1428,14 +1428,14 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
       v83 += 4;
       --v84;
     }
-    while ( v84 );
+    while( v84 );
   }
   v87 = 0;
   new_modef = (int)v2->title_bar;
   do
   {
     (*(void (__stdcall **)(_DWORD))(**(_DWORD **)new_modef + 20))(v87 < v2->size);
-    if ( player_num > 0 )
+    if( player_num > 0 )
     {
       v88 = player_num;
       v89 = new_modef + 48;
@@ -1445,12 +1445,12 @@ void __thiscall TribeAchievementsScreen::set_mode(TribeAchievementsScreen *this,
         v89 += 28;
         --v88;
       }
-      while ( v88 );
+      while( v88 );
     }
     ++v87;
     new_modef += 4;
   }
-  while ( v87 < 7 );
+  while( v87 < 7 );
 }
 
 //----- (0048F0B0) --------------------------------------------------------
@@ -1467,21 +1467,21 @@ void __thiscall TribeAchievementsScreen::draw(TribeAchievementsScreen *this)
 
   v1 = this;
   TScreenPanel::draw((TScreenPanel *)&this->vfptr);
-  if ( v1->current_mode < 5 )
+  if( v1->current_mode < 5 )
   {
     v2 = v1->vfptr;
     v8 = v1->vfptr;
     v1->vfptr->draw_setup((TPanel *)v1, 0);
-    if ( v1->win_decal && TDrawArea::Lock(v1->render_area, aScr_achDraw, 1) )
+    if( v1->win_decal && TDrawArea::Lock(v1->render_area, aScr_achDraw, 1) )
     {
       v3 = rge_base_game->world;
-      if ( v3->player_num - 1 > 0 )
+      if( v3->player_num - 1 > 0 )
       {
         v4 = (TPanel **)v1->player_names;
         v7 = v3->player_num - 1;
         do
         {
-          if ( (*(RGE_Player **)((char *)v3->players + -1444 - (_DWORD)v1 + (unsigned int)v4))->game_status == 1 )
+          if( (*(RGE_Player **)((char *)v3->players + -1444 - (_DWORD)v1 + (unsigned int)v4))->game_status == 1 )
           {
             v5 = TPanel::yPosition(*v4);
             v6 = TPanel::xPosition(*v4);
@@ -1490,7 +1490,7 @@ void __thiscall TribeAchievementsScreen::draw(TribeAchievementsScreen *this)
           ++v4;
           --v7;
         }
-        while ( v7 );
+        while( v7 );
         v2 = v8;
       }
       TDrawArea::Unlock(v1->render_area, aScr_achDraw);
@@ -1507,26 +1507,26 @@ int __thiscall TribeAchievementsScreen::handle_mouse_down(TribeAchievementsScree
 
   v6 = this;
   v7 = TEasy_Panel::handle_mouse_down((TEasy_Panel *)&this->vfptr, mouse_button_in, x, y, ctrl_key, shift_key);
-  if ( !v6->current_mode )
+  if( !v6->current_mode )
   {
-    if ( ((int (__stdcall *)(int, int))v6->achievement_choice[0]->vfptr->is_inside)(x, y) )
+    if( ((int (__stdcall *)(int, int))v6->achievement_choice[0]->vfptr->is_inside)(x, y) )
     {
       TribeAchievementsScreen::set_mode(v6, 1);
       return v7;
     }
-    if ( ((int (__stdcall *)(int, int))v6->achievement_choice[1]->vfptr->is_inside)(x, y) )
+    if( ((int (__stdcall *)(int, int))v6->achievement_choice[1]->vfptr->is_inside)(x, y) )
     {
       TribeAchievementsScreen::set_mode(v6, 2);
       return v7;
     }
-    if ( ((int (__stdcall *)(int, int))v6->achievement_choice[2]->vfptr->is_inside)(x, y) )
+    if( ((int (__stdcall *)(int, int))v6->achievement_choice[2]->vfptr->is_inside)(x, y) )
     {
       TribeAchievementsScreen::set_mode(v6, 3);
       return v7;
     }
-    if ( ((int (__stdcall *)(int, int))v6->achievement_choice[3]->vfptr->is_inside)(x, y) )
+    if( ((int (__stdcall *)(int, int))v6->achievement_choice[3]->vfptr->is_inside)(x, y) )
     {
-      if ( !((int (__stdcall *)(int, int))v6->achievement_choice[4]->vfptr->is_inside)(x, y) )
+      if( !((int (__stdcall *)(int, int))v6->achievement_choice[4]->vfptr->is_inside)(x, y) )
         TribeAchievementsScreen::set_mode(v6, 4);
     }
   }
@@ -1549,31 +1549,31 @@ int __thiscall TribeAchievementsScreen::action(TribeAchievementsScreen *this, TP
   TButtonPanel *v16; // ecx@35
 
   v5 = this;
-  if ( fromPanel != (TPanel *)this->okButton || actionIn != 1 )
+  if( fromPanel != (TPanel *)this->okButton || actionIn != 1 )
   {
-    if ( fromPanel == (TPanel *)this->restartButton && actionIn == 1 )
+    if( fromPanel == (TPanel *)this->restartButton && actionIn == 1 )
     {
       TRIBE_Game::restart_game((TRIBE_Game *)rge_base_game);
       return 1;
     }
-    if ( fromPanel != (TPanel *)this->timelineButton || actionIn != 1 )
+    if( fromPanel != (TPanel *)this->timelineButton || actionIn != 1 )
     {
-      if ( fromPanel != (TPanel *)this->aftermathButton || actionIn != 1 )
+      if( fromPanel != (TPanel *)this->aftermathButton || actionIn != 1 )
       {
-        if ( (fromPanel == (TPanel *)this->backButton || fromPanel == (TPanel *)this->backButton2) && actionIn == 1 )
+        if( (fromPanel == (TPanel *)this->backButton || fromPanel == (TPanel *)this->backButton2) && actionIn == 1 )
         {
           TribeAchievementsScreen::set_mode(this, 0);
           return 1;
         }
-        if ( fromPanel == (TPanel *)this->close_button && actionIn == 1 )
+        if( fromPanel == (TPanel *)this->close_button && actionIn == 1 )
         {
           RGE_Base_Game::close(rge_base_game);
           return 1;
         }
-        if ( !TPanel::panelName(fromPanel) || strcmp(TPanel::panelName(fromPanel), aYesnodialog) )
+        if( !TPanel::panelName(fromPanel) || strcmp(TPanel::panelName(fromPanel), aYesnodialog) )
           return TEasy_Panel::action((TEasy_Panel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
         TPanelSystem::destroyPanel(&panel_system, aYesnodialog);
-        if ( !actionIn )
+        if( !actionIn )
         {
           RGE_Base_Game::close(rge_base_game);
           return 1;
@@ -1584,19 +1584,19 @@ int __thiscall TribeAchievementsScreen::action(TribeAchievementsScreen *this, TP
       {
         TribeAchievementsScreen::set_mode(this, 5);
         v12 = v5->restartButton;
-        if ( v12 )
+        if( v12 )
           (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v12 + 20))(0);
         v13 = v5->okButton;
-        if ( v13 )
+        if( v13 )
           (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v13 + 20))(0);
         v14 = v5->aftermathButton;
-        if ( v14 )
+        if( v14 )
           (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v14 + 20))(0);
         v15 = v5->timelineButton;
-        if ( v15 )
+        if( v15 )
           (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v15 + 20))(0);
         v16 = v5->backButton;
-        if ( v16 )
+        if( v16 )
         {
           (*(void (__stdcall **)(signed int))(*(_DWORD *)v16 + 20))(1);
           return 1;
@@ -1607,19 +1607,19 @@ int __thiscall TribeAchievementsScreen::action(TribeAchievementsScreen *this, TP
     {
       TribeAchievementsScreen::set_mode(this, 6);
       v7 = v5->restartButton;
-      if ( v7 )
+      if( v7 )
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v7 + 20))(0);
       v8 = v5->okButton;
-      if ( v8 )
+      if( v8 )
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v8 + 20))(0);
       v9 = v5->aftermathButton;
-      if ( v9 )
+      if( v9 )
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v9 + 20))(0);
       v10 = v5->timelineButton;
-      if ( v10 )
+      if( v10 )
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v10 + 20))(0);
       v11 = v5->backButton;
-      if ( v11 )
+      if( v11 )
       {
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v11 + 20))(1);
         return 1;
@@ -1627,13 +1627,13 @@ int __thiscall TribeAchievementsScreen::action(TribeAchievementsScreen *this, TP
     }
     return 1;
   }
-  if ( this->end_game_flag )
+  if( this->end_game_flag )
   {
     TRIBE_Game::quit_game((TRIBE_Game *)rge_base_game);
   }
   else
   {
-    if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+    if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
       RGE_Base_Game::set_paused(rge_base_game, 0, 0);
     TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
   }
@@ -1648,7 +1648,7 @@ int __thiscall TribeAchievementsScreen::handle_idle(TribeAchievementsScreen *thi
   TribeAchievementsScreen *v1; // esi@1
 
   v1 = this;
-  if ( !rge_base_game->input_enabled )
+  if( !rge_base_game->input_enabled )
     RGE_Base_Game::enable_input(rge_base_game);
   return TPanel::handle_idle((TPanel *)&v1->vfptr);
 }
@@ -1662,7 +1662,7 @@ int __thiscall TribeAchievementsScreen::wnd_proc(TribeAchievementsScreen *this, 
   int result; // eax@8
 
   v5 = this;
-  if ( msg != 16
+  if( msg != 16
     || confirmed_close
     || (confirmed_close = 1, v6 = rge_base_game->prog_mode, v6 != 5) && v6 != 4 && v6 != 6 && v6 != 7
     || IsIconic(this->render_area->Wnd) )

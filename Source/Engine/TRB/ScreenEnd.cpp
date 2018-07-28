@@ -27,14 +27,14 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
   TScreenPanel::TScreenPanel((TScreenPanel *)&this->vfptr, aEndScreen);
   v4->vfptr = (TPanelVtbl *)&TribeEndScreen::`vftable';
   v22 = 0;
-  if ( TScreenPanel::setup((TScreenPanel *)&v4->vfptr, rge_base_game->draw_area, 0, 0, 1) )
+  if( TScreenPanel::setup((TScreenPanel *)&v4->vfptr, rge_base_game->draw_area, 0, 0, 1) )
   {
     v5 = v4->render_area->Width;
-    if ( v5 >= 800 )
+    if( v5 >= 800 )
     {
       v6 = backgroundName;
       v7 = aBga800;
-      if ( v5 >= 1024 )
+      if( v5 >= 1024 )
         v7 = aBga1024;
     }
     else
@@ -45,15 +45,15 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
     strcpy(v6, v7);
     v8 = (TPicturePanel *)operator new(0x11Cu);
     LOBYTE(v22) = 1;
-    if ( v8 )
+    if( v8 )
       TPicturePanel::TPicturePanel(v8);
     else
       v9 = 0;
     LOBYTE(v22) = 0;
     v4->background = v9;
-    if ( v9 )
+    if( v9 )
     {
-      if ( TPicturePanel::setup(v9, v4->render_area, (TPanel *)&v4->vfptr, 0, 0, 0, 0, backgroundName, -1, 0, 1) )
+      if( TPicturePanel::setup(v9, v4->render_area, (TPanel *)&v4->vfptr, 0, 0, 0, 0, backgroundName, -1, 0, 1) )
       {
         (*(void (__stdcall **)(signed int, _DWORD, _DWORD, _DWORD, _DWORD, int, int, int, int, _DWORD, _DWORD, _DWORD, _DWORD))&v4->background->vfptr->gap10[8])(
           2,
@@ -72,7 +72,7 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
         v10 = RGE_Base_Game::get_font(rge_base_game, 1);
         v11 = (TTextPanel *)operator new(0x188u);
         LOBYTE(v22) = 2;
-        if ( v11 )
+        if( v11 )
         {
           TTextPanel::TTextPanel(v11);
           v20 = v12;
@@ -84,7 +84,7 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
         }
         LOBYTE(v22) = 0;
         v4->title = v12;
-        if ( v12 )
+        if( v12 )
         {
           TTextPanel::setup(
             v20,
@@ -106,13 +106,13 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
             titleText);
           v13 = (TTextPanel *)operator new(0x188u);
           LOBYTE(v22) = 3;
-          if ( v13 )
+          if( v13 )
             TTextPanel::TTextPanel(v13);
           else
             v14 = 0;
           LOBYTE(v22) = 0;
           v4->text = v14;
-          if ( v14 )
+          if( v14 )
           {
             v15 = RGE_Base_Game::get_font(rge_base_game, 11);
             TTextPanel::setup(
@@ -140,7 +140,7 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
             v17 = RGE_Base_Game::get_font(rge_base_game, 0);
             v18 = (TButtonPanel *)operator new(0x2B8u);
             LOBYTE(v22) = 4;
-            if ( v18 )
+            if( v18 )
             {
               TButtonPanel::TButtonPanel(v18);
               titleTexta = v19;
@@ -152,7 +152,7 @@ void __thiscall TribeEndScreen::TribeEndScreen(TribeEndScreen *this, char *title
             }
             LOBYTE(v22) = 0;
             v4->okButton = (TButtonPanel *)v19;
-            if ( v19 )
+            if( v19 )
             {
               TButtonPanel::setup(
                 (TPanel *)titleTexta,
@@ -209,7 +209,7 @@ TribeEndScreen *__thiscall TribeEndScreen::`vector deleting destructor'(TribeEnd
 
   v2 = this;
   TribeEndScreen::~TribeEndScreen(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -226,16 +226,16 @@ void __thiscall TribeEndScreen::~TribeEndScreen(TribeEndScreen *this)
   v1 = this;
   this->vfptr = (TPanelVtbl *)&TribeEndScreen::`vftable';
   v2 = this->title;
-  if ( v2 )
+  if( v2 )
     ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
   v3 = v1->text;
-  if ( v3 )
+  if( v3 )
     ((void (__stdcall *)(_DWORD))v3->vfptr->__vecDelDtor)(1);
   v4 = v1->okButton;
-  if ( v4 )
+  if( v4 )
     (**(void (__stdcall ***)(_DWORD))v4)(1);
   v5 = v1->background;
-  if ( v5 )
+  if( v5 )
     ((void (__stdcall *)(_DWORD))v5->vfptr->__vecDelDtor)(1);
   TScreenPanel::~TScreenPanel((TScreenPanel *)&v1->vfptr);
 }
@@ -248,10 +248,10 @@ int __thiscall TribeEndScreen::action(TribeEndScreen *this, TPanel *fromPanel, i
   char *v6; // eax@4
   int result; // eax@5
 
-  if ( fromPanel && actionIn == 1 )
+  if( fromPanel && actionIn == 1 )
   {
     v5 = (TribeAchievementsScreen *)operator new(0x5F8u);
-    if ( v5 )
+    if( v5 )
     {
       v6 = TPanel::get_string(9886);
       TribeAchievementsScreen::TribeAchievementsScreen(v5, v6, 1);

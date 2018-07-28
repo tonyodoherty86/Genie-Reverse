@@ -16,75 +16,75 @@ class TRIBE_Player;
  */
 struct TRIBE_FealtyOffer
 {
-	/**
-	 * Offset: 0.
-	 */
-	char Sequence;
+    /**
+     * Offset: 0.
+     */
+    char Sequence;
 
-	/**
-	 * Offset: 1.
-	 */
-	char StartedBy;
+    /**
+     * Offset: 1.
+     */
+    char StartedBy;
 
-	/**
-	 * Offset: 8.
-	 */
-	int GameTime;
+    /**
+     * Offset: 8.
+     */
+    int GameTime;
 
-	/**
-	 * Offset: 12.
-	 */
-	char Declare;
+    /**
+     * Offset: 12.
+     */
+    char Declare;
 
-	/**
-	 * Offset: 13.
-	 */
-	char OldDiplomacy;
+    /**
+     * Offset: 13.
+     */
+    char OldDiplomacy;
 
-	/**
-	 * Offset: 14.
-	 */
-	char NewDiplomacy;
+    /**
+     * Offset: 14.
+     */
+    char NewDiplomacy;
 
-	/**
-	 * Offset: 15.
-	 */
-	char OldIntelligence;
+    /**
+     * Offset: 15.
+     */
+    char OldIntelligence;
 
-	/**
-	 * Offset: 16.
-	 */
-	char NewIntelligence;
+    /**
+     * Offset: 16.
+     */
+    char NewIntelligence;
 
-	/**
-	 * Offset: 17.
-	 */
-	char OldTrade;
+    /**
+     * Offset: 17.
+     */
+    char OldTrade;
 
-	/**
-	 * Offset: 18.
-	 */
-	char NewTrade;
+    /**
+     * Offset: 18.
+     */
+    char NewTrade;
 
-	/**
-	 * Offset: 19.
-	 */
-	char Demand;
+    /**
+     * Offset: 19.
+     */
+    char Demand;
 
-	/**
-	 * Offset: 20.
-	 */
-	char Gold;
+    /**
+     * Offset: 20.
+     */
+    char Gold;
 
-	/**
-	 * Offset: 24.
-	 */
-	char Message[TRIBE_FEALTY_OFFER_MESSAGE_LENGTH];
+    /**
+     * Offset: 24.
+     */
+    char Message[TRIBE_FEALTY_OFFER_MESSAGE_LENGTH];
 
-	/**
-	 * Offset: 124.
-	 */
-	char Status;
+    /**
+     * Offset: 124.
+     */
+    char Status;
 };
 
 struct Item_Avail

@@ -208,7 +208,7 @@ void TRIBE_Player::TRIBE_Player(TRIBE_World *gworld, RGE_Master_Player *prototyp
             v23 = 0;
         v11->visible = v23;
     }
-    for ( i = 1; i < v11->world->player_num; ++i )
+    for( i = 1; i < v11->world->player_num; ++i )
     {
         if( i != v11->id )
             RGE_Player::set_relation((RGE_Player *)&v11->vfptr, i, 3);
@@ -437,7 +437,7 @@ void TRIBE_Player::update()
                     }
                     v10 = v10->next;
                 }
-                while ( v10 );
+                while( v10 );
                 if( !v10 )
                 {
 LABEL_43:
@@ -446,7 +446,7 @@ LABEL_43:
                 }
             }
         }
-        while ( v1->update_time > 1.0 );
+        while( v1->update_time > 1.0 );
     }
     RGE_Player::update((RGE_Player *)&v1->vfptr);
     *v1->attributes = *v1->attributes
@@ -506,7 +506,7 @@ void TRIBE_Player::scenario_load(TRIBE_Player *this@<ecx>, int a2@<ebp>, char *a
         TRIBE_Player_Tech::~TRIBE_Player_Tech(v6->tech_tree);
         operator delete(v7);
     }
-    for ( i = 0; i < v6->master_object_num; ++i )
+    for( i = 0; i < v6->master_object_num; ++i )
     {
         v9 = v6->master_objects[i];
         if( v9 )
@@ -603,7 +603,7 @@ void TRIBE_Player::load(TRIBE_Player *this@<ecx>, int a2@<edi>, int infile)
                 }
                 ++v6;
             }
-            while ( (signed short)v6 < *(_WORD *)v5 );
+            while( (signed short)v6 < *(_WORD *)v5 );
         }
     }
     v9 = (RGE_Visible_Map *)operator new(0x38u);
@@ -862,7 +862,7 @@ RGE_Static_Object *TRIBE_Player::find_obj(short obj_id, RGE_Static_Object *after
     if( after_obj )
     {
         v3 = 0;
-        for ( i = this->objects->list; i; i = i->next )
+        for( i = this->objects->list; i; i = i->next )
         {
             v5 = i->node;
             if( i->node )
@@ -882,7 +882,7 @@ RGE_Static_Object *TRIBE_Player::find_obj(short obj_id, RGE_Static_Object *after
     v6 = this->objects->list;
     if( v6 )
     {
-        while ( 1 )
+        while( 1 )
         {
             v7 = v6->node;
             if( v6->node )
@@ -979,7 +979,7 @@ void TRIBE_Player::interface_tech_avail(Item_Avail **list, short *list_num, shor
             v10 += 30;
             --v8;
         }
-        while ( v8 );
+        while( v8 );
     }
     v12 = list;
     if( *list )
@@ -1039,7 +1039,7 @@ void TRIBE_Player::interface_tech_avail(Item_Avail **list, short *list_num, shor
                 v13 = v4->tech_tree;
                 ++v14;
             }
-            while ( v14 < v13->tech_player_tree_num );
+            while( v14 < v13->tech_player_tree_num );
         }
     }
 }
@@ -1099,13 +1099,13 @@ void TRIBE_Player::interface_item_avail(Item_Avail **list, short *list_num, shor
             ++v8;
             --v9;
         }
-        while ( v9 );
+        while( v9 );
     }
     if( obj_cat == 118 && v4->attributes[48] == 0.0 && !*(_BYTE *)(*((_DWORD *)v4->master_objects + 109) + 82) )
     {
         v11 = v4->objects;
         tribe_flag = 1;
-        for ( i = v11->list; i; i = i->next )
+        for( i = v11->list; i; i = i->next )
         {
             if( i->node->master_obj->id == 109 )
                 tribe_flag = 0;
@@ -1165,7 +1165,7 @@ void TRIBE_Player::interface_item_avail(Item_Avail **list, short *list_num, shor
                 v17 = (signed short)(v15 - v4->master_object_num) < 0;
                 index = v15;
             }
-            while ( v17 ^ v25 );
+            while( v17 ^ v25 );
             v5 = 0;
         }
         if( (_WORD)tribe_flag != v5 )
@@ -1214,7 +1214,7 @@ void TRIBE_Player::interface_trade_avail(Trade_Avail **list, short *list_num)
     v4 = 1;
     v5 = 0;
     v14 = this;
-    for ( i = 1; v4 < v3->player_num; i = ++v4 )
+    for( i = 1; v4 < v3->player_num; i = ++v4 )
     {
         if( v4 != this->id )
         {
@@ -1236,7 +1236,7 @@ void TRIBE_Player::interface_trade_avail(Trade_Avail **list, short *list_num)
                     }
                     v6 = v6->next;
                 }
-                while ( v6 );
+                while( v6 );
                 v4 = i;
                 this = v14;
             }
@@ -1268,7 +1268,7 @@ void TRIBE_Player::interface_trade_avail(Trade_Avail **list, short *list_num)
                 v8[-1].player = v12;
                 v8[-1].inventory = v11->attribute_amount_held;
             }
-            while ( v10 );
+            while( v10 );
         }
     }
 }
@@ -1633,7 +1633,7 @@ char TRIBE_Player::check_obj_cost(short obj_id, short *attribute_needed, float m
     {
         v9 = 0;
         v10 = (int)&v8[1].convert_terrain_flag;
-        while ( 1 )
+        while( 1 )
         {
             v11 = *(_WORD *)(v10 - 2);
             if( v11 >= 0 )
@@ -1720,7 +1720,7 @@ char TRIBE_Player::pay_obj_cost(short obj_id, float modifier, int ignore_pop)
             v6 = (RGE_Damage_Sprite_Info **)((char *)v6 + 6);
             --v5;
         }
-        while ( v5 );
+        while( v5 );
         result = 1;
     }
     else
@@ -1756,7 +1756,7 @@ void TRIBE_Player::reimburse_obj_cost(short obj_id)
             v3 += 6;
             --v4;
         }
-        while ( v4 );
+        while( v4 );
     }
 }
 
@@ -1925,7 +1925,7 @@ void TRIBE_Player::random_start()
             ++v5;
             w1 = (double)(signed int)(v13 + (v13 >> 31) + 15) - -0.5;
         }
-        while ( v5 < 5000 );
+        while( v5 < 5000 );
         if( v5 < 5000 )
         {
             v14 = (TRIBE_Building_Object *)(*(int (__stdcall **)(TRIBE_Player *, float, float, _DWORD))(**((_DWORD **)v1->master_objects + 109)
@@ -1980,10 +1980,10 @@ void TRIBE_Player::random_start()
                         }
                     }
                 }
-                while ( v15 );
+                while( v15 );
                 --v38;
             }
-            while ( v38 );
+            while( v38 );
         }
     }
     if( RGE_Base_Game::multiplayerGame(rge_base_game) || RGE_Base_Game::randomGame(rge_base_game) )
@@ -2013,7 +2013,7 @@ void TRIBE_Player::random_start()
                 }
                 ++v26;
             }
-            while ( v26 < v1->world->player_num );
+            while( v26 < v1->world->player_num );
         }
     }
     v29 = v1->world;
@@ -2038,11 +2038,11 @@ void TRIBE_Player::random_start()
                             }
                             ++v31;
                         }
-                        while ( v31 < 9 );
+                        while( v31 < 9 );
                     }
                     ++v30;
                 }
-                while ( v30 < v1->world->player_num );
+                while( v30 < v1->world->player_num );
             }
         }
     }
@@ -2756,7 +2756,7 @@ LABEL_9:
                 TRIBE_Player::intelligentBuildListAndRulesSelection(v6, buildListName, ruleSetName, v9, v8, v7);
                 AIModule::logCommonHistory((AIModule *)&v6->playerAI->vfptr, aLoadingRandomG, buildListName);
             }
-            while ( !((int (__thiscall *)(int, char *, TRIBE_Player *))v6->playerAI->buildAI.vfptr[1].setLogHistory)(
+            while( !((int (__thiscall *)(int, char *, TRIBE_Player *))v6->playerAI->buildAI.vfptr[1].setLogHistory)(
                                  (int)&v6->playerAI->buildAI,
                                  buildListName,
                                  v6) );
@@ -2780,7 +2780,7 @@ LABEL_9:
             TRIBE_Player::intelligentBuildListAndRulesSelection(v6, buildListName, ruleSetName, v12, v11, v10);
             AIModule::logCommonHistory((AIModule *)&v6->playerAI->vfptr, aLoadingDefault, buildListName);
         }
-        while ( !((int (__thiscall *)(_DWORD, _DWORD, _DWORD))v6->playerAI->buildAI.vfptr[1].setLogHistory)(
+        while( !((int (__thiscall *)(_DWORD, _DWORD, _DWORD))v6->playerAI->buildAI.vfptr[1].setLogHistory)(
                              &v6->playerAI->buildAI,
                              buildListName,
                              v6) );
@@ -2831,7 +2831,7 @@ LABEL_22:
     AIModule::logCommonHistory((AIModule *)&v6->playerAI->vfptr, aSettingDifficu, v16);
     TribeStrategyAIModule::setDifficultyLevel(&v6->playerAI->strategyAI, v16);
     TribeMainDecisionAIModule::updateBuildAIWithObjects(v6->playerAI);
-    for ( i = 1; i < v6->world->player_num; ++i )
+    for( i = 1; i < v6->world->player_num; ++i )
     {
         if( i == v6->id )
         {
@@ -2866,7 +2866,7 @@ LABEL_22:
                 DiplomacyAIModule::setChangeable(&v6->playerAI->diplomacyAI, v19, 1);
             ++v19;
         }
-        while ( v19 < v6->world->player_num );
+        while( v19 < v6->world->player_num );
     }
     EmotionalAIModule::setOverallState(&v6->playerAI->emotionalAI, mood);
     v22 = v6->world;
@@ -3475,7 +3475,7 @@ LABEL_64:
             v15 = __OFSUB__(mostBuiltUnit1 + 1, 7);
             v14 = mostBuiltUnit1++ - 6 < 0;
         }
-        while ( v14 ^ v15 );
+        while( v14 ^ v15 );
         buildLists[18] = v8;
         buildLists[51] = v11;
         buildLists[50] = v12;
@@ -3489,7 +3489,7 @@ LABEL_64:
             ++v16;
             --v17;
         }
-        while ( v17 );
+        while( v17 );
         v18 = 0;
         v19 = buildLists;
         v20 = 125;
@@ -3500,13 +3500,13 @@ LABEL_64:
             v18 += v21;
             --v20;
         }
-        while ( v20 );
+        while( v20 );
         v22 = debug_rand(aCMsdevWorkAg_3, 3137) % v18;
         v23 = 0;
         v24 = 0;
         v25 = 0;
         v26 = buildLists;
-        while ( 1 )
+        while( 1 )
         {
             v24 += *v26;
             if( v24 > v22 )
@@ -5230,7 +5230,7 @@ void TRIBE_Player::analyize_selected_objects()
             ++v1;
             v4 += 4;
         }
-        while ( v1 < 25 );
+        while( v1 < 25 );
     }
 }
 
@@ -5298,7 +5298,7 @@ int TRIBE_Player::get_mouse_pointer_action_vars(int Obj_id, int *newFacet, int *
             v4->vfptr->analyize_selected_objects((RGE_Player *)v4);
             if( MstrObjId == 158 || MstrObjId == 163 )
                 v9 = 50;
-            while ( 1 )
+            while( 1 )
             {
                 if( v4->sel_count && v4->sel_object_properties )
                 {
@@ -5321,7 +5321,7 @@ int TRIBE_Player::get_mouse_pointer_action_vars(int Obj_id, int *newFacet, int *
                     if( (signed int)v14 > 0 )
                     {
                         v17 = v13;
-                        while ( *(_DWORD *)v17 != ObjectType )
+                        while( *(_DWORD *)v17 != ObjectType )
                         {
                             ++v16;
                             v17 += 44;
@@ -5365,7 +5365,7 @@ LABEL_25:
                 }
                 if( v18 == -1 )
                     break;
-                while ( 2 )
+                while( 2 )
                 {
                     switch ( v18 )
                     {
@@ -5561,7 +5561,7 @@ void TRIBE_Gaia::update()
             if( v5 == 30 )
                 this->update_nature = 0;
         }
-        while ( this->update_time > 1.0 );
+        while( this->update_time > 1.0 );
     }
     RGE_Player::update((RGE_Player *)&this->vfptr);
 }

@@ -33,19 +33,19 @@ void __thiscall TRIBE_Credits_Screen::TRIBE_Credits_Screen(TRIBE_Credits_Screen 
   memset(v1->back_pics, 0, sizeof(v1->back_pics));
   v2 = rge_base_game->draw_area;
   v16 = 0;
-  if ( TScreenPanel::setup((TScreenPanel *)&v1->vfptr, v2, aScr_cred, 50059, 1) )
+  if( TScreenPanel::setup((TScreenPanel *)&v1->vfptr, v2, aScr_cred, 50059, 1) )
   {
     TEasy_Panel::set_ideal_size((TEasy_Panel *)&v1->vfptr, 640, 480);
     v3 = RGE_Base_Game::get_font(rge_base_game, 4);
     v4 = 0;
     v5 = _open(aData2List_cr, 0x8000);
     v6 = v5;
-    if ( v5 != -1 )
+    if( v5 != -1 )
     {
       lseek(v5, 0, 2);
       size = _tell(v6);
       v4 = calloc(size + 1, 0x400u);
-      if ( v4 )
+      if( v4 )
       {
         lseek(v6, 0, 0);
         read(v6, v4, size);
@@ -54,7 +54,7 @@ void __thiscall TRIBE_Credits_Screen::TRIBE_Credits_Screen(TRIBE_Credits_Screen 
     }
     v7 = (TScrollTextPanel *)operator new(0x198u);
     LOBYTE(v16) = 1;
-    if ( v7 )
+    if( v7 )
       TScrollTextPanel::TScrollTextPanel(
         v7,
         (TPanel *)&v1->vfptr,
@@ -72,7 +72,7 @@ void __thiscall TRIBE_Credits_Screen::TRIBE_Credits_Screen(TRIBE_Credits_Screen 
       v8 = 0;
     LOBYTE(v16) = 0;
     v1->text_panel = v8;
-    if ( v4 )
+    if( v4 )
       free(v4);
     v9 = 50155;
     v1->back_pics[0] = v1->background_pic;
@@ -82,7 +82,7 @@ void __thiscall TRIBE_Credits_Screen::TRIBE_Credits_Screen(TRIBE_Credits_Screen 
       sprintf(temp_file_name, aCreditD, v9 - 50153);
       v11 = (TShape *)operator new(0x20u);
       LOBYTE(v16) = 2;
-      if ( v11 )
+      if( v11 )
         TShape::TShape(v11, temp_file_name, v9);
       else
         v12 = 0;
@@ -91,9 +91,9 @@ void __thiscall TRIBE_Credits_Screen::TRIBE_Credits_Screen(TRIBE_Credits_Screen 
       ++v9;
       LOBYTE(v16) = 0;
     }
-    while ( v9 - 50154 < 7 );
+    while( v9 - 50154 < 7 );
     v13 = rge_base_game->music_system;
-    if ( v13 && v13->music_type == 1 && v13->track_count == 15 )
+    if( v13 && v13->music_type == 1 && v13->track_count == 15 )
       TMusic_System::play_tracks(v13, 15, 15, 1, 0, 0);
   }
   else
@@ -110,7 +110,7 @@ TRIBE_Credits_Screen *__thiscall TRIBE_Credits_Screen::`vector deleting destruct
 
   v2 = this;
   TRIBE_Credits_Screen::~TRIBE_Credits_Screen(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -132,7 +132,7 @@ void __thiscall TRIBE_Credits_Screen::~TRIBE_Credits_Screen(TRIBE_Credits_Screen
   do
   {
     v4 = *v2;
-    if ( *v2 )
+    if( *v2 )
     {
       TShape::~TShape(*v2);
       operator delete(v4);
@@ -141,16 +141,16 @@ void __thiscall TRIBE_Credits_Screen::~TRIBE_Credits_Screen(TRIBE_Credits_Screen
     ++v2;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v5 = v1->text_panel;
   v1->background_pic = 0;
-  if ( v5 )
+  if( v5 )
   {
     ((void (__stdcall *)(_DWORD))v5->vfptr->__vecDelDtor)(1);
     v1->text_panel = 0;
   }
   v6 = rge_base_game->music_system;
-  if ( v6 && v6->music_type == 1 && v6->track_count == 15 )
+  if( v6 && v6->music_type == 1 && v6->track_count == 15 )
     TMusic_System::play_tracks(v6, 5, 14, 1, 0, 0);
   TScreenPanel::~TScreenPanel((TScreenPanel *)&v1->vfptr);
 }
@@ -178,21 +178,21 @@ int __thiscall TRIBE_Credits_Screen::handle_idle(TRIBE_Credits_Screen *this)
 
   v1 = this;
   v2 = this->mode;
-  if ( v2 == 1 )
+  if( v2 == 1 )
   {
-    if ( this->last_picture_time )
+    if( this->last_picture_time )
     {
-      if ( debug_timeGetTime() - this->last_picture_time >= 0x2710 )
+      if( debug_timeGetTime() - this->last_picture_time >= 0x2710 )
       {
         v3 = v1->render_area;
-        if ( v3->DrawSystem->ScreenMode == 2 || v3->DrawSystem->DrawType == 1 )
+        if( v3->DrawSystem->ScreenMode == 2 || v3->DrawSystem->DrawType == 1 )
         {
           v4 = v1->palette;
           v1->mode = 2;
           v1->color.peRed = 0;
           v1->color.peGreen = 0;
           v1->color.peBlue = 0;
-          if ( v4 )
+          if( v4 )
             GetPaletteEntries(v4, 0, 0x100u, v1->color_table);
           else
             TDrawArea::GetPalette(v3, v1->color_table);
@@ -209,11 +209,11 @@ LABEL_26:
     v1->last_picture_time = debug_timeGetTime();
     goto LABEL_27;
   }
-  if ( v2 != 2 )
+  if( v2 != 2 )
   {
-    if ( v2 == 4 )
+    if( v2 == 4 )
     {
-      if ( !this->last_pause_time )
+      if( !this->last_pause_time )
       {
         this->last_pause_time = debug_timeGetTime();
         goto LABEL_27;
@@ -222,7 +222,7 @@ LABEL_26:
       v6 = v1->picture_set + 1;
       v1->mode = 5;
       v1->picture_set = v6;
-      if ( v6 > 7 )
+      if( v6 > 7 )
         v1->picture_set = 1;
       v7 = v1->vfptr;
       v1->background_pic = (TShape *)*((_DWORD *)&v1->color + v1->picture_set);
@@ -230,7 +230,7 @@ LABEL_26:
       v7->handle_paint((TPanel *)v1);
       TDrawSystem::Paint(v1->render_area->DrawSystem, 0);
       v8 = v1->render_area;
-      if ( v8->DrawSystem->ScreenMode == 2 || v8->DrawSystem->DrawType == 1 )
+      if( v8->DrawSystem->ScreenMode == 2 || v8->DrawSystem->DrawType == 1 )
       {
         RGE_fade_palette_start(v8, v1->color, 0.5, 2, v1->color_table, 255, -1);
         goto LABEL_27;
@@ -239,13 +239,13 @@ LABEL_26:
     }
     else
     {
-      if ( v2 != 5 || !RGE_fade_palette_step() )
+      if( v2 != 5 || !RGE_fade_palette_step() )
         goto LABEL_27;
       v1->mode = 1;
     }
     goto LABEL_26;
   }
-  if ( RGE_fade_palette_step() )
+  if( RGE_fade_palette_step() )
   {
     v5 = v1->vfptr;
     v1->mode = 4;
@@ -255,7 +255,7 @@ LABEL_26:
     TDrawSystem::Paint(v1->render_area->DrawSystem, 0);
   }
 LABEL_27:
-  if ( v1->text_done )
+  if( v1->text_done )
   {
     TRIBE_Credits_Screen::close_screen();
     result = 1;
@@ -277,9 +277,9 @@ void __thiscall TRIBE_Credits_Screen::draw(TRIBE_Credits_Screen *this)
   TShape *v5; // ecx@8
 
   v1 = this;
-  if ( this->mode != 4 || (v2 = this->render_area, v2->DrawSystem->ScreenMode != 2) && v2->DrawSystem->DrawType != 1 )
+  if( this->mode != 4 || (v2 = this->render_area, v2->DrawSystem->ScreenMode != 2) && v2->DrawSystem->DrawType != 1 )
   {
-    if ( v1->first_draw )
+    if( v1->first_draw )
     {
       v3 = 7;
       v4 = v1->back_pics;
@@ -290,7 +290,7 @@ void __thiscall TRIBE_Credits_Screen::draw(TRIBE_Credits_Screen *this)
         ++v4;
         --v3;
       }
-      while ( v3 );
+      while( v3 );
       v5 = v1->back_pics[0];
       v1->first_draw = 0;
       v1->background_pic = v5;
@@ -308,7 +308,7 @@ int __stdcall TRIBE_Credits_Screen::key_down_action(int key, __int16 count, int 
 {
   int result; // eax@3
 
-  if ( key == 13 || key == 27 )
+  if( key == 13 || key == 27 )
   {
     TRIBE_Credits_Screen::close_screen();
     result = 1;
@@ -325,7 +325,7 @@ int __thiscall TRIBE_Credits_Screen::action(TRIBE_Credits_Screen *this, TPanel *
 {
   int result; // eax@4
 
-  if ( from_panel && from_panel == (TPanel *)this->text_panel && action_in == 1 )
+  if( from_panel && from_panel == (TPanel *)this->text_panel && action_in == 1 )
   {
     this->text_done = 1;
     result = 1;
@@ -343,16 +343,16 @@ void TRIBE_Credits_Screen::close_screen()
   TRIBE_Screen_Main_Menu *v1; // eax@6
   char *v2; // [sp-8h] [bp-18h]@5
 
-  if ( TPanelSystem::panel(&panel_system, aGameScreen) )
+  if( TPanelSystem::panel(&panel_system, aGameScreen) )
   {
-    if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+    if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
       RGE_Base_Game::set_paused(rge_base_game, 0, 0);
     v2 = aGameScreen;
   }
   else
   {
     v1 = (TRIBE_Screen_Main_Menu *)operator new(0x4B0u);
-    if ( v1 )
+    if( v1 )
       TRIBE_Screen_Main_Menu::TRIBE_Screen_Main_Menu(v1);
     v2 = aMainMenu;
   }

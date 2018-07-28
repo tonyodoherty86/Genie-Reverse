@@ -10,7 +10,7 @@ void __thiscall TRIBE_Master_Tree_Object::TRIBE_Master_Tree_Object(TRIBE_Master_
     (RGE_Master_Static_Object *)&other_object->vfptr,
     0);
   v3->vfptr = (RGE_Master_Static_ObjectVtbl *)&TRIBE_Master_Tree_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
   {
     RGE_Master_Static_Object::setup(
       (RGE_Master_Static_Object *)&v3->vfptr,
@@ -27,7 +27,7 @@ TRIBE_Master_Tree_Object *__thiscall TRIBE_Master_Tree_Object::`scalar deleting 
 
   v2 = this;
   TRIBE_Master_Tree_Object::~TRIBE_Master_Tree_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -46,7 +46,7 @@ void __thiscall TRIBE_Master_Tree_Object::TRIBE_Master_Tree_Object(TRIBE_Master_
     sounds,
     0);
   v5->vfptr = (RGE_Master_Static_ObjectVtbl *)&TRIBE_Master_Tree_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
   {
     RGE_Master_Static_Object::setup((RGE_Master_Static_Object *)&v5->vfptr, infile, infile, sprites, sounds);
     v5->master_type = 90;
@@ -68,7 +68,7 @@ void __thiscall TRIBE_Master_Tree_Object::TRIBE_Master_Tree_Object(TRIBE_Master_
     in_id,
     0);
   v6->vfptr = (RGE_Master_Static_ObjectVtbl *)&TRIBE_Master_Tree_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
   {
     RGE_Master_Static_Object::setup((RGE_Master_Static_Object *)&v6->vfptr, infile, sprites, sounds, in_id);
     v6->master_type = 90;
@@ -84,7 +84,7 @@ void __thiscall TRIBE_Master_Tree_Object::make_new_obj(TRIBE_Master_Tree_Object 
 
   v5 = this;
   v6 = (TRIBE_Tree_Object *)operator new(0x88u);
-  if ( v6 )
+  if( v6 )
     TRIBE_Tree_Object::TRIBE_Tree_Object(v6, v5, owner, x, y, z, 1);
 }
 
@@ -96,6 +96,6 @@ void __thiscall TRIBE_Master_Tree_Object::make_new_master(TRIBE_Master_Tree_Obje
 
   v1 = this;
   v2 = (TRIBE_Master_Tree_Object *)operator new(0xB8u);
-  if ( v2 )
+  if( v2 )
     TRIBE_Master_Tree_Object::TRIBE_Master_Tree_Object(v2, v1, 1);
 }

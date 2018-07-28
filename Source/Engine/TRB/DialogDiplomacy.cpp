@@ -88,7 +88,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
     v3 += 4;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
   memset(v2->allyButton, 0, sizeof(v2->allyButton));
   v2->allianceButton = 0;
   v2->okButton = 0;
@@ -110,30 +110,30 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
   v5 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&parentPanel->vfptr);
   v6 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&parentPanel->vfptr);
   v7 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-  if ( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v7, (TPanel *)&parentPanel->vfptr, 625, 405, v6, v5, 1) )
+  if( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v7, (TPanel *)&parentPanel->vfptr, 625, 405, v6, v5, 1) )
   {
     v8 = (TShape *)operator new(0x20u);
     LOBYTE(v62) = 1;
-    if ( v8 )
+    if( v8 )
       TShape::TShape(v8, aTradicon_shp, 50732);
     else
       v9 = 0;
     LOBYTE(v62) = 0;
     v2->buttonPics = v9;
-    if ( v9 )
+    if( v9 )
     {
       v10 = (TShape *)operator new(0x20u);
       LOBYTE(v62) = 2;
-      if ( v10 )
+      if( v10 )
         TShape::TShape(v10, aDlg_plbn_shp, 50746);
       else
         v11 = 0;
       LOBYTE(v62) = 0;
       v2->backgroundPics = v11;
-      if ( v11 )
+      if( v11 )
       {
         RGE_Base_Game::get_font(rge_base_game, 1);
-        if ( TEasy_Panel::create_text(
+        if( TEasy_Panel::create_text(
                (TEasy_Panel *)&v2->vfptr,
                (TPanel *)&v2->vfptr,
                v2->title,
@@ -147,7 +147,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                1,
                0) )
         {
-          if ( TEasy_Panel::create_text(
+          if( TEasy_Panel::create_text(
                  (TEasy_Panel *)&v2->vfptr,
                  (TPanel *)&v2->vfptr,
                  &v2->needMarket,
@@ -161,7 +161,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                  1,
                  1) )
           {
-            if ( TEasy_Panel::create_text(
+            if( TEasy_Panel::create_text(
                    (TEasy_Panel *)&v2->vfptr,
                    (TPanel *)&v2->vfptr,
                    &v2->title[1],
@@ -175,7 +175,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                    1,
                    0) )
             {
-              if ( TEasy_Panel::create_text(
+              if( TEasy_Panel::create_text(
                      (TEasy_Panel *)&v2->vfptr,
                      (TPanel *)&v2->vfptr,
                      &v2->title[2],
@@ -189,7 +189,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                      1,
                      0) )
               {
-                if ( TEasy_Panel::create_text(
+                if( TEasy_Panel::create_text(
                        (TEasy_Panel *)&v2->vfptr,
                        (TPanel *)&v2->vfptr,
                        &v2->title[3],
@@ -203,7 +203,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                        1,
                        0) )
                 {
-                  if ( TEasy_Panel::create_text(
+                  if( TEasy_Panel::create_text(
                          (TEasy_Panel *)&v2->vfptr,
                          (TPanel *)&v2->vfptr,
                          &v2->title[4],
@@ -217,7 +217,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                          1,
                          0) )
                   {
-                    if ( TEasy_Panel::create_text(
+                    if( TEasy_Panel::create_text(
                            (TEasy_Panel *)&v2->vfptr,
                            (TPanel *)&v2->vfptr,
                            &v2->title[5],
@@ -236,7 +236,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                                            * 100.0);
                       v13 = TPanel::get_string(9856);
                       sprintf(temp_str, v13, v12);
-                      if ( TEasy_Panel::create_text(
+                      if( TEasy_Panel::create_text(
                              (TEasy_Panel *)&v2->vfptr,
                              (TPanel *)&v2->vfptr,
                              &v2->title[6],
@@ -250,7 +250,7 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                              1,
                              0) )
                       {
-                        if ( TEasy_Panel::create_text(
+                        if( TEasy_Panel::create_text(
                                (TEasy_Panel *)&v2->vfptr,
                                (TPanel *)&v2->vfptr,
                                &v2->title[7],
@@ -268,14 +268,14 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                           a = 1;
                           v14 = rge_base_game->world;
                           world = v14;
-                          if ( v14->player_num - 1 > 0 )
+                          if( v14->player_num - 1 > 0 )
                           {
                             v49 = v2->woodTributeButton;
                             button = v2->allyButton;
                             v15 = -1328 - (_DWORD)v2;
                             v57 = 0;
                             y = 80;
-                            while ( 1 )
+                            while( 1 )
                             {
                               v16 = (int)v49 + v15;
                               GetPaletteEntries(
@@ -283,14 +283,14 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                                 (*(RGE_Player **)((char *)v14->players + v16))->color_table->map_color,
                                 1u,
                                 &paletteColor);
-                              if ( rge_base_game->prog_mode == 5 )
+                              if( rge_base_game->prog_mode == 5 )
                               {
                                 v17 = a;
                               }
                               else
                               {
                                 v17 = a;
-                                if ( a != v14->curr_player
+                                if( a != v14->curr_player
                                   && !(*(RGE_Player **)((char *)v14->players + v16))->game_status )
                                 {
                                   disable_buttons = 0;
@@ -299,28 +299,28 @@ void __thiscall TribeDiplomacyDialog::TribeDiplomacyDialog(TribeDiplomacyDialog 
                               }
                               disable_buttons = 1;
 LABEL_30:
-                              if ( v17 == v14->curr_player )
+                              if( v17 == v14->curr_player )
                                 v2->cur_player_row = v17 - 1;
                               v18 = 0;
-                              if ( (*(RGE_Player **)((char *)world->players + v16))->game_status == 2 )
+                              if( (*(RGE_Player **)((char *)world->players + v16))->game_status == 2 )
                                 goto LABEL_95;
-                              if ( RGE_Base_Game::multiplayerGame(rge_base_game) )
+                              if( RGE_Base_Game::multiplayerGame(rge_base_game) )
                               {
                                 humanity = 0;
-                                for ( i = 1; i <= RGE_Base_Game::numberPlayers(rge_base_game); ++i )
+                                for( i = 1; i <= RGE_Base_Game::numberPlayers(rge_base_game); ++i )
                                 {
-                                  if ( RGE_Base_Game::playerID(rge_base_game, i) == a )
+                                  if( RGE_Base_Game::playerID(rge_base_game, i) == a )
                                   {
                                     v20 = TCommunications_Handler::GetPlayerHumanity(comm, i);
-                                    if ( v20 == 2 || v20 == 4 )
+                                    if( v20 == 2 || v20 == 4 )
                                       humanity = v20;
                                   }
                                 }
-                                if ( humanity != 2 && humanity != 4 )
+                                if( humanity != 2 && humanity != 4 )
 LABEL_95:
                                   v18 = 1;
                               }
-                              if ( !TEasy_Panel::create_text(
+                              if( !TEasy_Panel::create_text(
                                       (TEasy_Panel *)&v2->vfptr,
                                       (TPanel *)&v2->vfptr,
                                       (TTextPanel **)v49 - 33,
@@ -340,7 +340,7 @@ LABEL_95:
                                 0,
                                 temp_str,
                                 100);
-                              if ( !TEasy_Panel::create_text(
+                              if( !TEasy_Panel::create_text(
                                       (TEasy_Panel *)&v2->vfptr,
                                       (TPanel *)&v2->vfptr,
                                       (TTextPanel **)v49 - 17,
@@ -354,7 +354,7 @@ LABEL_95:
                                       1,
                                       0) )
                                 return;
-                              if ( a == world->curr_player )
+                              if( a == world->curr_player )
                               {
                                 v21 = button;
                               }
@@ -362,7 +362,7 @@ LABEL_95:
                               {
                                 v21 = button;
                                 humanitya = (int)button + -1428 - (_DWORD)v2;
-                                if ( !TEasy_Panel::create_radio_button(
+                                if( !TEasy_Panel::create_radio_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         button,
@@ -374,7 +374,7 @@ LABEL_95:
                                         0) )
                                   return;
                                 TPanel::set_help_info((TPanel *)*button, 30340, -1);
-                                if ( !TEasy_Panel::create_radio_button(
+                                if( !TEasy_Panel::create_radio_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         button + 1,
@@ -386,7 +386,7 @@ LABEL_95:
                                         0) )
                                   return;
                                 TPanel::set_help_info((TPanel *)button[1], 30341, -1);
-                                if ( !TEasy_Panel::create_radio_button(
+                                if( !TEasy_Panel::create_radio_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         button + 2,
@@ -398,25 +398,25 @@ LABEL_95:
                                         0) )
                                   return;
                                 TPanel::set_help_info((TPanel *)button[2], 30342, -1);
-                                if ( __OFSUB__(v57, v57 + 3) ^ 1 )
+                                if( __OFSUB__(v57, v57 + 3) ^ 1 )
                                 {
                                   v22 = button;
                                   v23 = 3;
                                   do
                                   {
                                     TButtonPanel::set_radio_info(*v22, button, 3);
-                                    if ( rge_base_game->prog_mode == 5 )
+                                    if( rge_base_game->prog_mode == 5 )
                                       TButtonPanel::set_disabled(*v22, 1);
                                     ++v22;
                                     --v23;
                                   }
-                                  while ( v23 );
+                                  while( v23 );
                                 }
                                 v24 = (RGE_Player *)RGE_Base_Game::get_player(rge_base_game);
                                 v25 = RGE_Player::relation(v24, a);
-                                if ( a != world->curr_player && v25 )
+                                if( a != world->curr_player && v25 )
                                 {
-                                  if ( v25 == 1 )
+                                  if( v25 == 1 )
                                     TButtonPanel::set_radio_button(*(TButtonPanel **)((char *)&v2->allyButton[1]
                                                                                     + humanitya));
                                   else
@@ -428,9 +428,9 @@ LABEL_95:
                                   TButtonPanel::set_radio_button(*(TButtonPanel **)((char *)v2->allyButton + humanitya));
                                 }
                               }
-                              if ( !disable_buttons )
+                              if( !disable_buttons )
                               {
-                                if ( !TEasy_Panel::create_button(
+                                if( !TEasy_Panel::create_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         v49,
@@ -445,7 +445,7 @@ LABEL_95:
                                         0) )
                                   return;
                                 v26 = v49 + 8;
-                                if ( !TEasy_Panel::create_button(
+                                if( !TEasy_Panel::create_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         v49 + 8,
@@ -460,7 +460,7 @@ LABEL_95:
                                         0) )
                                   return;
                                 v27 = v49 - 8;
-                                if ( !TEasy_Panel::create_button(
+                                if( !TEasy_Panel::create_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         v49 - 8,
@@ -475,7 +475,7 @@ LABEL_95:
                                         0) )
                                   return;
                                 v28 = v49 + 16;
-                                if ( !TEasy_Panel::create_button(
+                                if( !TEasy_Panel::create_button(
                                         (TEasy_Panel *)&v2->vfptr,
                                         (TPanel *)&v2->vfptr,
                                         v49 + 16,
@@ -508,14 +508,14 @@ LABEL_95:
                               ++a;
                               y += 30;
                               ++v49;
-                              if ( a - 1 >= world->player_num - 1 )
+                              if( a - 1 >= world->player_num - 1 )
                                 break;
                               v15 = -1328 - (_DWORD)v2;
                               v14 = world;
                             }
                           }
                           v29 = (TPanel **)&v2->allianceButton;
-                          if ( TEasy_Panel::create_check_box(
+                          if( TEasy_Panel::create_check_box(
                                  (TEasy_Panel *)&v2->vfptr,
                                  (TPanel *)&v2->vfptr,
                                  &v2->allianceButton,
@@ -531,11 +531,11 @@ LABEL_95:
                             LOWORD(v32) = (unsigned __int8)RGE_Player::get_allied_victory(v31);
                             v30[1].__vecDelDtor(*v29, v32);
                             TPanel::set_help_info(*v29, 30348, -1);
-                            if ( rge_base_game->prog_mode == 5 )
+                            if( rge_base_game->prog_mode == 5 )
                               TButtonPanel::set_disabled((TButtonPanel *)*v29, 1);
-                            if ( rge_base_game->prog_mode != 5 )
+                            if( rge_base_game->prog_mode != 5 )
                             {
-                              if ( !TEasy_Panel::create_button(
+                              if( !TEasy_Panel::create_button(
                                       (TEasy_Panel *)&v2->vfptr,
                                       (TPanel *)&v2->vfptr,
                                       &v2->okButton,
@@ -550,7 +550,7 @@ LABEL_95:
                                       0) )
                                 return;
                               TPanel::set_help_info((TPanel *)v2->okButton, 30001, -1);
-                              if ( !TEasy_Panel::create_button(
+                              if( !TEasy_Panel::create_button(
                                       (TEasy_Panel *)&v2->vfptr,
                                       (TPanel *)&v2->vfptr,
                                       &v2->clearButton,
@@ -567,7 +567,7 @@ LABEL_95:
                               TPanel::set_help_info((TPanel *)v2->clearButton, 30347, -1);
                             }
                             v33 = (TPanel **)&v2->cancelButton;
-                            if ( TEasy_Panel::create_button(
+                            if( TEasy_Panel::create_button(
                                    (TEasy_Panel *)&v2->vfptr,
                                    (TPanel *)&v2->vfptr,
                                    &v2->cancelButton,
@@ -585,7 +585,7 @@ LABEL_95:
                               v34 = *v33;
                               v34[2].max_wid = 27;
                               v34[2].min_hgt = 0;
-                              if ( TEasy_Panel::create_button(
+                              if( TEasy_Panel::create_button(
                                      (TEasy_Panel *)&v2->vfptr,
                                      (TPanel *)&v2->vfptr,
                                      &v2->help_button,
@@ -603,7 +603,7 @@ LABEL_95:
                                                                 + 4)
                                                      - v2->woodTotal);
                                 sprintf(temp_str, aLd_0, (_DWORD)v35);
-                                if ( TEasy_Panel::create_text(
+                                if( TEasy_Panel::create_text(
                                        (TEasy_Panel *)&v2->vfptr,
                                        (TPanel *)&v2->vfptr,
                                        &v2->playerWood,
@@ -620,7 +620,7 @@ LABEL_95:
                                   v36 = **(float **)&RGE_Base_Game::get_player(rge_base_game)->terrain_num
                                       - v2->foodTotal;
                                   sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v36);
-                                  if ( TEasy_Panel::create_text(
+                                  if( TEasy_Panel::create_text(
                                          (TEasy_Panel *)&v2->vfptr,
                                          (TPanel *)&v2->vfptr,
                                          &v2->playerFood,
@@ -639,7 +639,7 @@ LABEL_95:
                                         - v2->goldTotal;
                                     sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v37);
                                     v38 = (int)&v2->playerGold;
-                                    if ( TEasy_Panel::create_text(
+                                    if( TEasy_Panel::create_text(
                                            (TEasy_Panel *)&v2->vfptr,
                                            (TPanel *)&v2->vfptr,
                                            &v2->playerGold,
@@ -658,7 +658,7 @@ LABEL_95:
                                                            - v2->stoneTotal);
                                       sprintf(temp_str, aLd_0, (_DWORD)v39);
                                       v40 = (int)&v2->playerStone;
-                                      if ( TEasy_Panel::create_text(
+                                      if( TEasy_Panel::create_text(
                                              (TEasy_Panel *)&v2->vfptr,
                                              (TPanel *)&v2->vfptr,
                                              &v2->playerStone,
@@ -673,7 +673,7 @@ LABEL_95:
                                              0) )
                                       {
                                         v41 = RGE_Base_Game::get_player(rge_base_game);
-                                        if ( RGE_Object_List::find_by_master_id(
+                                        if( RGE_Object_List::find_by_master_id(
                                                (RGE_Object_List *)v41->map,
                                                84,
                                                -1.0,
@@ -703,7 +703,7 @@ LABEL_95:
                                           (*(void (__cdecl **)(signed int))(**(_DWORD **)v40 + 20))(0);
                                         }
                                         v44 = RGE_Base_Game::get_player(rge_base_game);
-                                        if ( TRIBE_Player_Tech::get_tech_state(
+                                        if( TRIBE_Player_Tech::get_tech_state(
                                                (TRIBE_Player_Tech *)LODWORD(v44[2].game_speed),
                                                30) == 3 )
                                           (*(void (__stdcall **)(_DWORD))&v2->title[6]->vfptr->gap10[4])(0);
@@ -712,20 +712,20 @@ LABEL_95:
                                         TribeDiplomacyDialog::check_food(v2);
                                         TribeDiplomacyDialog::check_stone(v2);
                                         TPanel::set_curr_child((TPanel *)&v2->vfptr, (TPanel *)v2->okButton);
-                                        if ( v2->okButton )
+                                        if( v2->okButton )
                                         {
                                           tabList[0] = (TPanel *)v2->okButton;
                                           tabCount = 1;
                                         }
                                         v45 = (TPanel *)v2->clearButton;
                                         v46 = tabCount;
-                                        if ( v45 )
+                                        if( v45 )
                                         {
                                           tabList[tabCount] = v45;
                                           v46 = tabCount + 1;
                                         }
                                         v47 = (TPanel *)v2->cancelButton;
-                                        if ( v47 )
+                                        if( v47 )
                                         {
                                           tabList[v46] = v47;
                                           LOWORD(v46) = v46 + 1;
@@ -760,7 +760,7 @@ TribeDiplomacyDialog *__thiscall TribeDiplomacyDialog::`vector deleting destruct
 
   v2 = this;
   TribeDiplomacyDialog::~TribeDiplomacyDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -800,80 +800,80 @@ void __thiscall TribeDiplomacyDialog::~TribeDiplomacyDialog(TribeDiplomacyDialog
   do
   {
     v4 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 - 16);
-    if ( v4 )
+    if( v4 )
       (**v4)(1);
-    if ( *(_DWORD *)v2 )
+    if( *(_DWORD *)v2 )
       (***(void (__stdcall ****)(_DWORD))v2)(1);
     v5 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 - 8);
-    if ( v5 )
+    if( v5 )
       (**v5)(1);
     v6 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 + 8);
-    if ( v6 )
+    if( v6 )
       (**v6)(1);
     v7 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 + 25);
-    if ( v7 )
+    if( v7 )
       (**v7)(1);
     v8 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 + 33);
-    if ( v8 )
+    if( v8 )
       (**v8)(1);
     v9 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 + 17);
-    if ( v9 )
+    if( v9 )
       (**v9)(1);
     v10 = (void (__stdcall ***)(_DWORD))*((_DWORD *)v2 + 41);
-    if ( v10 )
+    if( v10 )
       (**v10)(1);
     v2 += 4;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v11 = v1->allyButton;
   v12 = 24;
   do
   {
-    if ( *v11 )
+    if( *v11 )
       (**(void (__stdcall ***)(_DWORD))*v11)(1);
     ++v11;
     --v12;
   }
-  while ( v12 );
+  while( v12 );
   v13 = v1->allianceButton;
-  if ( v13 )
+  if( v13 )
     (**(void (__stdcall ***)(_DWORD))v13)(1);
   v14 = v1->okButton;
-  if ( v14 )
+  if( v14 )
     (**(void (__stdcall ***)(_DWORD))v14)(1);
   v15 = v1->cancelButton;
-  if ( v15 )
+  if( v15 )
     (**(void (__stdcall ***)(_DWORD))v15)(1);
   v16 = v1->clearButton;
-  if ( v16 )
+  if( v16 )
     (**(void (__stdcall ***)(_DWORD))v16)(1);
   v17 = v1->help_button;
-  if ( v17 )
+  if( v17 )
     (**(void (__stdcall ***)(_DWORD))v17)(1);
   v18 = v1->playerFood;
-  if ( v18 )
+  if( v18 )
     ((void (__stdcall *)(signed int))v18->vfptr->__vecDelDtor)(1);
   v19 = v1->playerGold;
-  if ( v19 )
+  if( v19 )
     ((void (__stdcall *)(signed int))v19->vfptr->__vecDelDtor)(1);
   v20 = v1->playerWood;
-  if ( v20 )
+  if( v20 )
     ((void (__stdcall *)(signed int))v20->vfptr->__vecDelDtor)(1);
   v21 = v1->playerStone;
-  if ( v21 )
+  if( v21 )
     ((void (__stdcall *)(signed int))v21->vfptr->__vecDelDtor)(1);
   v22 = v1->needMarket;
-  if ( v22 )
+  if( v22 )
     ((void (__stdcall *)(signed int))v22->vfptr->__vecDelDtor)(1);
   v23 = v1->buttonPics;
-  if ( v23 )
+  if( v23 )
   {
     TShape::~TShape(v1->buttonPics);
     operator delete(v23);
   }
   v24 = v1->backgroundPics;
-  if ( v24 )
+  if( v24 )
   {
     TShape::~TShape(v1->backgroundPics);
     operator delete(v24);
@@ -951,17 +951,17 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
   char temp_str[256]; // [sp+4Ch] [bp-100h]@48
 
   v5 = this;
-  if ( !fromPanel || actionIn != 1 )
+  if( !fromPanel || actionIn != 1 )
     return TPanel::action((TPanel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
-  if ( fromPanel == (TPanel *)this->okButton )
+  if( fromPanel == (TPanel *)this->okButton )
   {
     v6 = (TRIBE_Command *)rge_base_game->world->commands;
     tc = (TRIBE_Command *)rge_base_game->world->commands;
-    if ( allow_user_commands )
+    if( allow_user_commands )
     {
       v7 = (RGE_Player *)RGE_Base_Game::get_player(rge_base_game);
       v8 = (unsigned __int8)RGE_Player::get_allied_victory(v7);
-      if ( TButtonPanel::get_state(v5->allianceButton) != v8 )
+      if( TButtonPanel::get_state(v5->allianceButton) != v8 )
       {
         v9 = TButtonPanel::get_state(v5->allianceButton);
         v10 = RGE_Base_Game::get_player(rge_base_game);
@@ -971,25 +971,25 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
     v11 = rge_base_game;
     v12 = 1;
     v13 = rge_base_game->world;
-    if ( v13->player_num - 1 > 0 )
+    if( v13->player_num - 1 > 0 )
     {
       v14 = v5->woodTributeAmount;
       v15 = (int)v5->allyButton;
       cost = *(float *)&v15;
       do
       {
-        if ( v12 != v13->curr_player && *(_DWORD *)v15 )
+        if( v12 != v13->curr_player && *(_DWORD *)v15 )
         {
           v16 = TButtonPanel::get_state(*(TButtonPanel **)v15) == 1 ? 0 : TButtonPanel::get_state(*(TButtonPanel **)(v15 + 4)) != 1 ? 3 : 1;
-          if ( allow_user_commands )
+          if( allow_user_commands )
           {
             v17 = (RGE_Player *)RGE_Base_Game::get_player(rge_base_game);
-            if ( RGE_Player::relation(v17, v12) != v16 )
+            if( RGE_Player::relation(v17, v12) != v16 )
             {
               v18 = RGE_Base_Game::get_player(rge_base_game);
               TRIBE_Command::command_relation(tc, HIWORD(v18->master_players), v12, (unsigned __int8)v16);
             }
-            if ( *(v14 - 24) > 0.0 )
+            if( *(v14 - 24) > 0.0 )
             {
               v19 = RGE_Base_Game::get_player(rge_base_game);
               v20 = v19->vfptr;
@@ -1001,7 +1001,7 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
                 *((_DWORD *)v14 - 24),
                 *(float *)(v21 + 184));
             }
-            if ( *v14 > 0.0 )
+            if( *v14 > 0.0 )
             {
               v22 = RGE_Base_Game::get_player(rge_base_game);
               v23 = v22->vfptr;
@@ -1013,7 +1013,7 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
                 COERCE_FLOAT(*(_DWORD *)v14),
                 *(float *)(v24 + 184));
             }
-            if ( *(v14 - 16) > 0.0 )
+            if( *(v14 - 16) > 0.0 )
             {
               v25 = RGE_Base_Game::get_player(rge_base_game);
               v26 = v25->vfptr;
@@ -1025,7 +1025,7 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
                 *((_DWORD *)v14 - 16),
                 *(float *)(v27 + 184));
             }
-            if ( *(v14 - 8) > 0.0 )
+            if( *(v14 - 8) > 0.0 )
             {
               v28 = RGE_Base_Game::get_player(rge_base_game);
               v29 = v28->vfptr;
@@ -1045,8 +1045,8 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
         ++v14;
         LODWORD(cost) += 12;
       }
-      while ( v12 - 1 < v13->player_num - 1 );
-      if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+      while( v12 - 1 < v13->player_num - 1 );
+      if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
       {
         RGE_Base_Game::set_paused(rge_base_game, 0, 0);
         TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
@@ -1056,24 +1056,24 @@ int __thiscall TribeDiplomacyDialog::action(TribeDiplomacyDialog *this, TPanel *
       goto LABEL_34;
     }
 LABEL_31:
-    if ( RGE_Base_Game::singlePlayerGame(v11) == 1 && !rge_base_game->save_paused )
+    if( RGE_Base_Game::singlePlayerGame(v11) == 1 && !rge_base_game->save_paused )
       RGE_Base_Game::set_paused(rge_base_game, 0, 0);
 LABEL_34:
     TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
     TPanelSystem::destroyPanel(&panel_system, aDiplomacyDialo);
     return 1;
   }
-  if ( fromPanel == (TPanel *)this->cancelButton )
+  if( fromPanel == (TPanel *)this->cancelButton )
   {
     v11 = rge_base_game;
     goto LABEL_31;
   }
-  if ( fromPanel == (TPanel *)this->help_button )
+  if( fromPanel == (TPanel *)this->help_button )
   {
     TEasy_Panel::setup_popup_help((TEasy_Panel *)&this->vfptr);
     return 1;
   }
-  if ( fromPanel == (TPanel *)this->clearButton )
+  if( fromPanel == (TPanel *)this->clearButton )
   {
     v32 = (char *)this->foodTributeButton;
     LODWORD(this->foodTotal) = 0;
@@ -1084,15 +1084,15 @@ LABEL_34:
     do
     {
       v34 = (TButtonPanel *)*((_DWORD *)v32 - 16);
-      if ( v34 )
+      if( v34 )
         TButtonPanel::set_text(v34, 0, message_in);
-      if ( *(_DWORD *)v32 )
+      if( *(_DWORD *)v32 )
         TButtonPanel::set_text(*(TButtonPanel **)v32, 0, message_in);
       v35 = (TButtonPanel *)*((_DWORD *)v32 - 8);
-      if ( v35 )
+      if( v35 )
         TButtonPanel::set_text(v35, 0, message_in);
       v36 = (TButtonPanel *)*((_DWORD *)v32 + 8);
-      if ( v36 )
+      if( v36 )
         TButtonPanel::set_text(v36, 0, message_in);
       *((_DWORD *)v32 + 55) = 0;
       *((_DWORD *)v32 + 63) = 0;
@@ -1101,7 +1101,7 @@ LABEL_34:
       v32 += 4;
       --v33;
     }
-    while ( v33 );
+    while( v33 );
     v37 = *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 12);
     sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v37);
     (*(void (__stdcall **)(char *))&v5->playerGold->vfptr[1].gap4[4])(temp_str);
@@ -1121,22 +1121,22 @@ LABEL_34:
     return 1;
   }
   costa = 0.0;
-  if ( *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 184) > 0.0 )
+  if( *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 184) > 0.0 )
     costa = *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 184);
   v41 = 0;
   v42 = 1;
   v43 = rge_base_game->world->player_num - 1;
-  if ( v43 <= 0 )
+  if( v43 <= 0 )
     return TPanel::action((TPanel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
   v44 = (int)v5->woodTributeButton;
-  while ( fromPanel != *(TPanel **)(v44 - 32) )
+  while( fromPanel != *(TPanel **)(v44 - 32) )
   {
-    if ( fromPanel == *(TPanel **)v44 )
+    if( fromPanel == *(TPanel **)v44 )
     {
-      if ( TribeDiplomacyDialog::check_wood(v5) )
+      if( TribeDiplomacyDialog::check_wood(v5) )
       {
         v52 = *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 4) - v5->woodTotal;
-        if ( v52 < 0.0 )
+        if( v52 < 0.0 )
           v52 = 0.0;
         sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v52);
         (*(void (__stdcall **)(char *))&v5->playerWood->vfptr[1].gap4[4])(temp_str);
@@ -1146,7 +1146,7 @@ LABEL_34:
       else
       {
         costc = costa - -1.0;
-        if ( costc * 100.0 <= *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 4)
+        if( costc * 100.0 <= *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 4)
                             - v5->woodTotal )
         {
           v5->stoneTributeAmount[v42 + 7] = v5->stoneTributeAmount[v42 + 7] - -100.0;
@@ -1170,12 +1170,12 @@ LABEL_34:
       }
       return result;
     }
-    if ( fromPanel == *(TPanel **)(v44 + 32) )
+    if( fromPanel == *(TPanel **)(v44 + 32) )
     {
-      if ( TribeDiplomacyDialog::check_food(v5) )
+      if( TribeDiplomacyDialog::check_food(v5) )
       {
         v56 = **(float **)&RGE_Base_Game::get_player(rge_base_game)->terrain_num - v5->foodTotal;
-        if ( v56 < 0.0 )
+        if( v56 < 0.0 )
           v56 = 0.0;
         sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v56);
         (*(void (__stdcall **)(char *))&v5->playerFood->vfptr[1].gap4[4])(temp_str);
@@ -1185,7 +1185,7 @@ LABEL_34:
       else
       {
         costd = costa - -1.0;
-        if ( costd * 100.0 <= **(float **)&RGE_Base_Game::get_player(rge_base_game)->terrain_num - v5->foodTotal )
+        if( costd * 100.0 <= **(float **)&RGE_Base_Game::get_player(rge_base_game)->terrain_num - v5->foodTotal )
         {
           v5->goldTributeAmount[v42 + 7] = v5->goldTributeAmount[v42 + 7] - -100.0;
           v54 = v5->foodTotal - costd * -100.0;
@@ -1207,12 +1207,12 @@ LABEL_34:
       }
       return result;
     }
-    if ( fromPanel == *(TPanel **)(v44 + 64) )
+    if( fromPanel == *(TPanel **)(v44 + 64) )
     {
-      if ( TribeDiplomacyDialog::check_stone(v5) )
+      if( TribeDiplomacyDialog::check_stone(v5) )
       {
         v60 = *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 8) - v5->stoneTotal;
-        if ( v60 < 0.0 )
+        if( v60 < 0.0 )
           v60 = 0.0;
         sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v60);
         (*(void (__stdcall **)(char *))&v5->playerStone->vfptr[1].gap4[4])(temp_str);
@@ -1222,7 +1222,7 @@ LABEL_34:
       else
       {
         coste = costa - -1.0;
-        if ( coste * 100.0 <= *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 8)
+        if( coste * 100.0 <= *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 8)
                             - v5->stoneTotal )
         {
           v5->foodTributeAmount[v42 + 7] = v5->foodTributeAmount[v42 + 7] - -100.0;
@@ -1249,13 +1249,13 @@ LABEL_34:
     ++v41;
     v44 += 4;
     ++v42;
-    if ( v41 >= v43 )
+    if( v41 >= v43 )
       return TPanel::action((TPanel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
   }
-  if ( TribeDiplomacyDialog::check_gold(v5) )
+  if( TribeDiplomacyDialog::check_gold(v5) )
   {
     v48 = *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 12) - v5->goldTotal;
-    if ( v48 < 0.0 )
+    if( v48 < 0.0 )
       v48 = 0.0;
     sprintf(temp_str, aLd_0, (unsigned int)(signed __int64)v48);
     (*(void (__stdcall **)(char *))&v5->playerGold->vfptr[1].gap4[4])(temp_str);
@@ -1265,7 +1265,7 @@ LABEL_34:
   else
   {
     costb = costa - -1.0;
-    if ( costb * 100.0 <= *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 12)
+    if( costb * 100.0 <= *(float *)(*(_DWORD *)&RGE_Base_Game::get_player(rge_base_game)->terrain_num + 12)
                         - v5->goldTotal )
     {
       *((float *)&v5->playerStone + v42) = *((float *)&v5->playerStone + v42) - -100.0;
@@ -1309,14 +1309,14 @@ int __thiscall TribeDiplomacyDialog::check_gold(TribeDiplomacyDialog *this)
   do
   {
     v5 = *v4;
-    if ( *v4 )
+    if( *v4 )
     {
-      if ( v3 == v1->cur_player_row )
+      if( v3 == v1->cur_player_row )
         TButtonPanel::set_disabled(v5, 1);
       else
         TButtonPanel::set_disabled(v5, v2);
       v6 = *v4;
-      if ( v1->tribute_flag )
+      if( v1->tribute_flag )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v6 + 20))(1);
       else
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v6 + 20))(0);
@@ -1324,7 +1324,7 @@ int __thiscall TribeDiplomacyDialog::check_gold(TribeDiplomacyDialog *this)
     ++v3;
     ++v4;
   }
-  while ( v3 < 8 );
+  while( v3 < 8 );
   return v2;
 }
 
@@ -1346,14 +1346,14 @@ int __thiscall TribeDiplomacyDialog::check_wood(TribeDiplomacyDialog *this)
   do
   {
     v5 = *v4;
-    if ( *v4 )
+    if( *v4 )
     {
-      if ( v3 == v1->cur_player_row )
+      if( v3 == v1->cur_player_row )
         TButtonPanel::set_disabled(v5, 1);
       else
         TButtonPanel::set_disabled(v5, v2);
       v6 = *v4;
-      if ( v1->tribute_flag )
+      if( v1->tribute_flag )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v6 + 20))(1);
       else
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v6 + 20))(0);
@@ -1361,7 +1361,7 @@ int __thiscall TribeDiplomacyDialog::check_wood(TribeDiplomacyDialog *this)
     ++v3;
     ++v4;
   }
-  while ( v3 < 8 );
+  while( v3 < 8 );
   return v2;
 }
 
@@ -1383,14 +1383,14 @@ int __thiscall TribeDiplomacyDialog::check_food(TribeDiplomacyDialog *this)
   do
   {
     v5 = *v4;
-    if ( *v4 )
+    if( *v4 )
     {
-      if ( v3 == v1->cur_player_row )
+      if( v3 == v1->cur_player_row )
         TButtonPanel::set_disabled(v5, 1);
       else
         TButtonPanel::set_disabled(v5, v2);
       v6 = *v4;
-      if ( v1->tribute_flag )
+      if( v1->tribute_flag )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v6 + 20))(1);
       else
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v6 + 20))(0);
@@ -1398,7 +1398,7 @@ int __thiscall TribeDiplomacyDialog::check_food(TribeDiplomacyDialog *this)
     ++v3;
     ++v4;
   }
-  while ( v3 < 8 );
+  while( v3 < 8 );
   return v2;
 }
 
@@ -1420,14 +1420,14 @@ int __thiscall TribeDiplomacyDialog::check_stone(TribeDiplomacyDialog *this)
   do
   {
     v5 = *v4;
-    if ( *v4 )
+    if( *v4 )
     {
-      if ( v3 == v1->cur_player_row )
+      if( v3 == v1->cur_player_row )
         TButtonPanel::set_disabled(v5, 1);
       else
         TButtonPanel::set_disabled(v5, v2);
       v6 = *v4;
-      if ( v1->tribute_flag )
+      if( v1->tribute_flag )
         (*(void (__stdcall **)(signed int))(*(_DWORD *)v6 + 20))(1);
       else
         (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v6 + 20))(0);
@@ -1435,7 +1435,7 @@ int __thiscall TribeDiplomacyDialog::check_stone(TribeDiplomacyDialog *this)
     ++v3;
     ++v4;
   }
-  while ( v3 < 8 );
+  while( v3 < 8 );
   return v2;
 }
 
@@ -1454,20 +1454,20 @@ void __thiscall TribeDiplomacyDialog::draw(TribeDiplomacyDialog *this)
   v1 = this;
   TEasy_Panel::draw((TEasy_Panel *)&this->vfptr);
   v2 = 0;
-  if ( v1->backgroundPics )
+  if( v1->backgroundPics )
   {
     v3 = v1->vfptr;
     v4 = rge_base_game->world;
     v8 = v1->vfptr;
     v1->vfptr->draw_setup((TPanel *)v1, 0);
-    if ( v4->player_num - 1 > 0 )
+    if( v4->player_num - 1 > 0 )
     {
       v7 = 0;
       v5 = 1;
       do
       {
         v6 = v4->players[v5]->color_table;
-        if ( v6 )
+        if( v6 )
         {
           ASMSet_Color_Xform(16 * (v6->id + 1));
           TShape::shape_draw(
@@ -1483,7 +1483,7 @@ void __thiscall TribeDiplomacyDialog::draw(TribeDiplomacyDialog *this)
         ++v5;
         ++v7;
       }
-      while ( v7 < v4->player_num - 1 );
+      while( v7 < v4->player_num - 1 );
       v3 = v8;
     }
     v3->draw_finish((TPanel *)v1);

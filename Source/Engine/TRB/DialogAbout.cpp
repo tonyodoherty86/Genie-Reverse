@@ -51,7 +51,7 @@ void __userpurge TribeAboutDialog::TribeAboutDialog(TribeAboutDialog *this@<ecx>
   v5 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&parentPanel->vfptr);
   v6 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&parentPanel->vfptr);
   v7 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-  if ( TDialogPanel::setup((TDialogPanel *)&v4->vfptr, v7, (TPanel *)&parentPanel->vfptr, 520, 412, v6, v5, 1) )
+  if( TDialogPanel::setup((TDialogPanel *)&v4->vfptr, v7, (TPanel *)&parentPanel->vfptr, 520, 412, v6, v5, 1) )
   {
     TEasy_Panel::create_text(
       (TEasy_Panel *)&v4->vfptr,
@@ -102,7 +102,7 @@ void __userpurge TribeAboutDialog::TribeAboutDialog(TribeAboutDialog *this@<ecx>
       0,
       0);
     TPanel::get_string(9252, &str, 512);
-    if ( str )
+    if( str )
     {
       strcpy(&str, TPanel::get_string(9243));
       strcat(&str, TPanel::get_string(9252));
@@ -138,18 +138,18 @@ void __userpurge TribeAboutDialog::TribeAboutDialog(TribeAboutDialog *this@<ecx>
         0,
         0);
       v8 = v4->ms_copy_text1;
-      if ( v8 && TTextPanel::get_text_rect(v8, &rect) )
+      if( v8 && TTextPanel::get_text_rect(v8, &rect) )
       {
         v9 = (TPicturePanel *)operator new(0x11Cu);
         v20 = v9;
         LOBYTE(v26) = 1;
-        if ( v9 )
+        if( v9 )
           TPicturePanel::TPicturePanel(v9);
         else
           v10 = 0;
         LOBYTE(v26) = 0;
         v4->circle_p_pic = v10;
-        if ( v10 )
+        if( v10 )
         {
           TPicturePanel::setup(
             v10,
@@ -221,10 +221,10 @@ void __userpurge TribeAboutDialog::TribeAboutDialog(TribeAboutDialog *this@<ecx>
       0,
       0);
     v13 = v4->pid_label_text;
-    if ( v13 && TTextPanel::get_text_rect(v13, &rect) )
+    if( v13 && TTextPanel::get_text_rect(v13, &rect) )
     {
       v14 = TRegistry::RegGetAscii(Regs, 0, aPid);
-      if ( !v14 )
+      if( !v14 )
         v14 = a00000000000000;
       sprintf(&Dest, aS_2, v14);
       TEasy_Panel::create_text(
@@ -301,7 +301,7 @@ TribeAboutDialog *__thiscall TribeAboutDialog::`vector deleting destructor'(Trib
 
   v2 = this;
   TribeAboutDialog::~TribeAboutDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -337,27 +337,27 @@ int __thiscall TribeAboutDialog::action(TribeAboutDialog *this, TPanel *fromPane
   TRIBE_Credits_Screen *v7; // eax@9
 
   v5 = this;
-  if ( actionIn != 1 )
+  if( actionIn != 1 )
     return TEasy_Panel::action((TEasy_Panel *)&this->vfptr, fromPanel, actionIn, a1, a2);
-  if ( fromPanel != (TPanel *)this->close_button )
+  if( fromPanel != (TPanel *)this->close_button )
   {
-    if ( fromPanel == (TPanel *)this->credits_button )
+    if( fromPanel == (TPanel *)this->credits_button )
     {
       v7 = (TRIBE_Credits_Screen *)operator new(0x8B8u);
-      if ( v7 )
+      if( v7 )
         TRIBE_Credits_Screen::TRIBE_Credits_Screen(v7);
       TPanelSystem::setCurrentPanel(&panel_system, aCreditsScreen, 0);
       goto LABEL_12;
     }
     return TEasy_Panel::action((TEasy_Panel *)&this->vfptr, fromPanel, actionIn, a1, a2);
   }
-  if ( !TPanelSystem::panel(&panel_system, aGameScreen) )
+  if( !TPanelSystem::panel(&panel_system, aGameScreen) )
   {
 LABEL_12:
     TPanelSystem::destroyPanel(&panel_system, panel_name_in);
     return 1;
   }
-  if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+  if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
     RGE_Base_Game::set_paused(rge_base_game, 0, 0);
   TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
   (*(void (__thiscall **)(TribeAboutDialog *, _DWORD))&v5->vfptr->gap10[4])(v5, 0);

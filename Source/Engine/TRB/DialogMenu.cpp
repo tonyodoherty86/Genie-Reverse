@@ -39,17 +39,17 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
   v2->vfptr = (TPanelVtbl *)&TribeMenuDialog::`vftable';
   memset(v2->button, 0, sizeof(v2->button));
   v3 = 300;
-  if ( RGE_Base_Game::multiplayerGame(rge_base_game) && !LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) )
+  if( RGE_Base_Game::multiplayerGame(rge_base_game) && !LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) )
     v3 = 335;
-  if ( RGE_Base_Game::singlePlayerGame(rge_base_game) )
+  if( RGE_Base_Game::singlePlayerGame(rge_base_game) )
     v3 += 105;
   v4 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&parentPanel->vfptr);
   v5 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&parentPanel->vfptr);
   v6 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-  if ( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v6, (TPanel *)&parentPanel->vfptr, 400, v3, v5, v4, 1) )
+  if( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v6, (TPanel *)&parentPanel->vfptr, 400, v3, v5, v4, 1) )
   {
     v7 = 1;
-    if ( TEasy_Panel::create_button(
+    if( TEasy_Panel::create_button(
            (TEasy_Panel *)&v2->vfptr,
            (TPanel *)&v2->vfptr,
            v2->button,
@@ -64,11 +64,11 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
            4) )
     {
       v8 = 65;
-      if ( RGE_Base_Game::multiplayerGame(rge_base_game)
+      if( RGE_Base_Game::multiplayerGame(rge_base_game)
         && !LOBYTE(RGE_Base_Game::get_player(rge_base_game)->sound_driver) )
       {
         v7 = 2;
-        if ( !TEasy_Panel::create_button(
+        if( !TEasy_Panel::create_button(
                 (TEasy_Panel *)&v2->vfptr,
                 (TPanel *)&v2->vfptr,
                 &v2->button[1],
@@ -86,7 +86,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
       }
       v9 = &v2->button[v7];
       v10 = v7 + 1;
-      if ( TEasy_Panel::create_button(
+      if( TEasy_Panel::create_button(
              (TEasy_Panel *)&v2->vfptr,
              (TPanel *)&v2->vfptr,
              v9,
@@ -103,7 +103,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
         v11 = v8 + 35;
         v12 = &v2->button[v10];
         v13 = v10 + 1;
-        if ( TEasy_Panel::create_button(
+        if( TEasy_Panel::create_button(
                (TEasy_Panel *)&v2->vfptr,
                (TPanel *)&v2->vfptr,
                v12,
@@ -118,11 +118,11 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
                9) )
         {
           v14 = v11 + 35;
-          if ( RGE_Base_Game::singlePlayerGame(rge_base_game) )
+          if( RGE_Base_Game::singlePlayerGame(rge_base_game) )
           {
             v15 = &v2->button[v13];
             v16 = v13 + 1;
-            if ( !TEasy_Panel::create_button(
+            if( !TEasy_Panel::create_button(
                     (TEasy_Panel *)&v2->vfptr,
                     (TPanel *)&v2->vfptr,
                     v15,
@@ -139,7 +139,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
             v17 = v14 + 35;
             v18 = &v2->button[v16];
             v19 = v16 + 1;
-            if ( !TEasy_Panel::create_button(
+            if( !TEasy_Panel::create_button(
                     (TEasy_Panel *)&v2->vfptr,
                     (TPanel *)&v2->vfptr,
                     v18,
@@ -156,7 +156,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
             v20 = v17 + 35;
             v21 = &v2->button[v19];
             v13 = v19 + 1;
-            if ( !TEasy_Panel::create_button(
+            if( !TEasy_Panel::create_button(
                     (TEasy_Panel *)&v2->vfptr,
                     (TPanel *)&v2->vfptr,
                     v21,
@@ -174,7 +174,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
           }
           v22 = &v2->button[v13];
           v23 = v13 + 1;
-          if ( TEasy_Panel::create_button(
+          if( TEasy_Panel::create_button(
                  (TEasy_Panel *)&v2->vfptr,
                  (TPanel *)&v2->vfptr,
                  v22,
@@ -191,7 +191,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
             v24 = v14 + 35;
             v25 = &v2->button[v23];
             v26 = v23 + 1;
-            if ( TEasy_Panel::create_button(
+            if( TEasy_Panel::create_button(
                    (TEasy_Panel *)&v2->vfptr,
                    (TPanel *)&v2->vfptr,
                    v25,
@@ -208,7 +208,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
               v27 = v24 + 35;
               v28 = &v2->button[v26];
               v29 = v26 + 1;
-              if ( TEasy_Panel::create_button(
+              if( TEasy_Panel::create_button(
                      (TEasy_Panel *)&v2->vfptr,
                      (TPanel *)&v2->vfptr,
                      v28,
@@ -224,7 +224,7 @@ void __thiscall TribeMenuDialog::TribeMenuDialog(TribeMenuDialog *this, TScreenP
               {
                 v30 = &v2->button[v29];
                 v31 = v29 + 1;
-                if ( TEasy_Panel::create_button(
+                if( TEasy_Panel::create_button(
                        (TEasy_Panel *)&v2->vfptr,
                        (TPanel *)&v2->vfptr,
                        v30,
@@ -261,7 +261,7 @@ TribeMenuDialog *__thiscall TribeMenuDialog::`scalar deleting destructor'(TribeM
 
   v2 = this;
   TribeMenuDialog::~TribeMenuDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -283,7 +283,7 @@ void __thiscall TribeMenuDialog::~TribeMenuDialog(TribeMenuDialog *this)
     ++v2;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   TDialogPanel::~TDialogPanel((TDialogPanel *)&v1->vfptr);
 }
 // 56FC30: using guessed type int (__thiscall *TribeMenuDialog::`vftable')(void *Memory, unsigned int __flags);
@@ -305,26 +305,26 @@ int __thiscall TribeMenuDialog::action(TribeMenuDialog *this, TPanel *fromPanel,
   TRIBE_Mission_Screen *v17; // eax@33
   TEasy_Panel *v18; // esi@42
 
-  if ( !fromPanel || actionIn != 1 )
+  if( !fromPanel || actionIn != 1 )
     return TEasy_Panel::action((TEasy_Panel *)&this->vfptr, fromPanel, actionIn, a1, a2);
-  if ( a1 == 1 )
+  if( a1 == 1 )
   {
     v5 = (TribeSaveGameScreen *)operator new(0x6A4u);
-    if ( v5 )
+    if( v5 )
       TribeSaveGameScreen::TribeSaveGameScreen(v5, 0, 0, 0);
     TPanelSystem::setCurrentPanel(&panel_system, aSaveGameScreen, 0);
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
     return 1;
   }
-  if ( a1 == 2 )
+  if( a1 == 2 )
   {
     v7 = (TribeSaveGameScreen *)operator new(0x6A4u);
-    if ( v7 )
+    if( v7 )
       TribeSaveGameScreen::TribeSaveGameScreen(v7, SaveScenario, 0, 0);
     TPanelSystem::setCurrentPanel(&panel_system, aSaveGameScreen, 0);
     return 1;
   }
-  if ( a1 == 3 )
+  if( a1 == 3 )
   {
     v8 = (TEasy_Panel *)this->parent_panel;
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
@@ -332,16 +332,16 @@ int __thiscall TribeMenuDialog::action(TribeMenuDialog *this, TPanel *fromPanel,
     TEasy_Panel::popupYesNoDialog(v8, 3100, panel_title, 450, 100);
     return 1;
   }
-  if ( a1 == 8 )
+  if( a1 == 8 )
   {
-    if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+    if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
       RGE_Base_Game::set_paused(rge_base_game, 0, 0);
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
     TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
     WinHelpA(rge_base_game->prog_window, szHelp, 3u, 0);
     return 1;
   }
-  if ( a1 == 4 )
+  if( a1 == 4 )
   {
     confirmed_close = 1;
     v9 = (TEasy_Panel *)this->parent_panel;
@@ -350,23 +350,23 @@ int __thiscall TribeMenuDialog::action(TribeMenuDialog *this, TPanel *fromPanel,
     TEasy_Panel::popupYesNoDialog(v9, 3101, aQuitgamedialog, 450, 100);
     return 1;
   }
-  if ( a1 == 5 )
+  if( a1 == 5 )
   {
     v10 = (TScreenPanel *)this->parent_panel;
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
     TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
     v11 = (TribeConfigDialog *)operator new(0x564u);
-    if ( v11 )
+    if( v11 )
     {
       TribeConfigDialog::TribeConfigDialog(v11, 0, v10);
       return 1;
     }
     return 1;
   }
-  if ( a1 == 7 )
+  if( a1 == 7 )
   {
     v12 = (TribeAchievementsScreen *)operator new(0x5F8u);
-    if ( v12 )
+    if( v12 )
     {
       v13 = TPanel::get_string(9886);
       TribeAchievementsScreen::TribeAchievementsScreen(v12, v13, 0);
@@ -375,20 +375,20 @@ int __thiscall TribeMenuDialog::action(TribeMenuDialog *this, TPanel *fromPanel,
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
     return 1;
   }
-  if ( a1 == 10 )
+  if( a1 == 10 )
   {
     v14 = (TScreenPanel *)this->parent_panel;
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
     TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
     v15 = (TribeAboutDialog *)operator new(0x4C4u);
-    if ( v15 )
+    if( v15 )
     {
       TribeAboutDialog::TribeAboutDialog(v15, (int)v15, v14);
       return 1;
     }
     return 1;
   }
-  if ( a1 == 11 )
+  if( a1 == 11 )
   {
     v16 = (TEasy_Panel *)this->parent_panel;
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
@@ -396,18 +396,18 @@ int __thiscall TribeMenuDialog::action(TribeMenuDialog *this, TPanel *fromPanel,
     TEasy_Panel::popupYesNoDialog(v16, 3102, aRestartdialog, 450, 100);
     return 1;
   }
-  if ( a1 == 9 )
+  if( a1 == 9 )
   {
     v17 = (TRIBE_Mission_Screen *)operator new(0x49Cu);
-    if ( v17 )
+    if( v17 )
       TRIBE_Mission_Screen::TRIBE_Mission_Screen(v17, 0, 1, rge_base_game->world->scenario->mission_picture);
     TPanelSystem::setCurrentPanel(&panel_system, aMissionDialog, 0);
     TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
     return 1;
   }
-  if ( a1 != 6 )
+  if( a1 != 6 )
   {
-    if ( a1 == 12 )
+    if( a1 == 12 )
     {
       v18 = (TEasy_Panel *)this->parent_panel;
       TPanelSystem::destroyPanel(&panel_system, aMenuDialog);
@@ -417,7 +417,7 @@ int __thiscall TribeMenuDialog::action(TribeMenuDialog *this, TPanel *fromPanel,
     }
     return TEasy_Panel::action((TEasy_Panel *)&this->vfptr, fromPanel, actionIn, a1, a2);
   }
-  if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+  if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
     RGE_Base_Game::set_paused(rge_base_game, 0, 0);
   TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
   TPanelSystem::destroyPanel(&panel_system, aMenuDialog);

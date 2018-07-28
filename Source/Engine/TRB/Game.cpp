@@ -205,10 +205,10 @@ void TRIBE_Game::setup()
         *(_WORD *)&new_string_dll_name[98] = 0;
         if( v2 )
         {
-            for ( ; *v2 != 61; v2 = _mbsninc(v2, 1u) )
+            for( ; *v2 != 61; v2 = _mbsninc(v2, 1u) )
                 ;
             v3 = _mbsninc(v2, 1u);
-            for ( new_string_dll_name[0] = 0; !_ismbcspace(*v3); v3 = _mbsninc(v3, 1u) )
+            for( new_string_dll_name[0] = 0; !_ismbcspace(*v3); v3 = _mbsninc(v3, 1u) )
             {
                 if( !*v3 )
                     break;
@@ -460,7 +460,7 @@ int TRIBE_Game::setup_cmd_options()
         }
         v4 = v2[1];
         v5 = (int)(v2 + 1);
-        for ( i = 0; v4 != 32; ++v5 )
+        for( i = 0; v4 != 32; ++v5 )
         {
             if( !v4 )
                 break;
@@ -494,7 +494,7 @@ int TRIBE_Game::setup_cmd_options()
         }
         v10 = v8[1];
         v11 = (int)(v8 + 1);
-        for ( j = 0; v10 != 32; ++v11 )
+        for( j = 0; v10 != 32; ++v11 )
         {
             if( !v10 )
                 break;
@@ -515,7 +515,7 @@ int TRIBE_Game::setup_cmd_options()
         }
         v15 = v13[1];
         v16 = (int)(v13 + 1);
-        for ( k = 0; v15 != 32; ++v16 )
+        for( k = 0; v15 != 32; ++v16 )
         {
             if( !v15 )
                 break;
@@ -537,7 +537,7 @@ int TRIBE_Game::setup_cmd_options()
         }
         v20 = v18[1];
         v21 = (int)(v18 + 1);
-        for ( l = 0; v20 != 32; ++v21 )
+        for( l = 0; v20 != 32; ++v21 )
         {
             if( !v20 )
                 break;
@@ -641,7 +641,7 @@ TDigital **TRIBE_Game::setup_sounds()
     v1->sounds = result;
     if( result )
     {
-        for ( i = 0; i < v1->sound_num; v1->sounds[++i - 1] = 0 )
+        for( i = 0; i < v1->sound_num; v1->sounds[++i - 1] = 0 )
             ;
         v4 = (TDigital *)operator new(0x3Cu);
         if( v4 )
@@ -2067,7 +2067,7 @@ int TRIBE_Game::save_scenario(char *fileName)
         RGE_Base_Game::disable_input((RGE_Base_Game *)&this->vfptr);
         TRIBE_Game::show_status_message(v2, 1104, 0, -1);
         v5 = v2->world;
-        for ( i = 1; i < v5->player_num; ++i )
+        for( i = 1; i < v5->player_num; ++i )
         {
             RGE_Scenario::Set_player_Active(v5->scenario, i - 1, 1);
             v5 = v2->world;
@@ -2751,7 +2751,7 @@ LABEL_120:
             TRIBE_Screen_Game::display_system_message(v6->game_screen, msg);
             TRIBE_Screen_Game::reset_clocks(v6->game_screen);
             v34 = v6->world;
-            for ( i = 1; i < v34->player_num; ++i )
+            for( i = 1; i < v34->player_num; ++i )
             {
                 ((void (__stdcall *)(_DWORD, signed int, signed int, _DWORD, _DWORD, _DWORD))v34->players[i]->vfptr->notify)(
                     v31->id,
@@ -2817,7 +2817,7 @@ LABEL_138:
             TRIBE_Screen_Game::display_system_message(v6->game_screen, msg);
             TRIBE_Screen_Game::reset_clocks(v6->game_screen);
             v42 = v6->world;
-            for ( j = 1; j < v42->player_num; ++j )
+            for( j = 1; j < v42->player_num; ++j )
             {
                 ((void (__stdcall *)(_DWORD, signed int, signed int, _DWORD, _DWORD, _DWORD))v42->players[j]->vfptr->notify)(
                     v39->id,
@@ -3079,9 +3079,9 @@ LABEL_20:
                 TRIBE_Game::setScenarioPlayer(v3, 0, first_any_player);
             }
             TCommunications_Handler::SetPlayerHumanity(v3->comm_handler, 1u, ME_HUMAN);
-            for ( i = 2; i <= v5; ++i )
+            for( i = 2; i <= v5; ++i )
                 TCommunications_Handler::SetPlayerHumanity(v3->comm_handler, i, ME_COMPUTER);
-            for ( j = v5 + 1; j <= 9; ++j )
+            for( j = v5 + 1; j <= 9; ++j )
                 TCommunications_Handler::SetPlayerHumanity(v3->comm_handler, j, 0);
             result = TRIBE_Game::start_game(v3, 1);
         }
@@ -3442,7 +3442,7 @@ LABEL_38:
                             {
                                 v40 = list->node[2].unitAIValue;
                                 v41 = (RGE_Action_Node *)v40->moodValue;
-                                for ( act_node = (RGE_Action_Node *)v40->moodValue; v41; act_node = v41 )
+                                for( act_node = (RGE_Action_Node *)v40->moodValue; v41; act_node = v41 )
                                 {
                                     v42 = v41->action;
                                     if( v41->action )
@@ -3575,7 +3575,7 @@ LABEL_38:
                             {
                                 v70 = lista->node[2].unitAIValue;
                                 v71 = (RGE_Action_Node *)v70->moodValue;
-                                for ( act_nodea = (RGE_Action_Node *)v70->moodValue; v71; act_nodea = v71 )
+                                for( act_nodea = (RGE_Action_Node *)v70->moodValue; v71; act_nodea = v71 )
                                 {
                                     v72 = v71->action;
                                     if( v71->action )
@@ -3614,7 +3614,7 @@ LABEL_38:
                     }
                     v82 = p->sleeping_objects;
                     v83 = v82->list;
-                    for ( listb = v82->list; v83; listb = v83 )
+                    for( listb = v82->list; v83; listb = v83 )
                     {
                         v84 = ((int (*)(void))v83->node->vfptr->get_target_obj)();
                         if( v84 )
@@ -3992,7 +3992,7 @@ LABEL_59:
     while( v29 < 9 );
     v30 = 1;
     player_index = 0;
-    for ( ia = 1; v30 <= RGE_Base_Game::numberPlayers((RGE_Base_Game *)&v2->vfptr); ia = v30 )
+    for( ia = 1; v30 <= RGE_Base_Game::numberPlayers((RGE_Base_Game *)&v2->vfptr); ia = v30 )
     {
         if( TCommunications_Handler::GetPlayerHumanity(v2->comm_handler, v30) != 2 )
         {
@@ -4188,14 +4188,14 @@ LABEL_119:
         v56 = v2->sound_system;
         if( v56 )
             v56->mute = 0;
-        for ( j = 0; j < v2->world->player_num; RGE_Base_Game::reset_countdown_timer((RGE_Base_Game *)&v2->vfptr, j++) )
+        for( j = 0; j < v2->world->player_num; RGE_Base_Game::reset_countdown_timer((RGE_Base_Game *)&v2->vfptr, j++) )
             ;
         RGE_Game_World::update_mutual_allies(v2->world);
         RGE_Base_Game::set_map_visible((RGE_Base_Game *)&v2->vfptr, 0);
         if( RGE_Base_Game::fullVisibility((RGE_Base_Game *)&v2->vfptr) )
         {
             v58 = v2->world;
-            for ( k = 1; k < v58->player_num; ++k )
+            for( k = 1; k < v58->player_num; ++k )
             {
                 if( !RGE_Player::computerPlayer(v58->players[k]) )
                     RGE_Visible_Map::explore_all(v2->world->players[k]->visible);

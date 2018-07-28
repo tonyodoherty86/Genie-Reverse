@@ -10,7 +10,7 @@ void __thiscall TRIBE_Master_Building_Object::TRIBE_Master_Building_Object(TRIBE
     (TRIBE_Master_Combat_Object *)&other_object->vfptr,
     0);
   v3->vfptr = (RGE_Master_Static_ObjectVtbl *)&TRIBE_Master_Building_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     TRIBE_Master_Building_Object::setup(v3, other_object);
 }
 // 576700: using guessed type int (__thiscall *TRIBE_Master_Building_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -22,7 +22,7 @@ TRIBE_Master_Building_Object *__thiscall TRIBE_Master_Building_Object::`scalar d
 
   v2 = this;
   TRIBE_Master_Building_Object::~TRIBE_Master_Building_Object(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -40,7 +40,7 @@ void __thiscall TRIBE_Master_Building_Object::TRIBE_Master_Building_Object(TRIBE
     sounds,
     0);
   v5->vfptr = (RGE_Master_Static_ObjectVtbl *)&TRIBE_Master_Building_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     TRIBE_Master_Building_Object::setup(v5, infile, sprites, sounds);
 }
 // 576700: using guessed type int (__thiscall *TRIBE_Master_Building_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -59,7 +59,7 @@ void __thiscall TRIBE_Master_Building_Object::TRIBE_Master_Building_Object(TRIBE
     in_id,
     0);
   v6->vfptr = (RGE_Master_Static_ObjectVtbl *)&TRIBE_Master_Building_Object::`vftable';
-  if ( do_setup )
+  if( do_setup )
     TRIBE_Master_Building_Object::setup(v6, infile, sprites, sounds, in_id);
 }
 // 576700: using guessed type int (__thiscall *TRIBE_Master_Building_Object::`vftable')(void *Memory, unsigned int __flags);
@@ -112,13 +112,13 @@ int __thiscall TRIBE_Master_Building_Object::setup(TRIBE_Master_Building_Object 
   rge_read((int)v5, v6, v6, &v7->on_build_make_overlay, 2);
   rge_read((int)v5, v6, v6, &v7->on_build_make_tech, 2);
   rge_read((int)v5, v6, v6, &sprites, 2);
-  if ( (signed __int16)sounds <= -1 )
+  if( (signed __int16)sounds <= -1 )
     v8 = 0;
   else
     v8 = v4[(signed __int16)sounds];
   v9 = (signed __int16)sprites;
   v7->construction_sprite = v8;
-  if ( v9 <= -1 )
+  if( v9 <= -1 )
   {
     v7->construction_sound = 0;
     result = 1;
@@ -172,13 +172,13 @@ int __thiscall TRIBE_Master_Building_Object::setup(TRIBE_Master_Building_Object 
   v12 = (signed __int16)((_WORD)sprites + 1) < 0;
   v8->building_connect_flag = in_id;
   v8->build_and_go_away = v10;
-  if ( (unsigned __int8)(v12 ^ v13) | v11 )
+  if( (unsigned __int8)(v12 ^ v13) | v11 )
     v14 = 0;
   else
     v14 = v5[v9];
   v15 = (signed __int16)infile;
   v8->construction_sprite = v14;
-  if ( v15 <= -1 )
+  if( v15 <= -1 )
   {
     v8->construction_sound = 0;
     result = 1;
@@ -220,7 +220,7 @@ void __thiscall TRIBE_Master_Building_Object::copy_obj(TRIBE_Master_Building_Obj
 //----- (0050E4D0) --------------------------------------------------------
 void __thiscall TRIBE_Master_Building_Object::modify(TRIBE_Master_Building_Object *this, float amount, char flag)
 {
-  if ( flag == 17 )
+  if( flag == 17 )
     this->building_facet = (signed __int64)amount;
   else
     TRIBE_Master_Combat_Object::modify((TRIBE_Master_Combat_Object *)&this->vfptr, amount, flag);
@@ -229,7 +229,7 @@ void __thiscall TRIBE_Master_Building_Object::modify(TRIBE_Master_Building_Objec
 //----- (0050E500) --------------------------------------------------------
 void __thiscall TRIBE_Master_Building_Object::modify_delta(TRIBE_Master_Building_Object *this, float amount, char flag)
 {
-  if ( flag == 17 )
+  if( flag == 17 )
     this->building_facet += (signed __int64)amount;
   else
     TRIBE_Master_Combat_Object::modify_delta((TRIBE_Master_Combat_Object *)&this->vfptr, amount, flag);
@@ -256,7 +256,7 @@ void __fastcall TRIBE_Master_Building_Object::save(TRIBE_Master_Building_Object 
   TRIBE_Master_Combat_Object::save((TRIBE_Master_Combat_Object *)&this->vfptr, a2, outfile);
   v5 = (int)v4->construction_sprite;
   v6 = -1;
-  if ( v5 )
+  if( v5 )
   {
     LOWORD(v5) = *(_WORD *)(v5 + 114);
     outfile = v5;
@@ -266,7 +266,7 @@ void __fastcall TRIBE_Master_Building_Object::save(TRIBE_Master_Building_Object 
     outfile = -1;
   }
   v7 = v4->construction_sound;
-  if ( v7 )
+  if( v7 )
     LOWORD(v6) = v7->id;
   sound_num = v6;
   rge_write(v3, &outfile, 2);
@@ -288,7 +288,7 @@ void __thiscall TRIBE_Master_Building_Object::make_new_obj(TRIBE_Master_Building
 
   v6 = this;
   v7 = (TRIBE_Building_Object *)operator new(0x204u);
-  if ( v7 )
+  if( v7 )
     TRIBE_Building_Object::TRIBE_Building_Object(v7, v6, owner, x, y, z, uID, 1);
 }
 
@@ -300,7 +300,7 @@ void __thiscall TRIBE_Master_Building_Object::make_new_obj(TRIBE_Master_Building
 
   v5 = this;
   v6 = (TRIBE_Building_Object *)operator new(0x204u);
-  if ( v6 )
+  if( v6 )
     TRIBE_Building_Object::TRIBE_Building_Object(v6, v5, owner, x, y, z, 1);
 }
 
@@ -312,7 +312,7 @@ void __thiscall TRIBE_Master_Building_Object::make_new_master(TRIBE_Master_Build
 
   v1 = this;
   v2 = (TRIBE_Master_Building_Object *)operator new(0x17Cu);
-  if ( v2 )
+  if( v2 )
     TRIBE_Master_Building_Object::TRIBE_Master_Building_Object(v2, v1, 1);
 }
 
@@ -343,15 +343,15 @@ void __thiscall TRIBE_Master_Building_Object::draw(TRIBE_Master_Building_Object 
   v9 = this;
   v10 = this->sprite;
   ya = *(float *)&v9;
-  if ( v10 )
+  if( v10 )
   {
-    if ( v9->building_connect_flag )
+    if( v9->building_connect_flag )
     {
       v11 = y;
       v12 = x;
       v23 = 0;
       v13 = y;
-      if ( facet )
+      if( facet )
       {
         v22 = render_area;
         v21 = player_color;
@@ -387,7 +387,7 @@ void __thiscall TRIBE_Master_Building_Object::draw(TRIBE_Master_Building_Object 
       v16 = v9->building_facet;
     }
     RGE_Sprite::draw(v10, v16, 0, v17, v18, v19, v20, v21, v22, v23);
-    if ( draw_frame )
+    if( draw_frame )
     {
       v14 = rge_base_game->world;
       rx1 = *(float *)(LODWORD(ya) + 48);

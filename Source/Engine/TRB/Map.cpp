@@ -9,7 +9,7 @@ void __thiscall TRIBE_Map::TRIBE_Map(TRIBE_Map *this, int infile, RGE_Sound **so
   v4 = this;
   RGE_Map::RGE_Map((RGE_Map *)&this->vfptr, infile, infile, sound, 0);
   v4->vfptr = (RGE_MapVtbl *)&TRIBE_Map::`vftable';
-  if ( setup )
+  if( setup )
     TRIBE_Map::data_load_random_map(v4, infile);
   v5 = (TRIBE_Map *)((char *)v4 + 36380);
   v4->old_cliff_x = -1;
@@ -32,7 +32,7 @@ void __thiscall TRIBE_Map::TRIBE_Map(TRIBE_Map *this, int infile, RGE_Sound **so
     v5 = (TRIBE_Map *)((char *)v5 + 40);
     --v6;
   }
-  while ( v6 );
+  while( v6 );
   TRIBE_Map::setup_cliff_type(v4, 1, 0, 0, 0, 264, 16, -1, -1, 1.5, 1.5);
   TRIBE_Map::setup_cliff_type(v4, 0, 1, 0, 0, 264, 18, -1, -1, 1.5, 1.5);
   TRIBE_Map::setup_cliff_type(v4, 0, 0, 1, 0, 264, 17, -1, -1, 1.5, 1.5);
@@ -63,7 +63,7 @@ TRIBE_Map *__thiscall TRIBE_Map::`vector deleting destructor'(TRIBE_Map *this, u
 
   v2 = this;
   TRIBE_Map::~TRIBE_Map(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -111,7 +111,7 @@ void __thiscall TRIBE_Map::data_load_random_map(TRIBE_Map *this, int infile)
 
   v2 = this;
   v3 = (TRIBE_RMM_Database_Controller *)operator new(0x4F5Cu);
-  if ( v3 )
+  if( v3 )
     TRIBE_RMM_Database_Controller::TRIBE_RMM_Database_Controller(v3, infile);
   else
     v4 = 0;
@@ -127,7 +127,7 @@ void __thiscall TRIBE_Map::load_random_map(TRIBE_Map *this, char *rmm_map_file, 
 
   v5 = this;
   v6 = (TRIBE_RMM_Database_Controller *)operator new(0x4F5Cu);
-  if ( v6 )
+  if( v6 )
     TRIBE_RMM_Database_Controller::TRIBE_RMM_Database_Controller(
       v6,
       rmm_land_file,
@@ -177,75 +177,75 @@ void __thiscall TRIBE_Map::check_tile_for_forest_change(TRIBE_Map *this, __int16
   v9 = 0;
   x1 = x + 1;
   success = 0;
-  if ( (signed __int16)(x - 1) < 0 )
+  if( (signed __int16)(x - 1) < 0 )
     x0 = 0;
-  if ( v6 < 0 )
+  if( v6 < 0 )
     v6 = 0;
-  if ( (signed __int16)(x + 1) >= v4->map_width )
+  if( (signed __int16)(x + 1) >= v4->map_width )
     x1 = LOWORD(v4->map_width) - 1;
-  if ( v7 >= v4->map_height )
+  if( v7 >= v4->map_height )
   {
     v7 = LOWORD(v4->map_height) - 1;
     y1 = LOWORD(v4->map_height) - 1;
   }
   v10 = *(_BYTE *)(v8 + 5) & 0x1F;
-  if ( v10 == 10 )
+  if( v10 == 10 )
   {
     v13 = &v5[v6];
     v14 = (int)&(*v13)[x0].screen_xpos;
-    if ( v6 <= v7 )
+    if( v6 <= v7 )
     {
       v15 = v7 - v6;
       v16 = v13;
       v17 = v15 + 1;
       do
       {
-        if ( x0 <= x1 )
+        if( x0 <= x1 )
         {
           v18 = (_BYTE *)(v14 + 5);
           v19 = x1 - x0 + 1;
           do
           {
             v20 = *v18 & 0x1F;
-            if ( v20 != 10 && v20 != 18 )
+            if( v20 != 10 && v20 != 18 )
               success = 1;
             v18 += 24;
             --v19;
           }
-          while ( v19 );
+          while( v19 );
         }
         v21 = v16[1];
         ++v16;
         v14 = (int)&v21[x0].screen_xpos;
         --v17;
       }
-      while ( v17 );
+      while( v17 );
     }
-    if ( success )
+    if( success )
       TRIBE_Map::change_terrain(v4, x, y, 18, world);
   }
-  else if ( v10 == 18 )
+  else if( v10 == 18 )
   {
     v11 = *(_DWORD *)(v8 + 16);
-    if ( v11 )
+    if( v11 )
     {
       do
       {
-        if ( *(_WORD *)(*(_DWORD *)(*(_DWORD *)v11 + 8) + 20) == 15 && *(_BYTE *)(*(_DWORD *)v11 + 72) < 8u )
+        if( *(_WORD *)(*(_DWORD *)(*(_DWORD *)v11 + 8) + 20) == 15 && *(_BYTE *)(*(_DWORD *)v11 + 72) < 8u )
           v9 = 1;
         v11 = *(_DWORD *)(v11 + 4);
       }
-      while ( v11 );
+      while( v11 );
       v7 = y1;
     }
-    if ( !v9 )
+    if( !v9 )
     {
       TRIBE_Map::change_terrain(v4, x, y, 0, world);
-      for ( ; v6 <= v7; ++v6 )
+      for( ; v6 <= v7; ++v6 )
       {
-        for ( i = x0; i <= x1; ++i )
+        for( i = x0; i <= x1; ++i )
         {
-          if ( i != x || v6 != y )
+          if( i != x || v6 != y )
             TRIBE_Map::check_tile_for_forest_change(v25, i, v6, world);
         }
       }
@@ -289,7 +289,7 @@ void __thiscall TRIBE_Map::change_terrain(TRIBE_Map *this, __int16 map_col, __in
   v8 = &this->map_row_offset[map_row][map_col];
   *((_BYTE *)v8 + 5) ^= (*((_BYTE *)v8 + 5) ^ new_terrain) & 0x1F;
   v9 = world->curr_player;
-  if ( v9 <= 0 || v9 >= world->player_num )
+  if( v9 <= 0 || v9 >= world->player_num )
   {
     map_cola = 0;
     v10 = 0;
@@ -299,9 +299,9 @@ void __thiscall TRIBE_Map::change_terrain(TRIBE_Map *this, __int16 map_col, __in
     v10 = world->players[v9];
     map_cola = v10;
   }
-  if ( v10 && world->game_state != 3 )
+  if( v10 && world->game_state != 3 )
     RGE_Tile_List::add_node(&v10->diam_tile_list, v7, map_row);
-  if ( v5 )
+  if( v5 )
   {
     col1 = v7 - 1;
     v11 = v7 - 1;
@@ -311,24 +311,24 @@ void __thiscall TRIBE_Map::change_terrain(TRIBE_Map *this, __int16 map_col, __in
     v11 = 0;
     col1 = 0;
   }
-  if ( map_row )
+  if( map_row )
     v12 = map_row - 1;
   else
     v12 = 0;
-  if ( v7 != v20->map_width - 1 )
+  if( v7 != v20->map_width - 1 )
     LOWORD(v7) = v7 + 1;
   col2 = v7;
-  if ( map_row != v20->map_height - 1 )
+  if( map_row != v20->map_height - 1 )
     v6 = map_row + 1;
   row2 = v6;
   player = (RGE_Player *)v12;
-  if ( (signed __int16)v12 <= v6 )
+  if( (signed __int16)v12 <= v6 )
   {
     row = (signed __int16)v12;
     v25 = (signed __int16)v12;
     do
     {
-      if ( v11 <= col2 )
+      if( v11 <= col2 )
       {
         col = v11;
         v13 = v11;
@@ -339,7 +339,7 @@ void __thiscall TRIBE_Map::change_terrain(TRIBE_Map *this, __int16 map_col, __in
           new_terraina = v15 >> 4;
           v16 = v15 & 0xF;
           RGE_Map::get_border_type((RGE_Map *)&v20->vfptr, v11, (__int16)player);
-          if ( map_cola
+          if( map_cola
             && ((*(_BYTE *)(v14 + 6) & 0xF) != v16 || *(_BYTE *)(v14 + 6) >> 4 != new_terraina)
             && world->game_state != 3 )
           {
@@ -349,7 +349,7 @@ void __thiscall TRIBE_Map::change_terrain(TRIBE_Map *this, __int16 map_col, __in
           ++v13;
           ++col;
         }
-        while ( v11 <= col2 );
+        while( v11 <= col2 );
         v11 = col1;
       }
       v19 = __OFSUB__((_WORD)player + 1, row2);
@@ -359,7 +359,7 @@ void __thiscall TRIBE_Map::change_terrain(TRIBE_Map *this, __int16 map_col, __in
       ++row;
       ++v25;
     }
-    while ( (unsigned __int8)(v18 ^ v19) | v17 );
+    while( (unsigned __int8)(v18 ^ v19) | v17 );
   }
 }
 
@@ -385,53 +385,53 @@ char __thiscall TRIBE_Map::do_terrain_brush(TRIBE_Map *this, int x, int y, int b
   v10 = x - brush_size < 0;
   xa = x - brush_size;
   brush_sizea = brush_size + y;
-  if ( v10 )
+  if( v10 )
   {
     xa = 0;
     v7 = 0;
   }
   v11 = v5->map_width;
-  if ( v6 >= v11 )
+  if( v6 >= v11 )
     v6 = v11 - 1;
-  if ( v8 < 0 )
+  if( v8 < 0 )
     v8 = 0;
   v12 = v5->map_height;
-  if ( v9 >= v12 )
+  if( v9 >= v12 )
     brush_sizea = v12 - 1;
-  if ( !TRIBE_Map::water(terrain_id) )
+  if( !TRIBE_Map::water(terrain_id) )
   {
-    if ( v8 <= brush_sizea )
+    if( v8 <= brush_sizea )
     {
-      while ( 1 )
+      while( 1 )
       {
-        if ( xa <= v6 )
+        if( xa <= v6 )
         {
           do
             RGE_Map::set_terrain((RGE_Map *)&v5->vfptr, v5->game_world, v7++, v8, terrain_id, 0, 0);
-          while ( v7 <= v6 );
+          while( v7 <= v6 );
         }
-        if ( ++v8 > brush_sizea )
+        if( ++v8 > brush_sizea )
           break;
         v7 = xa;
       }
     }
     return 1;
   }
-  if ( v8 > brush_sizea )
+  if( v8 > brush_sizea )
     return 1;
-  while ( 1 )
+  while( 1 )
   {
-    if ( xa <= v6 )
+    if( xa <= v6 )
     {
       do
       {
-        if ( TRIBE_Map::do_terrain_brush_check(v5, v7, v8) )
+        if( TRIBE_Map::do_terrain_brush_check(v5, v7, v8) )
           RGE_Map::set_terrain((RGE_Map *)&v5->vfptr, v5->game_world, v7, v8, terrain_id, 0, 0);
         ++v7;
       }
-      while ( v7 <= v6 );
+      while( v7 <= v6 );
     }
-    if ( ++v8 > brush_sizea )
+    if( ++v8 > brush_sizea )
       break;
     v7 = xa;
   }
@@ -449,7 +449,7 @@ char __thiscall TRIBE_Map::do_terrain_brush_stroke(TRIBE_Map *this, int x1, int 
 
   v12 = this;
   RGE_Map::do_terrain_brush_stroke((RGE_Map *)&this->vfptr, x1, y1, x2, y2, brush_size, terrain_id);
-  if ( x1 >= x2 )
+  if( x1 >= x2 )
   {
     v7 = x2 - brush_size;
     v8 = x1 + brush_size;
@@ -459,7 +459,7 @@ char __thiscall TRIBE_Map::do_terrain_brush_stroke(TRIBE_Map *this, int x1, int 
     v7 = x1 - brush_size;
     v8 = brush_size + x2;
   }
-  if ( y1 >= y2 )
+  if( y1 >= y2 )
   {
     v9 = y2 - brush_size;
     v10 = brush_size + y1;
@@ -489,7 +489,7 @@ char __thiscall TRIBE_Map::do_elevation_brush_stroke(TRIBE_Map *this, int x1, in
 
   v16 = this;
   RGE_Map::do_elevation_brush_stroke((RGE_Map *)&this->vfptr, x1, y1, x2, y2, brush_size, elevation_height);
-  if ( x1 >= x2 )
+  if( x1 >= x2 )
   {
     v7 = (unsigned __int8)elevation_height;
     v8 = x2 - brush_size - (unsigned __int8)elevation_height;
@@ -501,7 +501,7 @@ char __thiscall TRIBE_Map::do_elevation_brush_stroke(TRIBE_Map *this, int x1, in
     v8 = x1 - (brush_size + (unsigned __int8)elevation_height);
     v9 = brush_size + (unsigned __int8)elevation_height + x2;
   }
-  if ( y1 >= y2 )
+  if( y1 >= y2 )
   {
     v10 = y2 - brush_size - v7;
     v11 = v7 + brush_size + y1;
@@ -552,43 +552,43 @@ RGE_Static_ObjectVtbl *__thiscall TRIBE_Map::find_cliff(TRIBE_Map *this, int x, 
   __int16 v11; // cx@12
   __int16 v12; // cx@16
 
-  if ( 3 * x + 2 <= this->map_width && 3 * y + 2 <= this->map_height )
+  if( 3 * x + 2 <= this->map_width && 3 * y + 2 <= this->map_height )
   {
     v3 = this->map_row_offset;
     v4 = 3 * x + 1;
     v5 = v3[3 * y + 1];
     v6 = (int)&v5[v4].screen_xpos;
-    for ( result = (RGE_Static_ObjectVtbl *)v5[v4].objects.list;
+    for( result = (RGE_Static_ObjectVtbl *)v5[v4].objects.list;
           result;
           result = *(RGE_Static_ObjectVtbl **)&result->gap4[0] )
     {
       v8 = *(_WORD *)(*((_DWORD *)result->__vecDelDtor + 2) + 16);
-      if ( v8 >= 264 && v8 <= 273 )
+      if( v8 >= 264 && v8 <= 273 )
         return (RGE_Static_ObjectVtbl *)result->__vecDelDtor;
     }
     v9 = (int)&v3[3 * y + 2][v4].screen_xpos;
-    for ( result = *(RGE_Static_ObjectVtbl **)(v9 + 16); result; result = *(RGE_Static_ObjectVtbl **)&result->gap4[0] )
+    for( result = *(RGE_Static_ObjectVtbl **)(v9 + 16); result; result = *(RGE_Static_ObjectVtbl **)&result->gap4[0] )
     {
       v10 = *(_WORD *)(*((_DWORD *)result->__vecDelDtor + 2) + 16);
-      if ( v10 >= 264 && v10 <= 273 )
+      if( v10 >= 264 && v10 <= 273 )
         return (RGE_Static_ObjectVtbl *)result->__vecDelDtor;
     }
-    for ( result = *(RGE_Static_ObjectVtbl **)(v6 + 40); result; result = *(RGE_Static_ObjectVtbl **)&result->gap4[0] )
+    for( result = *(RGE_Static_ObjectVtbl **)(v6 + 40); result; result = *(RGE_Static_ObjectVtbl **)&result->gap4[0] )
     {
       v11 = *(_WORD *)(*((_DWORD *)result->__vecDelDtor + 2) + 16);
-      if ( v11 >= 264 && v11 <= 273 )
+      if( v11 >= 264 && v11 <= 273 )
         return (RGE_Static_ObjectVtbl *)result->__vecDelDtor;
     }
     result = *(RGE_Static_ObjectVtbl **)(v9 + 40);
-    if ( result )
+    if( result )
     {
-      while ( 1 )
+      while( 1 )
       {
         v12 = *(_WORD *)(*((_DWORD *)result->__vecDelDtor + 2) + 16);
-        if ( v12 >= 264 && v12 <= 273 )
+        if( v12 >= 264 && v12 <= 273 )
           break;
         result = *(RGE_Static_ObjectVtbl **)&result->gap4[0];
-        if ( !result )
+        if( !result )
           return result;
       }
       return (RGE_Static_ObjectVtbl *)result->__vecDelDtor;
@@ -607,18 +607,18 @@ TRIBE_Cliff_Info *__thiscall TRIBE_Map::get_cliff_info(TRIBE_Map *this, TRIBE_Cl
   char *v7; // eax@3
   char *v8; // ecx@10
 
-  if ( __$ReturnUdt )
+  if( __$ReturnUdt )
   {
     v4 = __$ReturnUdt->facet;
     v5 = 0;
     v6 = __$ReturnUdt->master_obj->id;
     v7 = (char *)&this->cliff_master_table[0].facet;
-    while ( (*((_DWORD *)v7 - 1) != v6 || *(_DWORD *)v7 != v4)
+    while( (*((_DWORD *)v7 - 1) != v6 || *(_DWORD *)v7 != v4)
          && (*((_DWORD *)v7 + 1) != v6 || *((_DWORD *)v7 + 2) != v4) )
     {
       ++v5;
       v7 += 40;
-      if ( v5 >= 256 )
+      if( v5 >= 256 )
       {
         v3 = result;
         result->info[0] = 0;
@@ -674,7 +674,7 @@ RGE_Static_Object *__thiscall TRIBE_Map::make_new_cliff(TRIBE_Map *this, int x, 
   v5 = (char *)this + 40 * (info.info[3] + 4 * (info.info[2] + 4 * (info.info[1] + 4 * info.info[0])) + 85);
   world_y = (double)(3 * x) + *((float *)v5 + 9094);
   *(float *)&i = (double)(3 * y) + *((float *)v5 + 9095);
-  if ( *((_DWORD *)v5 + 9088) <= -1 || 2 * debug_rand(aCMsdevWorkA_28, 545) <= 0x7FFF )
+  if( *((_DWORD *)v5 + 9088) <= -1 || 2 * debug_rand(aCMsdevWorkA_28, 545) <= 0x7FFF )
   {
     facet = *((_DWORD *)v5 + 9087);
     id = *((_DWORD *)v5 + 9086);
@@ -686,7 +686,7 @@ RGE_Static_Object *__thiscall TRIBE_Map::make_new_cliff(TRIBE_Map *this, int x, 
     id = *((_DWORD *)v5 + 9088);
     facet = *((_DWORD *)v5 + 9089);
   }
-  if ( v6 < 0 )
+  if( v6 < 0 )
   {
     result = 0;
   }
@@ -712,12 +712,12 @@ RGE_Static_Object *__thiscall TRIBE_Map::make_new_cliff(TRIBE_Map *this, int x, 
           v8++);
         --v7;
       }
-      while ( v7 );
+      while( v7 );
       v10 = __OFSUB__(xa + 1, 2);
       v9 = xa++ - 1 < 0;
     }
-    while ( v9 ^ v10 );
-    if ( new_cliff )
+    while( v9 ^ v10 );
+    if( new_cliff )
       new_cliff->facet = facet;
     TRIBE_World::check_destructables((TRIBE_World *)v4->game_world, 0, id, world_y, *(float *)&i, 1);
     result = new_cliff;
@@ -745,25 +745,25 @@ void __thiscall TRIBE_Map::remove_cliff_edge(TRIBE_Map *this, int x, int y, int 
   switch ( direction )
   {
     case 0:
-      if ( ++x < this->map_width )
+      if( ++x < this->map_width )
         goto LABEL_9;
       break;
     case 2:
-      if ( x > 0 )
+      if( x > 0 )
       {
         --x;
         goto LABEL_9;
       }
       break;
     case 3:
-      if ( y > 0 )
+      if( y > 0 )
       {
         --y;
         goto LABEL_9;
       }
       break;
     case 1:
-      if ( ++y < this->map_height )
+      if( ++y < this->map_height )
         goto LABEL_9;
       break;
     default:
@@ -776,7 +776,7 @@ LABEL_9:
       v8 = v7->info[3];
       cliff_info.info[2] = v7->info[2];
       cliff_info.info[3] = v8;
-      if ( v6 )
+      if( v6 )
       {
         v9 = -1;
         do
@@ -787,10 +787,10 @@ LABEL_9:
               &v12->game_world->players[v12->game_world->curr_player]->diam_tile_list,
               (unsigned __int64)(signed __int64)v6->world_x + v9,
               (unsigned __int64)(signed __int64)v6->world_y + v10++);
-          while ( v10 < 2 );
+          while( v10 < 2 );
           ++v9;
         }
-        while ( v9 < 2 );
+        while( v9 < 2 );
         v6->vfptr->__vecDelDtor(v6, 1u);
         cliff_info.info[TRIBE_Map::reverse_cliff_direction(direction)] = 0;
         *(_QWORD *)&v11.info[0] = *(_QWORD *)&cliff_info.info[0];
@@ -807,7 +807,7 @@ int __stdcall TRIBE_Map::reverse_cliff_direction(int direction)
   int result; // eax@1
 
   result = direction + 2;
-  if ( direction + 2 >= 4 )
+  if( direction + 2 >= 4 )
     result = direction - 2;
   return result;
 }
@@ -865,32 +865,32 @@ int __thiscall TRIBE_Map::add_cliff_edge(TRIBE_Map *this, int x, int y, int dire
   possible_direction1 = -1;
   possible_direction2 = -1;
   possible_facing2 = 0;
-  if ( !result )
+  if( !result )
     goto LABEL_82;
-  if ( !facing )
+  if( !facing )
     return result;
-  if ( facing == result )
+  if( facing == result )
   {
     result = facing;
   }
   else
   {
 LABEL_82:
-    if ( v7 )
+    if( v7 )
     {
-      for ( i = -1; ; i = -1 )
+      for( i = -1; ; i = -1 )
       {
-        while ( 1 )
+        while( 1 )
         {
           RGE_Tile_List::add_node(
             &v6->game_world->players[v6->game_world->curr_player]->diam_tile_list,
             (unsigned __int64)(signed __int64)v7->world_x + v8,
             (unsigned __int64)(signed __int64)v7->world_y + i++);
-          if ( i >= 2 )
+          if( i >= 2 )
             break;
           v6 = v43;
         }
-        if ( ++v8 >= 2 )
+        if( ++v8 >= 2 )
           break;
         v6 = v43;
       }
@@ -898,30 +898,30 @@ LABEL_82:
       v6 = v43;
     }
     v11 = save_direction;
-    if ( save_direction == direction )
+    if( save_direction == direction )
       v11 = -1;
-    if ( v11 < 0 )
+    if( v11 < 0 )
     {
       v14 = 0;
       v15 = 0;
       v16 = &cliff_info;
       do
       {
-        if ( v16->info[0] && v15 != direction )
+        if( v16->info[0] && v15 != direction )
           ++v14;
         ++v15;
         v16 = (TRIBE_Cliff_Info *)((char *)v16 + 4);
       }
-      while ( v15 < 4 );
-      if ( v14 == 2 )
+      while( v15 < 4 );
+      if( v14 == 2 )
       {
         v17 = 0;
         v18 = &cliff_info;
         do
         {
-          if ( v18->info[0] && v17 != direction )
+          if( v18->info[0] && v17 != direction )
           {
-            if ( possible_direction1 >= 0 )
+            if( possible_direction1 >= 0 )
             {
               possible_direction2 = v17;
               possible_facing2 = v18->info[0];
@@ -936,7 +936,7 @@ LABEL_82:
           ++v17;
           v18 = (TRIBE_Cliff_Info *)((char *)v18 + 4);
         }
-        while ( v17 < 4 );
+        while( v17 < 4 );
       }
     }
     else
@@ -945,7 +945,7 @@ LABEL_82:
       v13 = &cliff_info;
       do
       {
-        if ( v12 != v11 )
+        if( v12 != v11 )
         {
           TRIBE_Map::remove_cliff_edge(v6, x, y, v12);
           v13->info[0] = 0;
@@ -953,30 +953,30 @@ LABEL_82:
         ++v12;
         v13 = (TRIBE_Cliff_Info *)((char *)v13 + 4);
       }
-      while ( v12 < 4 );
+      while( v12 < 4 );
     }
-    if ( facing )
+    if( facing )
     {
       cliff_info.info[direction] = facing;
-      if ( possible_direction1 > -1 )
+      if( possible_direction1 > -1 )
       {
         v19 = (char *)&cliff_info + 4 * possible_direction1;
         *(_DWORD *)v19 = possible_facing1;
         *(_QWORD *)&v20.info[0] = *(_QWORD *)&cliff_info.info[0];
         *(_QWORD *)&v20.info[2] = *(_QWORD *)&cliff_info.info[2];
-        if ( !TRIBE_Map::check_cliff_valid(v6, v20) )
+        if( !TRIBE_Map::check_cliff_valid(v6, v20) )
         {
           *(_DWORD *)v19 = 0;
           TRIBE_Map::remove_cliff_edge(v6, x, y, possible_direction1);
         }
       }
-      if ( possible_direction2 > -1 )
+      if( possible_direction2 > -1 )
       {
         v21 = (char *)&cliff_info + 4 * possible_direction2;
         *(_DWORD *)v21 = possible_facing2;
         *(_QWORD *)&v22.info[0] = *(_QWORD *)&cliff_info.info[0];
         *(_QWORD *)&v22.info[2] = *(_QWORD *)&cliff_info.info[2];
-        if ( !TRIBE_Map::check_cliff_valid(v6, v22) )
+        if( !TRIBE_Map::check_cliff_valid(v6, v22) )
         {
           *(_DWORD *)v21 = 0;
           TRIBE_Map::remove_cliff_edge(v6, x, y, possible_direction2);
@@ -984,15 +984,15 @@ LABEL_82:
       }
       *(_QWORD *)&v23.info[0] = *(_QWORD *)&cliff_info.info[0];
       *(_QWORD *)&v23.info[2] = *(_QWORD *)&cliff_info.info[2];
-      if ( !TRIBE_Map::check_cliff_valid(v6, v23) )
+      if( !TRIBE_Map::check_cliff_valid(v6, v23) )
       {
         v24 = 0;
         v25 = &cliff_info;
         do
         {
-          if ( v24 != direction )
+          if( v24 != direction )
           {
-            if ( v25->info[0] )
+            if( v25->info[0] )
             {
               TRIBE_Map::remove_cliff_edge(v6, x, y, v24);
               v25->info[0] = 0;
@@ -1001,7 +1001,7 @@ LABEL_82:
           ++v24;
           v25 = (TRIBE_Cliff_Info *)((char *)v25 + 4);
         }
-        while ( v24 < 4 );
+        while( v24 < 4 );
       }
     }
     else
@@ -1009,13 +1009,13 @@ LABEL_82:
       facing = 1;
       v26 = 0;
       cliff_info.info[direction] = 1;
-      if ( possible_direction1 > -1 )
+      if( possible_direction1 > -1 )
       {
         v27 = (char *)&cliff_info + 4 * possible_direction1;
         *(_DWORD *)v27 = possible_facing1;
         *(_QWORD *)&v28.info[0] = *(_QWORD *)&cliff_info.info[0];
         *(_QWORD *)&v28.info[2] = *(_QWORD *)&cliff_info.info[2];
-        if ( TRIBE_Map::check_cliff_valid(v6, v28) )
+        if( TRIBE_Map::check_cliff_valid(v6, v28) )
         {
           v26 = 1;
           possible_facing1 = 0;
@@ -1025,15 +1025,15 @@ LABEL_82:
           *(_DWORD *)v27 = 0;
         }
       }
-      if ( !v26 )
+      if( !v26 )
       {
-        if ( possible_direction2 > -1 )
+        if( possible_direction2 > -1 )
         {
           v29 = (char *)&cliff_info + 4 * possible_direction2;
           *(_DWORD *)v29 = possible_facing2;
           *(_QWORD *)&v30.info[0] = *(_QWORD *)&cliff_info.info[0];
           *(_QWORD *)&v30.info[2] = *(_QWORD *)&cliff_info.info[2];
-          if ( TRIBE_Map::check_cliff_valid(v6, v30) )
+          if( TRIBE_Map::check_cliff_valid(v6, v30) )
           {
             v26 = 1;
             possible_facing2 = 0;
@@ -1043,21 +1043,21 @@ LABEL_82:
             *(_DWORD *)v29 = 0;
           }
         }
-        if ( !v26 )
+        if( !v26 )
         {
           *(_QWORD *)&v31.info[0] = *(_QWORD *)&cliff_info.info[0];
           *(_QWORD *)&v31.info[2] = *(_QWORD *)&cliff_info.info[2];
-          if ( !TRIBE_Map::check_cliff_valid(v6, v31) )
+          if( !TRIBE_Map::check_cliff_valid(v6, v31) )
           {
             cliff_info.info[direction] = -1;
             facing = -1;
-            if ( possible_direction1 > -1 )
+            if( possible_direction1 > -1 )
             {
               v32 = (char *)&cliff_info + 4 * possible_direction1;
               *(_DWORD *)v32 = possible_facing1;
               *(_QWORD *)&v33.info[0] = *(_QWORD *)&cliff_info.info[0];
               *(_QWORD *)&v33.info[2] = *(_QWORD *)&cliff_info.info[2];
-              if ( TRIBE_Map::check_cliff_valid(v6, v33) )
+              if( TRIBE_Map::check_cliff_valid(v6, v33) )
               {
                 v26 = 1;
                 possible_facing1 = 0;
@@ -1067,15 +1067,15 @@ LABEL_82:
                 *(_DWORD *)v32 = 0;
               }
             }
-            if ( !v26 )
+            if( !v26 )
             {
-              if ( possible_direction2 > -1 )
+              if( possible_direction2 > -1 )
               {
                 v34 = (char *)&cliff_info + 4 * possible_direction2;
                 *(_DWORD *)v34 = possible_facing2;
                 *(_QWORD *)&v35.info[0] = *(_QWORD *)&cliff_info.info[0];
                 *(_QWORD *)&v35.info[2] = *(_QWORD *)&cliff_info.info[2];
-                if ( TRIBE_Map::check_cliff_valid(v6, v35) )
+                if( TRIBE_Map::check_cliff_valid(v6, v35) )
                 {
                   v26 = 1;
                   possible_facing2 = 0;
@@ -1085,16 +1085,16 @@ LABEL_82:
                   *(_DWORD *)v34 = 0;
                 }
               }
-              if ( !v26 )
+              if( !v26 )
               {
                 *(_QWORD *)&v36.info[0] = *(_QWORD *)&cliff_info.info[0];
                 *(_QWORD *)&v36.info[2] = *(_QWORD *)&cliff_info.info[2];
-                if ( !TRIBE_Map::check_cliff_valid(v6, v36) )
+                if( !TRIBE_Map::check_cliff_valid(v6, v36) )
                 {
                   v37 = &cliff_info;
                   do
                   {
-                    if ( v26 != direction && v37->info[0] )
+                    if( v26 != direction && v37->info[0] )
                     {
                       TRIBE_Map::remove_cliff_edge(v6, x, y, v26);
                       v37->info[0] = 0;
@@ -1102,16 +1102,16 @@ LABEL_82:
                     ++v26;
                     v37 = (TRIBE_Cliff_Info *)((char *)v37 + 4);
                   }
-                  while ( v26 < 4 );
+                  while( v26 < 4 );
                 }
               }
             }
           }
         }
       }
-      if ( possible_facing1 )
+      if( possible_facing1 )
         TRIBE_Map::remove_cliff_edge(v6, x, y, possible_direction1);
-      if ( possible_facing2 )
+      if( possible_facing2 )
         TRIBE_Map::remove_cliff_edge(v6, x, y, possible_direction2);
     }
     *(_QWORD *)&v38.info[0] = *(_QWORD *)&cliff_info.info[0];
@@ -1140,7 +1140,7 @@ void __thiscall TRIBE_Map::delete_cliff(TRIBE_Map *this, int x, int y)
   v3 = this;
   v4 = (RGE_Static_Object *)TRIBE_Map::find_cliff(this, x, y);
   TRIBE_Map::get_cliff_info(v3, &cliff_info, v4);
-  if ( v4 )
+  if( v4 )
   {
     v5 = TRIBE_Map::get_cliff_info(v3, &result, v4);
     v6 = 0;
@@ -1151,12 +1151,12 @@ void __thiscall TRIBE_Map::delete_cliff(TRIBE_Map *this, int x, int y)
     cliff_info.info[3] = v5->info[3];
     do
     {
-      if ( v7->info[0] )
+      if( v7->info[0] )
         TRIBE_Map::remove_cliff_edge(v3, x, y, v6);
       ++v6;
       v7 = (TRIBE_Cliff_Info *)((char *)v7 + 4);
     }
-    while ( v6 < 4 );
+    while( v6 < 4 );
     ya = -1;
     do
     {
@@ -1166,11 +1166,11 @@ void __thiscall TRIBE_Map::delete_cliff(TRIBE_Map *this, int x, int y)
           &v3->game_world->players[v3->game_world->curr_player]->diam_tile_list,
           (unsigned __int64)(signed __int64)v4->world_x + ya,
           (unsigned __int64)(signed __int64)v4->world_y + v8++);
-      while ( v8 < 2 );
+      while( v8 < 2 );
       v10 = __OFSUB__(ya + 1, 2);
       v9 = ya++ - 1 < 0;
     }
-    while ( v9 ^ v10 );
+    while( v9 ^ v10 );
     v4->vfptr->__vecDelDtor(v4, 1u);
   }
 }
@@ -1193,12 +1193,12 @@ char __thiscall TRIBE_Map::do_cliff_brush(TRIBE_Map *this, int x, int y, char cl
   v5 = this;
   v6 = x / 3;
   v7 = y / 3;
-  if ( RGE_Map::do_cliff_brush(x, y, cliff_id, delete_cliff_flag) )
+  if( RGE_Map::do_cliff_brush(x, y, cliff_id, delete_cliff_flag) )
     return 1;
   v9 = v5->old_cliff_x;
   v5->safe_cliff_x = v6;
   v5->safe_cliff_y = v7;
-  if ( v9 == v6 && v5->old_cliff_y == v7
+  if( v9 == v6 && v5->old_cliff_y == v7
     || 3 * v6 + 2 >= v5->map_width
     || 3 * v7 + 2 >= v5->map_height
     || v6 < 0
@@ -1206,19 +1206,19 @@ char __thiscall TRIBE_Map::do_cliff_brush(TRIBE_Map *this, int x, int y, char cl
   {
     return 0;
   }
-  if ( v9 != -1 )
+  if( v9 != -1 )
   {
     v10 = v5->old_cliff_y;
-    if ( v10 != -1 )
+    if( v10 != -1 )
     {
       v11 = y - 3 * v10;
       v12 = x - 3 * v9;
-      if ( v12 >= 3 || v12 <= -1 )
+      if( v12 >= 3 || v12 <= -1 )
       {
         v7 = v5->old_cliff_y;
         goto LABEL_17;
       }
-      if ( v11 >= 3 || v11 <= -1 )
+      if( v11 >= 3 || v11 <= -1 )
       {
         v6 = v9;
         goto LABEL_17;
@@ -1227,14 +1227,14 @@ char __thiscall TRIBE_Map::do_cliff_brush(TRIBE_Map *this, int x, int y, char cl
     }
   }
 LABEL_17:
-  if ( v6 != v9 || v7 != v5->old_cliff_y )
+  if( v6 != v9 || v7 != v5->old_cliff_y )
   {
-    if ( delete_cliff_flag )
+    if( delete_cliff_flag )
     {
       ((void (__thiscall *)(TRIBE_Map *, int, int))v5->vfptr[1].__vecDelDtor)(v5, v6, v7);
       result = 1;
     }
-    else if ( v9 == -1 )
+    else if( v9 == -1 )
     {
       v5->old_cliff_direction = -1;
       v5->old_cliff_x = v6;
@@ -1243,12 +1243,12 @@ LABEL_17:
     }
     else
     {
-      if ( v9 >= v6 )
+      if( v9 >= v6 )
       {
-        if ( v9 <= v6 )
+        if( v9 <= v6 )
         {
           v13 = 1;
-          if ( v5->old_cliff_y >= v7 )
+          if( v5->old_cliff_y >= v7 )
             v13 = 3;
         }
         else
@@ -1279,7 +1279,7 @@ LABEL_17:
 //----- (00510C10) --------------------------------------------------------
 char __thiscall TRIBE_Map::do_cliff_brush_stroke(TRIBE_Map *this, int x1, int y1, int x2, int y2, int cliff_id, int delete_cliff)
 {
-  if ( this->safe_cliff_x != x1 / 3 || this->safe_cliff_y != y1 / 3 )
+  if( this->safe_cliff_x != x1 / 3 || this->safe_cliff_y != y1 / 3 )
   {
     this->old_cliff_x = -1;
     this->old_cliff_y = -1;
@@ -1297,9 +1297,9 @@ char __stdcall TRIBE_Map::water(char terrain)
   char result; // al@1
 
   result = terrain;
-  if ( terrain != 1 )
+  if( terrain != 1 )
   {
-    if ( terrain == 22 )
+    if( terrain == 22 )
       result = 1;
     else
       result = terrain == 4;
@@ -1332,16 +1332,16 @@ void __thiscall TRIBE_Map::clean_borders(TRIBE_Map *this, int x1, int y1, int x2
   v8 = v6->map_width;
   v18 = v7 - 1;
   v19 = v8 - 1;
-  if ( x1 < 0 )
+  if( x1 < 0 )
     x1 = 0;
   v9 = y1;
-  if ( y1 < 0 )
+  if( y1 < 0 )
     v9 = 0;
-  if ( x2 >= v8 )
+  if( x2 >= v8 )
     x2 = v8 - 1;
-  if ( y2 >= v7 )
+  if( y2 >= v7 )
     y2 = v7 - 1;
-  if ( v9 <= y2 )
+  if( v9 <= y2 )
   {
     v10 = x2;
     v11 = x1;
@@ -1349,7 +1349,7 @@ void __thiscall TRIBE_Map::clean_borders(TRIBE_Map *this, int x1, int y1, int x2
     {
       v12 = v11;
       y1a = v11;
-      if ( v11 <= v10 )
+      if( v11 <= v10 )
       {
         v13 = v11;
         do
@@ -1357,54 +1357,54 @@ void __thiscall TRIBE_Map::clean_borders(TRIBE_Map *this, int x1, int y1, int x2
           v14 = v6->map_row_offset;
           v15 = (int)&v14[v9];
           v16 = *((_BYTE *)&v14[v9][v13] + 5) & 0x1F;
-          if ( v16 == 2 )
+          if( v16 == 2 )
           {
             y1b = 0;
-            if ( v9 > 0 && TRIBE_Map::water(*(_BYTE *)(*(_DWORD *)(v15 - 4) + v13 * 24 + 5) & 0x1F)
+            if( v9 > 0 && TRIBE_Map::water(*(_BYTE *)(*(_DWORD *)(v15 - 4) + v13 * 24 + 5) & 0x1F)
               || v9 < v18 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 + 1][v13] + 5) & 0x1F) )
             {
               y1b = 1;
             }
-            if ( v13 > 0
+            if( v13 > 0
               && (TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9][v13] - 19) & 0x1F)
                || v9 > 0 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 - 1][v13] - 19) & 0x1F)
                || v9 < v18 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 + 1][v13] - 19) & 0x1F)) )
             {
               y1b = 1;
             }
-            if ( v12 < v19
+            if( v12 < v19
               && (TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9][v13 + 1] + 5) & 0x1F)
                || v9 > 0 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 - 1][v13 + 1] + 5) & 0x1F)
                || v9 < v18 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 + 1][v13 + 1] + 5) & 0x1F)) )
             {
               y1b = 1;
             }
-            if ( y1b != 1 )
+            if( y1b != 1 )
               RGE_Map::set_terrain((RGE_Map *)&v6->vfptr, v6->game_world, v12, v9, terrain_id, 0, 0);
           }
-          else if ( !TRIBE_Map::water(v16) )
+          else if( !TRIBE_Map::water(v16) )
           {
             v17 = 0;
-            if ( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 - 1][v13] + 5) & 0x1F)
+            if( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 - 1][v13] + 5) & 0x1F)
               || v9 < v18 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 + 1][v13] + 5) & 0x1F) )
             {
               v17 = 1;
             }
-            if ( v13 > 0
+            if( v13 > 0
               && (TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9][v13] - 19) & 0x1F)
                || v9 > 0 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 - 1][v13] - 19) & 0x1F)
                || v9 < v18 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 + 1][v13] - 19) & 0x1F)) )
             {
               v17 = 1;
             }
-            if ( y1a < v19
+            if( y1a < v19
               && (TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9][v13 + 1] + 5) & 0x1F)
                || v9 > 0 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 - 1][v13 + 1] + 5) & 0x1F)
                || v9 < v18 && TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v9 + 1][v13 + 1] + 5) & 0x1F)) )
             {
               v17 = 1;
             }
-            if ( v17 == 1 )
+            if( v17 == 1 )
               RGE_Map::set_terrain((RGE_Map *)&v6->vfptr, v6->game_world, y1a, v9, 2, 0, 0);
             v12 = y1a;
           }
@@ -1413,12 +1413,12 @@ void __thiscall TRIBE_Map::clean_borders(TRIBE_Map *this, int x1, int y1, int x2
           ++v13;
           y1a = v12;
         }
-        while ( v12 <= x2 );
+        while( v12 <= x2 );
         v11 = x1;
       }
       ++v9;
     }
-    while ( v9 <= y2 );
+    while( v9 <= y2 );
   }
 }
 
@@ -1437,33 +1437,33 @@ char __thiscall TRIBE_Map::do_terrain_brush_check(TRIBE_Map *this, int x, int y)
 
   v3 = y;
   v4 = &this->map_row_offset[y][x];
-  if ( x > 0 && v4[-1].tile_type )
+  if( x > 0 && v4[-1].tile_type )
     return 0;
   v6 = this->map_width;
   v7 = v6 - 1;
-  if ( x < v6 - 1 && v4[1].tile_type )
+  if( x < v6 - 1 && v4[1].tile_type )
     return 0;
-  if ( y > 0 )
+  if( y > 0 )
   {
     v8 = (int)&v4[-v6].screen_xpos;
-    if ( *(_BYTE *)(v8 + 4) )
+    if( *(_BYTE *)(v8 + 4) )
       return 0;
-    if ( x > 0 && *(_BYTE *)(v8 - 20) )
+    if( x > 0 && *(_BYTE *)(v8 - 20) )
       return 0;
-    if ( x < v7 && *(_BYTE *)(v8 + 28) )
+    if( x < v7 && *(_BYTE *)(v8 + 28) )
       return 0;
     v3 = y;
   }
-  if ( v3 >= this->map_height - 1 )
+  if( v3 >= this->map_height - 1 )
     goto LABEL_29;
   v9 = 3 * v6;
   v10 = v4[8 * v9 / 0x18u].tile_type;
   v11 = (int)&v4[8 * v9 / 0x18u].screen_xpos;
-  if ( v10 )
+  if( v10 )
     return 0;
-  if ( x > 0 && *(_BYTE *)(v11 - 20) )
+  if( x > 0 && *(_BYTE *)(v11 - 20) )
     return 0;
-  if ( x < v7 && *(_BYTE *)(v11 + 28) )
+  if( x < v7 && *(_BYTE *)(v11 + 28) )
     result = 0;
   else
 LABEL_29:
@@ -1483,36 +1483,36 @@ void __thiscall TRIBE_Map::tribe_clean_elevation(TRIBE_Map *this, int x1, int y1
 
   v5 = x1;
   v6 = this;
-  if ( x1 < 0 )
+  if( x1 < 0 )
   {
     x1 = 0;
     v5 = 0;
   }
   v7 = y1;
-  if ( y1 < 0 )
+  if( y1 < 0 )
     v7 = 0;
   v8 = this->map_width;
-  if ( x2 >= v8 )
+  if( x2 >= v8 )
     x2 = v8 - 1;
   v9 = this->map_height;
-  if ( y2 >= v9 )
+  if( y2 >= v9 )
     y2 = v9 - 1;
-  for ( ; v7 <= y2; ++v7 )
+  for( ; v7 <= y2; ++v7 )
   {
-    if ( v5 <= x2 )
+    if( v5 <= x2 )
     {
       v10 = v5;
       do
       {
-        if ( TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v7][v10] + 5) & 0x1F) )
+        if( TRIBE_Map::water(*((_BYTE *)&v6->map_row_offset[v7][v10] + 5) & 0x1F) )
         {
-          if ( !TRIBE_Map::do_terrain_brush_check(v6, v5, v7) )
+          if( !TRIBE_Map::do_terrain_brush_check(v6, v5, v7) )
             RGE_Map::set_terrain((RGE_Map *)&v6->vfptr, v6->game_world, v5, v7, 0, 0, 0);
         }
         ++v5;
         ++v10;
       }
-      while ( v5 <= x2 );
+      while( v5 <= x2 );
       v5 = x1;
     }
   }
@@ -1567,27 +1567,27 @@ void __userpurge TRIBE_Map::tribe_clean_terrain(TRIBE_Map *this@<ecx>, int a2@<e
   offset3 = 1 - a2;
   offset5 = a2 + 1;
   offset7 = a2 - 1;
-  if ( x1 < 0 )
+  if( x1 < 0 )
   {
     v9 = 0;
     x1 = 0;
   }
   v10 = y1;
-  if ( y1 < 0 )
+  if( y1 < 0 )
   {
     v10 = 0;
     y1 = 0;
   }
   v11 = this->map_width;
   v12 = x2;
-  if ( x2 >= v11 )
+  if( x2 >= v11 )
   {
     v12 = v11 - 1;
     x2 = v11 - 1;
   }
   v13 = this->map_height;
   v14 = y2;
-  if ( y2 >= v13 )
+  if( y2 >= v13 )
   {
     v14 = v13 - 1;
     y2 = v13 - 1;
@@ -1595,18 +1595,18 @@ void __userpurge TRIBE_Map::tribe_clean_terrain(TRIBE_Map *this@<ecx>, int a2@<e
   do
   {
     change_flag = 0;
-    if ( v9 > 0 )
+    if( v9 > 0 )
       x1 = --v9;
-    if ( v10 > 0 )
+    if( v10 > 0 )
       y1 = --v10;
-    if ( v12 < v8->map_width - 1 )
+    if( v12 < v8->map_width - 1 )
       x2 = ++v12;
-    if ( v14 < v8->map_height - 1 )
+    if( v14 < v8->map_height - 1 )
       y2 = ++v14;
     pass_index = 0;
     do
     {
-      if ( v10 > v14 )
+      if( v10 > v14 )
         goto LABEL_140;
       v15 = 24 * v9;
       v43 = 24 * v9;
@@ -1615,11 +1615,11 @@ void __userpurge TRIBE_Map::tribe_clean_terrain(TRIBE_Map *this@<ecx>, int a2@<e
         v16 = v8->map_row_offset;
         v17 = (int)&v16[v10]->screen_xpos + v15;
         til = (RGE_Tile *)((char *)v16[v10] + v15);
-        if ( v9 > v12 )
+        if( v9 > v12 )
           goto LABEL_138;
-        while ( 1 )
+        while( 1 )
         {
-          if ( TRIBE_Map::water(*(_BYTE *)(v17 + 5) & 0x1F) )
+          if( TRIBE_Map::water(*(_BYTE *)(v17 + 5) & 0x1F) )
             goto LABEL_136;
           v18 = 0;
           place2 = 0;
@@ -1629,47 +1629,47 @@ void __userpurge TRIBE_Map::tribe_clean_terrain(TRIBE_Map *this@<ecx>, int a2@<e
           place6 = 0;
           place7 = 0;
           place8 = 0;
-          if ( v10 > 0 && TRIBE_Map::water(*((_BYTE *)&til[(signed __int16)offset2] + 5) & 0x1F) )
+          if( v10 > 0 && TRIBE_Map::water(*((_BYTE *)&til[(signed __int16)offset2] + 5) & 0x1F) )
             place2 = 1;
-          if ( v10 < v8->map_height - 1 && TRIBE_Map::water(*((_BYTE *)&til[v38] + 5) & 0x1F) )
+          if( v10 < v8->map_height - 1 && TRIBE_Map::water(*((_BYTE *)&til[v38] + 5) & 0x1F) )
             place6 = 1;
-          if ( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&til[-1] + 5) & 0x1F) )
+          if( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&til[-1] + 5) & 0x1F) )
             place8 = 1;
-          if ( v9 < v8->map_width - 1 && TRIBE_Map::water(*((_BYTE *)&til[1] + 5) & 0x1F) )
+          if( v9 < v8->map_width - 1 && TRIBE_Map::water(*((_BYTE *)&til[1] + 5) & 0x1F) )
             place4 = 1;
-          if ( v10 > 0 )
+          if( v10 > 0 )
           {
-            if ( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&til[offset1] + 5) & 0x1F) )
+            if( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&til[offset1] + 5) & 0x1F) )
               v18 = 1;
-            if ( v9 < v8->map_width - 1 && TRIBE_Map::water(*((_BYTE *)&til[offset3] + 5) & 0x1F) )
+            if( v9 < v8->map_width - 1 && TRIBE_Map::water(*((_BYTE *)&til[offset3] + 5) & 0x1F) )
               place3 = 1;
           }
-          if ( v10 < v8->map_height - 1 )
+          if( v10 < v8->map_height - 1 )
           {
-            if ( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&til[offset7] + 5) & 0x1F) )
+            if( v9 > 0 && TRIBE_Map::water(*((_BYTE *)&til[offset7] + 5) & 0x1F) )
               place7 = 1;
-            if ( v9 < v8->map_width - 1 && TRIBE_Map::water(*((_BYTE *)&til[offset5] + 5) & 0x1F) )
+            if( v9 < v8->map_width - 1 && TRIBE_Map::water(*((_BYTE *)&til[offset5] + 5) & 0x1F) )
               place5 = 1;
           }
           v19 = 0;
-          if ( !pass_index )
+          if( !pass_index )
           {
-            if ( place2 && place6 || place4 && place8 )
+            if( place2 && place6 || place4 && place8 )
               goto LABEL_113;
             goto LABEL_114;
           }
-          if ( v18 )
+          if( v18 )
           {
-            if ( place3 && !place2 || place4 && !place3 )
+            if( place3 && !place2 || place4 && !place3 )
             {
               v20 = place7;
             }
             else
             {
               v20 = place7;
-              if ( (!place7 || place8) && (!place6 || place7) )
+              if( (!place7 || place8) && (!place6 || place7) )
               {
-                if ( place5 && !place6 && !place4 )
+                if( place5 && !place6 && !place4 )
                   v19 = 1;
                 goto LABEL_72;
               }
@@ -1681,23 +1681,23 @@ void __userpurge TRIBE_Map::tribe_clean_terrain(TRIBE_Map *this@<ecx>, int a2@<e
             v20 = place7;
           }
 LABEL_72:
-          if ( place3
+          if( place3
             && !v19
             && (v18 && !place2 || place8 && !v18 || place5 && !place4 || place6 && !place5 || v20 && !place8 && !place6) )
           {
             v19 = 1;
           }
-          if ( place5
+          if( place5
             && !v19
             && (place3 && !place4 || place2 && !place3 || v20 && !place6 || place8 && !v20 || v18 && !place8 && !place2) )
           {
             v19 = 1;
           }
-          if ( v20 )
+          if( v20 )
           {
-            if ( v19 )
+            if( v19 )
               goto LABEL_115;
-            if ( v18 && !place8
+            if( v18 && !place8
               || place2 && !v18
               || place5 && !place6
               || place4 && !place5
@@ -1709,12 +1709,12 @@ LABEL_113:
             }
           }
 LABEL_114:
-          if ( !v19 )
+          if( !v19 )
             goto LABEL_136;
 LABEL_115:
-          if ( TRIBE_Map::water(replacement_terrain) )
+          if( TRIBE_Map::water(replacement_terrain) )
           {
-            if ( !TRIBE_Map::do_terrain_brush_check(v8, v9, v10) )
+            if( !TRIBE_Map::do_terrain_brush_check(v8, v9, v10) )
               goto LABEL_136;
             v26 = replacement_terrain;
             v25 = v10;
@@ -1723,21 +1723,21 @@ LABEL_115:
           }
           else
           {
-            if ( v18 )
+            if( v18 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9 - 1, v10 - 1, replacement_terrain, 0, 0);
-            if ( place2 )
+            if( place2 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9, v10 - 1, replacement_terrain, 0, 0);
-            if ( place3 )
+            if( place3 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9 + 1, v10 - 1, replacement_terrain, 0, 0);
-            if ( place4 )
+            if( place4 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9 + 1, v10, replacement_terrain, 0, 0);
-            if ( place5 )
+            if( place5 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9 + 1, v10 + 1, replacement_terrain, 0, 0);
-            if ( place6 )
+            if( place6 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9, v10 + 1, replacement_terrain, 0, 0);
-            if ( place7 )
+            if( place7 )
               RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, v8->game_world, v9 - 1, v10 + 1, replacement_terrain, 0, 0);
-            if ( !place8 )
+            if( !place8 )
               goto LABEL_135;
             v26 = replacement_terrain;
             v25 = v10;
@@ -1750,7 +1750,7 @@ LABEL_135:
 LABEL_136:
           ++v9;
           ++til;
-          if ( v9 > x2 )
+          if( v9 > x2 )
             break;
           v17 = (int)til;
         }
@@ -1760,16 +1760,16 @@ LABEL_136:
 LABEL_138:
         ++v10;
       }
-      while ( v10 <= y2 );
+      while( v10 <= y2 );
       v10 = y1;
       v14 = y2;
 LABEL_140:
       v22 = __OFSUB__(pass_index + 1, 2);
       v21 = pass_index++ - 1 < 0;
     }
-    while ( v21 ^ v22 );
+    while( v21 ^ v22 );
   }
-  while ( change_flag );
+  while( change_flag );
   TRIBE_Map::clean_borders(v8, v9, y1, v12, y2, replacement_terrain);
   RGE_Map::set_terrain((RGE_Map *)&v8->vfptr, 0, 0, v9, y1, v12, y2, 0, 0, 0);
 }

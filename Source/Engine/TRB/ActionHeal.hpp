@@ -1,8 +1,8 @@
 
 /**
- * @file    Engine\TRB\ActionHeal.cpp
+ * @file    Engine\TRB\ActionHeal.hpp
  * @author  Yvan Burrie
- * @date    2018/06/27
+ * @date    2018/07/03
  * @version 1.0
  */
 
@@ -22,7 +22,9 @@ public:
     TRIBE_Action_Heal(
         RGE_Action_Object *obj_in,
         RGE_Task *task_in,
-        float x, float y, float z);
+        float x,
+        float y,
+        float z);
 
     ~TRIBE_Action_Heal();
 
@@ -34,5 +36,7 @@ public:
 
     int work(
         RGE_Static_Object *obj_in,
-        float x, float y, float z);
+        float x,
+        float y,
+        float z);
 };

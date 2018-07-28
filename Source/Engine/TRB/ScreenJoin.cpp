@@ -31,12 +31,12 @@ void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this)
   v2 = 2;
   do
     TCommunications_Handler::SetPlayerHumanity(comm, v2++, 0);
-  while ( v2 <= 9 );
-  if ( TScreenPanel::setup((TScreenPanel *)&v1->vfptr, rge_base_game->draw_area, info_file_name_in, 50053, 1) )
+  while( v2 <= 9 );
+  if( TScreenPanel::setup((TScreenPanel *)&v1->vfptr, rge_base_game->draw_area, info_file_name_in, 50053, 1) )
   {
     TEasy_Panel::setup_shadow_area((TEasy_Panel *)&v1->vfptr, 0);
     TEasy_Panel::set_ideal_size((TEasy_Panel *)&v1->vfptr, 640, 480);
-    if ( TEasy_Panel::create_text(
+    if( TEasy_Panel::create_text(
            (TEasy_Panel *)&v1->vfptr,
            (TPanel *)&v1->vfptr,
            &v1->title,
@@ -64,15 +64,15 @@ void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this)
         0,
         0);
       v3 = (TTextPanel **)&v1->list;
-      if ( TEasy_Panel::create_list((TEasy_Panel *)&v1->vfptr, (TPanel *)&v1->vfptr, &v1->list, 20, 90, 600, 270, 11) )
+      if( TEasy_Panel::create_list((TEasy_Panel *)&v1->vfptr, (TPanel *)&v1->vfptr, &v1->list, 20, 90, 600, 270, 11) )
       {
-        if ( TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v1->vfptr, &v1->scrollbar, *v3, 20) )
+        if( TEasy_Panel::create_auto_scrollbar((TEasy_Panel *)&v1->vfptr, &v1->scrollbar, *v3, 20) )
         {
           v4 = *v3;
           v1->listFilled = 1;
           (*(void (__stdcall **)(signed int))&v4->vfptr[1].gap4[0])(9643);
           v5 = (TPanel **)&v1->refreshButton;
-          if ( TEasy_Panel::create_button(
+          if( TEasy_Panel::create_button(
                  (TEasy_Panel *)&v1->vfptr,
                  (TPanel *)&v1->vfptr,
                  &v1->refreshButton,
@@ -86,7 +86,7 @@ void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this)
                  0,
                  0) )
           {
-            if ( TEasy_Panel::create_button(
+            if( TEasy_Panel::create_button(
                    (TEasy_Panel *)&v1->vfptr,
                    (TPanel *)&v1->vfptr,
                    &v1->joinButton,
@@ -100,7 +100,7 @@ void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this)
                    0,
                    0) )
             {
-              if ( TEasy_Panel::create_button(
+              if( TEasy_Panel::create_button(
                      (TEasy_Panel *)&v1->vfptr,
                      (TPanel *)&v1->vfptr,
                      &v1->createButton,
@@ -115,7 +115,7 @@ void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this)
                      0) )
               {
                 v6 = (TPanel **)&v1->cancelButton;
-                if ( TEasy_Panel::create_button(
+                if( TEasy_Panel::create_button(
                        (TEasy_Panel *)&v1->vfptr,
                        (TPanel *)&v1->vfptr,
                        &v1->cancelButton,
@@ -132,7 +132,7 @@ void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this)
                   v7 = *v6;
                   v7[2].max_wid = 27;
                   v7[2].min_hgt = 0;
-                  if ( TEasy_Panel::create_button(
+                  if( TEasy_Panel::create_button(
                          (TEasy_Panel *)&v1->vfptr,
                          (TPanel *)&v1->vfptr,
                          &v1->close_button,
@@ -195,7 +195,7 @@ TribeJoinScreen *__thiscall TribeJoinScreen::`vector deleting destructor'(TribeJ
 
   v2 = this;
   TribeJoinScreen::~TribeJoinScreen(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -207,17 +207,17 @@ int __thiscall TribeJoinScreen::handle_idle(TribeJoinScreen *this)
   int result; // eax@7
 
   v1 = this;
-  if ( !this->waitingToStart )
+  if( !this->waitingToStart )
   {
-    if ( this->listFilled )
+    if( this->listFilled )
     {
-      if ( !rge_base_game->input_enabled )
+      if( !rge_base_game->input_enabled )
         RGE_Base_Game::enable_input(rge_base_game);
     }
-    if ( !v1->waitingToStart )
+    if( !v1->waitingToStart )
       goto LABEL_11;
   }
-  if ( debug_timeGetTime() - v1->joinTime > 0x2710 )
+  if( debug_timeGetTime() - v1->joinTime > 0x2710 )
   {
     TCommunications_Handler::UnlinkToLevel(comm, SERVICE_AVAILABLE);
     v1->waitingToStart = 0;
@@ -244,10 +244,10 @@ int __thiscall TribeJoinScreen::handle_user_command(TribeJoinScreen *this, unsig
   switch ( wParam )
   {
     case 0x17B8u:
-      if ( !this->waitingToStart )
+      if( !this->waitingToStart )
         goto LABEL_8;
       v4 = (TribeMPSetupScreen *)operator new(0x890u);
-      if ( v4 )
+      if( v4 )
         TribeMPSetupScreen::TribeMPSetupScreen(v4);
       TPanelSystem::setCurrentPanel(&panel_system, aMpSetupScreen, 0);
       TPanelSystem::destroyPanel(&panel_system, aJoinScreen);
@@ -257,7 +257,7 @@ int __thiscall TribeJoinScreen::handle_user_command(TribeJoinScreen *this, unsig
     case 0x17A9u:
     case 0x17AAu:
     case 0x17B2u:
-      if ( !this->waitingToStart )
+      if( !this->waitingToStart )
         goto LABEL_8;
       TCommunications_Handler::UnlinkToLevel(comm, SERVICE_AVAILABLE);
       v3->waitingToStart = 0;
@@ -296,7 +296,7 @@ void __thiscall TribeJoinScreen::fillList(TribeJoinScreen *this)
   v1->game_count = 0;
   (*(void (__stdcall **)(signed int))&v2->vfptr[1].gap4[0])(9641);
   RGE_Base_Game::draw_window(rge_base_game);
-  if ( v1->startedSession )
+  if( v1->startedSession )
   {
     TCommunications_Sessions::Refresh(Sess);
   }
@@ -304,13 +304,13 @@ void __thiscall TribeJoinScreen::fillList(TribeJoinScreen *this)
   {
     v3 = (TCommunications_Sessions *)operator new(0x457B0u);
     v12 = 0;
-    if ( v3 )
+    if( v3 )
       TCommunications_Sessions::TCommunications_Sessions(v3, comm);
     else
       v4 = 0;
     v12 = -1;
     Sess = v4;
-    if ( !v4 )
+    if( !v4 )
     {
       (*(void (__stdcall **)(signed int))&v1->list->vfptr[1].gap4[0])(9643);
       return;
@@ -320,14 +320,14 @@ void __thiscall TribeJoinScreen::fillList(TribeJoinScreen *this)
   v5 = TCommunications_Sessions::GetSessionCount(Sess);
   v6 = (TTextPanel *)&v1->list->vfptr;
   v1->game_count = v5;
-  if ( v5 <= 0 )
+  if( v5 <= 0 )
   {
     (*(void (__stdcall **)(signed int))&v6->vfptr[1].gap4[0])(9643);
   }
   else
   {
     TTextPanel::empty_list(v6);
-    for ( i = 0; i < v1->game_count; ++i )
+    for( i = 0; i < v1->game_count; ++i )
     {
       v8 = TCommunications_Sessions::GetSessionMaxPlayers(Sess, i);
       v9 = TCommunications_Sessions::GetSessionCurrentPlayers(Sess, i);
@@ -356,12 +356,12 @@ int __thiscall TribeJoinScreen::action(TribeJoinScreen *this, TPanel *fromPanel,
   int v15; // [sp+210h] [bp-4h]@15
 
   v5 = this;
-  if ( !fromPanel )
+  if( !fromPanel )
     return TEasy_Panel::action((TEasy_Panel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
   v6 = this->list;
-  if ( (TListPanel *)fromPanel == v6 )
+  if( (TListPanel *)fromPanel == v6 )
   {
-    if ( actionIn == 3 && v5->game_count > 0 )
+    if( actionIn == 3 && v5->game_count > 0 )
     {
       ((void (__fastcall *)(TribeJoinScreen *, signed int, TButtonPanel *, signed int, _DWORD, _DWORD))v5->vfptr->action)(
         v5,
@@ -374,11 +374,11 @@ int __thiscall TribeJoinScreen::action(TribeJoinScreen *this, TPanel *fromPanel,
     }
     return 1;
   }
-  if ( fromPanel == (TPanel *)v5->joinButton )
+  if( fromPanel == (TPanel *)v5->joinButton )
   {
-    if ( actionIn == 1 )
+    if( actionIn == 1 )
     {
-      if ( v5->game_count <= 0 )
+      if( v5->game_count <= 0 )
       {
         TEasy_Panel::popupOKDialog((TEasy_Panel *)&v5->vfptr, 9636, 0, 450, 100);
         result = 1;
@@ -387,7 +387,7 @@ int __thiscall TribeJoinScreen::action(TribeJoinScreen *this, TPanel *fromPanel,
       {
         v8 = TTextPanel::currentLineNumber((TTextPanel *)&v6->vfptr);
         v9 = TCommunications_Sessions::GetSessionGUID(Sess, v8);
-        if ( TCommunications_Handler::JoinMultiplayerGame(comm, v9) )
+        if( TCommunications_Handler::JoinMultiplayerGame(comm, v9) )
         {
           RGE_Base_Game::disable_input(rge_base_game);
           v5->waitingToStart = 1;
@@ -407,42 +407,42 @@ int __thiscall TribeJoinScreen::action(TribeJoinScreen *this, TPanel *fromPanel,
     }
     return 1;
   }
-  if ( fromPanel != (TPanel *)v5->cancelButton )
+  if( fromPanel != (TPanel *)v5->cancelButton )
   {
-    if ( fromPanel == (TPanel *)v5->createButton && actionIn == 1 )
+    if( fromPanel == (TPanel *)v5->createButton && actionIn == 1 )
     {
       v12 = (TribeMPCreateDialog *)operator new(0x4A4u);
       v15 = 1;
-      if ( v12 )
+      if( v12 )
       {
         TribeMPCreateDialog::TribeMPCreateDialog(v12, (TPanel *)&v5->vfptr);
         return 1;
       }
       return 1;
     }
-    if ( fromPanel == (TPanel *)v5->refreshButton )
+    if( fromPanel == (TPanel *)v5->refreshButton )
     {
-      if ( actionIn == 1 )
+      if( actionIn == 1 )
       {
         TribeJoinScreen::fillList(v5);
         return 1;
       }
       return 1;
     }
-    if ( fromPanel == (TPanel *)v5->close_button && actionIn == 1 )
+    if( fromPanel == (TPanel *)v5->close_button && actionIn == 1 )
     {
       RGE_Base_Game::close(rge_base_game);
       return 1;
     }
     return TEasy_Panel::action((TEasy_Panel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
   }
-  if ( actionIn != 1 )
+  if( actionIn != 1 )
     return 1;
   RGE_Base_Game::disable_input(rge_base_game);
   TCommunications_Handler::UnlinkToLevel(comm, SINGLE_PLAYER);
   v11 = (TribeMPStartupScreen *)operator new(0x6A0u);
   v15 = 0;
-  if ( v11 )
+  if( v11 )
     TribeMPStartupScreen::TribeMPStartupScreen(v11);
   v15 = -1;
   TPanelSystem::setCurrentPanel(&panel_system, aMpStartupScree, 0);

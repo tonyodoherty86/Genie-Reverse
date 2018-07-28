@@ -51,7 +51,7 @@ void __thiscall TribeSendMessageDialog::TribeSendMessageDialog(TribeSendMessageD
     v3 += 4;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
   v5 = v2->radioButton;
   v6 = 3;
   do
@@ -61,7 +61,7 @@ void __thiscall TribeSendMessageDialog::TribeSendMessageDialog(TribeSendMessageD
     ++v5;
     --v6;
   }
-  while ( v6 );
+  while( v6 );
   v2->chatInput = 0;
   v2->chatTitle = 0;
   v2->okButton = 0;
@@ -69,20 +69,20 @@ void __thiscall TribeSendMessageDialog::TribeSendMessageDialog(TribeSendMessageD
   v2->backgroundPics = 0;
   v7 = (TShape *)operator new(0x20u);
   LOBYTE(v33) = 1;
-  if ( v7 )
+  if( v7 )
     TShape::TShape(v7, aDlg_plbn_shp, 50746);
   else
     v8 = 0;
   LOBYTE(v33) = 0;
   v2->backgroundPics = v8;
-  if ( v8 )
+  if( v8 )
   {
     v9 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&parentPanel->vfptr);
     v10 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&parentPanel->vfptr);
     v11 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-    if ( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v11, (TPanel *)&parentPanel->vfptr, 520, 465, v10, v9, 1) )
+    if( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v11, (TPanel *)&parentPanel->vfptr, 520, 465, v10, v9, 1) )
     {
-      if ( TEasy_Panel::create_text(
+      if( TEasy_Panel::create_text(
              (TEasy_Panel *)&v2->vfptr,
              (TPanel *)&v2->vfptr,
              &v2->title,
@@ -105,30 +105,30 @@ void __thiscall TribeSendMessageDialog::TribeSendMessageDialog(TribeSendMessageD
         {
           v14 = RGE_Base_Game::playerID(rge_base_game, v12);
           id = v14;
-          if ( v14 )
+          if( v14 )
           {
             v15 = 0;
             v31 = v14;
-            if ( world->players[v14]->game_status == 2 )
+            if( world->players[v14]->game_status == 2 )
               goto LABEL_52;
-            if ( RGE_Base_Game::multiplayerGame(rge_base_game) )
+            if( RGE_Base_Game::multiplayerGame(rge_base_game) )
             {
               humanity = 0;
-              for ( j = 1; j <= RGE_Base_Game::numberPlayers(rge_base_game); ++j )
+              for( j = 1; j <= RGE_Base_Game::numberPlayers(rge_base_game); ++j )
               {
-                if ( RGE_Base_Game::playerID(rge_base_game, j) == id )
+                if( RGE_Base_Game::playerID(rge_base_game, j) == id )
                 {
                   v17 = TCommunications_Handler::GetPlayerHumanity(comm, j);
-                  if ( v17 == 2 || v17 == 4 )
+                  if( v17 == 2 || v17 == 4 )
                     humanity = v17;
                 }
               }
-              if ( humanity != 2 && humanity != 4 )
+              if( humanity != 2 && humanity != 4 )
 LABEL_52:
                 v15 = 1;
             }
             v18 = TCommunications_Handler::GetPlayerName(comm, i);
-            if ( !TEasy_Panel::create_text(
+            if( !TEasy_Panel::create_text(
                     (TEasy_Panel *)&v2->vfptr,
                     (TPanel *)&v2->vfptr,
                     (TTextPanel **)button - 16,
@@ -148,7 +148,7 @@ LABEL_52:
               0,
               temp_str,
               100);
-            if ( !TEasy_Panel::create_text(
+            if( !TEasy_Panel::create_text(
                     (TEasy_Panel *)&v2->vfptr,
                     (TPanel *)&v2->vfptr,
                     (TTextPanel **)button - 8,
@@ -162,7 +162,7 @@ LABEL_52:
                     1,
                     0) )
               return;
-            if ( i == TCommunications_Handler::WhoAmI(comm)
+            if( i == TCommunications_Handler::WhoAmI(comm)
               || TCommunications_Handler::GetPlayerHumanity(comm, i) != 2
               && TCommunications_Handler::GetPlayerHumanity(comm, i) != 4 )
             {
@@ -171,7 +171,7 @@ LABEL_52:
             else
             {
               v19 = button;
-              if ( !TEasy_Panel::create_check_box(
+              if( !TEasy_Panel::create_check_box(
                       (TEasy_Panel *)&v2->vfptr,
                       (TPanel *)&v2->vfptr,
                       button,
@@ -185,7 +185,7 @@ LABEL_52:
               TPanel::set_help_info((TPanel *)*button, 30335, -1);
               v20 = TChat::inChatGroup(chat, i);
               v21 = *button;
-              if ( v20 )
+              if( v20 )
                 (*(void (__stdcall **)(signed int))(*(_DWORD *)v21 + 224))(1);
               else
                 (*(void (__stdcall **)(_DWORD))(*(_DWORD *)v21 + 224))(0);
@@ -197,8 +197,8 @@ LABEL_52:
           }
           i = ++v12;
         }
-        while ( v12 < 9 );
-        if ( TEasy_Panel::create_text(
+        while( v12 < 9 );
+        if( TEasy_Panel::create_text(
                (TEasy_Panel *)&v2->vfptr,
                (TPanel *)&v2->vfptr,
                &v2->chatTitle,
@@ -212,7 +212,7 @@ LABEL_52:
                1,
                0) )
         {
-          if ( TEasy_Panel::create_edit(
+          if( TEasy_Panel::create_edit(
                  (TEasy_Panel *)&v2->vfptr,
                  (TPanel *)&v2->vfptr,
                  &v2->chatInput,
@@ -228,7 +228,7 @@ LABEL_52:
                  0) )
           {
             TPanel::set_help_info((TPanel *)&v2->chatInput->vfptr, 30330, -1);
-            if ( TEasy_Panel::create_radio_button(
+            if( TEasy_Panel::create_radio_button(
                    (TEasy_Panel *)&v2->vfptr,
                    (TPanel *)&v2->vfptr,
                    v2->radioButton,
@@ -239,7 +239,7 @@ LABEL_52:
                    0,
                    0) )
             {
-              if ( TEasy_Panel::create_radio_button(
+              if( TEasy_Panel::create_radio_button(
                      (TEasy_Panel *)&v2->vfptr,
                      (TPanel *)&v2->vfptr,
                      &v2->radioButton[1],
@@ -250,7 +250,7 @@ LABEL_52:
                      0,
                      0) )
               {
-                if ( TEasy_Panel::create_radio_button(
+                if( TEasy_Panel::create_radio_button(
                        (TEasy_Panel *)&v2->vfptr,
                        (TPanel *)&v2->vfptr,
                        &v2->radioButton[2],
@@ -261,7 +261,7 @@ LABEL_52:
                        0,
                        0) )
                 {
-                  if ( TEasy_Panel::create_radio_button(
+                  if( TEasy_Panel::create_radio_button(
                          (TEasy_Panel *)&v2->vfptr,
                          (TPanel *)&v2->vfptr,
                          &v2->radioButton[3],
@@ -272,7 +272,7 @@ LABEL_52:
                          0,
                          0) )
                   {
-                    if ( TEasy_Panel::create_text(
+                    if( TEasy_Panel::create_text(
                            (TEasy_Panel *)&v2->vfptr,
                            (TPanel *)&v2->vfptr,
                            v2->radioTitle,
@@ -287,7 +287,7 @@ LABEL_52:
                            0) )
                     {
                       TPanel::set_help_info((TPanel *)&v2->radioTitle[0]->vfptr, -1, -1);
-                      if ( TEasy_Panel::create_text(
+                      if( TEasy_Panel::create_text(
                              (TEasy_Panel *)&v2->vfptr,
                              (TPanel *)&v2->vfptr,
                              &v2->radioTitle[1],
@@ -302,7 +302,7 @@ LABEL_52:
                              0) )
                       {
                         TPanel::set_help_info((TPanel *)&v2->radioTitle[1]->vfptr, -1, -1);
-                        if ( TEasy_Panel::create_text(
+                        if( TEasy_Panel::create_text(
                                (TEasy_Panel *)&v2->vfptr,
                                (TPanel *)&v2->vfptr,
                                &v2->radioTitle[2],
@@ -317,7 +317,7 @@ LABEL_52:
                                0) )
                         {
                           TPanel::set_help_info((TPanel *)&v2->radioTitle[2]->vfptr, -1, -1);
-                          if ( TEasy_Panel::create_text(
+                          if( TEasy_Panel::create_text(
                                  (TEasy_Panel *)&v2->vfptr,
                                  (TPanel *)&v2->vfptr,
                                  &v2->radioTitle[3],
@@ -340,14 +340,14 @@ LABEL_52:
                               ++v22;
                               --v23;
                             }
-                            while ( v23 );
+                            while( v23 );
                             (*(void (__stdcall **)(signed int))(*(_DWORD *)v2->radioButton[3] + 224))(1);
                             TPanel::set_help_info((TPanel *)v2->radioButton[0], 30331, -1);
                             TPanel::set_help_info((TPanel *)v2->radioButton[1], 30332, -1);
                             TPanel::set_help_info((TPanel *)v2->radioButton[2], 30333, -1);
                             TPanel::set_help_info((TPanel *)v2->radioButton[3], 30334, -1);
                             v24 = (TPanel **)&v2->okButton;
-                            if ( TEasy_Panel::create_button(
+                            if( TEasy_Panel::create_button(
                                    (TEasy_Panel *)&v2->vfptr,
                                    (TPanel *)&v2->vfptr,
                                    &v2->okButton,
@@ -390,7 +390,7 @@ TribeSendMessageDialog *__thiscall TribeSendMessageDialog::`scalar deleting dest
 
   v2 = this;
   TribeSendMessageDialog::~TribeSendMessageDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -418,7 +418,7 @@ void __thiscall TribeSendMessageDialog::~TribeSendMessageDialog(TribeSendMessage
     v2 += 4;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v4 = (TPanel **)v1->radioButton;
   v5 = 4;
   do
@@ -428,13 +428,13 @@ void __thiscall TribeSendMessageDialog::~TribeSendMessageDialog(TribeSendMessage
     ++v4;
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   TPanel::delete_panel((TPanel **)&v1->chatInput);
   TPanel::delete_panel((TPanel **)&v1->chatTitle);
   TPanel::delete_panel((TPanel **)&v1->okButton);
   TPanel::delete_panel((TPanel **)&v1->help_button);
   v6 = v1->backgroundPics;
-  if ( v6 )
+  if( v6 )
   {
     TShape::~TShape(v1->backgroundPics);
     operator delete(v6);
@@ -462,27 +462,27 @@ int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPan
   char save_msg[66]; // [sp+10h] [bp-44h]@6
 
   v5 = this;
-  if ( !fromPanel )
+  if( !fromPanel )
     return TPanel::action((TPanel *)&this->vfptr, 0, actionIn, a1, a2);
   v6 = this->chatInput;
-  if ( (TEditPanel *)fromPanel == v6 )
+  if( (TEditPanel *)fromPanel == v6 )
   {
-    if ( !actionIn )
+    if( !actionIn )
     {
       v7 = (TRIBE_Screen_Game *)v5->parent_panel;
-      if ( TEditPanel::currentLine(v6) && *TEditPanel::currentLine(v5->chatInput) )
+      if( TEditPanel::currentLine(v6) && *TEditPanel::currentLine(v5->chatInput) )
         strcpy(save_msg, TEditPanel::currentLine(v5->chatInput));
       else
         save_msg[0] = 0;
-      if ( save_msg[0] )
+      if( save_msg[0] )
       {
-        if ( !((int (__stdcall *)(_DWORD, char *))rge_base_game->vfptr->processCheatCode)(
+        if( !((int (__stdcall *)(_DWORD, char *))rge_base_game->vfptr->processCheatCode)(
                 rge_base_game->world->curr_player,
                 save_msg) )
         {
-          if ( RGE_Base_Game::multiplayerGame(rge_base_game) )
+          if( RGE_Base_Game::multiplayerGame(rge_base_game) )
           {
-            if ( rge_base_game->prog_mode != 5 )
+            if( rge_base_game->prog_mode != 5 )
             {
               TCommunications_Handler::SendGroupChatMsg(comm, save_msg);
               TDebuggingLog::Log(L, aSendChat_US, rge_base_game->world->world_time, save_msg);
@@ -500,30 +500,30 @@ int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPan
     }
     return 1;
   }
-  if ( fromPanel == (TPanel *)v5->okButton )
+  if( fromPanel == (TPanel *)v5->okButton )
   {
-    if ( actionIn == 1 )
+    if( actionIn == 1 )
     {
       TribeSendMessageDialog::checkButtons(v5);
       v9 = (TRIBE_Screen_Game *)v5->parent_panel;
-      if ( TEditPanel::currentLine(v5->chatInput) && *TEditPanel::currentLine(v5->chatInput) )
+      if( TEditPanel::currentLine(v5->chatInput) && *TEditPanel::currentLine(v5->chatInput) )
         strcpy(save_msg, TEditPanel::currentLine(v5->chatInput));
       else
         save_msg[0] = 0;
       TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
       TPanelSystem::destroyPanel(&panel_system, aSendMessageDia);
-      if ( save_msg[0]
+      if( save_msg[0]
         && !((int (__stdcall *)(_DWORD, char *))rge_base_game->vfptr->processCheatCode)(
               rge_base_game->world->curr_player,
               save_msg) )
       {
-        if ( !RGE_Base_Game::multiplayerGame(rge_base_game) )
+        if( !RGE_Base_Game::multiplayerGame(rge_base_game) )
         {
           RGE_Base_Game::play_sound(rge_base_game, 2);
           TRIBE_Screen_Game::display_system_message(v9, save_msg);
           return 1;
         }
-        if ( rge_base_game->prog_mode != 5 )
+        if( rge_base_game->prog_mode != 5 )
         {
           TCommunications_Handler::SendGroupChatMsg(comm, save_msg);
           TDebuggingLog::Log(L, aSendChat_US, rge_base_game->world->world_time, save_msg);
@@ -534,13 +534,13 @@ int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPan
     }
     goto LABEL_64;
   }
-  if ( fromPanel == (TPanel *)v5->help_button )
+  if( fromPanel == (TPanel *)v5->help_button )
   {
     TEasy_Panel::setup_popup_help((TEasy_Panel *)&v5->vfptr);
     return 1;
   }
   v10 = (int)v5->checkButton;
-  if ( fromPanel == (TPanel *)v5->checkButton[0]
+  if( fromPanel == (TPanel *)v5->checkButton[0]
     || fromPanel == (TPanel *)v5->checkButton[1]
     || fromPanel == (TPanel *)v5->checkButton[2]
     || fromPanel == (TPanel *)v5->checkButton[3]
@@ -555,16 +555,16 @@ int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPan
     (*(void (__stdcall **)(signed int))(*(_DWORD *)v5->radioButton[3] + 224))(1);
     goto LABEL_64;
   }
-  if ( fromPanel == (TPanel *)v5->radioButton[0] )
+  if( fromPanel == (TPanel *)v5->radioButton[0] )
   {
     v11 = 8;
     v12 = rge_base_game->world->players[rge_base_game->world->curr_player];
     do
     {
-      if ( *(_DWORD *)v10 )
+      if( *(_DWORD *)v10 )
       {
         v13 = RGE_Base_Game::playerID(rge_base_game, *(_DWORD *)(v10 + 88));
-        if ( v13 == v12->id || (*(int (__thiscall **)(RGE_Player *, int))&v12->vfptr->gap4[24])(v12, v13) )
+        if( v13 == v12->id || (*(int (__thiscall **)(RGE_Player *, int))&v12->vfptr->gap4[24])(v12, v13) )
           (*(void (__stdcall **)(signed int))(**(_DWORD **)v10 + 224))(1);
         else
           (*(void (__stdcall **)(_DWORD))(**(_DWORD **)v10 + 224))(0);
@@ -572,20 +572,20 @@ int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPan
       v10 += 4;
       --v11;
     }
-    while ( v11 );
+    while( v11 );
     TribeSendMessageDialog::checkButtons(v5);
     return 1;
   }
-  if ( fromPanel == (TPanel *)v5->radioButton[1] )
+  if( fromPanel == (TPanel *)v5->radioButton[1] )
   {
     v14 = 8;
     v15 = rge_base_game->world->players[rge_base_game->world->curr_player];
     do
     {
-      if ( *(_DWORD *)v10 )
+      if( *(_DWORD *)v10 )
       {
         v16 = RGE_Base_Game::playerID(rge_base_game, *(_DWORD *)(v10 + 88));
-        if ( v16 != v15->id && (*(int (__thiscall **)(RGE_Player *, int))&v15->vfptr->gap4[20])(v15, v16) )
+        if( v16 != v15->id && (*(int (__thiscall **)(RGE_Player *, int))&v15->vfptr->gap4[20])(v15, v16) )
           (*(void (__stdcall **)(signed int))(**(_DWORD **)v10 + 224))(1);
         else
           (*(void (__stdcall **)(_DWORD))(**(_DWORD **)v10 + 224))(0);
@@ -593,17 +593,17 @@ int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPan
       v10 += 4;
       --v14;
     }
-    while ( v14 );
+    while( v14 );
     TribeSendMessageDialog::checkButtons(v5);
     return 1;
   }
-  if ( fromPanel != (TPanel *)v5->radioButton[2] )
+  if( fromPanel != (TPanel *)v5->radioButton[2] )
   {
     v18 = v5->radioButton[3];
     TribeSendMessageDialog::checkButtons(v5);
     return 1;
   }
-  if ( actionIn != 1 )
+  if( actionIn != 1 )
   {
 LABEL_64:
     TribeSendMessageDialog::checkButtons(v5);
@@ -612,12 +612,12 @@ LABEL_64:
   v17 = 8;
   do
   {
-    if ( *(_DWORD *)v10 )
+    if( *(_DWORD *)v10 )
       (*(void (__stdcall **)(signed int))(**(_DWORD **)v10 + 224))(1);
     v10 += 4;
     --v17;
   }
-  while ( v17 );
+  while( v17 );
   TribeSendMessageDialog::checkButtons(v5);
   return 1;
 }
@@ -633,12 +633,12 @@ void __thiscall TribeSendMessageDialog::checkButtons(TribeSendMessageDialog *thi
   v2 = 8;
   do
   {
-    if ( *v1 )
+    if( *v1 )
     {
       v3 = (TButtonPanel *)*(v1 - 22);
-      if ( v3 )
+      if( v3 )
       {
-        if ( TButtonPanel::get_state(v3) )
+        if( TButtonPanel::get_state(v3) )
           TChat::setInChatGroup(chat, *v1, 1);
         else
           TChat::setInChatGroup(chat, *v1, 0);
@@ -647,7 +647,7 @@ void __thiscall TribeSendMessageDialog::checkButtons(TribeSendMessageDialog *thi
     ++v1;
     --v2;
   }
-  while ( v2 );
+  while( v2 );
 }
 
 //----- (00441460) --------------------------------------------------------
@@ -665,7 +665,7 @@ void __thiscall TribeSendMessageDialog::draw(TribeSendMessageDialog *this)
 
   v1 = this;
   TEasy_Panel::draw((TEasy_Panel *)&this->vfptr);
-  if ( v1->backgroundPics )
+  if( v1->backgroundPics )
   {
     v2 = rge_base_game->world;
     v9 = v1->vfptr;
@@ -676,11 +676,11 @@ void __thiscall TribeSendMessageDialog::draw(TribeSendMessageDialog *this)
     do
     {
       v5 = RGE_Base_Game::playerID(rge_base_game, v3);
-      if ( v5 )
+      if( v5 )
       {
         v6 = v5;
         v7 = v2->players[v5]->color_table;
-        if ( v7 )
+        if( v7 )
         {
           ASMSet_Color_Xform(16 * (v7->id + 1));
           TShape::shape_draw(
@@ -697,7 +697,7 @@ void __thiscall TribeSendMessageDialog::draw(TribeSendMessageDialog *this)
       }
       i = ++v3;
     }
-    while ( v3 < 9 );
+    while( v3 < 9 );
     v9->draw_finish((TPanel *)v1);
   }
 }
@@ -717,7 +717,7 @@ void __thiscall TribeSendQuickMessageDialog::TribeSendQuickMessageDialog(TribeSe
   v4 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&parentPanel->vfptr);
   v5 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&parentPanel->vfptr);
   v6 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-  if ( TDialogPanel::setup((TDialogPanel *)&v3->vfptr, v6, (TPanel *)&parentPanel->vfptr, 540, 35, v5, v4, 1)
+  if( TDialogPanel::setup((TDialogPanel *)&v3->vfptr, v6, (TPanel *)&parentPanel->vfptr, 540, 35, v5, v4, 1)
     && TEasy_Panel::create_text(
          (TEasy_Panel *)&v3->vfptr,
          (TPanel *)&v3->vfptr,
@@ -732,7 +732,7 @@ void __thiscall TribeSendQuickMessageDialog::TribeSendQuickMessageDialog(TribeSe
          1,
          0) )
   {
-    if ( TEasy_Panel::create_edit(
+    if( TEasy_Panel::create_edit(
            (TEasy_Panel *)&v3->vfptr,
            (TPanel *)&v3->vfptr,
            &v3->chatInput,
@@ -760,7 +760,7 @@ TribeSendQuickMessageDialog *__thiscall TribeSendQuickMessageDialog::`vector del
 
   v2 = this;
   TribeSendQuickMessageDialog::~TribeSendQuickMessageDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -775,10 +775,10 @@ void __thiscall TribeSendQuickMessageDialog::~TribeSendQuickMessageDialog(TribeS
   v1 = this;
   this->vfptr = (TPanelVtbl *)&TribeSendQuickMessageDialog::`vftable';
   v2 = this->chatInput;
-  if ( v2 )
+  if( v2 )
     ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
   v3 = v1->chatTitle;
-  if ( v3 )
+  if( v3 )
     ((void (__stdcall *)(_DWORD))v3->vfptr->__vecDelDtor)(1);
   TDialogPanel::~TDialogPanel((TDialogPanel *)&v1->vfptr);
 }
@@ -793,30 +793,30 @@ int __thiscall TribeSendQuickMessageDialog::action(TribeSendQuickMessageDialog *
   char save_msg[66]; // [sp+Ch] [bp-44h]@6
 
   v5 = this;
-  if ( fromPanel )
+  if( fromPanel )
   {
     v6 = this->chatInput;
-    if ( (TEditPanel *)fromPanel == v6 )
+    if( (TEditPanel *)fromPanel == v6 )
     {
-      if ( !actionIn )
+      if( !actionIn )
       {
-        if ( TEditPanel::currentLine(v6) && *TEditPanel::currentLine(v5->chatInput) )
+        if( TEditPanel::currentLine(v6) && *TEditPanel::currentLine(v5->chatInput) )
         {
           v7 = (TRIBE_Screen_Game *)v5->parent_panel;
           strcpy(save_msg, TEditPanel::currentLine(v5->chatInput));
           TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
           TPanelSystem::destroyPanel(&panel_system, aSendQuickMessa);
-          if ( !((int (__stdcall *)(_DWORD, char *))rge_base_game->vfptr->processCheatCode)(
+          if( !((int (__stdcall *)(_DWORD, char *))rge_base_game->vfptr->processCheatCode)(
                   rge_base_game->world->curr_player,
                   save_msg) )
           {
-            if ( !RGE_Base_Game::multiplayerGame(rge_base_game) )
+            if( !RGE_Base_Game::multiplayerGame(rge_base_game) )
             {
               RGE_Base_Game::play_sound(rge_base_game, 2);
               TRIBE_Screen_Game::display_system_message(v7, save_msg);
               return 1;
             }
-            if ( rge_base_game->prog_mode != 5 )
+            if( rge_base_game->prog_mode != 5 )
             {
               TCommunications_Handler::SendGroupChatMsg(comm, save_msg);
               return 1;
@@ -829,7 +829,7 @@ LABEL_12:
         TPanelSystem::destroyPanel(&panel_system, aSendQuickMessa);
         return 1;
       }
-      if ( actionIn == 1 )
+      if( actionIn == 1 )
         goto LABEL_12;
     }
   }
@@ -845,7 +845,7 @@ int __thiscall TribeSendQuickMessageDialog::handle_mouse_down(TribeSendQuickMess
 
   v6 = this;
   v7 = this->vfptr;
-  if ( ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y) )
+  if( ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y) )
   {
     result = TEasy_Panel::handle_mouse_down((TEasy_Panel *)&v6->vfptr, mouse_button_in, x, y, ctrl_key, shift_key);
   }

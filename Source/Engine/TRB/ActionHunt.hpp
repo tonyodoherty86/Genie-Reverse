@@ -1,8 +1,8 @@
 
 /**
- * @file    Engine\TRB\ActionHunt.cpp
+ * @file    Engine\TRB\ActionHunt.hpp
  * @author  Yvan Burrie
- * @date    2018/06/27
+ * @date    2018/07/03
  * @version 1.0
  */
 
@@ -24,7 +24,9 @@ public:
     TRIBE_Action_Hunt(
         RGE_Action_Object *obj_in,
         RGE_Task *task_in,
-        float x, float y, float z);
+        float x,
+        float y,
+        float z);
 
     ~TRIBE_Action_Hunt();
 
@@ -43,9 +45,13 @@ public:
 
     int move_to(
         RGE_Static_Object *obj_in,
-        float x, float y, float z);
+        float x,
+        float y,
+        float z);
 
     int work(
         RGE_Static_Object *obj_in,
-        float x, float y, float z);
+        float x,
+        float y,
+        float z);
 };

@@ -30,7 +30,7 @@ void __thiscall TribeMPCreateDialog::TribeMPCreateDialog(TribeMPCreateDialog *th
   v4 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)parentPanel);
   v5 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)parentPanel);
   v6 = TPanel::renderArea(parentPanel);
-  if ( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v6, parentPanel, 500, 230, v5, v4, 1)
+  if( TDialogPanel::setup((TDialogPanel *)&v2->vfptr, v6, parentPanel, 500, 230, v5, v4, 1)
     && TEasy_Panel::create_text(
          (TEasy_Panel *)&v2->vfptr,
          (TPanel *)&v2->vfptr,
@@ -58,11 +58,11 @@ void __thiscall TribeMPCreateDialog::TribeMPCreateDialog(TribeMPCreateDialog *th
          1,
          0) )
   {
-    if ( TRegistry::RegGetAscii(Regs, 1, aDefaultAgeOf_0) )
+    if( TRegistry::RegGetAscii(Regs, 1, aDefaultAgeOf_0) )
       strcpy(str, TRegistry::RegGetAscii(Regs, 1, aDefaultAgeOf_0));
     else
       str[0] = 0;
-    if ( TEasy_Panel::create_edit(
+    if( TEasy_Panel::create_edit(
            (TEasy_Panel *)&v2->vfptr,
            (TPanel *)&v2->vfptr,
            &v2->inputGamename,
@@ -91,7 +91,7 @@ void __thiscall TribeMPCreateDialog::TribeMPCreateDialog(TribeMPCreateDialog *th
            0) )
     {
       v7 = (TPanel **)&v2->cancelButton;
-      if ( TEasy_Panel::create_button(
+      if( TEasy_Panel::create_button(
              (TEasy_Panel *)&v2->vfptr,
              (TPanel *)&v2->vfptr,
              &v2->cancelButton,
@@ -128,7 +128,7 @@ TribeMPCreateDialog *__thiscall TribeMPCreateDialog::`vector deleting destructor
 
   v2 = this;
   TribeMPCreateDialog::~TribeMPCreateDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -171,14 +171,14 @@ int __thiscall TribeMPCreateDialog::action(TribeMPCreateDialog *this, TPanel *fr
   int v21; // [sp+28h] [bp-4h]@17
 
   v5 = this;
-  if ( !fromPanel )
+  if( !fromPanel )
     return TPanel::action((TPanel *)&this->vfptr, fromPanel, actionIn, a1, a2);
-  if ( fromPanel != (TPanel *)this->okButton || actionIn != 1 )
+  if( fromPanel != (TPanel *)this->okButton || actionIn != 1 )
   {
     v6 = this->inputGamename;
-    if ( (TEditPanel *)fromPanel != v6 || actionIn )
+    if( (TEditPanel *)fromPanel != v6 || actionIn )
     {
-      if ( fromPanel == (TPanel *)this->cancelButton && actionIn == 1 || (TEditPanel *)fromPanel == v6 && actionIn == 1 )
+      if( fromPanel == (TPanel *)this->cancelButton && actionIn == 1 || (TEditPanel *)fromPanel == v6 && actionIn == 1 )
       {
         TPanelSystem::setCurrentPanel(&panel_system, aJoinScreen, 0);
         TPanelSystem::destroyPanel(&panel_system, aCreateDialog);
@@ -187,7 +187,7 @@ int __thiscall TribeMPCreateDialog::action(TribeMPCreateDialog *this, TPanel *fr
       return TPanel::action((TPanel *)&this->vfptr, fromPanel, actionIn, a1, a2);
     }
   }
-  if ( TEditPanel::is_blank(this->inputGamename) )
+  if( TEditPanel::is_blank(this->inputGamename) )
   {
     TPanel::set_curr_child((TPanel *)&v5->vfptr, (TPanel *)&v5->inputGamename->vfptr);
     result = 1;
@@ -208,26 +208,26 @@ int __thiscall TribeMPCreateDialog::action(TribeMPCreateDialog *this, TPanel *fr
     v18 = *(_DWORD *)&comm->ServiceGUID.s1;
     v19 = *(_DWORD *)&comm->ServiceGUID.c[0];
     v20 = *(_DWORD *)&comm->ServiceGUID.c[4];
-    if ( !memcmp(&v17, &DPSPGUID_TCPIP, 0x10u) )
+    if( !memcmp(&v17, &DPSPGUID_TCPIP, 0x10u) )
       TRIBE_Game::show_status_message((TRIBE_Game *)rge_base_game, 1219, info_file_name_in, 50053);
     else
       TRIBE_Game::show_status_message((TRIBE_Game *)rge_base_game, 1218, info_file_name_in, 50053);
     RGE_Base_Game::draw_window(rge_base_game);
     WinExec(CmdLine, 0);
     v12 = *v11;
-    if ( v12->DrawType == 2 && v12->ScreenMode == 2 )
+    if( v12->DrawType == 2 && v12->ScreenMode == 2 )
       v12->DirDraw->vfptr[3].AddRef((IUnknown *)v12->DirDraw);
     memset(&comm->PlayerStopTurn[1], 0, 0x24u);
     v13 = TCommunications_Handler::CreateMultiplayerGame(comm);
     TDebuggingLog::Log(L, aReturnedFromCr);
     v14 = FindWindowA(WindowName, WindowName);
-    if ( v14 )
+    if( v14 )
       SendMessageA(v14, 0x10u, 0, 0);
-    if ( v13 )
+    if( v13 )
     {
       v15 = (TribeMPSetupScreen *)operator new(0x890u);
       v21 = 0;
-      if ( v15 )
+      if( v15 )
         TribeMPSetupScreen::TribeMPSetupScreen(v15);
       v21 = -1;
       TPanelSystem::setCurrentPanel(&panel_system, aMpSetupScreen, 0);

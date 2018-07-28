@@ -125,7 +125,7 @@ void __thiscall TribeConfigDialog::TribeConfigDialog(TribeConfigDialog *this, Tr
   v15 = TEasy_Panel::get_popup_info_id((TEasy_Panel *)&parentPanel->vfptr);
   v16 = TEasy_Panel::get_popup_info_file((TEasy_Panel *)&parentPanel->vfptr);
   v17 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-  if ( !TDialogPanel::setup((TDialogPanel *)&v3->vfptr, v17, (TPanel *)&parentPanel->vfptr, 600, 390, v16, v15, 1)
+  if( !TDialogPanel::setup((TDialogPanel *)&v3->vfptr, v17, (TPanel *)&parentPanel->vfptr, 600, 390, v16, v15, 1)
     || !TEasy_Panel::create_text(
           (TEasy_Panel *)&v3->vfptr,
           (TPanel *)&v3->vfptr,
@@ -158,25 +158,25 @@ void __thiscall TribeConfigDialog::TribeConfigDialog(TribeConfigDialog *this, Tr
   v18 = 0;
   do
   {
-    if ( !v18 )
+    if( !v18 )
     {
 LABEL_10:
       v19 = 9432;
       goto LABEL_11;
     }
-    if ( v18 == 1 )
+    if( v18 == 1 )
     {
       v19 = 9433;
     }
     else
     {
-      if ( v18 != 2 )
+      if( v18 != 2 )
         goto LABEL_10;
       v19 = 9434;
     }
 LABEL_11:
     ma = v19;
-    if ( !TEasy_Panel::create_text(
+    if( !TEasy_Panel::create_text(
             (TEasy_Panel *)&v3->vfptr,
             (TPanel *)&v3->vfptr,
             &v3->speedTitle[v18 + 1],
@@ -204,7 +204,7 @@ LABEL_11:
     }
     ++v18;
   }
-  while ( v18 < 3 );
+  while( v18 < 3 );
   v20 = 3;
   v21 = v3->speedButton;
   do
@@ -213,8 +213,8 @@ LABEL_11:
     ++v21;
     --v20;
   }
-  while ( v20 );
-  if ( rge_base_game->prog_mode == 5 )
+  while( v20 );
+  if( rge_base_game->prog_mode == 5 )
   {
     v22 = v3->speedButton;
     v23 = 3;
@@ -224,28 +224,28 @@ LABEL_11:
       ++v22;
       --v23;
     }
-    while ( v23 );
+    while( v23 );
   }
   v24 = rge_base_game->world;
   v25 = v24->game_speed;
   v3->gameSpeed = v24->game_speed;
-  if ( v27 )
+  if( v27 )
   {
     v28 = v3->speedButton[2];
     goto LABEL_25;
   }
-  if ( v25 == 1.5 )
+  if( v25 == 1.5 )
   {
     v28 = v3->speedButton[1];
     goto LABEL_25;
   }
-  if ( v25 == 1.0 )
+  if( v25 == 1.0 )
   {
     v28 = v3->speedButton[0];
 LABEL_25:
     TButtonPanel::set_radio_button(v28);
   }
-  if ( TEasy_Panel::create_text(
+  if( TEasy_Panel::create_text(
          (TEasy_Panel *)&v3->vfptr,
          (TPanel *)&v3->vfptr,
          v3->musicTitle,
@@ -300,7 +300,7 @@ LABEL_25:
     v3->musicVolume = v29 ? v29->volume / -100 : 99;
     TScrollBarPanel::set_tab_pos((TScrollBarPanel *)&v3->musicSlider->vfptr, v3->musicVolume);
     v3->newMusicVolume = v3->musicVolume;
-    if ( TEasy_Panel::create_text(
+    if( TEasy_Panel::create_text(
            (TEasy_Panel *)&v3->vfptr,
            (TPanel *)&v3->vfptr,
            v3->soundTitle,
@@ -314,7 +314,7 @@ LABEL_25:
            1,
            1) )
     {
-      if ( TEasy_Panel::create_text(
+      if( TEasy_Panel::create_text(
              (TEasy_Panel *)&v3->vfptr,
              (TPanel *)&v3->vfptr,
              &v3->soundTitle[1],
@@ -356,7 +356,7 @@ LABEL_25:
         v3->soundVolume = v30 ? TSound_Driver::get_volume(v30) / -100 : 99;
         TScrollBarPanel::set_tab_pos((TScrollBarPanel *)&v3->soundSlider->vfptr, v3->soundVolume);
         v3->newSoundVolume = v3->soundVolume;
-        if ( TEasy_Panel::create_text(
+        if( TEasy_Panel::create_text(
                (TEasy_Panel *)&v3->vfptr,
                (TPanel *)&v3->vfptr,
                v3->scrollSpeedTitle,
@@ -370,7 +370,7 @@ LABEL_25:
                1,
                1) )
         {
-          if ( TEasy_Panel::create_text(
+          if( TEasy_Panel::create_text(
                  (TEasy_Panel *)&v3->vfptr,
                  (TPanel *)&v3->vfptr,
                  &v3->scrollSpeedTitle[1],
@@ -384,7 +384,7 @@ LABEL_25:
                  1,
                  0) )
           {
-            if ( TEasy_Panel::create_text(
+            if( TEasy_Panel::create_text(
                    (TEasy_Panel *)&v3->vfptr,
                    (TPanel *)&v3->vfptr,
                    &v3->scrollSpeedTitle[2],
@@ -398,7 +398,7 @@ LABEL_25:
                    1,
                    0) )
             {
-              if ( TEasy_Panel::create_vert_slider(
+              if( TEasy_Panel::create_vert_slider(
                      (TEasy_Panel *)&v3->vfptr,
                      (TPanel *)&v3->vfptr,
                      &v3->scrollSpeedSlider,
@@ -414,7 +414,7 @@ LABEL_25:
                 v32 = rge_base_game->prog_info->mouse_scroll_interval;
                 v3->scrollSpeed = v32;
                 TScrollBarPanel::set_tab_pos(v31, v32 - 10);
-                if ( TEasy_Panel::create_text(
+                if( TEasy_Panel::create_text(
                        (TEasy_Panel *)&v3->vfptr,
                        (TPanel *)&v3->vfptr,
                        v3->sizeTitle,
@@ -432,13 +432,13 @@ LABEL_25:
                   v34 = 0;
                   do
                   {
-                    if ( v34 )
+                    if( v34 )
                     {
-                      if ( v34 == 1 )
+                      if( v34 == 1 )
                       {
                         v33 = 9448;
                       }
-                      else if ( v34 == 2 )
+                      else if( v34 == 2 )
                       {
                         v33 = 9449;
                       }
@@ -447,7 +447,7 @@ LABEL_25:
                     {
                       v33 = 9447;
                     }
-                    if ( !TEasy_Panel::create_text(
+                    if( !TEasy_Panel::create_text(
                             (TEasy_Panel *)&v3->vfptr,
                             (TPanel *)&v3->vfptr,
                             &v3->sizeTitle[v34 + 1],
@@ -475,7 +475,7 @@ LABEL_25:
                     }
                     ++v34;
                   }
-                  while ( v34 < 3 );
+                  while( v34 < 3 );
                   v35 = v3->sizeButton;
                   v36 = 3;
                   v37 = v3->sizeButton;
@@ -485,29 +485,29 @@ LABEL_25:
                     ++v37;
                     --v36;
                   }
-                  while ( v36 );
+                  while( v36 );
                   v38 = v3->render_area->DrawSystem->ScreenWidth;
-                  if ( v38 == 640 )
+                  if( v38 == 640 )
                   {
                     v39 = *v35;
                   }
                   else
                   {
-                    if ( v38 != 800 )
+                    if( v38 != 800 )
                     {
-                      if ( v38 == 1024 )
+                      if( v38 == 1024 )
                       {
                         v39 = v3->sizeButton[2];
                         goto LABEL_63;
                       }
 LABEL_64:
-                      if ( !TDrawSystem::IsModeAvail(v3->render_area->DrawSystem, 640, 0, 8) )
+                      if( !TDrawSystem::IsModeAvail(v3->render_area->DrawSystem, 640, 0, 8) )
                         TButtonPanel::set_disabled(*v35, 1);
-                      if ( !TDrawSystem::IsModeAvail(v3->render_area->DrawSystem, 800, 0, 8) )
+                      if( !TDrawSystem::IsModeAvail(v3->render_area->DrawSystem, 800, 0, 8) )
                         TButtonPanel::set_disabled(v3->sizeButton[1], 1);
-                      if ( !TDrawSystem::IsModeAvail(v3->render_area->DrawSystem, 1024, 0, 8) )
+                      if( !TDrawSystem::IsModeAvail(v3->render_area->DrawSystem, 1024, 0, 8) )
                         TButtonPanel::set_disabled(v3->sizeButton[2], 1);
-                      if ( TEasy_Panel::create_text(
+                      if( TEasy_Panel::create_text(
                              (TEasy_Panel *)&v3->vfptr,
                              (TPanel *)&v3->vfptr,
                              v3->mouseTitle,
@@ -522,11 +522,11 @@ LABEL_64:
                              0) )
                       {
                         v40 = 0;
-                        while ( 1 )
+                        while( 1 )
                         {
-                          if ( v40 )
+                          if( v40 )
                           {
-                            if ( !TEasy_Panel::create_text(
+                            if( !TEasy_Panel::create_text(
                                     (TEasy_Panel *)&v3->vfptr,
                                     (TPanel *)&v3->vfptr,
                                     &v3->mouseTitle[v40 + 1],
@@ -541,7 +541,7 @@ LABEL_64:
                                     0) )
                               return;
                           }
-                          else if ( !TEasy_Panel::create_text(
+                          else if( !TEasy_Panel::create_text(
                                        (TEasy_Panel *)&v3->vfptr,
                                        (TPanel *)&v3->vfptr,
                                        &v3->mouseTitle[1],
@@ -557,7 +557,7 @@ LABEL_64:
                           {
                             return;
                           }
-                          if ( !TEasy_Panel::create_radio_button(
+                          if( !TEasy_Panel::create_radio_button(
                                   (TEasy_Panel *)&v3->vfptr,
                                   (TPanel *)&v3->vfptr,
                                   &v3->mouseButton[v40],
@@ -568,7 +568,7 @@ LABEL_64:
                                   0,
                                   0) )
                             break;
-                          if ( ++v40 >= 2 )
+                          if( ++v40 >= 2 )
                           {
                             v41 = 2;
                             v42 = v3->mouseButton;
@@ -578,13 +578,13 @@ LABEL_64:
                               ++v42;
                               --v41;
                             }
-                            while ( v41 );
-                            if ( rge_base_game->prog_info->interface_style == 2 )
+                            while( v41 );
+                            if( rge_base_game->prog_info->interface_style == 2 )
                               v43 = v3->mouseButton[0];
                             else
                               v43 = v3->mouseButton[1];
                             TButtonPanel::set_radio_button(v43);
-                            if ( TEasy_Panel::create_text(
+                            if( TEasy_Panel::create_text(
                                    (TEasy_Panel *)&v3->vfptr,
                                    (TPanel *)&v3->vfptr,
                                    v3->rolloverTitle,
@@ -599,11 +599,11 @@ LABEL_64:
                                    0) )
                             {
                               v44 = 0;
-                              while ( 1 )
+                              while( 1 )
                               {
-                                if ( v44 )
+                                if( v44 )
                                 {
-                                  if ( !TEasy_Panel::create_text(
+                                  if( !TEasy_Panel::create_text(
                                           (TEasy_Panel *)&v3->vfptr,
                                           (TPanel *)&v3->vfptr,
                                           &v3->rolloverTitle[v44 + 1],
@@ -618,7 +618,7 @@ LABEL_64:
                                           0) )
                                     return;
                                 }
-                                else if ( !TEasy_Panel::create_text(
+                                else if( !TEasy_Panel::create_text(
                                              (TEasy_Panel *)&v3->vfptr,
                                              (TPanel *)&v3->vfptr,
                                              &v3->rolloverTitle[1],
@@ -634,7 +634,7 @@ LABEL_64:
                                 {
                                   return;
                                 }
-                                if ( !TEasy_Panel::create_radio_button(
+                                if( !TEasy_Panel::create_radio_button(
                                         (TEasy_Panel *)&v3->vfptr,
                                         (TPanel *)&v3->vfptr,
                                         &v3->rolloverButton[v44],
@@ -645,7 +645,7 @@ LABEL_64:
                                         0,
                                         0) )
                                   break;
-                                if ( ++v44 >= 2 )
+                                if( ++v44 >= 2 )
                                 {
                                   v45 = 2;
                                   v46 = v3->rolloverButton;
@@ -655,13 +655,13 @@ LABEL_64:
                                     ++v46;
                                     --v45;
                                   }
-                                  while ( v45 );
-                                  if ( rge_base_game->rollover )
+                                  while( v45 );
+                                  if( rge_base_game->rollover )
                                     v47 = v3->rolloverButton[0];
                                   else
                                     v47 = v3->rolloverButton[1];
                                   TButtonPanel::set_radio_button(v47);
-                                  if ( TEasy_Panel::create_text(
+                                  if( TEasy_Panel::create_text(
                                          (TEasy_Panel *)&v3->vfptr,
                                          (TPanel *)&v3->vfptr,
                                          v3->pathFindingTitle,
@@ -678,7 +678,7 @@ LABEL_64:
                                     v48 = 0;
                                     v49 = 225;
                                     v50 = v3->pathFindingButton;
-                                    while ( TEasy_Panel::create_text(
+                                    while( TEasy_Panel::create_text(
                                               (TEasy_Panel *)&v3->vfptr,
                                               (TPanel *)&v3->vfptr,
                                               (TTextPanel **)v50 - 3,
@@ -702,12 +702,12 @@ LABEL_64:
                                               0,
                                               0) )
                                     {
-                                      if ( RGE_Base_Game::multiplayerGame(rge_base_game) )
+                                      if( RGE_Base_Game::multiplayerGame(rge_base_game) )
                                         TButtonPanel::set_disabled(*v50, 1);
                                       v49 += 35;
                                       ++v48;
                                       ++v50;
-                                      if ( v49 >= 330 )
+                                      if( v49 >= 330 )
                                       {
                                         v51 = v3->pathFindingButton;
                                         v52 = 3;
@@ -717,15 +717,15 @@ LABEL_64:
                                           ++v51;
                                           --v52;
                                         }
-                                        while ( v52 );
-                                        if ( RGE_Base_Game::multiplayerGame(rge_base_game) )
+                                        while( v52 );
+                                        if( RGE_Base_Game::multiplayerGame(rge_base_game) )
                                           v53 = RGE_Base_Game::mpPathFinding(rge_base_game);
                                         else
                                           v53 = RGE_Base_Game::pathFinding(rge_base_game);
-                                        if ( (unsigned __int8)v53 <= 2u )
+                                        if( (unsigned __int8)v53 <= 2u )
                                           TButtonPanel::set_radio_button(v3->pathFindingButton[(unsigned __int8)v53]);
                                         v54 = (TPanel **)&v3->okButton;
-                                        if ( TEasy_Panel::create_button(
+                                        if( TEasy_Panel::create_button(
                                                (TEasy_Panel *)&v3->vfptr,
                                                (TPanel *)&v3->vfptr,
                                                &v3->okButton,
@@ -740,7 +740,7 @@ LABEL_64:
                                                0) )
                                         {
                                           v55 = (TPanel **)&v3->cancelButton;
-                                          if ( TEasy_Panel::create_button(
+                                          if( TEasy_Panel::create_button(
                                                  (TEasy_Panel *)&v3->vfptr,
                                                  (TPanel *)&v3->vfptr,
                                                  &v3->cancelButton,
@@ -801,7 +801,7 @@ TribeConfigDialog *__thiscall TribeConfigDialog::`vector deleting destructor'(Tr
 
   v2 = this;
   TribeConfigDialog::~TribeConfigDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -848,7 +848,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v2;
     --v3;
   }
-  while ( v3 );
+  while( v3 );
   v4 = (TPanel **)v1->speedButton;
   v5 = 3;
   do
@@ -857,7 +857,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v4;
     --v5;
   }
-  while ( v5 );
+  while( v5 );
   v6 = (TPanel **)v1->musicTitle;
   v7 = 3;
   do
@@ -866,7 +866,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v6;
     --v7;
   }
-  while ( v7 );
+  while( v7 );
   TPanel::delete_panel((TPanel **)&v1->musicSlider);
   v8 = (TPanel **)v1->soundTitle;
   v9 = 3;
@@ -876,7 +876,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v8;
     --v9;
   }
-  while ( v9 );
+  while( v9 );
   TPanel::delete_panel((TPanel **)&v1->soundSlider);
   v10 = (TPanel **)v1->scrollSpeedTitle;
   v11 = 3;
@@ -886,7 +886,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v10;
     --v11;
   }
-  while ( v11 );
+  while( v11 );
   TPanel::delete_panel((TPanel **)&v1->scrollSpeedSlider);
   v12 = (TPanel **)v1->sizeTitle;
   v13 = 4;
@@ -896,7 +896,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v12;
     --v13;
   }
-  while ( v13 );
+  while( v13 );
   v14 = (TPanel **)v1->sizeButton;
   v15 = 3;
   do
@@ -905,7 +905,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v14;
     --v15;
   }
-  while ( v15 );
+  while( v15 );
   v16 = (TPanel **)v1->mouseTitle;
   v17 = 3;
   do
@@ -914,7 +914,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v16;
     --v17;
   }
-  while ( v17 );
+  while( v17 );
   v18 = (TPanel **)v1->mouseButton;
   v19 = 2;
   do
@@ -923,7 +923,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v18;
     --v19;
   }
-  while ( v19 );
+  while( v19 );
   v20 = (TPanel **)v1->rolloverTitle;
   v21 = 3;
   do
@@ -932,7 +932,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v20;
     --v21;
   }
-  while ( v21 );
+  while( v21 );
   v22 = (TPanel **)v1->rolloverButton;
   v23 = 2;
   do
@@ -941,7 +941,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v22;
     --v23;
   }
-  while ( v23 );
+  while( v23 );
   v24 = (TPanel **)v1->pathFindingTitle;
   v25 = 4;
   do
@@ -950,7 +950,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v24;
     --v25;
   }
-  while ( v25 );
+  while( v25 );
   v26 = (TPanel **)v1->pathFindingButton;
   v27 = 3;
   do
@@ -959,7 +959,7 @@ void __thiscall TribeConfigDialog::~TribeConfigDialog(TribeConfigDialog *this)
     ++v26;
     --v27;
   }
-  while ( v27 );
+  while( v27 );
   TPanel::delete_panel((TPanel **)&v1->okButton);
   TPanel::delete_panel((TPanel **)&v1->cancelButton);
   TDialogPanel::~TDialogPanel((TDialogPanel *)&v1->vfptr);
@@ -997,59 +997,59 @@ int __thiscall TribeConfigDialog::action(TribeConfigDialog *this, TPanel *fromPa
   char msg[256]; // [sp+10h] [bp-100h]@32
 
   v5 = this;
-  if ( !fromPanel )
+  if( !fromPanel )
     return TPanel::action((TPanel *)&v5->vfptr, fromPanel, actionIn, a1, a2);
-  if ( fromPanel == (TPanel *)this->okButton && actionIn == 1 )
+  if( fromPanel == (TPanel *)this->okButton && actionIn == 1 )
   {
-    if ( this->modeValue == InGame )
+    if( this->modeValue == InGame )
     {
-      if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+      if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
         RGE_Base_Game::set_paused(rge_base_game, 0, 0);
-      if ( TButtonPanel::get_state(v5->mouseButton[0]) )
+      if( TButtonPanel::get_state(v5->mouseButton[0]) )
         rge_base_game->prog_info->interface_style = 2;
       else
         rge_base_game->prog_info->interface_style = 1;
       ((void (*)(void))rge_base_game->vfptr->set_interface_messages)();
-      if ( TButtonPanel::get_state(v5->rolloverButton[0]) )
+      if( TButtonPanel::get_state(v5->rolloverButton[0]) )
         rge_base_game->rollover = 1;
       else
         rge_base_game->rollover = 0;
-      if ( RGE_Base_Game::singlePlayerGame(rge_base_game) )
+      if( RGE_Base_Game::singlePlayerGame(rge_base_game) )
       {
-        if ( TButtonPanel::get_state(v5->pathFindingButton[0]) )
+        if( TButtonPanel::get_state(v5->pathFindingButton[0]) )
         {
           RGE_Base_Game::setPathFinding(rge_base_game, 0);
           numberPathingIterations = 2500;
         }
-        else if ( TButtonPanel::get_state(v5->pathFindingButton[1]) )
+        else if( TButtonPanel::get_state(v5->pathFindingButton[1]) )
         {
           RGE_Base_Game::setPathFinding(rge_base_game, 1);
           numberPathingIterations = 5000;
         }
-        else if ( TButtonPanel::get_state(v5->pathFindingButton[2]) )
+        else if( TButtonPanel::get_state(v5->pathFindingButton[2]) )
         {
           RGE_Base_Game::setPathFinding(rge_base_game, 2);
           numberPathingIterations = 7500;
         }
       }
-      if ( rge_base_game->prog_mode != 5 )
+      if( rge_base_game->prog_mode != 5 )
       {
         new_speed = 0.0;
-        if ( TButtonPanel::get_state(v5->speedButton[0]) )
+        if( TButtonPanel::get_state(v5->speedButton[0]) )
         {
           new_speed = 1.0;
         }
-        else if ( TButtonPanel::get_state(v5->speedButton[1]) )
+        else if( TButtonPanel::get_state(v5->speedButton[1]) )
         {
           new_speed = 1.5;
         }
-        else if ( TButtonPanel::get_state(v5->speedButton[2]) )
+        else if( TButtonPanel::get_state(v5->speedButton[2]) )
         {
           new_speed = 2.0;
         }
-        if ( allow_user_commands && new_speed != 0.0 && new_speed != v5->gameSpeed )
+        if( allow_user_commands && new_speed != 0.0 && new_speed != v5->gameSpeed )
         {
-          if ( RGE_Base_Game::multiplayerGame(rge_base_game) )
+          if( RGE_Base_Game::multiplayerGame(rge_base_game) )
           {
             v6 = TCommunications_Handler::WhoAmI(comm);
             v7 = TCommunications_Handler::GetPlayerName(comm, v6);
@@ -1058,36 +1058,36 @@ int __thiscall TribeConfigDialog::action(TribeConfigDialog *this, TPanel *fromPa
             TCommunications_Handler::SendChatMsgAll(comm, msg);
           }
           TRIBE_Command::command_game_speed((TRIBE_Command *)rge_base_game->world->commands, new_speed);
-          if ( RGE_Base_Game::singlePlayerGame(rge_base_game) )
+          if( RGE_Base_Game::singlePlayerGame(rge_base_game) )
             RGE_Base_Game::set_game_speed(rge_base_game, new_speed);
         }
       }
       v9 = v5->newMusicVolume;
-      if ( v9 == v5->musicVolume )
+      if( v9 == v5->musicVolume )
         goto LABEL_48;
       v11 = __OFSUB__(v9, 99);
       v10 = v9 - 99 < 0;
       v12 = rge_base_game->prog_info;
       v13 = v12->use_music;
-      if ( !(v10 ^ v11) )
+      if( !(v10 ^ v11) )
       {
-        if ( v13 )
+        if( v13 )
         {
           v12->use_music = 0;
           ((void (*)(void))rge_base_game->vfptr->shutdown_music_system)();
         }
         goto LABEL_46;
       }
-      if ( !v13 )
+      if( !v13 )
       {
         v12->use_music = 1;
         TRegistry::RegSetInt(Regs, 1, aMusicVolume, 100 * v5->newMusicVolume);
         ((void (*)(void))rge_base_game->vfptr->setup_music_system)();
         v14 = rge_base_game->music_system;
-        if ( v14 )
+        if( v14 )
         {
           v15 = v14->music_type;
-          if ( v15 == 1 )
+          if( v15 == 1 )
           {
             v29 = 1;
             v28 = v14->track_count;
@@ -1095,7 +1095,7 @@ int __thiscall TribeConfigDialog::action(TribeConfigDialog *this, TPanel *fromPa
           }
           else
           {
-            if ( v15 != 2 )
+            if( v15 != 2 )
               goto LABEL_46;
             v29 = 1;
             v28 = v14->track_count;
@@ -1106,18 +1106,18 @@ int __thiscall TribeConfigDialog::action(TribeConfigDialog *this, TPanel *fromPa
       }
 LABEL_46:
       v16 = rge_base_game->sound_system;
-      if ( v16 )
+      if( v16 )
         TSound_Driver::set_volume(v16, -100 * v5->newSoundVolume, 1);
 LABEL_48:
-      if ( TButtonPanel::get_state(v5->sizeButton[0]) )
+      if( TButtonPanel::get_state(v5->sizeButton[0]) )
         goto LABEL_101;
-      if ( TButtonPanel::get_state(v5->sizeButton[1]) )
+      if( TButtonPanel::get_state(v5->sizeButton[1]) )
       {
         v17 = 800;
         v18 = 600;
         goto LABEL_54;
       }
-      if ( !TButtonPanel::get_state(v5->sizeButton[2]) )
+      if( !TButtonPanel::get_state(v5->sizeButton[2]) )
       {
 LABEL_101:
         v17 = 640;
@@ -1132,7 +1132,7 @@ LABEL_54:
       TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
       (*(void (__thiscall **)(TribeConfigDialog *, _DWORD))&v5->vfptr->gap10[4])(v5, 0);
       TEasy_Panel::prepare_for_close((TEasy_Panel *)&v5->vfptr);
-      if ( !do_color_log )
+      if( !do_color_log )
         RGE_Base_Game::set_screen_size(rge_base_game, v17, v18);
       goto LABEL_97;
     }
@@ -1142,51 +1142,51 @@ LABEL_97:
     TPanelSystem::destroyPanel(&panel_system, aConfigDialog);
     return 1;
   }
-  if ( fromPanel == (TPanel *)this->speedButton[0] && actionIn == 1 )
+  if( fromPanel == (TPanel *)this->speedButton[0] && actionIn == 1 )
     return 1;
-  if ( fromPanel == (TPanel *)this->speedButton[1] && actionIn == 1 )
+  if( fromPanel == (TPanel *)this->speedButton[1] && actionIn == 1 )
     return 1;
-  if ( fromPanel == (TPanel *)this->speedButton[2] && actionIn == 1 )
+  if( fromPanel == (TPanel *)this->speedButton[2] && actionIn == 1 )
     return 1;
-  if ( fromPanel == (TPanel *)this->sizeButton[0] )
+  if( fromPanel == (TPanel *)this->sizeButton[0] )
     return 1;
-  if ( fromPanel == (TPanel *)this->sizeButton[1] )
+  if( fromPanel == (TPanel *)this->sizeButton[1] )
     return 1;
-  if ( fromPanel == (TPanel *)this->sizeButton[2] )
+  if( fromPanel == (TPanel *)this->sizeButton[2] )
     return 1;
-  if ( fromPanel == (TPanel *)this->musicSlider && actionIn == 4 )
+  if( fromPanel == (TPanel *)this->musicSlider && actionIn == 4 )
   {
     this->newMusicVolume = a1;
     v20 = rge_base_game->music_system;
-    if ( !v20 )
+    if( !v20 )
       return 1;
     TMusic_System::set_volume(v20, -100 * a1, 1);
     v21 = rge_base_game->sound_system;
-    if ( !v21 )
+    if( !v21 )
       return 1;
     v22 = -5 * v5->newSoundVolume;
 LABEL_80:
     TSound_Driver::set_volume(v21, 20 * v22, 1);
     return 1;
   }
-  if ( fromPanel != (TPanel *)this->soundSlider || actionIn != 4 )
+  if( fromPanel != (TPanel *)this->soundSlider || actionIn != 4 )
   {
-    if ( fromPanel != (TPanel *)this->scrollSpeedSlider || actionIn != 4 )
+    if( fromPanel != (TPanel *)this->scrollSpeedSlider || actionIn != 4 )
     {
-      if ( fromPanel == (TPanel *)this->cancelButton && actionIn == 1 )
+      if( fromPanel == (TPanel *)this->cancelButton && actionIn == 1 )
       {
         v24 = rge_base_game->music_system;
-        if ( v24 )
+        if( v24 )
           TMusic_System::set_volume(v24, -100 * v5->musicVolume, 1);
         v25 = rge_base_game->sound_system;
-        if ( v25 )
+        if( v25 )
           TSound_Driver::set_volume(v25, -100 * v5->soundVolume, 1);
         v26 = rge_base_game->prog_info;
         v26->mouse_scroll_interval = v5->scrollSpeed;
         v26->key_scroll_interval = v5->scrollSpeed;
-        if ( v5->modeValue == InGame )
+        if( v5->modeValue == InGame )
         {
-          if ( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
+          if( RGE_Base_Game::singlePlayerGame(rge_base_game) == 1 && !rge_base_game->save_paused )
             RGE_Base_Game::set_paused(rge_base_game, 0, 0);
           TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
           (*(void (__thiscall **)(TribeConfigDialog *, _DWORD))&v5->vfptr->gap10[4])(v5, 0);
@@ -1205,7 +1205,7 @@ LABEL_80:
   }
   this->newSoundVolume = a1;
   v21 = rge_base_game->sound_system;
-  if ( v21 )
+  if( v21 )
   {
     v22 = -5 * a1;
     goto LABEL_80;
