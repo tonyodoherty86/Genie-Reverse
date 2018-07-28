@@ -64,7 +64,7 @@ TTextPanel *__thiscall TTextPanel::`vector deleting destructor'(TTextPanel *this
 
   v2 = this;
   TTextPanel::~TTextPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -81,7 +81,7 @@ int __thiscall TTextPanel::setup(TTextPanel *this, TDrawArea *render_area_in, TP
   v17->outline = outline_in;
   v17->outline_color = outline_color_in;
   v17->fixed_len = fixed_len_in;
-  if ( outline_in )
+  if( outline_in )
     v17->bevel_type = 1;
   (*(void (__thiscall **)(TTextPanel *, char *))&v17->vfptr[1].gap4[4])(v17, text_in);
   TTextPanel::set_font(v17, font_in, font_wid_in, font_hgt_in);
@@ -103,7 +103,7 @@ int __thiscall TTextPanel::setup(TTextPanel *this, TDrawArea *render_area_in, TP
   v17->outline = outline_in;
   v17->outline_color = outline_color_in;
   v17->fixed_len = fixed_len_in;
-  if ( outline_in )
+  if( outline_in )
     v17->bevel_type = 1;
   TTextPanel::set_font(v17, font_in, font_wid_in, font_hgt_in);
   TTextPanel::set_alignment(v17, 0, 0);
@@ -125,7 +125,7 @@ int __thiscall TTextPanel::setup(TTextPanel *this, TDrawArea *render_area_in, TP
   v18->outline = outline_in;
   v18->outline_color = outline_color_in;
   v18->fixed_len = fixed_len_in;
-  if ( outline_in )
+  if( outline_in )
     v18->bevel_type = 1;
   ((void (__thiscall *)(TTextPanel *, char **, int))v18->vfptr[1].__vecDelDtor)(v18, text_in, num_lines_in);
   TTextPanel::set_font(v18, font_in, font_wid_in, font_hgt_in);
@@ -150,15 +150,15 @@ void __thiscall TTextPanel::set_rect(TTextPanel *this, int x_in, int y_in, int w
   TPanel::set_rect((TPanel *)&this->vfptr, x_in, y_in, wid_in, hgt_in);
   v6 = v5->auto_scbar;
   v5->full_width = v5->pnl_wid;
-  if ( v6 )
+  if( v6 )
   {
     v7 = v5->scbar_panel;
-    if ( v7 )
+    if( v7 )
     {
       (*(void (__stdcall **)(_DWORD))&v7->vfptr->gap10[4])(0);
       v8 = v5->parent_panel;
       v5->scbar_active = 0;
-      if ( v8 )
+      if( v8 )
       {
         v9 = v5->pnl_x - TPanel::xPosition(v8);
         v10 = v5->pnl_y - TPanel::yPosition(v5->parent_panel);
@@ -176,18 +176,18 @@ void __thiscall TTextPanel::set_rect(TTextPanel *this, int x_in, int y_in, int w
     }
   }
   TTextPanel::calc_draw_info(v5, 1);
-  if ( v5->second_column_pos )
+  if( v5->second_column_pos )
   {
-    if ( v5->clip_rgn2 )
+    if( v5->clip_rgn2 )
     {
       DeleteObject(v5->clip_rgn2);
       v5->clip_rgn2 = 0;
     }
-    if ( v5->visible )
+    if( v5->visible )
     {
       clip_rect2_8 = v5->clip_rect.right;
       v12 = v5->render_rect.left + v5->second_column_pos - 10;
-      if ( v12 > v5->clip_rect.right )
+      if( v12 > v5->clip_rect.right )
         v12 = v5->clip_rect.right;
       v5->clip_rgn2 = CreateRectRgn(v5->clip_rect.left, v5->clip_rect.top, v12, v5->clip_rect.bottom);
     }
@@ -205,7 +205,7 @@ void __thiscall TTextPanel::set_scrollbar(TTextPanel *this, TScrollBarPanel *scb
   v3 = this;
   this->scbar_panel = scbar_panel_in;
   this->auto_scbar = auto_scbar_in;
-  if ( scbar_panel_in )
+  if( scbar_panel_in )
   {
     v4 = TPanel::width((TPanel *)&scbar_panel_in->vfptr);
     v5 = v3->pnl_wid;
@@ -220,11 +220,11 @@ signed int __stdcall TTextPanel::char_type(char *c)
 {
   signed int result; // eax@4
 
-  if ( !c || !*c )
+  if( !c || !*c )
     goto LABEL_11;
-  if ( IsDBCSLeadByte(*c) )
+  if( IsDBCSLeadByte(*c) )
     return 2;
-  if ( (unsigned __int8)*c >= 0xA1u && (unsigned __int8)*c <= 0xDFu )
+  if( (unsigned __int8)*c >= 0xA1u && (unsigned __int8)*c <= 0xDFu )
     result = 1;
   else
 LABEL_11:
@@ -245,21 +245,21 @@ void __thiscall TTextPanel::set_text(TTextPanel *this, char *text_in)
   v2 = this;
   TTextPanel::free_text(this);
   v3 = text_in;
-  if ( text_in )
+  if( text_in )
   {
-    if ( *text_in )
+    if( *text_in )
     {
-      if ( v2->word_wrap || v2->horz_align == 6 )
+      if( v2->word_wrap || v2->horz_align == 6 )
       {
         TTextPanel::word_wrap_append(v2, text_in);
       }
       else
       {
-        while ( 1 )
+        while( 1 )
         {
           v4 = _mbschr((const unsigned __int8 *)v3, 0xAu);
           v5 = v4;
-          if ( !v4 )
+          if( !v4 )
             break;
           v6 = (signed __int16)((_WORD)v4 - (_WORD)v3);
           strncpy(temp_text, v3, v6);
@@ -275,7 +275,7 @@ void __thiscall TTextPanel::set_text(TTextPanel *this, char *text_in)
       TTextPanel::append_line(v2, message_in, 0);
     }
   }
-  else if ( v2->fixed_len != (_WORD)text_in )
+  else if( v2->fixed_len != (_WORD)text_in )
   {
     TTextPanel::append_line(v2, message_in, 0);
   }
@@ -326,21 +326,21 @@ int __thiscall TTextPanel::word_wrap_append(TTextPanel *this, char *text_in)
   v3 = 0;
   v4 = this;
   v29 = this;
-  if ( text_in && *text_in )
+  if( text_in && *text_in )
   {
-    if ( this->auto_scbar )
+    if( this->auto_scbar )
       v5 = this->full_width - this->scbar_width;
     else
       v5 = this->pnl_wid;
     max_wid = v5 - 10;
     v6 = TDrawArea::GetDc(this->render_area, aPnl_txtWord_wr);
     dc = v6;
-    if ( !v6 )
+    if( !v6 )
       return 0;
     old_font = SelectObject(v6, v4->font);
     GetTextMetricsA(v6, &tm);
     japanese = tm.tmCharSet == -128;
-    while ( 1 )
+    while( 1 )
     {
       v8 = _mbslen(v2);
       v9 = *v2 == 10;
@@ -350,7 +350,7 @@ int __thiscall TTextPanel::word_wrap_append(TTextPanel *this, char *text_in)
       found_break = 0;
       found_bad_return = 0;
       v10 = v2;
-      if ( v9 )
+      if( v9 )
       {
         found_return = 1;
       }
@@ -360,22 +360,22 @@ int __thiscall TTextPanel::word_wrap_append(TTextPanel *this, char *text_in)
         v11 = (unsigned int)_mbsinc(v2);
         GetTextExtentPoint32A(dc, (LPCSTR)v2, (signed __int16)(v11 - (_WORD)v2), &text_size);
         v12 = 0;
-        if ( v8 >= 1 )
+        if( v8 >= 1 )
         {
-          while ( text_size.cx < max_wid )
+          while( text_size.cx < max_wid )
           {
-            if ( *v10 == 10 )
+            if( *v10 == 10 )
             {
               --v3;
               found_return = 1;
-              if ( v12 && *v12 == 13 )
+              if( v12 && *v12 == 13 )
               {
                 found_linefeed = 1;
                 --v3;
               }
               break;
             }
-            if ( *v10 == 13 )
+            if( *v10 == 13 )
               found_bad_return = 1;
             last_char = (char *)v10;
             v13 = _mbsinc(v10);
@@ -383,50 +383,50 @@ int __thiscall TTextPanel::word_wrap_append(TTextPanel *this, char *text_in)
             ++v3;
             v14 = (unsigned int)_mbsinc(v13);
             GetTextExtentPoint32A(dc, (LPCSTR)v2, (signed __int16)(v14 - (_WORD)v2), &text_size);
-            if ( v3 > v8 )
+            if( v3 > v8 )
               break;
             v12 = last_char;
           }
         }
       }
-      if ( !found_return )
+      if( !found_return )
       {
         GetTextExtentPoint32A(dc, (LPCSTR)v2, (signed __int16)strlen((const char *)v2), &text_size);
-        if ( text_size.cx <= max_wid )
+        if( text_size.cx <= max_wid )
           break;
         v3 = 1;
         v15 = (unsigned __int8 *)v2;
         last_chara = 1;
-        if ( v8 > 1 )
+        if( v8 > 1 )
         {
           do
           {
             v16 = (unsigned int)_mbsinc(v15);
             GetTextExtentPoint32A(dc, (LPCSTR)v2, (signed __int16)(v16 - (_WORD)v2), &text_size);
-            if ( text_size.cx > max_wid )
+            if( text_size.cx > max_wid )
               break;
             last_chara = v3++ - 1;
             v15 = _mbsinc(v15);
           }
-          while ( v3 < v8 );
+          while( v3 < v8 );
         }
-        while ( v3 > 1 )
+        while( v3 > 1 )
         {
           next_char = (char *)v15;
           v15 = _mbsdec(v2, v15);
           --v3;
-          if ( japanese )
+          if( japanese )
           {
             v17 = TTextPanel::char_type((char *)v15);
             v18 = TTextPanel::char_type(next_char);
             next_chara = (char *)v18;
-            if ( !v17 && !v18 )
+            if( !v17 && !v18 )
             {
-              if ( _ismbcspace(*v15) )
+              if( _ismbcspace(*v15) )
                 goto LABEL_52;
               v18 = (signed int)next_chara;
             }
-            if ( v17 == 2 && v18 == 2
+            if( v17 == 2 && v18 == 2
               || v17 == 1 && v18 == 1
               || !v17 && v18 == 2
               || v17 == 2 && !v18
@@ -437,49 +437,49 @@ int __thiscall TTextPanel::word_wrap_append(TTextPanel *this, char *text_in)
               break;
             }
           }
-          else if ( _ismbcspace(*v15) )
+          else if( _ismbcspace(*v15) )
           {
 LABEL_52:
             found_space = 1;
             break;
           }
         }
-        if ( !found_space && !found_break )
+        if( !found_space && !found_break )
         {
           v3 = last_chara;
           found_break = 1;
         }
-        if ( !found_space && !found_break )
+        if( !found_space && !found_break )
           break;
       }
       memset(temp_text, 0, sizeof(temp_text));
       v19 = v3;
       _mbsncpy((unsigned __int8 *)temp_text, v2, v3);
       v20 = found_linefeed;
-      if ( found_linefeed )
+      if( found_linefeed )
         _mbscat((unsigned __int8 *)temp_text, (const unsigned __int8 *)::text_in);
-      if ( found_return )
+      if( found_return )
         _mbscat((unsigned __int8 *)temp_text, (const unsigned __int8 *)::text_in);
-      if ( found_bad_return )
+      if( found_bad_return )
       {
         v21 = (const unsigned __int8 *)temp_text;
-        if ( temp_text[0] )
+        if( temp_text[0] )
         {
           do
           {
-            if ( *v21 == 13 )
+            if( *v21 == 13 )
               *v21 = 32;
             v21 = _mbsinc(v21);
           }
-          while ( *v21 );
+          while( *v21 );
         }
       }
       TTextPanel::append_line(v29, temp_text, 0);
       v22 = _mbsninc(v2, v19);
       v2 = v22;
-      if ( v20 )
+      if( v20 )
         v2 = _mbsinc(v22);
-      if ( found_return )
+      if( found_return )
         v2 = _mbsinc(v2);
       v3 = 0;
     }
@@ -510,9 +510,9 @@ void __thiscall TTextPanel::set_text(TTextPanel *this, char **text_in, __int16 n
 
   v3 = this;
   TTextPanel::free_text(this);
-  if ( num_lines_in )
+  if( num_lines_in )
   {
-    if ( num_lines_in > 0 )
+    if( num_lines_in > 0 )
     {
       v4 = text_in;
       v5 = num_lines_in;
@@ -522,10 +522,10 @@ void __thiscall TTextPanel::set_text(TTextPanel *this, char **text_in, __int16 n
         ++v4;
         --v5;
       }
-      while ( v5 );
+      while( v5 );
     }
   }
-  else if ( v3->fixed_len )
+  else if( v3->fixed_len )
   {
     TTextPanel::append_line(v3, message_in, 0);
   }
@@ -620,7 +620,7 @@ void __thiscall TTextPanel::set_back_pic(TTextPanel *this, char *back_pic_in)
 
   v2 = this;
   v3 = this->back_pic;
-  if ( v3 )
+  if( v3 )
   {
     TShape::~TShape(this->back_pic);
     operator delete(v3);
@@ -628,11 +628,11 @@ void __thiscall TTextPanel::set_back_pic(TTextPanel *this, char *back_pic_in)
     v2->back_pic_wid = 0;
     v2->back_pic_hgt = 0;
   }
-  if ( back_pic_in && *back_pic_in )
+  if( back_pic_in && *back_pic_in )
   {
     v4 = (TShape *)operator new(0x20u);
     v11 = 0;
-    if ( v4 )
+    if( v4 )
       TShape::TShape(v4, back_pic_in, -1);
     else
       v5 = 0;
@@ -652,7 +652,7 @@ void __thiscall TTextPanel::set_outline(TTextPanel *this, int outline_in, char o
   TPanelVtbl *v4; // edx@3
 
   this->outline = outline_in;
-  if ( outline_in )
+  if( outline_in )
   {
     v3 = this->vfptr;
     this->bevel_type = 1;
@@ -719,13 +719,13 @@ void __thiscall TTextPanel::set_active(TTextPanel *this, int activ_in)
 
   v2 = this;
   TPanel::set_active((TPanel *)&this->vfptr, activ_in);
-  if ( v2->auto_scbar )
+  if( v2->auto_scbar )
   {
     v3 = &v2->scbar_panel->vfptr;
-    if ( v3 )
+    if( v3 )
     {
       v4 = *v3;
-      if ( v2->active )
+      if( v2->active )
         (*(void (__stdcall **)(int))&v4->gap10[4])(v2->scbar_active);
       else
         (*(void (__stdcall **)(_DWORD))&v4->gap10[4])(0);
@@ -755,11 +755,11 @@ void __thiscall TTextPanel::calc_draw_info(TTextPanel *this, int update_scbar)
   v3 = this->font_hgt;
   v4 = v3 + 2;
   v2->text_hgt = v3 + 2;
-  if ( v3 )
+  if( v3 )
   {
     v5 = v2->spacer_size;
     v6 = v2->border_size;
-    if ( v5 )
+    if( v5 )
     {
       v7 = v2->pnl_hgt - 2 * v6;
       v4 = v4 + 2 * v5 - 1;
@@ -775,58 +775,58 @@ void __thiscall TTextPanel::calc_draw_info(TTextPanel *this, int update_scbar)
   {
     v2->draw_lines = 1;
   }
-  if ( v2->draw_lines < 1 )
+  if( v2->draw_lines < 1 )
     v2->draw_lines = 1;
   LOWORD(v4) = v2->num_lines;
-  if ( v2->top_line >= (signed __int16)v4 )
+  if( v2->top_line >= (signed __int16)v4 )
     v2->top_line = v4 - 1;
   LOWORD(v3) = v2->draw_lines;
   v8 = v2->top_line;
   v9 = (signed __int16)v4;
   v10 = v2->draw_lines;
-  if ( (signed __int16)v4 - v8 < v10 )
+  if( (signed __int16)v4 - v8 < v10 )
   {
     v8 = v4 - v3;
     v2->top_line = v4 - v3;
   }
-  if ( v2->top_line < 0 )
+  if( v2->top_line < 0 )
     v2->top_line = 0;
   LOWORD(v8) = v2->top_line;
   v11 = v8 + v3 - 1;
   v2->bot_line = v11;
-  if ( (signed __int16)v11 < 0 )
+  if( (signed __int16)v11 < 0 )
     v2->bot_line = 0;
-  if ( v2->bot_line >= (signed __int16)v4 )
+  if( v2->bot_line >= (signed __int16)v4 )
     v2->bot_line = v4 - 1;
-  if ( v2->cur_line < 0 )
+  if( v2->cur_line < 0 )
     v2->cur_line = 0;
-  if ( v2->cur_line >= (signed __int16)v4 )
+  if( v2->cur_line >= (signed __int16)v4 )
     v2->cur_line = v4 - 1;
   v12 = v2->scbar_panel;
-  if ( v12 )
+  if( v12 )
   {
-    if ( update_scbar )
+    if( update_scbar )
       TScrollBarPanel::set_list_len(v12, v9 - v10 + 1, (signed __int16)v8);
-    if ( v2->auto_scbar )
+    if( v2->auto_scbar )
     {
       v13 = v2->scbar_active;
-      if ( v2->num_lines <= v2->draw_lines )
+      if( v2->num_lines <= v2->draw_lines )
       {
-        if ( v13 )
+        if( v13 )
         {
           TPanel::set_rect((TPanel *)&v2->vfptr, v2->pnl_x, v2->pnl_y, v2->full_width, v2->pnl_hgt);
           v15 = v2->active;
           v2->scbar_active = 0;
-          if ( v15 )
+          if( v15 )
             (*(void (__stdcall **)(_DWORD))&v2->scbar_panel->vfptr->gap10[4])(0);
         }
       }
-      else if ( !v13 )
+      else if( !v13 )
       {
         TPanel::set_rect((TPanel *)&v2->vfptr, v2->pnl_x, v2->pnl_y, v2->full_width - v2->scbar_width, v2->pnl_hgt);
         v14 = v2->active;
         v2->scbar_active = 1;
-        if ( v14 )
+        if( v14 )
         {
           (*(void (__stdcall **)(signed int))&v2->scbar_panel->vfptr->gap10[4])(1);
           v2->text_wid = v2->pnl_wid;
@@ -904,7 +904,7 @@ int __thiscall TTextPanel::key_down_action(TTextPanel *this, int key, int count,
 LABEL_4:
       TTextPanel::scroll(this, v9, v11, 1);
       v7 = v6->parent_panel;
-      if ( v7 && v6->tab_stop )
+      if( v7 && v6->tab_stop )
         goto LABEL_11;
       goto LABEL_14;
     case 34:
@@ -917,7 +917,7 @@ LABEL_4:
 LABEL_9:
       TTextPanel::scroll(this, v10, v12, 1);
       v7 = v6->parent_panel;
-      if ( !v7 || !v6->tab_stop )
+      if( !v7 || !v6->tab_stop )
         goto LABEL_14;
 LABEL_11:
       ((void (__stdcall *)(int, int, int, int, int))v7->vfptr->key_down_action)(
@@ -951,7 +951,7 @@ int __thiscall TTextPanel::action(TTextPanel *this, TPanel *from_panel, int acti
   int result; // eax@4
 
   v5 = this->scbar_panel;
-  if ( v5 && (TScrollBarPanel *)from_panel == v5 )
+  if( v5 && (TScrollBarPanel *)from_panel == v5 )
   {
     switch ( action_in )
     {
@@ -1003,21 +1003,21 @@ void __thiscall TTextPanel::draw(TTextPanel *this)
   v2 = 0;
   v3 = this->render_area;
   this->need_redraw = 0;
-  if ( v3 && this->visible && this->active )
+  if( v3 && this->visible && this->active )
   {
     TTextPanel::draw_background(this);
     v4 = v1->vfptr;
     v8 = v1->vfptr;
     v1->vfptr->draw_setup((TPanel *)v1, 0);
     v5 = TDrawArea::GetDc(v1->render_area, aPnl_txtDraw);
-    if ( v5 )
+    if( v5 )
     {
       SelectClipRgn(v5, v1->clip_rgn);
       old_font = SelectObject(v5, v1->font);
       SetBkMode(v5, 1);
-      for ( i = v1->top_line; i <= v1->bot_line; ++v2 )
+      for( i = v1->top_line; i <= v1->bot_line; ++v2 )
       {
-        if ( v1->tab_stop && v1->have_focus || v1->mouse_captured )
+        if( v1->tab_stop && v1->have_focus || v1->mouse_captured )
           TTextPanel::draw_line(v1, v5, v2, i, v1->highlightTextColor1, v1->highlightTextColor2);
         else
           TTextPanel::draw_line(v1, v5, v2, i, v1->text_color1, v1->text_color2);
@@ -1053,16 +1053,16 @@ void __thiscall TTextPanel::draw_background(TTextPanel *this)
 
   v1 = this;
   LOWORD(v2) = 0;
-  if ( this->back_pic )
+  if( this->back_pic )
   {
-    if ( TDrawArea::Lock(this->render_area, aPnl_txtDraw_ba, 1) )
+    if( TDrawArea::Lock(this->render_area, aPnl_txtDraw_ba, 1) )
     {
       v3 = v1->back_pic_wid;
       v4 = v1->pnl_wid;
-      if ( v3 < v4 )
+      if( v3 < v4 )
       {
         pic_cols = v4 / v3;
-        if ( v3 * (signed __int16)(v4 / v3) < v4 )
+        if( v3 * (signed __int16)(v4 / v3) < v4 )
           LOWORD(pic_cols) = pic_cols + 1;
         v5 = pic_cols;
       }
@@ -1073,19 +1073,19 @@ void __thiscall TTextPanel::draw_background(TTextPanel *this)
       }
       v6 = v1->back_pic_hgt;
       v7 = v1->pnl_hgt;
-      if ( v6 >= v7 )
+      if( v6 >= v7 )
       {
         v2 = v7 / v6;
-        if ( v6 * (signed __int16)(v7 / v6) < v7 )
+        if( v6 * (signed __int16)(v7 / v6) < v7 )
           LOWORD(v2) = v2 + 1;
       }
-      if ( (signed __int16)v2 > 0 )
+      if( (signed __int16)v2 > 0 )
       {
         v8 = 0;
         v14 = (signed __int16)v2;
         do
         {
-          if ( v5 > 0 )
+          if( v5 > 0 )
           {
             v9 = 0;
             v10 = v5;
@@ -1101,20 +1101,20 @@ void __thiscall TTextPanel::draw_background(TTextPanel *this)
                 0);
               --v10;
             }
-            while ( v10 );
+            while( v10 );
             v5 = pic_cols;
           }
           ++v8;
           --v14;
         }
-        while ( v14 );
+        while( v14 );
       }
       TDrawArea::Unlock(v1->render_area, aPnl_txtDraw_ba);
     }
   }
-  else if ( this->fill_back )
+  else if( this->fill_back )
   {
-    if ( TDrawArea::Lock(this->render_area, aPnl_txtDraw__1, 1) )
+    if( TDrawArea::Lock(this->render_area, aPnl_txtDraw__1, 1) )
     {
       TDrawArea::FillRect(
         v1->render_area,
@@ -1129,12 +1129,12 @@ void __thiscall TTextPanel::draw_background(TTextPanel *this)
   else
   {
     v11 = this->parent_panel;
-    if ( v11 )
+    if( v11 )
     {
       v12 = v1->bevel_type;
-      if ( v12 < 2 || v12 > 7 )
+      if( v12 < 2 || v12 > 7 )
       {
-        if ( !v11->just_drawn )
+        if( !v11->just_drawn )
           ((void (__stdcall *)(int))v11->vfptr->draw_rect)((int)&v1->clip_rect);
       }
       else
@@ -1151,9 +1151,9 @@ void __thiscall TTextPanel::draw_border(TTextPanel *this)
   TTextPanel *v1; // esi@1
 
   v1 = this;
-  if ( this->bevel_type )
+  if( this->bevel_type )
   {
-    if ( TDrawArea::Lock(this->render_area, aPnl_txtDraw_bo, 1) )
+    if( TDrawArea::Lock(this->render_area, aPnl_txtDraw_bo, 1) )
     {
       switch ( v1->bevel_type )
       {
@@ -1278,68 +1278,68 @@ void __thiscall TTextPanel::draw_line(TTextPanel *this, void *dc, __int16 draw_r
   v7 = TTextPanel::get_text(this, text_line);
   v8 = TTextPanel::get_text2(v6, text_line);
   temp_text2 = (char *)v8;
-  if ( v7 )
+  if( v7 )
   {
     text_len = strlen(v7);
   }
-  else if ( !v8 )
+  else if( !v8 )
   {
     return;
   }
-  if ( v8 )
+  if( v8 )
     text2_len = strlen(v8);
   TTextPanel::calc_line_pos(v6, dc, draw_row, text_line, &line_rect, 0);
   v9 = v6->horz_align;
   x2 = line_rect.left;
-  if ( v9 && v9 != 6 )
+  if( v9 && v9 != 6 )
     x2 = line_rect.left + 5;
   v10 = line_rect.top;
   draw_rowa = x2 + v6->second_column_pos;
-  if ( v6->clip_rgn2 )
+  if( v6->clip_rgn2 )
     SelectClipRgn(dc, v6->clip_rgn2);
   v11 = v6->text_style;
-  if ( v11 )
+  if( v11 )
   {
     v12 = v11 - 1;
-    if ( v12 )
+    if( v12 )
     {
-      if ( v12 == 1 )
+      if( v12 == 1 )
       {
         SetTextColor(dc, color2);
-        if ( v7 )
+        if( v7 )
           TextOutA(dc, x2 - 1, v10 + 1, (LPCSTR)v7, text_len);
         SetTextColor(dc, color1);
-        if ( v7 )
+        if( v7 )
           TextOutA(dc, x2, v10, (LPCSTR)v7, text_len);
       }
       goto LABEL_25;
     }
     SetTextColor(dc, color1);
-    if ( v7 )
+    if( v7 )
       TextOutA(dc, x2 - 1, v10 + 1, (LPCSTR)v7, text_len);
     SetTextColor(dc, color2);
-    if ( !v7 )
+    if( !v7 )
       goto LABEL_25;
   }
   else
   {
     SetTextColor(dc, color1);
-    if ( !v7 )
+    if( !v7 )
       goto LABEL_25;
   }
   TextOutA(dc, x2, v10, (LPCSTR)v7, text_len);
 LABEL_25:
-  if ( temp_text2 )
+  if( temp_text2 )
   {
-    if ( v18->clip_rgn2 )
+    if( v18->clip_rgn2 )
       SelectClipRgn(dc, v18->clip_rgn);
     v13 = v18->text_style;
-    if ( v13 )
+    if( v13 )
     {
       v14 = v13 - 1;
-      if ( v14 )
+      if( v14 )
       {
-        if ( v14 == 1 )
+        if( v14 == 1 )
         {
           SetTextColor(dc, color2);
           TextOutA(dc, draw_rowa - 1, v10 + 1, temp_text2, text2_len);
@@ -1393,13 +1393,13 @@ void __thiscall TTextPanel::calc_line_pos(TTextPanel *this, void *dc, __int16 dr
   v7 = (const unsigned __int8 *)TTextPanel::get_text(this, text_line);
   v8 = v7;
   v9 = 0;
-  if ( v7 )
+  if( v7 )
   {
-    if ( v6->cur_col )
+    if( v6->cur_col )
     {
       v10 = _mbslen(v7);
       v11 = v6->cur_col;
-      if ( v11 <= v10 )
+      if( v11 <= v10 )
       {
         memset(temp_text2, 0, sizeof(temp_text2));
         _mbsncpy((unsigned __int8 *)temp_text2, v8, v11);
@@ -1426,25 +1426,25 @@ void __thiscall TTextPanel::calc_line_pos(TTextPanel *this, void *dc, __int16 dr
     v12 = 0;
   }
   v13 = v6->horz_align;
-  if ( v13 && v13 != 6 )
+  if( v13 && v13 != 6 )
   {
     v9 += 5;
     col_offset = v9;
   }
   v14 = v13 - 1;
-  if ( !v14 )
+  if( !v14 )
   {
     v16 = v6->pnl_x;
     v17 = v6->border_size;
     goto LABEL_21;
   }
   v15 = v14 - 1;
-  if ( !v15 )
+  if( !v15 )
   {
     v18 = v6->pnl_wid + v6->pnl_x - v6->border_size - v12 - 7;
     goto LABEL_22;
   }
-  if ( v15 != 3 )
+  if( v15 != 3 )
   {
     v16 = v6->pnl_x - v12 / 2;
     v17 = v6->pnl_wid / 2;
@@ -1454,21 +1454,21 @@ LABEL_21:
   }
   v18 = v6->border_size + v6->pnl_x;
   v19 = v6->pnl_wid;
-  if ( v9 + 1 >= v19 )
+  if( v9 + 1 >= v19 )
     v18 = v18 + v19 - v9 - 2;
 LABEL_22:
   v20 = v6->spacer_size;
-  if ( v20 )
+  if( v20 )
     v21 = v6->text_hgt + 2 * v20 - 1;
   else
     v21 = v6->text_hgt;
-  if ( v6->vert_align == 3 )
+  if( v6->vert_align == 3 )
   {
     v23 = v6->border_size + v6->pnl_y + v21 * draw_row;
   }
   else
   {
-    if ( v6->vert_align == 4 )
+    if( v6->vert_align == 4 )
     {
       v24 = v6->pnl_hgt + v6->pnl_y - v21 * (v6->num_lines - draw_row) - v6->border_size - v20 - 1;
       goto LABEL_31;
@@ -1483,7 +1483,7 @@ LABEL_31:
   line_rect->top = v24;
   line_rect->right = v12 + v18 - 1;
   line_rect->bottom = v6->text_hgt + v24;
-  if ( cursor_x_offset )
+  if( cursor_x_offset )
     *cursor_x_offset = col_offset;
 }
 
@@ -1493,7 +1493,7 @@ int __thiscall TTextPanel::mouse_left_down_action(TTextPanel *this, int x, int y
   TPanel *v5; // eax@1
 
   v5 = this->parent_panel;
-  if ( v5 )
+  if( v5 )
     v5->vfptr->action(v5, (TPanel *)this, 1, 0, 0);
   return 0;
 }
@@ -1537,13 +1537,13 @@ void __thiscall TTextPanel::set_line_by_id(TTextPanel *this, int id_in)
 
   v2 = this->list;
   v3 = 0;
-  if ( v2 )
+  if( v2 )
   {
-    while ( v2->id != id_in )
+    while( v2->id != id_in )
     {
       v2 = v2->next_node;
       ++v3;
-      if ( !v2 )
+      if( !v2 )
         return;
     }
     TTextPanel::set_line(this, v3);
@@ -1603,14 +1603,14 @@ void *__thiscall TTextPanel::insert_line(TTextPanel *this, int line_in, char *te
   v19 = this;
   result = calloc(1u, 0x10u);
   v7 = (int)result;
-  if ( !result )
+  if( !result )
     return result;
   v8 = v5->fixed_len;
-  if ( v8 )
+  if( v8 )
   {
     v18 = v8 + 1;
   }
-  else if ( text_in )
+  else if( text_in )
   {
     v18 = strlen(text_in) + 1;
   }
@@ -1620,23 +1620,23 @@ void *__thiscall TTextPanel::insert_line(TTextPanel *this, int line_in, char *te
   }
   v9 = calloc(v18, 1u);
   *(_DWORD *)v7 = v9;
-  if ( !v9 )
+  if( !v9 )
   {
     free((void *)v7);
     return 0;
   }
-  if ( text2_in )
+  if( text2_in )
   {
     v10 = calloc(strlen(text2_in) + 1, 1u);
     *(_DWORD *)(v7 + 4) = v10;
-    if ( !v10 )
+    if( !v10 )
     {
       free(*(void **)v7);
       free((void *)v7);
       return 0;
     }
   }
-  if ( !text_in )
+  if( !text_in )
   {
     **(_BYTE **)v7 = 0;
 LABEL_17:
@@ -1645,7 +1645,7 @@ LABEL_17:
   }
   v11 = v19;
   v12 = v19->fixed_len;
-  if ( !v12 )
+  if( !v12 )
   {
     strcpy(*(char **)v7, text_in);
     goto LABEL_17;
@@ -1653,7 +1653,7 @@ LABEL_17:
   strncpy(*(char **)v7, text_in, v12);
   *(_BYTE *)(*(_DWORD *)v7 + v19->fixed_len) = 0;
 LABEL_18:
-  if ( text2_in )
+  if( text2_in )
   {
     strcpy(*(char **)(v7 + 4), text2_in);
     v11 = v19;
@@ -1662,37 +1662,37 @@ LABEL_18:
   v13 = 0;
   *(_DWORD *)(v7 + 12) = 0;
   v14 = v11->list;
-  if ( v14 )
+  if( v14 )
   {
-    if ( v11->sorted )
+    if( v11->sorted )
     {
       v15 = v11->list;
       v16 = 0;
-      if ( !v14 )
+      if( !v14 )
         goto LABEL_44;
-      while ( CompareStringA(0x400u, 1u, *(PCNZCH *)v7, -1, v15->text, -1) != 1 )
+      while( CompareStringA(0x400u, 1u, *(PCNZCH *)v7, -1, v15->text, -1) != 1 )
       {
         v16 = v15;
         v15 = v15->next_node;
-        if ( !v15 )
+        if( !v15 )
           goto LABEL_30;
       }
       *(_DWORD *)(v7 + 12) = v15;
-      if ( v16 )
+      if( v16 )
         v16->next_node = (TTextPanel::TextNode *)v7;
       else
         v19->list = (TTextPanel::TextNode *)v7;
 LABEL_30:
-      if ( !v15 )
+      if( !v15 )
 LABEL_44:
         v16->next_node = (TTextPanel::TextNode *)v7;
       v11 = v19;
     }
-    else if ( line_in )
+    else if( line_in )
     {
-      if ( line_in < v11->num_lines )
+      if( line_in < v11->num_lines )
       {
-        while ( v13 != line_in - 1 )
+        while( v13 != line_in - 1 )
         {
           v14 = v14->next_node;
           ++v13;
@@ -1707,7 +1707,7 @@ LABEL_44:
           v17 = v14;
           v14 = v14->next_node;
         }
-        while ( v14 );
+        while( v14 );
         v17->next_node = (TTextPanel::TextNode *)v7;
       }
     }
@@ -1762,7 +1762,7 @@ void *__thiscall TTextPanel::change_line(TTextPanel *this, int line_in, char *te
   v6 = this->sorted;
   this->sorted = 0;
   result = TTextPanel::insert_line(this, line_in, text_in, text2_in, id_in);
-  if ( result )
+  if( result )
   {
     TTextPanel::delete_line(v5, line_in + 1);
     v5->sorted = v6;
@@ -1786,7 +1786,7 @@ void *__thiscall TTextPanel::change_line(TTextPanel *this, int line_in, int stri
   v6 = this->sorted;
   this->sorted = 0;
   result = TTextPanel::insert_line(this, line_in, string_id_in, string_id2_in, id_in);
-  if ( result )
+  if( result )
   {
     TTextPanel::delete_line(v5, line_in + 1);
     v5->sorted = v6;
@@ -1810,12 +1810,12 @@ int __thiscall TTextPanel::delete_line(TTextPanel *this, int line_in)
   int result; // eax@18
 
   v2 = this;
-  if ( line_in < 0 || line_in > this->num_lines - 1 )
+  if( line_in < 0 || line_in > this->num_lines - 1 )
     goto LABEL_22;
-  if ( line_in )
+  if( line_in )
   {
     v4 = this->list;
-    for ( i = 0; i != line_in - 1; ++i )
+    for( i = 0; i != line_in - 1; ++i )
       v4 = v4->next_node;
     v3 = v4->next_node;
     v4->next_node = v3->next_node;
@@ -1825,17 +1825,17 @@ int __thiscall TTextPanel::delete_line(TTextPanel *this, int line_in)
     v3 = this->list;
     this->list = v3->next_node;
   }
-  if ( v3 )
+  if( v3 )
   {
-    if ( v3->text )
+    if( v3->text )
       free(v3->text);
-    if ( v3->text2 )
+    if( v3->text2 )
       free(v3->text2);
     free(v3);
     v6 = --v2->num_lines;
-    if ( v6 )
+    if( v6 )
     {
-      if ( v2->cur_line >= v6 )
+      if( v2->cur_line >= v6 )
         v2->cur_line = v6 - 1;
     }
     else
@@ -1859,7 +1859,7 @@ int __thiscall TTextPanel::get_line(TTextPanel *this)
 {
   int result; // eax@2
 
-  if ( this->num_lines )
+  if( this->num_lines )
     result = this->cur_line;
   else
     result = -1;
@@ -1874,13 +1874,13 @@ int __thiscall TTextPanel::get_line(TTextPanel *this, int id_in)
 
   v2 = this->list;
   result = 0;
-  if ( v2 )
+  if( v2 )
   {
-    while ( v2->id != id_in )
+    while( v2->id != id_in )
     {
       v2 = v2->next_node;
       ++result;
-      if ( !v2 )
+      if( !v2 )
         goto LABEL_4;
     }
   }
@@ -1900,13 +1900,13 @@ int __thiscall TTextPanel::get_line(TTextPanel *this, char *text_in)
 
   v2 = this->list;
   result = 0;
-  if ( v2 )
+  if( v2 )
   {
-    while ( strcmp(v2->text, text_in) )
+    while( strcmp(v2->text, text_in) )
     {
       v2 = v2->next_node;
       ++result;
-      if ( !v2 )
+      if( !v2 )
         goto LABEL_4;
     }
   }
@@ -1933,13 +1933,13 @@ char *__thiscall TTextPanel::get_text(TTextPanel *this, int line_in)
 
   v2 = this->list;
   v3 = 0;
-  if ( v2 )
+  if( v2 )
   {
-    while ( v3 != line_in )
+    while( v3 != line_in )
     {
       v2 = v2->next_node;
       ++v3;
-      if ( !v2 )
+      if( !v2 )
       {
         empty_text_0 = 0;
         return &empty_text_0;
@@ -1970,13 +1970,13 @@ char *__thiscall TTextPanel::get_text2(TTextPanel *this, int line_in)
 
   v2 = this->list;
   v3 = 0;
-  if ( v2 )
+  if( v2 )
   {
-    while ( v3 != line_in )
+    while( v3 != line_in )
     {
       v2 = v2->next_node;
       ++v3;
-      if ( !v2 )
+      if( !v2 )
       {
         empty_text = 0;
         return &empty_text;
@@ -2007,13 +2007,13 @@ int __thiscall TTextPanel::get_id(TTextPanel *this, int line_in)
 
   v2 = this->list;
   v3 = 0;
-  if ( v2 )
+  if( v2 )
   {
-    while ( v3 != line_in )
+    while( v3 != line_in )
     {
       v2 = v2->next_node;
       ++v3;
-      if ( !v2 )
+      if( !v2 )
         return -1;
     }
     result = v2->id;
@@ -2034,19 +2034,19 @@ void __thiscall TTextPanel::free_text(TTextPanel *this)
 
   v1 = this;
   v2 = this->list;
-  if ( v2 )
+  if( v2 )
   {
     do
     {
-      if ( v2->text )
+      if( v2->text )
         free(v2->text);
-      if ( v2->text2 )
+      if( v2->text2 )
         free(v2->text2);
       v3 = v2;
       v2 = v2->next_node;
       free(v3);
     }
-    while ( v2 );
+    while( v2 );
     v1->list = 0;
   }
   v1->num_lines = 0;
@@ -2074,7 +2074,7 @@ int __thiscall TTextPanel::get_text_rect(TTextPanel *this, tagRECT *rect)
 
   v2 = this;
   v3 = TDrawArea::GetDc(this->render_area, aPnl_txtGet_tex);
-  if ( v3 )
+  if( v3 )
   {
     v4 = SelectObject(v3, v2->font);
     TTextPanel::calc_line_pos(v2, v3, 0, 0, rect, 0);

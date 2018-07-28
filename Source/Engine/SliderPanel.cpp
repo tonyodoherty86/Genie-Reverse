@@ -19,7 +19,7 @@ TVerticalSliderPanel *__thiscall TVerticalSliderPanel::`scalar deleting destruct
 
   v2 = this;
   TVerticalSliderPanel::~TVerticalSliderPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -58,7 +58,7 @@ int __thiscall TVerticalSliderPanel::setup(TVerticalSliderPanel *this, TDrawArea
              0,
              scaleIn,
              0);
-  if ( result )
+  if( result )
   {
     v15->one_step = one_step_in;
     v15->page_step = page_step_in;
@@ -91,7 +91,7 @@ THorizontalSliderPanel *__thiscall THorizontalSliderPanel::`vector deleting dest
 
   v2 = this;
   THorizontalSliderPanel::~THorizontalSliderPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -130,7 +130,7 @@ int __thiscall THorizontalSliderPanel::setup(THorizontalSliderPanel *this, TDraw
              0,
              scaleIn,
              Horizontal);
-  if ( result )
+  if( result )
   {
     v15->one_step = one_step_in;
     v15->page_step = page_step_in;

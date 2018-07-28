@@ -2,7 +2,7 @@
 /**
  * @file    RGE.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/07
  * @version 1.0
  */
 
@@ -58,6 +58,8 @@ class RGE_Moving_Object;
 class RGE_Action_Object;
 class RGE_Combat_Object;
 class RGE_Missile_Object;
+
+struct RGE_Object_Node;
 
 /* Include Master-Player components: */
 #include "RGE\MasterPlayer.hpp"

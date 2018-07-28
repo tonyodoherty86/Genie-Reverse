@@ -30,7 +30,7 @@ TShape::TShape(char *filename, int resource_file_id)
   this->head = 0;
   this->offsets = 0;
   this->FShape = 0;
-  if ( shape_file_first || (v4 = resource_file_id, resource_file_id < 0) )
+  if( shape_file_first || (v4 = resource_file_id, resource_file_id < 0) )
   {
     color_log(84, 84, 1);
     strcpy(NextFile, filename);
@@ -38,7 +38,7 @@ TShape::TShape(char *filename, int resource_file_id)
     ++Shape_Loads;
     v5 = _open(NextFile, 0x8000);
     v6 = v5;
-    if ( v5 != -1 )
+    if( v5 != -1 )
     {
       lseek(v5, 0, 2);
       v7 = _tell(v6);
@@ -51,12 +51,12 @@ TShape::TShape(char *filename, int resource_file_id)
       v3->shape_info = (Shape_Info *)&v8[1];
       v3->load_size = v7;
     }
-    if ( !v3->FShape )
+    if( !v3->FShape )
     {
       strcpy(&NextFile[strlen(NextFile) - 3], aShp);
       v9 = _open(NextFile, 0x8000);
       v10 = v9;
-      if ( v9 != -1 )
+      if( v9 != -1 )
       {
         lseek(v9, 0, 2);
         v11 = _tell(v10);
@@ -74,14 +74,14 @@ TShape::TShape(char *filename, int resource_file_id)
     color_log(84, 95, 1);
     v4 = resource_file_id;
   }
-  if ( !v3->FShape && !v3->shape && v4 >= 0 )
+  if( !v3->FShape && !v3->shape && v4 >= 0 )
   {
     ++Shape_Loads;
     v13 = RESFILE_load(0x73687020u, v4, &v3->load_type, &v3->load_size);
     v3->shape = v13;
-    if ( v13 )
+    if( v13 )
     {
-      if ( *(_DWORD *)v13 == *(_DWORD *)a1_10 )
+      if( *(_DWORD *)v13 == *(_DWORD *)a1_10 )
       {
         v3->head = (Shape_File_Header *)v13;
         v3->offsets = (Shape_Offsets *)(v13 + 8);
@@ -91,7 +91,7 @@ TShape::TShape(char *filename, int resource_file_id)
     {
       v14 = RESFILE_load(0x736C7020u, v4, &v3->load_type, &v3->load_size);
       v3->shape = v14;
-      if ( v14 )
+      if( v14 )
       {
         v3->FShape = (SLhape_File_Header *)v14;
         v3->shape = 0;
@@ -104,21 +104,21 @@ TShape::TShape(char *filename, int resource_file_id)
 TShape::~TShape()
 {
     /* Destroy SLP */
-    if ( this->FShape )
+    if( this->FShape )
     {
-        if ( this->load_type == 1 )
+        if( this->load_type == 1 )
             delete this->FShape;
 
-        if ( !this->load_type )
+        if( !this->load_type )
             RESFILE_Decommit_Mapped_Memory(this->FShape->Version, this->load_size);
     }
     /* Destroy SHP */
-    if ( this->shape )
+    if( this->shape )
     {
-        if ( this->load_type == 1 )
+        if( this->load_type == 1 )
             delete this->shape;
 
-        if ( this->load_type == 0 )
+        if( this->load_type == 0 )
             RESFILE_Decommit_Mapped_Memory(this->shape, this->load_size);
     }
     this->shape = 0;
@@ -194,11 +194,11 @@ bool TShape::shape_bounds(int shape_num, short *width, short *height)
 int TShape::shape_count()
 {
     /* Shape count */
-    if ( this->Check_shape(-1) )
+    if( this->Check_shape(-1) )
         return 0;
 
     _DWORD *v3 = (_DWORD *)this->FShape->Version;
-    if ( !v3 )
+    if( !v3 )
         v3 = &this->head->version;
 
     return v3[1];
@@ -267,26 +267,26 @@ bool TShape::shape_check(int check_x, int check_y, int shape_num)
 
   v4 = this;
   /* Shape draw */
-  if ( shape_num >= 0 && !this->Check_shape(shape_num) )
+  if( shape_num >= 0 && !this->Check_shape(shape_num) )
   {
     v5 = v4->FShape;
-    if ( v5 )
+    if( v5 )
     {
       v6 = (int)&v4->shape_info[shape_num];
       v7 = check_x + *(_DWORD *)(v6 + 24);
       v8 = *(_DWORD *)(v6 + 16);
       v9 = check_y + *(_DWORD *)(v6 + 28);
-      if ( v7 >= 0 && v9 >= 0 && v7 < v8 && v9 < *(_DWORD *)(v6 + 20) )
+      if( v7 >= 0 && v9 >= 0 && v7 < v8 && v9 < *(_DWORD *)(v6 + 20) )
       {
         v10 = 4 * v9;
         v11 = (int)v5 + *(_DWORD *)(v6 + 4);
         v12 = *(_WORD *)(v11 + 4 * v9);
-        if ( v12 >= 0 && v7 >= v12 && v7 <= v8 - *(_WORD *)(v11 + v10 + 2) )
+        if( v12 >= 0 && v7 >= v12 && v7 <= v8 - *(_WORD *)(v11 + v10 + 2) )
         {
           v13 = &v5->Version[*(_DWORD *)(&v5->Version[*(_DWORD *)v6] + v10)];
-          if ( v12 < v8 )
+          if( v12 < v8 )
           {
-            while ( v7 >= v12 )
+            while( v7 >= v12 )
             {
               v14 = *v13++;
               check_xa = v14;
@@ -298,7 +298,7 @@ bool TShape::shape_check(int check_x, int check_y, int shape_num)
                 case 0xC:
                   v15 = (unsigned int)v14 >> 2;
                   v12 += v15;
-                  if ( v7 < v12 )
+                  if( v7 < v12 )
                     return 1;
                   v13 += v15;
                   break;
@@ -306,7 +306,7 @@ bool TShape::shape_check(int check_x, int check_y, int shape_num)
                   v16 = (unsigned __int8)*v13 | 16 * v14;
                   v17 = (int)(v13 + 1);
                   v12 += v16;
-                  if ( v7 < v12 )
+                  if( v7 < v12 )
                     return 1;
                   v13 = (char *)(v16 + v17);
                   break;
@@ -322,35 +322,35 @@ bool TShape::shape_check(int check_x, int check_y, int shape_num)
                   break;
                 case 6:
                   v19 = (unsigned int)v14 >> 4;
-                  if ( !((unsigned int)check_xa >> 4) )
+                  if( !((unsigned int)check_xa >> 4) )
                     v19 = (unsigned __int8)*v13++;
                   v12 += v19;
-                  if ( v7 < v12 )
+                  if( v7 < v12 )
                     return 1;
                   v13 += v19;
                   break;
                 case 7:
                 case 0xA:
                   v20 = (unsigned int)v14 >> 4;
-                  if ( !((unsigned int)check_xa >> 4) )
+                  if( !((unsigned int)check_xa >> 4) )
                     v20 = (unsigned __int8)*v13++;
                   v12 += v20;
-                  if ( v7 < v12 )
+                  if( v7 < v12 )
                     return 1;
                   ++v13;
                   break;
                 case 0xB:
                   v21 = (unsigned int)v14 >> 4;
-                  if ( !((unsigned int)check_xa >> 4) )
+                  if( !((unsigned int)check_xa >> 4) )
                     v21 = (unsigned __int8)*v13++;
                   v12 += v21;
-                  if ( v7 < v12 )
+                  if( v7 < v12 )
                     return 1;
                   break;
                 default:
                   return 0;
               }
-              if ( v12 >= v8 )
+              if( v12 >= v8 )
                 return 0;
             }
           }
@@ -365,74 +365,74 @@ bool TShape::shape_check(int check_x, int check_y, int shape_num)
     v26 = *(_DWORD *)(v23 + 16);
     v27 = (unsigned __int8 *)(v23 + 24);
     v28 = *(_DWORD *)(v23 + 20);
-    if ( check_y >= v24 && check_y <= v28 )
+    if( check_y >= v24 && check_y <= v28 )
     {
       v29 = check_x;
-      if ( check_x >= v25 && check_x <= v26 )
+      if( check_x >= v25 && check_x <= v26 )
       {
-        if ( v24 >= check_y )
+        if( v24 >= check_y )
           goto LABEL_48;
         v30 = check_y - v24;
-        while ( 1 )
+        while( 1 )
         {
           v31 = 0;
           do
           {
             v32 = *v27++;
-            if ( (v32 & 1) == 1 )
+            if( (v32 & 1) == 1 )
             {
-              if ( v32 >> 1 )
+              if( v32 >> 1 )
               {
                 v27 += v32 >> 1;
                 continue;
               }
             }
-            else if ( !(v32 & 0xFE) )
+            else if( !(v32 & 0xFE) )
             {
               v31 = 1;
               continue;
             }
             ++v27;
           }
-          while ( !v31 );
-          if ( !--v30 )
+          while( !v31 );
+          if( !--v30 )
           {
 LABEL_48:
             v33 = v25;
             command = 0;
-            while ( 1 )
+            while( 1 )
             {
               v34 = *v27++;
-              if ( (v34 & 1) == 1 )
+              if( (v34 & 1) == 1 )
               {
                 check_xb = v34 >> 1;
-                if ( !(v34 >> 1) )
+                if( !(v34 >> 1) )
                 {
                   v33 += *v27;
-                  if ( v33 > v29 )
+                  if( v33 > v29 )
                     return 0;
 LABEL_58:
                   ++v27;
                   goto LABEL_59;
                 }
                 v33 += check_xb;
-                if ( v33 > v29 )
+                if( v33 > v29 )
                   return 1;
                 v27 += check_xb;
               }
               else
               {
-                if ( v34 >> 1 )
+                if( v34 >> 1 )
                 {
                   v33 += v34 >> 1;
-                  if ( v33 > v29 )
+                  if( v33 > v29 )
                     return 1;
                   goto LABEL_58;
                 }
                 command = 1;
               }
 LABEL_59:
-              if ( command )
+              if( command )
                 return 0;
             }
           }
@@ -480,17 +480,17 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
 
   v7 = this;
   /* Shape draw */
-  if ( shape_num < 0 || TShape::Check_shape(this, shape_num) )
+  if( shape_num < 0 || TShape::Check_shape(this, shape_num) )
     return 0;
   v8 = v7->FShape;
-  if ( !v8 )
+  if( !v8 )
   {
     v20 = drawarea;
     rect = drawarea->ClipRect.left;
     rect_4 = drawarea->ClipRect.top;
     rect_8 = drawarea->ClipRect.right;
     rect_12 = drawarea->ClipRect.bottom;
-    if ( v7->shape )
+    if( v7->shape )
     {
       v21 = (int)&v7->shape[v7->offsets[shape_num].shape];
       v7->shape_header = (Shape_Header *)v21;
@@ -503,50 +503,50 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
       clip_x1 = y + *(_DWORD *)(v21 + 12);
       shape_x1 = x + *(_DWORD *)(v21 + 16);
       clip_x0 = x + *(_DWORD *)(v21 + 16);
-      if ( v23 < rect )
+      if( v23 < rect )
         drawareaa = (TDrawArea *)rect;
-      if ( v24 < rect_4 )
+      if( v24 < rect_4 )
         clip_x1 = rect_4;
-      if ( v22 > rect_8 )
+      if( v22 > rect_8 )
         clip_x0 = rect_8;
-      if ( shape_y1 > rect_12 )
+      if( shape_y1 > rect_12 )
         v25 = rect_12;
-      if ( (signed int)drawareaa < 0 )
+      if( (signed int)drawareaa < 0 )
         drawareaa = 0;
-      if ( clip_x1 < 0 )
+      if( clip_x1 < 0 )
         clip_x1 = 0;
       v26 = v20->Width;
       v27 = clip_x0;
-      if ( clip_x0 >= v26 )
+      if( clip_x0 >= v26 )
       {
         v27 = v26 - 1;
         clip_x0 = v26 - 1;
       }
       v28 = v20->Height;
-      if ( v25 >= v28 )
+      if( v25 >= v28 )
         v25 = v28 - 1;
-      if ( v27 >= (signed int)drawareaa )
+      if( v27 >= (signed int)drawareaa )
       {
         v29 = clip_x1;
-        if ( v25 >= clip_x1 )
+        if( v25 >= clip_x1 )
         {
-          if ( drawareaa == (TDrawArea *)v23 && clip_x1 == v24 )
+          if( drawareaa == (TDrawArea *)v23 && clip_x1 == v24 )
           {
-            if ( clip_x0 == shape_x1 && v25 == shape_y1 )
+            if( clip_x0 == shape_x1 && v25 == shape_y1 )
             {
-              if ( !flags )
+              if( !flags )
                 return TShape::shape_draw_unclipped(v7, v20, v23, v24, shape_num);
-              if ( flags == 1 )
+              if( flags == 1 )
               {
-                if ( color_table )
+                if( color_table )
                   result = TShape::shape_color_trans_unclipped(v7, v20, v23, v24, shape_num, color_table);
                 else
                   result = TShape::shape_draw_unclipped(v7, v20, v23, v24, shape_num);
                 return result;
               }
-              if ( flags == 2 )
+              if( flags == 2 )
               {
-                if ( color_table )
+                if( color_table )
                   result = TShape::shape_shadow_unclipped(v7, v20, v23, v24, color_table);
                 else
                   result = TShape::shape_draw_unclipped(v7, v20, v23, v24, shape_num);
@@ -556,11 +556,11 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
             }
             v29 = clip_x1;
           }
-          if ( flags )
+          if( flags )
           {
-            if ( flags == 1 )
+            if( flags == 1 )
             {
-              if ( color_table )
+              if( color_table )
                 return TShape::shape_color_trans_clipped(
                          v7,
                          v20,
@@ -575,9 +575,9 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
             }
             else
             {
-              if ( flags != 2 )
+              if( flags != 2 )
                 return 0;
-              if ( color_table )
+              if( color_table )
                 return TShape::shape_shadow_clipped(v7, v20, v23, v24, (int)drawareaa, v29, clip_x0, v25, color_table);
             }
           }
@@ -587,7 +587,7 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
     }
     return 0;
   }
-  if ( SDI_Capture_Info )
+  if( SDI_Capture_Info )
   {
     v9 = (Shape_Info *)&v8[shape_num + 1];
     v10 = SDI_Object_ID;
@@ -612,7 +612,7 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
     v14 = drawarea->CurSpanList;
     v15 = drawarea->SpanList->Num_Lines;
     v16 = v14->Num_Lines;
-    if ( v15 >= v16 )
+    if( v15 >= v16 )
       v17 = v16 - 1;
     else
       v17 = v15 - 1;
@@ -624,7 +624,7 @@ bool TShape::shape_draw(TDrawArea *drawarea, int x, int y, int shape_num, char f
       0,
       v14->Max_Span_Px,
       v17);
-    if ( color_table )
+    if( color_table )
       ASMSet_Xlate_Table((int)color_table);
     v18 = v7->FShape;
     v19 = (int)&v18[shape_num + 1];
@@ -667,13 +667,13 @@ bool TShape::shape_draw_unclipped(TDrawArea *drawarea, int shape_x0, int shape_y
   v8 = (unsigned __int8 *)&v5[1];
   v9 = v6 * TDrawArea::AlignedWidth(drawarea);
   width = v9;
-  if ( v6 >= 1 )
+  if( v6 >= 1 )
     v10 = shape_y0 * v9;
   else
     v10 = v9 * (shape_y0 - drawarea->Height + 1);
   v11 = &drawarea->Bits[v10] + shape_x0;
   shape_x0a = (int)v11;
-  if ( v7 > 0 )
+  if( v7 > 0 )
   {
     drawareaa = (TDrawArea *)v7;
     do
@@ -682,10 +682,10 @@ bool TShape::shape_draw_unclipped(TDrawArea *drawarea, int shape_x0, int shape_y
       do
       {
         v13 = *v8++;
-        if ( (v13 & 1) == 1 )
+        if( (v13 & 1) == 1 )
         {
           save_buffer = v13 >> 1;
-          if ( v13 >> 1 )
+          if( v13 >> 1 )
           {
             memcpy(v11, v8, save_buffer);
             v11 += save_buffer;
@@ -697,7 +697,7 @@ bool TShape::shape_draw_unclipped(TDrawArea *drawarea, int shape_x0, int shape_y
         else
         {
           save_buffera = v13 >> 1;
-          if ( !(v13 >> 1) )
+          if( !(v13 >> 1) )
           {
             v12 = 1;
             continue;
@@ -707,13 +707,13 @@ bool TShape::shape_draw_unclipped(TDrawArea *drawarea, int shape_x0, int shape_y
         }
         ++v8;
       }
-      while ( !v12 );
+      while( !v12 );
       v11 = (char *)(width + shape_x0a);
       v14 = drawareaa == (TDrawArea *)1;
       shape_x0a += width;
       drawareaa = (TDrawArea *)((char *)drawareaa - 1);
     }
-    while ( !v14 );
+    while( !v14 );
   }
   return 1;
 }
@@ -743,13 +743,13 @@ bool TShape::shape_color_trans_unclipped(TDrawArea *drawarea, int shape_x0, int 
   v9 = (unsigned __int8 *)&v6[1];
   v10 = v7 * TDrawArea::AlignedWidth(drawarea);
   width = v10;
-  if ( v7 >= 1 )
+  if( v7 >= 1 )
     v11 = shape_y0 * v10;
   else
     v11 = v10 * (shape_y0 - drawarea->Height + 1);
   v12 = &drawarea->Bits[v11] + shape_x0;
   drawareaa = (TDrawArea *)v12;
-  if ( v8 > 0 )
+  if( v8 > 0 )
   {
     v18 = v8;
     do
@@ -758,10 +758,10 @@ bool TShape::shape_color_trans_unclipped(TDrawArea *drawarea, int shape_x0, int 
       do
       {
         v13 = *v9++;
-        if ( (v13 & 1) != 1 )
+        if( (v13 & 1) != 1 )
         {
           save_buffer = v13 >> 1;
-          if ( !(v13 >> 1) )
+          if( !(v13 >> 1) )
           {
             command = 1;
             continue;
@@ -770,26 +770,26 @@ bool TShape::shape_color_trans_unclipped(TDrawArea *drawarea, int shape_x0, int 
           v12 += save_buffer;
           goto LABEL_16;
         }
-        if ( !(v13 >> 1) )
+        if( !(v13 >> 1) )
         {
           v12 += *v9;
 LABEL_16:
           ++v9;
           continue;
         }
-        for ( i = (unsigned int)&v12[v13 >> 1]; (unsigned int)v12 < i; *(v12 - 1) = color_table[v15] )
+        for( i = (unsigned int)&v12[v13 >> 1]; (unsigned int)v12 < i; *(v12 - 1) = color_table[v15] )
         {
           v15 = *v9++;
           ++v12;
         }
       }
-      while ( !command );
+      while( !command );
       v12 = (char *)drawareaa + width;
       v16 = v18 == 1;
       drawareaa = (TDrawArea *)((char *)drawareaa + width);
       --v18;
     }
-    while ( !v16 );
+    while( !v16 );
   }
   return 1;
 }
@@ -821,13 +821,13 @@ bool TShape::shape_shadow_unclipped(TDrawArea *drawarea, int shape_x0, int shape
   v8 = drawarea->Orien;
   v9 = v8 * TDrawArea::AlignedWidth(drawarea);
   width = v9;
-  if ( v8 >= 1 )
+  if( v8 >= 1 )
     v10 = shape_y0 * v9;
   else
     v10 = v9 * (shape_y0 - drawarea->Height + 1);
   v11 = &drawarea->Bits[v10] + shape_x0;
   shape_x0a = (int)v11;
-  if ( v7 > 0 )
+  if( v7 > 0 )
   {
     drawareaa = (TDrawArea *)v7;
     do
@@ -836,36 +836,36 @@ bool TShape::shape_shadow_unclipped(TDrawArea *drawarea, int shape_x0, int shape
       do
       {
         v13 = *v6++;
-        if ( (v13 & 1) != 1 )
+        if( (v13 & 1) != 1 )
         {
-          if ( !(v13 >> 1) )
+          if( !(v13 >> 1) )
           {
             v12 = 1;
             continue;
           }
-          for ( i = (unsigned int)&v11[v13 >> 1]; (unsigned int)v11 < i; *(v11 - 1) = color_table[v17] )
+          for( i = (unsigned int)&v11[v13 >> 1]; (unsigned int)v11 < i; *(v11 - 1) = color_table[v17] )
             v17 = (unsigned __int8)*v11++;
           goto LABEL_17;
         }
         save_buffer = v13 >> 1;
-        if ( !(v13 >> 1) )
+        if( !(v13 >> 1) )
         {
           v11 += *v6;
 LABEL_17:
           ++v6;
           continue;
         }
-        for ( j = (unsigned int)&v11[save_buffer]; (unsigned int)v11 < j; *(v11 - 1) = color_table[v15] )
+        for( j = (unsigned int)&v11[save_buffer]; (unsigned int)v11 < j; *(v11 - 1) = color_table[v15] )
           v15 = (unsigned __int8)*v11++;
         v6 += save_buffer;
       }
-      while ( !v12 );
+      while( !v12 );
       v11 = (char *)(width + shape_x0a);
       v18 = drawareaa == (TDrawArea *)1;
       shape_x0a += width;
       drawareaa = (TDrawArea *)((char *)drawareaa - 1);
     }
-    while ( !v18 );
+    while( !v18 );
   }
   return 1;
 }
@@ -909,7 +909,7 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
   v11 = v8 * v10;
   v12 = (unsigned __int8 *)&v9->shape_header[1];
   width = v8 * v10;
-  if ( v8 >= 1 )
+  if( v8 >= 1 )
   {
     v13 = clip_y0;
     v14 = clip_x0;
@@ -923,7 +923,7 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
   }
   save_buffer = v15;
   v16 = shape_y0;
-  if ( shape_y0 < v13 )
+  if( shape_y0 < v13 )
   {
     clip_y0a = v13 - shape_y0;
     v16 = v13;
@@ -933,33 +933,33 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
       do
       {
         v18 = *v12++;
-        if ( (v18 & 1) == 1 )
+        if( (v18 & 1) == 1 )
         {
-          if ( v18 >> 1 )
+          if( v18 >> 1 )
           {
             v12 += v18 >> 1;
             continue;
           }
         }
-        else if ( !(v18 & 0xFE) )
+        else if( !(v18 & 0xFE) )
         {
           v17 = 1;
           continue;
         }
         ++v12;
       }
-      while ( !v17 );
+      while( !v17 );
       --clip_y0a;
     }
-    while ( clip_y0a );
+    while( clip_y0a );
   }
-  if ( v16 <= clip_y1 )
+  if( v16 <= clip_y1 )
   {
     clip_y1a = clip_y1 - v16 + 1;
-    while ( 1 )
+    while( 1 )
     {
       v19 = shape_x0;
-      if ( shape_x0 >= v14 )
+      if( shape_x0 >= v14 )
       {
         clip_y0b = 1;
       }
@@ -969,16 +969,16 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
         do
         {
           v20 = *v12++;
-          if ( (v20 & 1) == 1 )
+          if( (v20 & 1) == 1 )
           {
             drawareaa = v20 >> 1;
-            if ( v20 >> 1 )
+            if( v20 >> 1 )
             {
               v21 = drawareaa;
               v19 += drawareaa;
-              if ( v19 >= v14 )
+              if( v19 >= v14 )
               {
-                if ( v19 <= clip_x1 )
+                if( v19 <= clip_x1 )
                 {
                   clip_y0b = 1;
                   v22 = v19 - clip_x0;
@@ -999,9 +999,9 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
             else
             {
               v19 += *v12++;
-              if ( v19 >= v14 )
+              if( v19 >= v14 )
               {
-                if ( v19 <= clip_x1 )
+                if( v19 <= clip_x1 )
                 {
                   clip_y0b = 1;
                   v15 += v19 - v14;
@@ -1013,12 +1013,12 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
               }
             }
           }
-          else if ( v20 >> 1 )
+          else if( v20 >> 1 )
           {
             v19 += v20 >> 1;
-            if ( v19 >= v14 )
+            if( v19 >= v14 )
             {
-              if ( v19 <= clip_x1 )
+              if( v19 <= clip_x1 )
               {
                 clip_y0b = 1;
                 v23 = v19 - v14;
@@ -1040,21 +1040,21 @@ bool TShape::shape_draw_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0,
             clip_y0b = 3;
           }
         }
-        while ( !clip_y0b );
+        while( !clip_y0b );
       }
       clip_y0c = clip_y0b - 1;
-      if ( !clip_y0c )
+      if( !clip_y0c )
       {
-        while ( 1 )
+        while( 1 )
         {
           v24 = *v12++;
-          if ( (v24 & 1) == 1 )
+          if( (v24 & 1) == 1 )
             break;
           drawareac = v24 >> 1;
-          if ( v24 >> 1 )
+          if( v24 >> 1 )
           {
             v19 += drawareac;
-            if ( v19 <= clip_x1 )
+            if( v19 <= clip_x1 )
             {
               memset(v15, *v12, drawareac);
             }
@@ -1071,22 +1071,22 @@ LABEL_56:
           }
           clip_y0c = 3;
 LABEL_57:
-          if ( clip_y0c )
+          if( clip_y0c )
             goto LABEL_58;
         }
         drawareab = v24 >> 1;
-        if ( !(v24 >> 1) )
+        if( !(v24 >> 1) )
         {
           v25 = *v12;
           v19 += v25;
           v15 += v25;
           ++v12;
-          if ( v19 > clip_x1 )
+          if( v19 > clip_x1 )
             clip_y0c = 1;
           goto LABEL_57;
         }
         v19 += drawareab;
-        if ( v19 <= clip_x1 )
+        if( v19 <= clip_x1 )
         {
           memcpy(v15, v12, drawareab);
           v15 += drawareab;
@@ -1103,28 +1103,28 @@ LABEL_57:
       }
 LABEL_58:
       clip_y0d = clip_y0c - 1;
-      if ( !clip_y0d )
+      if( !clip_y0d )
         break;
 LABEL_66:
       v15 = &save_buffer[width];
       v27 = clip_y1a == 1;
       save_buffer += width;
       --clip_y1a;
-      if ( v27 )
+      if( v27 )
         return 1;
     }
-    while ( 1 )
+    while( 1 )
     {
       v26 = *v12++;
-      if ( (v26 & 1) == 1 )
+      if( (v26 & 1) == 1 )
       {
-        if ( !(v26 >> 1) )
+        if( !(v26 >> 1) )
           goto LABEL_64;
         v12 += v26 >> 1;
       }
       else
       {
-        if ( v26 & 0xFE )
+        if( v26 & 0xFE )
         {
 LABEL_64:
           ++v12;
@@ -1133,7 +1133,7 @@ LABEL_64:
         clip_y0d = 2;
       }
 LABEL_65:
-      if ( clip_y0d )
+      if( clip_y0d )
         goto LABEL_66;
     }
   }
@@ -1191,7 +1191,7 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
   v13 = v10 * v12;
   v14 = (unsigned __int8 *)&v11->shape_header[1];
   width = v10 * v12;
-  if ( v10 >= 1 )
+  if( v10 >= 1 )
   {
     v15 = clip_y0;
     v16 = clip_x0;
@@ -1205,7 +1205,7 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
   }
   save_buffer = v17;
   v18 = shape_y0;
-  if ( shape_y0 < v15 )
+  if( shape_y0 < v15 )
   {
     clip_y0a = v15 - shape_y0;
     v18 = v15;
@@ -1215,33 +1215,33 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
       do
       {
         v20 = *v14++;
-        if ( (v20 & 1) == 1 )
+        if( (v20 & 1) == 1 )
         {
-          if ( v20 >> 1 )
+          if( v20 >> 1 )
           {
             v14 += v20 >> 1;
             continue;
           }
         }
-        else if ( !(v20 & 0xFE) )
+        else if( !(v20 & 0xFE) )
         {
           v19 = 1;
           continue;
         }
         ++v14;
       }
-      while ( !v19 );
+      while( !v19 );
       --clip_y0a;
     }
-    while ( clip_y0a );
+    while( clip_y0a );
   }
-  if ( v18 <= clip_y1 )
+  if( v18 <= clip_y1 )
   {
     clip_y1a = clip_y1 - v18 + 1;
-    while ( 1 )
+    while( 1 )
     {
       v21 = shape_x0;
-      if ( shape_x0 >= v16 )
+      if( shape_x0 >= v16 )
       {
         clip_y0b = 1;
       }
@@ -1251,21 +1251,21 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
         do
         {
           v22 = *v14++;
-          if ( (v22 & 1) == 1 )
+          if( (v22 & 1) == 1 )
           {
             drawareaa = v22 >> 1;
-            if ( v22 >> 1 )
+            if( v22 >> 1 )
             {
               v21 += drawareaa;
-              if ( v21 < v16 )
+              if( v21 < v16 )
               {
                 v14 += drawareaa;
               }
-              else if ( v21 <= clip_x1 )
+              else if( v21 <= clip_x1 )
               {
                 clip_y0b = 1;
                 v28 = (unsigned int)&v17[v21 - v16];
-                for ( v14 += drawareaa - (v21 - v16); (unsigned int)v17 < v28; *(v17 - 1) = color_table[v29] )
+                for( v14 += drawareaa - (v21 - v16); (unsigned int)v17 < v28; *(v17 - 1) = color_table[v29] )
                 {
                   v29 = *v14++;
                   ++v17;
@@ -1279,14 +1279,14 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
                 clip_y0b = 2;
                 shape_y0a = v24;
                 temp_buffer = &v17[v24];
-                if ( v17 < &v17[v24] )
+                if( v17 < &v17[v24] )
                 {
                   do
                   {
                     v26 = *v25++;
                     *(++v17 - 1) = color_table[v26];
                   }
-                  while ( v17 < temp_buffer );
+                  while( v17 < temp_buffer );
                   v24 = shape_y0a;
                 }
                 v27 = drawareaa - v24;
@@ -1297,9 +1297,9 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
             else
             {
               v21 += *v14++;
-              if ( v21 >= v16 )
+              if( v21 >= v16 )
               {
-                if ( v21 <= clip_x1 )
+                if( v21 <= clip_x1 )
                 {
                   clip_y0b = 1;
                   v17 += v21 - v16;
@@ -1311,12 +1311,12 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
               }
             }
           }
-          else if ( v22 >> 1 )
+          else if( v22 >> 1 )
           {
             v21 += v22 >> 1;
-            if ( v21 >= v16 )
+            if( v21 >= v16 )
             {
-              if ( v21 <= clip_x1 )
+              if( v21 <= clip_x1 )
               {
                 clip_y0b = 1;
                 v30 = v21 - v16;
@@ -1337,21 +1337,21 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
             clip_y0b = 3;
           }
         }
-        while ( !clip_y0b );
+        while( !clip_y0b );
       }
       clip_y0c = clip_y0b - 1;
-      while ( !clip_y0c )
+      while( !clip_y0c )
       {
         v31 = *v14++;
-        if ( (v31 & 1) == 1 )
+        if( (v31 & 1) == 1 )
         {
           drawareab = v31 >> 1;
-          if ( v31 >> 1 )
+          if( v31 >> 1 )
           {
             v21 += drawareab;
-            if ( v21 <= clip_x1 )
+            if( v21 <= clip_x1 )
             {
-              for ( i = (unsigned int)&v17[drawareab]; (unsigned int)v17 < i; *(v17 - 1) = color_table[v37] )
+              for( i = (unsigned int)&v17[drawareab]; (unsigned int)v17 < i; *(v17 - 1) = color_table[v37] )
               {
                 v37 = *v14++;
                 ++v17;
@@ -1362,14 +1362,14 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
               clip_y0c = 1;
               v33 = clip_x1 - v21 + drawareab + 1;
               v34 = (unsigned int)&v17[v33];
-              if ( v17 < &v17[v33] )
+              if( v17 < &v17[v33] )
               {
                 do
                 {
                   v35 = *v14++;
                   *(++v17 - 1) = color_table[v35];
                 }
-                while ( (unsigned int)v17 < v34 );
+                while( (unsigned int)v17 < v34 );
                 v16 = clip_x0;
               }
               v14 += drawareab - v33;
@@ -1381,17 +1381,17 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
             v21 += v32;
             v17 += v32;
             ++v14;
-            if ( v21 > clip_x1 )
+            if( v21 > clip_x1 )
               clip_y0c = 1;
           }
         }
         else
         {
           drawareac = v31 >> 1;
-          if ( v31 >> 1 )
+          if( v31 >> 1 )
           {
             v21 += drawareac;
-            if ( v21 <= clip_x1 )
+            if( v21 <= clip_x1 )
             {
               memset(v17, (unsigned __int8)color_table[*v14], drawareac);
             }
@@ -1411,28 +1411,28 @@ char shape_color_trans_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, 
         }
       }
       clip_y0d = clip_y0c - 1;
-      if ( !clip_y0d )
+      if( !clip_y0d )
         break;
 LABEL_74:
       v17 = &save_buffer[width];
       v39 = clip_y1a == 1;
       save_buffer += width;
       --clip_y1a;
-      if ( v39 )
+      if( v39 )
         return 1;
     }
-    while ( 1 )
+    while( 1 )
     {
       v38 = *v14++;
-      if ( (v38 & 1) == 1 )
+      if( (v38 & 1) == 1 )
       {
-        if ( !(v38 >> 1) )
+        if( !(v38 >> 1) )
           goto LABEL_72;
         v14 += v38 >> 1;
       }
       else
       {
-        if ( v38 & 0xFE )
+        if( v38 & 0xFE )
         {
 LABEL_72:
           ++v14;
@@ -1441,7 +1441,7 @@ LABEL_72:
         clip_y0d = 2;
       }
 LABEL_73:
-      if ( clip_y0d )
+      if( clip_y0d )
         goto LABEL_74;
     }
   }
@@ -1510,7 +1510,7 @@ char shape_shadow_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, int c
   v14 = (unsigned __int8 *)&v10->shape_header[1];
   width = v11 * v12;
   drawareaa = (TDrawArea *)v14;
-  if ( v11 >= 1 )
+  if( v11 >= 1 )
   {
     v15 = clip_y0;
     v16 = clip_y0 * v13;
@@ -1523,73 +1523,73 @@ char shape_shadow_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, int c
   v17 = &v9->Bits[v16] + clip_x0;
   save_buffer = v17;
   v18 = shape_y0;
-  if ( shape_y0 < v15 )
+  if( shape_y0 < v15 )
   {
     v19 = v15 - shape_y0;
     v18 = v15;
     do
     {
       v20 = 0;
-      while ( 1 )
+      while( 1 )
       {
         v21 = *v14;
         drawareaa = (TDrawArea *)(v14 + 1);
-        if ( (*v14 & 1) == 1 )
+        if( (*v14 & 1) == 1 )
         {
-          if ( v21 >> 1 )
+          if( v21 >> 1 )
           {
             drawareaa = (TDrawArea *)((char *)drawareaa + (v21 >> 1));
             goto LABEL_14;
           }
         }
-        else if ( !(v21 & 0xFE) )
+        else if( !(v21 & 0xFE) )
         {
           v20 = 1;
           goto LABEL_14;
         }
         drawareaa = (TDrawArea *)(v14 + 2);
 LABEL_14:
-        if ( v20 )
+        if( v20 )
           break;
         v14 = (unsigned __int8 *)drawareaa;
       }
       v14 = (unsigned __int8 *)drawareaa;
       --v19;
     }
-    while ( v19 );
+    while( v19 );
   }
-  if ( v18 > clip_y1 )
+  if( v18 > clip_y1 )
     return 1;
   shape_y0a = clip_y1 - v18 + 1;
   do
   {
     v22 = shape_x0;
-    if ( shape_x0 < clip_x0 )
+    if( shape_x0 < clip_x0 )
     {
       v23 = 0;
-      while ( 1 )
+      while( 1 )
       {
         clip_y0a = *v14;
         v24 = (char *)&drawareaa->DrawSystem + 1;
         drawareaa = (TDrawArea *)((char *)drawareaa + 1);
-        if ( (*v14 & 1) == 1 )
+        if( (*v14 & 1) == 1 )
           break;
         clip_y0c = clip_y0a >> 1;
-        if ( clip_y0c )
+        if( clip_y0c )
         {
           v22 += clip_y0c;
-          if ( v22 >= clip_x0 )
+          if( v22 >= clip_x0 )
           {
-            if ( v22 <= clip_x1 )
+            if( v22 <= clip_x1 )
             {
               v23 = 1;
-              for ( i = (unsigned int)(&v17[v22] - clip_x0); (unsigned int)v17 < i; *(v17 - 1) = color_table[v33] )
+              for( i = (unsigned int)(&v17[v22] - clip_x0); (unsigned int)v17 < i; *(v17 - 1) = color_table[v33] )
                 v33 = (unsigned __int8)*v17++;
             }
             else
             {
               v23 = 2;
-              for ( j = (unsigned int)(&v17[clip_x1 + 1] - clip_x0); (unsigned int)v17 < j; *(v17 - 1) = color_table[v31] )
+              for( j = (unsigned int)(&v17[clip_x1 + 1] - clip_x0); (unsigned int)v17 < j; *(v17 - 1) = color_table[v31] )
                 v31 = (unsigned __int8)*v17++;
             }
           }
@@ -1599,17 +1599,17 @@ LABEL_14:
         v23 = 3;
 LABEL_45:
         v14 = (unsigned __int8 *)drawareaa;
-        if ( v23 )
+        if( v23 )
           goto LABEL_48;
       }
       clip_y0b = clip_y0a >> 1;
-      if ( !clip_y0b )
+      if( !clip_y0b )
       {
         v22 += *v24;
         drawareaa = (TDrawArea *)(v24 + 1);
-        if ( v22 >= clip_x0 )
+        if( v22 >= clip_x0 )
         {
-          if ( v22 <= clip_x1 )
+          if( v22 <= clip_x1 )
           {
             v23 = 1;
             v17 += v22 - clip_x0;
@@ -1622,26 +1622,26 @@ LABEL_45:
         goto LABEL_45;
       }
       v22 += clip_y0b;
-      if ( v22 >= clip_x0 )
+      if( v22 >= clip_x0 )
       {
-        if ( v22 <= clip_x1 )
+        if( v22 <= clip_x1 )
         {
           v23 = 1;
-          for ( k = (unsigned int)(&v17[v22] - clip_x0); (unsigned int)v17 < k; *(v17 - 1) = color_table[v29] )
+          for( k = (unsigned int)(&v17[v22] - clip_x0); (unsigned int)v17 < k; *(v17 - 1) = color_table[v29] )
             v29 = (unsigned __int8)*v17++;
         }
         else
         {
           v23 = 2;
           v25 = (unsigned int)(&v17[clip_x1 + 1] - clip_x0);
-          if ( (unsigned int)v17 < v25 )
+          if( (unsigned int)v17 < v25 )
           {
             do
             {
               v26 = (unsigned __int8)*v17++;
               *(v17 - 1) = color_table[v26];
             }
-            while ( (unsigned int)v17 < v25 );
+            while( (unsigned int)v17 < v25 );
             v27 = (int)drawareaa + clip_y0b;
             goto LABEL_44;
           }
@@ -1655,28 +1655,28 @@ LABEL_44:
     v23 = 1;
 LABEL_48:
     v34 = v23 - 1;
-    if ( !v34 )
+    if( !v34 )
     {
-      while ( 1 )
+      while( 1 )
       {
         clip_y0d = *v14;
         v35 = (char *)&drawareaa->DrawSystem + 1;
         drawareaa = (TDrawArea *)((char *)drawareaa + 1);
-        if ( (*v14 & 1) == 1 )
+        if( (*v14 & 1) == 1 )
           break;
         clip_y0f = clip_y0d >> 1;
-        if ( clip_y0f )
+        if( clip_y0f )
         {
           v22 += clip_y0f;
-          if ( v22 <= clip_x1 )
+          if( v22 <= clip_x1 )
           {
-            for ( l = (unsigned int)&v17[clip_y0f]; (unsigned int)v17 < l; *(v17 - 1) = color_table[v46] )
+            for( l = (unsigned int)&v17[clip_y0f]; (unsigned int)v17 < l; *(v17 - 1) = color_table[v46] )
               v46 = (unsigned __int8)*v17++;
           }
           else
           {
             v34 = 1;
-            for ( m = (unsigned int)(&v17[clip_y0f - v22 + 1] + clip_x1);
+            for( m = (unsigned int)(&v17[clip_y0f - v22 + 1] + clip_x1);
                   (unsigned int)v17 < m;
                   *(v17 - 1) = color_table[v44] )
             {
@@ -1689,47 +1689,47 @@ LABEL_48:
         v34 = 3;
 LABEL_70:
         v14 = (unsigned __int8 *)drawareaa;
-        if ( v34 )
+        if( v34 )
           goto LABEL_71;
       }
       clip_y0e = clip_y0d >> 1;
-      if ( !clip_y0e )
+      if( !clip_y0e )
       {
         v36 = v35;
         v37 = *v35;
         v22 += v37;
         v17 += v37;
         drawareaa = (TDrawArea *)(v36 + 1);
-        if ( v22 > clip_x1 )
+        if( v22 > clip_x1 )
           v34 = 1;
         goto LABEL_70;
       }
       v22 += clip_y0e;
-      if ( v22 <= clip_x1 )
+      if( v22 <= clip_x1 )
       {
         v41 = (unsigned int)&v17[clip_y0e];
-        if ( v17 < &v17[clip_y0e] )
+        if( v17 < &v17[clip_y0e] )
         {
           do
           {
             v42 = (unsigned __int8)*v17++;
             *(v17 - 1) = color_table[v42];
           }
-          while ( (unsigned int)v17 < v41 );
+          while( (unsigned int)v17 < v41 );
         }
       }
       else
       {
         v34 = 1;
         v38 = (unsigned int)(&v17[clip_y0e - v22 + 1] + clip_x1);
-        if ( (unsigned int)v17 < v38 )
+        if( (unsigned int)v17 < v38 )
         {
           do
           {
             v39 = (unsigned __int8)*v17++;
             *(v17 - 1) = color_table[v39];
           }
-          while ( (unsigned int)v17 < v38 );
+          while( (unsigned int)v17 < v38 );
           v40 = (int)drawareaa + clip_y0e;
           goto LABEL_69;
         }
@@ -1741,27 +1741,27 @@ LABEL_69:
     }
 LABEL_71:
     v47 = v34 - 1;
-    if ( v47 )
+    if( v47 )
       goto LABEL_80;
     do
     {
       v48 = *v14++;
-      if ( (v48 & 1) == 1 )
+      if( (v48 & 1) == 1 )
       {
-        if ( v48 >> 1 )
+        if( v48 >> 1 )
         {
           v14 += v48 >> 1;
           continue;
         }
       }
-      else if ( !(v48 & 0xFE) )
+      else if( !(v48 & 0xFE) )
       {
         v47 = 2;
         continue;
       }
       ++v14;
     }
-    while ( !v47 );
+    while( !v47 );
     drawareaa = (TDrawArea *)v14;
 LABEL_80:
     v17 = &save_buffer[width];
@@ -1769,7 +1769,7 @@ LABEL_80:
     save_buffer += width;
     --shape_y0a;
   }
-  while ( !v49 );
+  while( !v49 );
   return 1;
 }
 
@@ -1809,17 +1809,17 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
 
   v7 = this;
   /* Shape draw */
-  if ( shape_num < 0 || TShape::Check_shape(this, shape_num) )
+  if( shape_num < 0 || TShape::Check_shape(this, shape_num) )
     return 0;
   v8 = v7->FShape;
-  if ( !v8 )
+  if( !v8 )
   {
     v20 = drawarea;
     rect = drawarea->ClipRect.left;
     rect_4 = drawarea->ClipRect.top;
     rect_8 = drawarea->ClipRect.right;
     rect_12 = drawarea->ClipRect.bottom;
-    if ( v7->shape )
+    if( v7->shape )
     {
       v21 = (int)&v7->shape[v7->offsets[shape_num].shape];
       v7->shape_header = (Shape_Header *)v21;
@@ -1832,48 +1832,48 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
       drawareaa = (TDrawArea *)v24;
       shape_y1 = v25;
       clip_x0 = v25;
-      if ( v22 < rect )
+      if( v22 < rect )
         clip_x1 = rect;
-      if ( v23 < rect_4 )
+      if( v23 < rect_4 )
         clip_y0 = rect_4;
-      if ( v24 > rect_8 )
+      if( v24 > rect_8 )
         drawareaa = (TDrawArea *)rect_8;
-      if ( v25 > rect_12 )
+      if( v25 > rect_12 )
         clip_x0 = rect_12;
-      if ( clip_x1 < 0 )
+      if( clip_x1 < 0 )
         clip_x1 = 0;
-      if ( clip_y0 < 0 )
+      if( clip_y0 < 0 )
         clip_y0 = 0;
       v26 = v20->Width;
-      if ( (signed int)drawareaa >= v26 )
+      if( (signed int)drawareaa >= v26 )
         drawareaa = (TDrawArea *)(v26 - 1);
       v27 = v20->Height;
-      if ( clip_x0 >= v27 )
+      if( clip_x0 >= v27 )
         clip_x0 = v27 - 1;
-      if ( (signed int)drawareaa >= clip_x1 && clip_x0 >= clip_y0 )
+      if( (signed int)drawareaa >= clip_x1 && clip_x0 >= clip_y0 )
       {
-        if ( clip_x1 != v22 || clip_y0 != v23 )
+        if( clip_x1 != v22 || clip_y0 != v23 )
         {
           v28 = (int)drawareaa;
         }
         else
         {
           v28 = (int)drawareaa;
-          if ( drawareaa == (TDrawArea *)v24 && clip_x0 == shape_y1 )
+          if( drawareaa == (TDrawArea *)v24 && clip_x0 == shape_y1 )
           {
-            if ( !flags )
+            if( !flags )
               return TShape::shape_mirror_unclipped(v7, v20, v24, v23);
-            if ( flags == 1 )
+            if( flags == 1 )
             {
-              if ( color_table )
+              if( color_table )
                 result = TShape::shape_mirror_color_trans_unclipped(v7, v20, v24, v23, shape_num, color_table);
               else
                 result = TShape::shape_mirror_unclipped(v7, v20, v24, v23);
               return result;
             }
-            if ( flags == 2 )
+            if( flags == 2 )
             {
-              if ( color_table )
+              if( color_table )
                 result = TShape::shape_mirror_shadow_unclipped(v7, v20, v24, v23, color_table);
               else
                 result = TShape::shape_mirror_unclipped(v7, v20, v24, v23);
@@ -1882,11 +1882,11 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
             return 0;
           }
         }
-        if ( flags )
+        if( flags )
         {
-          if ( flags == 1 )
+          if( flags == 1 )
           {
-            if ( color_table )
+            if( color_table )
               return TShape::shape_mirror_color_trans_clipped(
                        v7,
                        v20,
@@ -1901,9 +1901,9 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
           }
           else
           {
-            if ( flags != 2 )
+            if( flags != 2 )
               return 0;
-            if ( color_table )
+            if( color_table )
               return TShape::shape_mirror_shadow_clipped(v7, v20, v24, v23, clip_x1, clip_y0, v28, clip_x0, color_table);
           }
         }
@@ -1912,7 +1912,7 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
     }
     return 0;
   }
-  if ( SDI_Capture_Info )
+  if( SDI_Capture_Info )
   {
     v9 = (Shape_Info *)&v8[shape_num + 1];
     v10 = SDI_Object_ID;
@@ -1937,7 +1937,7 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
     v14 = drawarea->CurSpanList;
     v15 = drawarea->SpanList->Num_Lines;
     v16 = v14->Num_Lines;
-    if ( v15 >= v16 )
+    if( v15 >= v16 )
       v17 = v16 - 1;
     else
       v17 = v15 - 1;
@@ -1949,7 +1949,7 @@ char shape_mirror(TDrawArea *drawarea, int x, int y, int shape_num, char flags, 
       0,
       v14->Max_Span_Px,
       v17);
-    if ( color_table )
+    if( color_table )
       ASMSet_Xlate_Table((int)color_table);
     v18 = v7->FShape;
     v19 = (int)&v18[shape_num + 1];
@@ -1996,14 +1996,14 @@ char shape_mirror_unclipped(TDrawArea *drawarea, int shape_x1, int shape_y0)
   v8 = v5 * v6;
   v9 = (unsigned __int8 *)&v7[1];
   v10 = v7->ymax - v7->ymin + 1;
-  if ( v5 >= 1 )
+  if( v5 >= 1 )
     v11 = shape_y0 * v8;
   else
     v11 = v8 * (shape_y0 - drawarea->Height + 1);
   v12 = &drawarea->Bits[v11];
   v13 = &v12[shape_x1 + 1];
   shape_x1a = (int)&v12[shape_x1 + 1];
-  if ( v10 > 0 )
+  if( v10 > 0 )
   {
     drawareaa = (TDrawArea *)v10;
     do
@@ -2012,10 +2012,10 @@ char shape_mirror_unclipped(TDrawArea *drawarea, int shape_x1, int shape_y0)
       do
       {
         v15 = *v9++;
-        if ( (v15 & 1) != 1 )
+        if( (v15 & 1) != 1 )
         {
           save_buffer = v15 >> 1;
-          if ( !(v15 >> 1) )
+          if( !(v15 >> 1) )
           {
             v14 = 1;
             continue;
@@ -2025,14 +2025,14 @@ char shape_mirror_unclipped(TDrawArea *drawarea, int shape_x1, int shape_y0)
           goto LABEL_17;
         }
         LOBYTE(v16) = v15 >> 1;
-        if ( !(_BYTE)v16 )
+        if( !(_BYTE)v16 )
         {
           v13 -= *v9;
 LABEL_17:
           ++v9;
           continue;
         }
-        if ( (_BYTE)v16 )
+        if( (_BYTE)v16 )
         {
           v16 = (unsigned __int8)v16;
           do
@@ -2043,16 +2043,16 @@ LABEL_17:
             --v16;
             *v13 = v17;
           }
-          while ( v16 );
+          while( v16 );
         }
       }
-      while ( !v14 );
+      while( !v14 );
       v13 = (char *)(v8 + shape_x1a);
       v18 = drawareaa == (TDrawArea *)1;
       shape_x1a += v8;
       drawareaa = (TDrawArea *)((char *)drawareaa - 1);
     }
-    while ( !v18 );
+    while( !v18 );
   }
   return 1;
 }
@@ -2084,12 +2084,12 @@ char shape_mirror_color_trans_unclipped(TDrawArea *drawarea, int shape_x1, int s
   v10 = v7 * v8;
   width = v7 * v8;
   v11 = (unsigned __int8 *)&v9[1];
-  if ( v7 >= 1 )
+  if( v7 >= 1 )
     v12 = &drawarea->Bits[shape_x1 + 1] + shape_y0 * v10;
   else
     v12 = &drawarea->Bits[shape_x1 + 1] + v10 * (shape_y0 - drawarea->Height + 1);
   shape_x1a = (int)v12;
-  if ( v9->ymax - v9->ymin + 1 > 0 )
+  if( v9->ymax - v9->ymin + 1 > 0 )
   {
     drawareaa = (TDrawArea *)(v9->ymax - v9->ymin + 1);
     do
@@ -2098,10 +2098,10 @@ char shape_mirror_color_trans_unclipped(TDrawArea *drawarea, int shape_x1, int s
       do
       {
         v14 = *v11++;
-        if ( (v14 & 1) != 1 )
+        if( (v14 & 1) != 1 )
         {
           save_buffer = v14 >> 1;
-          if ( !(v14 >> 1) )
+          if( !(v14 >> 1) )
           {
             v13 = 1;
             continue;
@@ -2111,14 +2111,14 @@ char shape_mirror_color_trans_unclipped(TDrawArea *drawarea, int shape_x1, int s
           goto LABEL_17;
         }
         LOBYTE(v15) = v14 >> 1;
-        if ( !(_BYTE)v15 )
+        if( !(_BYTE)v15 )
         {
           v12 -= *v11;
 LABEL_17:
           ++v11;
           continue;
         }
-        if ( (_BYTE)v15 )
+        if( (_BYTE)v15 )
         {
           v15 = (unsigned __int8)v15;
           do
@@ -2128,16 +2128,16 @@ LABEL_17:
             --v15;
             *v12 = color_table[v16];
           }
-          while ( v15 );
+          while( v15 );
         }
       }
-      while ( !v13 );
+      while( !v13 );
       v12 = (char *)(width + shape_x1a);
       v17 = drawareaa == (TDrawArea *)1;
       shape_x1a += width;
       drawareaa = (TDrawArea *)((char *)drawareaa - 1);
     }
-    while ( !v17 );
+    while( !v17 );
   }
   return 1;
 }
@@ -2167,12 +2167,12 @@ char shape_mirror_shadow_unclipped(TDrawArea *drawarea, int shape_x1, int shape_
   v8 = v5->shape_header;
   v9 = (unsigned __int8 *)&v8[1];
   v10 = v8->ymax - v8->ymin + 1;
-  if ( v6 >= 1 )
+  if( v6 >= 1 )
     v11 = &drawarea->Bits[shape_x1 + 1] + shape_y0 * v7;
   else
     v11 = &drawarea->Bits[shape_x1 + 1] + v7 * (shape_y0 - drawarea->Height + 1);
   shape_x1a = (int)v11;
-  if ( v10 > 0 )
+  if( v10 > 0 )
   {
     drawareaa = (TDrawArea *)v10;
     do
@@ -2181,15 +2181,15 @@ char shape_mirror_shadow_unclipped(TDrawArea *drawarea, int shape_x1, int shape_
       do
       {
         v13 = *v9++;
-        if ( (v13 & 1) != 1 )
+        if( (v13 & 1) != 1 )
         {
           LOBYTE(v15) = v13 >> 1;
-          if ( !(_BYTE)v15 )
+          if( !(_BYTE)v15 )
           {
             v12 = 1;
             continue;
           }
-          if ( (_BYTE)v15 )
+          if( (_BYTE)v15 )
           {
             v15 = (unsigned __int8)v15;
             do
@@ -2198,20 +2198,20 @@ char shape_mirror_shadow_unclipped(TDrawArea *drawarea, int shape_x1, int shape_
               --v15;
               *v11 = color_table[(unsigned __int8)*v11];
             }
-            while ( v15 );
+            while( v15 );
           }
           goto LABEL_19;
         }
         LOBYTE(v14) = v13 >> 1;
         save_buffer = v14;
-        if ( !(_BYTE)v14 )
+        if( !(_BYTE)v14 )
         {
           v11 -= *v9;
 LABEL_19:
           ++v9;
           continue;
         }
-        if ( (_BYTE)v14 )
+        if( (_BYTE)v14 )
         {
           v14 = (unsigned __int8)v14;
           do
@@ -2220,17 +2220,17 @@ LABEL_19:
             --v14;
             *v11 = color_table[(unsigned __int8)*v11];
           }
-          while ( v14 );
+          while( v14 );
         }
         v9 += save_buffer;
       }
-      while ( !v12 );
+      while( !v12 );
       v11 = (char *)(v7 + shape_x1a);
       v16 = drawareaa == (TDrawArea *)1;
       shape_x1a += v7;
       drawareaa = (TDrawArea *)((char *)drawareaa - 1);
     }
-    while ( !v16 );
+    while( !v16 );
   }
   return 1;
 }
@@ -2281,7 +2281,7 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
   v11 = v9 * v10;
   v12 = (unsigned __int8 *)&v8->shape_header[1];
   width = v9 * v10;
-  if ( v9 >= 1 )
+  if( v9 >= 1 )
   {
     v13 = clip_x1;
     v14 = &drawarea->Bits[clip_x1 + 1] + clip_y0 * v11;
@@ -2293,7 +2293,7 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
   }
   save_buffer = v14;
   v15 = shape_y0;
-  if ( shape_y0 < clip_y0 )
+  if( shape_y0 < clip_y0 )
   {
     drawareaa = (TDrawArea *)(clip_y0 - shape_y0);
     v15 = clip_y0;
@@ -2303,33 +2303,33 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
       do
       {
         v17 = *v12++;
-        if ( (v17 & 1) == 1 )
+        if( (v17 & 1) == 1 )
         {
-          if ( v17 >> 1 )
+          if( v17 >> 1 )
           {
             v12 += v17 >> 1;
             continue;
           }
         }
-        else if ( !(v17 & 0xFE) )
+        else if( !(v17 & 0xFE) )
         {
           v16 = 1;
           continue;
         }
         ++v12;
       }
-      while ( !v16 );
+      while( !v16 );
       drawareaa = (TDrawArea *)((char *)drawareaa - 1);
     }
-    while ( drawareaa );
+    while( drawareaa );
   }
-  if ( v15 <= clip_y1 )
+  if( v15 <= clip_y1 )
   {
     shape_y0a = clip_y1 - v15 + 1;
-    while ( 1 )
+    while( 1 )
     {
       v18 = shape_x1;
-      if ( shape_x1 <= v13 )
+      if( shape_x1 <= v13 )
       {
         v19 = 1;
       }
@@ -2339,21 +2339,21 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
         do
         {
           v20 = *v12++;
-          if ( (v20 & 1) == 1 )
+          if( (v20 & 1) == 1 )
           {
             clip_y0a = v20 >> 1;
-            if ( v20 >> 1 )
+            if( v20 >> 1 )
             {
               v18 -= clip_y0a;
-              if ( v18 > v13 )
+              if( v18 > v13 )
               {
                 v12 += clip_y0a;
               }
-              else if ( v18 >= clip_x0 )
+              else if( v18 >= clip_x0 )
               {
                 v19 = 1;
                 v12 += clip_y0a - (v13 - v18);
-                if ( (_BYTE)v13 != (_BYTE)v18 )
+                if( (_BYTE)v13 != (_BYTE)v18 )
                 {
                   v24 = (unsigned __int8)(v13 - v18);
                   do
@@ -2364,14 +2364,14 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
                     --v24;
                     *v14 = v25;
                   }
-                  while ( v24 );
+                  while( v24 );
                 }
               }
               else
               {
                 v19 = 2;
                 v21 = (char *)(&v12[v18 - clip_x1 - 1] + clip_y0a);
-                if ( (_BYTE)v13 - (_BYTE)clip_x0 != -1 )
+                if( (_BYTE)v13 - (_BYTE)clip_x0 != -1 )
                 {
                   v22 = (v13 - clip_x0 + 1) & 0xFF;
                   do
@@ -2382,7 +2382,7 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
                     --v22;
                     *v14 = v23;
                   }
-                  while ( v22 );
+                  while( v22 );
                 }
                 v12 = (unsigned __int8 *)&v21[clip_x0 - v18];
                 v13 = clip_x1;
@@ -2391,9 +2391,9 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
             else
             {
               v18 -= *v12++;
-              if ( v18 <= v13 )
+              if( v18 <= v13 )
               {
-                if ( v18 >= clip_x0 )
+                if( v18 >= clip_x0 )
                 {
                   v19 = 1;
                   v14 += v18 - v13;
@@ -2405,12 +2405,12 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
               }
             }
           }
-          else if ( v20 >> 1 )
+          else if( v20 >> 1 )
           {
             v18 -= v20 >> 1;
-            if ( v18 <= v13 )
+            if( v18 <= v13 )
             {
-              if ( v18 >= clip_x0 )
+              if( v18 >= clip_x0 )
               {
                 v19 = 1;
                 v14 -= v13 - v18;
@@ -2431,21 +2431,21 @@ char shape_mirror_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0, int c
             v19 = 3;
           }
         }
-        while ( !v19 );
+        while( !v19 );
       }
       v26 = v19 - 1;
-      if ( !v26 )
+      if( !v26 )
       {
-        while ( 1 )
+        while( 1 )
         {
           v27 = *v12++;
-          if ( (v27 & 1) == 1 )
+          if( (v27 & 1) == 1 )
             break;
           clip_y0c = v27 >> 1;
-          if ( v27 >> 1 )
+          if( v27 >> 1 )
           {
             v18 -= clip_y0c;
-            if ( v18 >= clip_x0 )
+            if( v18 >= clip_x0 )
             {
               v14 -= clip_y0c;
               memset(v14, *v12, clip_y0c);
@@ -2463,25 +2463,25 @@ LABEL_66:
           }
           v26 = 3;
 LABEL_67:
-          if ( v26 )
+          if( v26 )
             goto LABEL_68;
         }
         clip_y0b = v27 >> 1;
-        if ( !(v27 >> 1) )
+        if( !(v27 >> 1) )
         {
           v28 = *v12;
           v18 -= v28;
           v14 -= v28;
           ++v12;
-          if ( v18 < clip_x0 )
+          if( v18 < clip_x0 )
             v26 = 1;
           goto LABEL_67;
         }
         v29 = clip_y0b;
         v18 -= clip_y0b;
-        if ( v18 >= clip_x0 )
+        if( v18 >= clip_x0 )
         {
-          if ( clip_y0b )
+          if( clip_y0b )
           {
             do
             {
@@ -2491,13 +2491,13 @@ LABEL_67:
               --v29;
               *v14 = v32;
             }
-            while ( v29 );
+            while( v29 );
           }
           goto LABEL_67;
         }
         v26 = 1;
         v30 = clip_y0b + v18 - clip_x0;
-        if ( (_BYTE)v30 )
+        if( (_BYTE)v30 )
         {
           drawareab = (TDrawArea *)(unsigned __int8)v30;
           do
@@ -2508,35 +2508,35 @@ LABEL_67:
             *v14 = v31;
             drawareab = (TDrawArea *)((char *)drawareab - 1);
           }
-          while ( drawareab );
+          while( drawareab );
         }
         v12 -= v18 - clip_x0;
         goto LABEL_66;
       }
 LABEL_68:
       v33 = v26 - 1;
-      if ( !v33 )
+      if( !v33 )
         break;
 LABEL_76:
       v14 = &save_buffer[width];
       v35 = shape_y0a == 1;
       save_buffer += width;
       --shape_y0a;
-      if ( v35 )
+      if( v35 )
         return 1;
     }
-    while ( 1 )
+    while( 1 )
     {
       v34 = *v12++;
-      if ( (v34 & 1) == 1 )
+      if( (v34 & 1) == 1 )
       {
-        if ( !(v34 >> 1) )
+        if( !(v34 >> 1) )
           goto LABEL_74;
         v12 += v34 >> 1;
       }
       else
       {
-        if ( v34 & 0xFE )
+        if( v34 & 0xFE )
         {
 LABEL_74:
           ++v12;
@@ -2545,7 +2545,7 @@ LABEL_74:
         v33 = 2;
       }
 LABEL_75:
-      if ( v33 )
+      if( v33 )
         goto LABEL_76;
     }
   }
@@ -2598,7 +2598,7 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
   v13 = v11 * v12;
   v14 = (unsigned __int8 *)&v10->shape_header[1];
   width = v11 * v12;
-  if ( v11 >= 1 )
+  if( v11 >= 1 )
   {
     v15 = clip_x1;
     v16 = &drawarea->Bits[clip_x1 + 1] + clip_y0 * v13;
@@ -2610,7 +2610,7 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
   }
   save_buffer = v16;
   v17 = shape_y0;
-  if ( shape_y0 < clip_y0 )
+  if( shape_y0 < clip_y0 )
   {
     clip_y0a = clip_y0 - shape_y0;
     v17 = shape_y0 + clip_y0a;
@@ -2620,33 +2620,33 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
       do
       {
         v19 = *v14++;
-        if ( (v19 & 1) == 1 )
+        if( (v19 & 1) == 1 )
         {
-          if ( v19 >> 1 )
+          if( v19 >> 1 )
           {
             v14 += v19 >> 1;
             continue;
           }
         }
-        else if ( !(v19 & 0xFE) )
+        else if( !(v19 & 0xFE) )
         {
           v18 = 1;
           continue;
         }
         ++v14;
       }
-      while ( !v18 );
+      while( !v18 );
       --clip_y0a;
     }
-    while ( clip_y0a );
+    while( clip_y0a );
   }
-  if ( v17 <= clip_y1 )
+  if( v17 <= clip_y1 )
   {
     clip_y1a = clip_y1 - v17 + 1;
-    while ( 1 )
+    while( 1 )
     {
       v20 = shape_x1;
-      if ( shape_x1 <= v15 )
+      if( shape_x1 <= v15 )
       {
         v21 = 1;
       }
@@ -2656,21 +2656,21 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
         do
         {
           v22 = *v14++;
-          if ( (v22 & 1) == 1 )
+          if( (v22 & 1) == 1 )
           {
             drawareaa = v22 >> 1;
-            if ( v22 >> 1 )
+            if( v22 >> 1 )
             {
               v20 -= drawareaa;
-              if ( v20 > v15 )
+              if( v20 > v15 )
               {
                 v14 += drawareaa;
               }
-              else if ( v20 >= clip_x0 )
+              else if( v20 >= clip_x0 )
               {
                 v21 = 1;
                 v14 += drawareaa - (v15 - v20);
-                if ( (_BYTE)v15 != (_BYTE)v20 )
+                if( (_BYTE)v15 != (_BYTE)v20 )
                 {
                   v26 = (unsigned __int8)(v15 - v20);
                   do
@@ -2681,7 +2681,7 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
                     --v26;
                     *v16 = color_table[v27];
                   }
-                  while ( v26 );
+                  while( v26 );
                   v15 = clip_x1;
                 }
               }
@@ -2689,7 +2689,7 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
               {
                 v21 = 2;
                 v23 = &v14[v20 - clip_x1 - 1] + drawareaa;
-                if ( (_BYTE)v15 - (_BYTE)clip_x0 != -1 )
+                if( (_BYTE)v15 - (_BYTE)clip_x0 != -1 )
                 {
                   v24 = (v15 - clip_x0 + 1) & 0xFF;
                   do
@@ -2700,7 +2700,7 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
                     --v24;
                     *v16 = color_table[v25];
                   }
-                  while ( v24 );
+                  while( v24 );
                 }
                 v14 = &v23[clip_x0 - v20];
                 v15 = clip_x1;
@@ -2709,9 +2709,9 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
             else
             {
               v20 -= *v14++;
-              if ( v20 <= v15 )
+              if( v20 <= v15 )
               {
-                if ( v20 >= clip_x0 )
+                if( v20 >= clip_x0 )
                 {
                   v21 = 1;
                   v16 += v20 - v15;
@@ -2723,12 +2723,12 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
               }
             }
           }
-          else if ( v22 >> 1 )
+          else if( v22 >> 1 )
           {
             v20 -= v22 >> 1;
-            if ( v20 <= v15 )
+            if( v20 <= v15 )
             {
-              if ( v20 >= clip_x0 )
+              if( v20 >= clip_x0 )
               {
                 v21 = 1;
                 v28 = v15 - v20;
@@ -2749,21 +2749,21 @@ char shape_mirror_color_trans_clipped(TDrawArea *drawarea, int shape_x1, int sha
             v21 = 3;
           }
         }
-        while ( !v21 );
+        while( !v21 );
       }
       v29 = v21 - 1;
-      if ( !v29 )
+      if( !v29 )
       {
-        while ( 1 )
+        while( 1 )
         {
           v30 = *v14++;
-          if ( (v30 & 1) == 1 )
+          if( (v30 & 1) == 1 )
             break;
           drawareac = v30 >> 1;
-          if ( v30 >> 1 )
+          if( v30 >> 1 )
           {
             v20 -= drawareac;
-            if ( v20 >= clip_x0 )
+            if( v20 >= clip_x0 )
             {
               v16 -= drawareac;
               memset(v16, (unsigned __int8)color_table[*v14], drawareac);
@@ -2781,24 +2781,24 @@ LABEL_68:
           }
           v29 = 3;
 LABEL_69:
-          if ( v29 )
+          if( v29 )
             goto LABEL_70;
         }
         drawareab = v30 >> 1;
-        if ( !(v30 >> 1) )
+        if( !(v30 >> 1) )
         {
           v31 = *v14;
           v20 -= v31;
           v16 -= v31;
           ++v14;
-          if ( v20 < clip_x0 )
+          if( v20 < clip_x0 )
             v29 = 1;
           goto LABEL_69;
         }
         v20 -= drawareab;
-        if ( v20 >= clip_x0 )
+        if( v20 >= clip_x0 )
         {
-          if ( drawareab )
+          if( drawareab )
           {
             clip_y0b = drawareab;
             do
@@ -2809,13 +2809,13 @@ LABEL_69:
               *v16 = color_table[v34];
               --clip_y0b;
             }
-            while ( clip_y0b );
+            while( clip_y0b );
           }
           goto LABEL_69;
         }
         v29 = 1;
         v32 = drawareab + v20 - clip_x0;
-        if ( (_BYTE)v32 )
+        if( (_BYTE)v32 )
         {
           shape_y0a = (unsigned __int8)v32;
           do
@@ -2826,7 +2826,7 @@ LABEL_69:
             *v16 = color_table[v33];
             --shape_y0a;
           }
-          while ( shape_y0a );
+          while( shape_y0a );
           v29 = 1;
         }
         v14 -= v20 - clip_x0;
@@ -2834,28 +2834,28 @@ LABEL_69:
       }
 LABEL_70:
       v35 = v29 - 1;
-      if ( !v35 )
+      if( !v35 )
         break;
 LABEL_78:
       v16 = &save_buffer[width];
       v37 = clip_y1a == 1;
       save_buffer += width;
       --clip_y1a;
-      if ( v37 )
+      if( v37 )
         return 1;
     }
-    while ( 1 )
+    while( 1 )
     {
       v36 = *v14++;
-      if ( (v36 & 1) == 1 )
+      if( (v36 & 1) == 1 )
       {
-        if ( !(v36 >> 1) )
+        if( !(v36 >> 1) )
           goto LABEL_76;
         v14 += v36 >> 1;
       }
       else
       {
-        if ( v36 & 0xFE )
+        if( v36 & 0xFE )
         {
 LABEL_76:
           ++v14;
@@ -2864,7 +2864,7 @@ LABEL_76:
         v35 = 2;
       }
 LABEL_77:
-      if ( v35 )
+      if( v35 )
         goto LABEL_78;
     }
   }
@@ -2920,70 +2920,70 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
   v13 = (unsigned __int8 *)&v10->shape_header[1];
   width = v12;
   drawareaa = (TDrawArea *)&v10->shape_header[1];
-  if ( v11 >= 1 )
+  if( v11 >= 1 )
     v14 = &v9->Bits[clip_x1 + 1] + clip_y0 * v12;
   else
     v14 = &v9->Bits[clip_x1 + 1] + v12 * (clip_y0 - v9->Height + 1);
   v15 = shape_y0;
   save_buffer = v14;
-  if ( shape_y0 < clip_y0 )
+  if( shape_y0 < clip_y0 )
   {
     v16 = clip_y0 - shape_y0;
     v15 = clip_y0;
-    while ( 1 )
+    while( 1 )
     {
       v17 = 0;
       do
       {
         v18 = *v13++;
-        if ( (v18 & 1) == 1 )
+        if( (v18 & 1) == 1 )
         {
-          if ( v18 >> 1 )
+          if( v18 >> 1 )
           {
             v13 += v18 >> 1;
             continue;
           }
         }
-        else if ( !(v18 & 0xFE) )
+        else if( !(v18 & 0xFE) )
         {
           v17 = 1;
           continue;
         }
         ++v13;
       }
-      while ( !v17 );
-      if ( !--v16 )
+      while( !v17 );
+      if( !--v16 )
       {
         drawareaa = (TDrawArea *)v13;
         break;
       }
     }
   }
-  if ( v15 <= clip_y1 )
+  if( v15 <= clip_y1 )
   {
     v19 = (unsigned __int8 *)drawareaa;
     v20 = clip_y1 - v15;
     v21 = shape_x1;
     shape_y0a = v20 + 1;
-    while ( 1 )
+    while( 1 )
     {
-      if ( v21 > clip_x1 )
+      if( v21 > clip_x1 )
       {
         v22 = 0;
-        while ( 1 )
+        while( 1 )
         {
           v23 = *v19++;
-          if ( (v23 & 1) != 1 )
+          if( (v23 & 1) != 1 )
           {
-            if ( v23 >> 1 )
+            if( v23 >> 1 )
             {
               v21 -= v23 >> 1;
-              if ( v21 <= clip_x1 )
+              if( v21 <= clip_x1 )
               {
-                if ( v21 >= clip_x0 )
+                if( v21 >= clip_x0 )
                 {
                   v22 = 1;
-                  if ( (_BYTE)clip_x1 != (_BYTE)v21 )
+                  if( (_BYTE)clip_x1 != (_BYTE)v21 )
                   {
                     v27 = (unsigned __int8)(clip_x1 - v21);
                     do
@@ -2992,13 +2992,13 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
                       --v27;
                       *v14 = color_table[(unsigned __int8)*v14];
                     }
-                    while ( v27 );
+                    while( v27 );
                   }
                 }
                 else
                 {
                   v22 = 2;
-                  if ( (_BYTE)clip_x1 - (_BYTE)clip_x0 != -1 )
+                  if( (_BYTE)clip_x1 - (_BYTE)clip_x0 != -1 )
                   {
                     v26 = (clip_x1 - clip_x0 + 1) & 0xFF;
                     do
@@ -3007,7 +3007,7 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
                       --v26;
                       *v14 = color_table[(unsigned __int8)*v14];
                     }
-                    while ( v26 );
+                    while( v26 );
                   }
                 }
               }
@@ -3020,12 +3020,12 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
             goto LABEL_49;
           }
           clip_y0a = v23 >> 1;
-          if ( !(v23 >> 1) )
+          if( !(v23 >> 1) )
           {
             v21 -= *v19++;
-            if ( v21 <= clip_x1 )
+            if( v21 <= clip_x1 )
             {
-              if ( v21 >= clip_x0 )
+              if( v21 >= clip_x0 )
               {
                 v22 = 1;
                 v14 += v21 - clip_x1;
@@ -3038,12 +3038,12 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
             goto LABEL_49;
           }
           v21 -= clip_y0a;
-          if ( v21 <= clip_x1 )
+          if( v21 <= clip_x1 )
           {
-            if ( v21 >= clip_x0 )
+            if( v21 >= clip_x0 )
             {
               v22 = 1;
-              if ( (_BYTE)clip_x1 != (_BYTE)v21 )
+              if( (_BYTE)clip_x1 != (_BYTE)v21 )
               {
                 v25 = (unsigned __int8)(clip_x1 - v21);
                 do
@@ -3052,13 +3052,13 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
                   --v25;
                   *v14 = color_table[(unsigned __int8)*v14];
                 }
-                while ( v25 );
+                while( v25 );
               }
             }
             else
             {
               v22 = 2;
-              if ( (_BYTE)clip_x1 - (_BYTE)clip_x0 != -1 )
+              if( (_BYTE)clip_x1 - (_BYTE)clip_x0 != -1 )
               {
                 v24 = (clip_x1 - clip_x0 + 1) & 0xFF;
                 do
@@ -3067,7 +3067,7 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
                   --v24;
                   *v14 = color_table[(unsigned __int8)*v14];
                 }
-                while ( v24 );
+                while( v24 );
                 v19 += clip_y0a;
                 goto LABEL_49;
               }
@@ -3075,29 +3075,29 @@ char shape_mirror_shadow_clipped(TDrawArea *drawarea, int shape_x1, int shape_y0
           }
           v19 += clip_y0a;
 LABEL_49:
-          if ( v22 )
+          if( v22 )
             goto LABEL_52;
         }
       }
       v22 = 1;
 LABEL_52:
       v28 = v22 - 1;
-      if ( !v28 )
+      if( !v28 )
       {
-        while ( 1 )
+        while( 1 )
         {
           v29 = *v19++;
           drawareab = (TDrawArea *)v19;
-          if ( (v29 & 1) == 1 )
+          if( (v29 & 1) == 1 )
             break;
           v34 = v29 >> 1;
-          if ( v34 )
+          if( v34 )
           {
             v35 = v34;
             v21 -= v34;
-            if ( v21 >= clip_x0 )
+            if( v21 >= clip_x0 )
             {
-              if ( v34 )
+              if( v34 )
               {
                 do
                 {
@@ -3105,14 +3105,14 @@ LABEL_52:
                   --v35;
                   *v14 = color_table[(unsigned __int8)*v14];
                 }
-                while ( v35 );
+                while( v35 );
               }
             }
             else
             {
               v28 = 1;
               v36 = v34 + v21 - clip_x0;
-              if ( (_BYTE)v36 )
+              if( (_BYTE)v36 )
               {
                 v36 = (unsigned __int8)v36;
                 do
@@ -3121,7 +3121,7 @@ LABEL_52:
                   --v36;
                   *v14 = color_table[(unsigned __int8)*v14];
                 }
-                while ( v36 );
+                while( v36 );
               }
             }
             v33 = (int)&drawareab->DrawSystem + 1;
@@ -3129,25 +3129,25 @@ LABEL_52:
           }
           v28 = 3;
 LABEL_77:
-          if ( v28 )
+          if( v28 )
             goto LABEL_78;
         }
         LOBYTE(v30) = v29 >> 1;
         clip_y0b = v30;
-        if ( !(_BYTE)v30 )
+        if( !(_BYTE)v30 )
         {
           v31 = *v19;
           v21 -= v31;
           v14 -= v31;
           ++v19;
-          if ( v21 < clip_x0 )
+          if( v21 < clip_x0 )
             v28 = 1;
           goto LABEL_77;
         }
         v21 -= (unsigned __int8)v30;
-        if ( v21 >= clip_x0 )
+        if( v21 >= clip_x0 )
         {
-          if ( (_BYTE)v30 )
+          if( (_BYTE)v30 )
           {
             v30 = (unsigned __int8)v30;
             do
@@ -3156,14 +3156,14 @@ LABEL_77:
               --v30;
               *v14 = color_table[(unsigned __int8)*v14];
             }
-            while ( v30 );
+            while( v30 );
           }
         }
         else
         {
           v28 = 1;
           v32 = (unsigned __int8)v30 + v21 - clip_x0;
-          if ( (_BYTE)v32 )
+          if( (_BYTE)v32 )
           {
             v32 = (unsigned __int8)v32;
             do
@@ -3172,7 +3172,7 @@ LABEL_77:
               --v32;
               *v14 = color_table[(unsigned __int8)*v14];
             }
-            while ( v32 );
+            while( v32 );
             v33 = (int)&v19[clip_y0b];
             goto LABEL_76;
           }
@@ -3184,29 +3184,29 @@ LABEL_76:
       }
 LABEL_78:
       v37 = v28 - 1;
-      if ( !v37 )
+      if( !v37 )
         break;
 LABEL_86:
       v14 = &save_buffer[width];
       v39 = shape_y0a == 1;
       save_buffer += width;
       --shape_y0a;
-      if ( v39 )
+      if( v39 )
         return 1;
       v21 = shape_x1;
     }
-    while ( 1 )
+    while( 1 )
     {
       v38 = *v19++;
-      if ( (v38 & 1) == 1 )
+      if( (v38 & 1) == 1 )
       {
-        if ( !(v38 >> 1) )
+        if( !(v38 >> 1) )
           goto LABEL_84;
         v19 += v38 >> 1;
       }
       else
       {
-        if ( v38 & 0xFE )
+        if( v38 & 0xFE )
         {
 LABEL_84:
           ++v19;
@@ -3215,7 +3215,7 @@ LABEL_84:
         v37 = 2;
       }
 LABEL_85:
-      if ( v37 )
+      if( v37 )
         goto LABEL_86;
     }
   }
@@ -3230,7 +3230,7 @@ bool TShape::shape_dither(TDrawArea *drawarea, int x, int y, int shape_num, int 
     int rectb = drawarea->ClipRect.bottom;
 
     /* Shape draw */
-    if ( this->Check_shape(shape_num) )
+    if( this->Check_shape(shape_num) )
         return false;
 
     this->shape_header = &this->shape[this->offsets[shape_num].shape];
@@ -3241,31 +3241,31 @@ bool TShape::shape_dither(TDrawArea *drawarea, int x, int y, int shape_num, int 
     int v12 = y + this->shape_header->ymax;
 
     int clip_y0 = v13;
-    if ( v13 < rectl )
+    if( v13 < rectl )
         clip_y0 = rectl;
 
     int clip_x1 = v10;
-    if ( v10 < rectt )
+    if( v10 < rectt )
         clip_x1 = rectt;
 
     int clip_x0 = v11;
-    if ( v11 > rectr )
+    if( v11 > rectr )
         clip_x0 = rectr;
 
     int clip_y1 = v12;
-    if ( v12 > rectb )
+    if( v12 > rectb )
         clip_y1 = rectb;
 
-    if ( clip_y0 < 0 )
+    if( clip_y0 < 0 )
         clip_y0 = 0;
 
-    if ( clip_x1 < 0 )
+    if( clip_x1 < 0 )
         clip_x1 = 0;
 
-    if ( rectr >= drawarea->Width )
+    if( rectr >= drawarea->Width )
         clip_x0 = drawarea->Width - 1;
 
-    if ( clip_y1 >= drawarea->Height )
+    if( clip_y1 >= drawarea->Height )
         clip_y1 = drawarea->Height - 1;
 
     switch( true )
@@ -3331,7 +3331,7 @@ bool TShape::shape_dithered_unclipped(TDrawArea *drawarea, int shape_x0, int sha
   width = v7 * v8;
   v11 = v9->ymax - v9->ymin + 1;
   v12 = (unsigned __int8 *)&v9[1];
-  if ( v7 >= 1 )
+  if( v7 >= 1 )
   {
     v13 = shape_y0;
     v14 = shape_y0 * v10;
@@ -3344,12 +3344,12 @@ bool TShape::shape_dithered_unclipped(TDrawArea *drawarea, int shape_x0, int sha
   v15 = &drawarea->Bits[v14] + shape_x0;
   v16 = ((_BYTE)shape_x0 + (_BYTE)dx) & 1;
   save_buffer = v15;
-  if ( (v13 + (_BYTE)dy) & 1 )
+  if( (v13 + (_BYTE)dy) & 1 )
     v16 = v16 != 1;
-  if ( v11 <= 0 )
+  if( v11 <= 0 )
     return 1;
   v17 = v11;
-  while ( 2 )
+  while( 2 )
   {
     i = v16;
     drawareaa = (TDrawArea *)(v16 != 1);
@@ -3357,55 +3357,55 @@ bool TShape::shape_dithered_unclipped(TDrawArea *drawarea, int shape_x0, int sha
     do
     {
       v19 = *v12++;
-      if ( (v19 & 1) != 1 )
+      if( (v19 & 1) != 1 )
       {
         v22 = v19 >> 1;
-        if ( !v22 )
+        if( !v22 )
         {
           index1 = 1;
           continue;
         }
         save_flaga = v22;
-        if ( i )
+        if( i )
         {
           ++v15;
           save_flaga = v22 - 1;
         }
         v23 = (unsigned int)&v15[save_flaga];
-        for ( i = save_flaga & 1; (unsigned int)v15 < v23; v15 += 2 )
+        for( i = save_flaga & 1; (unsigned int)v15 < v23; v15 += 2 )
           *v15 = 0;
-        if ( save_flaga & 1 )
+        if( save_flaga & 1 )
           --v15;
         goto LABEL_29;
       }
       v20 = v19 >> 1;
-      if ( !v20 )
+      if( !v20 )
       {
         v15 += *v12;
-        if ( *v12 & 1 )
+        if( *v12 & 1 )
           i = i != 1;
 LABEL_29:
         ++v12;
         continue;
       }
       save_flag = v20;
-      if ( i )
+      if( i )
       {
         ++v15;
         save_flag = v20 - 1;
       }
       v21 = (unsigned int)&v15[save_flag];
-      for ( i = save_flag & 1; (unsigned int)v15 < v21; v15 += 2 )
+      for( i = save_flag & 1; (unsigned int)v15 < v21; v15 += 2 )
         *v15 = 0;
-      if ( save_flag & 1 )
+      if( save_flag & 1 )
         --v15;
       v12 += v20;
     }
-    while ( !index1 );
+    while( !index1 );
     v15 = &save_buffer[width];
     --v17;
     save_buffer += width;
-    if ( v17 )
+    if( v17 )
     {
       v16 = (int)drawareaa;
       continue;
@@ -3480,7 +3480,7 @@ bool shape_dithered_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, int
   v12 = v11 * TDrawArea::AlignedWidth(drawarea);
   width = v12;
   v13 = (unsigned __int8 *)&v10->shape_header[1];
-  if ( v11 >= 1 )
+  if( v11 >= 1 )
   {
     v14 = clip_y0;
     v15 = clip_y0 * v12;
@@ -3493,11 +3493,11 @@ bool shape_dithered_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, int
   v16 = &drawarea->Bits[v15] + clip_x0;
   save_buffer = v16;
   drawareaa = (clip_x0 + dx) & 1;
-  if ( ((_BYTE)v14 + (_BYTE)dy) & 1 )
+  if( ((_BYTE)v14 + (_BYTE)dy) & 1 )
     drawareaa = (((_BYTE)clip_x0 + (_BYTE)dx) & 1) != 1;
   v17 = shape_y0;
   y = shape_y0;
-  if ( shape_y0 < v14 )
+  if( shape_y0 < v14 )
   {
     v18 = v14 - shape_y0;
     v17 = shape_y0 + v18;
@@ -3508,54 +3508,54 @@ bool shape_dithered_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, int
       do
       {
         v20 = *v13++;
-        if ( (v20 & 1) == 1 )
+        if( (v20 & 1) == 1 )
         {
-          if ( v20 >> 1 )
+          if( v20 >> 1 )
           {
             v13 += v20 >> 1;
             continue;
           }
         }
-        else if ( !(v20 & 0xFE) )
+        else if( !(v20 & 0xFE) )
         {
           v19 = 1;
           continue;
         }
         ++v13;
       }
-      while ( !v19 );
+      while( !v19 );
       --v18;
     }
-    while ( v18 );
+    while( v18 );
   }
-  if ( v17 <= clip_y1 )
+  if( v17 <= clip_y1 )
   {
     v21 = clip_x1;
-    while ( 1 )
+    while( 1 )
     {
       v22 = drawareaa;
       drawareaa = drawareaa != 1;
       index1 = shape_x0;
-      if ( shape_x0 < clip_x0 )
+      if( shape_x0 < clip_x0 )
       {
         clip_y0a = 0;
-        while ( 1 )
+        while( 1 )
         {
           v23 = *v13++;
-          if ( (v23 & 1) == 1 )
+          if( (v23 & 1) == 1 )
           {
             shape_y0a = v23 >> 1;
-            if ( !(v23 >> 1) )
+            if( !(v23 >> 1) )
             {
               v24 = *v13++ + index1;
               index1 = v24;
-              if ( v24 >= clip_x0 )
+              if( v24 >= clip_x0 )
               {
-                if ( v24 <= v21 )
+                if( v24 <= v21 )
                 {
                   clip_y0a = 1;
                   v16 += (unsigned __int8)(v24 - clip_x0);
-                  if ( ((_BYTE)v24 - (_BYTE)clip_x0) & 1 )
+                  if( ((_BYTE)v24 - (_BYTE)clip_x0) & 1 )
                     v22 = v22 != 1;
                 }
                 else
@@ -3566,23 +3566,23 @@ bool shape_dithered_clipped(TDrawArea *drawarea, int shape_x0, int shape_y0, int
               goto LABEL_60;
             }
             index1 += shape_y0a;
-            if ( index1 <= clip_x0 )
+            if( index1 <= clip_x0 )
               goto LABEL_42;
-            if ( index1 <= v21 )
+            if( index1 <= v21 )
             {
               clip_y0a = 1;
               v27 = index1 - clip_x0;
               v61 = index1 - clip_x0;
-              if ( v22 )
+              if( v22 )
               {
                 --v27;
                 ++v16;
                 v61 = v27;
               }
               v22 = v27 & 1;
-              for ( i = (unsigned int)&v16[v61]; (unsigned int)v16 < i; v16 += 2 )
+              for( i = (unsigned int)&v16[v61]; (unsigned int)v16 < i; v16 += 2 )
                 *v16 = 0;
-              if ( v22 )
+              if( v22 )
                 --v16;
 LABEL_42:
               v13 += shape_y0a;
@@ -3591,42 +3591,42 @@ LABEL_42:
             clip_y0a = 2;
             v25 = v21 - clip_x0 + 1;
             v60 = v21 - clip_x0 + 1;
-            if ( v22 )
+            if( v22 )
             {
               LOBYTE(v25) = v21 - clip_x0;
               ++v16;
               v60 = v21 - clip_x0;
             }
             v22 = v25 & 1;
-            for ( j = (unsigned int)&v16[v60]; (unsigned int)v16 < j; v16 += 2 )
+            for( j = (unsigned int)&v16[v60]; (unsigned int)v16 < j; v16 += 2 )
               *v16 = 0;
-            if ( !v22 )
+            if( !v22 )
               goto LABEL_42;
             --v16;
             v13 += shape_y0a;
           }
           else
           {
-            if ( v23 >> 1 )
+            if( v23 >> 1 )
             {
               index1 += v23 >> 1;
-              if ( index1 > clip_x0 )
+              if( index1 > clip_x0 )
               {
-                if ( index1 <= v21 )
+                if( index1 <= v21 )
                 {
                   clip_y0a = 1;
                   v31 = index1 - clip_x0;
                   v63 = index1 - clip_x0;
-                  if ( v22 )
+                  if( v22 )
                   {
                     --v31;
                     ++v16;
                     v63 = v31;
                   }
                   v22 = v31 & 1;
-                  for ( k = (unsigned int)&v16[v63]; (unsigned int)v16 < k; v16 += 2 )
+                  for( k = (unsigned int)&v16[v63]; (unsigned int)v16 < k; v16 += 2 )
                     *v16 = 0;
-                  if ( v22 )
+                  if( v22 )
 LABEL_58:
                     --v16;
                 }
@@ -3635,16 +3635,16 @@ LABEL_58:
                   clip_y0a = 2;
                   v29 = v21 - clip_x0 + 1;
                   v62 = v21 - clip_x0 + 1;
-                  if ( v22 )
+                  if( v22 )
                   {
                     LOBYTE(v29) = v21 - clip_x0;
                     ++v16;
                     v62 = v21 - clip_x0;
                   }
                   v22 = v29 & 1;
-                  for ( l = (unsigned int)&v16[v62]; (unsigned int)v16 < l; v16 += 2 )
+                  for( l = (unsigned int)&v16[v62]; (unsigned int)v16 < l; v16 += 2 )
                     *v16 = 0;
-                  if ( v22 )
+                  if( v22 )
                     goto LABEL_58;
                 }
               }
@@ -3655,7 +3655,7 @@ LABEL_58:
           }
 LABEL_60:
           v33 = clip_y0a;
-          if ( clip_y0a )
+          if( clip_y0a )
             goto LABEL_63;
         }
       }
@@ -3663,31 +3663,31 @@ LABEL_60:
 LABEL_63:
       v34 = v33 - 1;
       clip_y0b = v34;
-      if ( !v34 )
+      if( !v34 )
       {
-        while ( 1 )
+        while( 1 )
         {
           v35 = *v13++;
-          if ( (v35 & 1) != 1 )
+          if( (v35 & 1) != 1 )
           {
             v41 = v35 >> 1;
             shape_y0c = v41;
-            if ( v41 )
+            if( v41 )
             {
               index1 += v41;
-              if ( index1 <= clip_x1 )
+              if( index1 <= clip_x1 )
               {
                 v67 = v41;
-                if ( v22 )
+                if( v22 )
                 {
                   --v41;
                   ++v16;
                   v67 = v41;
                 }
                 v22 = v41 & 1;
-                for ( m = (unsigned int)&v16[v67]; (unsigned int)v16 < m; v16 += 2 )
+                for( m = (unsigned int)&v16[v67]; (unsigned int)v16 < m; v16 += 2 )
                   *v16 = 0;
-                if ( v22 )
+                if( v22 )
                   --v16;
                 v21 = clip_x1;
               }
@@ -3697,16 +3697,16 @@ LABEL_63:
                 clip_y0b = 1;
                 v42 = clip_x1 - index1 + v41 + 1;
                 v66 = clip_x1 - index1 + shape_y0c + 1;
-                if ( v22 )
+                if( v22 )
                 {
                   LOBYTE(v42) = v42 - 1;
                   ++v16;
                   v66 = v42;
                 }
                 v22 = v42 & 1;
-                for ( n = (unsigned int)&v16[v66]; (unsigned int)v16 < n; v16 += 2 )
+                for( n = (unsigned int)&v16[v66]; (unsigned int)v16 < n; v16 += 2 )
                   *v16 = 0;
-                if ( v22 )
+                if( v22 )
                   --v16;
               }
               ++v13;
@@ -3719,54 +3719,54 @@ LABEL_63:
           }
           v36 = v35 >> 1;
           shape_y0b = v36;
-          if ( !v36 )
+          if( !v36 )
           {
             v37 = *v13;
             index1 += v37;
-            if ( *v13 & 1 )
+            if( *v13 & 1 )
               v22 = v22 != 1;
             v16 += v37;
             ++v13;
-            if ( index1 > v21 )
+            if( index1 > v21 )
               clip_y0b = 1;
             goto LABEL_102;
           }
           index1 += v36;
-          if ( index1 <= clip_x1 )
+          if( index1 <= clip_x1 )
             break;
           v21 = clip_x1;
           clip_y0b = 1;
           v38 = clip_x1 - index1 + v36 + 1;
           v64 = clip_x1 - index1 + shape_y0b + 1;
-          if ( v22 )
+          if( v22 )
           {
             LOBYTE(v38) = v38 - 1;
             ++v16;
             v64 = v38;
           }
           v22 = v38 & 1;
-          for ( ii = (unsigned int)&v16[v64]; (unsigned int)v16 < ii; v16 += 2 )
+          for( ii = (unsigned int)&v16[v64]; (unsigned int)v16 < ii; v16 += 2 )
             *v16 = 0;
-          if ( !v22 )
+          if( !v22 )
             goto LABEL_84;
           --v16;
           v13 += shape_y0b;
 LABEL_102:
           v34 = clip_y0b;
-          if ( clip_y0b )
+          if( clip_y0b )
             goto LABEL_103;
         }
         v65 = v36;
-        if ( v22 )
+        if( v22 )
         {
           --v36;
           ++v16;
           v65 = v36;
         }
         v22 = v36 & 1;
-        for ( jj = (unsigned int)&v16[v65]; (unsigned int)v16 < jj; v16 += 2 )
+        for( jj = (unsigned int)&v16[v65]; (unsigned int)v16 < jj; v16 += 2 )
           *v16 = 0;
-        if ( v22 )
+        if( v22 )
           --v16;
         v21 = clip_x1;
 LABEL_84:
@@ -3775,7 +3775,7 @@ LABEL_84:
       }
 LABEL_103:
       v45 = v34 - 1;
-      if ( !v45 )
+      if( !v45 )
         break;
 LABEL_111:
       v16 = &save_buffer[width];
@@ -3784,21 +3784,21 @@ LABEL_111:
       v48 = y + 1 - clip_y1 < 0;
       save_buffer += width;
       ++y;
-      if ( !((unsigned __int8)(v48 ^ v49) | v47) )
+      if( !((unsigned __int8)(v48 ^ v49) | v47) )
         return 1;
     }
-    while ( 1 )
+    while( 1 )
     {
       v46 = *v13++;
-      if ( (v46 & 1) == 1 )
+      if( (v46 & 1) == 1 )
       {
-        if ( !(v46 >> 1) )
+        if( !(v46 >> 1) )
           goto LABEL_109;
         v13 += v46 >> 1;
       }
       else
       {
-        if ( v46 & 0xFE )
+        if( v46 & 0xFE )
         {
 LABEL_109:
           ++v13;
@@ -3807,7 +3807,7 @@ LABEL_109:
         v45 = 2;
       }
 LABEL_110:
-      if ( v45 )
+      if( v45 )
         goto LABEL_111;
     }
   }

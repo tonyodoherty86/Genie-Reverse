@@ -60,7 +60,7 @@ TScrollBarPanel *__thiscall TScrollBarPanel::`vector deleting destructor'(TScrol
 
   v2 = this;
   TScrollBarPanel::~TScrollBarPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -107,7 +107,7 @@ void __thiscall TScrollBarPanel::set_rect(TScrollBarPanel *this, int x_in, int y
 
   v5 = this;
   TPanel::set_rect((TPanel *)&this->vfptr, x_in, y_in, wid_in, hgt_in);
-  if ( v5->orientationValue == 1 )
+  if( v5->orientationValue == 1 )
   {
     v6 = v5->pnl_y;
     v7 = v5->pnl_hgt;
@@ -180,7 +180,7 @@ void __thiscall TScrollBarPanel::calc_item_rects(TScrollBarPanel *this)
   int v9; // edx@3
   int v10; // eax@3
 
-  if ( this->orientationValue == 1 )
+  if( this->orientationValue == 1 )
   {
     v1 = this->tab_x;
     v2 = this->pnl_hgt;
@@ -226,16 +226,16 @@ void __thiscall TScrollBarPanel::set_tab_pos(TScrollBarPanel *this, int list_num
   v3 = this->orientationValue;
   v4 = this->list_len;
   this->list_num = list_num_in;
-  if ( v3 == 1 )
+  if( v3 == 1 )
   {
-    if ( v4 > 0 )
+    if( v4 > 0 )
       this->tab_x = this->tab_min_x + list_num_in * (this->tab_max_x + this->tabSize / 2 - this->tab_min_x) / v4;
     v5 = this->tab_x;
     v6 = this->tab_min_x;
-    if ( v5 >= v6 )
+    if( v5 >= v6 )
     {
       v7 = v2->tab_max_x;
-      if ( v5 > v7 )
+      if( v5 > v7 )
         v2->tab_x = v7;
     }
     else
@@ -245,16 +245,16 @@ void __thiscall TScrollBarPanel::set_tab_pos(TScrollBarPanel *this, int list_num
   }
   else
   {
-    if ( v4 > 0 )
+    if( v4 > 0 )
     {
-      if ( list_num_in == v4 - 1 )
+      if( list_num_in == v4 - 1 )
         this->tab_y = this->tab_max_y;
       else
         this->tab_y = this->tab_min_y + list_num_in * (this->tab_max_y + this->tabSize / 2 - this->tab_min_y) / v4;
     }
     v8 = this->tab_y;
     v9 = this->tab_min_y;
-    if ( v8 < v9 || (v9 = v2->tab_max_y, v8 > v9) )
+    if( v8 < v9 || (v9 = v2->tab_max_y, v8 > v9) )
       v2->tab_y = v9;
   }
   TScrollBarPanel::calc_item_rects(v2);
@@ -302,10 +302,10 @@ int __thiscall TScrollBarPanel::handle_idle(TScrollBarPanel *this)
   unsigned int v7; // ecx@15
 
   v1 = this;
-  if ( this->item_mode == 1 )
+  if( this->item_mode == 1 )
   {
     v6 = debug_timeGetTime();
-    if ( v6 - v1->item_last_time >= v1->item_down_interval )
+    if( v6 - v1->item_last_time >= v1->item_down_interval )
     {
       v7 = v1->item_hold_interval;
       v1->item_mode = 2;
@@ -313,12 +313,12 @@ int __thiscall TScrollBarPanel::handle_idle(TScrollBarPanel *this)
     }
     return 0;
   }
-  if ( this->item_mode != 2 )
+  if( this->item_mode != 2 )
     return 0;
-  if ( !this->item_is_down )
+  if( !this->item_is_down )
     return 0;
   v2 = debug_timeGetTime();
-  if ( v2 - v1->item_last_time < v1->item_hold_interval )
+  if( v2 - v1->item_last_time < v1->item_hold_interval )
     return 0;
   v1->item_last_time = v2;
   switch ( v1->item_down )
@@ -332,7 +332,7 @@ int __thiscall TScrollBarPanel::handle_idle(TScrollBarPanel *this)
       result = 0;
       break;
     case 4:
-      if ( TPanel::is_inside_rect(v1->item_x, v1->item_y, &v1->top_rect) )
+      if( TPanel::is_inside_rect(v1->item_x, v1->item_y, &v1->top_rect) )
       {
         TScrollBarPanel::scroll(v1, ActionPrior, 0);
         result = 0;
@@ -347,7 +347,7 @@ int __thiscall TScrollBarPanel::handle_idle(TScrollBarPanel *this)
       }
       break;
     case 5:
-      if ( TPanel::is_inside_rect(v1->item_x, v1->item_y, &v1->bottom_rect) )
+      if( TPanel::is_inside_rect(v1->item_x, v1->item_y, &v1->bottom_rect) )
       {
         TScrollBarPanel::scroll(v1, ActionNext, 0);
         result = 0;
@@ -379,34 +379,34 @@ int __thiscall TScrollBarPanel::mouse_left_down_action(TScrollBarPanel *this, in
 
   v5 = this;
   TPanel::capture_mouse((TPanel *)&this->vfptr);
-  if ( TPanel::is_inside_rect(x, y, &v5->up_rect) )
+  if( TPanel::is_inside_rect(x, y, &v5->up_rect) )
   {
     v5->item_down = 1;
     v5->item_is_down = 1;
     TScrollBarPanel::scroll(v5, 0, 0);
   }
-  else if ( TPanel::is_inside_rect(x, y, &v5->down_rect) )
+  else if( TPanel::is_inside_rect(x, y, &v5->down_rect) )
   {
     v5->item_down = 2;
     v5->item_is_down = 1;
     TScrollBarPanel::scroll(v5, ActionDown, 0);
   }
-  else if ( TPanel::is_inside_rect(x, y, &v5->tab_rect) )
+  else if( TPanel::is_inside_rect(x, y, &v5->tab_rect) )
   {
     v6 = v5->orientationValue;
     v5->item_down = 3;
-    if ( v6 == 1 )
+    if( v6 == 1 )
       v5->tab_mouse_x = x - v5->tab_x;
     else
       v5->tab_mouse_y = y - v5->tab_y;
   }
-  else if ( TPanel::is_inside_rect(x, y, &v5->top_rect) )
+  else if( TPanel::is_inside_rect(x, y, &v5->top_rect) )
   {
     v5->item_down = 4;
     v5->item_is_down = 1;
     TScrollBarPanel::scroll(v5, ActionPrior, 0);
   }
-  else if ( TPanel::is_inside_rect(x, y, &v5->bottom_rect) )
+  else if( TPanel::is_inside_rect(x, y, &v5->bottom_rect) )
   {
     v5->item_down = 5;
     v5->item_is_down = 1;
@@ -416,15 +416,15 @@ int __thiscall TScrollBarPanel::mouse_left_down_action(TScrollBarPanel *this, in
   {
     v5->item_down = 0;
   }
-  if ( v5->item_down )
+  if( v5->item_down )
   {
     v7 = v5->list_panel;
-    if ( v7 )
+    if( v7 )
     {
-      if ( v7->tab_stop )
+      if( v7->tab_stop )
       {
         v8 = v7->parent_panel;
-        if ( v8 )
+        if( v8 )
           TPanel::set_curr_child(v8, v5->list_panel);
       }
     }
@@ -480,9 +480,9 @@ int __thiscall TScrollBarPanel::mouse_left_move_action(TScrollBarPanel *this, in
     case 1:
       v15 = TPanel::is_inside_rect(x, y, &this->up_rect) == 0;
       v7 = v5->item_is_down;
-      if ( v15 )
+      if( v15 )
         goto LABEL_12;
-      if ( !v7 )
+      if( !v7 )
       {
         v5->item_is_down = 1;
         v5->item_mode = 2;
@@ -494,9 +494,9 @@ int __thiscall TScrollBarPanel::mouse_left_move_action(TScrollBarPanel *this, in
     case 2:
       v15 = TPanel::is_inside_rect(x, y, &this->down_rect) == 0;
       v8 = v5->item_is_down;
-      if ( v15 )
+      if( v15 )
         goto LABEL_18;
-      if ( !v8 )
+      if( !v8 )
       {
         v5->item_is_down = 1;
         v5->item_mode = 2;
@@ -508,10 +508,10 @@ int __thiscall TScrollBarPanel::mouse_left_move_action(TScrollBarPanel *this, in
     case 4:
       v15 = TPanel::is_inside_rect(x, y, &this->top_rect) == 0;
       v7 = v5->item_is_down;
-      if ( v15 )
+      if( v15 )
       {
 LABEL_12:
-        if ( v7 )
+        if( v7 )
         {
           v9 = v5->vfptr;
           v5->item_is_down = 0;
@@ -519,7 +519,7 @@ LABEL_12:
           v9->set_redraw((TPanel *)v5, RedrawNormal);
         }
       }
-      else if ( !v7 )
+      else if( !v7 )
       {
         v5->item_is_down = 1;
         v5->item_mode = 2;
@@ -533,10 +533,10 @@ LABEL_11:
     case 5:
       v15 = TPanel::is_inside_rect(x, y, &this->bottom_rect) == 0;
       v8 = v5->item_is_down;
-      if ( v15 )
+      if( v15 )
       {
 LABEL_18:
-        if ( v8 )
+        if( v8 )
         {
           v10 = v5->vfptr;
           v5->item_is_down = 0;
@@ -544,7 +544,7 @@ LABEL_18:
           v10->set_redraw((TPanel *)v5, RedrawNormal);
         }
       }
-      else if ( !v8 )
+      else if( !v8 )
       {
         v5->item_is_down = 1;
         v5->item_mode = 2;
@@ -556,29 +556,29 @@ LABEL_17:
       }
       goto LABEL_66;
     case 3:
-      if ( this->orientationValue == 1 )
+      if( this->orientationValue == 1 )
       {
         v11 = x - this->item_x;
-        if ( v11 > 0 )
+        if( v11 > 0 )
           v12 = this->tab_min_x;
         v13 = v5->tab_x;
         v14 = v5->tab_min_x;
-        if ( v13 == v14 && v11 > 0 && x < v13 + v5->tab_mouse_x )
+        if( v13 == v14 && v11 > 0 && x < v13 + v5->tab_mouse_x )
           goto LABEL_71;
-        if ( v13 == v5->tab_max_x )
+        if( v13 == v5->tab_max_x )
         {
           v15 = v11 == 0;
-          if ( v11 >= 0 )
+          if( v11 >= 0 )
           {
 LABEL_31:
-            if ( v15 )
+            if( v15 )
               goto LABEL_66;
             v16 = v11 + v5->tab_x;
             v5->tab_x = v16;
-            if ( v16 >= v14 )
+            if( v16 >= v14 )
             {
               v17 = v5->tab_max_x;
-              if ( v16 > v17 )
+              if( v16 > v17 )
                 v5->tab_x = v17;
             }
             else
@@ -589,7 +589,7 @@ LABEL_31:
             v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
             v18 = v5->tab_min_x;
             v19 = v5->tab_max_x;
-            if ( v18 == v19 )
+            if( v18 == v19 )
             {
               v20 = 0;
 LABEL_65:
@@ -598,19 +598,19 @@ LABEL_65:
             }
             v21 = v5->list_len;
             v20 = v21 * (v5->tab_x - v18) / (v19 - v18);
-            if ( v20 < 0 )
+            if( v20 < 0 )
             {
               v20 = 0;
               goto LABEL_65;
             }
             v22 = v21 - 1;
-            if ( v20 <= v21 - 1 )
+            if( v20 <= v21 - 1 )
               goto LABEL_65;
 LABEL_64:
             v20 = v22;
             goto LABEL_65;
           }
-          if ( x >= v13 + v5->tab_mouse_x )
+          if( x >= v13 + v5->tab_mouse_x )
 LABEL_71:
             v11 = 0;
         }
@@ -618,30 +618,30 @@ LABEL_71:
         goto LABEL_31;
       }
       v23 = y - this->item_y;
-      if ( v23 > 0 )
+      if( v23 > 0 )
         v24 = this->tab_min_y;
       v25 = v5->tab_y;
       v26 = v5->tab_min_y;
-      if ( v25 != v26 || v23 <= 0 )
+      if( v25 != v26 || v23 <= 0 )
         goto LABEL_49;
-      if ( y >= v25 + v5->tab_mouse_y )
+      if( y >= v25 + v5->tab_mouse_y )
       {
         v6 = x;
 LABEL_49:
-        if ( v25 == v5->tab_max_y )
+        if( v25 == v5->tab_max_y )
         {
           v27 = v23 == 0;
-          if ( v23 >= 0 )
+          if( v23 >= 0 )
           {
 LABEL_54:
-            if ( v27 )
+            if( v27 )
               goto LABEL_66;
             v28 = v23 + v5->tab_y;
             v5->tab_y = v28;
-            if ( v28 >= v26 )
+            if( v28 >= v26 )
             {
               v29 = v5->tab_max_y;
-              if ( v28 > v29 )
+              if( v28 > v29 )
                 v5->tab_y = v29;
             }
             else
@@ -652,24 +652,24 @@ LABEL_54:
             v5->vfptr->set_redraw((TPanel *)v5, RedrawNormal);
             v30 = v5->tab_min_y;
             v31 = v5->tab_max_y;
-            if ( v30 == v31 )
+            if( v30 == v31 )
             {
               v20 = 0;
               goto LABEL_65;
             }
             v32 = v5->list_len;
             v20 = v32 * (v5->tab_y - v30) / (v31 - v30);
-            if ( v20 < 0 )
+            if( v20 < 0 )
             {
               v20 = 0;
               goto LABEL_65;
             }
             v22 = v32 - 1;
-            if ( v20 <= v32 - 1 )
+            if( v20 <= v32 - 1 )
               goto LABEL_65;
             goto LABEL_64;
           }
-          if ( y >= v25 + v5->tab_mouse_y )
+          if( y >= v25 + v5->tab_mouse_y )
             v23 = 0;
         }
       }
@@ -682,7 +682,7 @@ LABEL_54:
       goto LABEL_54;
     default:
 LABEL_66:
-      if ( v5->item_down )
+      if( v5->item_down )
       {
         v5->item_x = v6;
         v5->item_y = y;
@@ -700,7 +700,7 @@ int __thiscall TScrollBarPanel::mouse_left_up_action(TScrollBarPanel *this, int 
 
   v5 = this;
   v6 = this->parent_panel;
-  if ( v6 )
+  if( v6 )
     ((void (__stdcall *)(TScrollBarPanel *, signed int, int, _DWORD))v6->vfptr->action)(v5, 5, v5->list_num, 0);
   TPanel::release_mouse((TPanel *)&v5->vfptr);
   v7 = v5->vfptr;
@@ -722,7 +722,7 @@ void __thiscall TScrollBarPanel::scroll(TScrollBarPanel *this, TScrollBarPanel::
 
   v3 = this;
   v4 = this->list_panel;
-  if ( v4 )
+  if( v4 )
   {
     ((void (__stdcall *)(TScrollBarPanel *, TScrollBarPanel::ActionType, int, _DWORD))v4->vfptr->action)(
       v3,
@@ -750,20 +750,20 @@ void __thiscall TScrollBarPanel::scroll(TScrollBarPanel *this, TScrollBarPanel::
       case 4:
         v6 = val;
 LABEL_9:
-        if ( v6 >= 0 )
+        if( v6 >= 0 )
         {
-          if ( v6 > v3->list_len - 1 )
+          if( v6 > v3->list_len - 1 )
             v6 = v3->list_len - 1;
         }
         else
         {
           v6 = 0;
         }
-        if ( v6 != v3->list_num )
+        if( v6 != v3->list_num )
         {
           TScrollBarPanel::set_tab_pos(v3, v6);
           v7 = v3->parent_panel;
-          if ( v7 )
+          if( v7 )
             ((void (__stdcall *)(TScrollBarPanel *, signed int, int, _DWORD))v7->vfptr->action)(v3, 4, v6, 0);
         }
         break;
@@ -786,22 +786,22 @@ void __thiscall TScrollBarPanel::draw(TScrollBarPanel *this)
 
   v1 = this;
   v2 = this->parent_panel;
-  if ( v2 )
+  if( v2 )
     ((void (__stdcall *)(int))v2->vfptr->draw_rect2)((int)&v1->clip_rect);
   v3 = v1->vfptr;
   v1->vfptr->draw_setup((TPanel *)v1, 0);
-  if ( TDrawArea::Lock(v1->render_area, aPnl_scbrDraw, 1) )
+  if( TDrawArea::Lock(v1->render_area, aPnl_scbrDraw, 1) )
   {
     TScrollBarPanel::draw_back_pic(v1);
     TScrollBarPanel::draw_border(v1, 0, 1, &v1->render_rect);
-    if ( v1->up_rect.top != v1->up_rect.bottom && v1->up_rect.left != v1->up_rect.right )
+    if( v1->up_rect.top != v1->up_rect.bottom && v1->up_rect.left != v1->up_rect.right )
     {
       v4 = v1->item_down == 1 && v1->item_is_down;
       TScrollBarPanel::draw_button_pic(v1, v1->up_frame, v4, &v1->up_rect);
       v5 = v1->item_down == 1 && v1->item_is_down;
       TScrollBarPanel::draw_border(v1, 1, v5, &v1->up_rect);
     }
-    if ( v1->down_rect.top != v1->down_rect.bottom && v1->down_rect.left != v1->down_rect.right )
+    if( v1->down_rect.top != v1->down_rect.bottom && v1->down_rect.left != v1->down_rect.right )
     {
       v6 = v1->item_down == 2 && v1->item_is_down;
       TScrollBarPanel::draw_button_pic(v1, v1->down_frame, v6, &v1->down_rect);
@@ -830,17 +830,17 @@ void __thiscall TScrollBarPanel::draw_border(TScrollBarPanel *this, int button, 
   char v10; // [sp-4h] [bp-14h]@5
 
   v7 = this;
-  if ( x1 != x2 && y1 != y2 )
+  if( x1 != x2 && y1 != y2 )
   {
     v8 = this->bevel_type;
-    if ( down )
+    if( down )
     {
       switch ( v8 )
       {
         case 1:
           v10 = -1;
           v9 = y2;
-          if ( !button )
+          if( !button )
             goto LABEL_14;
           TDrawArea::DrawRect(v7->render_area, x1 + 1, y1 + 1, x2, y2, -1);
           break;
@@ -883,7 +883,7 @@ void __thiscall TScrollBarPanel::draw_border(TScrollBarPanel *this, int button, 
       {
         case 1:
           v10 = 0;
-          if ( button )
+          if( button )
           {
             TDrawArea::DrawVertLine(v7->render_area, x2, y1 + 1, y2 - y1, 0);
             TDrawArea::DrawHorzLine(v7->render_area, x1 + 1, y1, x2 - x1, 0);
@@ -950,9 +950,9 @@ void __thiscall TScrollBarPanel::draw_back_pic(TScrollBarPanel *this)
 
   v1 = this;
   v2 = this->button_pics;
-  if ( v2 )
+  if( v2 )
   {
-    if ( v1->back_frame != -1 )
+    if( v1->back_frame != -1 )
     {
       TShape::shape_minmax(v2, &x_min, &y_min, &x_max, &y_max, v1->back_frame);
       v3 = v1->pnl_hgt;
@@ -960,24 +960,24 @@ void __thiscall TScrollBarPanel::draw_back_pic(TScrollBarPanel *this)
       v5 = y_max - y_min + 1;
       v6 = 0;
       pic_hgt = y_max - y_min + 1;
-      if ( v3 >= 0 )
+      if( v3 >= 0 )
       {
         do
         {
           v7 = 0;
-          if ( v1->pnl_wid >= 0 )
+          if( v1->pnl_wid >= 0 )
           {
             do
             {
               TShape::shape_draw(v1->button_pics, v1->render_area, v1->pnl_x + v7, v1->pnl_y + v6, v1->back_frame, 0, 0);
               v7 += v4;
             }
-            while ( v7 <= v1->pnl_wid );
+            while( v7 <= v1->pnl_wid );
             v5 = pic_hgt;
           }
           v6 += v5;
         }
-        while ( v6 <= v1->pnl_hgt );
+        while( v6 <= v1->pnl_hgt );
       }
     }
   }
@@ -997,7 +997,7 @@ void __thiscall TScrollBarPanel::draw_button_pic(TScrollBarPanel *this, int fram
   int y_min; // [sp+18h] [bp-4h]@3
 
   v4 = this;
-  if ( this->button_pics && frame != -1 )
+  if( this->button_pics && frame != -1 )
   {
     v5 = rect;
     TDrawArea::SetClipRect(this->render_area, rect);
@@ -1006,7 +1006,7 @@ void __thiscall TScrollBarPanel::draw_button_pic(TScrollBarPanel *this, int fram
     v7 = LOWORD(v5->left) + (((signed int)v6 - HIDWORD(v6)) >> 1) - ((signed int)&rect->left + -x_min + 1) / 2 - x_min;
     v8 = v5->bottom - v5->top + 1;
     v9 = LOWORD(v5->top) + (((signed int)v8 - HIDWORD(v8)) >> 1) - (y_max - y_min + 1) / 2 - y_min;
-    if ( down )
+    if( down )
     {
       ++v7;
       --v9;

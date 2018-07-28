@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TRB.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/07/03
  * @version 1.0
  */
 
@@ -34,6 +34,7 @@ class TribeMainDecisionAIModule;
 #include "Engine\TRB\AiResourceModule.hpp"
 #include "Engine\TRB\AiStrategyModule.hpp"
 #include "Engine\TRB\AiMainDecisionModule.hpp"
+#include "Engine\TRB\AiUnitModule.hpp"
 
 class TRIBE_Tree_Object;
 class TRIBE_Combat_Object;
