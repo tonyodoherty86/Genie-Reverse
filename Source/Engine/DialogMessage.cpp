@@ -22,7 +22,7 @@ TMessageDialog *__thiscall TMessageDialog::`scalar deleting destructor'(TMessage
 
   v2 = this;
   TMessageDialog::~TMessageDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -38,18 +38,18 @@ void __thiscall TMessageDialog::~TMessageDialog(TMessageDialog *this)
   v1 = this;
   this->vfptr = (TPanelVtbl *)&TMessageDialog::`vftable';
   v2 = this->text;
-  if ( v2 )
+  if( v2 )
     ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
   v3 = v1->button;
   v4 = 3;
   do
   {
-    if ( *v3 )
+    if( *v3 )
       (**(void (__stdcall ***)(_DWORD))*v3)(1);
     ++v3;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
   TDialogPanel::~TDialogPanel((TDialogPanel *)&v1->vfptr);
 }
 // 56FD60: using guessed type int (__thiscall *TMessageDialog::`vftable')(void *Memory, unsigned int __flags);
@@ -80,7 +80,7 @@ int __thiscall TMessageDialog::setup(TMessageDialog *this, TPanel *parent_panel_
   *((_DWORD *)v11 + 1) = 0;
   *((_DWORD *)v11 + 2) = 0;
   v12 = TPanel::renderArea(parent_panel_in);
-  if ( !TDialogPanel::setup(
+  if( !TDialogPanel::setup(
           (TDialogPanel *)&v10->vfptr,
           v12,
           parent_panel_in,
@@ -94,7 +94,7 @@ int __thiscall TMessageDialog::setup(TMessageDialog *this, TPanel *parent_panel_
   v14 = v10->pnl_wid - 3;
   v15 = v10->pnl_hgt - btn_hgt_in - 6;
   v10->dlg_type = dlg_type_in;
-  if ( !((int (__thiscall *)(TMessageDialog *, TMessageDialog *, int, char *, signed int, signed int, int, int, signed int, signed int, signed int, signed int))v13[1].set_redraw)(
+  if( !((int (__thiscall *)(TMessageDialog *, TMessageDialog *, int, char *, signed int, signed int, int, int, signed int, signed int, signed int, signed int))v13[1].set_redraw)(
           v10,
           v10,
           (int)&v10->text,
@@ -124,7 +124,7 @@ int __thiscall TMessageDialog::setup(TMessageDialog *this, TPanel *parent_panel_
     default:
       return 0;
   }
-  if ( v10->pnl_wid - btn_wid_in * y > 0 )
+  if( v10->pnl_wid - btn_wid_in * y > 0 )
     index = (v10->pnl_wid - btn_wid_in * y) / (y + 1);
   else
     index = 0;
@@ -132,12 +132,12 @@ int __thiscall TMessageDialog::setup(TMessageDialog *this, TPanel *parent_panel_
   v17 = v10->pnl_hgt - btn_hgt_in - 7;
   info_file_ina = 0;
   hgt_ina = v10->pnl_hgt - btn_hgt_in - 7;
-  if ( y > 0 )
+  if( y > 0 )
   {
     v18 = v13[1].set_rect;
     v19 = (int)v10->button;
     space = v18;
-    while ( ((int (__thiscall *)(TMessageDialog *, TMessageDialog *, int, char *, char *, int, int, int, int, signed int, _DWORD, _DWORD))space)(
+    while( ((int (__thiscall *)(TMessageDialog *, TMessageDialog *, int, char *, char *, int, int, int, int, signed int, _DWORD, _DWORD))space)(
               v10,
               v10,
               v19,
@@ -153,7 +153,7 @@ int __thiscall TMessageDialog::setup(TMessageDialog *this, TPanel *parent_panel_
     {
       v19 += 4;
       v16 += btn_wid_in + index;
-      if ( (signed int)++info_file_ina >= y )
+      if( (signed int)++info_file_ina >= y )
         goto LABEL_15;
       v17 = hgt_ina;
     }
@@ -226,19 +226,19 @@ int __thiscall TMessageDialog::action(TMessageDialog *this, TPanel *from_panel, 
 
   v5 = this;
   v6 = this->parent_panel;
-  if ( !v6 || action_in != 1 )
+  if( !v6 || action_in != 1 )
     goto LABEL_12;
-  if ( from_panel == (TPanel *)v5->button[0] )
+  if( from_panel == (TPanel *)v5->button[0] )
   {
     ((void (__stdcall *)(TMessageDialog *, _DWORD, _DWORD, _DWORD))v6->vfptr->action)(v5, 0, 0, 0);
     return 1;
   }
-  if ( from_panel == (TPanel *)v5->button[1] )
+  if( from_panel == (TPanel *)v5->button[1] )
   {
     ((void (__stdcall *)(TMessageDialog *, signed int, _DWORD, _DWORD))v6->vfptr->action)(v5, 1, 0, 0);
     return 1;
   }
-  if ( from_panel == (TPanel *)v5->button[2] )
+  if( from_panel == (TPanel *)v5->button[2] )
   {
     ((void (__stdcall *)(TMessageDialog *, signed int, _DWORD, _DWORD))v6->vfptr->action)(v5, 2, 0, 0);
     result = 1;
@@ -263,7 +263,7 @@ int __thiscall TMessageDialog::handle_idle(TMessageDialog *this)
   TMessageDialog *v1; // esi@1
 
   v1 = this;
-  if ( !rge_base_game->input_enabled )
+  if( !rge_base_game->input_enabled )
     RGE_Base_Game::enable_input(rge_base_game);
   return TPanel::handle_idle((TPanel *)&v1->vfptr);
 }

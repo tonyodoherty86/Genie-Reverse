@@ -120,7 +120,7 @@ void __thiscall TMousePointer::~TMousePointer(TMousePointer *this)
 
   v1 = this;
   v2 = this->Cursor_Shape;
-  if ( v2 )
+  if( v2 )
   {
     TShape::~TShape(this->Cursor_Shape);
     operator delete(v2);
@@ -137,13 +137,13 @@ int __thiscall TMousePointer::Shutdown_Mouse(TMousePointer *this)
   int result; // eax@2
 
   v1 = this;
-  if ( this->Shutdown )
+  if( this->Shutdown )
   {
     result = 0;
   }
-  else if ( this->custom_draw )
+  else if( this->custom_draw )
   {
-    if ( this->Setup )
+    if( this->Setup )
     {
       TMousePointer::reset(this);
       result = 1;
@@ -174,18 +174,18 @@ int __thiscall TMousePointer::Restore_Mouse(TMousePointer *this, TDrawArea *rend
   int result; // eax@2
 
   v2 = this;
-  if ( !this->Shutdown )
+  if( !this->Shutdown )
     return 0;
-  if ( !this->custom_draw )
+  if( !this->custom_draw )
     goto LABEL_8;
-  if ( !this->Setup )
+  if( !this->Setup )
     return 0;
   this->render_area = render_area_in;
   this->renderSurface = render_area_in->DrawSurface;
   this->PrimarySurface = render_area_in->DrawSystem->PrimarySurface;
   this->primary_area = render_area_in->DrawSystem->PrimaryArea;
   result = TMousePointer::LoadCursors(this, 0, -1, 1);
-  if ( result )
+  if( result )
   {
     v2->Shutdown = 0;
 LABEL_8:
@@ -211,9 +211,9 @@ int __thiscall TMousePointer::setup(TMousePointer *this, int custom_draw_in, TDr
   MouseSystem = this;
   this->custom_draw = custom_draw_in;
   this->render_area = render_area_in;
-  if ( custom_draw_in )
+  if( custom_draw_in )
   {
-    if ( render_area_in->DrawSystem->DrawType != 1
+    if( render_area_in->DrawSystem->DrawType != 1
       && ((this->renderSurface = render_area_in->DrawSurface,
            this->PrimarySurface = render_area_in->DrawSystem->PrimarySurface,
            this->primary_area = render_area_in->DrawSystem->PrimaryArea,
@@ -308,34 +308,34 @@ int __thiscall TMousePointer::LoadCursors(TMousePointer *this, char *cursor_file
   v4 = this;
   v5 = this->Cursor_Shape;
   LoadOk = 1;
-  if ( v5 )
+  if( v5 )
   {
     TShape::~TShape(v5);
     operator delete(v5);
   }
-  if ( !Reload )
+  if( !Reload )
   {
     v4->cursor_file_id = resId;
     sprintf(v4->cursor_file, aS_slp, cursor_file_name);
   }
   v6 = (TShape *)operator new(0x20u);
-  if ( v6 )
+  if( v6 )
     TShape::TShape(v6, v4->cursor_file, v4->cursor_file_id);
   else
     v7 = 0;
   v4->Cursor_Shape = v7;
-  if ( v7 )
+  if( v7 )
   {
-    if ( TShape::is_loaded(v7) )
+    if( TShape::is_loaded(v7) )
     {
       v8 = v4->Cursor_Shape;
-      if ( v8->FShape )
+      if( v8->FShape )
       {
         v9 = TShape::shape_count(v8);
         v4->Num_Cursors = v9;
         v4->Max_CX = 0;
         v4->Max_CY = 0;
-        if ( v9 > 0 )
+        if( v9 > 0 )
         {
           v10 = v4->Cursor_Shape;
           v11 = 0;
@@ -344,49 +344,49 @@ int __thiscall TMousePointer::LoadCursors(TMousePointer *this, char *cursor_file
           {
             v13 = (int)&v10->shape_info[v11];
             v14 = *(_DWORD *)(v13 + 16);
-            if ( v14 > v4->Max_CX )
+            if( v14 > v4->Max_CX )
               v4->Max_CX = v14;
             v15 = *(_DWORD *)(v13 + 20);
-            if ( v15 > v4->Max_CY )
+            if( v15 > v4->Max_CY )
               v4->Max_CY = v15;
             ++v11;
             --v12;
           }
-          while ( v12 );
+          while( v12 );
         }
-        if ( v4->Max_CX )
+        if( v4->Max_CX )
         {
-          if ( v4->Max_CY )
+          if( v4->Max_CY )
           {
             v16 = v4->save_area;
             v4->Max_CX = 64;
             v4->Max_CY = 48;
-            if ( v16 || TMousePointer::create_surfaces(v4) )
+            if( v16 || TMousePointer::create_surfaces(v4) )
             {
               TMousePointer::set_facet(v4, v4->facet);
               TMousePointer::set_game_facet(v4, v4->game_facet);
-              if ( v4->Mouse_Mode )
+              if( v4->Mouse_Mode )
                 return LoadOk;
               v17 = v4->Num_Cursors;
               v18 = v4->Max_Cursors;
-              if ( v17 <= v18 )
+              if( v17 <= v18 )
               {
                 v19 = 0;
-                if ( v17 > 0 )
+                if( v17 > 0 )
                 {
                   v20 = &v4->Cursor_Shape->shape_info->Height;
-                  while ( *(v20 - 1) <= v4->Max_CX && *v20 <= v4->Max_CY )
+                  while( *(v20 - 1) <= v4->Max_CX && *v20 <= v4->Max_CY )
                   {
                     ++v19;
                     v20 += 8;
-                    if ( v19 >= v17 )
+                    if( v19 >= v17 )
                       goto LABEL_29;
                   }
                   return 0;
                 }
 LABEL_29:
                 v21 = 0;
-                if ( v18 > 0 )
+                if( v18 > 0 )
                 {
                   v22 = 0;
                   v23 = v4->cursors;
@@ -394,9 +394,9 @@ LABEL_29:
                   {
                     TDrawArea::Clear(*v23, 0, 0);
                     TDrawArea::SetTrans(*v23, 1, 0);
-                    if ( v21 < v4->Num_Cursors )
+                    if( v21 < v4->Num_Cursors )
                     {
-                      if ( TDrawArea::Lock(*v23, aMouseptrLoadcu, 1) )
+                      if( TDrawArea::Lock(*v23, aMouseptrLoadcu, 1) )
                       {
                         TDrawArea::FillRect(*v23, 0, 0, v4->Max_CX, v4->Max_CY, 0);
                         TShape::shape_draw(
@@ -418,7 +418,7 @@ LABEL_29:
                     ++v23;
                     ++v22;
                   }
-                  while ( v21 < v4->Max_Cursors );
+                  while( v21 < v4->Max_Cursors );
                 }
                 return LoadOk;
               }
@@ -442,22 +442,22 @@ void __thiscall TMousePointer::delete_surfaces(TMousePointer *this)
 
   v1 = this;
   v2 = 0;
-  if ( this->custom_draw )
+  if( this->custom_draw )
   {
     v3 = this->save_area;
-    if ( v3 )
+    if( v3 )
     {
       TDrawArea::~TDrawArea(this->save_area);
       operator delete(v3);
       v1->save_area = 0;
     }
-    if ( v1->Max_Cursors > 0 )
+    if( v1->Max_Cursors > 0 )
     {
       v4 = v1->cursors;
       do
       {
         v5 = *v4;
-        if ( *v4 )
+        if( *v4 )
         {
           TDrawArea::~TDrawArea(*v4);
           operator delete(v5);
@@ -466,7 +466,7 @@ void __thiscall TMousePointer::delete_surfaces(TMousePointer *this)
         ++v2;
         ++v4;
       }
-      while ( v2 < v1->Max_Cursors );
+      while( v2 < v1->Max_Cursors );
     }
     v1->Num_Cursors = 0;
     TMousePointer::reset(v1);
@@ -489,25 +489,25 @@ DrawAreaNode *__thiscall TMousePointer::create_surfaces(TMousePointer *this)
 
   v1 = this;
   v2 = 0;
-  if ( !this->custom_draw )
+  if( !this->custom_draw )
     return (DrawAreaNode *)1;
-  if ( this->save_area || this->Max_CX <= 0 || this->Max_CY <= 0 )
+  if( this->save_area || this->Max_CX <= 0 || this->Max_CY <= 0 )
     goto LABEL_26;
   v4 = (TDrawArea *)operator new(0x100u);
   v10 = 0;
-  if ( v4 )
+  if( v4 )
     TDrawArea::TDrawArea(v4, aMouseSaveArea, 0);
   else
     v5 = 0;
   v10 = -1;
   v1->save_area = v5;
-  if ( !v5 )
+  if( !v5 )
     return 0;
   result = TDrawArea::Init(v5, v1->render_area->DrawSystem, v1->Max_CX, v1->Max_CY, 0, 0);
-  if ( result )
+  if( result )
   {
 LABEL_26:
-    if ( v1->Mouse_Mode || v1->Max_Cursors <= 0 )
+    if( v1->Mouse_Mode || v1->Max_Cursors <= 0 )
     {
 LABEL_22:
       result = (DrawAreaNode *)1;
@@ -515,25 +515,25 @@ LABEL_22:
     else
     {
       v6 = v1->cursors;
-      while ( 1 )
+      while( 1 )
       {
-        if ( !*v6 )
+        if( !*v6 )
         {
           sprintf(NameBuf, aMouseCursorD, v2);
           v7 = (TDrawArea *)operator new(0x100u);
           v10 = 1;
-          if ( v7 )
+          if( v7 )
             TDrawArea::TDrawArea(v7, NameBuf, 0);
           else
             v8 = 0;
           v10 = -1;
           *v6 = v8;
-          if ( !v8 || !TDrawArea::Init(v8, v1->render_area->DrawSystem, v1->Max_CX, v1->Max_CY, 0, 0) )
+          if( !v8 || !TDrawArea::Init(v8, v1->render_area->DrawSystem, v1->Max_CX, v1->Max_CY, 0, 0) )
             break;
         }
         ++v2;
         ++v6;
-        if ( v2 >= v1->Max_Cursors )
+        if( v2 >= v1->Max_Cursors )
           goto LABEL_22;
       }
       result = 0;
@@ -586,21 +586,21 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
   tagPOINT point; // [sp+10h] [bp-8h]@3
 
   v1 = this;
-  if ( this->custom_draw )
+  if( this->custom_draw )
   {
     GetCursorPos(&point);
     v3 = v1->render_area;
-    if ( v3->DrawSystem->ScreenMode == 1 )
+    if( v3->DrawSystem->ScreenMode == 1 )
     {
       ScreenToClient(v3->Wnd, &point);
       v4 = point.x;
-      if ( point.x > 0x8000 )
+      if( point.x > 0x8000 )
       {
         v4 = point.x - 0x10000;
         point.x -= 0x10000;
       }
       v5 = point.y;
-      if ( point.y > 0x8000 )
+      if( point.y > 0x8000 )
       {
         v5 = point.y - 0x10000;
         point.y -= 0x10000;
@@ -613,7 +613,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
     }
     v1->mouse_x = v4;
     v1->mouse_y = v5;
-    if ( v1->GameMode
+    if( v1->GameMode
       && v1->GameEnabled
       && (v6 = v1->mouse_x, v6 >= v1->game_window.left)
       && v6 < v1->game_window.right
@@ -628,7 +628,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
       v1->next_facet = v1->facet;
       v7 = 0;
     }
-    if ( v1->save_area_valid && v4 == v1->save_x && v5 == v1->save_y && v1->next_facet == v1->last_facet )
+    if( v1->save_area_valid && v4 == v1->save_x && v5 == v1->save_y && v1->next_facet == v1->last_facet )
     {
       result = 0;
     }
@@ -638,7 +638,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
       v1->save_y = v5;
       v1->new_save_rect.left = 0;
       v1->new_save_rect.top = 0;
-      if ( v7 )
+      if( v7 )
       {
         v8 = v1->gWidth;
         v1->new_save_rect.bottom = v1->gHeight;
@@ -678,7 +678,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
       *(_DWORD *)(v20 + 8) = v22;
       *(_DWORD *)(v20 + 12) = v23;
       v24 = v1->mouse_rect.right;
-      if ( v24 < 0
+      if( v24 < 0
         || (v25 = v1->mouse_rect.bottom, v25 < 0)
         || (v26 = v1->render_area, v27 = v1->mouse_rect.left, v27 > v26->Width)
         || (v28 = v1->mouse_rect.top, v28 > v26->Height) )
@@ -688,7 +688,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
       }
       else
       {
-        if ( v27 < 0 )
+        if( v27 < 0 )
         {
           v29 = -v27;
           v1->cursor_rect.left = v29;
@@ -697,7 +697,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
           v1->new_save_rect.right = v30;
         }
         v31 = v26->Width;
-        if ( v24 > v31 )
+        if( v24 > v31 )
         {
           v32 = v24 - v31;
           v33 = v1->new_save_rect.right - v32;
@@ -705,7 +705,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
           v1->new_save_rect.right = v33;
           v1->mouse_rect.right = v26->Width;
         }
-        if ( v28 < 0 )
+        if( v28 < 0 )
         {
           v34 = v1->new_save_rect.bottom;
           v1->mouse_rect.top = 0;
@@ -714,7 +714,7 @@ int __thiscall TMousePointer::update_mouse_position(TMousePointer *this)
           v1->new_save_rect.bottom = v34 - v35;
         }
         v36 = v26->Height;
-        if ( v25 > v36 )
+        if( v25 > v36 )
         {
           v37 = v25 - v36;
           v38 = v1->new_save_rect.bottom - v37;
@@ -759,20 +759,20 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
 
   v2 = this;
   lplpDDClipper = 0;
-  if ( this->active )
+  if( this->active )
   {
-    if ( this->custom_draw )
+    if( this->custom_draw )
     {
       v3 = debug_timeGetTime();
-      if ( (!v2->GameMode || !v2->GameEnabled || dMode || v3 - v2->LastDrawTime >= 0x22)
+      if( (!v2->GameMode || !v2->GameEnabled || dMode || v3 - v2->LastDrawTime >= 0x22)
         && (TMousePointer::update_mouse_position(v2) || dMode) )
       {
         v4 = v2->save_area_valid;
         v2->LastDrawTime = v3;
-        if ( v4 )
+        if( v4 )
         {
           v5 = v2->restoreSurface;
-          if ( v5 != v2->PrimarySurface )
+          if( v5 != v2->PrimarySurface )
           {
             v6 = ((int (__stdcall *)(IDirectDrawSurface *, int, IDirectDrawSurface *, int, signed int, _DWORD))v5->vfptr[1].Release)(
                    v5,
@@ -781,14 +781,14 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
                    (int)&v2->save_rect,
                    0x1000000,
                    0);
-            if ( v6 )
+            if( v6 )
             {
               v2->LastddError = v6;
               return;
             }
           }
         }
-        if ( v2->MouseOnScreen )
+        if( v2->MouseOnScreen )
         {
           v7 = &v2->mouse_rect.left;
           v8 = ((int (__stdcall *)(_DWORD, int, _DWORD, int, signed int, _DWORD))v2->save_area->DrawSurface->vfptr[1].Release)(
@@ -798,7 +798,7 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
                  (int)&v2->mouse_rect,
                  0x1000000,
                  0);
-          if ( v8 )
+          if( v8 )
           {
             v2->LastddError = v8;
             return;
@@ -818,32 +818,32 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
           *(_DWORD *)(v12 + 12) = v2->new_save_rect.bottom;
           v13 = v2->Mouse_Mode;
           v2->save_area_valid = 1;
-          if ( !v13 )
+          if( !v13 )
           {
             v14 = ((int (__stdcall *)(IDirectDrawSurface *, IDirectDrawClipper **))v10->vfptr[5].QueryInterface)(
                     v10,
                     &lplpDDClipper);
-            if ( v14 == -2005532104 )
+            if( v14 == -2005532104 )
             {
               v14 = 0;
               lplpDDClipper = 0;
             }
-            if ( v14 )
+            if( v14 )
             {
               v2->LastddError = v14;
               return;
             }
-            if ( lplpDDClipper )
+            if( lplpDDClipper )
             {
               v15 = ((int (__stdcall *)(_DWORD, _DWORD))v2->renderSurface->vfptr[9].AddRef)(v2->renderSurface, 0);
-              if ( v15 )
+              if( v15 )
               {
                 v2->LastddError = v15;
                 return;
               }
             }
           }
-          if ( v2->Mouse_Mode == 1 && TDrawArea::Lock(v2->render_area, aMouseptrDraw, 1) )
+          if( v2->Mouse_Mode == 1 && TDrawArea::Lock(v2->render_area, aMouseptrDraw, 1) )
           {
             v16 = v2->Cursor_Shape;
             v17 = (int)&v16->shape_info[v2->next_facet];
@@ -857,7 +857,7 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
               0);
             TDrawArea::Unlock(v2->render_area, aMouseptrDraw);
           }
-          if ( !v2->Mouse_Mode )
+          if( !v2->Mouse_Mode )
           {
             TDrawArea::SetTrans(v2->cursors[v2->next_facet], 1, 0);
             v18 = ((int (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, int, signed int))v2->renderSurface->vfptr[2].AddRef)(
@@ -867,21 +867,21 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
                     v2->cursors[v2->next_facet]->DrawSurface,
                     (int)&v2->cursor_rect,
                     17);
-            if ( v18 )
+            if( v18 )
             {
               v2->LastddError = v18;
               return;
             }
           }
           v2->last_facet = v2->next_facet;
-          if ( !v2->Mouse_Mode )
+          if( !v2->Mouse_Mode )
           {
-            if ( lplpDDClipper )
+            if( lplpDDClipper )
             {
               v19 = ((int (__stdcall *)(_DWORD, IDirectDrawClipper *))v2->renderSurface->vfptr[9].AddRef)(
                       v2->renderSurface,
                       lplpDDClipper);
-              if ( v19 )
+              if( v19 )
               {
                 v2->LastddError = v19;
                 return;
@@ -893,7 +893,7 @@ void __thiscall TMousePointer::draw(TMousePointer *this, int dMode)
         {
           v2->save_area_valid = 0;
         }
-        if ( !v2->GameMode || !v2->GameEnabled )
+        if( !v2->GameMode || !v2->GameEnabled )
           InvalidateRect(v2->render_area->Wnd, &v2->mouse_rect, 0);
         v2->drawn = 1;
       }
@@ -910,16 +910,16 @@ void __thiscall TMousePointer::erase(TMousePointer *this)
   IDirectDrawSurface *v4; // eax@10
 
   v1 = this;
-  if ( this->active )
+  if( this->active )
   {
-    if ( this->custom_draw )
+    if( this->custom_draw )
     {
-      if ( this->drawn )
+      if( this->drawn )
       {
-        if ( this->save_area_valid )
+        if( this->save_area_valid )
         {
           v2 = this->restoreSurface;
-          if ( v2 != this->PrimarySurface )
+          if( v2 != this->PrimarySurface )
           {
             v3 = ((int (__stdcall *)(IDirectDrawSurface *, tagRECT *, IDirectDrawSurface *, tagRECT *, signed int, _DWORD))v2->vfptr[1].Release)(
                    v2,
@@ -928,11 +928,11 @@ void __thiscall TMousePointer::erase(TMousePointer *this)
                    &this->save_rect,
                    0x1000000,
                    0);
-            if ( v3 )
+            if( v3 )
             {
               v1->LastddError = v3;
             }
-            else if ( v1->GameMode && v1->GameEnabled )
+            else if( v1->GameMode && v1->GameEnabled )
             {
               v4 = v1->PrimarySurface;
               v1->save_area_valid = 1;
@@ -956,7 +956,7 @@ void __thiscall TMousePointer::set_facet(TMousePointer *this, int facet_in)
   TShape *v2; // eax@3
   int v3; // eax@3
 
-  if ( facet_in >= 0 && facet_in < this->Num_Cursors )
+  if( facet_in >= 0 && facet_in < this->Num_Cursors )
   {
     v2 = this->Cursor_Shape;
     this->facet = facet_in;
@@ -976,7 +976,7 @@ void __thiscall TMousePointer::set_game_facet(TMousePointer *this, int facet_in)
   TShape *v2; // eax@3
   int v3; // eax@3
 
-  if ( facet_in >= 0 && facet_in < this->Num_Cursors )
+  if( facet_in >= 0 && facet_in < this->Num_Cursors )
   {
     v2 = this->Cursor_Shape;
     this->game_facet = facet_in;
@@ -996,11 +996,11 @@ void __thiscall TMousePointer::off(TMousePointer *this)
   TMousePointer *v1; // esi@1
 
   v1 = this;
-  if ( !this->Shutdown )
+  if( !this->Shutdown )
   {
-    if ( this->custom_draw && this->drawn )
+    if( this->custom_draw && this->drawn )
     {
-      if ( this->save_area_valid )
+      if( this->save_area_valid )
       {
         TMousePointer::erase(this);
         TDrawSystem::Paint(v1->render_area->DrawSystem, &v1->restore_rect);
@@ -1019,9 +1019,9 @@ void __thiscall TMousePointer::on(TMousePointer *this)
   HCURSOR v2; // eax@3
 
   v1 = this;
-  if ( !this->Shutdown )
+  if( !this->Shutdown )
   {
-    if ( !this->custom_draw )
+    if( !this->custom_draw )
     {
       v2 = LoadCursorA(0, (LPCSTR)0x7F00);
       SetCursor(v2);
@@ -1046,7 +1046,7 @@ void __thiscall TMousePointer::center(TMousePointer *this)
 
   v1 = this->render_area;
   v2 = v1->DrawSystem;
-  if ( v1->DrawSystem->ScreenMode == 1 )
+  if( v1->DrawSystem->ScreenMode == 1 )
   {
     GetWindowRect(v2->Wnd, &win_rect);
     SetCursorPos(
@@ -1085,47 +1085,47 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
 
   v1 = this;
   lplpDDClipper = 0;
-  if ( this->active )
+  if( this->active )
   {
-    if ( this->custom_draw )
+    if( this->custom_draw )
     {
-      if ( this->GameMode )
+      if( this->GameMode )
       {
-        if ( this->GameEnabled )
+        if( this->GameEnabled )
         {
           v2 = debug_timeGetTime();
-          if ( v2 - v1->LastDrawTime >= 0x22 )
+          if( v2 - v1->LastDrawTime >= 0x22 )
           {
-            if ( TMousePointer::update_mouse_position(v1) )
+            if( TMousePointer::update_mouse_position(v1) )
             {
               v3 = v1->Mouse_Mode;
               v1->LastDrawTime = v2;
-              if ( !v3 )
+              if( !v3 )
               {
                 v4 = ((int (__stdcall *)(_DWORD, IDirectDrawClipper **))v1->PrimarySurface->vfptr[5].QueryInterface)(
                        v1->PrimarySurface,
                        &lplpDDClipper);
-                if ( v4 == -2005532104 )
+                if( v4 == -2005532104 )
                 {
                   v4 = 0;
                   lplpDDClipper = 0;
                 }
-                if ( v4 )
+                if( v4 )
                 {
                   v1->LastddError = v4;
                   return;
                 }
-                if ( lplpDDClipper )
+                if( lplpDDClipper )
                 {
                   v5 = ((int (__stdcall *)(_DWORD, _DWORD))v1->PrimarySurface->vfptr[9].AddRef)(v1->PrimarySurface, 0);
-                  if ( v5 )
+                  if( v5 )
                   {
                     v1->LastddError = v5;
                     return;
                   }
                 }
               }
-              if ( v1->save_area_valid )
+              if( v1->save_area_valid )
               {
                 v6 = ((int (__stdcall *)(_DWORD, int, _DWORD, int, signed int, _DWORD))v1->restoreSurface->vfptr[1].Release)(
                        v1->restoreSurface,
@@ -1134,13 +1134,13 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
                        (int)&v1->save_rect,
                        0x1000000,
                        0);
-                if ( v6 )
+                if( v6 )
                 {
                   v1->LastddError = v6;
                   return;
                 }
                 v7 = v1->PrimarySurface;
-                if ( v1->restoreSurface != v7 )
+                if( v1->restoreSurface != v7 )
                 {
                   v8 = ((int (__stdcall *)(IDirectDrawSurface *, int, IDirectDrawSurface *, int, signed int, _DWORD))v7->vfptr[1].Release)(
                          v7,
@@ -1149,14 +1149,14 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
                          (int)&v1->save_rect,
                          0x1000000,
                          0);
-                  if ( v8 )
+                  if( v8 )
                   {
                     v1->LastddError = v8;
                     return;
                   }
                 }
               }
-              if ( v1->MouseOnScreen )
+              if( v1->MouseOnScreen )
               {
                 v9 = &v1->mouse_rect.left;
                 v10 = ((int (__stdcall *)(_DWORD, int, _DWORD, int, signed int, _DWORD))v1->save_area->DrawSurface->vfptr[1].Release)(
@@ -1166,7 +1166,7 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
                         (int)&v1->mouse_rect,
                         0x1000000,
                         0);
-                if ( v10 )
+                if( v10 )
                 {
                   v1->LastddError = v10;
                   v1->LastddError = TMousePointer::GetDDBltError(v10);
@@ -1187,7 +1187,7 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
                 *(_DWORD *)(v12 + 8) = v14;
                 v1->save_area_valid = 1;
                 *(_DWORD *)(v12 + 12) = v15;
-                if ( !v1->Mouse_Mode )
+                if( !v1->Mouse_Mode )
                 {
                   TDrawArea::SetTrans(v1->cursors[v1->next_facet], 1, 0);
                   v16 = ((int (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, int, signed int))v1->PrimarySurface->vfptr[2].AddRef)(
@@ -1197,13 +1197,13 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
                           v1->cursors[v1->next_facet]->DrawSurface,
                           (int)&v1->cursor_rect,
                           17);
-                  if ( v16 )
+                  if( v16 )
                   {
                     v1->LastddError = v16;
                     return;
                   }
                 }
-                if ( v1->Mouse_Mode == 1 && TDrawArea::Lock(v1->primary_area, aMouseptrPoll, 1) )
+                if( v1->Mouse_Mode == 1 && TDrawArea::Lock(v1->primary_area, aMouseptrPoll, 1) )
                 {
                   v17 = v1->Cursor_Shape;
                   v18 = (int)&v17->shape_info[v1->next_facet];
@@ -1223,7 +1223,7 @@ void __thiscall TMousePointer::Poll(TMousePointer *this)
               {
                 v1->save_area_valid = 0;
               }
-              if ( !v1->Mouse_Mode
+              if( !v1->Mouse_Mode
                 && lplpDDClipper
                 && (v19 = ((int (__stdcall *)(_DWORD, IDirectDrawClipper *))v1->PrimarySurface->vfptr[9].AddRef)(
                             v1->PrimarySurface,
@@ -1248,81 +1248,81 @@ int __stdcall TMousePointer::GetDDBltError(int theError)
 {
   int result; // eax@4
 
-  if ( theError <= -2147467259 )
+  if( theError <= -2147467259 )
   {
-    if ( theError == -2147467259 )
+    if( theError == -2147467259 )
       return 1;
-    if ( theError == -2147467263 )
+    if( theError == -2147467263 )
       return 17;
     return -1;
   }
-  if ( theError <= -2005532617 )
+  if( theError <= -2005532617 )
   {
-    if ( theError == -2005532617 )
+    if( theError == -2005532617 )
       return 18;
-    if ( theError == -2147024809 )
+    if( theError == -2147024809 )
       return 4;
     return -1;
   }
-  if ( theError <= -2005532542 )
+  if( theError <= -2005532542 )
   {
-    if ( theError == -2005532542 )
+    if( theError == -2005532542 )
       return 3;
-    if ( theError == -2005532562 )
+    if( theError == -2005532562 )
       return 2;
     return -1;
   }
-  if ( theError <= -2005532492 )
+  if( theError <= -2005532492 )
   {
-    if ( theError == -2005532492 )
+    if( theError == -2005532492 )
       return 6;
-    if ( theError == -2005532522 )
+    if( theError == -2005532522 )
       return 5;
     return -1;
   }
-  if ( theError <= -2005532422 )
+  if( theError <= -2005532422 )
   {
-    if ( theError == -2005532422 )
+    if( theError == -2005532422 )
       return 10;
-    if ( theError == -2005532467 )
+    if( theError == -2005532467 )
       return 8;
     return -1;
   }
-  if ( theError <= -2005532382 )
+  if( theError <= -2005532382 )
   {
-    if ( theError == -2005532382 )
+    if( theError == -2005532382 )
       return 12;
-    if ( theError == -2005532392 )
+    if( theError == -2005532392 )
       return 11;
     return -1;
   }
-  if ( theError <= -2005532332 )
+  if( theError <= -2005532332 )
   {
-    if ( theError == -2005532332 )
+    if( theError == -2005532332 )
       return 14;
-    if ( theError == -2005532362 )
+    if( theError == -2005532362 )
       return 13;
     return -1;
   }
-  if ( theError <= -2005532222 )
+  if( theError <= -2005532222 )
   {
-    if ( theError == -2005532222 )
+    if( theError == -2005532222 )
       return 16;
-    if ( theError == -2005532242 )
+    if( theError == -2005532242 )
       return 15;
     return -1;
   }
-  if ( theError == -2005532097 )
+  if( theError == -2005532097 )
   {
     result = 7;
   }
-  else if ( theError == -2005532096 )
+  else if( theError == -2005532096 )
   {
     result = 9;
   }
   else
   {
-    if ( theError )
+    if( theError )
       return -1;
     result = 0;
   }

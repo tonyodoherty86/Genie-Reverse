@@ -17,7 +17,7 @@ TScreenPanel *__thiscall TScreenPanel::`scalar deleting destructor'(TScreenPanel
 
   v2 = this;
   TScreenPanel::~TScreenPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -92,12 +92,12 @@ void __thiscall TScreenPanel::set_focus(TScreenPanel *this, int have_focus_in)
   v4 = this->render_area;
   v5 = !v3;
   save_focus = v2->have_focus;
-  if ( v4 && (v6 = v4->DrawSystem) != 0 && have_focus_in && !v3 && (v6->ScreenMode == 2 || v6->DrawType == 1) )
+  if( v4 && (v6 = v4->DrawSystem) != 0 && have_focus_in && !v3 && (v6->ScreenMode == 2 || v6->DrawType == 1) )
   {
     v7 = v2->palette;
     *(_WORD *)&color.peRed = 0;
     color.peBlue = 0;
-    if ( v7 )
+    if( v7 )
       GetPaletteEntries(v7, 0, 0x100u, color_table);
     else
       TDrawArea::GetPalette(v4, color_table);
@@ -112,12 +112,12 @@ void __thiscall TScreenPanel::set_focus(TScreenPanel *this, int have_focus_in)
   }
   TEasy_Panel::set_focus((TEasy_Panel *)&v2->vfptr, have_focus_in);
   v9 = v2->render_area;
-  if ( v9 )
+  if( v9 )
   {
     v10 = v9->DrawSystem;
-    if ( v9->DrawSystem )
+    if( v9->DrawSystem )
     {
-      if ( have_focus_in && v5 && (v10->ScreenMode == 2 || v10->DrawType == 1) )
+      if( have_focus_in && v5 && (v10->ScreenMode == 2 || v10->DrawType == 1) )
       {
         RGE_fade_palette(v9, v8, 0.0, 2, color_table, -1, -1);
         v2->vfptr->handle_paint((TPanel *)v2);
@@ -127,9 +127,9 @@ void __thiscall TScreenPanel::set_focus(TScreenPanel *this, int have_focus_in)
       }
     }
   }
-  if ( have_focus_in != save_focus )
+  if( have_focus_in != save_focus )
   {
-    if ( v2->have_focus )
+    if( v2->have_focus )
       last_screen = v2;
   }
 }

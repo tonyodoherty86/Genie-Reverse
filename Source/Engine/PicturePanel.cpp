@@ -27,7 +27,7 @@ TPicturePanel *__thiscall TPicturePanel::`scalar deleting destructor'(TPicturePa
 
   v2 = this;
   TPicturePanel::~TPicturePanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -43,7 +43,7 @@ int __thiscall TPicturePanel::setup(TPicturePanel *this, TDrawArea *render_area_
   int v16; // esi@9
 
   v11 = this;
-  if ( pic_name_in )
+  if( pic_name_in )
     strcpy(this->pic_name, pic_name_in);
   else
     this->pic_name[0] = 0;
@@ -52,11 +52,11 @@ int __thiscall TPicturePanel::setup(TPicturePanel *this, TDrawArea *render_area_
   v13 = keep_loaded_in;
   v11->size_from_pic = v12;
   v11->keep_loaded = v13;
-  if ( (v12 || v13) && TPicturePanel::load_pic(v11) )
+  if( (v12 || v13) && TPicturePanel::load_pic(v11) )
   {
-    if ( v11->size_from_pic )
+    if( v11->size_from_pic )
     {
-      if ( v11->pic_type )
+      if( v11->pic_type )
       {
         TShape::shape_bounds(v11->shape, 0, (__int16 *)&pic_name_in, (__int16 *)&res_id_in);
         v15 = (signed __int16)pic_name_in;
@@ -74,7 +74,7 @@ int __thiscall TPicturePanel::setup(TPicturePanel *this, TDrawArea *render_area_
       v16 = hgt_in;
       v15 = wid_in;
     }
-    if ( !v11->keep_loaded )
+    if( !v11->keep_loaded )
       TPicturePanel::free_pic(v11);
   }
   else
@@ -118,12 +118,12 @@ int __thiscall TPicturePanel::load_pic(TPicturePanel *this)
 
   v1 = this;
   TPicturePanel::free_pic(this);
-  if ( v1->pic_name[0] )
+  if( v1->pic_name[0] )
   {
     sprintf(file_name, aS_shp, v1->pic_name);
     v2 = (TShape *)operator new(0x20u);
     v11 = 0;
-    if ( v2 )
+    if( v2 )
     {
       TShape::TShape(v2, file_name, v1->res_id);
       v11 = -1;
@@ -136,20 +136,20 @@ int __thiscall TPicturePanel::load_pic(TPicturePanel *this)
   }
   else
   {
-    if ( v1->res_id == -1 )
+    if( v1->res_id == -1 )
       return 0;
     v4 = (TShape *)operator new(0x20u);
     v11 = 1;
-    if ( v4 )
+    if( v4 )
       TShape::TShape(v4, message_in, v1->res_id);
     else
       v3 = 0;
     v11 = -1;
   }
   v1->shape = v3;
-  if ( v3 )
+  if( v3 )
   {
-    if ( TShape::is_loaded(v3) )
+    if( TShape::is_loaded(v3) )
     {
       result = 1;
       v1->pic_type = 1;
@@ -157,7 +157,7 @@ int __thiscall TPicturePanel::load_pic(TPicturePanel *this)
       return result;
     }
     v6 = v1->shape;
-    if ( v6 )
+    if( v6 )
     {
       TShape::~TShape(v1->shape);
       operator delete(v6);
@@ -167,7 +167,7 @@ int __thiscall TPicturePanel::load_pic(TPicturePanel *this)
   sprintf(file_name, aS_bmp, v1->pic_name);
   v7 = (TPicture *)operator new(0x20u);
   v11 = 2;
-  if ( v7 )
+  if( v7 )
   {
     TPicture::TPicture(v7, file_name, -1, 0, 0, 0);
     v9 = v8;
@@ -178,9 +178,9 @@ int __thiscall TPicturePanel::load_pic(TPicturePanel *this)
   }
   v11 = -1;
   v1->pic = v9;
-  if ( v9 )
+  if( v9 )
   {
-    if ( v9->Dib )
+    if( v9->Dib )
     {
       result = 1;
       v1->pic_type = 0;
@@ -203,9 +203,9 @@ void __thiscall TPicturePanel::free_pic(TPicturePanel *this)
 
   v1 = this;
   v2 = this->pic;
-  if ( v2 )
+  if( v2 )
   {
-    if ( this->own_pic && v2 )
+    if( this->own_pic && v2 )
     {
       TPicture::~TPicture(this->pic);
       operator delete(v2);
@@ -213,9 +213,9 @@ void __thiscall TPicturePanel::free_pic(TPicturePanel *this)
     v1->pic = 0;
   }
   v3 = v1->shape;
-  if ( v3 )
+  if( v3 )
   {
-    if ( v1->own_pic && v3 )
+    if( v1->own_pic && v3 )
     {
       TShape::~TShape(v1->shape);
       operator delete(v3);
@@ -234,29 +234,29 @@ void __thiscall TPicturePanel::draw(TPicturePanel *this)
   TShape *v4; // ecx@10
 
   v1 = this;
-  if ( this->render_area && this->visible && this->active )
+  if( this->render_area && this->visible && this->active )
   {
     v2 = this->vfptr;
     ((void (__stdcall *)(_DWORD))this->vfptr->draw_setup)(0);
-    if ( !v1->keep_loaded )
+    if( !v1->keep_loaded )
       TPicturePanel::load_pic(v1);
-    if ( TDrawArea::Lock(v1->render_area, aPnl_picDraw, 1) )
+    if( TDrawArea::Lock(v1->render_area, aPnl_picDraw, 1) )
     {
-      if ( v1->pic_type )
+      if( v1->pic_type )
       {
         v4 = v1->shape;
-        if ( v4 )
+        if( v4 )
           TShape::shape_draw(v4, v1->render_area, v1->pnl_x, v1->pnl_y, 0, 0, 0);
       }
       else
       {
         v3 = v1->pic;
-        if ( v3 )
+        if( v3 )
           TPicture::Draw(v3, v1->render_area, v1->pnl_x, v1->pnl_y, 0, 0);
       }
       TDrawArea::Unlock(v1->render_area, aPnl_picDraw);
     }
-    if ( !v1->keep_loaded )
+    if( !v1->keep_loaded )
       TPicturePanel::free_pic(v1);
     v2->draw_finish((TPanel *)v1);
   }

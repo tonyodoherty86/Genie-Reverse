@@ -24,7 +24,7 @@ TListDialog *__thiscall TListDialog::`scalar deleting destructor'(TListDialog *t
 
   v2 = this;
   TListDialog::~TListDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -42,19 +42,19 @@ void __thiscall TListDialog::~TListDialog(TListDialog *this)
   v1 = this;
   this->vfptr = (TPanelVtbl *)&TListDialog::`vftable';
   v2 = this->title;
-  if ( v2 )
+  if( v2 )
     ((void (__stdcall *)(_DWORD))v2->vfptr->__vecDelDtor)(1);
   v3 = v1->list;
-  if ( v3 )
+  if( v3 )
     ((void (__stdcall *)(_DWORD))v3->vfptr->__vecDelDtor)(1);
   v4 = v1->scroll_bar;
-  if ( v4 )
+  if( v4 )
     ((void (__stdcall *)(_DWORD))v4->vfptr->__vecDelDtor)(1);
   v5 = v1->ok_btn;
-  if ( v5 )
+  if( v5 )
     (**(void (__stdcall ***)(_DWORD))v5)(1);
   v6 = v1->cancel_btn;
-  if ( v6 )
+  if( v6 )
     (**(void (__stdcall ***)(_DWORD))v6)(1);
   TDialogPanel::~TDialogPanel((TDialogPanel *)&v1->vfptr);
 }
@@ -83,9 +83,9 @@ int __thiscall TListDialog::setup(TListDialog *this, TPanel *parent_panel_in, ch
              info_file_in,
              info_id_in,
              1);
-  if ( result )
+  if( result )
   {
-    if ( !title_in
+    if( !title_in
       || !*title_in
       || (result = ((int (__thiscall *)(TListDialog *, TListDialog *, int, char *, int, int, int, int, signed int, signed int, signed int, signed int))v23->vfptr[1].set_redraw)(
                      v23,
@@ -112,23 +112,23 @@ int __thiscall TListDialog::setup(TListDialog *this, TPanel *parent_panel_in, ch
                  list_wid_in,
                  list_hgt_in,
                  11);
-      if ( result )
+      if( result )
       {
         result = ((int (__thiscall *)(TListDialog *, int, TPanel *, signed int))v26[1].draw_offset)(
                    v23,
                    (int)&v23->scroll_bar,
                    *v27,
                    20);
-        if ( result )
+        if( result )
         {
-          if ( list_in )
+          if( list_in )
             ((void (__stdcall *)(char **, int))(*v27)->vfptr[1].__vecDelDtor)(list_in, list_num_lines_in);
           v28 = (TListPanel *)*v27;
           v23->list_id = list_id_in;
           TListPanel::scroll_cur_line(v28, 1, list_id_in, 1);
           v29 = *(int (__thiscall **)(TListDialog *, TListDialog *, TButtonPanel **, signed int, _DWORD, int, int, int, int, _DWORD, _DWORD, _DWORD))&v26[1].gap4[4];
           result = v29(v23, v23, &v23->ok_btn, 4001, 0, ok_btn_x_in, btn_y_in, btn_wid_in, btn_hgt_in, 0, 0, 0);
-          if ( result )
+          if( result )
           {
             result = v29(
                        v23,
@@ -143,7 +143,7 @@ int __thiscall TListDialog::setup(TListDialog *this, TPanel *parent_panel_in, ch
                        0,
                        0,
                        0);
-            if ( result )
+            if( result )
             {
               v30 = v23->cancel_btn;
               *((_DWORD *)v30 + 166) = 27;
@@ -215,11 +215,11 @@ int __thiscall TListDialog::action(TListDialog *this, TPanel *from_panel, int ac
   TPanel *v16; // ecx@12
 
   v5 = this;
-  if ( from_panel )
+  if( from_panel )
   {
-    if ( from_panel == (TPanel *)this->ok_btn )
+    if( from_panel == (TPanel *)this->ok_btn )
     {
-      if ( action_in == 1 )
+      if( action_in == 1 )
       {
         v6 = TTextPanel::currentLineNumber((TTextPanel *)&this->list->vfptr);
         v7 = (TTextPanel *)&v5->list->vfptr;
@@ -227,7 +227,7 @@ int __thiscall TListDialog::action(TListDialog *this, TPanel *from_panel, int ac
         v8 = TTextPanel::currentLine(v7);
         v9 = v5->parent_panel;
         v5->list_name = v8;
-        if ( v9 )
+        if( v9 )
         {
           ((void (__stdcall *)(TListDialog *, signed int, _DWORD, _DWORD))v9->vfptr->action)(v5, 1, 0, 0);
           return 1;
@@ -235,12 +235,12 @@ int __thiscall TListDialog::action(TListDialog *this, TPanel *from_panel, int ac
         return 1;
       }
     }
-    else if ( from_panel == (TPanel *)this->cancel_btn )
+    else if( from_panel == (TPanel *)this->cancel_btn )
     {
-      if ( action_in == 1 )
+      if( action_in == 1 )
       {
         v11 = this->parent_panel;
-        if ( v11 )
+        if( v11 )
         {
           ((void (__stdcall *)(TListDialog *, signed int, _DWORD, _DWORD))v11->vfptr->action)(v5, 2, 0, 0);
           return 1;
@@ -251,7 +251,7 @@ int __thiscall TListDialog::action(TListDialog *this, TPanel *from_panel, int ac
     else
     {
       v12 = this->list;
-      if ( (TListPanel *)from_panel == v12 && action_in == 3 )
+      if( (TListPanel *)from_panel == v12 && action_in == 3 )
       {
         v13 = TTextPanel::currentLineNumber((TTextPanel *)&v12->vfptr);
         v14 = (TTextPanel *)&v5->list->vfptr;
@@ -259,7 +259,7 @@ int __thiscall TListDialog::action(TListDialog *this, TPanel *from_panel, int ac
         v15 = TTextPanel::currentLine(v14);
         v16 = v5->parent_panel;
         v5->list_name = v15;
-        if ( v16 )
+        if( v16 )
           ((void (__stdcall *)(TListDialog *, signed int, _DWORD, _DWORD))v16->vfptr->action)(v5, 1, 0, 0);
         return 1;
       }

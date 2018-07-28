@@ -11,7 +11,7 @@ void __thiscall TScrollTextPanel::TScrollTextPanel(TScrollTextPanel *this, TPane
   v12->scroll = 0;
   v12->last_time = 0;
   v12->done = 0;
-  if ( TTextPanel::setup(
+  if( TTextPanel::setup(
          (TTextPanel *)&v12->vfptr,
          render_area_in,
          parent_in,
@@ -45,7 +45,7 @@ TScrollTextPanel *__thiscall TScrollTextPanel::`vector deleting destructor'(TScr
 
   v2 = this;
   TScrollTextPanel::~TScrollTextPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -80,12 +80,12 @@ int __thiscall TScrollTextPanel::handle_idle(TScrollTextPanel *this)
   TPanel *v5; // ecx@6
 
   v1 = this;
-  if ( this->last_time )
+  if( this->last_time )
   {
     v2 = debug_timeGetTime();
     v3 = v2;
     v4 = (signed __int64)((double)(v2 - v1->last_time) * 0.001 * (double)v1->speed);
-    if ( (signed int)v4 > 0 )
+    if( (signed int)v4 > 0 )
     {
       HIDWORD(v4) = v1->vfptr;
       v1->scroll += v4;
@@ -97,10 +97,10 @@ int __thiscall TScrollTextPanel::handle_idle(TScrollTextPanel *this)
   {
     this->last_time = debug_timeGetTime();
   }
-  if ( v1->done )
+  if( v1->done )
   {
     v5 = v1->parent_panel;
-    if ( v5 )
+    if( v5 )
       ((void (__stdcall *)(TScrollTextPanel *, signed int, _DWORD, _DWORD))v5->vfptr->action)(v1, 1, 0, 0);
   }
   return TPanel::handle_idle((TPanel *)&v1->vfptr);
@@ -120,27 +120,27 @@ void __thiscall TScrollTextPanel::draw(TScrollTextPanel *this)
   v1 = this;
   v2 = this->render_area;
   this->need_redraw = 0;
-  if ( v2 && this->visible && this->active )
+  if( v2 && this->visible && this->active )
   {
     TTextPanel::draw_background((TTextPanel *)&this->vfptr);
     v3 = v1->vfptr;
     v7 = v1->vfptr;
     v1->vfptr->draw_setup((TPanel *)v1, 0);
     v4 = TDrawArea::GetDc(v1->render_area, aScr_credDraw);
-    if ( v4 )
+    if( v4 )
     {
       SelectClipRgn(v4, v1->clip_rgn);
       old_font = SelectObject(v4, v1->font);
       SetBkMode(v4, 1);
       v5 = 0;
-      if ( v1->num_lines > 0 )
+      if( v1->num_lines > 0 )
       {
         do
         {
           TScrollTextPanel::draw_scrolled_line(v1, v4, v5, v5, v1->text_color1, v1->text_color2);
           ++v5;
         }
-        while ( v5 < v1->num_lines );
+        while( v5 < v1->num_lines );
       }
       SelectObject(v4, old_font);
       SelectClipRgn(v4, 0);
@@ -181,70 +181,70 @@ void __thiscall TScrollTextPanel::draw_scrolled_line(TScrollTextPanel *this, voi
   v7 = TTextPanel::get_text((TTextPanel *)&this->vfptr, text_line);
   v8 = TTextPanel::get_text2((TTextPanel *)&v6->vfptr, text_line);
   temp_text2 = (char *)v8;
-  if ( v7 )
+  if( v7 )
   {
     text_len = strlen(v7);
   }
-  else if ( !v8 )
+  else if( !v8 )
   {
     return;
   }
-  if ( v8 )
+  if( v8 )
     text2_len = strlen(v8);
   TTextPanel::calc_line_pos((TTextPanel *)&v6->vfptr, dc, draw_row, text_line, &line_rect, 0);
   v9 = v6->horz_align;
   x2 = line_rect.left;
-  if ( v9 && v9 != 6 )
+  if( v9 && v9 != 6 )
     x2 = line_rect.left + 5;
   draw_rowa = x2 + v6->second_column_pos;
   v10 = line_rect.top + v6->pnl_hgt - v6->scroll;
-  if ( v18 == v6->num_lines - 1 && v10 + v6->font_hgt < v6->pnl_y )
+  if( v18 == v6->num_lines - 1 && v10 + v6->font_hgt < v6->pnl_y )
     v6->done = 1;
-  if ( v6->clip_rgn2 )
+  if( v6->clip_rgn2 )
     SelectClipRgn(dc, v6->clip_rgn2);
   v11 = v6->text_style;
-  if ( v11 )
+  if( v11 )
   {
     v12 = v11 - 1;
-    if ( v12 )
+    if( v12 )
     {
-      if ( v12 == 1 )
+      if( v12 == 1 )
       {
         SetTextColor(dc, color2);
-        if ( v7 )
+        if( v7 )
           TextOutA(dc, x2 - 1, v10 + 1, (LPCSTR)v7, text_len);
         SetTextColor(dc, color1);
-        if ( v7 )
+        if( v7 )
           TextOutA(dc, x2, v10, (LPCSTR)v7, text_len);
       }
       goto LABEL_28;
     }
     SetTextColor(dc, color1);
-    if ( v7 )
+    if( v7 )
       TextOutA(dc, x2 - 1, v10 + 1, (LPCSTR)v7, text_len);
     SetTextColor(dc, color2);
-    if ( !v7 )
+    if( !v7 )
       goto LABEL_28;
   }
   else
   {
     SetTextColor(dc, color1);
-    if ( !v7 )
+    if( !v7 )
       goto LABEL_28;
   }
   TextOutA(dc, x2, v10, (LPCSTR)v7, text_len);
 LABEL_28:
-  if ( temp_text2 )
+  if( temp_text2 )
   {
-    if ( v19->clip_rgn2 )
+    if( v19->clip_rgn2 )
       SelectClipRgn(dc, v19->clip_rgn);
     v13 = v19->text_style;
-    if ( v13 )
+    if( v13 )
     {
       v14 = v13 - 1;
-      if ( v14 )
+      if( v14 )
       {
-        if ( v14 == 1 )
+        if( v14 == 1 )
         {
           SetTextColor(dc, color2);
           TextOutA(dc, draw_rowa - 1, v10 + 1, temp_text2, text2_len);

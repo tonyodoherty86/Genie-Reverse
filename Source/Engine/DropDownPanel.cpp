@@ -27,7 +27,7 @@ TDropDownPanel *__thiscall TDropDownPanel::`scalar deleting destructor'(TDropDow
 
   v2 = this;
   TDropDownPanel::~TDropDownPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -75,12 +75,12 @@ void __thiscall TDropDownPanel::setup(TDropDownPanel *this, TDrawArea *render_ar
   this->font_hgt = font_hgt_in;
   TPanel::setup((TPanel *)&this->vfptr, render_area_in, parent_panel_in, x_in, y_in, wid_in, hgt_in, 0);
   v31 = (TTextPanel *)operator new(0x188u);
-  if ( v31 )
+  if( v31 )
     TTextPanel::TTextPanel(v31);
   else
     v32 = 0;
   v30->val_panel = v32;
-  if ( v32
+  if( v32
     && TTextPanel::setup(
          v32,
          render_area_in,
@@ -102,12 +102,12 @@ void __thiscall TDropDownPanel::setup(TDropDownPanel *this, TDrawArea *render_ar
   {
     TTextPanel::set_alignment(v30->val_panel, 0, AlignLeft);
     v33 = (TDropDownButtonPanel *)operator new(0x2BCu);
-    if ( v33 )
+    if( v33 )
       TDropDownButtonPanel::TDropDownButtonPanel(v33, v30);
     else
       v34 = 0;
     v30->btn_panel = (TButtonPanel *)v34;
-    if ( v34
+    if( v34
       && TButtonPanel::setup(
            v34,
            render_area_in,
@@ -122,14 +122,14 @@ void __thiscall TDropDownPanel::setup(TDropDownPanel *this, TDrawArea *render_ar
            0) )
     {
       v35 = (TListPanel *)operator new(0x1A0u);
-      if ( v35 )
+      if( v35 )
         TListPanel::TListPanel(v35);
       else
         v36 = 0;
       v30->list_panel = (TListPanel *)v36;
-      if ( v36 )
+      if( v36 )
       {
-        if ( TTextPanel::setup(
+        if( TTextPanel::setup(
                v36,
                render_area_in,
                (TPanel *)&v30->vfptr,
@@ -153,14 +153,14 @@ void __thiscall TDropDownPanel::setup(TDropDownPanel *this, TDrawArea *render_ar
           (*(void (__stdcall **)(_DWORD))&v30->list_panel->vfptr->gap10[4])(0);
           TTextPanel::setCurrentLineNumber((TTextPanel *)&v30->list_panel->vfptr, v30->val_num);
           v37 = (TScrollBarPanel *)operator new(0x1C4u);
-          if ( v37 )
+          if( v37 )
             TScrollBarPanel::TScrollBarPanel(v37);
           else
             v38 = 0;
           v30->scbar_panel = v38;
-          if ( v38 )
+          if( v38 )
           {
-            if ( TScrollBarPanel::setup(
+            if( TScrollBarPanel::setup(
                    v38,
                    v30->render_area,
                    (TPanel *)&v30->vfptr,
@@ -201,13 +201,13 @@ int __thiscall TDropDownPanel::handle_mouse_down(TDropDownPanel *this, int mouse
   int result; // eax@10
 
   v6 = this;
-  if ( this->tab_stop )
+  if( this->tab_stop )
   {
     v7 = this->parent_panel;
-    if ( v7 )
+    if( v7 )
       TPanel::set_curr_child(v7, (TPanel *)&v6->vfptr);
   }
-  if ( v6->mode != 2
+  if( v6->mode != 2
     || ((v8 = ((int (__stdcall *)(int, int))v6->list_panel->vfptr->is_inside)(x, y), v9 = v6->scbar_panel, v10 = v8, !v9) ? (v11 = 0) : (v11 = ((int (__stdcall *)(int, int))v9->vfptr->is_inside)(x, y)),
         v10 || v11) )
   {
@@ -239,7 +239,7 @@ int __userpurge TDropDownPanel::handle_key_down@<eax>(TDropDownPanel *this@<ecx>
 {
   int result; // eax@5
 
-  if ( this->have_focus && (key == 40 || key == 38) && this->mode == 1 )
+  if( this->have_focus && (key == 40 || key == 38) && this->mode == 1 )
   {
     TDropDownPanel::set_mode(this, a2, a3, a4, ModeList);
     result = 1;
@@ -264,15 +264,15 @@ int __thiscall TDropDownPanel::action(TDropDownPanel *this, TPanel *from_panel, 
 
   v5 = action_in;
   v6 = this;
-  if ( from_panel == (TPanel *)this->btn_panel )
+  if( from_panel == (TPanel *)this->btn_panel )
   {
-    if ( action_in == 2 && this->mode == 1 )
+    if( action_in == 2 && this->mode == 1 )
       TDropDownPanel::set_mode(this, (int)from_panel, 2, action_val1, ModeList);
   }
   else
   {
     v7 = this->list_panel;
-    if ( (TListPanel *)from_panel == v7 && (action_in == 3 || action_in == 2) )
+    if( (TListPanel *)from_panel == v7 && (action_in == 3 || action_in == 2) )
     {
       v8 = (int *)v6->val_panel;
       v6->val_num = action_val1;
@@ -281,7 +281,7 @@ int __thiscall TDropDownPanel::action(TDropDownPanel *this, TPanel *from_panel, 
       (*(void (__thiscall **)(TTextPanel *, char *))(v9 + 232))(v6->val_panel, v10);
       TDropDownPanel::set_mode(v6, (int)from_panel, v9, action_val1, ModeValue);
       v11 = v6->parent_panel;
-      if ( v11 )
+      if( v11 )
         ((void (__stdcall *)(TDropDownPanel *, _DWORD, _DWORD, _DWORD))v11->vfptr->action)(v6, 0, 0, 0);
       v5 = action_in;
     }
@@ -300,7 +300,7 @@ void __userpurge TDropDownPanel::set_rect(TDropDownPanel *this@<ecx>, int a2@<eb
   v8 = this;
   TPanel::set_rect((TPanel *)&this->vfptr, x_in, y_in, wid_in, hgt_in);
   v9 = v8->mode;
-  if ( v9 == 1 )
+  if( v9 == 1 )
   {
     v10 = v8->pnl_hgt;
     v8->val_wid = v8->pnl_wid - v8->btn_wid - 1;
@@ -308,7 +308,7 @@ void __userpurge TDropDownPanel::set_rect(TDropDownPanel *this@<ecx>, int a2@<eb
     TDropDownPanel::set_mode(v8, a2, a3, a4, 0);
     TDropDownPanel::set_mode(v8, a2, a3, a4, ModeValue);
   }
-  else if ( v9 == 2 )
+  else if( v9 == 2 )
   {
     v11 = v8->pnl_hgt;
     v8->list_wid = v8->pnl_wid;
@@ -324,7 +324,7 @@ void __thiscall TDropDownPanel::set_val_text_color(TDropDownPanel *this, unsigne
   TTextPanel *v3; // ecx@1
 
   v3 = this->val_panel;
-  if ( v3 )
+  if( v3 )
     TTextPanel::set_text_color(v3, text_color1_in, text_color2_in);
 }
 
@@ -334,7 +334,7 @@ void __userpurge TDropDownPanel::set_draw_style(TDropDownPanel *this@<ecx>, int 
   TDropDownPanel::DropdownMode v5; // eax@2
 
   this->draw_style = draw_style_in;
-  if ( this->val_panel )
+  if( this->val_panel )
   {
     v5 = this->mode;
     this->mode = 0;
@@ -351,7 +351,7 @@ void __thiscall TDropDownPanel::set_draw_val_rect(TDropDownPanel *this, int draw
   v2 = this;
   v3 = this->val_panel;
   v2->draw_val_rect = draw_val_rect_in;
-  if ( v3 )
+  if( v3 )
   {
     TTextPanel::set_outline(v3, draw_val_rect_in, v2->outline_color);
     v2->vfptr->set_redraw((TPanel *)v2, RedrawNormal);
@@ -375,7 +375,7 @@ void __thiscall TDropDownPanel::set_bevel_info(TDropDownPanel *this, int bevel_t
   v8 = c1;
   v9 = this;
   v10 = this->val_panel;
-  if ( v10 )
+  if( v10 )
   {
     switch ( bevel_type_in )
     {
@@ -399,7 +399,7 @@ void __thiscall TDropDownPanel::set_bevel_info(TDropDownPanel *this, int bevel_t
     ((void (__stdcall *)(signed int, int, int, int, int, int, int))v10->vfptr[1].set_rect)(v11, c1, c2, c3, c4, c5, c6);
   }
   v12 = v9->list_panel;
-  if ( v12 )
+  if( v12 )
   {
     switch ( bevel_type_in )
     {
@@ -423,7 +423,7 @@ void __thiscall TDropDownPanel::set_bevel_info(TDropDownPanel *this, int bevel_t
     ((void (__stdcall *)(signed int, int, int, int, int, int, int))v12->vfptr[1].set_rect)(v13, c1, c2, c3, c4, c5, c6);
   }
   v14 = v9->scbar_panel;
-  if ( v14 )
+  if( v14 )
   {
     switch ( bevel_type_in )
     {
@@ -446,7 +446,7 @@ void __thiscall TDropDownPanel::set_bevel_info(TDropDownPanel *this, int bevel_t
     TScrollBarPanel::set_bevel_info(v14, v15, v8, c2, c3, c4, c5, c6);
   }
   v16 = v9->btn_panel;
-  if ( v16 )
+  if( v16 )
   {
     switch ( bevel_type_in )
     {
@@ -479,15 +479,15 @@ void __thiscall TDropDownPanel::set_buttons(TDropDownPanel *this, TShape *button
 
   v7 = this;
   v8 = this->btn_panel;
-  if ( v8 )
+  if( v8 )
   {
-    if ( button_shape_in )
+    if( button_shape_in )
       TButtonPanel::set_picture(v8, 0, button_shape_in, btn_frame_in);
     else
       TButtonPanel::set_picture(v8, 0, 0, -1);
   }
   v9 = v7->scbar_panel;
-  if ( v9 )
+  if( v9 )
     TScrollBarPanel::set_buttons(
       v9,
       button_shape_in,
@@ -582,13 +582,13 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
   int retaddr; // [sp+1FCh] [bp+0h]@38
 
   v5 = this;
-  if ( mode_in != this->mode )
+  if( mode_in != this->mode )
   {
     v6 = this->parent_panel;
     v77 = a4;
     v75 = a3;
     v74 = a2;
-    if ( v6 )
+    if( v6 )
     {
       v7 = TPanel::xPosition(v6);
       v8 = v7;
@@ -612,17 +612,17 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
     v14 = v5->mode;
     v5->mode = 0;
     save_mode = v14;
-    if ( mode_in == 1 )
+    if( mode_in == 1 )
     {
-      if ( v14 == 2 )
+      if( v14 == 2 )
       {
         v15 = v5->parent_panel;
-        if ( v15 )
+        if( v15 )
         {
           v16 = v15->parent_panel;
-          if ( v16 )
+          if( v16 )
           {
-            if ( v5->clip_rect.left < v8
+            if( v5->clip_rect.left < v8
               || v5->clip_rect.top < v10
               || v5->clip_rect.right > v11 + v8 - 1
               || v5->clip_rect.bottom > v12 + v10 - 1 )
@@ -634,7 +634,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
       }
       (*(void (__stdcall **)(_DWORD, int, int, int))&v5->list_panel->vfptr->gap10[4])(0, v74, v75, v77);
       (*(void (__stdcall **)(_DWORD))&v5->scbar_panel->vfptr->gap10[4])(0);
-      if ( v5->draw_style == 1 )
+      if( v5->draw_style == 1 )
       {
         (*(void (__stdcall **)(signed int, _DWORD, _DWORD, signed int, _DWORD, int, int, int, int, _DWORD, _DWORD, _DWORD, _DWORD, int, int, int))(*(_DWORD *)v5->btn_panel + 24))(
           7,
@@ -700,7 +700,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
       v23 = v5->val_wid + v5->btn_wid + 1;
       v24 = v5->val_hgt;
       v5->clip_to_parent = 1;
-      if ( v21 )
+      if( v21 )
       {
         v25 = v5->pnl_hgt + v5->pnl_y - v24 - 1;
         v26 = v5->pnl_x - v8;
@@ -714,17 +714,17 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
         ((void (__thiscall *)(TDropDownPanel *))v22->set_fixed_position)(v5);
       }
       v29 = v5->parent_panel;
-      if ( v29 )
+      if( v29 )
         ((void (__cdecl *)(signed int))v29->vfptr->set_redraw)(1);
       else
         ((void (__thiscall *)(TDropDownPanel *))v22->set_redraw)(v5);
       TPanel::set_curr_child((TPanel *)&v5->vfptr, (TPanel *)&v5->val_panel->vfptr);
-      if ( save_mode == 2 )
+      if( save_mode == 2 )
       {
-        if ( !TPanelSystem::restorePreviousModalPanel(&panel_system) )
+        if( !TPanelSystem::restorePreviousModalPanel(&panel_system) )
           TPanelSystem::setModalPanel(&panel_system, 0);
         v30 = v5->parent_panel;
-        if ( v30 )
+        if( v30 )
         {
           ((void (__stdcall *)(TDropDownPanel *, signed int, _DWORD, _DWORD))v30->vfptr->action)(v5, 2, 0, 0);
           v5->mode = 1;
@@ -732,12 +732,12 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
         }
       }
     }
-    else if ( mode_in == 2 )
+    else if( mode_in == 2 )
     {
       (*(void (__stdcall **)(signed int, int, int, int))&v5->list_panel->vfptr->gap10[4])(1, v74, v75, v77);
       v31 = (TTextPanel *)&v5->list_panel->vfptr;
       v32 = v31->spacer_size;
-      if ( v32 )
+      if( v32 )
       {
         v34 = v31->border_size;
         v5->list_hgt = (v5->font_hgt + 2 * v32 + 1) * TTextPanel::numberLines(v31) + 2 * v34;
@@ -755,11 +755,11 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
       v35 = TTextPanel::numberLines((TTextPanel *)&v5->list_panel->vfptr);
       v36 = TTextPanel::numberDrawLines((TTextPanel *)&v5->list_panel->vfptr);
       v37 = v5->scbar_panel;
-      if ( v35 <= v36 )
+      if( v35 <= v36 )
         (*(void (__stdcall **)(_DWORD))&v37->vfptr->gap10[4])(0);
       else
         (*(void (__stdcall **)(signed int))&v37->vfptr->gap10[4])(1);
-      if ( v5->draw_style == 1 )
+      if( v5->draw_style == 1 )
       {
         (*(void (__stdcall **)(signed int, _DWORD, _DWORD, signed int, _DWORD, int, int, int, int, _DWORD, _DWORD, _DWORD, _DWORD, int, int, int))(*(_DWORD *)v5->btn_panel + 24))(
           7,
@@ -857,12 +857,12 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
       calc_wid = v45;
       v45((TPanel *)&v5->vfptr, v47, v46, v42, v44);
       v48 = TPanel::yPosition((TPanel *)&v5->list_panel->vfptr);
-      if ( TPanel::height((TPanel *)&v5->list_panel->vfptr) + v48 > v5->render_area->Height - 4 )
+      if( TPanel::height((TPanel *)&v5->list_panel->vfptr) + v48 > v5->render_area->Height - 4 )
       {
         v49 = TPanel::yPosition((TPanel *)&v5->list_panel->vfptr);
         v50 = 4 - v5->render_area->Height + TPanel::height((TPanel *)&v5->list_panel->vfptr) + v49;
         v51 = 4 - v5->pnl_y + TPanel::height((TPanel *)&v5->list_panel->vfptr);
-        if ( v51 >= v50 )
+        if( v51 >= v50 )
         {
           v65 = v5->list_hgt - v50;
           v66 = v5->list_panel->vfptr;
@@ -876,7 +876,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
             v78);
           v67 = (TTextPanel *)&v5->list_panel->vfptr;
           v68 = v67->spacer_size;
-          if ( v68 )
+          if( v68 )
           {
             v70 = v67->border_size;
             v5->list_hgt = (v5->font_hgt + 2 * v68 + 1) * TTextPanel::numberDrawLines(v67) + 2 * v70;
@@ -887,7 +887,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
             v5->list_hgt = (v5->font_hgt + 2) * TTextPanel::numberDrawLines(v67) + 2 * v69;
           }
           v71 = v5->list_hgt + v5->val_hgt + 1;
-          if ( !v5->scbar_panel->active )
+          if( !v5->scbar_panel->active )
           {
             ((void (__stdcall *)(_DWORD, _DWORD, int, int))v5->list_panel->vfptr->set_fixed_position)(
               0,
@@ -895,7 +895,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
               v5->list_wid,
               v5->list_hgt);
             v72 = TTextPanel::numberLines((TTextPanel *)&v5->list_panel->vfptr);
-            if ( v72 > TTextPanel::numberDrawLines((TTextPanel *)&v5->list_panel->vfptr) )
+            if( v72 > TTextPanel::numberDrawLines((TTextPanel *)&v5->list_panel->vfptr) )
               (*(void (__stdcall **)(signed int))&v5->scbar_panel->vfptr->gap10[4])(1);
             (*(void (__stdcall **)(signed int, _DWORD, signed int, signed int, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, TTextPanel *, TScrollBarPanel *, _DWORD))&v5->list_panel->vfptr->gap10[8])(
               8,
@@ -916,7 +916,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
         }
         else
         {
-          if ( v51 > 0 )
+          if( v51 > 0 )
           {
             v52 = v5->list_panel->vfptr;
             v53 = v5->list_hgt - v51;
@@ -925,7 +925,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
             ((void (__stdcall *)(_DWORD, _DWORD, int, int))v52->set_fixed_position)(0, 0, v54, v53);
             v55 = (TTextPanel *)&v5->list_panel->vfptr;
             v56 = v55->spacer_size;
-            if ( v56 )
+            if( v56 )
             {
               v58 = v55->border_size;
               v5->list_hgt = (v5->font_hgt + 2 * v56 + 1) * TTextPanel::numberDrawLines(v55) + 2 * v58;
@@ -936,7 +936,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
               v5->list_hgt = (v5->font_hgt + 2) * TTextPanel::numberDrawLines(v55) + 2 * v57;
             }
             v43 = v5->list_hgt + v5->val_hgt + 1;
-            if ( !v5->scbar_panel->active )
+            if( !v5->scbar_panel->active )
             {
               ((void (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD))v5->list_panel->vfptr->set_fixed_position)(
                 0,
@@ -944,11 +944,11 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
                 v5->list_wid,
                 v5->list_hgt);
               v59 = TTextPanel::numberLines((TTextPanel *)&v5->list_panel->vfptr);
-              if ( v59 > TTextPanel::numberDrawLines((TTextPanel *)&v5->list_panel->vfptr) )
+              if( v59 > TTextPanel::numberDrawLines((TTextPanel *)&v5->list_panel->vfptr) )
                 (*(void (__stdcall **)(signed int))&v5->scbar_panel->vfptr->gap10[4])(1);
             }
           }
-          if ( v5->draw_style == 1 )
+          if( v5->draw_style == 1 )
           {
             (*(void (__stdcall **)(signed int, _DWORD, _DWORD, signed int, _DWORD, int, int, int, int, _DWORD, _DWORD, _DWORD, _DWORD, int, void *, _DWORD, _DWORD, _DWORD))(*(_DWORD *)v5->btn_panel + 24))(
               8,
@@ -1046,7 +1046,7 @@ void __userpurge TDropDownPanel::set_mode(TDropDownPanel *this@<ecx>, int a2@<eb
       TPanel::set_curr_child((TPanel *)&v5->vfptr, (TPanel *)&v5->list_panel->vfptr);
       TPanelSystem::setModalPanel(&panel_system, (TPanel *)&v5->vfptr);
       v73 = v5->parent_panel;
-      if ( v73 )
+      if( v73 )
         ((void (__stdcall *)(TDropDownPanel *, signed int, _DWORD, _DWORD))v73->vfptr->action)(v5, 1, 0, 0);
     }
     v5->mode = mode_in;
@@ -1063,7 +1063,7 @@ int __thiscall TDropDownPanel::numberLines(TDropDownPanel *this)
   int result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = TTextPanel::numberLines((TTextPanel *)&v1->vfptr);
   else
     result = 0;
@@ -1077,7 +1077,7 @@ int __thiscall TDropDownPanel::currentLineNumber(TDropDownPanel *this)
   int result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = TTextPanel::currentLineNumber((TTextPanel *)&v1->vfptr);
   else
     result = 0;
@@ -1102,13 +1102,13 @@ void __thiscall TDropDownPanel::setCurrentLineId(TDropDownPanel *this, int id_in
 
   v2 = this;
   v3 = this->list_panel;
-  if ( v3 )
+  if( v3 )
   {
     TTextPanel::set_line_by_id((TTextPanel *)&v3->vfptr, id_in);
     v4 = TTextPanel::get_line((TTextPanel *)&v2->list_panel->vfptr);
     v5 = &v2->val_panel->vfptr;
     v2->val_num = v4;
-    if ( v5 )
+    if( v5 )
     {
       v6 = *v5;
       v7 = TTextPanel::get_text((TTextPanel *)&v2->list_panel->vfptr, v4);
@@ -1124,7 +1124,7 @@ char *__thiscall TDropDownPanel::currentLine(TDropDownPanel *this)
   char *result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = TTextPanel::currentLine((TTextPanel *)&v1->vfptr);
   else
     result = 0;
@@ -1140,7 +1140,7 @@ void __thiscall TDropDownPanel::set_tab_order(TDropDownPanel *this, TPanel *prev
   v3 = this;
   TPanel::set_tab_order((TPanel *)&this->vfptr, prev_panel, next_panel);
   v4 = v3->val_panel;
-  if ( v4 )
+  if( v4 )
     (*((void (__stdcall **)(_DWORD, _DWORD))&v4->vfptr->set_focus + 1))(0, 0);
 }
 
@@ -1150,7 +1150,7 @@ void __thiscall TDropDownPanel::set_sorted(TDropDownPanel *this, int sorted_in)
   TListPanel *v2; // eax@1
 
   v2 = this->list_panel;
-  if ( v2 )
+  if( v2 )
     v2->sorted = sorted_in;
 }
 
@@ -1161,7 +1161,7 @@ int __thiscall TDropDownPanel::get_sorted(TDropDownPanel *this)
   int result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = v1->sorted;
   else
     result = 0;
@@ -1180,11 +1180,11 @@ void __thiscall TDropDownPanel::set_line(TDropDownPanel *this, int line_in)
   v2 = this;
   v3 = this->list_panel;
   v2->val_num = line_in;
-  if ( v3 )
+  if( v3 )
   {
     TTextPanel::set_line((TTextPanel *)&v3->vfptr, line_in);
     v4 = &v2->val_panel->vfptr;
-    if ( v4 )
+    if( v4 )
     {
       v5 = *v4;
       v6 = TTextPanel::get_text((TTextPanel *)&v2->list_panel->vfptr, line_in);
@@ -1200,7 +1200,7 @@ void *__thiscall TDropDownPanel::append_line(TDropDownPanel *this, char *text_in
   void *result; // eax@2
 
   v3 = this->list_panel;
-  if ( v3 )
+  if( v3 )
     result = TTextPanel::append_line((TTextPanel *)&v3->vfptr, text_in, id_in);
   else
     result = 0;
@@ -1214,7 +1214,7 @@ void *__thiscall TDropDownPanel::append_line(TDropDownPanel *this, int string_id
   void *result; // eax@2
 
   v3 = this->list_panel;
-  if ( v3 )
+  if( v3 )
     result = TTextPanel::append_line((TTextPanel *)&v3->vfptr, string_id_in, id_in);
   else
     result = 0;
@@ -1228,7 +1228,7 @@ void *__thiscall TDropDownPanel::insert_line(TDropDownPanel *this, int line_in, 
   void *result; // eax@2
 
   v4 = this->list_panel;
-  if ( v4 )
+  if( v4 )
     result = TTextPanel::insert_line((TTextPanel *)&v4->vfptr, line_in, text_in, id_in);
   else
     result = 0;
@@ -1242,7 +1242,7 @@ void *__thiscall TDropDownPanel::insert_line(TDropDownPanel *this, int line_in, 
   void *result; // eax@2
 
   v4 = this->list_panel;
-  if ( v4 )
+  if( v4 )
     result = TTextPanel::insert_line((TTextPanel *)&v4->vfptr, line_in, string_id_in, id_in);
   else
     result = 0;
@@ -1256,7 +1256,7 @@ int __thiscall TDropDownPanel::delete_line(TDropDownPanel *this, int line_in)
   int result; // eax@2
 
   v2 = this->list_panel;
-  if ( v2 )
+  if( v2 )
     result = TTextPanel::delete_line((TTextPanel *)&v2->vfptr, line_in);
   else
     result = 0;
@@ -1270,7 +1270,7 @@ int __thiscall TDropDownPanel::get_line(TDropDownPanel *this)
   int result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = TTextPanel::get_line((TTextPanel *)&v1->vfptr);
   else
     result = 0;
@@ -1284,7 +1284,7 @@ int __thiscall TDropDownPanel::get_line(TDropDownPanel *this, int id_in)
   int result; // eax@2
 
   v2 = this->list_panel;
-  if ( v2 )
+  if( v2 )
     result = TTextPanel::get_line((TTextPanel *)&v2->vfptr, id_in);
   else
     result = 0;
@@ -1298,7 +1298,7 @@ int __thiscall TDropDownPanel::get_line(TDropDownPanel *this, char *text_in)
   int result; // eax@2
 
   v2 = this->list_panel;
-  if ( v2 )
+  if( v2 )
     result = TTextPanel::get_line((TTextPanel *)&v2->vfptr, text_in);
   else
     result = 0;
@@ -1312,7 +1312,7 @@ char *__thiscall TDropDownPanel::get_text(TDropDownPanel *this)
   char *result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = TTextPanel::get_text((TTextPanel *)&v1->vfptr);
   else
     result = 0;
@@ -1326,7 +1326,7 @@ char *__thiscall TDropDownPanel::get_text(TDropDownPanel *this, int line_in)
   char *result; // eax@2
 
   v2 = this->list_panel;
-  if ( v2 )
+  if( v2 )
     result = TTextPanel::get_text((TTextPanel *)&v2->vfptr, line_in);
   else
     result = 0;
@@ -1340,7 +1340,7 @@ int __thiscall TDropDownPanel::get_id(TDropDownPanel *this)
   int result; // eax@2
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     result = TTextPanel::get_id((TTextPanel *)&v1->vfptr);
   else
     result = 0;
@@ -1354,7 +1354,7 @@ int __thiscall TDropDownPanel::get_id(TDropDownPanel *this, int line_in)
   int result; // eax@2
 
   v2 = this->list_panel;
-  if ( v2 )
+  if( v2 )
     result = TTextPanel::get_id((TTextPanel *)&v2->vfptr, line_in);
   else
     result = 0;
@@ -1367,6 +1367,6 @@ void __thiscall TDropDownPanel::empty_list(TDropDownPanel *this)
   TListPanel *v1; // ecx@1
 
   v1 = this->list_panel;
-  if ( v1 )
+  if( v1 )
     TTextPanel::empty_list((TTextPanel *)&v1->vfptr);
 }

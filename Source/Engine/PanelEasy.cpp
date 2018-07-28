@@ -18,7 +18,7 @@ TEasy_Panel *__thiscall TEasy_Panel::`vector deleting destructor'(TEasy_Panel *t
 
   v2 = this;
   TEasy_Panel::~TEasy_Panel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -102,11 +102,11 @@ int __thiscall TEasy_Panel::setup(TEasy_Panel *this, TDrawArea *render_area_in, 
   own_mem = -1;
   this->allow_shadow_area = allow_shadow_area_in;
   TEasy_Panel::set_info_file(this, info_file_name_in, resource_file_id);
-  if ( full_screen )
+  if( full_screen )
   {
     v12 = 0;
     v13 = 0;
-    if ( render_area_in )
+    if( render_area_in )
     {
       v14 = render_area_in->Width;
       v15 = render_area_in->Height;
@@ -121,13 +121,13 @@ int __thiscall TEasy_Panel::setup(TEasy_Panel *this, TDrawArea *render_area_in, 
   {
     v14 = wid_in;
     v15 = hgt_in;
-    if ( wid_in > 0 && hgt_in > 0 && render_area_in )
+    if( wid_in > 0 && hgt_in > 0 && render_area_in )
     {
       v12 = x_in;
-      if ( x_in == -1 )
+      if( x_in == -1 )
         v12 = render_area_in->Width / 2 - wid_in / 2;
       v13 = y_in;
-      if ( y_in == -1 )
+      if( y_in == -1 )
         v13 = render_area_in->Height / 2 - hgt_in / 2;
     }
     else
@@ -137,11 +137,11 @@ int __thiscall TEasy_Panel::setup(TEasy_Panel *this, TDrawArea *render_area_in, 
     }
   }
   result = TPanel::setup((TPanel *)&v11->vfptr, render_area_in, parent_in, v12, v13, v14, v15, 0);
-  if ( result )
+  if( result )
   {
     v17 = v11->vfptr;
     (*(void (__thiscall **)(TEasy_Panel *, int, int))&v11->vfptr[1].gap4[0])(v11, v14, v15);
-    if ( full_screen )
+    if( full_screen )
       (*(void (__thiscall **)(TEasy_Panel *, signed int, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))&v17->gap10[8])(
         v11,
         1,
@@ -158,22 +158,22 @@ int __thiscall TEasy_Panel::setup(TEasy_Panel *this, TDrawArea *render_area_in, 
         0,
         0);
     v18 = 0;
-    if ( shape_file_first && v11 != (TEasy_Panel *)-252 && v11->info_file_name[0] )
+    if( shape_file_first && v11 != (TEasy_Panel *)-252 && v11->info_file_name[0] )
     {
       v19 = strchr(v11->info_file_name, 46);
       v30 = (int)v11->info_file_name;
-      if ( v19 )
+      if( v19 )
         sprintf(info_file_name2, aS_2, v30);
       else
         sprintf(info_file_name2, aS_sin, v30);
       v20 = _open(info_file_name2, 0x8000);
       v21 = v20;
-      if ( v20 != -1 )
+      if( v20 != -1 )
       {
         lseek(v20, 0, 2);
         v22 = _tell(v21);
         v18 = (char *)malloc(v22);
-        if ( v18 )
+        if( v18 )
         {
           lseek(v21, 0, 0);
           read(v21, v18, v22);
@@ -182,15 +182,15 @@ int __thiscall TEasy_Panel::setup(TEasy_Panel *this, TDrawArea *render_area_in, 
         _close(v21);
       }
     }
-    if ( v18 )
+    if( v18 )
       goto LABEL_43;
     v23 = v11->info_id;
-    if ( v23 != -1 )
+    if( v23 != -1 )
       v18 = RESFILE_load(0x62696E61u, v23, &own_mem, &resDataSize);
-    if ( v18 )
+    if( v18 )
     {
 LABEL_43:
-      if ( sscanf(
+      if( sscanf(
              v18,
              aSSSDDSSSDDSSSD,
              temp_label,
@@ -256,9 +256,9 @@ LABEL_43:
              &s1b) != -1 )
       {
         TEasy_Panel::set_use_bevels(v11, 1);
-        if ( v11->render_area->Width >= 800 && _strcmpi(background_pic_file_name_b1, Str2) )
+        if( v11->render_area->Width >= 800 && _strcmpi(background_pic_file_name_b1, Str2) )
         {
-          if ( v11->render_area->Width >= 1024 )
+          if( v11->render_area->Width >= 1024 )
           {
             TEasy_Panel::set_background(v11, background_pic_file_name_c1, back_pic_id_c1);
             TEasy_Panel::set_background2(v11, background_pic_file_name_c2, back_pic_id_c2);
@@ -298,7 +298,7 @@ LABEL_43:
         TEasy_Panel::set_button_pics(v11, button_pics_file_name, button_pic_id);
         TEasy_Panel::set_popup_info_file(v11, popup_info_file_name_in, popup_info_id);
       }
-      if ( own_mem == 1 )
+      if( own_mem == 1 )
         free(v18);
     }
     result = 1;
@@ -374,45 +374,45 @@ void __thiscall TEasy_Panel::prepare_for_close(TEasy_Panel *this)
 
   v1 = this;
   v2 = this->shadow_area;
-  if ( v2 )
+  if( v2 )
   {
     TDrawArea::~TDrawArea(this->shadow_area);
     operator delete(v2);
     v1->shadow_area = 0;
   }
-  if ( v1->brush )
+  if( v1->brush )
   {
-    if ( !v1->stock_brush )
+    if( !v1->stock_brush )
       DeleteObject(v1->brush);
     v1->brush = 0;
   }
   v3 = v1->background_pic;
-  if ( v3 )
+  if( v3 )
   {
     TShape::~TShape(v1->background_pic);
     operator delete(v3);
     v1->background_pic = 0;
   }
   v4 = v1->background_pic2;
-  if ( v4 )
+  if( v4 )
   {
     TShape::~TShape(v1->background_pic2);
     operator delete(v4);
     v1->background_pic2 = 0;
   }
-  if ( v1->palette )
+  if( v1->palette )
   {
     TPanelSystem::release_palette(&panel_system, v1->palette);
     v1->palette = 0;
   }
   v5 = v1->shadow_color_table;
-  if ( v5 )
+  if( v5 )
   {
     ((void (__stdcall *)(_DWORD))v5->vfptr->__vecDelDtor)(1);
     v1->shadow_color_table = 0;
   }
   v6 = v1->button_pics;
-  if ( v6 )
+  if( v6 )
   {
     TShape::~TShape(v1->button_pics);
     operator delete(v6);
@@ -440,37 +440,37 @@ void __thiscall TEasy_Panel::setup_shadow_area(TEasy_Panel *this, int force_redr
 
   v2 = this;
   v3 = this->shadow_area;
-  if ( (!v3 || force_redraw) && v2->background_pic && v2->shadow_color_table )
+  if( (!v3 || force_redraw) && v2->background_pic && v2->shadow_color_table )
   {
     v4 = v2->render_area;
     v5 = v4->DrawSystem->Flags;
-    if ( !v3 )
+    if( !v3 )
     {
       v4->DrawSystem->Flags &= 1u;
       sprintf(area_name, aSShadowPanel, v2->panelNameValue);
       v6 = (TDrawArea *)operator new(0x100u);
       y_min = (int)v6;
       v15 = 0;
-      if ( v6 )
+      if( v6 )
         TDrawArea::TDrawArea(v6, area_name, 0);
       else
         v7 = 0;
       v15 = -1;
       v2->shadow_area = v7;
     }
-    if ( v2->shadow_area )
+    if( v2->shadow_area )
     {
       TShape::shape_minmax(v2->background_pic, &x_min, &y_min, &x_max, &y_max, 0);
       v8 = x_max - x_min + 1;
       v9 = y_max - y_min + 1;
-      if ( v8 > v2->pnl_wid )
+      if( v8 > v2->pnl_wid )
         v8 = v2->pnl_wid;
-      if ( v9 > v2->pnl_hgt )
+      if( v9 > v2->pnl_hgt )
         v9 = v2->pnl_hgt;
-      if ( TDrawArea::Init(v2->shadow_area, v2->render_area->DrawSystem, v8, v9, 0, 0) )
+      if( TDrawArea::Init(v2->shadow_area, v2->render_area->DrawSystem, v8, v9, 0, 0) )
       {
         TDrawArea::Clear(v2->shadow_area, 0, v2->background_color1);
-        if ( TDrawArea::Lock(v2->shadow_area, aPanel_ezSetup_, 1) )
+        if( TDrawArea::Lock(v2->shadow_area, aPanel_ezSetup_, 1) )
         {
           TShape::shape_draw(v2->background_pic, v2->shadow_area, 0, 0, 0, 0, 0);
           TDrawArea::SetShadowTable(v2->shadow_area, v2->shadow_color_table);
@@ -495,13 +495,13 @@ void __thiscall TEasy_Panel::draw(TEasy_Panel *this)
   TEasy_Panel *v1; // esi@1
 
   v1 = this;
-  if ( this->need_restore )
+  if( this->need_restore )
   {
-    if ( this->shadow_area )
+    if( this->shadow_area )
       TEasy_Panel::setup_shadow_area(this, 1);
     v1->need_restore = 0;
   }
-  if ( v1->draw_rect2_flag )
+  if( v1->draw_rect2_flag )
     v1->vfptr[1].__vecDelDtor((TPanel *)v1, 1u);
   else
     v1->vfptr[1].__vecDelDtor((TPanel *)v1, 0);
@@ -536,26 +536,26 @@ void __thiscall TEasy_Panel::draw_background(TEasy_Panel *this, int use_backgrou
   v2 = this;
   v23 = this->vfptr;
   ((void (__stdcall *)(_DWORD))v23->draw_setup)(0);
-  if ( !use_background2 )
+  if( !use_background2 )
     goto LABEL_48;
-  if ( v2->shadow_area )
+  if( v2->shadow_area )
   {
-    if ( v2->need_redraw == 2 )
+    if( v2->need_redraw == 2 )
       TDrawArea::Clear(v2->render_area, &v2->clip_rect, v2->background_color2);
     v3 = v2->shadow_area;
     v4 = v2->background_pos;
     v5 = v3->Width;
     pic_hgt = v3->Height;
-    if ( v4 )
+    if( v4 )
     {
       v6 = v4 - 1;
-      if ( v6 )
+      if( v6 )
       {
-        if ( v6 == 1 )
+        if( v6 == 1 )
         {
-          for ( i = 0; i <= v2->pnl_hgt; i += pic_hgt )
+          for( i = 0; i <= v2->pnl_hgt; i += pic_hgt )
           {
-            for ( j = 0; j <= v2->pnl_wid; j += v5 )
+            for( j = 0; j <= v2->pnl_wid; j += v5 )
               TDrawArea::Copy(v2->shadow_area, v2->render_area, v2->pnl_x + j, v2->pnl_y + i, 0, 0);
           }
         }
@@ -577,7 +577,7 @@ void __thiscall TEasy_Panel::draw_background(TEasy_Panel *this, int use_backgrou
     }
     goto LABEL_42;
   }
-  if ( use_background2 && (v9 = v2->background_pic2) != 0 )
+  if( use_background2 && (v9 = v2->background_pic2) != 0 )
   {
     pic = v2->background_pic2;
   }
@@ -587,35 +587,35 @@ LABEL_48:
     pic = v2->background_pic;
     v9 = v2->background_pic;
   }
-  if ( v2->need_redraw != 2 && v9
+  if( v2->need_redraw != 2 && v9
     || (!use_background2 ? TDrawArea::Clear(v2->render_area, &v2->clip_rect, v2->background_color1) : TDrawArea::Clear(v2->render_area, &v2->clip_rect, v2->background_color2),
         v9) )
   {
-    if ( TDrawArea::Lock(v2->render_area, aPanel_ezDraw_b, 1) )
+    if( TDrawArea::Lock(v2->render_area, aPanel_ezDraw_b, 1) )
     {
       TShape::shape_minmax(v9, &x_min, &y_min, &x_max, &y_max, 0);
       v10 = x_max - x_min + 1;
       v11 = y_max - y_min + 1;
       pic_hgta = y_max - y_min + 1;
-      if ( v2->background_pos == 1 )
+      if( v2->background_pos == 1 )
       {
         v14 = (signed __int16)(v2->pnl_wid / 2 + LOWORD(v2->pnl_x) - v10 / 2);
         pic_hgtb = (signed __int16)(v2->pnl_hgt / 2 + LOWORD(v2->pnl_y) - v11 / 2);
         TShape::shape_draw(pic, v2->render_area, v14, pic_hgtb, 0, 0, 0);
-        if ( use_background2 && v2->shadow_color_table )
+        if( use_background2 && v2->shadow_color_table )
         {
           TDrawArea::SetShadowTable(v2->render_area, v2->shadow_color_table);
           TDrawArea::DrawShadowBox(v2->render_area, v14, pic_hgtb, v14 + v10 - 1, pic_hgtb + v11 - 1);
         }
       }
-      else if ( v2->background_pos == 2 )
+      else if( v2->background_pos == 2 )
       {
-        for ( k = 0; k <= v2->pnl_hgt; k += pic_hgta )
+        for( k = 0; k <= v2->pnl_hgt; k += pic_hgta )
         {
-          for ( l = 0; l <= v2->pnl_wid; l += v10 )
+          for( l = 0; l <= v2->pnl_wid; l += v10 )
             TShape::shape_draw(pic, v2->render_area, v2->pnl_x + l, v2->pnl_y + k, 0, 0, 0);
         }
-        if ( use_background2 && v2->shadow_color_table )
+        if( use_background2 && v2->shadow_color_table )
         {
           TDrawArea::SetShadowTable(v2->render_area, v2->shadow_color_table);
           TDrawArea::DrawShadowBox(
@@ -629,7 +629,7 @@ LABEL_48:
       else
       {
         TShape::shape_draw(v9, v2->render_area, v2->pnl_x, v2->pnl_y, 0, 0, 0);
-        if ( use_background2 && v2->shadow_color_table )
+        if( use_background2 && v2->shadow_color_table )
         {
           TDrawArea::SetShadowTable(v2->render_area, v2->shadow_color_table);
           TDrawArea::DrawShadowBox(v2->render_area, v2->pnl_x, v2->pnl_y, v10 + v2->pnl_x - 1, v11 + v2->pnl_y - 1);
@@ -639,7 +639,7 @@ LABEL_48:
     }
   }
 LABEL_42:
-  if ( v2->use_bevels && TDrawArea::Lock(v2->render_area, aPanel_ezDraw_1, 1) )
+  if( v2->use_bevels && TDrawArea::Lock(v2->render_area, aPanel_ezDraw_1, 1) )
   {
     TDrawArea::DrawBevel3(
       v2->render_area,
@@ -665,7 +665,7 @@ int __thiscall TEasy_Panel::handle_mouse_down(TEasy_Panel *this, int mouse_butto
   int result; // eax@2
 
   v6 = this;
-  if ( TEasy_Panel::command_do_popup_help(this, mouse_button_in, x, y) )
+  if( TEasy_Panel::command_do_popup_help(this, mouse_button_in, x, y) )
     result = 1;
   else
     result = TPanel::handle_mouse_down((TPanel *)&v6->vfptr, mouse_button_in, x, y, ctrl_key, shift_key);
@@ -675,7 +675,7 @@ int __thiscall TEasy_Panel::handle_mouse_down(TEasy_Panel *this, int mouse_butto
 //----- (004679F0) --------------------------------------------------------
 void __thiscall TEasy_Panel::set_info_file(TEasy_Panel *this, char *file_name, int resource_file_id)
 {
-  if ( file_name )
+  if( file_name )
   {
     strcpy(this->info_file_name, file_name);
     this->info_id = resource_file_id;
@@ -709,21 +709,21 @@ BOOL __thiscall TEasy_Panel::set_background(TEasy_Panel *this, char *file_name, 
 
   v3 = this;
   v4 = this->background_pic;
-  if ( v4 )
+  if( v4 )
   {
     TShape::~TShape(this->background_pic);
     operator delete(v4);
     v3->background_pic = 0;
   }
-  if ( file_name && *file_name && _strcmpi(file_name, Str2) )
+  if( file_name && *file_name && _strcmpi(file_name, Str2) )
   {
-    if ( strchr(file_name, 46) )
+    if( strchr(file_name, 46) )
       sprintf(file_name2, aS_2, file_name);
     else
       sprintf(file_name2, aS_shp, file_name);
     v5 = (TShape *)operator new(0x20u);
     v12 = 0;
-    if ( v5 )
+    if( v5 )
     {
       TShape::TShape(v5, file_name2, resource_id);
 LABEL_15:
@@ -733,11 +733,11 @@ LABEL_15:
     }
     goto LABEL_14;
   }
-  if ( resource_id != -1 )
+  if( resource_id != -1 )
   {
     v7 = (TShape *)operator new(0x20u);
     v12 = 1;
-    if ( v7 )
+    if( v7 )
     {
       TShape::TShape(v7, message_in, resource_id);
       goto LABEL_15;
@@ -748,10 +748,10 @@ LABEL_14:
   }
 LABEL_16:
   v8 = v3->background_pic;
-  if ( v8 && !TShape::is_loaded(v8) )
+  if( v8 && !TShape::is_loaded(v8) )
   {
     v9 = v3->background_pic;
-    if ( v9 )
+    if( v9 )
     {
       TShape::~TShape(v3->background_pic);
       operator delete(v9);
@@ -776,21 +776,21 @@ BOOL __thiscall TEasy_Panel::set_background2(TEasy_Panel *this, char *file_name,
 
   v3 = this;
   v4 = this->background_pic2;
-  if ( v4 )
+  if( v4 )
   {
     TShape::~TShape(this->background_pic2);
     operator delete(v4);
     v3->background_pic2 = 0;
   }
-  if ( file_name && *file_name && _strcmpi(file_name, Str2) )
+  if( file_name && *file_name && _strcmpi(file_name, Str2) )
   {
-    if ( strchr(file_name, 46) )
+    if( strchr(file_name, 46) )
       sprintf(file_name2, aS_2, file_name);
     else
       sprintf(file_name2, aS_shp, file_name);
     v5 = (TShape *)operator new(0x20u);
     v12 = 0;
-    if ( v5 )
+    if( v5 )
     {
       TShape::TShape(v5, file_name2, resource_id);
 LABEL_15:
@@ -800,11 +800,11 @@ LABEL_15:
     }
     goto LABEL_14;
   }
-  if ( resource_id != -1 )
+  if( resource_id != -1 )
   {
     v7 = (TShape *)operator new(0x20u);
     v12 = 1;
-    if ( v7 )
+    if( v7 )
     {
       TShape::TShape(v7, message_in, resource_id);
       goto LABEL_15;
@@ -815,10 +815,10 @@ LABEL_14:
   }
 LABEL_16:
   v8 = v3->background_pic2;
-  if ( v8 && !TShape::is_loaded(v8) )
+  if( v8 && !TShape::is_loaded(v8) )
   {
     v9 = v3->background_pic2;
-    if ( v9 )
+    if( v9 )
     {
       TShape::~TShape(v3->background_pic2);
       operator delete(v9);
@@ -854,33 +854,33 @@ int __thiscall TEasy_Panel::set_palette(TEasy_Panel *this, char *file_name, int 
   int v10; // [sp+418h] [bp-4h]@13
 
   v3 = this;
-  if ( this->palette )
+  if( this->palette )
   {
     TPanelSystem::release_palette(&panel_system, this->palette);
     v3->palette = 0;
   }
   v4 = v3->shadow_color_table;
-  if ( v4 )
+  if( v4 )
   {
     ((void (__stdcall *)(signed int))v4->vfptr->__vecDelDtor)(1);
     v3->shadow_color_table = 0;
   }
-  if ( resource_file_id == -1 )
+  if( resource_file_id == -1 )
   {
-    if ( !file_name || !*file_name )
+    if( !file_name || !*file_name )
       return 1;
-    if ( !_strcmpi(file_name, Str2) )
+    if( !_strcmpi(file_name, Str2) )
       return 1;
   }
   v6 = TPanelSystem::get_palette(&panel_system, file_name, resource_file_id);
   v3->palette = v6;
-  if ( v6 && v3->shadow_amount > 0 )
+  if( v6 && v3->shadow_amount > 0 )
   {
-    if ( GetPaletteEntries(v6, 0, 0x100u, palette_entries) )
+    if( GetPaletteEntries(v6, 0, 0x100u, palette_entries) )
     {
       v7 = (RGE_Color_Table *)operator new(0x128u);
       v10 = 0;
-      if ( v7 )
+      if( v7 )
       {
         RGE_Color_Table::RGE_Color_Table(v7, v3->render_area, v3->shadow_amount, 0, palette_entries);
         v3->shadow_color_table = v8;
@@ -964,7 +964,7 @@ void __thiscall TEasy_Panel::set_state_colors(TEasy_Panel *this, unsigned int c1
 //----- (00468000) --------------------------------------------------------
 void __thiscall TEasy_Panel::set_popup_info_file(TEasy_Panel *this, char *file_name, int resource_file_id)
 {
-  if ( file_name )
+  if( file_name )
   {
     strcpy(this->popup_info_file_name, file_name);
     this->popup_info_id = resource_file_id;
@@ -991,21 +991,21 @@ void __thiscall TEasy_Panel::set_button_pics(TEasy_Panel *this, char *file_name,
 
   v3 = this;
   v4 = this->button_pics;
-  if ( v4 )
+  if( v4 )
   {
     TShape::~TShape(this->button_pics);
     operator delete(v4);
     v3->button_pics = 0;
   }
-  if ( file_name && *file_name && _strcmpi(file_name, Str2) )
+  if( file_name && *file_name && _strcmpi(file_name, Str2) )
   {
-    if ( strchr(file_name, 46) )
+    if( strchr(file_name, 46) )
       sprintf(file_name2, aS_2, file_name);
     else
       sprintf(file_name2, aS_shp, file_name);
     v5 = (TShape *)operator new(0x20u);
     v11 = 0;
-    if ( v5 )
+    if( v5 )
     {
       TShape::TShape(v5, file_name2, resource_file_id);
 LABEL_15:
@@ -1015,11 +1015,11 @@ LABEL_15:
     }
     goto LABEL_14;
   }
-  if ( resource_file_id != -1 )
+  if( resource_file_id != -1 )
   {
     v7 = (TShape *)operator new(0x20u);
     v11 = 1;
-    if ( v7 )
+    if( v7 )
     {
       TShape::TShape(v7, message_in, resource_file_id);
       goto LABEL_15;
@@ -1030,10 +1030,10 @@ LABEL_14:
   }
 LABEL_16:
   v8 = v3->button_pics;
-  if ( v8 && !TShape::is_loaded(v8) )
+  if( v8 && !TShape::is_loaded(v8) )
   {
     v9 = v3->button_pics;
-    if ( v9 )
+    if( v9 )
     {
       TShape::~TShape(v3->button_pics);
       operator delete(v9);
@@ -1054,29 +1054,29 @@ void __thiscall TEasy_Panel::set_shadow_amount(TEasy_Panel *this, int val)
   int v8; // [sp+410h] [bp-4h]@9
 
   v2 = this;
-  if ( val == -1 )
+  if( val == -1 )
     this->shadow_amount = 0;
   else
     this->shadow_amount = val;
   v3 = this->shadow_color_table;
-  if ( v3 )
+  if( v3 )
   {
     ((void (__stdcall *)(signed int))v3->vfptr->__vecDelDtor)(1);
     v2->shadow_color_table = 0;
   }
   v4 = v2->palette;
-  if ( v4 && v2->shadow_amount > 0 && GetPaletteEntries(v4, 0, 0x100u, palette_entries) )
+  if( v4 && v2->shadow_amount > 0 && GetPaletteEntries(v4, 0, 0x100u, palette_entries) )
   {
     v5 = (RGE_Color_Table *)operator new(0x128u);
     v8 = 0;
-    if ( v5 )
+    if( v5 )
       RGE_Color_Table::RGE_Color_Table(v5, v2->render_area, v2->shadow_amount, 0, palette_entries);
     else
       v6 = 0;
     v8 = -1;
     v2->shadow_color_table = v6;
   }
-  if ( v2->have_focus )
+  if( v2->have_focus )
     v2->vfptr->set_redraw((TPanel *)v2, RedrawFull);
 }
 
@@ -1087,9 +1087,9 @@ void __thiscall TEasy_Panel::set_enable_ime(TEasy_Panel *this, int enable_ime_in
 
   v2 = this->have_focus;
   this->enable_ime = enable_ime_in;
-  if ( v2 )
+  if( v2 )
   {
-    if ( enable_ime_in )
+    if( enable_ime_in )
       TPanelSystem::EnableIME(&panel_system);
     else
       TPanelSystem::DisableIME(&panel_system);
@@ -1266,12 +1266,12 @@ int __thiscall TEasy_Panel::create_button(TEasy_Panel *this, TPanel *parent, TBu
   v17 = v13 * width / v14;
   v18 = v15 * height / v16;
   v19 = (TButtonPanel *)operator new(0x2B8u);
-  if ( v19 )
+  if( v19 )
     TButtonPanel::TButtonPanel(v19);
   else
     v20 = 0;
   *button = (TButtonPanel *)v20;
-  if ( v20
+  if( v20
     && !*(_DWORD *)(v20 + 216)
     && (sound_num < 0 ? (v21 = 0) : (v21 = RGE_Base_Game::get_sound(rge_base_game, sound_num)),
         TButtonPanel::setup(
@@ -1288,14 +1288,14 @@ int __thiscall TEasy_Panel::create_button(TEasy_Panel *this, TPanel *parent, TBu
           action_id)) )
   {
     TButtonPanel::set_sound_number(*button, sound_num);
-    if ( font_num < 0 )
+    if( font_num < 0 )
       v22 = RGE_Base_Game::get_font(rge_base_game, 10);
     else
       v22 = RGE_Base_Game::get_font(rge_base_game, font_num);
     TButtonPanel::set_text_info(*button, text1, v22->font, v22->font_wid, v22->font_hgt, -1, -1);
-    if ( text2 )
+    if( text2 )
       TButtonPanel::set_text(*button, 1, text2);
-    if ( v12->use_bevels )
+    if( v12->use_bevels )
       TButtonPanel::set_bevel_info(
         *button,
         4,
@@ -1311,7 +1311,7 @@ int __thiscall TEasy_Panel::create_button(TEasy_Panel *this, TPanel *parent, TBu
       TButtonPanel::set_text_color(*button, v23, v12->text_color1, v12->text_color2);
       TButtonPanel::set_highlight_text_color(*button, v23++, v12->focus_color1, v12->focus_color2);
     }
-    while ( v23 < 9 );
+    while( v23 < 9 );
     TButtonPanel::set_text_color(*button, 1, v12->state_color1, v12->state_color2);
     TButtonPanel::set_highlight_text_color(*button, 1, v12->focus_color1, v12->focus_color2);
     result = 1;
@@ -1352,12 +1352,12 @@ int __thiscall TEasy_Panel::create_check_box(TEasy_Panel *this, TPanel *parent, 
   xa = v10 * width / v11;
   v14 = v12 * height / v13;
   v15 = (TButtonPanel *)operator new(0x2B8u);
-  if ( v15 )
+  if( v15 )
     TButtonPanel::TButtonPanel(v15);
   else
     v16 = 0;
   *button = (TButtonPanel *)v16;
-  if ( v16
+  if( v16
     && !*(_DWORD *)(v16 + 216)
     && (sound_num < 0 ? (v17 = 0) : (v17 = RGE_Base_Game::get_sound(rge_base_game, sound_num)),
         TButtonPanel::setup(
@@ -1375,7 +1375,7 @@ int __thiscall TEasy_Panel::create_check_box(TEasy_Panel *this, TPanel *parent, 
   {
     TButtonPanel::set_sound_number(*button, sound_num);
     TButtonPanel::set_state_info(*button, 2);
-    if ( v9->button_pics )
+    if( v9->button_pics )
     {
       TButtonPanel::setDrawType((int)*button, 6);
       TButtonPanel::set_picture(*button, 0, v9->button_pics, 0);
@@ -1388,7 +1388,7 @@ int __thiscall TEasy_Panel::create_check_box(TEasy_Panel *this, TPanel *parent, 
       TButtonPanel::set_text(*button, 1, asc_583B74);
       TButtonPanel::setDrawType((int)*button, 3);
     }
-    if ( v9->use_bevels )
+    if( v9->use_bevels )
       TButtonPanel::set_bevel_info(
         *button,
         4,
@@ -1440,12 +1440,12 @@ int __thiscall TEasy_Panel::create_radio_button(TEasy_Panel *this, TPanel *paren
   xa = v10 * width / v11;
   v14 = v12 * height / v13;
   v15 = (TButtonPanel *)operator new(0x2B8u);
-  if ( v15 )
+  if( v15 )
     TButtonPanel::TButtonPanel(v15);
   else
     v16 = 0;
   *button = (TButtonPanel *)v16;
-  if ( v16
+  if( v16
     && !*(_DWORD *)(v16 + 216)
     && (sound_num < 0 ? (v17 = 0) : (v17 = RGE_Base_Game::get_sound(rge_base_game, sound_num)),
         TButtonPanel::setup(
@@ -1462,7 +1462,7 @@ int __thiscall TEasy_Panel::create_radio_button(TEasy_Panel *this, TPanel *paren
           action_id)) )
   {
     TButtonPanel::set_sound_number(*button, sound_num);
-    if ( v9->button_pics )
+    if( v9->button_pics )
     {
       TButtonPanel::setDrawType((int)*button, 6);
       TButtonPanel::set_picture(*button, 0, v9->button_pics, 4);
@@ -1475,7 +1475,7 @@ int __thiscall TEasy_Panel::create_radio_button(TEasy_Panel *this, TPanel *paren
       TButtonPanel::set_text_info(*button, text_in, v18->font, v18->font_wid, v18->font_hgt, -1, -1);
       TButtonPanel::set_text(*button, 1, asc_583B74);
     }
-    if ( v9->use_bevels )
+    if( v9->use_bevels )
       TButtonPanel::set_bevel_info(
         *button,
         4,
@@ -1549,15 +1549,15 @@ int __thiscall TEasy_Panel::create_text(TEasy_Panel *this, TPanel *parent, TText
   v17 = v13 * width / v14;
   v18 = v15 * height / v16;
   v19 = (TTextPanel *)operator new(0x188u);
-  if ( v19 )
+  if( v19 )
     TTextPanel::TTextPanel(v19);
   else
     v20 = 0;
   *text_panel = v20;
-  if ( v20 && !v20->error_code )
+  if( v20 && !v20->error_code )
   {
     v21 = font_num < 0 ? RGE_Base_Game::get_font(rge_base_game, 10) : RGE_Base_Game::get_font(rge_base_game, font_num);
-    if ( TTextPanel::setup(
+    if( TTextPanel::setup(
            *text_panel,
            v12->render_area,
            parent,
@@ -1576,7 +1576,7 @@ int __thiscall TEasy_Panel::create_text(TEasy_Panel *this, TPanel *parent, TText
            0,
            0) )
     {
-      if ( horz_center && vert_center )
+      if( horz_center && vert_center )
       {
         TTextPanel::set_alignment(*text_panel, 0, 0);
 LABEL_18:
@@ -1586,14 +1586,14 @@ LABEL_18:
         TTextPanel::set_highlight_text_color(*text_panel, v12->focus_color1, v12->focus_color2);
         return 1;
       }
-      if ( horz_center )
+      if( horz_center )
       {
         v23 = 0;
       }
       else
       {
         v23 = 1;
-        if ( vert_center )
+        if( vert_center )
         {
           TTextPanel::set_alignment(*text_panel, 0, AlignLeft);
           goto LABEL_18;
@@ -1634,15 +1634,15 @@ int __thiscall TEasy_Panel::create_text(TEasy_Panel *this, TPanel *parent, TText
   v17 = v13 * width / v14;
   v18 = v15 * height / v16;
   v19 = (TTextPanel *)operator new(0x188u);
-  if ( v19 )
+  if( v19 )
     TTextPanel::TTextPanel(v19);
   else
     v20 = 0;
   *text_panel = v20;
-  if ( v20 && !v20->error_code )
+  if( v20 && !v20->error_code )
   {
     v21 = font_num < 0 ? RGE_Base_Game::get_font(rge_base_game, 10) : RGE_Base_Game::get_font(rge_base_game, font_num);
-    if ( TTextPanel::setup(
+    if( TTextPanel::setup(
            *text_panel,
            v12->render_area,
            parent,
@@ -1663,7 +1663,7 @@ int __thiscall TEasy_Panel::create_text(TEasy_Panel *this, TPanel *parent, TText
     {
       ((void (__stdcall *)(char **, int))(*text_panel)->vfptr[1].__vecDelDtor)(text, line_num);
       TTextPanel::scroll(*text_panel, 6, 0, 1);
-      if ( horz_center && vert_center )
+      if( horz_center && vert_center )
       {
         TTextPanel::set_alignment(*text_panel, 0, 0);
 LABEL_18:
@@ -1671,14 +1671,14 @@ LABEL_18:
         TTextPanel::set_highlight_text_color(*text_panel, v12->focus_color1, v12->focus_color2);
         return 1;
       }
-      if ( horz_center )
+      if( horz_center )
       {
         v23 = 0;
       }
       else
       {
         v23 = 1;
-        if ( vert_center )
+        if( vert_center )
         {
           TTextPanel::set_alignment(*text_panel, 0, AlignLeft);
           goto LABEL_18;
@@ -1719,12 +1719,12 @@ int __thiscall TEasy_Panel::create_input(TEasy_Panel *this, TPanel *parent, TInp
   v16 = v12 * width / v13;
   v17 = v14 * height / v15;
   v18 = (TInputPanel *)operator new(0x1B8u);
-  if ( v18 )
+  if( v18 )
     TInputPanel::TInputPanel(v18);
   else
     v19 = 0;
   *input_panel = v19;
-  if ( v19
+  if( v19
     && !v19->error_code
     && (font_num < 0 ? (v20 = RGE_Base_Game::get_font(rge_base_game, 10)) : (v20 = RGE_Base_Game::get_font(
                                                                                      rge_base_game,
@@ -1751,7 +1751,7 @@ int __thiscall TEasy_Panel::create_input(TEasy_Panel *this, TPanel *parent, TInp
           value,
           format_type)) )
   {
-    if ( v11->use_bevels )
+    if( v11->use_bevels )
       ((void (__stdcall *)(signed int, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))(*input_panel)->vfptr[1].set_rect)(
         3,
         v11->bevel_color1,
@@ -1793,12 +1793,12 @@ int __thiscall TEasy_Panel::create_edit(TEasy_Panel *this, TPanel *parent, TEdit
   v17 = y * v13->pnl_hgt / v13->ideal_height;
   xa = v14 * width / v15;
   v18 = (TEditPanel *)operator new(0x16Cu);
-  if ( v18 )
+  if( v18 )
     TEditPanel::TEditPanel(v18);
   else
     v19 = 0;
   *edit_panel = v19;
-  if ( v19
+  if( v19
     && !v19->error_code
     && (font_num < 0 ? (v20 = RGE_Base_Game::get_font(rge_base_game, 10)) : (v20 = RGE_Base_Game::get_font(
                                                                                      rge_base_game,
@@ -1817,7 +1817,7 @@ int __thiscall TEasy_Panel::create_edit(TEasy_Panel *this, TPanel *parent, TEdit
           format_type,
           format_type != 7)) )
   {
-    if ( v13->use_bevels )
+    if( v13->use_bevels )
       TEditPanel::set_bevel_info(
         *edit_panel,
         3,
@@ -1878,29 +1878,29 @@ char *__thiscall TEasy_Panel::create_drop_down(TEasy_Panel *this, TPanel *parent
   ideal_h = v13 * height / v14;
   list = (char **)(18 * v11 / v12);
   list_h = v11 * list_width / v12;
-  if ( font_num < 0 )
+  if( font_num < 0 )
     RGE_Base_Game::get_font(rge_base_game, 10);
   else
     RGE_Base_Game::get_font(rge_base_game, font_num);
   result = (char *)calloc(1u, 4u);
   v16 = result;
   xa = (char **)result;
-  if ( result )
+  if( result )
   {
     result = (char *)calloc(0x14u, 1u);
     *(_DWORD *)v16 = result;
-    if ( result )
+    if( result )
     {
       strcpy(result, text_in);
-      if ( !v10->error_code )
+      if( !v10->error_code )
       {
         v17 = (TDropDownPanel *)operator new(0x144u);
-        if ( v17 )
+        if( v17 )
           TDropDownPanel::TDropDownPanel(v17);
         else
           v18 = 0;
         *drop_panel = v18;
-        if ( v18
+        if( v18
           && !v18->error_code
           && (v19 = RGE_Base_Game::get_font(rge_base_game, font_num),
               TDropDownPanel::setup(
@@ -1937,9 +1937,9 @@ char *__thiscall TEasy_Panel::create_drop_down(TEasy_Panel *this, TPanel *parent
               v20) )
         {
           v21 = v10->button_pics;
-          if ( v21 )
+          if( v21 )
             TDropDownPanel::set_buttons(*drop_panel, v21, 14, -1, 8, 10, 12);
-          if ( v10->use_bevels )
+          if( v10->use_bevels )
             TDropDownPanel::set_bevel_info(
               *drop_panel,
               3,
@@ -1974,7 +1974,7 @@ char *__thiscall TEasy_Panel::create_drop_down(TEasy_Panel *this, TPanel *parent
       v24 = (void **)xa;
       do
       {
-        if ( *v24 )
+        if( *v24 )
         {
           free(*v24);
           *v24 = 0;
@@ -1982,7 +1982,7 @@ char *__thiscall TEasy_Panel::create_drop_down(TEasy_Panel *this, TPanel *parent
         ++v24;
         --v23;
       }
-      while ( v23 );
+      while( v23 );
       free(xa);
       result = (char *)(v10->error_code == 0);
     }
@@ -2020,29 +2020,29 @@ char *__thiscall TEasy_Panel::create_list(TEasy_Panel *this, TPanel *parent, TLi
   v12 = v8->ideal_height;
   ideal_x = v9 * x / v10;
   ideal_h = v9 * width / v10;
-  if ( font_num < 0 )
+  if( font_num < 0 )
     RGE_Base_Game::get_font(rge_base_game, 10);
   else
     RGE_Base_Game::get_font(rge_base_game, font_num);
   result = (char *)calloc(1u, 4u);
   v14 = result;
   xa = (char **)result;
-  if ( result )
+  if( result )
   {
     result = (char *)calloc(0x14u, 1u);
     *(_DWORD *)v14 = result;
-    if ( result )
+    if( result )
     {
       strcpy(result, text_in);
-      if ( !v8->error_code )
+      if( !v8->error_code )
       {
         v15 = (TListPanel *)operator new(0x1A0u);
-        if ( v15 )
+        if( v15 )
           TListPanel::TListPanel(v15);
         else
           v16 = 0;
         *list_panel = v16;
-        if ( v16
+        if( v16
           && !v16->error_code
           && (v17 = RGE_Base_Game::get_font(rge_base_game, font_num),
               TTextPanel::setup(
@@ -2076,7 +2076,7 @@ char *__thiscall TEasy_Panel::create_list(TEasy_Panel *this, TPanel *parent, TLi
       v19 = 1;
       do
       {
-        if ( *v18 )
+        if( *v18 )
         {
           free(*v18);
           *v18 = 0;
@@ -2084,9 +2084,9 @@ char *__thiscall TEasy_Panel::create_list(TEasy_Panel *this, TPanel *parent, TLi
         ++v18;
         --v19;
       }
-      while ( v19 );
+      while( v19 );
       free(xa);
-      if ( v8->use_bevels )
+      if( v8->use_bevels )
         ((void (__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD))(*list_panel)->vfptr[1].set_rect)(
           3,
           v8->bevel_color1,
@@ -2131,12 +2131,12 @@ int __thiscall TEasy_Panel::create_scrollbar(TEasy_Panel *this, TPanel *parent, 
   v14 = v11 * y / v12;
   xa = v11 * height / v12;
   v15 = (TScrollBarPanel *)operator new(0x1C4u);
-  if ( v15 )
+  if( v15 )
     TScrollBarPanel::TScrollBarPanel(v15);
   else
     v16 = 0;
   *scrollbar_panel = v16;
-  if ( v16
+  if( v16
     && !v16->error_code
     && TScrollBarPanel::setup(
          v16,
@@ -2156,7 +2156,7 @@ int __thiscall TEasy_Panel::create_scrollbar(TEasy_Panel *this, TPanel *parent, 
          list_size,
          0) )
   {
-    if ( list_panel )
+    if( list_panel )
     {
       v17 = scrollbar_panel;
       TTextPanel::set_scrollbar(list_panel, *scrollbar_panel, 0);
@@ -2166,9 +2166,9 @@ int __thiscall TEasy_Panel::create_scrollbar(TEasy_Panel *this, TPanel *parent, 
       v17 = scrollbar_panel;
     }
     v18 = v9->button_pics;
-    if ( v18 )
+    if( v18 )
       TScrollBarPanel::set_buttons(*v17, v18, -1, 8, 10, 12);
-    if ( v9->use_bevels )
+    if( v9->use_bevels )
       TScrollBarPanel::set_bevel_info(
         *v17,
         3,
@@ -2201,7 +2201,7 @@ int __thiscall TEasy_Panel::create_auto_scrollbar(TEasy_Panel *this, TScrollBarP
              0,
              width,
              0);
-  if ( result )
+  if( result )
   {
     TTextPanel::set_scrollbar(list_panel, *scrollbar_panel, 1);
     result = 1;
@@ -2236,12 +2236,12 @@ int __thiscall TEasy_Panel::create_vert_slider(TEasy_Panel *this, TPanel *parent
   v15 = v11 * width / v12;
   v16 = v13 * height / v14;
   v17 = (TVerticalSliderPanel *)operator new(0x1CCu);
-  if ( v17 )
+  if( v17 )
     TVerticalSliderPanel::TVerticalSliderPanel(v17);
   else
     v18 = 0;
   *slider_panel = v18;
-  if ( v18
+  if( v18
     && !v18->error_code
     && TVerticalSliderPanel::setup(
          v18,
@@ -2261,9 +2261,9 @@ int __thiscall TEasy_Panel::create_vert_slider(TEasy_Panel *this, TPanel *parent
          0) )
   {
     v19 = v10->button_pics;
-    if ( v19 )
+    if( v19 )
       TScrollBarPanel::set_buttons((TScrollBarPanel *)&(*slider_panel)->vfptr, v19, -1, 8, 10, 12);
-    if ( v10->use_bevels )
+    if( v10->use_bevels )
       TScrollBarPanel::set_bevel_info(
         (TScrollBarPanel *)&(*slider_panel)->vfptr,
         3,
@@ -2309,12 +2309,12 @@ int __thiscall TEasy_Panel::create_horz_slider(TEasy_Panel *this, TPanel *parent
   v15 = v11 * width / v12;
   v16 = v13 * height / v14;
   v17 = (THorizontalSliderPanel *)operator new(0x1CCu);
-  if ( v17 )
+  if( v17 )
     THorizontalSliderPanel::THorizontalSliderPanel(v17);
   else
     v18 = 0;
   *slider_panel = v18;
-  if ( v18
+  if( v18
     && !v18->error_code
     && THorizontalSliderPanel::setup(
          v18,
@@ -2334,9 +2334,9 @@ int __thiscall TEasy_Panel::create_horz_slider(TEasy_Panel *this, TPanel *parent
          0) )
   {
     v19 = v10->button_pics;
-    if ( v19 )
+    if( v19 )
       TScrollBarPanel::set_buttons((TScrollBarPanel *)&(*slider_panel)->vfptr, v19, -1, 8, 10, 12);
-    if ( v10->use_bevels )
+    if( v10->use_bevels )
       TScrollBarPanel::set_bevel_info(
         (TScrollBarPanel *)&(*slider_panel)->vfptr,
         3,
@@ -2377,23 +2377,23 @@ void __thiscall TEasy_Panel::set_focus(TEasy_Panel *this, int have_focus_in)
 
   v2 = this;
   TPanel::set_focus((TPanel *)&this->vfptr, have_focus_in);
-  if ( v2->have_focus )
+  if( v2->have_focus )
   {
-    if ( v2->cursor_file[0] || v2->cursor_id >= 0 )
+    if( v2->cursor_file[0] || v2->cursor_id >= 0 )
     {
       v3 = rge_base_game->mouse_pointer;
-      if ( v3 )
+      if( v3 )
         TMousePointer::LoadCursors(v3, v2->cursor_file, v2->cursor_id, 0);
     }
     v4 = v2->render_area;
-    if ( v4 )
+    if( v4 )
     {
-      if ( v4->DrawSystem )
+      if( v4->DrawSystem )
       {
         v5 = v2->palette;
-        if ( v5 || (v5 = rge_base_game->prog_palette) != 0 )
+        if( v5 || (v5 = rge_base_game->prog_palette) != 0 )
         {
-          if ( v4->DrawSystem->Pal != v5 )
+          if( v4->DrawSystem->Pal != v5 )
           {
             TDrawArea::Clear(v4, 0, 0);
             TDrawSystem::Paint(v2->render_area->DrawSystem, 0);
@@ -2404,9 +2404,9 @@ void __thiscall TEasy_Panel::set_focus(TEasy_Panel *this, int have_focus_in)
       }
     }
   }
-  if ( v2->enable_ime )
+  if( v2->enable_ime )
   {
-    if ( v2->have_focus )
+    if( v2->have_focus )
       TPanelSystem::EnableIME(&panel_system);
     else
       TPanelSystem::DisableIME(&panel_system);
@@ -2438,7 +2438,7 @@ void __thiscall TEasy_Panel::popupOKDialog(TEasy_Panel *this, char *text, char *
 
   v5 = panel_title;
   v6 = this;
-  if ( panel_title && *panel_title )
+  if( panel_title && *panel_title )
   {
     v7 = temp_title;
   }
@@ -2448,11 +2448,11 @@ void __thiscall TEasy_Panel::popupOKDialog(TEasy_Panel *this, char *text, char *
     v5 = aOkdialog;
   }
   strcpy(v7, v5);
-  if ( TPanelSystem::panel(&panel_system, temp_title) )
+  if( TPanelSystem::panel(&panel_system, temp_title) )
     TPanelSystem::destroyPanel(&panel_system, temp_title);
   v8 = (TMessageDialog *)operator new(0x4A4u);
   v12 = 0;
-  if ( v8 )
+  if( v8 )
     TMessageDialog::TMessageDialog(v8, temp_title);
   else
     v9 = 0;
@@ -2481,10 +2481,10 @@ void __thiscall TEasy_Panel::popupYesNoDialog(TEasy_Panel *this, char *text, cha
   TMessageDialog *v8; // eax@5
 
   v5 = this;
-  if ( !panel_title || !*panel_title )
+  if( !panel_title || !*panel_title )
   {
     v8 = (TMessageDialog *)operator new(0x4A4u);
-    if ( v8 )
+    if( v8 )
     {
       TMessageDialog::TMessageDialog(v8, aYesnodialog);
       goto LABEL_8;
@@ -2494,7 +2494,7 @@ LABEL_7:
     goto LABEL_8;
   }
   v6 = (TMessageDialog *)operator new(0x4A4u);
-  if ( !v6 )
+  if( !v6 )
     goto LABEL_7;
   TMessageDialog::TMessageDialog(v6, panel_title);
 LABEL_8:
@@ -2531,10 +2531,10 @@ void __thiscall TEasy_Panel::popupYesNoCancelDialog(TEasy_Panel *this, char *tex
   TMessageDialog *v8; // eax@5
 
   v5 = this;
-  if ( !panel_title || !*panel_title )
+  if( !panel_title || !*panel_title )
   {
     v8 = (TMessageDialog *)operator new(0x4A4u);
-    if ( v8 )
+    if( v8 )
     {
       TMessageDialog::TMessageDialog(v8, aYesnocanceldia);
       goto LABEL_8;
@@ -2544,7 +2544,7 @@ LABEL_7:
     goto LABEL_8;
   }
   v6 = (TMessageDialog *)operator new(0x4A4u);
-  if ( !v6 )
+  if( !v6 )
     goto LABEL_7;
   TMessageDialog::TMessageDialog(v6, panel_title);
 LABEL_8:
@@ -2568,10 +2568,10 @@ void __thiscall TEasy_Panel::command_help(TEasy_Panel *this, char *in_parent_pan
   THelpDialog *v7; // eax@4
 
   v6 = this;
-  if ( help_string >= 0 && (TPanel::get_string(help_string) || (_BYTE)v0) )
+  if( help_string >= 0 && (TPanel::get_string(help_string) || (_BYTE)v0) )
   {
     v7 = (THelpDialog *)operator new(0x5A4u);
-    if ( v7 )
+    if( v7 )
       THelpDialog::THelpDialog(v7, v6, in_parent_panel, help_string, help_page, x, y);
   }
 }
@@ -2583,10 +2583,10 @@ void __thiscall TEasy_Panel::command_help(TEasy_Panel *this, char *in_parent_pan
   THelpDialog *v7; // eax@3
 
   v6 = this;
-  if ( help_string && *help_string )
+  if( help_string && *help_string )
   {
     v7 = (THelpDialog *)operator new(0x5A4u);
-    if ( v7 )
+    if( v7 )
       THelpDialog::THelpDialog(v7, v6, in_parent_panel, help_string, help_page, x, y);
   }
 }
@@ -2632,16 +2632,16 @@ int __thiscall TEasy_Panel::command_do_popup_help(TEasy_Panel *this, char mouse_
 
   v4 = this;
   temp = help_string2;
-  if ( this->help_mode == 1 )
+  if( this->help_mode == 1 )
   {
     this->help_mode = 0;
     v5 = LoadCursorA(0, (LPCSTR)0x7F00);
     RGE_Base_Game::set_mouse_cursor(rge_base_game, v5);
     RGE_Base_Game::set_mouse_facet(rge_base_game, 0);
     TMousePointer::set_game_enable(rge_base_game->mouse_pointer, v4->saved_mouse_mode);
-    if ( mouse_button_in == 1 )
+    if( mouse_button_in == 1 )
     {
-      if ( v4->vfptr->get_help_info((TPanel *)v4, &temp, &help_page, mouse_x, mouse_y) )
+      if( v4->vfptr->get_help_info((TPanel *)v4, &temp, &help_page, mouse_x, mouse_y) )
         TEasy_Panel::command_help(v4, v4->panelNameValue, help_string2, help_page, mouse_x, mouse_y);
     }
     result = 1;
@@ -2659,29 +2659,29 @@ int __thiscall TEasy_Panel::action(TEasy_Panel *this, TPanel *fromPanel, int act
   TEasy_Panel *v5; // ebp@1
 
   v5 = this;
-  if ( fromPanel )
+  if( fromPanel )
   {
-    if ( TPanel::panelName(fromPanel) && !strcmp(TPanel::panelName(fromPanel), aOkdialog) )
+    if( TPanel::panelName(fromPanel) && !strcmp(TPanel::panelName(fromPanel), aOkdialog) )
     {
-      if ( !actionIn || actionIn == 1 )
+      if( !actionIn || actionIn == 1 )
       {
         TPanelSystem::destroyPanel(&panel_system, aOkdialog);
         return 1;
       }
       return 1;
     }
-    if ( TPanel::panelName(fromPanel) && !strcmp(TPanel::panelName(fromPanel), aYesnodialog) )
+    if( TPanel::panelName(fromPanel) && !strcmp(TPanel::panelName(fromPanel), aYesnodialog) )
     {
-      if ( !actionIn || actionIn == 1 )
+      if( !actionIn || actionIn == 1 )
       {
         TPanelSystem::destroyPanel(&panel_system, aYesnodialog);
         return 1;
       }
       return 1;
     }
-    if ( TPanel::panelName(fromPanel) && !strcmp(TPanel::panelName(fromPanel), aYesnocanceldia) )
+    if( TPanel::panelName(fromPanel) && !strcmp(TPanel::panelName(fromPanel), aYesnocanceldia) )
     {
-      if ( !actionIn || actionIn == 1 || actionIn == 2 )
+      if( !actionIn || actionIn == 1 || actionIn == 2 )
         TPanelSystem::destroyPanel(&panel_system, aYesnocanceldia);
       return 1;
     }

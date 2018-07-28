@@ -20,7 +20,7 @@ THelpDialog *__thiscall THelpDialog::`vector deleting destructor'(THelpDialog *t
 
   v2 = this;
   THelpDialog::~THelpDialog(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -49,16 +49,16 @@ void __thiscall THelpDialog::~THelpDialog(THelpDialog *this)
   v1 = this;
   this->vfptr = (TPanelVtbl *)&THelpDialog::`vftable';
   v2 = this->ok_button;
-  if ( v2 )
+  if( v2 )
     (**(void (__stdcall ***)(_DWORD))v2)(1);
   v3 = v1->encyclopedia_button;
-  if ( v3 )
+  if( v3 )
     (**(void (__stdcall ***)(_DWORD))v3)(1);
   v4 = v1->list;
-  if ( v4 )
+  if( v4 )
     ((void (__stdcall *)(_DWORD))v4->vfptr->__vecDelDtor)(1);
   v5 = v1->title;
-  if ( v5 )
+  if( v5 )
     ((void (__stdcall *)(_DWORD))v5->vfptr->__vecDelDtor)(1);
   TDialogPanel::~TDialogPanel((TDialogPanel *)&v1->vfptr);
 }
@@ -107,7 +107,7 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
   v12 = TEasy_Panel::get_popup_info_id(parentPanel);
   v13 = TEasy_Panel::get_popup_info_file(parentPanel);
   v14 = TPanel::renderArea((TPanel *)&parentPanel->vfptr);
-  if ( ((int (__thiscall *)(THelpDialog *, TDrawArea *, TEasy_Panel *, signed int, signed int, char *, int, signed int))v11[1].handle_idle)(
+  if( ((int (__thiscall *)(THelpDialog *, TDrawArea *, TEasy_Panel *, signed int, signed int, char *, int, signed int))v11[1].handle_idle)(
          v7,
          v14,
          parentPanel,
@@ -133,9 +133,9 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
     v15 = *(_WORD *)(*(_DWORD *)v8 + 254) + 2;
     parentPanela = rge_text_font->font_hgt * v15 + 55;
     v16 = TPanel::width((TPanel *)&v10->vfptr);
-    if ( TPanel::xPosition((TPanel *)&v10->vfptr) + v16 < mouse_x + 355 )
+    if( TPanel::xPosition((TPanel *)&v10->vfptr) + v16 < mouse_x + 355 )
     {
-      if ( TPanel::xPosition((TPanel *)&v10->vfptr) + 10 > mouse_x - 345 )
+      if( TPanel::xPosition((TPanel *)&v10->vfptr) + 10 > mouse_x - 345 )
         v17 = TPanel::width((TPanel *)&v10->vfptr) / 2 - 170;
       else
         v17 = abs(mouse_x - 345 - TPanel::xPosition((TPanel *)&v10->vfptr));
@@ -145,15 +145,15 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
       v17 = abs(-5 - mouse_x + TPanel::xPosition((TPanel *)&v10->vfptr));
     }
     panel_height = v17;
-    if ( v17 < 0 )
+    if( v17 < 0 )
     {
       v17 = 0;
       panel_height = 0;
     }
-    if ( TPanel::yPosition((TPanel *)&v10->vfptr) > mouse_y - parentPanela - 10 )
+    if( TPanel::yPosition((TPanel *)&v10->vfptr) > mouse_y - parentPanela - 10 )
     {
       v19 = TPanel::height((TPanel *)&v10->vfptr);
-      if ( parentPanela + mouse_y + 10 > TPanel::yPosition((TPanel *)&v10->vfptr) + v19 )
+      if( parentPanela + mouse_y + 10 > TPanel::yPosition((TPanel *)&v10->vfptr) + v19 )
         v18 = TPanel::height((TPanel *)&v10->vfptr) / 2 - parentPanela / 2;
       else
         v18 = abs(mouse_y - TPanel::yPosition((TPanel *)&v10->vfptr) + 10);
@@ -163,7 +163,7 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
     {
       v18 = abs(mouse_y - parentPanela - TPanel::yPosition((TPanel *)&v10->vfptr) - 10);
     }
-    if ( v18 < 0 )
+    if( v18 < 0 )
       v18 = 0;
     v20 = v7->vfptr;
     v7->vfptr->set_fixed_position((TPanel *)v7, v17, v18, 340, parentPanela);
@@ -173,14 +173,14 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
       10,
       330,
       rge_text_font->font_hgt * v15);
-    if ( RGE_Base_Game::singlePlayerGame(rge_base_game) )
+    if( RGE_Base_Game::singlePlayerGame(rge_base_game) )
     {
-      if ( in_help_page_id >= 0 )
+      if( in_help_page_id >= 0 )
       {
         v21 = TPanel::get_string(in_help_page_id);
-        if ( v21 )
+        if( v21 )
         {
-          if ( *v21 )
+          if( *v21 )
             (*(void (__thiscall **)(THelpDialog *, THelpDialog *, int, signed int, _DWORD, signed int, int, signed int, signed int, signed int, _DWORD, _DWORD))&v20[1].gap4[4])(
               v7,
               v7,
@@ -197,7 +197,7 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
         }
       }
     }
-    if ( v7->encyclopedia_button )
+    if( v7->encyclopedia_button )
     {
       v26 = rge_text_font->font_hgt * v15 + 20;
       v25 = 195;
@@ -227,7 +227,7 @@ void __thiscall THelpDialog::setup_help(THelpDialog *this, TEasy_Panel *parentPa
     v23 = (TPanel *)v7->encyclopedia_button;
     tabList[0] = (TPanel *)v7->ok_button;
     v24 = 1;
-    if ( v23 )
+    if( v23 )
     {
       tabList[1] = v23;
       v24 = 2;
@@ -245,15 +245,15 @@ int __thiscall THelpDialog::action(THelpDialog *this, TPanel *fromPanel, int act
   char *v8; // eax@5
 
   v5 = this->help_page_id;
-  if ( actionIn != 1 )
+  if( actionIn != 1 )
     goto LABEL_9;
-  if ( fromPanel == (TPanel *)this->ok_button )
+  if( fromPanel == (TPanel *)this->ok_button )
   {
     TPanelSystem::setCurrentPanel(&panel_system, this->parent_panel, 0);
     TPanelSystem::destroyPanel(&panel_system, aHelpDialog);
     return 1;
   }
-  if ( fromPanel != (TPanel *)this->encyclopedia_button )
+  if( fromPanel != (TPanel *)this->encyclopedia_button )
   {
 LABEL_9:
     result = TEasy_Panel::action((TEasy_Panel *)&this->vfptr, fromPanel, actionIn, a1, a2);
@@ -279,7 +279,7 @@ int __thiscall THelpDialog::handle_mouse_down(THelpDialog *this, int mouse_butto
 
   v6 = this;
   v7 = this->vfptr;
-  if ( ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y) )
+  if( ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y) )
   {
     result = TEasy_Panel::handle_mouse_down((TEasy_Panel *)&v6->vfptr, mouse_button_in, x, y, ctrl_key, shift_key);
   }

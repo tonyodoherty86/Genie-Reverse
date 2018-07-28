@@ -41,7 +41,7 @@ TEditPanel *__thiscall TEditPanel::`vector deleting destructor'(TEditPanel *this
 
   v2 = this;
   TEditPanel::~TEditPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -62,13 +62,13 @@ int __thiscall TEditPanel::setup(TEditPanel *this, TDrawArea *render_area_in, TP
   v12 = this;
   this->format = format_in;
   v13 = fixed_len_in;
-  if ( fixed_len_in > 0 )
+  if( fixed_len_in > 0 )
     v13 = fixed_len_in + 1;
   this->fixed_len = v13;
   this->font = font_in;
   this->auto_sel = auto_sel_in;
   result = TPanel::setup((TPanel *)&this->vfptr, render_area_in, parent_panel_in, x_in, y_in, wid_in, hgt_in, 255);
-  if ( result )
+  if( result )
   {
     v15 = CreateWindowExA(
             0,
@@ -84,7 +84,7 @@ int __thiscall TEditPanel::setup(TEditPanel *this, TDrawArea *render_area_in, TP
             v12->render_area->DrawSystem->Inst,
             0);
     v12->edit_wnd = v15;
-    if ( v15 )
+    if( v15 )
     {
       SetWindowLongA(v15, -21, (LONG)v12);
       v16 = GetWindowLongA(v12->edit_wnd, -4);
@@ -93,11 +93,11 @@ int __thiscall TEditPanel::setup(TEditPanel *this, TDrawArea *render_area_in, TP
       SetWindowLongA(v17, -4, (LONG)pnl_sub_wnd_proc);
       v18 = (char *)calloc(v12->fixed_len + 2, 1u);
       v12->text = v18;
-      if ( v18 )
+      if( v18 )
       {
         *v18 = 0;
         v12->text_len = 0;
-        if ( text_in && *text_in )
+        if( text_in && *text_in )
           TEditPanel::set_text(v12, text_in);
         v12->brush = GetStockObject(4);
         v12->text_color1 = 0xFFFFFF;
@@ -106,7 +106,7 @@ int __thiscall TEditPanel::setup(TEditPanel *this, TDrawArea *render_area_in, TP
         v12->back_color = 0;
         v12->text_color2 = 0;
         v12->highlight_text_color2 = 0;
-        if ( v19 )
+        if( v19 )
           SendMessageA(v12->edit_wnd, 0x30u, v19, 0);
         v20 = v12->format;
         v12->draw_format = 0x2000;
@@ -133,7 +133,7 @@ int __stdcall pnl_sub_wnd_proc(void *wnd, unsigned int msg, unsigned int wparam,
   int result; // eax@2
 
   v4 = (TEditPanel *)GetWindowLongA(wnd, -21);
-  if ( v4 )
+  if( v4 )
     result = TEditPanel::sub_wnd_proc(v4, wnd, msg, wparam, lparam);
   else
     result = 0;
@@ -146,9 +146,9 @@ void __thiscall TEditPanel::set_text(TEditPanel *this, char *text_in)
   TEditPanel *v2; // esi@1
 
   v2 = this;
-  if ( this->edit_wnd )
+  if( this->edit_wnd )
   {
-    if ( text_in )
+    if( text_in )
     {
       memset(this->text, 0, this->fixed_len);
       strncpy(this->text, text_in, this->fixed_len - 1);
@@ -179,14 +179,14 @@ void __thiscall TEditPanel::update_text(TEditPanel *this)
 
   v1 = this;
   v2 = this->edit_wnd;
-  if ( v2 )
+  if( v2 )
   {
     GetWindowTextA(v2, this->text, this->fixed_len + 1);
     v3 = v1->text;
     v4 = v1->fixed_len;
     v1->text_len = strlen(v1->text);
     v3[v4 - 1] = 0;
-    if ( v1->text_len > v1->fixed_len - 1 )
+    if( v1->text_len > v1->fixed_len - 1 )
     {
       SetWindowTextA(v1->edit_wnd, v1->text);
       MessageBeep(0xFFFFFFFF);
@@ -238,9 +238,9 @@ void __thiscall TEditPanel::set_active(TEditPanel *this, int activ_in)
   v2 = this;
   TPanel::set_active((TPanel *)&this->vfptr, activ_in);
   v3 = v2->edit_wnd;
-  if ( v3 )
+  if( v3 )
   {
-    if ( !v2->active )
+    if( !v2->active )
     {
       ShowWindow(v3, 0);
       v2->hidden = 1;
@@ -263,57 +263,57 @@ void __thiscall TEditPanel::set_focus(TEditPanel *this, int have_focus_in)
   v2 = this;
   v3 = this->have_focus;
   TPanel::set_focus((TPanel *)&this->vfptr, have_focus_in);
-  if ( v2->edit_wnd )
+  if( v2->edit_wnd )
   {
     v4 = GetFocus();
     v5 = v2->edit_wnd;
-    if ( v2->have_focus )
+    if( v2->have_focus )
     {
-      if ( v4 != v5 )
+      if( v4 != v5 )
         SetFocus(v2->edit_wnd);
-      if ( !v2->imc )
+      if( !v2->imc )
       {
-        if ( v2->enable_ime )
+        if( v2->enable_ime )
           v6 = ImmGetContext(v2->edit_wnd);
         else
           v6 = ImmAssociateContext(v2->edit_wnd, 0);
         v2->imc = v6;
       }
       v7 = v2->imc;
-      if ( v7 && v2->enable_ime )
+      if( v7 && v2->enable_ime )
       {
-        if ( v2->turn_ime_on )
+        if( v2->turn_ime_on )
           imc_retval = ImmSetOpenStatus(v7, 1);
         else
           imc_retval = ImmSetOpenStatus(v7, 0);
       }
     }
-    else if ( v4 == v5 && v4 != v2->render_area->Wnd )
+    else if( v4 == v5 && v4 != v2->render_area->Wnd )
     {
       SetFocus(v2->render_area->Wnd);
     }
   }
-  if ( v3 && !v2->have_focus )
+  if( v3 && !v2->have_focus )
   {
     TEditPanel::update_text(v2);
     v2->vfptr->set_redraw((TPanel *)v2, RedrawNormal);
   }
   v8 = v2->edit_wnd;
-  if ( v8 && v2->have_focus && !v3 && v2->auto_sel )
+  if( v8 && v2->have_focus && !v3 && v2->auto_sel )
     SendMessageA(v8, 0xB1u, 0, -1);
-  if ( !tab_key )
+  if( !tab_key )
   {
     v9 = v2->edit_wnd;
-    if ( v9 )
+    if( v9 )
     {
-      if ( !v2->have_focus && !v2->hidden )
+      if( !v2->have_focus && !v2->hidden )
       {
         ShowWindow(v9, 0);
         v2->hidden = 1;
       }
     }
   }
-  if ( v2->have_focus )
+  if( v2->have_focus )
     ignore_next_char = 0;
 }
 // 86B23C: using guessed type int imc_retval;
@@ -339,7 +339,7 @@ void __thiscall TEditPanel::set_rect(TEditPanel *this, int x_in, int y_in, int w
   v5 = this;
   TPanel::set_rect((TPanel *)&this->vfptr, x_in, y_in, wid_in, hgt_in);
   v6 = v5->edit_wnd;
-  if ( v6 )
+  if( v6 )
   {
     v7 = !v5->hidden && v5->visible && v5->active;
     MoveWindow(
@@ -352,7 +352,7 @@ void __thiscall TEditPanel::set_rect(TEditPanel *this, int x_in, int y_in, int w
   }
   v8 = v5->render_rect.left;
   v9 = v5->bevel_size;
-  if ( v5->format == 7 )
+  if( v5->format == 7 )
   {
     v10 = v8 + v9 + 1;
     v11 = v9 + v5->render_rect.top;
@@ -385,14 +385,14 @@ void __thiscall TEditPanel::set_redraw(TEditPanel *this, TPanel::RedrawMode redr
 
   v2 = this;
   TPanel::set_redraw((TPanel *)&this->vfptr, RedrawNormal);
-  if ( v2->active )
+  if( v2->active )
   {
-    if ( redraw_mode )
+    if( redraw_mode )
     {
       v3 = v2->edit_wnd;
-      if ( v3 )
+      if( v3 )
       {
-        if ( !v2->hidden )
+        if( !v2->hidden )
           InvalidateRect(v3, 0, 1);
       }
     }
@@ -463,16 +463,16 @@ void *__thiscall TEditPanel::wnd_proc(TEditPanel *this, void *hwnd, unsigned int
 
   v5 = this;
   v6 = this->edit_wnd;
-  if ( !v6 || !this->active || !this->visible || this->hidden )
+  if( !v6 || !this->active || !this->visible || this->hidden )
     return (void *)TPanel::wnd_proc((TPanel *)&v5->vfptr, hwnd, msg, wParam, lParam);
-  if ( msg != 7 )
+  if( msg != 7 )
   {
-    if ( msg == 273 )
+    if( msg == 273 )
     {
-      if ( (void *)lParam == v6 && HIWORD(wParam) == 1024 )
+      if( (void *)lParam == v6 && HIWORD(wParam) == 1024 )
         InvalidateRect(v6, 0, 1);
     }
-    else if ( msg == 307 && this->brush && (void *)(unsigned __int16)lParam == v6 )
+    else if( msg == 307 && this->brush && (void *)(unsigned __int16)lParam == v6 )
     {
       SetBkColor((HDC)wParam, this->back_color);
       SetBkMode((HDC)wParam, 2);
@@ -510,28 +510,28 @@ int __thiscall TEditPanel::sub_wnd_proc(TEditPanel *this, void *hwnd, unsigned i
   v5 = lParam;
   v6 = msg;
   v7 = this;
-  if ( this->edit_wnd && this->active && this->visible && !this->hidden )
+  if( this->edit_wnd && this->active && this->visible && !this->hidden )
   {
-    if ( msg > 0x14 )
+    if( msg > 0x14 )
     {
-      if ( msg <= 0x200 )
+      if( msg <= 0x200 )
       {
-        if ( msg != 512 )
+        if( msg != 512 )
         {
           switch ( msg )
           {
             case 0x100u:
               v10 = this->parent_panel;
-              if ( !v10 )
+              if( !v10 )
               {
                 v11 = wParam;
-                if ( wParam != 27 )
+                if( wParam != 27 )
                   goto LABEL_37;
                 SendMessageA(v7->edit_wnd, 0xC7u, 0, 0);
                 return 0;
               }
               v11 = wParam;
-              if ( ((int (__stdcall *)(void *, unsigned int, unsigned int, int))v10->vfptr->wnd_proc)(
+              if( ((int (__stdcall *)(void *, unsigned int, unsigned int, int))v10->vfptr->wnd_proc)(
                      hwnd,
                      msg,
                      wParam,
@@ -539,7 +539,7 @@ int __thiscall TEditPanel::sub_wnd_proc(TEditPanel *this, void *hwnd, unsigned i
               {
                 return 0;
               }
-              if ( v11 == 9 )
+              if( v11 == 9 )
               {
                 v12 = GetKeyState(18) < 0;
                 wParam = GetKeyState(17) < 0;
@@ -550,14 +550,14 @@ int __thiscall TEditPanel::sub_wnd_proc(TEditPanel *this, void *hwnd, unsigned i
                 tab_key = 0;
                 return 0;
               }
-              if ( v11 == 13 )
+              if( v11 == 13 )
               {
                 ((void (__stdcall *)(TEditPanel *, _DWORD, _DWORD, _DWORD))v7->parent_panel->vfptr->action)(v7, 0, 0, 0);
                 return 0;
               }
-              if ( v11 == 27 )
+              if( v11 == 27 )
               {
-                if ( ((int (__stdcall *)(TEditPanel *, signed int, _DWORD, _DWORD))v7->parent_panel->vfptr->action)(
+                if( ((int (__stdcall *)(TEditPanel *, signed int, _DWORD, _DWORD))v7->parent_panel->vfptr->action)(
                        v7,
                        1,
                        0,
@@ -575,16 +575,16 @@ LABEL_33:
               }
               break;
             case 0x101u:
-              if ( wParam != 9 )
+              if( wParam != 9 )
                 goto LABEL_36;
               return 0;
             case 0x102u:
               result = TEditPanel::verify_char(this, wParam);
-              if ( result )
+              if( result )
                 goto LABEL_36;
               return result;
             case 0x104u:
-              if ( !this->imc || !this->enable_ime )
+              if( !this->imc || !this->enable_ime )
               {
                 SetFocus(this->render_area->Wnd);
                 PostMessageA(v7->render_area->Wnd, v6, wParam, lParam);
@@ -595,16 +595,16 @@ LABEL_33:
           }
           goto LABEL_37;
         }
-        if ( !rge_base_game->windows_mouse )
+        if( !rge_base_game->windows_mouse )
         {
           MouseCursorInChildContol = 1;
           RGE_Base_Game::mouse_off(rge_base_game);
         }
       }
     }
-    else if ( msg == 20 )
+    else if( msg == 20 )
     {
-      if ( this->brush )
+      if( this->brush )
       {
         v8 = (void *)wParam;
         SelectObject((HDC)wParam, this->brush);
@@ -613,7 +613,7 @@ LABEL_33:
         return 1;
       }
     }
-    else if ( msg == 15 )
+    else if( msg == 15 )
     {
       InvalidateRect(hwnd, 0, 1);
     }
@@ -626,7 +626,7 @@ LABEL_37:
   old_end = 0;
   msg = 0;
   new_end = 0;
-  if ( v15 && v6 != 176 )
+  if( v15 && v6 != 176 )
   {
     lParam = 1;
     SendMessageA(v15, 0xB0u, (WPARAM)&old_start, (LPARAM)&old_end);
@@ -636,18 +636,18 @@ LABEL_37:
     lParam = 0;
   }
   v16 = CallWindowProcA((WNDPROC)v7->old_sub_wnd_proc, hwnd, v6, v11, v5);
-  if ( lParam )
+  if( lParam )
   {
     SendMessageA(v7->edit_wnd, 0xB0u, (WPARAM)&msg, (LPARAM)&new_end);
-    if ( msg != old_start || new_end != old_end )
+    if( msg != old_start || new_end != old_end )
     {
       InvalidateRect(v7->edit_wnd, 0, 1);
       UpdateWindow(v7->edit_wnd);
     }
   }
-  if ( v6 == 770 )
+  if( v6 == 770 )
     TEditPanel::update_text(v7);
-  if ( v6 == 513 || v6 == 514 || v6 == 516 || v6 == 517 )
+  if( v6 == 513 || v6 == 514 || v6 == 516 || v6 == 517 )
   {
     v17 = (unsigned __int16)v5 + v7->pnl_x;
     v18 = v7->pnl_y + (v5 >> 16);
@@ -667,26 +667,26 @@ int __thiscall TEditPanel::verify_char(TEditPanel *this, int key)
   bool v6; // zf@22
 
   v2 = this;
-  if ( ignore_next_char )
+  if( ignore_next_char )
   {
     ignore_next_char = 0;
     return 0;
   }
-  if ( key == 9 )
+  if( key == 9 )
     return 0;
-  if ( key == 13 && this->format != 7 )
+  if( key == 13 && this->format != 7 )
     return 0;
-  if ( key != 8 )
+  if( key != 8 )
   {
     TEditPanel::update_text(this);
-    if ( !v2->sel_len )
+    if( !v2->sel_len )
     {
-      if ( v2->text_len >= v2->fixed_len - 1 )
+      if( v2->text_len >= v2->fixed_len - 1 )
       {
         MessageBeep(0xFFFFFFFF);
         return 0;
       }
-      if ( v2->text_len >= v2->fixed_len - 2 && IsDBCSLeadByte(key) )
+      if( v2->text_len >= v2->fixed_len - 2 && IsDBCSLeadByte(key) )
       {
         ignore_next_char = 1;
         MessageBeep(0xFFFFFFFF);
@@ -698,13 +698,13 @@ int __thiscall TEditPanel::verify_char(TEditPanel *this, int key)
       case 8:
         v4 = v2->text_len;
         v5 = v4 == 2;
-        if ( v4 >= 2 )
+        if( v4 >= 2 )
           goto LABEL_20;
-        if ( key >= 48 && key <= 57 )
+        if( key >= 48 && key <= 57 )
           return 1;
         v5 = v4 == 2;
 LABEL_20:
-        if ( !v5 || key != 48 )
+        if( !v5 || key != 48 )
           goto LABEL_49;
         v6 = _mbscmp(a10, (const unsigned __int8 *)v2->text) == 0;
         goto LABEL_31;
@@ -712,30 +712,30 @@ LABEL_20:
       case 2:
       case 3:
         TEditPanel::update_text(v2);
-        if ( key >= 48 && key <= 57 || key == 45 && !*v2->text && v2->format != 3 )
+        if( key >= 48 && key <= 57 || key == 45 && !*v2->text && v2->format != 3 )
           return 1;
-        if ( key != 46 || !_mbschr((const unsigned __int8 *)v2->text, 0x2Eu) )
+        if( key != 46 || !_mbschr((const unsigned __int8 *)v2->text, 0x2Eu) )
           goto LABEL_49;
         v6 = v2->format == 1;
 LABEL_31:
-        if ( v6 )
+        if( v6 )
           return 1;
         MessageBeep(0xFFFFFFFF);
         return 0;
       case 4:
       case 5:
         TEditPanel::update_text(v2);
-        if ( key == 46 )
+        if( key == 46 )
         {
-          if ( v2->format != 4 || _mbschr((const unsigned __int8 *)v2->text, 0x2Eu) )
+          if( v2->format != 4 || _mbschr((const unsigned __int8 *)v2->text, 0x2Eu) )
             goto LABEL_49;
         }
         else
         {
-          if ( key == 92 || key == 58 )
+          if( key == 92 || key == 58 )
             goto LABEL_49;
 LABEL_42:
-          if ( key == 47 || key == 34 || key == 42 || key == 63 || key == 62 || key == 60 || key == 124 )
+          if( key == 47 || key == 34 || key == 42 || key == 63 || key == 62 || key == 60 || key == 124 )
           {
 LABEL_49:
             MessageBeep(0xFFFFFFFF);
@@ -745,7 +745,7 @@ LABEL_49:
         break;
       case 6:
         TEditPanel::update_text(v2);
-        if ( key != 58 || v2->text_len == 1 )
+        if( key != 58 || v2->text_len == 1 )
           goto LABEL_42;
         goto LABEL_49;
       default:
@@ -779,12 +779,12 @@ void __thiscall TEditPanel::draw(TEditPanel *this)
   v1 = this;
   v2 = this->visible;
   this->need_redraw = 0;
-  if ( v2 )
+  if( v2 )
   {
     v3 = this->vfptr;
     v16 = this->vfptr;
     ((void (__stdcall *)(_DWORD))this->vfptr->draw_setup)(0);
-    if ( v1->brush && v1->active && v1->have_focus )
+    if( v1->brush && v1->active && v1->have_focus )
     {
       v4 = (unsigned __int8)GetNearestPaletteIndex(v1->render_area->DrawSystem->Pal, v1->back_color);
       TDrawArea::Clear(v1->render_area, &v1->clip_rect, v4);
@@ -792,12 +792,12 @@ void __thiscall TEditPanel::draw(TEditPanel *this)
     else
     {
       v5 = v1->parent_panel;
-      if ( v5 )
+      if( v5 )
       {
         v6 = v1->bevel_type;
-        if ( v6 < 2 || v6 > 7 )
+        if( v6 < 2 || v6 > 7 )
         {
-          if ( !v5->just_drawn )
+          if( !v5->just_drawn )
             ((void (__stdcall *)(int))v5->vfptr->draw_rect)((int)&v1->clip_rect);
         }
         else
@@ -810,9 +810,9 @@ void __thiscall TEditPanel::draw(TEditPanel *this)
         TDrawArea::Clear(v1->render_area, &v1->clip_rect, v1->color);
       }
     }
-    if ( v1->bevel_type )
+    if( v1->bevel_type )
     {
-      if ( TDrawArea::Lock(v1->render_area, aPnl_editDraw, 1) )
+      if( TDrawArea::Lock(v1->render_area, aPnl_editDraw, 1) )
       {
         switch ( v1->bevel_type )
         {
@@ -904,12 +904,12 @@ void __thiscall TEditPanel::draw(TEditPanel *this)
       TDrawArea::Unlock(v1->render_area, aPnl_editDraw);
     }
     v7 = v1->edit_wnd;
-    if ( v7 && v1->active )
+    if( v7 && v1->active )
     {
       v8 = v1->hidden;
-      if ( v1->have_focus )
+      if( v1->have_focus )
       {
-        if ( v8 )
+        if( v8 )
         {
           ShowWindow(v7, 5);
           InvalidateRect(v1->edit_wnd, 0, 1);
@@ -920,14 +920,14 @@ void __thiscall TEditPanel::draw(TEditPanel *this)
       }
       else
       {
-        if ( !v8 )
+        if( !v8 )
         {
           ShowWindow(v7, 0);
           v1->hidden = 1;
         }
         v9 = TDrawArea::GetDc(v1->render_area, aPnl_editDraw);
         v10 = v9;
-        if ( v9 )
+        if( v9 )
         {
           SelectClipRgn(v9, v1->clip_rgn);
           old_font = SelectObject(v10, v1->font);
@@ -964,11 +964,11 @@ int __thiscall TEditPanel::is_blank(TEditPanel *this)
   v1 = this;
   TEditPanel::update_text(this);
   v2 = (unsigned __int8 *)v1->text;
-  if ( v2 && *v2 )
+  if( v2 && *v2 )
   {
-    while ( *v2 )
+    while( *v2 )
     {
-      if ( !_ismbcspace(*v2) )
+      if( !_ismbcspace(*v2) )
         return 0;
       v2 = _mbsinc(v2);
     }
@@ -991,13 +991,13 @@ char *__thiscall TEditPanel::get_trimmed_str(TEditPanel *this, char *str, int st
   v4 = (unsigned __int8 *)str;
   memset(str, 0, str_len);
   v5 = (const unsigned __int8 *)temp_str;
-  if ( _ismbcspace((unsigned __int8)temp_str[0]) )
+  if( _ismbcspace((unsigned __int8)temp_str[0]) )
   {
     do
       v5 = _mbsinc(v5);
-    while ( _ismbcspace(*v5) );
+    while( _ismbcspace(*v5) );
   }
-  for ( ; *v5; v5 = _mbsinc(v5) )
+  for( ; *v5; v5 = _mbsinc(v5) )
   {
     _mbsncpy(v4, v5, 1u);
     v4 = _mbsinc(v4);
@@ -1005,11 +1005,11 @@ char *__thiscall TEditPanel::get_trimmed_str(TEditPanel *this, char *str, int st
   do
   {
     *v4 = 0;
-    if ( (char *)v4 == str )
+    if( (char *)v4 == str )
       break;
     v4 = _mbsdec((const unsigned __int8 *)str, v4);
   }
-  while ( _ismbcspace(*v4) );
+  while( _ismbcspace(*v4) );
   return str;
 }
 
@@ -1021,11 +1021,11 @@ void __thiscall TEditPanel::handle_reactivate(TEditPanel *this)
   void *v3; // esi@3
 
   v1 = this;
-  if ( this->edit_wnd && this->have_focus )
+  if( this->edit_wnd && this->have_focus )
   {
     v2 = GetFocus();
     v3 = v1->edit_wnd;
-    if ( v2 != v3 )
+    if( v2 != v3 )
       SetFocus(v3);
   }
 }

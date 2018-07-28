@@ -23,7 +23,7 @@ TDialogPanel *__thiscall TDialogPanel::`vector deleting destructor'(TDialogPanel
 
   v2 = this;
   TDialogPanel::~TDialogPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -38,7 +38,7 @@ int __thiscall TDialogPanel::setup(TDialogPanel *this, TDrawArea *render_area_in
   TPanel *v12; // ecx@6
 
   v8 = this;
-  if ( parent_in )
+  if( parent_in )
   {
     v9 = TPanel::width(parent_in);
     v10 = TPanel::height(parent_in);
@@ -62,10 +62,10 @@ int __thiscall TDialogPanel::setup(TDialogPanel *this, TDrawArea *render_area_in
              wid_in,
              hgt_in,
              allow_shadow_area_in);
-  if ( result )
+  if( result )
   {
     v12 = v8->parent_panel;
-    if ( v12 )
+    if( v12 )
     {
       v8->save_parent_child = v12->curr_child;
       TPanel::set_curr_child(v12, (TPanel *)&v8->vfptr);
@@ -91,7 +91,7 @@ int __thiscall TDialogPanel::setup(TDialogPanel *this, TDrawArea *render_area_in
   TPanel *v11; // ecx@6
 
   v7 = this;
-  if ( parent_in )
+  if( parent_in )
   {
     v8 = TPanel::width(parent_in);
     v9 = TPanel::height(parent_in);
@@ -113,13 +113,13 @@ int __thiscall TDialogPanel::setup(TDialogPanel *this, TDrawArea *render_area_in
              wid_in,
              hgt_in,
              allow_shadow_area_in);
-  if ( result )
+  if( result )
   {
     (*(void (__thiscall **)(TDialogPanel *, int))&v7->vfptr->gap10[0])(v7, color_in);
     TPanel::set_z_order((TPanel *)&v7->vfptr, 1, 0);
     TPanelSystem::setModalPanel(&panel_system, (TPanel *)&v7->vfptr);
     v11 = v7->parent_panel;
-    if ( v11 )
+    if( v11 )
     {
       v7->save_parent_child = v11->curr_child;
       TPanel::set_curr_child(v11, (TPanel *)&v7->vfptr);
@@ -141,10 +141,10 @@ void __thiscall TDialogPanel::~TDialogPanel(TDialogPanel *this)
 
   v1 = this;
   this->vfptr = (TPanelVtbl *)&TDialogPanel::`vftable';
-  if ( !TPanelSystem::restorePreviousModalPanel(&panel_system) )
+  if( !TPanelSystem::restorePreviousModalPanel(&panel_system) )
     TPanelSystem::setModalPanel(&panel_system, 0);
   v2 = v1->parent_panel;
-  if ( v2 )
+  if( v2 )
   {
     ((void (__stdcall *)(signed int))v2->vfptr->set_redraw)(2);
     TPanel::set_curr_child(v1->parent_panel, v1->save_parent_child);

@@ -62,7 +62,7 @@ void __thiscall TButtonPanel::TButtonPanel(TButtonPanel *this)
     v3 += 4;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
 }
 // 570FC8: using guessed type int (__thiscall *TButtonPanel::`vftable')(void *Memory, unsigned int __flags);
 
@@ -73,7 +73,7 @@ TButtonPanel *__thiscall TButtonPanel::`vector deleting destructor'(TButtonPanel
 
   v2 = this;
   TButtonPanel::~TButtonPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -91,12 +91,12 @@ void __thiscall TButtonPanel::~TButtonPanel(TButtonPanel *this)
   v3 = (void **)((char *)this + 444);
   do
   {
-    if ( *(v3 - 9) )
+    if( *(v3 - 9) )
     {
       free(*(v3 - 9));
       *(v3 - 9) = 0;
     }
-    if ( *v3 )
+    if( *v3 )
     {
       free(*v3);
       *v3 = 0;
@@ -104,8 +104,8 @@ void __thiscall TButtonPanel::~TButtonPanel(TButtonPanel *this)
     ++v3;
     --v2;
   }
-  while ( v2 );
-  if ( *((_DWORD *)v1 + 127) )
+  while( v2 );
+  if( *((_DWORD *)v1 + 127) )
   {
     free(*((void **)v1 + 127));
     *((_DWORD *)v1 + 127) = 0;
@@ -216,16 +216,16 @@ void __thiscall TButtonPanel::set_radio_info(TButtonPanel *this, TButtonPanel **
   v3 = this;
   v4 = (void *)*((_DWORD *)this + 127);
   *((_DWORD *)this + 79) = 2;
-  if ( v4 )
+  if( v4 )
   {
     free(v4);
     *((_DWORD *)v3 + 127) = 0;
   }
-  if ( button_count_in )
+  if( button_count_in )
   {
     *((_WORD *)v3 + 256) = button_count_in;
     *((_DWORD *)v3 + 127) = calloc(button_count_in, 4u);
-    if ( button_count_in > 0 )
+    if( button_count_in > 0 )
     {
       v5 = 0;
       v6 = button_count_in;
@@ -235,7 +235,7 @@ void __thiscall TButtonPanel::set_radio_info(TButtonPanel *this, TButtonPanel **
         ++v5;
         --v6;
       }
-      while ( v6 );
+      while( v6 );
     }
   }
 }
@@ -281,37 +281,37 @@ void __thiscall TButtonPanel::set_text(TButtonPanel *this, __int16 state_in, cha
   char *v10; // edx@12
 
   v3 = this;
-  if ( *((_DWORD *)this + state_in + 102) )
+  if( *((_DWORD *)this + state_in + 102) )
   {
     free(*((void **)this + state_in + 102));
     *((_DWORD *)v3 + state_in + 102) = 0;
   }
-  if ( *((_DWORD *)v3 + state_in + 111) )
+  if( *((_DWORD *)v3 + state_in + 111) )
   {
     free(*((void **)v3 + state_in + 111));
     *((_DWORD *)v3 + state_in + 111) = 0;
   }
-  if ( text_in && *text_in )
+  if( text_in && *text_in )
   {
     v4 = strchr(text_in, 10);
     v5 = v4;
-    if ( v4 )
+    if( v4 )
       v6 = (_WORD)v4 - (_WORD)text_in;
     else
       v6 = strlen(text_in);
     v7 = v6;
     v8 = (char *)calloc(v6 + 1, 1u);
     *((_DWORD *)v3 + state_in + 102) = v8;
-    if ( v8 )
+    if( v8 )
     {
       strncpy(v8, text_in, v7);
       *(_BYTE *)(v7 + *((_DWORD *)v3 + state_in + 102)) = 0;
-      if ( v5 )
+      if( v5 )
       {
         v9 = v5 + 1;
         v10 = (char *)calloc(strlen(v9) + 1, 1u);
         *((_DWORD *)v3 + state_in + 111) = v10;
-        if ( v10 )
+        if( v10 )
           strcpy(v10, v9);
       }
     }
@@ -327,32 +327,32 @@ void __thiscall TButtonPanel::set_text(TButtonPanel *this, __int16 state_in, cha
   char *v6; // edx@10
 
   v4 = this;
-  if ( *((_DWORD *)this + state_in + 102) )
+  if( *((_DWORD *)this + state_in + 102) )
   {
     free(*((void **)this + state_in + 102));
     *((_DWORD *)v4 + state_in + 102) = 0;
   }
-  if ( *((_DWORD *)v4 + state_in + 111) )
+  if( *((_DWORD *)v4 + state_in + 111) )
   {
     free(*((void **)v4 + state_in + 111));
     *((_DWORD *)v4 + state_in + 111) = 0;
   }
-  if ( text1_in )
+  if( text1_in )
   {
-    if ( *text1_in )
+    if( *text1_in )
     {
       v5 = (char *)calloc(strlen(text1_in) + 1, 1u);
       *((_DWORD *)v4 + state_in + 102) = v5;
-      if ( v5 )
+      if( v5 )
       {
         strcpy(v5, text1_in);
-        if ( text2_in )
+        if( text2_in )
         {
-          if ( *text2_in )
+          if( *text2_in )
           {
             v6 = (char *)calloc(strlen(text2_in) + 1, 1u);
             *((_DWORD *)v4 + state_in + 111) = v6;
-            if ( v6 )
+            if( v6 )
               strcpy(v6, text2_in);
           }
         }
@@ -401,7 +401,7 @@ void __thiscall TButtonPanel::set_font(TButtonPanel *this, void *font_in, int fo
 //----- (00472620) --------------------------------------------------------
 void __thiscall TButtonPanel::set_text_color(TButtonPanel *this, int state, unsigned int text_color1_in, unsigned int text_color2_in)
 {
-  if ( state >= 0 && state <= 8 )
+  if( state >= 0 && state <= 8 )
   {
     *((_DWORD *)this + state + 130) = text_color1_in;
     *((_DWORD *)this + state + 139) = text_color2_in;
@@ -412,7 +412,7 @@ void __thiscall TButtonPanel::set_text_color(TButtonPanel *this, int state, unsi
 //----- (00472650) --------------------------------------------------------
 void __thiscall TButtonPanel::set_highlight_text_color(TButtonPanel *this, int state, unsigned int text_color1_in, unsigned int text_color2_in)
 {
-  if ( state >= 0 && state <= 8 )
+  if( state >= 0 && state <= 8 )
   {
     *((_DWORD *)this + state + 148) = text_color1_in;
     *((_DWORD *)this + state + 157) = text_color2_in;
@@ -434,14 +434,14 @@ void __thiscall TButtonPanel::set_radio_button(TButtonPanel *this)
   int v3; // eax@3
 
   v1 = this;
-  for ( i = 0;
+  for( i = 0;
         i < *((_WORD *)v1 + 256);
         (*(void (__stdcall **)(_DWORD))(**(_DWORD **)(*((_DWORD *)v1 + 127) + 4 * i++) + 224))(0) )
   {
     *(_DWORD *)(*(_DWORD *)(*((_DWORD *)v1 + 127) + 4 * i) + 504) = 0;
   }
   v3 = *((_DWORD *)v1 + 80);
-  if ( v3 == 3 || v3 == 5 )
+  if( v3 == 3 || v3 == 5 )
     *((_DWORD *)v1 + 126) = 1;
   (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v1 + 224))(v1, 1);
 }
@@ -465,14 +465,14 @@ void __thiscall TButtonPanel::set_state_by_id(TButtonPanel *this, int id_in)
 
   v2 = *((_WORD *)this + 250);
   v3 = 0;
-  if ( v2 > 0 )
+  if( v2 > 0 )
   {
     v4 = (char *)this + 244;
-    while ( *(_DWORD *)v4 != id_in )
+    while( *(_DWORD *)v4 != id_in )
     {
       ++v3;
       v4 += 4;
-      if ( v3 >= v2 )
+      if( v3 >= v2 )
         return;
     }
     *((_WORD *)this + 251) = v3;
@@ -502,7 +502,7 @@ void __thiscall TButtonPanel::set_disabled(TButtonPanel *this, int val)
   v3 = *(_DWORD *)this;
   *((_DWORD *)this + 172) = val;
   (*(void (__stdcall **)(signed int))(v3 + 32))(1);
-  if ( *((_DWORD *)v2 + 172) )
+  if( *((_DWORD *)v2 + 172) )
     *((_DWORD *)v2 + 32) = 0;
   else
     *((_DWORD *)v2 + 32) = 1;
@@ -538,7 +538,7 @@ BOOL __thiscall TButtonPanel::get_text(TButtonPanel *this, __int16 state_in, cha
   __int16 v4; // ax@1
 
   v4 = state_in;
-  if ( state_in == -1 )
+  if( state_in == -1 )
     v4 = *((_WORD *)this + 251);
   *text1_in = (char *)*((_DWORD *)this + v4 + 102);
   *text2_in = (char *)*((_DWORD *)this + v4 + 111);
@@ -551,7 +551,7 @@ void __thiscall TButtonPanel::get_text_color(TButtonPanel *this, __int16 state_i
   __int16 v4; // ax@1
 
   v4 = state_in;
-  if ( state_in == -1 )
+  if( state_in == -1 )
     v4 = *((_WORD *)this + 251);
   *color1 = *((_DWORD *)this + v4 + 130);
   *color2 = *((_DWORD *)this + v4 + 139);
@@ -605,28 +605,28 @@ void __thiscall TButtonPanel::draw(TButtonPanel *this)
 
   v1 = this;
   v2 = (TDrawArea *)*((_DWORD *)this + 8);
-  if ( v2 )
+  if( v2 )
   {
-    if ( *((_DWORD *)v1 + 28) )
+    if( *((_DWORD *)v1 + 28) )
     {
-      if ( *((_DWORD *)v1 + 27) )
+      if( *((_DWORD *)v1 + 27) )
       {
         v3 = *((_DWORD *)v1 + 80);
-        if ( v3 != 1 )
+        if( v3 != 1 )
         {
-          if ( v3 == 5 )
+          if( v3 == 5 )
           {
             TDrawArea::Clear(v2, (tagRECT *)((char *)v1 + 36), *((_BYTE *)v1 + 239));
           }
           else
           {
             v4 = *((_DWORD *)v1 + 16);
-            if ( v4 )
+            if( v4 )
             {
               v5 = *((_DWORD *)v1 + 168);
-              if ( v5 < 2 || v5 > 4 )
+              if( v5 < 2 || v5 > 4 )
               {
-                if ( !*(_DWORD *)(v4 + 132) )
+                if( !*(_DWORD *)(v4 + 132) )
                   (*(void (__stdcall **)(int))(*(_DWORD *)v4 + 52))((int)v1 + 36);
               }
               else
@@ -639,21 +639,21 @@ void __thiscall TButtonPanel::draw(TButtonPanel *this)
           v41 = v6;
           (*(void (__thiscall **)(TButtonPanel *, _DWORD))(v6 + 40))(v1, 0);
           v7 = *((_DWORD *)v1 + 80);
-          if ( v7 != 2 && v7 != 4 && v7 != 6 || !TDrawArea::Lock(*((TDrawArea **)v1 + 8), aPnl_btnDraw, 1) )
+          if( v7 != 2 && v7 != 4 && v7 != 6 || !TDrawArea::Lock(*((TDrawArea **)v1 + 8), aPnl_btnDraw, 1) )
           {
 LABEL_27:
             v13 = *((_DWORD *)v1 + 80);
-            if ( v13 != 3 && v13 != 4 && v13 != 5
+            if( v13 != 3 && v13 != 4 && v13 != 5
               || (v14 = TDrawArea::GetDc(*((TDrawArea **)v1 + 8), aPnl_btnDraw), (v15 = v14) == 0) )
             {
 LABEL_64:
               v28 = *((_DWORD *)v1 + 80);
-              if ( v28 != 3 && v28 != 4 && v28 != 5 && v28 != 6
+              if( v28 != 3 && v28 != 4 && v28 != 5 && v28 != 6
                 || !TDrawArea::Lock(*((TDrawArea **)v1 + 8), aPnl_btnDraw2, 1) )
               {
                 goto LABEL_87;
               }
-              if ( *((_DWORD *)v1 + 172) )
+              if( *((_DWORD *)v1 + 172) )
               {
                 TDrawArea::DrawRect(
                   *((TDrawArea **)v1 + 8),
@@ -675,12 +675,12 @@ LABEL_87:
                 (*(void (__thiscall **)(TButtonPanel *))(v6 + 44))(v1);
                 return;
               }
-              if ( *((_DWORD *)v1 + 101) )
+              if( *((_DWORD *)v1 + 101) )
               {
-                if ( *((_DWORD *)v1 + 126) )
+                if( *((_DWORD *)v1 + 126) )
                   goto LABEL_80;
               }
-              else if ( !*((_DWORD *)v1 + 126) )
+              else if( !*((_DWORD *)v1 + 126) )
               {
 LABEL_80:
                 switch ( *((_DWORD *)v1 + 168) )
@@ -802,7 +802,7 @@ LABEL_80:
             SelectClipRgn(v14, *((HRGN *)v1 + 34));
             old_font = SelectObject(v15, *((HGDIOBJ *)v1 + 122));
             SetBkMode(v15, 1);
-            if ( *((_DWORD *)v1 + 120) == -1 )
+            if( *((_DWORD *)v1 + 120) == -1 )
             {
               v16 = *((_DWORD *)v1 + 5) / 2;
               calc_x = *((_DWORD *)v1 + 5) / 2;
@@ -813,12 +813,12 @@ LABEL_80:
               v16 = *((_DWORD *)v1 + 120);
             }
             v17 = *((_DWORD *)v1 + 121);
-            if ( v17 == -1 )
+            if( v17 == -1 )
               v17 = *((_DWORD *)v1 + 6) / 2;
             y = v17;
             v18 = *((_WORD *)v1 + 251);
             v19 = (const char *)*((_DWORD *)v1 + v18 + 102);
-            if ( v19 )
+            if( v19 )
             {
               text = (char *)*((_DWORD *)v1 + v18 + 102);
             }
@@ -827,7 +827,7 @@ LABEL_80:
               text = (char *)*((_DWORD *)v1 + 102);
               v19 = (const char *)*((_DWORD *)v1 + 102);
             }
-            if ( !v19 )
+            if( !v19 )
             {
 LABEL_63:
               SelectObject(v15, old_font);
@@ -840,20 +840,20 @@ LABEL_63:
             GetTextExtentPoint32A(v15, (LPCSTR)v19, x, &text_size);
             v20 = *((_DWORD *)v1 + 3) + v16 - text_size.cx / 2;
             v21 = *((_WORD *)v1 + 251);
-            if ( *((_DWORD *)v1 + v21 + 111) )
+            if( *((_DWORD *)v1 + v21 + 111) )
               v22 = y - *((_DWORD *)v1 + 124);
             else
               v22 = y - *((_DWORD *)v1 + 124) / 2;
             v23 = *((_DWORD *)v1 + 4) + v22;
-            if ( *((_DWORD *)v1 + 101) )
+            if( *((_DWORD *)v1 + 101) )
             {
-              if ( *((_DWORD *)v1 + 126) )
+              if( *((_DWORD *)v1 + 126) )
                 goto LABEL_48;
             }
-            else if ( !*((_DWORD *)v1 + 126) )
+            else if( !*((_DWORD *)v1 + 126) )
             {
 LABEL_48:
-              if ( *((_DWORD *)v1 + 30) )
+              if( *((_DWORD *)v1 + 30) )
               {
                 SetTextColor(v15, *((_DWORD *)v1 + v21 + 157));
                 TextOutA(v15, v20 - 1, v23 + 1, text, x);
@@ -871,7 +871,7 @@ LABEL_48:
                 v25 = (void (__stdcall *)(HDC, int, int, LPCSTR, int))TextOutA;
               }
               v26 = (const char *)*((_DWORD *)v1 + *((_WORD *)v1 + 251) + 111);
-              if ( v26 )
+              if( v26 )
               {
                 texta = (char *)*((_DWORD *)v1 + *((_WORD *)v1 + 251) + 111);
               }
@@ -880,21 +880,21 @@ LABEL_48:
                 texta = (char *)*((_DWORD *)v1 + 111);
                 v26 = (const char *)*((_DWORD *)v1 + 111);
               }
-              if ( !v26 )
+              if( !v26 )
                 goto LABEL_63;
               v27 = (signed __int16)strlen(v26);
               GetTextExtentPoint32A(v15, (LPCSTR)v26, v27, &text_size);
               xa = *((_DWORD *)v1 + 3) + calc_x - text_size.cx / 2;
               ya = *((_DWORD *)v1 + 4) + y;
-              if ( *((_DWORD *)v1 + 101) )
+              if( *((_DWORD *)v1 + 101) )
               {
-                if ( *((_DWORD *)v1 + 126) )
+                if( *((_DWORD *)v1 + 126) )
                   goto LABEL_60;
               }
-              else if ( !*((_DWORD *)v1 + 126) )
+              else if( !*((_DWORD *)v1 + 126) )
               {
 LABEL_60:
-                if ( *((_DWORD *)v1 + 30) )
+                if( *((_DWORD *)v1 + 30) )
                 {
                   SetTextColor(v15, *((_DWORD *)v1 + *((_WORD *)v1 + 251) + 157));
                   v25(v15, xa - 1, ya + 1, texta, v27);
@@ -920,13 +920,13 @@ LABEL_60:
           }
           v8 = *((_WORD *)v1 + 251);
           v9 = (TShape *)*((_DWORD *)v1 + v8 + 83);
-          if ( !v9 )
+          if( !v9 )
           {
 LABEL_26:
             TDrawArea::Unlock(*((TDrawArea **)v1 + 8), aPnl_btnDraw);
             goto LABEL_27;
           }
-          if ( *((_DWORD *)v1 + 97) )
+          if( *((_DWORD *)v1 + 97) )
           {
             TShape::shape_minmax(v9, &x_min, &y_min, &x_max, &y_max, *((_WORD *)v1 + v8 + 184));
             v10 = y_max;
@@ -935,9 +935,9 @@ LABEL_26:
           }
           v11 = *((_DWORD *)v1 + 4) + *((_DWORD *)v1 + 99);
           v12 = *((_DWORD *)v1 + 3) + *((_DWORD *)v1 + 98);
-          if ( *((_DWORD *)v1 + 101) )
+          if( *((_DWORD *)v1 + 101) )
           {
-            if ( *((_DWORD *)v1 + 126) )
+            if( *((_DWORD *)v1 + 126) )
             {
 LABEL_25:
               TShape::shape_draw(
@@ -951,7 +951,7 @@ LABEL_25:
               goto LABEL_26;
             }
           }
-          else if ( !*((_DWORD *)v1 + 126) )
+          else if( !*((_DWORD *)v1 + 126) )
           {
             goto LABEL_25;
           }
@@ -972,16 +972,16 @@ int __thiscall TButtonPanel::handle_mouse_down(TButtonPanel *this, int mouse_but
   int result; // eax@2
 
   v6 = this;
-  if ( *((_DWORD *)this + 27) )
+  if( *((_DWORD *)this + 27) )
   {
-    if ( *((_DWORD *)this + 26) )
+    if( *((_DWORD *)this + 26) )
     {
       result = 0;
     }
     else
     {
       result = (*(int (__stdcall **)(int, int))(*(_DWORD *)this + 228))(x, y);
-      if ( result )
+      if( result )
         result = TPanel::handle_mouse_down((TPanel *)v6, mouse_button_in, x, y, ctrl_key, shift_key);
     }
   }
@@ -1007,16 +1007,16 @@ int __thiscall TButtonPanel::mouse_left_down_action(TButtonPanel *this, int x, i
   int v8; // ecx@7
 
   v5 = this;
-  if ( *((_DWORD *)this + 172) )
+  if( *((_DWORD *)this + 172) )
   {
     result = 0;
   }
   else
   {
     v7 = (TDigital *)*((_DWORD *)this + 82);
-    if ( v7 )
+    if( v7 )
     {
-      if ( TDigital::is_playing(v7) )
+      if( TDigital::is_playing(v7) )
         TDigital::stop(*((TDigital **)v5 + 82));
       TDigital::play(*((TDigital **)v5 + 82));
     }
@@ -1025,7 +1025,7 @@ int __thiscall TButtonPanel::mouse_left_down_action(TButtonPanel *this, int x, i
     *((_DWORD *)v5 + 129) = debug_timeGetTime();
     (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v5 + 32))(v5, 1);
     v8 = *((_DWORD *)v5 + 16);
-    if ( v8 )
+    if( v8 )
       (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v8 + 180))(
         v5,
         2,
@@ -1047,16 +1047,16 @@ int __thiscall TButtonPanel::mouse_left_move_action(TButtonPanel *this, int x, i
   v5 = this;
   v6 = *(_DWORD *)this;
   v7 = (*(int (__stdcall **)(int, int))(*(_DWORD *)this + 188))(x, y) != 0;
-  if ( *((_DWORD *)v5 + 126) != v7 )
+  if( *((_DWORD *)v5 + 126) != v7 )
   {
     *((_DWORD *)v5 + 126) = v7;
-    if ( v7 )
+    if( v7 )
       *((_DWORD *)v5 + 129) = debug_timeGetTime();
     (*(void (__thiscall **)(TButtonPanel *, signed int))(v6 + 32))(v5, 1);
     v8 = *((_DWORD *)v5 + 16);
-    if ( *((_DWORD *)v5 + 126) )
+    if( *((_DWORD *)v5 + 126) )
     {
-      if ( v8 )
+      if( v8 )
       {
         (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v8 + 180))(
           v5,
@@ -1066,7 +1066,7 @@ int __thiscall TButtonPanel::mouse_left_move_action(TButtonPanel *this, int x, i
         return 1;
       }
     }
-    else if ( v8 )
+    else if( v8 )
     {
       (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v8 + 180))(
         v5,
@@ -1089,9 +1089,9 @@ int __thiscall TButtonPanel::mouse_left_up_action(TButtonPanel *this, int x, int
   v5 = this;
   TPanel::release_mouse((TPanel *)this);
   v6 = *((_DWORD *)v5 + 79);
-  if ( *((_DWORD *)v5 + 126) )
+  if( *((_DWORD *)v5 + 126) )
   {
-    if ( v6 != 2 )
+    if( v6 != 2 )
       *((_DWORD *)v5 + 126) = 0;
     (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v5 + 32))(v5, 1);
     SendMessageA(*(HWND *)(*((_DWORD *)v5 + 8) + 4), 0xFu, 0, 0);
@@ -1100,7 +1100,7 @@ int __thiscall TButtonPanel::mouse_left_up_action(TButtonPanel *this, int x, int
   }
   else
   {
-    if ( v6 == 2 && *((_WORD *)v5 + 251) == 1 )
+    if( v6 == 2 && *((_WORD *)v5 + 251) == 1 )
     {
       v8 = *(_DWORD *)v5;
       *((_DWORD *)v5 + 126) = 1;
@@ -1126,16 +1126,16 @@ int __thiscall TButtonPanel::mouse_right_down_action(TButtonPanel *this, int x, 
   int v8; // ecx@7
 
   v5 = this;
-  if ( *((_DWORD *)this + 172) )
+  if( *((_DWORD *)this + 172) )
   {
     result = 0;
   }
   else
   {
     v7 = (TDigital *)*((_DWORD *)this + 82);
-    if ( v7 )
+    if( v7 )
     {
-      if ( TDigital::is_playing(v7) )
+      if( TDigital::is_playing(v7) )
         TDigital::stop(*((TDigital **)v5 + 82));
       TDigital::play(*((TDigital **)v5 + 82));
     }
@@ -1144,7 +1144,7 @@ int __thiscall TButtonPanel::mouse_right_down_action(TButtonPanel *this, int x, 
     *((_DWORD *)v5 + 129) = debug_timeGetTime();
     (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v5 + 32))(v5, 1);
     v8 = *((_DWORD *)v5 + 16);
-    if ( v8 )
+    if( v8 )
       (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v8 + 180))(
         v5,
         5,
@@ -1166,16 +1166,16 @@ int __thiscall TButtonPanel::mouse_right_move_action(TButtonPanel *this, int x, 
   v5 = this;
   v6 = *(_DWORD *)this;
   v7 = (*(int (__stdcall **)(int, int))(*(_DWORD *)this + 188))(x, y) != 0;
-  if ( *((_DWORD *)v5 + 126) != v7 )
+  if( *((_DWORD *)v5 + 126) != v7 )
   {
     *((_DWORD *)v5 + 126) = v7;
-    if ( v7 )
+    if( v7 )
       *((_DWORD *)v5 + 129) = debug_timeGetTime();
     (*(void (__thiscall **)(TButtonPanel *, signed int))(v6 + 32))(v5, 1);
     v8 = *((_DWORD *)v5 + 16);
-    if ( *((_DWORD *)v5 + 126) )
+    if( *((_DWORD *)v5 + 126) )
     {
-      if ( v8 )
+      if( v8 )
       {
         (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v8 + 180))(
           v5,
@@ -1185,7 +1185,7 @@ int __thiscall TButtonPanel::mouse_right_move_action(TButtonPanel *this, int x, 
         return 1;
       }
     }
-    else if ( v8 )
+    else if( v8 )
     {
       (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v8 + 180))(
         v5,
@@ -1208,9 +1208,9 @@ int __thiscall TButtonPanel::mouse_right_up_action(TButtonPanel *this, int x, in
   v5 = this;
   TPanel::release_mouse((TPanel *)this);
   v6 = *((_DWORD *)v5 + 79);
-  if ( *((_DWORD *)v5 + 126) )
+  if( *((_DWORD *)v5 + 126) )
   {
-    if ( v6 != 2 )
+    if( v6 != 2 )
       *((_DWORD *)v5 + 126) = 0;
     (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v5 + 32))(v5, 1);
     SendMessageA(*(HWND *)(*((_DWORD *)v5 + 8) + 4), 0xFu, 0, 0);
@@ -1219,7 +1219,7 @@ int __thiscall TButtonPanel::mouse_right_up_action(TButtonPanel *this, int x, in
   }
   else
   {
-    if ( v6 == 2 && *((_WORD *)v5 + 251) == 1 )
+    if( v6 == 2 && *((_WORD *)v5 + 251) == 1 )
     {
       v8 = *(_DWORD *)v5;
       *((_DWORD *)v5 + 126) = 1;
@@ -1242,7 +1242,7 @@ int __thiscall TButtonPanel::handle_key_down(TButtonPanel *this, int key, int co
   int result; // eax@20
 
   v6 = this;
-  if ( !*((_DWORD *)this + 27)
+  if( !*((_DWORD *)this + 27)
     || *((_DWORD *)this + 172)
     || alt_key
     || ctrl_key
@@ -1255,19 +1255,19 @@ int __thiscall TButtonPanel::handle_key_down(TButtonPanel *this, int key, int co
   }
   else
   {
-    if ( *((_DWORD *)this + 29) )
+    if( *((_DWORD *)this + 29) )
     {
       v9 = (TPanel *)*((_DWORD *)this + 16);
-      if ( v9 )
+      if( v9 )
       {
-        if ( !*((_DWORD *)v6 + 30) )
+        if( !*((_DWORD *)v6 + 30) )
           TPanel::set_curr_child(v9, (TPanel *)v6);
       }
     }
     v10 = (TDigital *)*((_DWORD *)v6 + 82);
-    if ( v10 )
+    if( v10 )
     {
-      if ( TDigital::is_playing(v10) )
+      if( TDigital::is_playing(v10) )
         TDigital::stop(*((TDigital **)v6 + 82));
       TDigital::play(*((TDigital **)v6 + 82));
     }
@@ -1276,7 +1276,7 @@ int __thiscall TButtonPanel::handle_key_down(TButtonPanel *this, int key, int co
     *((_DWORD *)v6 + 129) = debug_timeGetTime();
     (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v6 + 32))(v6, 1);
     v11 = *((_DWORD *)v6 + 16);
-    if ( v11 )
+    if( v11 )
       (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v11 + 180))(
         v6,
         2,
@@ -1300,7 +1300,7 @@ int __thiscall TButtonPanel::key_down_action(TButtonPanel *this, int key, __int1
   int v13; // ecx@22
 
   v6 = this;
-  if ( *((_DWORD *)this + 171) )
+  if( *((_DWORD *)this + 171) )
   {
 LABEL_25:
     result = 0;
@@ -1310,42 +1310,42 @@ LABEL_25:
     switch ( key )
     {
       case 40:
-        if ( alt_key )
+        if( alt_key )
           goto LABEL_24;
-        if ( ctrl_key )
+        if( ctrl_key )
           goto LABEL_24;
-        if ( !*((_DWORD *)this + 29) )
+        if( !*((_DWORD *)this + 29) )
           goto LABEL_24;
         v7 = (TPanel *)*((_DWORD *)this + 16);
-        if ( !v7 )
+        if( !v7 )
           goto LABEL_24;
         v8 = (TPanel *)*((_DWORD *)v6 + 25);
         goto LABEL_13;
       case 38:
-        if ( alt_key )
+        if( alt_key )
           goto LABEL_24;
-        if ( ctrl_key )
+        if( ctrl_key )
           goto LABEL_24;
-        if ( !*((_DWORD *)this + 29) )
+        if( !*((_DWORD *)this + 29) )
           goto LABEL_24;
         v7 = (TPanel *)*((_DWORD *)this + 16);
-        if ( !v7 )
+        if( !v7 )
           goto LABEL_24;
         v8 = (TPanel *)*((_DWORD *)v6 + 24);
 LABEL_13:
-        if ( !v8 )
+        if( !v8 )
           goto LABEL_24;
         TPanel::set_curr_child(v7, v8);
         result = 1;
         break;
       case 13:
       case 32:
-        if ( *((_DWORD *)this + 172) || alt_key || ctrl_key )
+        if( *((_DWORD *)this + 172) || alt_key || ctrl_key )
           goto LABEL_25;
         v10 = (TDigital *)*((_DWORD *)this + 82);
-        if ( v10 )
+        if( v10 )
         {
-          if ( TDigital::is_playing(v10) )
+          if( TDigital::is_playing(v10) )
             TDigital::stop(*((TDigital **)v6 + 82));
           TDigital::play(*((TDigital **)v6 + 82));
         }
@@ -1356,7 +1356,7 @@ LABEL_13:
         *((_DWORD *)v6 + 129) = v11;
         (*(void (__thiscall **)(TButtonPanel *, signed int))(v12 + 32))(v6, 1);
         v13 = *((_DWORD *)v6 + 16);
-        if ( v13 )
+        if( v13 )
           (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v13 + 180))(
             v6,
             2,
@@ -1381,11 +1381,11 @@ int __thiscall TButtonPanel::wnd_proc(TButtonPanel *this, void *hwnd, unsigned i
   int result; // eax@6
 
   v5 = this;
-  if ( msg == 257 && (v6 = *((_DWORD *)this + 171)) != 0 && wParam == v6 )
+  if( msg == 257 && (v6 = *((_DWORD *)this + 171)) != 0 && wParam == v6 )
   {
     v7 = *((_DWORD *)this + 79);
     *((_DWORD *)this + 171) = 0;
-    if ( v7 != 2 )
+    if( v7 != 2 )
       *((_DWORD *)this + 126) = 0;
     (*(void (__fastcall **)(TButtonPanel *, unsigned int, signed int))(*(_DWORD *)this + 32))(this, wParam, 1);
     SendMessageA(*(HWND *)(*((_DWORD *)v5 + 8) + 4), 0xFu, 0, 0);
@@ -1415,9 +1415,9 @@ int __thiscall TButtonPanel::hit_button(TButtonPanel *this, int x, int y)
 
   v3 = this;
   result = (*(int (__stdcall **)(int, int))(*(_DWORD *)this + 188))(x, y);
-  if ( result )
+  if( result )
   {
-    if ( *((_DWORD *)v3 + 100) || (v5 = *((_WORD *)v3 + 251), (v6 = (TShape *)*((_DWORD *)v3 + v5 + 83)) == 0) )
+    if( *((_DWORD *)v3 + 100) || (v5 = *((_WORD *)v3 + 251), (v6 = (TShape *)*((_DWORD *)v3 + v5 + 83)) == 0) )
       result = 1;
     else
       result = TShape::shape_check(
@@ -1441,9 +1441,9 @@ void __thiscall TButtonPanel::do_action(TButtonPanel *this)
 
   v1 = this;
   v2 = *((_DWORD *)this + 79);
-  if ( v2 == 3 )
+  if( v2 == 3 )
   {
-    if ( *((_WORD *)this + 251) == *((_WORD *)this + 250) - 1 )
+    if( *((_WORD *)this + 251) == *((_WORD *)this + 250) - 1 )
     {
       (*(void (__thiscall **)(TButtonPanel *, _DWORD))(*(_DWORD *)this + 224))(this, 0);
     }
@@ -1453,21 +1453,21 @@ void __thiscall TButtonPanel::do_action(TButtonPanel *this)
       (*(void (__thiscall **)(TButtonPanel *, int))(*(_DWORD *)this + 224))(this, v2 + 1);
     }
   }
-  else if ( v2 == 2 )
+  else if( v2 == 2 )
   {
     TButtonPanel::set_radio_button(this);
   }
   v3 = *((_DWORD *)v1 + 16);
-  if ( v3 )
+  if( v3 )
     (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v3 + 180))(
       v1,
       3,
       *((_DWORD *)v1 + *((_WORD *)v1 + 251) + 61),
       *((_DWORD *)v1 + *((_WORD *)v1 + 251) + 70));
-  if ( *((_DWORD *)v1 + 81) == 1 )
+  if( *((_DWORD *)v1 + 81) == 1 )
   {
     v4 = *((_DWORD *)v1 + 16);
-    if ( v4 )
+    if( v4 )
       (*(void (__stdcall **)(TButtonPanel *, signed int, _DWORD, _DWORD))(*(_DWORD *)v4 + 180))(
         v1,
         1,
@@ -1478,7 +1478,7 @@ void __thiscall TButtonPanel::do_action(TButtonPanel *this)
   {
     v5 = *((_WORD *)v1 + 251);
     v6 = *((_DWORD *)v1 + v5 + 61);
-    if ( v6 || *((_DWORD *)v1 + v5 + 70) )
+    if( v6 || *((_DWORD *)v1 + v5 + 70) )
       SendMessageA(*(HWND *)(*((_DWORD *)v1 + 8) + 4), 0x111u, v6, *((_DWORD *)v1 + v5 + 70));
   }
 }
@@ -1497,9 +1497,9 @@ void __thiscall TButtonPanel::do_right_action(TButtonPanel *this, int shift_key)
 
   v2 = this;
   v3 = *((_DWORD *)this + 79);
-  if ( v3 == 3 )
+  if( v3 == 3 )
   {
-    if ( *((_WORD *)this + 251) == *((_WORD *)this + 250) - 1 )
+    if( *((_WORD *)this + 251) == *((_WORD *)this + 250) - 1 )
     {
       (*(void (__thiscall **)(TButtonPanel *, _DWORD))(*(_DWORD *)this + 224))(this, 0);
     }
@@ -1509,7 +1509,7 @@ void __thiscall TButtonPanel::do_right_action(TButtonPanel *this, int shift_key)
       (*(void (__thiscall **)(TButtonPanel *, int))(*(_DWORD *)this + 224))(this, v3 + 1);
     }
   }
-  else if ( v3 == 2 )
+  else if( v3 == 2 )
   {
     TButtonPanel::set_radio_button(this);
   }
@@ -1517,18 +1517,18 @@ void __thiscall TButtonPanel::do_right_action(TButtonPanel *this, int shift_key)
   v5 = *((_DWORD *)v2 + 16);
   v6 = *((_DWORD *)v2 + v4 + 61);
   v7 = *((_DWORD *)v2 + v4 + 70);
-  if ( v5 )
+  if( v5 )
     (*(void (__stdcall **)(TButtonPanel *, signed int, WPARAM, LPARAM))(*(_DWORD *)v5 + 180))(v2, 6, v6, v7);
-  if ( *((_DWORD *)v2 + 81) == 1 )
+  if( *((_DWORD *)v2 + 81) == 1 )
   {
     v8 = *((_DWORD *)v2 + 16);
-    if ( v8 )
+    if( v8 )
       (*(void (__stdcall **)(TButtonPanel *, signed int, WPARAM, LPARAM))(*(_DWORD *)v8 + 180))(v2, 4, v6, v7);
   }
   else
   {
     v9 = *((_WORD *)v2 + 251);
-    if ( *((_DWORD *)v2 + v9 + 61) || *((_DWORD *)v2 + v9 + 70) )
+    if( *((_DWORD *)v2 + v9 + 61) || *((_DWORD *)v2 + v9 + 70) )
       SendMessageA(*(HWND *)(*((_DWORD *)v2 + 8) + 4), 0x111u, v6, v7);
   }
 }
@@ -1540,9 +1540,9 @@ void __thiscall TButtonPanel::reset(TButtonPanel *this)
 
   v1 = this;
   TPanel::release_mouse((TPanel *)this);
-  if ( *((_DWORD *)v1 + 126) )
+  if( *((_DWORD *)v1 + 126) )
   {
-    if ( *((_DWORD *)v1 + 79) != 2 )
+    if( *((_DWORD *)v1 + 79) != 2 )
       *((_DWORD *)v1 + 126) = 0;
     (*(void (__thiscall **)(TButtonPanel *, signed int))(*(_DWORD *)v1 + 32))(v1, 1);
   }
@@ -1557,7 +1557,7 @@ void __thiscall TButtonPanel::set_sound_number(TButtonPanel *this, int sound_num
 //----- (00473BC0) --------------------------------------------------------
 void __thiscall TButtonPanel::stop_sound_system(TButtonPanel *this)
 {
-  if ( *((_DWORD *)this + 82) )
+  if( *((_DWORD *)this + 82) )
     *((_DWORD *)this + 82) = 0;
 }
 
@@ -1567,7 +1567,7 @@ int __thiscall TButtonPanel::restart_sound_system(TButtonPanel *this)
   int v1; // eax@1
 
   v1 = *((_DWORD *)this + 173);
-  if ( v1 != -1 )
+  if( v1 != -1 )
     *((_DWORD *)this + 82) = RGE_Base_Game::get_sound(rge_base_game, v1);
   return 1;
 }

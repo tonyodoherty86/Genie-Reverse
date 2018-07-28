@@ -18,7 +18,7 @@ TDropDownButtonPanel *__thiscall TDropDownButtonPanel::`scalar deleting destruct
 
   v2 = this;
   TDropDownButtonPanel::~TDropDownButtonPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -32,9 +32,9 @@ int __thiscall TDropDownButtonPanel::handle_mouse_move(TDropDownButtonPanel *thi
   int v8; // eax@5
 
   v5 = (TPanel *)this;
-  if ( !*((_DWORD *)this + 26) )
+  if( !*((_DWORD *)this + 26) )
     goto LABEL_9;
-  if ( (*(int (__stdcall **)(int, int))(**(_DWORD **)(*((_DWORD *)this + 174) + 252) + 188))(x, y) )
+  if( (*(int (__stdcall **)(int, int))(**(_DWORD **)(*((_DWORD *)this + 174) + 252) + 188))(x, y) )
   {
     v5->vfptr->handle_mouse_up(v5, 1, x, y, ctrl_key, shift_key);
     return (*(int (__stdcall **)(signed int, int, int, int, int))(**(_DWORD **)(v5[2].mouse_down_shift + 252) + 112))(
@@ -44,7 +44,7 @@ int __thiscall TDropDownButtonPanel::handle_mouse_move(TDropDownButtonPanel *thi
              ctrl_key,
              shift_key);
   }
-  if ( (*(int (__stdcall **)(int, int))(**(_DWORD **)(v5[2].mouse_down_shift + 256) + 188))(x, y) )
+  if( (*(int (__stdcall **)(int, int))(**(_DWORD **)(v5[2].mouse_down_shift + 256) + 188))(x, y) )
   {
     v5->vfptr->handle_mouse_up(v5, 1, x, y, ctrl_key, shift_key);
     v7 = TPanel::width(*(TPanel **)(v5[2].mouse_down_shift + 252));

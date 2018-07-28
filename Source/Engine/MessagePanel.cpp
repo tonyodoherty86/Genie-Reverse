@@ -41,7 +41,7 @@ TMessagePanel *__thiscall TMessagePanel::`vector deleting destructor'(TMessagePa
 
   v2 = this;
   TMessagePanel::~TMessagePanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -63,12 +63,12 @@ void __thiscall TMessagePanel::show_message(TMessagePanel *this, TMessagePanel::
   TPanel *v11; // ecx@10
 
   v8 = this;
-  if ( !this->showing_message
+  if( !this->showing_message
     || this->message_type != message_type_in
     || strncmp(text_in, this->text, 0x1FFu)
     || font_in && font_in != v8->font )
   {
-    if ( font_in )
+    if( font_in )
     {
       v8->font = font_in;
       v8->font_wid = font_wid_in;
@@ -84,13 +84,13 @@ void __thiscall TMessagePanel::show_message(TMessagePanel *this, TMessagePanel::
     v9 = v8->ImageBuffer;
     v8->index_color = 1;
     v8->back_color = backColorIn;
-    if ( v9 )
+    if( v9 )
       TMessagePanel::render_to_image_buffer(v8);
     v10 = v8->vfptr;
     (*(void (__thiscall **)(TMessagePanel *, signed int))&v8->vfptr->gap10[4])(v8, 1);
     v10->set_redraw((TPanel *)v8, RedrawNormal);
     v11 = v8->parent_panel;
-    if ( v11 )
+    if( v11 )
       ((void (__stdcall *)(signed int))v11->vfptr->set_redraw)(1);
   }
 }
@@ -105,7 +105,7 @@ void __thiscall TMessagePanel::show_message2(TMessagePanel *this, TMessagePanel:
   TPanel *v16; // ecx@14
 
   v12 = this;
-  if ( !this->showing_message
+  if( !this->showing_message
     || this->message_type != message_type_in
     || strncmp(text_in, this->text, 0x1FFu)
     || font_in && font_in != v12->font
@@ -114,7 +114,7 @@ void __thiscall TMessagePanel::show_message2(TMessagePanel *this, TMessagePanel:
     || v12->IconFrame1 != Frame1_in
     || v12->IconFrame2 != Frame2_in )
   {
-    if ( font_in )
+    if( font_in )
     {
       v12->font = font_in;
       v12->font_wid = font_wid_in;
@@ -135,13 +135,13 @@ void __thiscall TMessagePanel::show_message2(TMessagePanel *this, TMessagePanel:
     v14 = v12->ImageBuffer;
     v12->index_color = 0;
     v12->font_color2 = color2;
-    if ( v14 )
+    if( v14 )
       TMessagePanel::render_to_image_buffer(v12);
     v15 = v12->vfptr;
     (*(void (__thiscall **)(TMessagePanel *, signed int))&v12->vfptr->gap10[4])(v12, 1);
     v15->set_redraw((TPanel *)v12, RedrawNormal);
     v16 = v12->parent_panel;
-    if ( v16 )
+    if( v16 )
       ((void (__stdcall *)(signed int))v16->vfptr->set_redraw)(1);
   }
 }
@@ -154,14 +154,14 @@ void __thiscall TMessagePanel::remove_message(TMessagePanel *this)
   TPanel *v3; // ecx@2
 
   v1 = this;
-  if ( this->showing_message )
+  if( this->showing_message )
   {
     v2 = this->vfptr;
     this->showing_message = 0;
     (*(void (__stdcall **)(_DWORD))&v2->gap10[4])(0);
     v2->set_redraw((TPanel *)v1, RedrawNormal);
     v3 = v1->parent_panel;
-    if ( v3 )
+    if( v3 )
       ((void (__stdcall *)(signed int))v3->vfptr->set_redraw)(1);
   }
   v1->ImageTextActive = 0;
@@ -191,14 +191,14 @@ void __thiscall TMessagePanel::draw(TMessagePanel *this)
   tagRECT rect; // [sp+48h] [bp-10h]@33
 
   v1 = this;
-  if ( this->render_area && this->visible && this->active && this->showing_message )
+  if( this->render_area && this->visible && this->active && this->showing_message )
   {
     v2 = this->vfptr;
     v16 = this->vfptr;
     ((void (__stdcall *)(_DWORD))this->vfptr->draw_setup)(0);
-    if ( v1->ImageTextActive && (v3 = v1->ImageBuffer) != 0 )
+    if( v1->ImageTextActive && (v3 = v1->ImageBuffer) != 0 )
     {
-      if ( v1->need_restore )
+      if( v1->need_restore )
       {
         TMessagePanel::render_to_image_buffer(v1);
         v1->need_restore = 0;
@@ -220,11 +220,11 @@ void __thiscall TMessagePanel::draw(TMessagePanel *this)
     }
     else
     {
-      if ( v1->text[0] && TDrawArea::GetDc(v1->render_area, aPnl_msgDraw) )
+      if( v1->text[0] && TDrawArea::GetDc(v1->render_area, aPnl_msgDraw) )
       {
         SelectClipRgn(v1->render_area->DrawDc, v1->clip_rgn);
         old_font = SelectObject(v1->render_area->DrawDc, v1->font);
-        if ( v1->index_color )
+        if( v1->index_color )
         {
           GetPaletteEntries(rge_base_game->draw_system->Pal, v1->font_color, 1u, &paletteColor);
           font_rgb = (unsigned __int8)paletteColor.peRed | (*(unsigned __int16 *)&paletteColor.peGreen << 8);
@@ -236,7 +236,7 @@ void __thiscall TMessagePanel::draw(TMessagePanel *this)
           v4 = v1->font_color2;
           font_rgb = v1->font_color1;
         }
-        if ( v1->message_type == 2 )
+        if( v1->message_type == 2 )
         {
           SetBkColor(v1->render_area->DrawDc, 0);
           SetBkMode(v1->render_area->DrawDc, 2);
@@ -251,34 +251,34 @@ void __thiscall TMessagePanel::draw(TMessagePanel *this)
         hgt = v1->pnl_hgt - 2;
         GetTextExtentPoint32A(v1->render_area->DrawDc, v1->text, strlen(v1->text), &ts);
         v5 = v1->message_type;
-        if ( v5 == 1 )
+        if( v5 == 1 )
         {
           v6 = 33;
         }
-        else if ( v5 == 5 )
+        else if( v5 == 5 )
         {
           v6 = 34;
         }
         else
         {
           GetTextExtentPoint32A(v1->render_area->DrawDc, v1->text, strlen(v1->text), &ts);
-          if ( !v1->word_wrap || (v6 = 16, ts.cx <= wid) )
+          if( !v1->word_wrap || (v6 = 16, ts.cx <= wid) )
             v6 = 32;
           v7 = v1->horz_just;
-          if ( v7 == 4 )
+          if( v7 == 4 )
           {
             v6 |= 1u;
           }
-          else if ( v7 == 3 )
+          else if( v7 == 3 )
           {
             v6 |= 2u;
           }
           v8 = v1->vert_just;
-          if ( v8 == 4 )
+          if( v8 == 4 )
           {
             v6 |= 4u;
           }
-          else if ( v8 == 1 )
+          else if( v8 == 1 )
           {
             v6 |= 8u;
           }
@@ -316,7 +316,7 @@ void __thiscall TMessagePanel::get_true_render_rect(TMessagePanel *this, tagRECT
   char *v2; // ecx@6
   char *v3; // ecx@7
 
-  if ( this->ImageBuffer && this->render_area && this->visible && this->active && this->showing_message )
+  if( this->ImageBuffer && this->render_area && this->visible && this->active && this->showing_message )
   {
     v2 = (char *)&this->UsedScreenRect;
     drawRect->left = *(_DWORD *)v2;
@@ -341,12 +341,12 @@ int __thiscall TMessagePanel::handle_idle(TMessagePanel *this)
   TMessagePanel::MessageType v2; // eax@3
 
   v1 = this;
-  if ( this->active )
+  if( this->active )
   {
-    if ( this->showing_message )
+    if( this->showing_message )
     {
       v2 = this->message_type;
-      if ( (v2 == 1 || v2 == 3 || v2 == 4)
+      if( (v2 == 1 || v2 == 3 || v2 == 4)
         && (signed int)(debug_timeGetTime() - this->start_time) >= this->show_message_interval )
       {
         TMessagePanel::remove_message(v1);
@@ -403,18 +403,18 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
 
   v1 = this;
   v2 = this->ImageBuffer;
-  if ( v2 )
+  if( v2 )
   {
     TDrawArea::PtrClear(v2, &v1->ImageRect, 1);
-    if ( v1->text[0] )
+    if( v1->text[0] )
     {
       result = TDrawArea::GetDc(v1->ImageBuffer, aPnl_msgRender_);
-      if ( result )
+      if( result )
       {
         TDrawArea::SetClipRect(v1->ImageBuffer, &v1->ImageRect);
         SelectClipRgn(v1->ImageBuffer->DrawDc, v1->image_clip_region);
         old_font = SelectObject(v1->ImageBuffer->DrawDc, v1->font);
-        if ( v1->index_color )
+        if( v1->index_color )
         {
           GetPaletteEntries(rge_base_game->draw_system->Pal, v1->font_color, 1u, &paletteColor);
           font_rgb = (unsigned __int8)paletteColor.peRed | (*(unsigned __int16 *)&paletteColor.peGreen << 8);
@@ -427,7 +427,7 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
           font_rgb = v1->font_color1;
         }
         back_rgb = v4;
-        if ( v1->message_type == 2 )
+        if( v1->message_type == 2 )
         {
           SetBkColor(v1->ImageBuffer->DrawDc, 0);
           SetBkMode(v1->ImageBuffer->DrawDc, 2);
@@ -442,19 +442,19 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
         v6 = v1->ImageRect.top + 1;
         x = v1->ImageRect.left + 1;
         y = v1->ImageRect.top + 1;
-        if ( GetTextExtentPoint32A(v1->ImageBuffer->DrawDc, v1->text, strlen(v1->text), &ts) )
+        if( GetTextExtentPoint32A(v1->ImageBuffer->DrawDc, v1->text, strlen(v1->text), &ts) )
         {
           v7 = v1->message_type;
           Display_hgt = ts.cy + 2;
           v8 = 0;
           v9 = 0;
           v10 = ts.cx + 2;
-          if ( v7 == 1 )
+          if( v7 == 1 )
           {
             v11 = 33;
             v9 = ((v1->pnl_wid - v10) >> 1) - 1;
           }
-          else if ( v7 == 5 )
+          else if( v7 == 5 )
           {
             v11 = 34;
             v9 = v1->pnl_wid - v10 - 1;
@@ -462,7 +462,7 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
           }
           else
           {
-            if ( v1->word_wrap && ts.cx > wid )
+            if( v1->word_wrap && ts.cx > wid )
             {
               v10 = v1->pnl_wid;
               Display_hgt = v1->pnl_hgt;
@@ -479,44 +479,44 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
               v12 = 1;
             }
             v13 = v1->horz_just;
-            if ( v13 == 4 )
+            if( v13 == 4 )
             {
               v11 |= 1u;
-              if ( v12 )
+              if( v12 )
                 v9 = ((v1->pnl_wid - v10) >> 1) - 1;
             }
-            else if ( v13 == 3 )
+            else if( v13 == 3 )
             {
               v11 |= 2u;
-              if ( v12 )
+              if( v12 )
                 v9 = v1->pnl_wid - v10 - 1;
             }
-            else if ( v12 )
+            else if( v12 )
             {
               v9 = 0;
             }
             v14 = v1->vert_just;
-            if ( v14 == 4 )
+            if( v14 == 4 )
             {
               v11 |= 4u;
-              if ( v12 )
+              if( v12 )
                 v8 = ((v1->pnl_hgt - Display_hgt) >> 1) - 1;
             }
-            else if ( v14 == 1 )
+            else if( v14 == 1 )
             {
               v11 |= 8u;
-              if ( v12 )
+              if( v12 )
                 v8 = v1->pnl_hgt - Display_hgt - 1;
             }
-            else if ( v12 )
+            else if( v12 )
             {
               v8 = 0;
             }
             v5 = x;
           }
-          if ( v8 < 0 )
+          if( v8 < 0 )
             v8 = 0;
-          if ( v9 < 0 )
+          if( v9 < 0 )
             v9 = 0;
           v1->UsedImageRect.left = v9;
           v15 = v10 + v9;
@@ -525,10 +525,10 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
           v17 = v1->ImageRect.right;
           v1->UsedImageRect.right = v15;
           v1->UsedImageRect.bottom = v16;
-          if ( v15 > v17 )
+          if( v15 > v17 )
             v1->UsedImageRect.right = v17;
           v18 = v1->ImageRect.bottom;
-          if ( v16 > v18 )
+          if( v16 > v18 )
             v1->UsedImageRect.bottom = v18;
           SetTextColor(v1->ImageBuffer->DrawDc, back_rgb);
           v19 = wid + v5;
@@ -544,7 +544,7 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
           SetRect(&rect, x, y, v19 - 1, hgt + y - 1);
           DrawTextA(v1->ImageBuffer->DrawDc, v1->text, -1, &rect, v11);
           v20 = v1->Icon1;
-          if ( v20 )
+          if( v20 )
           {
             v21 = (int)&v20->shape_info[v1->IconFrame1];
             v22 = *(_DWORD *)(v21 + 16);
@@ -559,7 +559,7 @@ void *__thiscall TMessagePanel::render_to_image_buffer(TMessagePanel *this)
             v1->UsedImageRect.left += -4 - v22;
           }
           v23 = v1->Icon2;
-          if ( v23 )
+          if( v23 )
           {
             v24 = (int)&v23->shape_info[v1->IconFrame2];
             v25 = *(_DWORD *)(v24 + 16);
@@ -639,7 +639,7 @@ void __thiscall TMessagePanel::set_font(TMessagePanel *this, void *font_in, int 
 {
   TPanelVtbl *v4; // eax@2
 
-  if ( this->font != font_in )
+  if( this->font != font_in )
   {
     this->font = font_in;
     this->font_wid = font_wid_in;

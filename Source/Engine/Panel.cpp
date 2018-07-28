@@ -58,7 +58,7 @@ void __thiscall TPanelSystem::TPanelSystem(TPanelSystem *this)
     v3 += 260;
     --v4;
   }
-  while ( v4 );
+  while( v4 );
   TPanelSystem::setup(v1);
 }
 
@@ -76,20 +76,20 @@ void __thiscall TPanelSystem::~TPanelSystem(TPanelSystem *this)
   v1 = this;
   TPanelSystem::restore_system_colors(this);
   v2 = v1->panelListValue;
-  if ( v2 )
+  if( v2 )
   {
     v3 = v2->next_node;
-    if ( v3 != v2 )
+    if( v3 != v2 )
     {
       do
       {
         v3 = v3->next_node;
         v4 = v3->prev_node->panel;
-        if ( v4 )
+        if( v4 )
           ((void (__stdcall *)(_DWORD))v4->vfptr->__vecDelDtor)(1);
         free(v3->prev_node);
       }
-      while ( v3 != v1->panelListValue );
+      while( v3 != v1->panelListValue );
     }
     free(v1->panelListValue);
     v1->panelListValue = 0;
@@ -99,7 +99,7 @@ void __thiscall TPanelSystem::~TPanelSystem(TPanelSystem *this)
   v7 = 10;
   do
   {
-    if ( *(_DWORD *)v6 )
+    if( *(_DWORD *)v6 )
     {
       DeleteObject(*(HGDIOBJ *)v6);
       *(_DWORD *)v6 = 0;
@@ -111,7 +111,7 @@ void __thiscall TPanelSystem::~TPanelSystem(TPanelSystem *this)
     ++v5;
     --v7;
   }
-  while ( v7 );
+  while( v7 );
   TPanelSystem::EnableIME(v1);
 }
 
@@ -128,7 +128,7 @@ TPanel *__thiscall TPanelSystem::previousPanel(TPanelSystem *this)
   TPanel *result; // eax@2
 
   v1 = this->currentPanelValue;
-  if ( v1 )
+  if( v1 )
     result = TPanel::previousPanel(v1);
   else
     result = 0;
@@ -160,7 +160,7 @@ TPanel *__thiscall TPanelSystem::panel(TPanelSystem *this, char *n)
   TPanel *result; // eax@2
 
   v2 = TPanelSystem::findPanelNode(this, n);
-  if ( v2 )
+  if( v2 )
     result = v2->panel;
   else
     result = 0;
@@ -183,11 +183,11 @@ PanelNode *__thiscall TPanelSystem::addPanel(TPanelSystem *this, TPanel *p, int 
 
   v4 = this;
   v5 = TPanel::panelName(p);
-  if ( !TPanelSystem::findPanelNode(v4, v5) )
+  if( !TPanelSystem::findPanelNode(v4, v5) )
   {
     result = (PanelNode *)calloc(1u, 0xCu);
     v7 = result;
-    if ( !result )
+    if( !result )
       return result;
     result->panel = p;
     TPanel::setPreviousPanel(p, 0);
@@ -197,7 +197,7 @@ PanelNode *__thiscall TPanelSystem::addPanel(TPanelSystem *this, TPanel *p, int 
     v7->prev_node->next_node = v7;
     ++v4->numberActivePanelsValue;
   }
-  if ( makeCurrent )
+  if( makeCurrent )
     TPanelSystem::setCurrentPanel(v4, p, makeModal);
   return (PanelNode *)1;
 }
@@ -210,10 +210,10 @@ char *__thiscall TPanelSystem::removePanel(TPanelSystem *this, char *n)
 
   result = n;
   v3 = this;
-  if ( n )
+  if( n )
   {
     result = (char *)TPanelSystem::findPanelNode(this, n);
-    if ( result )
+    if( result )
     {
       --v3->numberActivePanelsValue;
       *(_DWORD *)(*((_DWORD *)result + 1) + 8) = *((_DWORD *)result + 2);
@@ -234,9 +234,9 @@ int __thiscall TPanelSystem::setCurrentPanel(TPanelSystem *this, char *n, int ma
 
   v3 = this;
   v4 = TPanelSystem::findPanelNode(this, n);
-  if ( v4 )
+  if( v4 )
   {
-    if ( v3->mouseOwnerValue )
+    if( v3->mouseOwnerValue )
       TPanel::release_mouse(v3->mouseOwnerValue);
     v3->modalPanelValue = 0;
     v3->keyboardOwnerValue = 0;
@@ -263,16 +263,16 @@ TPanel *__thiscall TPanelSystem::restorePreviousPanel(TPanelSystem *this, int de
 
   v2 = this;
   v3 = this->currentPanelValue;
-  if ( v3 )
+  if( v3 )
   {
     result = TPanel::previousPanel(v3);
     v5 = result;
-    if ( result )
+    if( result )
     {
       v6 = v2->currentPanelValue;
-      if ( destroyOldCurrentPanel )
+      if( destroyOldCurrentPanel )
       {
-        if ( TPanel::previousPanel(result) == v6 )
+        if( TPanel::previousPanel(result) == v6 )
           TPanel::setPreviousPanel(v5, 0);
         v7 = TPanel::panelName(v6);
         TPanelSystem::destroyPanel(v2, v7);
@@ -320,34 +320,34 @@ void __thiscall TPanelSystem::setModalPanel(TPanelSystem *this, TPanel *p)
   TPanelVtbl *v8; // eax@15
 
   v2 = this;
-  if ( this->modalPanelValue && p )
+  if( this->modalPanelValue && p )
     TPanel::setPreviousModalPanel(p, this->modalPanelValue);
   v3 = v2->modalPanelValue;
-  if ( v3 )
+  if( v3 )
   {
-    if ( !v3->tab_stop )
+    if( !v3->tab_stop )
     {
       v6 = v3->parent_panel;
-      if ( v6 )
+      if( v6 )
         TPanel::set_curr_child(v6, v2->prevCurrentChildValue);
     }
   }
   else
   {
     v4 = v2->prevCurrentChildValue;
-    if ( v4 )
+    if( v4 )
     {
       v5 = v4->parent_panel;
-      if ( v5 )
+      if( v5 )
         TPanel::set_curr_child(v5, v2->prevCurrentChildValue);
     }
   }
   v2->prevCurrentChildValue = 0;
   v2->modalPanelValue = p;
-  if ( p && p != v2->currentPanelValue )
+  if( p && p != v2->currentPanelValue )
   {
     v7 = p->parent_panel;
-    if ( v7 )
+    if( v7 )
     {
       v2->prevCurrentChildValue = v7->curr_child;
       TPanel::set_curr_child(v7, p);
@@ -370,10 +370,10 @@ void __thiscall TPanelSystem::setCurrentPanelModal(TPanelSystem *this)
 
   v1 = this;
   v2 = this->modalPanelValue;
-  if ( v2 )
+  if( v2 )
   {
     v3 = this->currentPanelValue;
-    if ( v2 != v3 )
+    if( v2 != v3 )
       TPanel::setPreviousModalPanel(v3, v2);
   }
   v1->modalPanelValue = v1->currentPanelValue;
@@ -389,11 +389,11 @@ TPanel *__thiscall TPanelSystem::restorePreviousModalPanel(TPanelSystem *this)
 
   v1 = this;
   v2 = this->modalPanelValue;
-  if ( v2 )
+  if( v2 )
   {
     result = TPanel::previousModalPanel(v2);
     v4 = result;
-    if ( result )
+    if( result )
     {
       result->vfptr->set_focus(result, 1);
       TPanelSystem::setMouseOwner(v1, v4);
@@ -419,25 +419,25 @@ char *__thiscall TPanelSystem::destroyPanel(TPanelSystem *this, char *n)
 
   result = n;
   v3 = this;
-  if ( n )
+  if( n )
   {
     result = (char *)TPanelSystem::findPanelNode(this, n);
     v4 = (int)result;
-    if ( result )
+    if( result )
     {
       v5 = v3->currentPanelValue;
       --v3->numberActivePanelsValue;
-      if ( v5 == *(TPanel **)v4 )
+      if( v5 == *(TPanel **)v4 )
         v3->currentPanelValue = 0;
-      if ( v3->mouseOwnerValue == *(TPanel **)v4 )
+      if( v3->mouseOwnerValue == *(TPanel **)v4 )
         v3->mouseOwnerValue = 0;
-      if ( v3->keyboardOwnerValue == *(TPanel **)v4 )
+      if( v3->keyboardOwnerValue == *(TPanel **)v4 )
         v3->keyboardOwnerValue = 0;
-      if ( v3->modalPanelValue == *(TPanel **)v4 )
+      if( v3->modalPanelValue == *(TPanel **)v4 )
         v3->modalPanelValue = 0;
       *(_DWORD *)(*(_DWORD *)(v4 + 4) + 8) = *(_DWORD *)(v4 + 8);
       *(_DWORD *)(*(_DWORD *)(v4 + 8) + 4) = *(_DWORD *)(v4 + 4);
-      if ( *(_DWORD *)v4 )
+      if( *(_DWORD *)v4 )
         (***(void (__stdcall ****)(_DWORD))v4)(1);
       free((void *)v4);
       result = (char *)1;
@@ -461,10 +461,10 @@ int __thiscall TPanelSystem::inSystem(TPanelSystem *this, TPanel *p)
 
   v2 = this;
   result = 0;
-  if ( p )
+  if( p )
   {
     v3 = TPanel::panelName(p);
-    if ( TPanelSystem::findPanelNode(v2, v3) )
+    if( TPanelSystem::findPanelNode(v2, v3) )
       result = 1;
   }
   return result;
@@ -479,7 +479,7 @@ PanelNode *__thiscall TPanelSystem::setup(TPanelSystem *this)
   v1 = this;
   result = (PanelNode *)calloc(1u, 0xCu);
   v1->panelListValue = result;
-  if ( result )
+  if( result )
   {
     result->panel = 0;
     v1->panelListValue->prev_node = v1->panelListValue;
@@ -499,21 +499,21 @@ PanelNode *__thiscall TPanelSystem::findPanelNode(TPanelSystem *this, char *n)
   PanelNode *v3; // edi@2
   PanelNode *result; // eax@7
 
-  if ( !n )
+  if( !n )
     goto LABEL_11;
   v2 = this->panelListValue;
   v3 = v2->next_node;
-  if ( v3 != v2 )
+  if( v3 != v2 )
   {
     do
     {
-      if ( !strcmp(TPanel::panelName(v3->panel), n) )
+      if( !strcmp(TPanel::panelName(v3->panel), n) )
         break;
       v3 = v3->next_node;
     }
-    while ( v3 != this->panelListValue );
+    while( v3 != this->panelListValue );
   }
-  if ( v3 != this->panelListValue && !strcmp(TPanel::panelName(v3->panel), n) )
+  if( v3 != this->panelListValue && !strcmp(TPanel::panelName(v3->panel), n) )
     result = v3;
   else
 LABEL_11:
@@ -531,14 +531,14 @@ void __thiscall TPanelSystem::setCurrentPanel(TPanelSystem *this, TPanel *p, int
   v3 = this;
   TPanel::setPreviousPanel(p, this->currentPanelValue);
   v4 = v3->currentPanelValue;
-  if ( v4 )
+  if( v4 )
     ((void (__stdcall *)(_DWORD))v4->vfptr->set_focus)(0);
   v5 = p->vfptr;
   v3->currentPanelValue = p;
   v5->set_focus(p, 1);
   ((void (__stdcall *)(signed int))v3->currentPanelValue->vfptr->set_redraw)(2);
   UpdateWindow(AppWnd);
-  if ( makeModal )
+  if( makeModal )
     TPanelSystem::setCurrentPanelModal(v3);
 }
 
@@ -557,9 +557,9 @@ void *__thiscall TPanelSystem::get_palette(TPanelSystem *this, char *file_name, 
 
   v3 = this;
   v10 = this;
-  if ( file_name )
+  if( file_name )
   {
-    if ( strchr(file_name, 46) )
+    if( strchr(file_name, 46) )
       strcpy(file_name2, file_name);
     else
       sprintf(file_name2, aS_pal, file_name);
@@ -575,15 +575,15 @@ void *__thiscall TPanelSystem::get_palette(TPanelSystem *this, char *file_name, 
   v6 = v3->palette_id;
   do
   {
-    if ( *(v6 - 670) )
+    if( *(v6 - 670) )
     {
-      if ( res_id != -1 && *v6 == res_id || (v7 = strcmp(v9, file_name2), v3 = v10, !v7) )
+      if( res_id != -1 && *v6 == res_id || (v7 = strcmp(v9, file_name2), v3 = v10, !v7) )
       {
         ++v3->palette_use_count[v5];
         return v3->palette[v5];
       }
     }
-    else if ( v4 == -1 )
+    else if( v4 == -1 )
     {
       v4 = v5;
     }
@@ -591,8 +591,8 @@ void *__thiscall TPanelSystem::get_palette(TPanelSystem *this, char *file_name, 
     ++v6;
     v9 += 260;
   }
-  while ( v5 < 10 );
-  if ( v4 == -1 )
+  while( v5 < 10 );
+  if( v4 == -1 )
   {
     result = 0;
   }
@@ -600,7 +600,7 @@ void *__thiscall TPanelSystem::get_palette(TPanelSystem *this, char *file_name, 
   {
     result = ReadPalette(file_name2, res_id, 1);
     v3->palette[v4] = result;
-    if ( result )
+    if( result )
     {
       ++v3->palette_use_count[v4];
       strcpy(v3->palette_file[v4], file_name2);
@@ -622,16 +622,16 @@ void __thiscall TPanelSystem::release_palette(TPanelSystem *this, void *pal)
   v2 = this;
   v3 = 0;
   v4 = this->palette;
-  while ( *v4 != pal )
+  while( *v4 != pal )
   {
     ++v3;
     ++v4;
-    if ( v3 >= 10 )
+    if( v3 >= 10 )
       return;
   }
   v5 = this->palette_use_count[v3] - 1;
   this->palette_use_count[v3] = v5;
-  if ( !v5 )
+  if( !v5 )
   {
     DeleteObject(this->palette[v3]);
     v2->palette[v3] = 0;
@@ -645,7 +645,7 @@ void __thiscall TPanelSystem::DisableIME(TPanelSystem *this)
   TPanelSystem *v1; // esi@1
 
   v1 = this;
-  if ( this->ImeEnabled )
+  if( this->ImeEnabled )
   {
     this->Imc = ImmAssociateContext(AppWnd, 0);
     v1->ImeEnabled = 0;
@@ -655,9 +655,9 @@ void __thiscall TPanelSystem::DisableIME(TPanelSystem *this)
 //----- (00464510) --------------------------------------------------------
 void __thiscall TPanelSystem::EnableIME(TPanelSystem *this)
 {
-  if ( this->Imc )
+  if( this->Imc )
   {
-    if ( !this->ImeEnabled )
+    if( !this->ImeEnabled )
       ImmAssociateContext(AppWnd, this->Imc);
   }
 }
@@ -675,10 +675,10 @@ void __thiscall TPanelSystem::TurnIMEOn(TPanelSystem *this)
   unsigned int v2; // eax@3
 
   v1 = this;
-  if ( !this->ImeOn && this->ImeEnabled )
+  if( !this->ImeOn && this->ImeEnabled )
   {
     v2 = this->Imc;
-    if ( v2 )
+    if( v2 )
     {
       ImmSetOpenStatus(v2, 1);
       v1->ImeOn = 1;
@@ -693,10 +693,10 @@ void __thiscall TPanelSystem::TurnIMEOff(TPanelSystem *this)
   unsigned int v2; // eax@3
 
   v1 = this;
-  if ( this->ImeOn && this->ImeEnabled )
+  if( this->ImeOn && this->ImeEnabled )
   {
     v2 = this->Imc;
-    if ( v2 )
+    if( v2 )
     {
       ImmSetOpenStatus(v2, 0);
       v1->ImeOn = 0;
@@ -735,11 +735,11 @@ void __thiscall TPanelSystem::stop_sound_system(TPanelSystem *this)
   PanelNode *i; // esi@1
 
   v1 = this;
-  for ( i = this->panelListValue->next_node; i; i = i->next_node )
+  for( i = this->panelListValue->next_node; i; i = i->next_node )
   {
-    if ( i == v1->panelListValue )
+    if( i == v1->panelListValue )
       break;
-    if ( i->panel )
+    if( i->panel )
       ((void (*)(void))i->panel->vfptr->stop_sound_system)();
   }
 }
@@ -753,11 +753,11 @@ int __thiscall TPanelSystem::restart_sound_system(TPanelSystem *this)
 
   v1 = this;
   v2 = 1;
-  for ( i = this->panelListValue->next_node; i; i = i->next_node )
+  for( i = this->panelListValue->next_node; i; i = i->next_node )
   {
-    if ( i == v1->panelListValue )
+    if( i == v1->panelListValue )
       break;
-    if ( i->panel && !((int (*)(void))i->panel->vfptr->restart_sound_system)() )
+    if( i->panel && !((int (*)(void))i->panel->vfptr->restart_sound_system)() )
       v2 = 0;
   }
   return v2;
@@ -772,7 +772,7 @@ void __thiscall TPanelSystem::restore_system_colors(TPanelSystem *this)
   int elems[2]; // [sp+10h] [bp-8h]@4
 
   v1 = this;
-  if ( this->saved_colors && (GetSysColor(5) != this->save_back_color || GetSysColor(8) != v1->save_text_color) )
+  if( this->saved_colors && (GetSysColor(5) != this->save_back_color || GetSysColor(8) != v1->save_text_color) )
   {
     v2 = v1->save_text_color;
     colors[0] = v1->save_back_color;
@@ -791,15 +791,15 @@ void __thiscall TPanelSystem::set_restore(TPanelSystem *this)
 
   v1 = this->panelListValue;
   v2 = v1->next_node;
-  if ( v2 != v1 )
+  if( v2 != v1 )
   {
     do
     {
-      if ( v2->panel )
+      if( v2->panel )
         v2->panel->need_restore = 1;
       v2 = v2->next_node;
     }
-    while ( v2 != this->panelListValue );
+    while( v2 != this->panelListValue );
   }
 }
 
@@ -874,9 +874,9 @@ void __thiscall TPanel::TPanel(TPanel *this, char *name)
   v2->help_string_id = -1;
   v2->help_page_id = -1;
   v3 = v2->panelNameValue;
-  if ( v3 )
+  if( v3 )
   {
-    if ( *v3 )
+    if( *v3 )
       TPanelSystem::addPanel(&panel_system, v2, 0, 0);
   }
 }
@@ -889,7 +889,7 @@ TPanel *__thiscall TPanel::`vector deleting destructor'(TPanel *this, unsigned i
 
   v2 = this;
   TPanel::~TPanel(this);
-  if ( __flags & 1 )
+  if( __flags & 1 )
     operator delete(v2);
   return v2;
 }
@@ -973,31 +973,31 @@ void __thiscall TPanel::~TPanel(TPanel *this)
   v1 = this;
   this->vfptr = (TPanelVtbl *)&TPanel::`vftable';
   TPanel::release_mouse(this);
-  if ( v1->panelNameValue && TPanelSystem::inSystem(&panel_system, v1) )
+  if( v1->panelNameValue && TPanelSystem::inSystem(&panel_system, v1) )
   {
     v2 = TPanel::panelName(v1);
     TPanelSystem::removePanel(&panel_system, v2);
   }
-  if ( v1->node )
+  if( v1->node )
   {
     v3 = v1->parent_panel;
-    if ( v3 )
+    if( v3 )
       TPanel::remove_panel_node(v3, v1->node);
     free(v1->node);
     v1->node = 0;
   }
   v4 = v1->clip_rgn;
   v1->first_child_node = 0;
-  if ( v4 )
+  if( v4 )
   {
     DeleteObject(v4);
     v1->clip_rgn = 0;
   }
   v5 = v1->parent_panel;
-  if ( v5 )
+  if( v5 )
     ((void (__stdcall *)(signed int))v5->vfptr->set_redraw)(2);
   v6 = v1->panelNameValue;
-  if ( v6 )
+  if( v6 )
     free(v6);
 }
 // 570C38: using guessed type int (__thiscall *TPanel::`vftable')(void *Memory, unsigned int __flags);
@@ -1016,7 +1016,7 @@ int __thiscall TPanel::setup(TPanel *this, TDrawArea *render_area_in, TPanel *pa
   this->parent_panel = parent_panel_in;
   v9 = this->position_mode;
   v8->render_area = render_area_in;
-  if ( v9 == PositionFixed )
+  if( v9 == PositionFixed )
   {
     v8->top_border = y_in;
     v8->min_wid = wid_in;
@@ -1028,24 +1028,24 @@ int __thiscall TPanel::setup(TPanel *this, TDrawArea *render_area_in, TPanel *pa
     v8->max_hgt = hgt_in;
   }
   v10 = v8->vfptr;
-  if ( render_area_in )
+  if( render_area_in )
     v10->handle_size(v8, render_area_in->Width, render_area_in->Height);
   else
     v10->handle_size(v8, 0, 0);
   (*(void (__thiscall **)(TPanel *, int))&v10->gap10[0])(v8, color_in);
   v11 = v8->node;
   v8->mouse_captured = 0;
-  if ( !v11 )
+  if( !v11 )
   {
     v12 = (PanelNode *)calloc(1u, 0xCu);
     v8->node = v12;
-    if ( !v12 )
+    if( !v12 )
       return 0;
     v12->panel = v8;
     v8->node->prev_node = 0;
     v8->node->next_node = 0;
     v14 = v8->parent_panel;
-    if ( v14 )
+    if( v14 )
       TPanel::add_panel_node(v14, v8->node, 0, 0);
   }
   return 1;
@@ -1061,16 +1061,16 @@ void __thiscall TPanel::add_panel_node(TPanel *this, PanelNode *node_in, PanelNo
   PanelNode *v8; // edi@10
   PanelNode *v9; // edx@10
 
-  if ( by_node )
+  if( by_node )
   {
     v5 = node_in;
-    if ( add_after )
+    if( add_after )
     {
       node_in->prev_node = by_node;
       node_in->next_node = by_node->next_node;
       by_node->next_node = node_in;
       v7 = node_in->next_node;
-      if ( v7 )
+      if( v7 )
         v7->prev_node = node_in;
     }
     else
@@ -1080,16 +1080,16 @@ void __thiscall TPanel::add_panel_node(TPanel *this, PanelNode *node_in, PanelNo
       node_in->prev_node = v8;
       by_node->prev_node = node_in;
       v9 = node_in->prev_node;
-      if ( v9 )
+      if( v9 )
         v9->next_node = node_in;
     }
   }
   else
   {
     v4 = this->first_child_node;
-    if ( v4 )
+    if( v4 )
     {
-      for ( i = v4->next_node; i; i = i->next_node )
+      for( i = v4->next_node; i; i = i->next_node )
         v4 = i;
       v5 = node_in;
       v4->next_node = node_in;
@@ -1103,9 +1103,9 @@ void __thiscall TPanel::add_panel_node(TPanel *this, PanelNode *node_in, PanelNo
       node_in->next_node = 0;
     }
   }
-  if ( !v5->prev_node )
+  if( !v5->prev_node )
     this->first_child_node = v5;
-  if ( !v5->next_node )
+  if( !v5->next_node )
     this->last_child_node = v5;
 }
 
@@ -1116,20 +1116,20 @@ void __thiscall TPanel::remove_panel_node(TPanel *this, PanelNode *node_in)
   PanelNode *v3; // edx@7
   TPanel *v4; // edi@9
 
-  if ( node_in == this->first_child_node )
+  if( node_in == this->first_child_node )
     this->first_child_node = node_in->next_node;
-  if ( node_in == this->last_child_node )
+  if( node_in == this->last_child_node )
     this->last_child_node = node_in->prev_node;
   v2 = node_in->prev_node;
-  if ( v2 )
+  if( v2 )
     v2->next_node = node_in->next_node;
   v3 = node_in->next_node;
-  if ( v3 )
+  if( v3 )
     v3->prev_node = node_in->prev_node;
   v4 = node_in->panel;
   node_in->prev_node = 0;
   node_in->next_node = 0;
-  if ( this->curr_child == v4 )
+  if( this->curr_child == v4 )
     this->curr_child = 0;
 }
 
@@ -1168,46 +1168,46 @@ void __thiscall TPanel::set_rect(TPanel *this, int x_in, int y_in, int wid_in, i
   this->clip_rect.top = y_in;
   this->clip_rect.right = v7;
   this->clip_rect.bottom = v8;
-  if ( v6 && this->clip_to_parent )
+  if( v6 && this->clip_to_parent )
   {
     v9 = v6->clip_rect.left;
-    if ( x_in < v9 )
+    if( x_in < v9 )
       this->clip_rect.left = v9;
     v10 = v6->clip_rect.top;
-    if ( y_in < v10 )
+    if( y_in < v10 )
       this->clip_rect.top = v10;
     v11 = v6->clip_rect.right;
-    if ( v7 > v11 )
+    if( v7 > v11 )
       this->clip_rect.right = v11;
     v12 = v6->clip_rect.bottom;
-    if ( v8 > v12 )
+    if( v8 > v12 )
       this->clip_rect.bottom = v12;
   }
-  if ( this->clip_rect.left < 0 )
+  if( this->clip_rect.left < 0 )
     this->clip_rect.left = 0;
-  if ( this->clip_rect.top < 0 )
+  if( this->clip_rect.top < 0 )
     this->clip_rect.top = 0;
   v13 = this->render_area;
-  if ( v13 )
+  if( v13 )
   {
     v14 = v13->Width;
-    if ( v5->clip_rect.right >= v14 )
+    if( v5->clip_rect.right >= v14 )
       v5->clip_rect.right = v14 - 1;
-    if ( v13 )
+    if( v13 )
     {
       v15 = v13->Height;
-      if ( v5->clip_rect.bottom >= v15 )
+      if( v5->clip_rect.bottom >= v15 )
         v5->clip_rect.bottom = v15 - 1;
     }
   }
-  if ( v5->clip_rgn )
+  if( v5->clip_rgn )
   {
     DeleteObject(v5->clip_rgn);
     v5->clip_rgn = 0;
   }
   v16 = v5->clip_rect.right;
   v17 = v5->clip_rect.left;
-  if ( v16 < v17 || (v18 = v5->clip_rect.top, v5->clip_rect.bottom < v18) )
+  if( v16 < v17 || (v18 = v5->clip_rect.top, v5->clip_rect.bottom < v18) )
   {
     v5->visible = 0;
   }
@@ -1217,7 +1217,7 @@ void __thiscall TPanel::set_rect(TPanel *this, int x_in, int y_in, int wid_in, i
     v5->visible = 1;
     v5->clip_rgn = CreateRectRgn(v17, v18, v16, v19);
   }
-  if ( v5->active )
+  if( v5->active )
     v5->vfptr->set_redraw(v5, RedrawFull);
 }
 
@@ -1235,7 +1235,7 @@ void __thiscall TPanel::set_rect(TPanel *this, tagRECT rect_in)
 void __thiscall TPanel::set_color(TPanel *this, char color_in)
 {
   this->color = color_in;
-  if ( this->active )
+  if( this->active )
     ((void (__stdcall *)(_DWORD))this->vfptr->set_redraw)(2);
 }
 
@@ -1246,10 +1246,10 @@ void __thiscall TPanel::set_active(TPanel *this, int active_in)
   TPanel *v3; // ecx@4
 
   v2 = this;
-  if ( this->active != active_in )
+  if( this->active != active_in )
   {
     this->active = active_in;
-    if ( active_in )
+    if( active_in )
     {
       ((void (__stdcall *)(_DWORD))this->vfptr->set_redraw)(1);
     }
@@ -1257,7 +1257,7 @@ void __thiscall TPanel::set_active(TPanel *this, int active_in)
     {
       TPanel::release_mouse(this);
       v3 = v2->parent_panel;
-      if ( v3 )
+      if( v3 )
         ((void (__stdcall *)(signed int))v3->vfptr->set_redraw)(1);
     }
   }
@@ -1286,11 +1286,11 @@ void __thiscall TPanel::set_positioning(TPanel *this, TPanel::PositionMode posit
   this->max_hgt = max_hgt_in;
   this->top_panel = top_panel_in;
   this->right_panel = right_panel_in;
-  if ( v16 )
+  if( v16 )
     v15->handle_size(this, v16->Width, v16->Height);
   else
     v15->handle_size(this, 0, 0);
-  if ( v14->active )
+  if( v14->active )
     v15->set_redraw(v14, RedrawFull);
 }
 
@@ -1318,17 +1318,17 @@ void __thiscall TPanel::set_redraw(TPanel *this, TPanel::RedrawMode redraw_mode)
 {
   TDrawArea *v2; // eax@4
 
-  if ( redraw_mode != 1 || this->need_redraw != 2 )
+  if( redraw_mode != 1 || this->need_redraw != 2 )
   {
     this->need_redraw = redraw_mode;
-    if ( redraw_mode )
+    if( redraw_mode )
     {
       v2 = this->render_area;
-      if ( v2 )
+      if( v2 )
       {
-        if ( this->visible )
+        if( this->visible )
         {
-          if ( this->active )
+          if( this->active )
             InvalidateRect(v2->Wnd, &this->clip_rect, 0);
         }
       }
@@ -1361,27 +1361,27 @@ void __thiscall TPanel::set_overlapped_redraw(TPanel *this, TPanel *redraw_panel
   v6 = redraw_panel->clip_rect.right;
   this_rect_8 = redraw_panel->clip_rect.right;
   this_rect_12 = redraw_panel->clip_rect.bottom;
-  if ( temp_node )
+  if( temp_node )
   {
-    while ( 1 )
+    while( 1 )
     {
       v7 = temp_node->panel;
-      if ( temp_node->panel == v4 || v7 == calling_panel || v7->z_order <= v4->z_order )
+      if( temp_node->panel == v4 || v7 == calling_panel || v7->z_order <= v4->z_order )
         goto LABEL_35;
       v8 = v7->clip_rect.left;
       v9 = v7->clip_rect.top;
       v10 = v7->clip_rect.right;
       v11 = v7->clip_rect.bottom;
-      if ( v8 >= v5 && v8 <= v6 || v10 >= v5 && v10 <= v6 )
+      if( v8 >= v5 && v8 <= v6 || v10 >= v5 && v10 <= v6 )
         goto LABEL_38;
       v13 = __OFSUB__(v5, v8);
       v12 = v5 - v8 < 0;
-      if ( v5 <= v8 )
+      if( v5 <= v8 )
         goto LABEL_22;
-      if ( v10 > v6 )
+      if( v10 > v6 )
       {
 LABEL_38:
-        if ( v9 >= this_rect_4 && v9 <= this_rect_12
+        if( v9 >= this_rect_4 && v9 <= this_rect_12
           || v11 >= this_rect_4 && v11 <= this_rect_12
           || v9 < this_rect_4 && v11 > this_rect_12 )
         {
@@ -1394,7 +1394,7 @@ LABEL_38:
       v13 = __OFSUB__(v5, v8);
       v12 = v5 - v8 < 0;
 LABEL_22:
-      if ( (!(v12 ^ v13) && v5 <= v10 || v6 >= v8 && v6 <= v10 || v5 < v8 && v6 > v10)
+      if( (!(v12 ^ v13) && v5 <= v10 || v6 >= v8 && v6 <= v10 || v5 < v8 && v6 > v10)
         && (this_rect_4 >= v9 && this_rect_4 <= v11
          || this_rect_12 >= v9 && this_rect_12 <= v11
          || this_rect_4 < v9 && this_rect_12 > v11) )
@@ -1403,7 +1403,7 @@ LABEL_22:
       }
 LABEL_35:
       temp_node = temp_node->next_node;
-      if ( !temp_node )
+      if( !temp_node )
         return;
       v4 = redraw_panel;
     }
@@ -1433,25 +1433,25 @@ void __thiscall TPanel::set_any_overlapping_redraw(TPanel *this, TPanel *redraw_
   v4 = redraw_panel->clip_rect.right;
   this_rect_8 = redraw_panel->clip_rect.right;
   this_rect_12 = redraw_panel->clip_rect.bottom;
-  while ( temp_node )
+  while( temp_node )
   {
     v5 = temp_node->panel;
-    if ( temp_node->panel != redraw_panel )
+    if( temp_node->panel != redraw_panel )
     {
       v6 = v5->clip_rect.left;
       v7 = v5->clip_rect.top;
       v8 = v5->clip_rect.right;
       v9 = v5->clip_rect.bottom;
-      if ( (v6 < v3 || v6 > v4) && (v8 < v3 || v8 > v4) )
+      if( (v6 < v3 || v6 > v4) && (v8 < v3 || v8 > v4) )
       {
         v11 = __OFSUB__(v3, v6);
         v10 = v3 - v6 < 0;
-        if ( v3 <= v6 )
+        if( v3 <= v6 )
           goto LABEL_18;
-        if ( v8 <= v4 )
+        if( v8 <= v4 )
           goto LABEL_17;
       }
-      if ( (v7 < this_rect_4 || v7 > this_rect_12)
+      if( (v7 < this_rect_4 || v7 > this_rect_12)
         && (v9 < this_rect_4 || v9 > this_rect_12)
         && (v7 >= this_rect_4 || v9 <= this_rect_12) )
       {
@@ -1460,7 +1460,7 @@ LABEL_17:
         v11 = __OFSUB__(v3, v6);
         v10 = v3 - v6 < 0;
 LABEL_18:
-        if ( (!(v10 ^ v11) && v3 <= v8 || v4 >= v6 && v4 <= v8 || v3 < v6 && v4 > v8)
+        if( (!(v10 ^ v11) && v3 <= v8 || v4 >= v6 && v4 <= v8 || v3 < v6 && v4 > v8)
           && (this_rect_4 >= v7 && this_rect_4 <= v9
            || this_rect_12 >= v7 && this_rect_12 <= v9
            || this_rect_4 < v7 && this_rect_12 > v9) )
@@ -1488,16 +1488,16 @@ void __thiscall TPanel::draw(TPanel *this)
   v1 = this;
   v2 = this->render_area;
   this->need_redraw = 0;
-  if ( v2 && this->visible && this->active )
+  if( v2 && this->visible && this->active )
   {
-    if ( this->fill_in_background || (v3 = this->parent_panel) == 0 )
+    if( this->fill_in_background || (v3 = this->parent_panel) == 0 )
     {
       TDrawArea::Clear(v2, &v1->clip_rect, v1->color);
     }
     else
     {
       v4 = v3->vfptr;
-      if ( v1->draw_rect2_flag )
+      if( v1->draw_rect2_flag )
         ((void (__stdcall *)(int))v4->draw_rect2)((int)&v1->clip_rect);
       else
         ((void (__stdcall *)(int))v4->draw_rect)((int)&v1->clip_rect);
@@ -1595,10 +1595,10 @@ void __thiscall TPanel::draw_setup(TPanel *this, int clear)
 
   v2 = this;
   v3 = this->render_area->DrawDc;
-  if ( v3 )
+  if( v3 )
     SelectClipRgn(v3, this->clip_rgn);
   TDrawArea::SetClipRect(v2->render_area, &v2->clip_rect);
-  if ( clear )
+  if( clear )
     TDrawArea::Clear(v2->render_area, &v2->clip_rect, v2->color);
 }
 
@@ -1613,7 +1613,7 @@ void __thiscall TPanel::draw_finish(TPanel *this)
   v2 = this->render_area;
   this->need_redraw = 0;
   v3 = v2->DrawDc;
-  if ( v3 )
+  if( v3 )
     SelectClipRgn(v3, 0);
   TDrawArea::SetClipRect(v1->render_area, 0);
   v1->need_restore = 0;
@@ -1627,9 +1627,9 @@ void __thiscall TPanel::paint(TPanel *this)
 
   v1 = this;
   v2 = this->render_area;
-  if ( v2 && this->visible )
+  if( v2 && this->visible )
   {
-    if ( this->active )
+    if( this->active )
     {
       TDrawSystem::Paint(v2->DrawSystem, &this->clip_rect);
       ValidateRect(v1->render_area->Wnd, &v1->clip_rect);
@@ -1655,26 +1655,26 @@ int __thiscall TPanel::wnd_proc(TPanel *this, void *hwnd, unsigned int msg, unsi
   tagPOINT point; // [sp+14h] [bp-8h]@22
 
   v16 = this;
-  if ( !this->active )
+  if( !this->active )
     return 0;
   v5 = msg;
-  if ( msg <= 0x206 )
+  if( msg <= 0x206 )
   {
     v6 = lParam;
-    if ( msg >= 0x200 )
+    if( msg >= 0x200 )
     {
-      if ( hwnd == this->render_area->Wnd && TPanelSystem::GetInputEnabled(&panel_system) )
+      if( hwnd == this->render_area->Wnd && TPanelSystem::GetInputEnabled(&panel_system) )
       {
         TPanel::get_mouse_info(wParam, v6, &point, &lParam, (int *)&msg);
-        if ( TPanelSystem::mouseOwner(&panel_system) )
+        if( TPanelSystem::mouseOwner(&panel_system) )
         {
           v11 = TPanelSystem::mouseOwner(&panel_system);
         }
-        else if ( TPanelSystem::keyboardOwner(&panel_system) )
+        else if( TPanelSystem::keyboardOwner(&panel_system) )
         {
           v11 = TPanelSystem::keyboardOwner(&panel_system);
         }
-        else if ( TPanelSystem::modalPanel(&panel_system) )
+        else if( TPanelSystem::modalPanel(&panel_system) )
         {
           v11 = TPanelSystem::modalPanel(&panel_system);
         }
@@ -1748,16 +1748,16 @@ int __thiscall TPanel::wnd_proc(TPanel *this, void *hwnd, unsigned int msg, unsi
     }
     else
     {
-      if ( msg != 256 && msg != 258 && msg != 260 )
+      if( msg != 256 && msg != 258 && msg != 260 )
         goto LABEL_7;
 LABEL_38:
-      if ( hwnd == this->render_area->Wnd && TPanelSystem::GetInputEnabled(&panel_system) )
+      if( hwnd == this->render_area->Wnd && TPanelSystem::GetInputEnabled(&panel_system) )
       {
-        if ( TPanelSystem::keyboardOwner(&panel_system) )
+        if( TPanelSystem::keyboardOwner(&panel_system) )
         {
           v12 = TPanelSystem::keyboardOwner(&panel_system);
         }
-        else if ( TPanelSystem::modalPanel(&panel_system) )
+        else if( TPanelSystem::modalPanel(&panel_system) )
         {
           v12 = TPanelSystem::modalPanel(&panel_system);
         }
@@ -1765,7 +1765,7 @@ LABEL_38:
         {
           v12 = v16;
         }
-        if ( v5 == 256 || v5 == 260 )
+        if( v5 == 256 || v5 == 260 )
         {
           v13 = GetKeyState(18) < 0;
           lParam = GetKeyState(17) < 0;
@@ -1787,12 +1787,12 @@ LABEL_7:
   v7 = this->last_child_node;
   v8 = lParam;
   v9 = wParam;
-  if ( !v7 )
+  if( !v7 )
   {
 LABEL_11:
-    if ( v5 <= 0x400 )
+    if( v5 <= 0x400 )
     {
-      if ( v5 == 1024 )
+      if( v5 == 1024 )
       {
         result = ((int (__stdcall *)(unsigned int, int))this->vfptr->handle_user_command)(v9, v8);
       }
@@ -1820,13 +1820,13 @@ LABEL_11:
     }
     return 0;
   }
-  while ( 1 )
+  while( 1 )
   {
     result = ((int (__stdcall *)(void *, unsigned int, unsigned int, int))v7->panel->vfptr->wnd_proc)(hwnd, v5, v9, v8);
-    if ( result )
+    if( result )
       return result;
     v7 = v7->prev_node;
-    if ( !v7 )
+    if( !v7 )
     {
       this = v16;
       goto LABEL_11;
@@ -1848,7 +1848,7 @@ int __thiscall TPanel::handle_idle(TPanel *this)
   int v9; // [sp-4h] [bp-8h]@4
 
   v1 = this;
-  if ( this->active
+  if( this->active
     && this->mouse_action == 1
     && (signed int)(debug_timeGetTime() - this->mouse_down_time) >= this->mouse_hold_interval )
   {
@@ -1859,21 +1859,21 @@ int __thiscall TPanel::handle_idle(TPanel *this)
     v4 = v1->vfptr;
     v7 = v1->mouse_down_y;
     v1->mouse_action = 2;
-    if ( v3 )
+    if( v3 )
       v4->mouse_left_hold_action(v1, v2, v7, v8, v9);
     else
       v4->mouse_right_hold_action(v1, v2, v7, v8, v9);
   }
   v5 = v1->last_child_node;
-  if ( v5 )
+  if( v5 )
   {
-    while ( 1 )
+    while( 1 )
     {
       result = ((int (*)(void))v5->panel->vfptr->handle_idle)();
-      if ( result )
+      if( result )
         break;
       v5 = v5->prev_node;
-      if ( !v5 )
+      if( !v5 )
         goto LABEL_10;
     }
   }
@@ -1923,7 +1923,7 @@ int __thiscall TPanel::handle_size(TPanel *this, int win_wid, int win_hgt)
 
   v3 = this;
   v4 = this->parent_panel;
-  if ( v4 )
+  if( v4 )
   {
     v5 = v4->render_rect.right;
     v6 = v4->render_rect.left;
@@ -1939,7 +1939,7 @@ int __thiscall TPanel::handle_size(TPanel *this, int win_wid, int win_hgt)
     v5 = win_wid - 1;
     v8 = win_hgt - 1;
   }
-  if ( v3->position_mode == PositionFixed )
+  if( v3->position_mode == PositionFixed )
   {
     v9 = v3->min_hgt;
     v10 = v6 + v3->left_border;
@@ -1950,35 +1950,35 @@ LABEL_47:
     goto LABEL_48;
   }
   v13 = v3->left_panel;
-  if ( v13 && v13->active )
+  if( v13 && v13->active )
     v10 = v3->left_border + v13->render_rect.right + 1;
   else
     v10 = v6 + v3->left_border;
   v14 = v3->top_panel;
-  if ( v14 && v14->active )
+  if( v14 && v14->active )
     v11 = v3->top_border + v14->render_rect.bottom + 1;
   else
     v11 = v7 + v3->top_border;
   v15 = v3->right_panel;
-  if ( v15 && v15->active )
+  if( v15 && v15->active )
     v12 = v15->render_rect.left - v3->right_border - 1;
   else
     v12 = v5 - v3->right_border;
   v16 = v3->bottom_panel;
-  if ( v16 && v16->active )
+  if( v16 && v16->active )
     v17 = v16->render_rect.top - v3->bottom_border - 1;
   else
     v17 = v8 - v3->bottom_border;
   v18 = v12 - v10 + 1;
   calc_hgt = v17 - v11 + 1;
   v19 = v3->min_wid;
-  if ( v19 && v18 < v19 )
+  if( v19 && v18 < v19 )
     goto LABEL_30;
   v19 = v3->max_wid;
-  if ( v19 && v18 > v19 )
+  if( v19 && v18 > v19 )
   {
     v20 = v3->position_mode;
-    if ( v20 != 3 && v20 != 7 && v20 != 8 )
+    if( v20 != 3 && v20 != 7 && v20 != 8 )
     {
       v10 = v12 - v19 + 1;
       goto LABEL_31;
@@ -1988,17 +1988,17 @@ LABEL_30:
   }
 LABEL_31:
   v21 = v3->min_hgt;
-  if ( v21 && calc_hgt < v21 )
+  if( v21 && calc_hgt < v21 )
   {
 LABEL_39:
     v17 = v11 + v21 - 1;
     goto LABEL_40;
   }
   v21 = v3->max_hgt;
-  if ( v21 && calc_hgt > v21 )
+  if( v21 && calc_hgt > v21 )
   {
     v22 = v3->position_mode;
-    if ( v22 != 4 && v22 != 7 && v22 != 9 )
+    if( v22 != 4 && v22 != 7 && v22 != 9 )
     {
       v11 = v17 - v21 + 1;
       goto LABEL_40;
@@ -2006,16 +2006,16 @@ LABEL_39:
     goto LABEL_39;
   }
 LABEL_40:
-  if ( v3->position_mode == 2 )
+  if( v3->position_mode == 2 )
   {
     v23 = v12 - v10 + 1;
     v9 = v17 - v11 + 1;
-    if ( v23 == win_wid )
+    if( v23 == win_wid )
       v10 = 0;
     else
       v10 = win_wid / 2 - v23 / 2;
     v12 = v23 + v10 - 1;
-    if ( v9 == win_hgt )
+    if( v9 == win_hgt )
     {
       v11 = 0;
     }
@@ -2034,27 +2034,27 @@ LABEL_48:
   v33 = v17;
   (*(void (__thiscall **)(TPanel *, int, int, int, int))&v24->gap4[4])(v3, v10, v11, v12, v17);
   calc_hgt = 0;
-  while ( 1 )
+  while( 1 )
   {
     v25 = v3->first_child_node;
-    if ( v25 )
+    if( v25 )
       break;
 LABEL_52:
     v29 = __OFSUB__(calc_hgt + 1, 2);
     v28 = calc_hgt++ - 1 < 0;
-    if ( !(v28 ^ v29) )
+    if( !(v28 ^ v29) )
       return 0;
   }
-  while ( 1 )
+  while( 1 )
   {
     v26 = v25->panel;
     v33 = win_hgt;
     v32 = win_wid;
     result = ((int (__stdcall *)(int, int))v26->vfptr->handle_size)(win_wid, win_hgt);
-    if ( result )
+    if( result )
       return result;
     v25 = v25->next_node;
-    if ( !v25 )
+    if( !v25 )
       goto LABEL_52;
   }
 }
@@ -2070,14 +2070,14 @@ int __thiscall TPanel::handle_paint(TPanel *this)
 
   v1 = this;
   v2 = this->render_area;
-  if ( v2 && this->visible && this->active && rge_base_game->prog_active && !IsIconic(v2->Wnd) )
+  if( v2 && this->visible && this->active && rge_base_game->prog_active && !IsIconic(v2->Wnd) )
   {
-    if ( v1->need_redraw )
+    if( v1->need_redraw )
     {
-      for ( i = v1->first_child_node; i; i = i->next_node )
+      for( i = v1->first_child_node; i; i = i->next_node )
         ((void (__stdcall *)(TPanel::RedrawMode))i->panel->vfptr->set_redraw)(v1->need_redraw);
       v4 = v1->parent_panel;
-      if ( v4 && v4->overlapping_children )
+      if( v4 && v4->overlapping_children )
         ((void (__stdcall *)(TPanel *, TPanel *, TPanel::RedrawMode))v4->vfptr->set_overlapped_redraw)(
           v1,
           v1,
@@ -2086,7 +2086,7 @@ int __thiscall TPanel::handle_paint(TPanel *this)
       v1->need_redraw = 0;
       v1->just_drawn = 1;
     }
-    for ( j = v1->first_child_node; j; j = j->next_node )
+    for( j = v1->first_child_node; j; j = j->next_node )
       ((void (*)(void))j->panel->vfptr->handle_paint)();
     v1->just_drawn = 0;
   }
@@ -2103,10 +2103,10 @@ int __thiscall TPanel::handle_key_down(TPanel *this, int key, int count, int alt
   TPanel *v10; // [sp+28h] [bp-4h]@1
 
   v10 = this;
-  if ( !this->have_focus )
+  if( !this->have_focus )
     return 0;
   v6 = this->last_child_node;
-  if ( !v6 )
+  if( !v6 )
   {
 LABEL_6:
     result = ((int (__stdcall *)(int, int, int, int, int))this->vfptr->key_down_action)(
@@ -2115,17 +2115,17 @@ LABEL_6:
                alt_key,
                ctrl_key,
                shift_key);
-    if ( result )
+    if( result )
       return result;
-    if ( !alt_key && !ctrl_key && key == 9 )
+    if( !alt_key && !ctrl_key && key == 9 )
     {
-      if ( v10->tab_stop )
+      if( v10->tab_stop )
       {
         v8 = v10->parent_panel;
-        if ( v8 )
+        if( v8 )
         {
           v9 = shift_key ? v10->tab_prev_panel : v10->tab_next_panel;
-          if ( v9 )
+          if( v9 )
           {
             TPanel::set_curr_child(v8, v9);
             return 1;
@@ -2135,7 +2135,7 @@ LABEL_6:
     }
     return 0;
   }
-  while ( 1 )
+  while( 1 )
   {
     result = ((int (__stdcall *)(int, int, int, int, int))v6->panel->vfptr->handle_key_down)(
                key,
@@ -2143,10 +2143,10 @@ LABEL_6:
                alt_key,
                ctrl_key,
                shift_key);
-    if ( result )
+    if( result )
       return result;
     v6 = v6->prev_node;
-    if ( !v6 )
+    if( !v6 )
     {
       this = v10;
       goto LABEL_6;
@@ -2162,18 +2162,18 @@ int __thiscall TPanel::handle_char(TPanel *this, int key, int count)
   PanelNode *v5; // esi@3
 
   v3 = this;
-  if ( this->have_focus )
+  if( this->have_focus )
   {
     v5 = this->last_child_node;
-    if ( v5 )
+    if( v5 )
     {
-      while ( 1 )
+      while( 1 )
       {
         result = ((int (__stdcall *)(int, int))v5->panel->vfptr->handle_char)(key, count);
-        if ( result )
+        if( result )
           break;
         v5 = v5->prev_node;
-        if ( !v5 )
+        if( !v5 )
           goto LABEL_6;
       }
     }
@@ -2225,15 +2225,15 @@ int __thiscall TPanel::handle_mouse_down(TPanel *this, int mouse_button_in, int 
   TPanel *v11; // ecx@11
 
   v6 = this;
-  if ( !this->active )
+  if( !this->active )
     return 0;
-  if ( this->mouse_captured )
+  if( this->mouse_captured )
   {
     v9 = shift_key;
 LABEL_15:
-    if ( v6->handle_mouse_input )
+    if( v6->handle_mouse_input )
     {
-      if ( v6->mouse_down_button == 1 )
+      if( v6->mouse_down_button == 1 )
       {
         v6->vfptr->mouse_left_down_action(v6, x, y, ctrl_key, v9);
         result = 1;
@@ -2251,13 +2251,13 @@ LABEL_15:
     return result;
   }
   result = ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y);
-  if ( !result )
+  if( !result )
     return result;
   v8 = v6->last_child_node;
-  if ( !v8 )
+  if( !v8 )
   {
 LABEL_8:
-    if ( !v6->handle_mouse_input )
+    if( !v6->handle_mouse_input )
       return 0;
     v9 = shift_key;
     v6->mouse_down_button = mouse_button_in;
@@ -2268,18 +2268,18 @@ LABEL_8:
     v6->mouse_down_time = debug_timeGetTime();
     v10 = v6->tab_stop;
     v6->mouse_action = 1;
-    if ( v10 )
+    if( v10 )
     {
       v11 = v6->parent_panel;
-      if ( v11 )
+      if( v11 )
       {
-        if ( v6->mouse_down_button == 1 )
+        if( v6->mouse_down_button == 1 )
           TPanel::set_curr_child(v11, v6);
       }
     }
     goto LABEL_15;
   }
-  while ( 1 )
+  while( 1 )
   {
     result = ((int (__stdcall *)(int, int, int, int, int))v8->panel->vfptr->handle_mouse_down)(
                mouse_button_in,
@@ -2287,10 +2287,10 @@ LABEL_8:
                y,
                ctrl_key,
                shift_key);
-    if ( result )
+    if( result )
       return result;
     v8 = v8->prev_node;
-    if ( !v8 )
+    if( !v8 )
       goto LABEL_8;
   }
 }
@@ -2309,36 +2309,36 @@ int __thiscall TPanel::handle_mouse_move(TPanel *this, int x, int y, int ctrl_ke
   TPanelVtbl *v13; // [sp+18h] [bp-4h]@4
 
   v5 = this;
-  if ( !this->active )
+  if( !this->active )
     return 0;
-  if ( this->mouse_captured )
+  if( this->mouse_captured )
   {
-    if ( !this->handle_mouse_input )
+    if( !this->handle_mouse_input )
       return 0;
     v8 = this->mouse_action;
-    if ( v8 == 1 || v8 == 2 )
+    if( v8 == 1 || v8 == 2 )
     {
-      if ( this->mouse_down_button == 1 )
+      if( this->mouse_down_button == 1 )
       {
         v9 = this->mouse_move_tolerance;
-        if ( abs(x - v5->mouse_down_x) <= v9 && abs(y - v5->mouse_down_y) <= v9 )
+        if( abs(x - v5->mouse_down_x) <= v9 && abs(y - v5->mouse_down_y) <= v9 )
           return 1;
       }
-      else if ( abs(x - this->mouse_down_x) <= 10 && abs(y - this->mouse_down_y) <= 10 )
+      else if( abs(x - this->mouse_down_x) <= 10 && abs(y - this->mouse_down_y) <= 10 )
       {
         return 1;
       }
     }
     v10 = v5->mouse_down_button;
     v5->mouse_action = 3;
-    if ( v10 == 1 )
+    if( v10 == 1 )
     {
       v5->vfptr->mouse_left_move_action(v5, x, y, ctrl_key, shift_key);
       return 1;
     }
     v11 = v10 == 2;
     v12 = v5->vfptr;
-    if ( v11 )
+    if( v11 )
     {
       v12->mouse_right_move_action(v5, x, y, ctrl_key, shift_key);
       return 1;
@@ -2348,25 +2348,25 @@ int __thiscall TPanel::handle_mouse_move(TPanel *this, int x, int y, int ctrl_ke
   }
   v13 = this->vfptr;
   result = ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y);
-  if ( result )
+  if( result )
   {
     v7 = v5->last_child_node;
-    if ( v7 )
+    if( v7 )
     {
-      while ( 1 )
+      while( 1 )
       {
         result = ((int (__stdcall *)(int, int, int, int))v7->panel->vfptr->handle_mouse_move)(x, y, ctrl_key, shift_key);
-        if ( result )
+        if( result )
           break;
         v7 = v7->prev_node;
-        if ( !v7 )
+        if( !v7 )
           goto LABEL_8;
       }
     }
     else
     {
 LABEL_8:
-      if ( v5->handle_mouse_input )
+      if( v5->handle_mouse_input )
         result = v13->mouse_move_action(v5, x, y, ctrl_key, shift_key);
       else
         result = 0;
@@ -2385,15 +2385,15 @@ int __thiscall TPanel::handle_mouse_up(TPanel *this, int mouse_button_in, int x,
   int v10; // eax@12
 
   v6 = this;
-  if ( !this->active )
+  if( !this->active )
     return 0;
-  if ( !this->mouse_captured )
+  if( !this->mouse_captured )
   {
     result = ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y);
-    if ( !result )
+    if( !result )
       return result;
     v8 = v6->last_child_node;
-    if ( v8 )
+    if( v8 )
     {
       do
       {
@@ -2403,25 +2403,25 @@ int __thiscall TPanel::handle_mouse_up(TPanel *this, int mouse_button_in, int x,
                    y,
                    ctrl_key,
                    shift_key);
-        if ( result )
+        if( result )
           break;
         v8 = v8->prev_node;
       }
-      while ( v8 );
+      while( v8 );
       return result;
     }
     return 0;
   }
-  if ( !this->handle_mouse_input )
+  if( !this->handle_mouse_input )
     return 0;
   v9 = this->vfptr;
-  if ( this->mouse_down_button == 1 )
+  if( this->mouse_down_button == 1 )
     v10 = ((int (__stdcall *)(int, int, int, int))v9->mouse_left_up_action)(x, y, ctrl_key, shift_key);
   else
     v10 = ((int (__stdcall *)(int, int, int, int))v9->mouse_right_up_action)(x, y, ctrl_key, shift_key);
-  if ( v10 )
+  if( v10 )
     return 0;
-  if ( (_BYTE)mouse_button_in == v6->mouse_down_button )
+  if( (_BYTE)mouse_button_in == v6->mouse_down_button )
   {
     v6->mouse_down_button = 0;
     v6->mouse_action = 0;
@@ -2442,29 +2442,29 @@ int __thiscall TPanel::handle_mouse_dbl_click(TPanel *this, int mouse_button_in,
 
   v6 = this;
   v11 = this;
-  if ( !this->active )
+  if( !this->active )
     return 0;
   v8 = shift_key;
-  if ( this->mouse_captured )
+  if( this->mouse_captured )
     goto LABEL_9;
   result = ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y);
-  if ( !result )
+  if( !result )
     return result;
   v9 = v6->last_child_node;
-  if ( !v9 )
+  if( !v9 )
   {
 LABEL_8:
     v6 = v11;
 LABEL_9:
-    if ( v6->handle_mouse_input )
+    if( v6->handle_mouse_input )
     {
       v10 = v6->vfptr;
       shift_keya = (int)v6->vfptr;
-      if ( (_BYTE)mouse_button_in == 1 )
+      if( (_BYTE)mouse_button_in == 1 )
         result = v10->mouse_left_dbl_click_action(v6, x, y, ctrl_key, v8);
       else
         result = v10->mouse_right_dbl_click_action(v6, x, y, ctrl_key, v8);
-      if ( !result )
+      if( !result )
       {
         (*(void (__thiscall **)(TPanel *, int, int, int, int, int))(shift_keya + 112))(
           v6,
@@ -2482,7 +2482,7 @@ LABEL_9:
     }
     return result;
   }
-  while ( 1 )
+  while( 1 )
   {
     result = ((int (__stdcall *)(int, int, int, int, int))v9->panel->vfptr->handle_mouse_dbl_click)(
                mouse_button_in,
@@ -2490,10 +2490,10 @@ LABEL_9:
                y,
                ctrl_key,
                shift_key);
-    if ( result )
+    if( result )
       return result;
     v9 = v9->prev_node;
-    if ( !v9 )
+    if( !v9 )
       goto LABEL_8;
   }
 }
@@ -2505,7 +2505,7 @@ int __thiscall TPanel::action(TPanel *this, TPanel *from_panel, int action_in, u
   int result; // eax@2
 
   v5 = this->parent_panel;
-  if ( v5 )
+  if( v5 )
     result = ((int (__stdcall *)(TPanel *, int, unsigned int, unsigned int))v5->vfptr->action)(
                from_panel,
                action_in,
@@ -2524,9 +2524,9 @@ void __stdcall TPanel::get_mouse_info(unsigned int wParam, int lParam, tagPOINT 
   v6 = (unsigned int)lParam >> 16;
   point->x = (unsigned __int16)lParam;
   point->y = (unsigned int)lParam >> 16;
-  if ( (signed int)(unsigned __int16)lParam > 60000 )
+  if( (signed int)(unsigned __int16)lParam > 60000 )
     point->x = (unsigned __int16)lParam - 0x10000;
-  if ( v6 > 60000 )
+  if( v6 > 60000 )
     point->y = v6 - 0x10000;
   *ctrl_key = wParam & 8;
   *shift_key = wParam & 4;
@@ -2542,13 +2542,13 @@ void __thiscall TPanel::get_mouse_pos(TPanel *this, tagPOINT *point)
   v2 = this;
   GetCursorPos(point);
   v3 = v2->render_area;
-  if ( v3->DrawSystem->ScreenMode != 2 )
+  if( v3->DrawSystem->ScreenMode != 2 )
   {
     ScreenToClient(v3->Wnd, point);
-    if ( point->x > 60000 )
+    if( point->x > 60000 )
       point->x -= 0x10000;
     v4 = point->y;
-    if ( v4 > 60000 )
+    if( v4 > 60000 )
       point->y = v4 - 0x10000;
   }
 }
@@ -2560,11 +2560,11 @@ int __thiscall TPanel::capture_mouse(TPanel *this)
   int result; // eax@3
 
   v1 = this;
-  if ( TPanelSystem::mouseOwner(&panel_system) && TPanelSystem::mouseOwner(&panel_system) != v1 )
+  if( TPanelSystem::mouseOwner(&panel_system) && TPanelSystem::mouseOwner(&panel_system) != v1 )
   {
     result = 0;
   }
-  else if ( TPanelSystem::mouseOwner(&panel_system) == v1 )
+  else if( TPanelSystem::mouseOwner(&panel_system) == v1 )
   {
     result = 1;
   }
@@ -2584,9 +2584,9 @@ void __thiscall TPanel::release_mouse(TPanel *this)
   TPanel *v1; // esi@1
 
   v1 = this;
-  if ( this->mouse_captured )
+  if( this->mouse_captured )
   {
-    if ( TPanelSystem::mouseOwner(&panel_system) == this )
+    if( TPanelSystem::mouseOwner(&panel_system) == this )
     {
       TPanelSystem::setMouseOwner(&panel_system, 0);
       ReleaseCapture();
@@ -2600,7 +2600,7 @@ char __thiscall TPanel::is_redraw_needed(TPanel *this)
 {
   char result; // al@4
 
-  if ( this->render_area && this->visible && this->active )
+  if( this->render_area && this->visible && this->active )
     result = this->need_redraw;
   else
     result = 0;
@@ -2633,16 +2633,16 @@ int __thiscall TPanel::bound_point(TPanel *this, int *x, int *y)
 
   result = 0;
   v4 = this->clip_rect.left + 1;
-  if ( *x < v4 || (v4 = this->clip_rect.right - 1, *x > v4) )
+  if( *x < v4 || (v4 = this->clip_rect.right - 1, *x > v4) )
   {
     *x = v4;
     result = 1;
   }
   v5 = this->clip_rect.top + 1;
-  if ( *y >= v5 )
+  if( *y >= v5 )
   {
     v6 = this->clip_rect.bottom - 1;
-    if ( *y > v6 )
+    if( *y > v6 )
     {
       *y = v6;
       result = 1;
@@ -2664,14 +2664,14 @@ void __thiscall TPanel::set_curr_child(TPanel *this, TPanel *curr_child_in)
 
   v2 = this;
   v3 = this->curr_child;
-  if ( curr_child_in != v3 )
+  if( curr_child_in != v3 )
   {
-    if ( v3 && v2->have_focus )
+    if( v3 && v2->have_focus )
       ((void (__stdcall *)(_DWORD))v3->vfptr->set_focus)(0);
     v2->curr_child = curr_child_in;
-    if ( curr_child_in )
+    if( curr_child_in )
     {
-      if ( v2->have_focus )
+      if( v2->have_focus )
         curr_child_in->vfptr->set_focus(curr_child_in, 1);
     }
   }
@@ -2684,12 +2684,12 @@ void __thiscall TPanel::set_focus(TPanel *this, int have_focus_in)
   TPanel *v3; // ecx@2
 
   v2 = this;
-  if ( have_focus_in != this->have_focus )
+  if( have_focus_in != this->have_focus )
   {
     this->have_focus = have_focus_in;
     ((void (__stdcall *)(_DWORD))this->vfptr->set_redraw)(1);
     v3 = v2->curr_child;
-    if ( v3 )
+    if( v3 )
       ((void (__stdcall *)(int))v3->vfptr->set_focus)(v2->have_focus);
   }
 }
@@ -2706,17 +2706,17 @@ void __thiscall TPanel::set_z_order(TPanel *this, char z_order_type, __int16 z_o
   TPanel *v3; // eax@1
 
   v3 = this->parent_panel;
-  if ( v3 )
+  if( v3 )
   {
     TPanel::set_child_z_order(v3, this, z_order_type, z_order_in);
   }
-  else if ( z_order_type )
+  else if( z_order_type )
   {
-    if ( z_order_type == 1 )
+    if( z_order_type == 1 )
     {
       this->z_order = 0;
     }
-    else if ( z_order_type == 2 )
+    else if( z_order_type == 2 )
     {
       this->z_order = 0;
     }
@@ -2748,26 +2748,26 @@ void __thiscall TPanel::set_child_z_order(TPanel *this, TPanel *child_panel, cha
   signed int v19; // edx@34
 
   v4 = this;
-  if ( z_order_type )
+  if( z_order_type )
   {
-    if ( z_order_type == 1 )
+    if( z_order_type == 1 )
     {
       v8 = this->first_child_node;
-      for ( i = 0; v8; v8 = v8->next_node )
+      for( i = 0; v8; v8 = v8->next_node )
       {
         v10 = v8->panel;
-        if ( v8->panel != child_panel && v10->z_order > i )
+        if( v8->panel != child_panel && v10->z_order > i )
           i = v10->z_order;
       }
       child_panel->z_order = i + 1;
     }
-    else if ( z_order_type == 2 )
+    else if( z_order_type == 2 )
     {
       v5 = this->first_child_node;
-      for ( j = 0; v5; v5 = v5->next_node )
+      for( j = 0; v5; v5 = v5->next_node )
       {
         v7 = v5->panel;
-        if ( v5->panel != child_panel && v7->z_order < j )
+        if( v5->panel != child_panel && v7->z_order < j )
           j = v7->z_order;
       }
       child_panel->z_order = j - 1;
@@ -2777,31 +2777,31 @@ void __thiscall TPanel::set_child_z_order(TPanel *this, TPanel *child_panel, cha
   {
     v11 = this->first_child_node;
     v12 = 0;
-    if ( v11 )
+    if( v11 )
     {
-      while ( v11->panel->z_order != z_order_in )
+      while( v11->panel->z_order != z_order_in )
       {
         v11 = v11->next_node;
-        if ( !v11 )
+        if( !v11 )
           goto LABEL_21;
       }
       v12 = 1;
 LABEL_21:
       v4 = this;
     }
-    if ( v12 )
+    if( v12 )
     {
       v13 = this->first_child_node;
-      if ( this->first_child_node )
+      if( this->first_child_node )
       {
         do
         {
           v14 = v13->panel->z_order;
-          if ( v14 >= z_order_in )
+          if( v14 >= z_order_in )
             v13->panel->z_order = v14 + 1;
           v13 = v13->next_node;
         }
-        while ( v13 );
+        while( v13 );
       }
     }
     child_panel->z_order = z_order_in;
@@ -2810,35 +2810,35 @@ LABEL_21:
   v16 = v4->curr_child;
   v17 = 0;
   v4->curr_child = 0;
-  if ( v15 )
+  if( v15 )
   {
-    while ( v15->panel != child_panel )
+    while( v15->panel != child_panel )
     {
       v15 = v15->next_node;
-      if ( !v15 )
+      if( !v15 )
         goto LABEL_33;
     }
     v17 = v15;
     TPanel::remove_panel_node(v4, v15);
   }
 LABEL_33:
-  if ( v17 )
+  if( v17 )
   {
     v18 = v4->first_child_node;
     v19 = 0;
-    if ( v18 )
+    if( v18 )
     {
-      while ( v18->panel->z_order <= child_panel->z_order )
+      while( v18->panel->z_order <= child_panel->z_order )
       {
         v18 = v18->next_node;
-        if ( !v18 )
+        if( !v18 )
           goto LABEL_39;
       }
       TPanel::add_panel_node(v4, v17, v18, 0);
       v19 = 1;
     }
 LABEL_39:
-    if ( !v19 )
+    if( !v19 )
       TPanel::add_panel_node(v4, v17, v4->last_child_node, 1);
   }
   v4->curr_child = v16;
@@ -2851,13 +2851,13 @@ void __stdcall TPanel::set_tab_order(TPanel **panel_list, __int16 panel_count)
   TPanel *v4; // edx@3
   TPanel *v5; // eax@6
 
-  for ( i = 0; i < panel_count; ++i )
+  for( i = 0; i < panel_count; ++i )
   {
-    if ( i )
+    if( i )
       v4 = panel_list[i - 1];
     else
       v4 = panel_list[panel_count - 1];
-    if ( i == panel_count - 1 )
+    if( i == panel_count - 1 )
       v5 = *panel_list;
     else
       v5 = panel_list[i + 1];
@@ -2910,24 +2910,24 @@ void __thiscall TPanel::setPanelName(TPanel *this, char *v)
   char *v3; // edx@3
 
   v2 = this;
-  if ( v && strlen(v) != 0 )
+  if( v && strlen(v) != 0 )
   {
     v3 = v2->panelNameValue;
-    if ( v3 )
+    if( v3 )
     {
-      if ( strlen(v2->panelNameValue) >= strlen(v) )
+      if( strlen(v2->panelNameValue) >= strlen(v) )
       {
 LABEL_8:
         strcpy(v2->panelNameValue, v);
         return;
       }
-      if ( v3 )
+      if( v3 )
         free(v2->panelNameValue);
     }
     v2->panelNameValue = (char *)malloc(strlen(v) + 1);
     goto LABEL_8;
   }
-  if ( v2->panelNameValue )
+  if( v2->panelNameValue )
   {
     free(v2->panelNameValue);
     v2->panelNameValue = 0;
@@ -2988,7 +2988,7 @@ void __thiscall TPanel::setClipRectangle(TPanel *this, tagRECT r)
 //----- (00466820) --------------------------------------------------------
 void __stdcall TPanel::delete_panel(TPanel **panel)
 {
-  if ( *panel )
+  if( *panel )
   {
     ((void (__stdcall *)(_DWORD))(*panel)->vfptr->__vecDelDtor)(1);
     *panel = 0;
@@ -3037,25 +3037,25 @@ char __thiscall TPanel::get_help_info(TPanel *this, char **string, int *page, in
 
   v5 = this;
   v8 = this;
-  if ( this->active && ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y) )
+  if( this->active && ((int (__stdcall *)(int, int))this->vfptr->is_inside)(x, y) )
   {
     v6 = v5->last_child_node;
-    if ( v6 )
+    if( v6 )
     {
-      while ( !(unsigned __int8)((int (__stdcall *)(char **, int *, int, int))v6->panel->vfptr->get_help_info)(
+      while( !(unsigned __int8)((int (__stdcall *)(char **, int *, int, int))v6->panel->vfptr->get_help_info)(
                                   string,
                                   page,
                                   x,
                                   y) )
       {
         v6 = v6->prev_node;
-        if ( !v6 )
+        if( !v6 )
           goto LABEL_6;
       }
       return 1;
     }
 LABEL_6:
-    if ( v8->help_string_id >= 0 )
+    if( v8->help_string_id >= 0 )
     {
       strcpy(*string, TPanel::get_string(v8->help_string_id));
       *page = v8->help_page_id;
@@ -3070,7 +3070,7 @@ void __thiscall TPanel::stop_sound_system(TPanel *this)
 {
   PanelNode *i; // esi@1
 
-  for ( i = this->first_child_node; i; i = i->next_node )
+  for( i = this->first_child_node; i; i = i->next_node )
     ((void (*)(void))i->panel->vfptr->stop_sound_system)();
 }
 
@@ -3081,9 +3081,9 @@ int __thiscall TPanel::restart_sound_system(TPanel *this)
   signed int i; // edi@1
 
   v1 = this->first_child_node;
-  for ( i = 1; v1; v1 = v1->next_node )
+  for( i = 1; v1; v1 = v1->next_node )
   {
-    if ( !((int (*)(void))v1->panel->vfptr->restart_sound_system)() )
+    if( !((int (*)(void))v1->panel->vfptr->restart_sound_system)() )
       i = 0;
   }
   return i;
@@ -3094,7 +3094,7 @@ void __thiscall TPanel::handle_reactivate(TPanel *this)
 {
   PanelNode *i; // esi@1
 
-  for ( i = this->first_child_node; i; i = i->next_node )
+  for( i = this->first_child_node; i; i = i->next_node )
     ((void (*)(void))i->panel->vfptr->handle_reactivate)();
 }
 
