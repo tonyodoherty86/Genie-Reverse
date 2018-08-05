@@ -1,4 +1,11 @@
 
+/**
+ * @file    Engine\ResFile.c
+ * @author  Yvan Burrie
+ * @date    2018/07/29
+ * @version 1.0
+ */
+
 char aErrorOpen_ne_1[] = "Error: Open_new_ResFile, file %s not Found."; // idb
 char aErrorOpen_re_1[] = "Error: Open_ResFile, Resfile not correct."; // idb
 char aErrorOpen_resf[] = "Error: Open_ResFile, Corruption detected in resfile."; // idb
@@ -11,7 +18,6 @@ char Caption[] = "RESOURCE ERROR"; // idb
 char aErrorOpen_new_[51] = "Error: Open_new_ResFile, mapped file %s not Found."; // weak
 char aErrorUnableToR[] = "Error: unable to read resource"; // idb
 char aErrorOutOfMe_1[] = "Error: Out of memory in res_read_bin."; // idb
-char aErrorRes_read_[] = "ERROR: res_read_bin, resource type %4.4c , id %d, not found"; // idb
 char PrefixString[] = "temp"; // idb
 char a__1[2] = "."; // weak
 char aErrorWriting_1[46] = "Error writing resource file header: type node"; // weak
@@ -36,7 +42,13 @@ ResFileHdr *Res_Files;
 
 int resource_missing_flag;
 
-void RESFILE_open_new_resource_file(char *resFileName, char *password, char *path, int open_mode)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void RESFILE_open_new_resource_file(
+    char *resFileName,
+    char *password,
+    char *path,
+    int open_mode = 0 )
 {
     HANDLE v4; // eax@2
     void *v5; // esi@2
@@ -153,39 +165,55 @@ LABEL_29:
     }
 }
 
-void RESFILE_close_new_resource_file(char *res_file)
-{
-    ResFileHdr *v1; // edi@1
-    ResFileHdr *v2; // ebx@1
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    v1 = Res_Files;
-    v2 = 0;
-    if( Res_Files )
-    {
-        while( strcmp(res_file, v1->res_name) )
-        {
-            v2 = v1;
-            v1 = v1->next;
-            if( !v1 )
-                return;
+void RESFILE_close_new_resource_file( char *res_file )
+{
+    /* find the file by its name and return nothing if unfound: */
+    for( ResFileHdr *Res_File = Res_Files; true; Res_File = Res_File->next ){
+
+        if( Res_File == NULL ){
+            return;
         }
-        if( !v1->mapped_file )
-            free(v1->header);
-        if( v2 )
-            v2->next = v1->next;
-        else
-            Res_Files = v1->next;
-        if( v1->handle != -1 )
-            _close(v1->handle);
-        if( v1->mapped_file )
-            UnmapViewOfFile(v1->mapped_file);
-        free(v1);
+
+        if( !strcmp(res_file, Res_File->res_name) ){
+            break;
+        }
+
+        ResFileHdr *Res_Prev = Res_File;
     }
+
+    if( Res_File->mapped_file == NULL ){
+        free(Res_File->header);
+    }
+
+    if( Res_Prev ){
+        Res_Prev->next = Res_File->next;
+    }else{
+        Res_Files = Res_File->next;
+    }
+
+    if( Res_File->handle != -1 ){
+        close(Res_File->handle);
+    }
+
+    if( Res_File->mapped_file ){
+        UnmapViewOfFile(Res_File->mapped_file);
+    }
+
+    free(Res_File);
 }
 
-bool RESFILE_locate_resource(unsigned int rType, unsigned int rId, int *file, int *offset, char **mapped_file, int *size)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool RESFILE_locate_resource(
+    unsigned int rType,
+    unsigned int rId,
+    int *file,
+    int *offset,
+    char **mapped_file,
+    int *size )
 {
-    ResFileHdr *v6; // esi@1
     unsigned int v7; // ebp@2
     resfile_header *v8; // ebx@3
     char *v9; // edi@4
@@ -196,67 +224,71 @@ bool RESFILE_locate_resource(unsigned int rType, unsigned int rId, int *file, in
     ResFileHdr *p; // [sp+10h] [bp-4h]@1
     unsigned int rIda; // [sp+1Ch] [bp+8h]@3
 
-    v6 = Res_Files;
-    *file = -1;
-    *offset = 0;
+    *file        = -1;
+    *offset      = 0;
     *mapped_file = 0;
-    p = v6;
-    *size = 0;
-    if( v6 )
+    *size        = 0;
+
+    p = Res_File;
+
+    ResFileHdr *Res_File = Res_Files;
+    if( Res_File == NULL ){
+        return false;
+    }
+
+    v7 = rId;
+    while( true ){
+        v8 = Res_File->header;
+        rIda = 0;
+        if( v8->num_res_types > 0 ) break;
+        LABEL_12:
+        Res_File = Res_File->next;
+        p = Res_File;
+        if( Res_File == NULL )
+            return false;
+    }
+    v9 = &v8[1].banner_msg[8];
+    while( 1 )
     {
-        v7 = rId;
-        while( 1 )
+        if( *((_DWORD *)v9 - 2) == rType )
         {
-            v8 = v6->header;
-            rIda = 0;
-            if( v8->num_res_types > 0 )
+            v10 = 0;
+            if( *(_DWORD *)v9 > 0 )
                 break;
-LABEL_12:
-            v6 = v6->next;
-            p = v6;
-            if( !v6 )
-                return 0;
         }
-        v9 = &v8[1].banner_msg[8];
-        while( 1 )
-        {
-            if( *((_DWORD *)v9 - 2) == rType )
-            {
-                v10 = 0;
-                if( *(_DWORD *)v9 > 0 )
-                    break;
-            }
 LABEL_11:
-            v9 += 12;
-            if( (signed int)++rIda >= v8->num_res_types )
-                goto LABEL_12;
-        }
-        v11 = &v8->banner_msg[*((_DWORD *)v9 - 1)];
-        while( *(_DWORD *)v11 != v7 )
-        {
-            ++v10;
-            v11 += 12;
-            if( v10 >= *(_DWORD *)v9 )
-            {
-                v6 = p;
-                goto LABEL_11;
-            }
-        }
-        v13 = (int)v8 + 12 * v10 + *((_DWORD *)v9 - 1);
-        *file = p->handle;
-        *offset = *(_DWORD *)(v13 + 4);
-        *mapped_file = p->mapped_file;
-        *size = *(_DWORD *)(v13 + 8);
-        result = 1;
+        v9 += 12;
+        if( (signed int)++rIda >= v8->num_res_types )
+            goto LABEL_12;
     }
-    else
+    v11 = &v8->banner_msg[*((_DWORD *)v9 - 1)];
+    while( *(_DWORD *)v11 != v7 )
     {
-        result = 0;
+        ++v10;
+        v11 += 12;
+        if( v10 >= *(_DWORD *)v9 )
+        {
+            Res_File = p;
+            goto LABEL_11;
+        }
     }
-    return result;
+    v13 = (int)v8 + 12 * v10 + *((_DWORD *)v9 - 1);
+
+    *file        = p->handle;
+    *offset      = *(_DWORD *)(v13 + 4);
+    *mapped_file = p->mapped_file;
+    *size        = *(_DWORD *)(v13 + 8);
+
+    return true;
 }
 
-char *RESFILE_load(char *rType, unsigned int rId, int *rLoadType, int *rDataSize)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+char *RESFILE_load(
+    char *rType,
+    unsigned int rId,
+    int *rLoadType,
+    int *rDataSize )
 {
     unsigned int v4; // ebx@1
     unsigned int v5; // ebp@1
@@ -269,25 +301,41 @@ char *RESFILE_load(char *rType, unsigned int rId, int *rLoadType, int *rDataSize
     int *v13; // eax@6
     void *v14; // esi@6
     int *v15; // eax@8
-    char error_string[100]; // [sp+10h] [bp-64h]@3
 
-    v4 = rId;
-    v5 = rType;
+
+    unsigned int res_orig_id = rId;
+    signed int res_orig_type = rType;
     v6 = rLoadType;
     v7 = rDataSize;
     v8 = rId;
+
     *rLoadType = -1;
+
     *v7 = 0;
-    if( !RESFILE_locate_resource(v5, v8, (int *)&rId, (int *)&rDataSize, (char **)&rType, (int *)&rLoadType) )
-    {
-        if( resource_missing_flag )
-        {
-            sprintf(error_string, aErrorRes_read_, v5, v4);
-            MessageBoxA(0, error_string, Caption, 0x30u);
-            return 0;
+
+    bool res_located = RESFILE_locate_resource(
+       res_orig_type,
+       v8,
+       &rId,
+       &rDataSize,
+       &rType,
+       &rLoadType);
+
+    if( !res_located ){
+        if( resource_missing_flag ){
+
+            char error_string[100];
+            sprintf(error_string, "ERROR: res_read_bin, resource type %4.4c , id %d, not found", res_orig_type, res_orig_id);
+
+            MessageBox(
+                NULL,
+                error_string,
+                Caption,
+                0x30u);
         }
-        return 0;
+        return NULL;
     }
+
     v10 = rType;
     if( rType )
     {
@@ -316,7 +364,13 @@ char *RESFILE_load(char *rType, unsigned int rId, int *rLoadType, int *rDataSize
     return (char *)v14;
 }
 
-char * RESFILE_Extract_to_File(unsigned int rType, unsigned int rId, char *file_name, _iobuf **file)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+char *RESFILE_Extract_to_File(
+    unsigned int rType,
+    unsigned int rId,
+    char *file_name,
+    FILE **file )
 {
     char *result; // eax@1
     char *v5; // ebp@1
@@ -352,20 +406,27 @@ char * RESFILE_Extract_to_File(unsigned int rType, unsigned int rId, char *file_
     return result;
 }
 
-void RESFILE_Set_Missing_Flag(int FlagVal)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void RESFILE_Set_Missing_Flag( int FlagVal )
 {
     resource_missing_flag = FlagVal;
 }
 
-bool RESFILE_Decommit_Mapped_Memory(char *ResData, int resSize)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool RESFILE_Decommit_Mapped_Memory( char *ResData, int resSize )
 {
-        if( ResData && resSize > 0 )
-                return VirtualFree(ResData, resSize, MEM_DECOMMIT);
-        else
-                return false;
+    if( ResData && resSize > 0 ){
+        return VirtualFree(ResData, resSize, MEM_DECOMMIT);
+    }else{
+        return false;
+    }
 }
 
-bool RESFILE_build_res_file(char *build_list_file, char *source_path, char *target_path)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool RESFILE_build_res_file( char *build_list_file, char *source_path, char *target_path )
 {
     FILE *v3; // eax@1
     FILE *v4; // esi@1

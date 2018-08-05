@@ -2,11 +2,13 @@
 /**
  * @file    Engine\ResFile.h
  * @author  Yvan Burrie
- * @date    2018/07/04
+ * @date    2018/07/29
  * @version 1.0
  */
 
-/* Determines whether the current stream will have compression */
+/**
+ * Determines whether the current stream will have compression.
+ */
 int ENABLE_COMPRESSION = 0;
 
 #if PROTOTYPE_SWGB
@@ -33,7 +35,11 @@ struct resfile_header
     int directory_size;
 };
 
-void RESFILE_open_new_resource_file(char *resFileName, char *password, char *path, int open_mode);
+void RESFILE_open_new_resource_file(
+    char *resFileName,
+    char *password,
+    char *path,
+    int open_mode );
 
 void RESFILE_close_new_resource_file(char *res_file);
 
@@ -50,6 +56,8 @@ bool RESFILE_Decommit_Mapped_Memory(char *ResData, int resSize);
 bool RESFILE_build_res_file(char *build_list_file, char *source_path, char *target_path);
 
 int BUILDRES_get_files_resource_type(char *filename);
+
+#define RES_FILE_TYPE_EXTENSION_BINARY 'bina'
 
 struct res_file_type_info
 {
