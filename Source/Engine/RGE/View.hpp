@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\View.hpp
  * @author  Yvan Burrie
- * @date    2018/06/26
+ * @date    2018/07/29
  * @version 1.0
  */
 
@@ -43,17 +43,19 @@ public:
     short start_scr_col,
           start_scr_row;
 
-    short start_map_col,
-          start_map_row;
+    short start_map_col = 0,
+          start_map_row = 0;
 
-    int map_scr_x_offset,
-        map_scr_y_offset;
+    int map_scr_x_offset = 0,
+        map_scr_y_offset = 0;
 
-    float last_view_x,
-          last_view_y;
+#define RGE_VIEW_LAST_VIEW_VALUE -9999
 
-    char function_mode;
-    char function_parm;
+    float last_view_x = RGE_VIEW_LAST_VIEW_VALUE,
+          last_view_y = RGE_VIEW_LAST_VIEW_VALUE;
+
+    char function_mode = 0;
+    char function_parm = 0;
 
     char render_terrain_mode;
 
@@ -62,7 +64,7 @@ public:
         sel_col2,
         sel_row2;
 
-    short save_paint_terrain;
+    short save_paint_terrain = -1;
 
     void *white_pen;
     void *red_pen;
@@ -72,14 +74,11 @@ public:
 
     char scroll_action;
 
-    int mouse_last_x,
-        mouse_last_y;
+    int mouse_last_x = -1, mouse_last_y = -1;
 
     RGE_Static_Object *movable_object;
 
-    TSpan_List_Manager *Terrain_Clip_Mask,
-                       *Terrain_Fog_Clip_Mask,
-                       *Master_Clip_Mask;
+    TSpan_List_Manager *Terrain_Clip_Mask, *Terrain_Fog_Clip_Mask, *Master_Clip_Mask;
 
     struct Tile_FogEdge_Table **Tile_Edge_Tables;
     struct Tile_BlackEdge_Table **Black_Edge_Tables;
@@ -124,26 +123,21 @@ public:
     DClipInfo_List *prior_objs,
                    *futur_objs;
 
-    int UC_ObjectTouched,
-        UC_TouchedObj;
+    int UC_ObjectTouched, UC_TouchedObj = 0x80000000;
 
-    unsigned int UC_StartTime,
-                 UC_ElapsedTime;
+    time_t UC_StartTime, UC_ElapsedTime;
 
     TMessagePanel *message_panel;
 
     struct Ov_Sprite_Draw_Rec *extra_sprites;
 
     struct DisplaySelectedObjRec *DispSel_List;
-
-    int DispSel_List_Size,
-        DispSel_List_Max;
+    int DispSel_List_Size, DispSel_List_Max = 8;
 };
 
 struct Tile_FogEdge_Table
 {
-    VSpanMiniList *normal_draw,
-                  *fog_draw;
+    VSpanMiniList *normal_draw, *fog_draw;
 };
 
 struct Tile_BlackEdge_Table
@@ -153,8 +147,7 @@ struct Tile_BlackEdge_Table
 
 struct Blit_Queue_Entry
 {
-    RECT src,
-         dest;
+    RECT src, dest;
 };
 
 struct RGE_SPick_Info
@@ -165,24 +158,20 @@ struct RGE_SPick_Info
 
     short draw_level;
 
-    short draw_x,
-          draw_y;
+    short draw_x, draw_y;
 
-    RGE_SPick_Info *next,
-                   *prev;
+    RGE_SPick_Info *next, *prev;
 };
 
 struct Ov_Sprite_Draw_Rec
 {
-    Ov_Sprite_Draw_Rec *next,
-                       *prev;
+    Ov_Sprite_Draw_Rec *next, *prev;
 
     TShape *theShape;
 
     int thefacet;
 
-    int world_x,
-        world_y;
+    int world_x, world_y;
 
     int flags;
     int drawLevel;

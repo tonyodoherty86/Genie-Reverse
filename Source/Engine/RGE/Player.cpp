@@ -111,7 +111,6 @@ RGE_Player::RGE_Player(
     this->pathingDelayCapValue = 10;
     RGE_Tile_List::RGE_Tile_List(&this->tile_list, 400);
     RGE_Tile_List::RGE_Tile_List(&v7->diam_tile_list, 400);
-    v7->vfptr = (RGE_PlayerVtbl *)&RGE_Player::`vftable';
     v7->pathingAttemptCapValue = pathingCapValue;
     v7->master_player_id = m_player_id;
     v7->type = 0;
@@ -268,7 +267,6 @@ RGE_Player::~RGE_Player()
     Visible_Resource_Manager *v11; // edi@19
 
     v1 = this;
-    this->vfptr = (RGE_PlayerVtbl *)&RGE_Player::`vftable';
     v2 = this->objects;
     if( v2 )
     {

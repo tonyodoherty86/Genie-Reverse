@@ -2,11 +2,16 @@
 /**
  * @file    Engine\RGE\GameWorld.hpp
  * @author  Yvan Burrie
- * @date    2018/07/04
+ * @date    2018/07/30
  * @version 1.0
  */
 
-#define RGE_WORLD_DIFFICULTY_LEVEL_EXISTS TRUE
+#ifndef RGE_WORLD_HPP
+#define RGE_WORLD_HPP
+
+#ifndef RGE_WORLD_DIFFICULTY_LEVEL_EXISTS
+    #define RGE_WORLD_DIFFICULTY_LEVEL_EXISTS TRUE
+#endif
 
 class RGE_Game_World
 {
@@ -375,3 +380,5 @@ public:
     RGE_Static_Object *recycle_object_in_to_game(char object_type);
     void update_mutual_allies();
 };
+
+#endif // RGE_WORLD_HPP

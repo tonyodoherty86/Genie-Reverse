@@ -2,12 +2,19 @@
 /**
  * @file    RGE.hpp
  * @author  Yvan Burrie
- * @date    2018/07/07
+ * @date    2018/08/05
  * @version 1.0
  */
 
+#ifndef RGE_HPP
+#define RGE_HPP
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /* Include core components: */
 #include "RGE\FileIO.h"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * This defines the hard-coded number of players.
@@ -17,12 +24,16 @@
  */
 #define RGE_PLAYERS_COUNT PLAYERS_ITERATIONS
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include game components: */
+
 #include "RGE\BaseGame.hpp"
 #include "RGE\GameInfo.hpp"
 #include "RGE\Campaign.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include communications components: */
+
 #include "RGE\CommQueue.hpp"
 #include "RGE\CommLobby.hpp"
 #include "RGE\TimeSinceLastCall.hpp"
@@ -31,7 +42,9 @@
 #include "RGE\CommAddresses.hpp"
 #include "RGE\CommError.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include world components: */
+
 #include "RGE\GameWorld.hpp"
 #include "RGE\ColorTable.hpp"
 #include "RGE\Sound.hpp"
@@ -41,7 +54,9 @@
 #include "RGE\PathingSystem.hpp"
 #include "RGE\ZoneMap.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include Random-Map-Module components: */
+
 #include "RGE\RmmBase.hpp"
 #include "RGE\RmmController.hpp"
 #include "RGE\RmmDbController.hpp"
@@ -52,6 +67,9 @@
 #include "RGE\RmmCliffs.hpp"
 #include "RGE\RmmShallows.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/* Include Master-Player components: */
+
 class RGE_Static_Object;
 class RGE_Animated_Object;
 class RGE_Moving_Object;
@@ -61,7 +79,6 @@ class RGE_Missile_Object;
 
 struct RGE_Object_Node;
 
-/* Include Master-Player components: */
 #include "RGE\MasterPlayer.hpp"
 #include "RGE\MasterStaticObject.hpp"
 #include "RGE\MasterAnimatedObject.hpp"
@@ -73,11 +90,15 @@ struct RGE_Object_Node;
 #include "RGE\MasterCombatObject.hpp"
 #include "RGE\MasterMissileObject.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "RGE\Player.hpp"
 #include "RGE\VisibleMap.hpp"
 #include "RGE\VictoryConditions.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include AI-Module components: */
+
 #include "RGE\InfluenceMap.hpp"
 #include "RGE\AiModule.hpp"
 #include "RGE\AiMainDecisionModule.hpp"
@@ -100,11 +121,15 @@ struct RGE_Object_Node;
 #include "RGE\AiTacticalModule.hpp"
 #include "RGE\AiTradeModule.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "RGE\Effects.hpp"
 
 #include "RGE\Timeline.hpp"
 #include "RGE\Scenario.hpp"
 #include "RGE\Command.hpp"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "RGE\ObjectList.hpp"
 #include "RGE\StaticObject.hpp"
@@ -128,9 +153,15 @@ struct RGE_Object_Node;
 #include "RGE\CombatObject.hpp"
 #include "RGE\MissileObject.hpp"
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include Panels: */
+
 #include "RGE\View.hpp"
 #include "RGE\MainView.hpp"
 #include "RGE\DiamondMap.hpp"
 #include "RGE\DiamondMapView.hpp"
 #include "RGE\PanelToolBox.hpp"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#endif // RGE_HPP
