@@ -2,12 +2,17 @@
 /**
  * @file    Engine\AsmDraw.c
  * @author  Yvan Burrie
- * @date    2018/07/19
+ * @date    2018/07/28
  * @version 1.0
  */
 
+#ifndef ASM_DRAW_H
+    #include "AsmDraw.h"
+#endif
+
 #ifndef ASM_DRAW_C
-#define ASM_DRAW_C
+    #define ASM_DRAW_C
+#endif
 
 /**
  * dword_88C000 (ROR)
@@ -27,7 +32,7 @@ VSpan_Node **ASMLineTailPtrs;
 /**
  * dword_88C014 (ROR)
  */
-int dword_88C014 = 0;
+int ASMCurrentRenderXOffset = 0;
 
 /**
  * dword_88C01C (ROR)
@@ -37,38 +42,48 @@ int ASMXlate = 0;
 /**
  * dword_88C020 (ROR)
  */
-int dword_88C020 = 0;
+int ASMCurrentRenderYOffset = 0;
 
 /**
- * dword_88C02C (ROR)
+ *
  */
 int dword_88C02C = 0;
 
 /**
- * dword_88C030 (ROR)
+ *
  */
 int dword_88C030 = 0;
 
+/**
+ *
+ */
 int dword_88C034 = 0;
 
 /**
- * 88C038 (ROR)
+ * dword_88C038 (ROR)
  */
 int ASMDrawYOffset = 0;
 
 /**
- *  (ROR)
+ * dword_88C03C (ROR)
  */
 VSpan_Node *ASMCurrentLineHead;
 
 /**
- * 88C040 (ROR)
+ * dword_88C040 (ROR)
  */
 int ASMColorXForm1 = 0;
 
-//int (*dword_88C044)(void) = NULL;
+/**
+ * dword_88C044 (ROR)
+ * dword_795044 (AOC)
+ */
+int (*ASMLocation)(void);
 
-int dword_88C04C = 0;
+/**
+ * dword_88C04C (ROR)
+ */
+int ASMCurrentLineHeadPx = 0;
 
 /**
  * dword_88C060 (ROR)
@@ -130,9 +145,8 @@ int ASMMinSpanPx = 0;
  */
 int ASMMaxSpanPx = 0;
 
-/**
- *
- */
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void ASMSet_Shadowing(
     int a1,
     int a2,
@@ -149,9 +163,8 @@ void ASMSet_Shadowing(
     ASMShadowing4B = a4;
 }
 
-/**
- *
- */
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void ASMSet_Surface_Info(
     void **RenderOffsets,
     VSpan_Node **LineHeadPtrs,
@@ -170,10 +183,9 @@ void ASMSet_Surface_Info(
     ASMMaxSpanPx     = MaxSpanPx;
 }
 
-/**
- *
- */
-void ASMSet_Color_Xform(unsigned int a1)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ASMSet_Color_Xform( unsigned int a1 )
 {
     /*
     asm("push    ebp");
@@ -190,170 +202,148 @@ void ASMSet_Color_Xform(unsigned int a1)
     */
 }
 
-/**
- *
- */
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int ASMGet_Color_Xform()
 {
     return (unsigned char)ASMColorXForm1;// XformMask
 }
 
-/**
- *
- */
-void ASMSet_Xlate_Table(int a1)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ASMSet_Xlate_Table( int ColorTable )
 {
-    asm("push    ebp");
-    asm("mov     ebp, esp");
-    asm("mov     eax, [ebp+arg_0]");
-    asm("mov     ds:ASMXlate, eax");
-    asm("pop     ebp");
-    asm("retn");
+    ASMXlate = ColorTable;
 }
 
-/**
- *
- */
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int ASMGet_Xlate_Table()
 {
     return ASMXlate;
 }
 
-/**
- *
- */
-void ASMDraw_HLine(
-    int x1,
-    int x2,
-    int y1)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void ASMDraw_HLine( int x1, int x2, int y1 )
 {
-    int result;
-    int v4;
-    int v5;
-    int v6;
-    int v7;
-    int v8;
-    int v9;
-    int v10;
-    int v11;
+    if( y1 < ASMMinLine ||
+        y1 > ASMMaxLine ){
+        return;
+    }
 
-    result = y1;
+    int xmax = x1;
+    int xmin = x2;
 
-    if( y1 >= ASMMinLine &&
-        y1 <= ASMMaxLine ){
+    if( x1 > x2 ){
+        xmax = x2;
+        xmin = x1;
+        x1 = x2;
+        x2 = xmin;
+    }
 
-        result = x1;
-        v4 = x2;
+    if( xmin < ASMMinSpanPx ||
+        xmax > ASMMaxSpanPx ){
+        return;
+    }
+    if( xmax < ASMMinSpanPx ){
+        xmax = ASMMinSpanPx;
+        x1 = ASMMinSpanPx;
+    }
+    if( xmin > ASMMaxSpanPx ){
+        xmin = ASMMaxSpanPx;
+        x2 = ASMMaxSpanPx;
+    }
 
-        if( x1 > x2 ){
-            result = x2;
-            v4 = x1;
-            x1 = x2;
-            x2 = v4;
-        }
-        if( v4 >= ASMMinSpanPx &&
-            result <= ASMMaxSpanPx ){
-            if( result < ASMMinSpanPx ){
-                result = ASMMinSpanPx;
-                x1 = ASMMinSpanPx;
-            }
-            if( v4 > ASMMaxSpanPx ){
-                v4 = ASMMaxSpanPx;
-                x2 = ASMMaxSpanPx;
-            }
+    VSpan_Node *LineHead = ASMLineHeadPtrs[y1]
+    if( LineHead == NULL ){
+        return;
+    }
 
-            v5 = ASMLineHeadPtrs[y1];
-            if( ASMLineHeadPtrs[y1] ){
+    ASMCurrentLineHead = ASMLineHeadPtrs[y1];
 
-                ASMCurrentLineHead = ASMLineHeadPtrs[y1];
+    int tempx = xmax;
 
-                v6 = result;
+    ASMDrawYOffset = xmin - xmax + 1;
 
-                ASMDrawYOffset = v4 - result + 1;
+    ASMLocation = &&loc_56C99A;
 
-                dword_88C044 = &loc_56C99A;
+    ASMCurrentRenderYOffset = ASMRenderOffsets[y1];
 
-                v7 = ASMRenderOffsets[y1];
+    xmax += ASMCurrentRenderYOffset;
 
-                dword_88C020 = v7;
+    ASMCurrentRenderXOffset = xmax;
 
-                result = v6 + v7;
+    while( xmin >= LineHead->StartPx ){
 
-                dword_88C014 = result;
-
-                while( v4 >= *(v5 + 8) ){
-                    if( v6 <= *(v5 + 12) ){
-                        if( v6 >= *(v5 + 8) && v4 <= *(v5 + 12) ){
-                            v8 = ASMDrawYOffset & 0x7F;
-                            if( ASMDrawYOffset >= 128 ){
-                                LOBYTE(v8) = v8 | 0x80;
-                            }
-                            JUMPOUT(__CS__, off_56A700[(byte_56B300[v8] | dword_88C014 & 3)]);
-                        }
-
-                        ASMCurrentLineHead = v5;
-
-                        while( true ){
-
-                            v9 = ASMDrawYOffset;
-
-                            if( x2 < ASMCurrentLineHead->StartPx ){
-                                break;
-                            }
-
-                            if( x1 <= ASMCurrentLineHead->EndPx ){
-                                v10 = 0;
-                                if( x1 < ASMCurrentLineHead->StartPx ){
-                                    v10 = ASMCurrentLineHead->StartPx - x1;
-                                    v9 = ASMDrawYOffset - v10;
-                                }
-                                dword_88C04C = v10;
-                                if( x2 > ASMCurrentLineHead->EndPx ){
-                                    v9 -= x2 - ASMCurrentLineHead->EndPx;
-                                    dword_88C044 = &loc_56C8FA;
-                                }
-                                v11 = v9 & 0x7F;
-                                if( v9 >= 128 ){
-                                    LOBYTE(v11) = v11 | 0x80;
-                                }
-                                JUMPOUT(__CS__, off_56A700[(byte_56B300[v11] | (dword_88C04C + dword_88C014) & 3)]);
-                            }
-
-                            if( ASMCurrentLineHead->Next == nullptr ){
-                                break;
-                            }
-                            ASMCurrentLineHead = ASMCurrentLineHead->Next;
-
-                            dword_88C044 = &loc_56C99A;
-                        }
-                        return result;
-                    }
-
-                    v5 = *v5;
-                    if( !v5 ){
-                        return result;
-                    }
+        if( tempx <= LineHead->EndPx ){
+            if( tempx >= LineHead->StartPx &&
+                xmin <= LineHead->EndPx ){
+                int v8 = ASMDrawYOffset & 127;
+                if( ASMDrawYOffset >= 128 ){
+                    LOBYTE(v8) = v8 | 0x80;
                 }
+                JUMPOUT(__CS__, off_56A700[(byte_56B300[v8] | ASMCurrentRenderXOffset & 3)]);
             }
+
+            ASMCurrentLineHead = LineHead;
+
+            while( true ){
+
+                int v9 = ASMDrawYOffset;
+
+                if( x2 < ASMCurrentLineHead->StartPx ){
+                    break;
+                }
+
+                if( x1 <= ASMCurrentLineHead->EndPx ){
+                    int v10 = 0;
+                    if( x1 < ASMCurrentLineHead->StartPx ){
+                        v10 = ASMCurrentLineHead->StartPx - x1;
+                        v9 = ASMDrawYOffset - v10;
+                    }
+                    ASMCurrentLineHeadPx = v10;
+                    if( x2 > ASMCurrentLineHead->EndPx ){
+                        v9 -= x2 - ASMCurrentLineHead->EndPx;
+                        ASMLocation = &&loc_56C8FA;
+                    }
+                    int v11 = v9 & 127;
+                    if( v9 >= 128 ){
+                        LOBYTE(v11) = v11 | 0x80;
+                    }
+                    JUMPOUT(__CS__, off_56A700[(byte_56B300[v11] | (ASMCurrentLineHeadPx + ASMCurrentRenderXOffset) & 3)]);
+                }
+
+                loc_56C8FA:
+                if( ASMCurrentLineHead->Next == NULL ){
+                    break;
+                }
+                ASMCurrentLineHead = ASMCurrentLineHead->Next;
+
+                ASMLocation = &&loc_56C99A;
+            }
+            return;
+        }
+
+        LineHead = LineHead->Next;
+        if( LineHead == NULL ){
+            loc_56C99A:
+            return;
         }
     }
-    return result;
 }
 
-/**
- *
- */
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void ASMDraw_Sprite(
-    int ShapeBase,
+    SLhape_File_Header *ShapeBase,
     int DrawX,
     int DrawY,
     int DrawW,
     int DrawH,
     int ShapeDataOffsets,
     int ShapeLineOffsets,
-    int DrawFlag)
+    int DrawFlag )
 {
     /* TODO */
 }
-
-#endif // ASM_DRAW_C
