@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TRB.hpp
  * @author  Yvan Burrie
- * @date    2018/08/05
+ * @date    2018/08/06
  * @version 1.0
  */
 
@@ -85,6 +85,7 @@ class TRIBE_Building_Object;
 /* Include panels: */
 
 #include "Engine\TRB\PanelScreenGame.hpp"
+#include "Engine\TRB\PanelTime.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include dialogs: */
@@ -102,9 +103,9 @@ class TRIBE_Building_Object;
 #include "Engine\TRB\ScreenAchievements.hpp"
 #include "Engine\TRB\ScreenCampaignEditor.hpp"
 #include "Engine\TRB\ScreenCampaignSelection.hpp"
-#include "Engine\TRB\ScreenCampaignCredits.hpp"
-#include "Engine\TRB\ScreenCampaignJoin.hpp"
-#include "Engine\TRB\ScreenCampaignEnd.hpp"
+#include "Engine\TRB\ScreenCredits.hpp"
+#include "Engine\TRB\ScreenJoin.hpp"
+#include "Engine\TRB\ScreenEnd.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

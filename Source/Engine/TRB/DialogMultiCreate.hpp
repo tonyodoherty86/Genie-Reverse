@@ -1,4 +1,25 @@
-void __thiscall TribeMPCreateDialog::TribeMPCreateDialog(TribeMPCreateDialog *this, TPanel *parentPanel); // idb
-TribeMPCreateDialog *__thiscall TribeMPCreateDialog::`vector deleting destructor'(TribeMPCreateDialog *this, unsigned int __flags);
-void __thiscall TribeMPCreateDialog::~TribeMPCreateDialog(TribeMPCreateDialog *this); // idb
-int __thiscall TribeMPCreateDialog::action(TribeMPCreateDialog *this, TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2); // idb
+
+/**
+ * @file    Engine\TRB\DialogMultiCreate.hpp
+ * @author  Yvan Burrie
+ * @date    2018/08/06
+ * @version 1.0
+ */
+
+class TribeMPCreateDialog : public TDialogPanel
+{
+public:
+
+    TTextPanel *title,
+               *input_title,
+               *inputGamename;
+
+    TButtonPanel *okButton,
+                 *cancelButton;
+
+    TribeMPCreateDialog( TPanel *parentPanel );
+
+    ~TribeMPCreateDialog();
+
+    int action( TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2 );
+};

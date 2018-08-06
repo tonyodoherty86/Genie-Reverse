@@ -19,9 +19,7 @@ struct TRIBE_Port_Info /* $5E07C38AD41064E6D66D4BD4C60F0823 */
 
 struct TRIBE_Anim_Pal_Table /* $046E19B52833A70008988A4EC31BC2A0 */
 {
-    char red,
-         green,
-         blue;
+    char red, green, blue;
 };
 
 class TRIBE_Screen_Game : public TScreenPanel
@@ -64,57 +62,68 @@ public:
                   *message_panel4,
                   *message_panel5,
                   *message_panel6,
-                  *chat_panel[8];
+                  *chat_panel[RGE_PLAYERS_COUNT - 1];
 
     RGE_Panel_Tool_Box *tool_box;
 
-    TTextPanel *age_panel;
-    TTextPanel *pause_text;
-    TTextPanel *fps_panel;
-    TMessagePanel *score_panel[8];
+    TTextPanel *age_panel,
+               *pause_text,
+               *fps_panel;
+
+    TMessagePanel *score_panel[RGE_PLAYERS_COUNT - 1];
+
     TTextPanel *log_text;
+
     TScrollBarPanel *log_scrollbar;
 
     TRIBE_World *world;
 
     unsigned int update_interval;
-    unsigned int last_update_time;
+    time_t last_update_time;
     unsigned int map_redraw_interval;
-    unsigned int last_map_redraw_time;
+    time_t last_map_redraw_time;
     RGE_Static_Object *game_obj;
     short sel_count;
-    Item_Avail *tech_list;
-    Item_Avail *make_list;
-    Item_Avail *bldg_list;
+
+    Item_Avail *tech_list,
+               *make_list,
+               *bldg_list;
+
     Trade_Avail *trade_list;
     short item_cnt;
     short start_item;
     short last_item;
-    TRIBE_Port_Info port_info[9];
+
+    TRIBE_Port_Info port_info[RGE_PLAYERS_COUNT];
+
     unsigned int terrain_sound_interval;
-    unsigned int last_terrain_sound_time;
+    time_t last_terrain_sound_time;
     RGE_Sound *terrain_sound;
     int terrain_playing;
-    unsigned int terrain_sound_start_time;
+    time_t terrain_sound_start_time;
     int anim_pal;
     unsigned int anim_pal_interval;
-    unsigned int last_anim_pal_time;
-    short last_anim_pal_index;
-    short last_anim_pal_index2;
-    short last_anim_pal_index3;
-    TRIBE_Anim_Pal_Table anim_pal_table[7];
-    TRIBE_Anim_Pal_Table anim_pal_table2[16];
-    TRIBE_Anim_Pal_Table anim_pal_table3[12];
-    int mouse_last_x;
-    int mouse_last_y;
+    time_t last_anim_pal_time;
+
+    short last_anim_pal_index,
+          last_anim_pal_index2,
+          last_anim_pal_index3;
+
+    TRIBE_Anim_Pal_Table anim_pal_table[7],
+                         anim_pal_table2[16],
+                         anim_pal_table3[12];
+
+    int mouse_last_x,
+        mouse_last_y;
+
     int save_age;
     int save_culture;
     int save_screen_width;
-    unsigned int game_over_time;
+    time_t game_over_time;
     int showing_game_over;
     int chat_line;
     unsigned int view_interval;
-    unsigned int last_view_time;
+    time_t last_view_time;
     int player_quit;
     int cheat_code_entry;
     char cheat_code_entry_str[52];
@@ -259,7 +268,7 @@ public:
     int mouse_right_up_action(int x, int y, int ctrl_key, int shift_key);
     int pick_through_fog(RGE_Static_Object *obj);
     int pick_weight(RGE_Static_Object *obj, int confidence);
-    int command_make_do(int x, int y, int work_on_tile, __int16 action_type);
+    int command_make_do(int x, int y, int work_on_tile, short action_type);
     int mouse_left_dbl_click_action(int x, int y, int ctrl_key, int shift_key);
 };
 
@@ -267,7 +276,7 @@ class TRIBE_Diamond_Map_View : public RGE_Diamond_Map_View
 {
 public:
 
-    unsigned int last_attack_time;
+    time_t last_attack_time;
 
     int flash_on;
 

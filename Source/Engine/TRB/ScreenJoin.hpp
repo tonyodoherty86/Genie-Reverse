@@ -1,7 +1,46 @@
-void __thiscall TribeJoinScreen::TribeJoinScreen(TribeJoinScreen *this); // idb
-TribeJoinScreen *__thiscall TribeJoinScreen::`vector deleting destructor'(TribeJoinScreen *this, unsigned int __flags);
-// void __thiscall TribeJoinScreen::~TribeJoinScreen(TribeJoinScreen *this); idb
-int __thiscall TribeJoinScreen::handle_idle(TribeJoinScreen *this); // idb
-int __thiscall TribeJoinScreen::handle_user_command(TribeJoinScreen *this, unsigned int wParam, int lParam); // idb
-void __thiscall TribeJoinScreen::fillList(TribeJoinScreen *this); // idb
-int __thiscall TribeJoinScreen::action(TribeJoinScreen *this, TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2); // idb
+
+/**
+ * @file    Engine\TRB\ScreenJoin.hpp
+ * @author  Yvan Burrie
+ * @date    2018/08/06
+ * @version 1.0
+ */
+
+class TribeJoinScreen : public TScreenPanel
+{
+public:
+
+    int startedSession;
+
+    int listFilled;
+
+    TTextPanel *title,
+               *listTitle;
+
+    TListPanel *list;
+
+    TScrollBarPanel *scrollbar;
+
+    TButtonPanel *joinButton,
+                 *createButton,
+                 *cancelButton,
+                 *refreshButton,
+                 *close_button;
+
+    int game_count,
+        waitingToStart;
+
+    time_t joinTime;
+
+    TribeJoinScreen();
+
+    ~TribeJoinScreen();
+
+    int handle_idle();
+
+    int handle_user_command( WPARAM wParam, LPARAM lParam );
+
+    void fillList();
+
+    int action( TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2 );
+};

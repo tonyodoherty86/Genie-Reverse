@@ -1,11 +1,61 @@
-void __thiscall TribeSendMessageDialog::TribeSendMessageDialog(TribeSendMessageDialog *this, TScreenPanel *parentPanel); // idb
-TribeSendMessageDialog *__thiscall TribeSendMessageDialog::`scalar deleting destructor'(TribeSendMessageDialog *this, unsigned int __flags);
-void __thiscall TribeSendMessageDialog::~TribeSendMessageDialog(TribeSendMessageDialog *this); // idb
-int __thiscall TribeSendMessageDialog::action(TribeSendMessageDialog *this, TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2); // idb
-void __thiscall TribeSendMessageDialog::checkButtons(TribeSendMessageDialog *this); // idb
-void __thiscall TribeSendMessageDialog::draw(TribeSendMessageDialog *this); // idb
-void __thiscall TribeSendQuickMessageDialog::TribeSendQuickMessageDialog(TribeSendQuickMessageDialog *this, TScreenPanel *parentPanel, TribeSendQuickMessageDialog::Mode m); // idb
-TribeSendQuickMessageDialog *__thiscall TribeSendQuickMessageDialog::`vector deleting destructor'(TribeSendQuickMessageDialog *this, unsigned int __flags);
-void __thiscall TribeSendQuickMessageDialog::~TribeSendQuickMessageDialog(TribeSendQuickMessageDialog *this); // idb
-int __thiscall TribeSendQuickMessageDialog::action(TribeSendQuickMessageDialog *this, TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2); // idb
-int __thiscall TribeSendQuickMessageDialog::handle_mouse_down(TribeSendQuickMessageDialog *this, int mouse_button_in, int x, int y, int ctrl_key, int shift_key);
+
+/**
+ * @file    Engine\TRB\DialogSendMessage.hpp
+ * @author  Yvan Burrie
+ * @date    2018/08/06
+ * @version 1.0
+ */
+
+class TribeSendMessageDialog : public TDialogPanel
+{
+    TTextPanel *title,
+               *playerName[RGE_PLAYERS_COUNT - 1],
+               *playerCivilization[RGE_PLAYERS_COUNT - 1];
+
+    TButtonPanel *checkButton[RGE_PLAYERS_COUNT - 1];
+    TTextPanel *radioTitle[4];
+    TButtonPanel *radioButton[4];
+    TShape *radioButtonShapes;
+    TEditPanel *chatInput;
+    TTextPanel *chatTitle;
+
+    TButtonPanel *okButton,
+                 *help_button;
+
+    TShape *backgroundPics;
+
+    int commPlayers[RGE_PLAYERS_COUNT - 1];
+
+    TribeSendMessageDialog( TScreenPanel *parentPanel );
+
+    ~TribeSendMessageDialog();
+
+    int action( TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2 );
+
+    void checkButtons();
+
+    void draw();
+};
+
+class TribeSendQuickMessageDialog : public TDialogPanel
+{
+public:
+
+    TEditPanel *chatInput,
+               *chatTitle;
+
+    enum Mode
+    {
+        AsChat    = 0x00,
+        AsComment = 0x01,
+    }
+    modeValue;
+
+    TribeSendQuickMessageDialog( TScreenPanel *parentPanel, Mode m );
+
+    ~TribeSendQuickMessageDialog();
+
+    int action( TPanel *fromPanel, int actionIn, unsigned int a1, unsigned int a2 );
+
+    int handle_mouse_down( int mouse_button_in, int x, int y, int ctrl_key, int shift_key );
+};
