@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TextPanel.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/08/06
  * @version 1.0
  */
 
@@ -15,7 +15,7 @@ public:
         char *text;
         char *text2;
         int id;
-        TTextPanel::TextNode *next_node;
+        TextNode *next_node;
     }
     *list;
 
@@ -27,6 +27,7 @@ public:
     short cur_col;
 
     void *font;
+
     int font_wid,
         font_hgt;
 
@@ -61,11 +62,15 @@ public:
     TScrollBarPanel *scbar_panel;
     int auto_scbar;
     short fixed_len;
+
     int text_wid,
         text_hgt;
+
     TShape *back_pic;
+
     short back_pic_wid,
           back_pic_hgt;
+
     int fill_back;
     char back_color;
     int outline;
@@ -76,12 +81,14 @@ public:
     int scbar_width;
     int scbar_active;
     int bevel_type;
-    char bevel_color1;
-    char bevel_color2;
-    char bevel_color3;
-    char bevel_color4;
-    char bevel_color5;
-    char bevel_color6;
+
+    char bevel_color1,
+         bevel_color2,
+         bevel_color3,
+         bevel_color4,
+         bevel_color5,
+         bevel_color6;
+
     void *clip_rgn2;
     int border_size;
     int spacer_size;
@@ -90,9 +97,60 @@ public:
 
     ~TTextPanel();
 
-    int setup(TDrawArea *render_area_in, TPanel *parent_panel_in, int x_in, int y_in, int wid_in, int hgt_in, void *font_in, int font_wid_in, int font_hgt_in, char *back_pic_in, int fill_back_in, char back_color_in, int outline_in, char outline_color_in, short fixed_len_in, char *text_in);
-    int setup(TDrawArea *render_area_in, TPanel *parent_panel_in, int x_in, int y_in, int wid_in, int hgt_in, void *font_in, int font_wid_in, int font_hgt_in, char *back_pic_in, int fill_back_in, char back_color_in, int outline_in, char outline_color_in, short fixed_len_in, int string_id_in);
-    int setup(TDrawArea *render_area_in, TPanel *parent_panel_in, int x_in, int y_in, int wid_in, int hgt_in, void *font_in, int font_wid_in, int font_hgt_in, char *back_pic_in, int fill_back_in, char back_color_in, int outline_in, char outline_color_in, short fixed_len_in, char **text_in, int num_lines_in);
+    int setup(
+        TDrawArea *render_area_in,
+        TPanel *parent_panel_in,
+        int x_in,
+        int y_in,
+        int wid_in,
+        int hgt_in,
+        void *font_in,
+        int font_wid_in,
+        int font_hgt_in,
+        char *back_pic_in,
+        int fill_back_in,
+        char back_color_in,
+        int outline_in,
+        char outline_color_in,
+        short fixed_len_in,
+        char *text_in );
+
+    int setup(
+        TDrawArea *render_area_in,
+        TPanel *parent_panel_in,
+        int x_in,
+        int y_in,
+        int wid_in,
+        int hgt_in,
+        void *font_in,
+        int font_wid_in,
+        int font_hgt_in,
+        char *back_pic_in,
+        int fill_back_in,
+        char back_color_in,
+        int outline_in,
+        char outline_color_in,
+        short fixed_len_in,
+        int string_id_in );
+
+    int setup(
+        TDrawArea *render_area_in,
+        TPanel *parent_panel_in,
+        int x_in,
+        int y_in,
+        int wid_in,
+        int hgt_in,
+        void *font_in,
+        int font_wid_in,
+        int font_hgt_in,
+        char *back_pic_in,
+        int fill_back_in,
+        char back_color_in,
+        int outline_in,
+        char outline_color_in,
+        short fixed_len_in,
+        char **text_in,
+        int num_lines_in );
 
     void set_rect(int x_in, int y_in, int wid_in, int hgt_in);
     void set_scrollbar(TScrollBarPanel *scbar_panel_in, int auto_scbar_in);
@@ -102,9 +160,9 @@ public:
     void set_text(int string_id_in);
     void set_text(char **text_in, short num_lines_in);
     void set_font(void *font_in, int font_wid_in, int font_hgt_in);
-    void set_alignment(TTextPanel::Alignment vert_align_in, TTextPanel::Alignment horz_align_in);
+    void set_alignment(Alignment vert_align_in, Alignment horz_align_in);
     void set_word_wrap(int word_wrap_in);
-    void set_style(TTextPanel::Style text_style_in);
+    void set_style(Style text_style_in);
     void set_text_color(unsigned int text_color1_in, unsigned int text_color2_in);
     void set_highlight_text_color(unsigned int text_color1_in, unsigned int text_color2_in);
     void set_fill_back(int fill_back_in, char back_color_in);

@@ -1,23 +1,14 @@
 
 /**
- * @file    Engine\PanelDropDown.hpp
+ * @file    Engine\TRB\PanelDropDown.hpp
  * @author  Yvan Burrie
- * @date    2018/02/21
+ * @date    2018/08/06
  * @version 1.0
  */
-
-//typedef TTextPanel::BevelType TDropDownPanel::BevelType;
 
 class TDropDownPanel : public TPanel
 {
 public:
-
-    enum ActionType
-    {
-        ActionItem  = 0x00,
-        ActionList  = 0x01,
-        ActionValue = 0x02,
-    };
 
     TTextPanel *val_panel;
     TButtonPanel *btn_panel;
@@ -59,20 +50,57 @@ public:
 
     ~TDropDownPanel();
 
-    setup(TDrawArea *render_area_in, TPanel *parent_panel_in, void *font_in, int font_wid_in, int font_hgt_in, int fill_back_in, char back_color_in, int outline_in, int outline_color_in, int x_in, int y_in, int wid_in, int hgt_in, short val_len_in, short val_num_in, int btn_wid_in, int btn_hgt_in, char *btn_pic_in, int list_wid_in, int list_hgt_in, char **list_in, int list_num_lines_in, int scbar_wid_in, char *scbar_back_pic_in, char *scbar_up_pic_in, char *scbar_down_pic_in, char *scbar_tab_pic_in, int scbar_arrow_hgt_in, int scbar_tab_hgt_in);
+    void setup(
+        TDrawArea *render_area_in,
+        TPanel *parent_panel_in,
+        void *font_in,
+        int font_wid_in,
+        int font_hgt_in,
+        int fill_back_in,
+        char back_color_in,
+        int outline_in,
+        int outline_color_in,
+        int x_in,
+        int y_in,
+        int wid_in,
+        int hgt_in,
+        short val_len_in,
+        short val_num_in,
+        int btn_wid_in,
+        int btn_hgt_in,
+        char *btn_pic_in,
+        int list_wid_in,
+        int list_hgt_in,
+        char **list_in,
+        int list_num_lines_in,
+        int scbar_wid_in,
+        char *scbar_back_pic_in,
+        char *scbar_up_pic_in,
+        char *scbar_down_pic_in,
+        char *scbar_tab_pic_in,
+        int scbar_arrow_hgt_in,
+        int scbar_tab_hgt_in);
 
     int handle_mouse_down(int mouse_button_in, int x, int y, int ctrl_key, int shift_key);
     int handle_mouse_move(int x, int y, int ctrl_key, int shift_key);
     int handle_mouse_up(int mouse_button_in, int x, int y, int ctrl_key, int shift_key);
     int handle_key_down(int key, int count, int alt_key, int ctrl_key, int shift_key);
+
+    enum ActionType
+    {
+        ActionItem  = 0x00,
+        ActionList  = 0x01,
+        ActionValue = 0x02,
+    };
     int action(TPanel *from_panel, int action_in, unsigned int action_val1, unsigned int action_val2);
+
     void set_rect(int x_in, int y_in, int wid_in, int hgt_in);
     void set_val_text_color(unsigned int text_color1_in, unsigned int text_color2_in);
-    void set_draw_style(TDropDownPanel::DrawStyle draw_style_in);
+    void set_draw_style(DrawStyle draw_style_in);
     void set_draw_val_rect(int draw_val_rect_in);
     void set_bevel_info(int bevel_type_in, int c1, int c2, int c3, int c4, int c5, int c6);
     void set_buttons(TShape *button_shape_in, int btn_frame_in, int scbar_back_frame_in, int scbar_up_frame_in, int scbar_down_frame_in, int scbar_tab_frame_in);
-    void set_mode(TDropDownPanel::DropdownMode mode_in);
+    void set_mode(DropdownMode mode_in);
     int numberLines();
     int currentLineNumber();
     void setCurrentLineNumber(int line_num_in);

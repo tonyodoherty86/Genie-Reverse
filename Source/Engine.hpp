@@ -2,7 +2,7 @@
 /**
  * @file    Engine.hpp
  * @author  Yvan Burrie
- * @date    2018/08/05
+ * @date    2018/08/06
  * @version 1.0
  */
 
@@ -70,10 +70,19 @@
 #include "Engine\ListPanel.hpp"
 #include "Engine\PanelDropDown.hpp"
 #include "Engine\PanelSlider.hpp"
-#include "Engine\PanelEasy.hpp"
-#include "Engine\PanelScreen.hpp"
 #include "Engine\PicturePanel.hpp"
+#include "Engine\PanelScrollText.hpp"
+
+#include "Engine\DropDownButtonPanel.hpp"
+#include "Engine\PanelEasy.hpp"
+#include "Engine\PanelTimeLine.hpp"
+#include "Engine\PanelScreen.hpp"
 #include "Engine\MessagePanel.hpp"
+
+#include "Engine\DialogPanel.hpp"
+#include "Engine\DialogHelp.hpp"
+#include "Engine\DialogList.hpp"
+#include "Engine\DialogMessage.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include RGE components: */

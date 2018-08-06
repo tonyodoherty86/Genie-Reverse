@@ -2,7 +2,7 @@
 /**
  * @file    Engine\Panel.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/08/06
  * @version 1.0
  */
 
@@ -10,8 +10,8 @@ class TPanel
 {
 public:
 
-    TPanel *previousPanelValue;
-    TPanel *previousModalPanelValue;
+    TPanel *previousPanelValue,
+           *previousModalPanelValue;
 
     int pnl_x,
         pnl_y,
@@ -48,19 +48,19 @@ public:
     }
     need_redraw;
 
-    TPanel *curr_child;
-    TPanel *parent_panel;
-    TPanel *left_panel;
-    TPanel *top_panel;
-    TPanel *right_panel;
-    TPanel *bottom_panel;
+    TPanel *curr_child,
+           *parent_panel,
+           *left_panel,
+           *top_panel,
+           *right_panel,
+           *bottom_panel;
 
-    struct PanelNode *node;
-    struct PanelNode *first_child_node;
-    struct PanelNode *last_child_node;
+    struct PanelNode *node,
+                     *first_child_node,
+                     *last_child_node;
 
-    TPanel *tab_prev_panel;
-    TPanel *tab_next_panel;
+    TPanel *tab_prev_panel,
+           *tab_next_panel;
 
     int mouse_captured;
     int active;
@@ -71,23 +71,27 @@ public:
     int handle_mouse_input;
     int just_drawn;
     void *clip_rgn;
+
     RECT render_rect;
+
     int left_border;
     int top_border;
     int right_border;
     int bottom_border;
-    int min_wid;
-    int max_wid;
-    int min_hgt;
-    int max_hgt;
 
-    int mouse_hold_interval;
-    int mouse_move_tolerance;
-    int mouse_down_x;
-    int mouse_down_y;
-    int mouse_down_ctrl;
-    int mouse_down_shift;
-    unsigned int mouse_down_time;
+    int min_wid,
+        max_wid,
+        min_hgt,
+        max_hgt;
+
+    int mouse_hold_interval,
+        mouse_move_tolerance,
+        mouse_down_x,
+        mouse_down_y,
+        mouse_down_ctrl,
+        mouse_down_shift;
+
+    time_t mouse_down_time;
 
     int error_code;
 
@@ -137,7 +141,9 @@ public:
     static int mouse_right_move_action(int x, int y, int ctrl_key, int shift_key);
     static int mouse_right_up_action(int x, int y, int ctrl_key, int shift_key);
     static int mouse_right_dbl_click_action(int x, int y, int ctrl_key, int shift_key);
+
     static int key_down_action(int key, short count, int alt_key, int ctrl_key, int shift_key);
+
     static int char_action(int key, short count);
 };
 
@@ -175,12 +181,12 @@ public:
 
     ~TPanelSystem();
 
-    TPanel *currentPanel();
-    TPanel *previousPanel();
-    TPanel *mouseOwner();
-    TPanel *keyboardOwner();
-    TPanel *modalPanel();
-    TPanel *panel(char *n);
+    TPanel *currentPanel(),
+           *previousPanel(),
+           *mouseOwner(),
+           *keyboardOwner(),
+           *modalPanel(),
+           *panel( char *n );
 
     int numberActivePanels();
     PanelNode *addPanel(TPanel *p, int makeCurrent, int makeModal);
