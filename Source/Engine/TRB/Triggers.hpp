@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TRB\Triggers.hpp
  * @author  Yvan Burrie
- * @date    2018/08/03
+ * @date    2018/08/06
  * @version 1.0
  */
 
@@ -14,11 +14,11 @@ public:
 
     char flash_objectives;
 
-    ConditionControlsHeader *condition_controls;
+    struct TRIBE_Trigger_Condition_Control *condition_controls;
 
-    TRIBE_Trigger_Effect_Controls *effect_controls;
+    struct TRIBE_Trigger_Effect_Controls *effect_controls;
 
-    TRIBE_Trigger **list;
+    class TRIBE_Trigger **list;
 
     int *triggers_order;
 
@@ -32,6 +32,55 @@ public:
         obj_next_order;
 };
 
+struct TRIBE_Trigger_Condition_Data
+{
+    int
+        Quantity,
+        Resource,
+        SetObject,
+        NextObject,
+        ObjectConstant,
+        SourcePlayer,
+        Technology,
+        Timer,
+        Trigger,
+        AreaXFROM,
+        AreaYFROM,
+        AreaXTO,
+        AreaYTO,
+        ObjectGroup,
+        ObjectType,
+        AISignal;
+};
+
+struct TRIBE_Trigger_Effect_Data
+{
+    int
+        AIScriptGoal,
+        Quantity,
+        Resource,
+        Diplomacy,
+        SetObjects,
+        NextObject,
+        ObjectConstant,
+        SourcePlayer,
+        TargetPlayer,
+        Technology,
+        StringTableID,
+        SoundResourceID,
+        Timer,
+        Trigger,
+        LocationX,
+        LocationY,
+        AreaXFROM,
+        AreaYFROM,
+        AreaXTO,
+        AreaYTO,
+        ObjectGroup,
+        ObjectType,
+        Number;
+};
+
 class TRIBE_Trigger
 {
 public:
@@ -43,7 +92,7 @@ public:
         Running  = 2,
         Expired  = 3,
     }
-    int state;
+    state;
 
     char loop;
 
@@ -97,42 +146,31 @@ public:
     char *sound;
 };
 
+struct TRIBE_Trigger_Condition_Check
+{
+    char
+        Quantity,
+        Resource,
+        SetObject,
+        NextObject,
+        ObjectConstant,
+        SourcePlayer,
+        Technology,
+        Timer,
+        Trigger,
+        AreaXFROM,
+        AreaYFROM,
+        AreaXTO,
+        AreaYTO,
+        ObjectGroup,
+        ObjectType,
+        AISignal;
+};
+
 struct TRIBE_Trigger_Effect_Check
 {
     char
-         AIScriptGoal,
-         Quantity,
-         Resource,
-         Diplomacy,
-         SetObjects,
-         NextObject,
-         ObjectConstant,
-         SourcePlayer,
-         TargetPlayer,
-         Technology,
-         StringTableID,
-         SoundResourceID,
-         Timer,
-         Trigger,
-         LocationX,
-         LocationY,
-         AreaXFROM,
-         AreaYFROM,
-         AreaXTO,
-         AreaYTO,
-         ObjectGroup,
-         ObjectType,
-         Number;
-};
-
-struct TRIBE_Trigger_Effect_Controls
-{
-    TRIBE_Trigger_Effect_Check *type[30];
-};
-
-struct TRIBE_Trigger_Effect_Data
-{
-    int AIScriptGoal,
+        AIScriptGoal,
         Quantity,
         Resource,
         Diplomacy,
@@ -157,9 +195,14 @@ struct TRIBE_Trigger_Effect_Data
         Number;
 };
 
+struct TRIBE_Trigger_Effect_Controls
+{
+    TRIBE_Trigger_Effect_Check *type[30];
+};
+
 struct TRIBE_Trigger_Condition
 {
-    ConditionControlsHeader *ConditionControls;
+    TRIBE_Trigger_Condition_Control *ConditionControls;
 
     int type;
 
@@ -168,47 +211,7 @@ struct TRIBE_Trigger_Condition
     TRIBE_Trigger_Condition_Data data;
 };
 
-struct ConditionControlsData
+struct TRIBE_Trigger_Condition_Control
 {
-    char Quantity,
-         Resource,
-         SetObject,
-         NextObject,
-         ObjectConstant,
-         SourcePlayer,
-         Technology,
-         Timer,
-         Trigger,
-         AreaXFROM,
-         AreaYFROM,
-         AreaXTO,
-         AreaYTO,
-         ObjectGroup,
-         ObjectType,
-         AISignal;
-};
-
-struct ConditionControlsHeader
-{
-    ConditionControlsData *type[20];
-};
-
-struct TRIBE_Trigger_Condition_Data
-{
-    int Quantity,
-        Resource,
-        SetObject,
-        NextObject,
-        ObjectConstant,
-        SourcePlayer,
-        Technology,
-        Timer,
-        Trigger,
-        AreaXFROM,
-        AreaYFROM,
-        AreaXTO,
-        AreaYTO,
-        ObjectGroup,
-        ObjectType,
-        AISignal;
+    TRIBE_Trigger_Condition_Check *type[20];
 };
