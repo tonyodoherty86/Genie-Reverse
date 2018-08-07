@@ -6,18 +6,18 @@
  * @version 1.0
  */
 
-struct TRIBE_Port_Info /* $5E07C38AD41064E6D66D4BD4C60F0823 */
+struct TRIBE_Port_Info
 {
     short player_id;
 
-    class TRIBE_Player *player;
+    TRIBE_Player *player;
 
-    class TRIBE_Building_Object *port;
+    TRIBE_Building_Object *port;
 
     short money;
 };
 
-struct TRIBE_Anim_Pal_Table /* $046E19B52833A70008988A4EC31BC2A0 */
+struct TRIBE_Anim_Pal_Table
 {
     char red, green, blue;
 };
@@ -41,20 +41,21 @@ public:
           cancel_frame,
           unselect_frame;
 
-    class TRIBE_Main_View *main_view;
-    class TRIBE_Diamond_Map_View *map_view;
+    TRIBE_Main_View *main_view;
+    TRIBE_Diamond_Map_View *map_view;
 
-    class TRIBE_Panel_Inven *inven_panel;
-    class TRIBE_Panel_Object *object_panel;
-    class TRIBE_Panel_Button *button_panel[17];
+    TRIBE_Panel_Inven *inven_panel;
+    TRIBE_Panel_Object *object_panel;
+    TRIBE_Panel_Button *button_panel[17];
 
     TMessagePanel *text_line_panel;
+
     TTextPanel *quit_message_panel;
 
-    class TRIBE_Panel_Time *time_panel,
-                           *countdown_clock[10];
+    TRIBE_Panel_Time *time_panel,
+                     *countdown_clock[10];
 
-    class TRIBE_Panel_Pop *pop_panel;
+    TRIBE_Panel_Pop *pop_panel;
 
     TMessagePanel *message_panel,
                   *message_panel2,
@@ -82,7 +83,9 @@ public:
     time_t last_update_time;
     unsigned int map_redraw_interval;
     time_t last_map_redraw_time;
+
     RGE_Static_Object *game_obj;
+
     short sel_count;
 
     Item_Avail *tech_list,
@@ -90,6 +93,7 @@ public:
                *bldg_list;
 
     Trade_Avail *trade_list;
+
     short item_cnt;
     short start_item;
     short last_item;
@@ -178,18 +182,19 @@ public:
     void disable_unused_buttons();
     char *calc_text_msg(char *msg_str, Item_Avail *item, int button_action_id, int message_string_id);
     short calc_button_loc(char button_loc);
-    void set_button(TShape *buttons,
-                    short button,
-                    short pic_index,
-                    int id,
-                    int id2,
-                    int help_string_id,
-                    int help_page_id,
-                    int hotkey,
-                    char *color_table,
-                    char *text2,
-                    char *text_msg,
-                    int make_disabled);
+    void set_button(
+        TShape *buttons,
+        short button,
+        short pic_index,
+        int id,
+        int id2,
+        int help_string_id,
+        int help_page_id,
+        int hotkey,
+        char *color_table,
+        char *text2,
+        char *text_msg,
+        int make_disabled);
     void reset_clocks();
     void reset_score_display();
     void draw();
