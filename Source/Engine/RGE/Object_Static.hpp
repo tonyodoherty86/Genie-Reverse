@@ -1,8 +1,8 @@
 
 /**
- * @file    Engine\RGE\StaticObject.hpp
+ * @file    Engine\RGE\Object_Static.hpp
  * @author  Yvan Burrie
- * @date    2018/07/07
+ * @date    2018/08/07
  * @version 1.0
  */
 
@@ -61,7 +61,7 @@ public:
     /**
      * Offset: 24.
      */
-    class RGE_Active_Sprite_List *sprite_list;
+    RGE_Active_Sprite_List *sprite_list;
 
     /**
      * Offset: 28.

@@ -2,14 +2,13 @@
 /**
  * @file    Engine\RGE\MainView.hpp
  * @author  Yvan Burrie
- * @date    2018/06/28
+ * @date    2018/08/07
  * @version 1.0
  */
 
 struct RGE_Pick_Info
 {
-    float x,
-          y;
+    float x, y;
 
     short scr_x,
           scr_y;
