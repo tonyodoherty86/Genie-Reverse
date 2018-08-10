@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TRB\PanelScreenGame.hpp
  * @author  Yvan Burrie
- * @date    2018/06/28
+ * @date    2018/08/10
  * @version 1.0
  */
 
@@ -41,8 +41,8 @@ public:
           cancel_frame,
           unselect_frame;
 
-    TRIBE_Main_View *main_view;
-    TRIBE_Diamond_Map_View *map_view;
+    class TRIBE_Main_View *main_view;
+    class TRIBE_Diamond_Map_View *map_view;
 
     TRIBE_Panel_Inven *inven_panel;
     TRIBE_Panel_Object *object_panel;
@@ -259,39 +259,3 @@ public:
 };
 
 int scr_game_score_compare(void *arg1, void *arg2);
-
-class TRIBE_Main_View : public RGE_Main_View
-{
-public:
-
-    void draw_multi_object_outline();
-    int draw_wall_outline(int col, int row, TRIBE_Master_Building_Object *master_bldg, int facet);
-    int command_place_object(int x, int y, int reset_mode);
-    int command_place_multi_object(int x1, int y1, int x2, int y2, int reset_mode);
-    void place_line_of_walls(TRIBE_Player *player, TRIBE_Master_Building_Object *master_obj, int x1, int y1, int x2, int y2);
-    int mouse_left_up_action(int x, int y, int ctrl_key, int shift_key);
-    int mouse_right_up_action(int x, int y, int ctrl_key, int shift_key);
-    int pick_through_fog(RGE_Static_Object *obj);
-    int pick_weight(RGE_Static_Object *obj, int confidence);
-    int command_make_do(int x, int y, int work_on_tile, short action_type);
-    int mouse_left_dbl_click_action(int x, int y, int ctrl_key, int shift_key);
-};
-
-class TRIBE_Diamond_Map_View : public RGE_Diamond_Map_View
-{
-public:
-
-    time_t last_attack_time;
-
-    int flash_on;
-
-    TRIBE_Diamond_Map_View();
-
-    ~TRIBE_Diamond_Map_View();
-
-    void set_redraw(TPanel::RedrawMode redraw_mode);
-
-    void draw_objects();
-
-    void draw_object(short col, short row, char color, short size, RGE_Static_Object *game_obj);
-};
