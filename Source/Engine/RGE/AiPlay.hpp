@@ -108,6 +108,8 @@ public:
     XYZ *operator-(XYZ *result);
 };
 
+#define RGE_AI_PLAY_STATUS_ORIGINAL_HIT_POINTS_COUNT 5
+
 class AIPlayStatus
 {
 public:
@@ -124,7 +126,7 @@ public:
     int targetValue;
 
     XYZ originalPointValue;
-    int originalHitPointsValue[5];
+    int originalHitPointsValue[RGE_AI_PLAY_STATUS_ORIGINAL_HIT_POINTS_COUNT];
 
     char currentPhaseValue;
     int savedAttackerValue;
