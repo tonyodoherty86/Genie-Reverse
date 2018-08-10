@@ -13,7 +13,7 @@ class RGE_Dialog_List : public TListDialog
     short list_size;
     short list_line;
 
-    rdlg_list_info *list_info;
+    struct rdlg_list_info *list_info;
 
     char **list_text;
 
@@ -42,3 +42,10 @@ class RGE_Dialog_List : public TListDialog
 };
 
 int rdlg_list_compare(void *arg1, void *arg2);
+
+struct rdlg_list_info
+{
+    char text[100];
+
+    short id;
+};

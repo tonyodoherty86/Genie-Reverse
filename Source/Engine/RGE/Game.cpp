@@ -61,6 +61,49 @@ unsigned __int8 do_color_log;
 char msg_str[32];
 unsigned int lastResendTime;
 
+
+
+
+// 57F9E4: using guessed type __int32 fixed_update_time;
+// 57F9E8: using guessed type int debug_timeGetTime_interval;
+// 57F9EC: using guessed type int useComputerPlayers;
+// 57F9F0: using guessed type int allowAIToCheat;
+// 57F9F4: using guessed type int numberPathingIterations;
+// 57F9F8: using guessed type int pathingCapValue;
+// 57F9FC: using guessed type int specificAIPlayerToLog;
+// 57FA00: using guessed type int logDebugID;
+// 57FA04: using guessed type int chatCheatCodes;
+// 58454C: using guessed type int DDSys_CanColorFill;
+// 584550: using guessed type int DDlogAutoFlush;
+// 592A5C: using guessed type int safe_draw_log;
+// 62C498: using guessed type int do_draw_log;
+// 62C4C8: using guessed type int debugActions;
+// 62C4D0: using guessed type int do_debug_random;
+// 62C4E0: using guessed type int do_fixed_update;
+// 62C4E4: using guessed type int do_debug_timeGetTime;
+// 62C4F4: using guessed type int do_run_log;
+// 62C50C: using guessed type int startLoggingAI;
+// 62C510: using guessed type int useInfluencePlacement;
+// 62C514: using guessed type int all_grassland_on;
+// 62C518: using guessed type int useNewPathing;
+// 62C51C: using guessed type int all_cp;
+// 62C520: using guessed type int force_cd;
+// 62C524: using guessed type int logStatusOn;
+// 62C528: using guessed type int logUpdateChanges;
+// 62C52C: using guessed type int do_fps_log;
+// 62C584: using guessed type unsigned __int8 do_color_log;
+// 62CF08: using guessed type int resend_adj1;
+// 62CF0C: using guessed type int resend_adj2;
+// 62E640: using guessed type int Sys_DDLOG_Enable;
+// 62E644: using guessed type int Sys_DDLOG_ErrorOn;
+// 62E648: using guessed type int debug_log_lock;
+// 86BBFC: using guessed type unsigned __int8 shape_file_first;
+// 86BC00: using guessed type unsigned __int8 sound_file_first;
+
+
+
+
+
 char message_in[4] = { '\0', '\0', '\0', '\0' };
 
 RGE_Base_Game *rge_base_game;
@@ -601,76 +644,6 @@ RGE_Base_Game::~RGE_Base_Game()
     }
 }
 
-int RGE_Base_Game::processCheatCode(int a2, char *a3)
-{
-    return 0;
-}
-
-int RGE_Base_Game::handle_message(MSG *msg)
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_update()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_mouse_move(int x, int y, int left_btn, int right_btn, int ctrl_key, int shift_key)
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_key_down(unsigned int key, int repeat_count, int ctrl_key, int alt_key, int shift_key)
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_user_command(unsigned int val1, unsigned int val2)
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_command(unsigned int val1, unsigned int val2)
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_music_done()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_activate()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_deactivate()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_init_menu()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_exit_menu()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_size()
-{
-    return 1;
-}
-
-int RGE_Base_Game::action_close()
-{
-    return 1;
-}
-
 void RGE_Base_Game::reset_timings()
 {
     this->frame_count             = 0;
@@ -693,7 +666,7 @@ void RGE_Base_Game::reset_timings()
     }
 }
 
-void RGE_Base_Game::add_to_timing(int id, unsigned int time)
+void RGE_Base_Game::add_to_timing( int id, time_t time )
 {
     char *v3; // eax@1
     char *v4; // eax@1
@@ -716,52 +689,52 @@ void RGE_Base_Game::increment_view_update_count()
     this->view_update_count++;
 }
 
-void RGE_Base_Game::set_last_single_time(int id, unsigned int time)
+void RGE_Base_Game::set_last_single_time( int id, time_t time )
 {
     this->timings[id].last_single_time = time;
 }
 
-unsigned int RGE_Base_Game::get_last_time(int id)
+time_t RGE_Base_Game::get_last_time( int id )
 {
     return this->timings[id].last_time;
 }
 
-unsigned int RGE_Base_Game::get_last_single_time(int id)
+time_t RGE_Base_Game::get_last_single_time( int id )
 {
     return this->timings[id].last_single_time;
 }
 
-unsigned int RGE_Base_Game::get_accum_time(int id)
+time_t RGE_Base_Game::get_accum_time(int id)
 {
     return this->timings[id].accum_time;
 }
 
-unsigned int RGE_Base_Game::get_max_time(int id)
+time_t RGE_Base_Game::get_max_time( int id )
 {
     return this->timings[id].max_time;
 }
 
-unsigned int RGE_Base_Game::get_last_max_time(int id)
+time_t RGE_Base_Game::get_last_max_time( int id )
 {
     return this->timings[id].last_max_time;
 }
 
-unsigned int RGE_Base_Game::get_last_world_update_count()
+time_t RGE_Base_Game::get_last_world_update_count()
 {
     return this->last_world_update_count;
 }
 
-unsigned int RGE_Base_Game::get_last_view_update_count()
+time_t RGE_Base_Game::get_last_view_update_count()
 {
     return this->last_view_update_count;
 }
 
-unsigned int RGE_Base_Game::get_world_update_count()
+time_t RGE_Base_Game::get_world_update_count()
 {
     return this->world_update_count;
 }
 
-unsigned int RGE_Base_Game::get_view_update_count()
+time_t RGE_Base_Game::get_view_update_count()
 {
     return this->view_update_count;
 }
@@ -771,13 +744,13 @@ int RGE_Base_Game::get_error_code()
     return this->error_code;
 }
 
-char *RGE_Base_Game::get_string(int text_id)
+char *RGE_Base_Game::get_string( int text_id )
 {
     (*(void (__stdcall **)(int, char *, signed int))&this->vfptr->gap8[24])(text_id, temp_getstring, 512);
     return temp_getstring;
 }
 
-char *RGE_Base_Game::get_string(int string_id, char *str, int max_len)
+char *RGE_Base_Game::get_string( int string_id, char *str, int max_len )
 {
     if( !LoadStringA(StringTable, string_id, str, max_len) )
         *str = 0;
@@ -785,81 +758,87 @@ char *RGE_Base_Game::get_string(int string_id, char *str, int max_len)
     return str;
 }
 
-char *RGE_Base_Game::get_string(int string_type, int id, char *str, int max_len)
+char *RGE_Base_Game::get_string( int string_type, int id, char *str, int max_len )
 {
     return (char *)(*(int (__stdcall **)(int, int, _DWORD, char *, int))&this->vfptr->gap28[0])(
-                                     string_type,
-                                     id,
-                                     0,
-                                     str,
-                                     max_len);
+        string_type,
+        id,
+        0,
+        str,
+        max_len);
 }
 
-//----- (0041CA10) --------------------------------------------------------
-char *RGE_Base_Game::get_string2(int string_type, int id, int id2, char *str, int max_len)
+char *RGE_Base_Game::get_string2( int string_type, int id, int id2, char *str, int max_len )
 {
-    char *result; // eax@1
-
-    result = str;
+    char *result = str;
     *str = 0;
-    if( string_type == 1 )
-    {
-        switch( id )
-        {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 14:
-            case 15:
-                result = (char *)(*(int (__stdcall **)(signed int, char *, int))&this->vfptr->gap8[24])(2002, str, max_len);
-                break;
-            case 7:
-            case 8:
-            case 11:
-            case 13:
-            case 17:
-                result = (char *)(*(int (__stdcall **)(signed int, char *, int))&this->vfptr->gap8[24])(2003, str, max_len);
-                break;
-            case 19:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2011, str, max_len);
-                break;
-            case 9:
-            case 16:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2005, str, max_len);
-                break;
-            case 10:
-            case 12:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2004, str, max_len);
-                break;
-            case 18:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2012, str, max_len);
-                break;
-            case 20:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2013, str, max_len);
-                break;
-            case 21:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2014, str, max_len);
-                break;
-            case 22:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2015, str, max_len);
-                break;
-            case 23:
-                result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2016, str, max_len);
-                break;
-            default:
-                goto LABEL_15;
+
+    switch( string_type ){
+
+    case 1:
+
+        switch( id ){
+
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 14:
+        case 15:
+            result = (char *)(*(int (__stdcall **)(signed int, char *, int))&this->vfptr->gap8[24])(2002, str, max_len);
+            break;
+
+        case 7:
+        case 8:
+        case 11:
+        case 13:
+        case 17:
+            result = (char *)(*(int (__stdcall **)(signed int, char *, int))&this->vfptr->gap8[24])(2003, str, max_len);
+            break;
+        case 19:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2011, str, max_len);
+            break;
+        case 9:
+        case 16:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2005, str, max_len);
+            break;
+        case 10:
+        case 12:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2004, str, max_len);
+            break;
+        case 18:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2012, str, max_len);
+            break;
+
+        case 20:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2013, str, max_len);
+            break;
+
+        case 21:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2014, str, max_len);
+            break;
+
+        case 22:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2015, str, max_len);
+            break;
+
+        case 23:
+            result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(2016, str, max_len);
+            break;
+
+        default:
+            goto LABEL_15;
         }
-    }
-    else if( string_type == 2 )
-    {
+        break;
+
+    case 2:
         result = (char *)(*(int (__stdcall **)(int, char *, int))&this->vfptr->gap8[24])(id, str, max_len);
-    }
-    else
-    {
-LABEL_15:
+        break;
+
+    default:
+        LABEL_15:
         str[max_len - 1] = 0;
     }
     return result;
@@ -1085,68 +1064,94 @@ int RGE_Base_Game::setup_cmd_options()
     unsigned __int8 *v28; // eax@269
     unsigned __int8 *v29; // esi@272
 
-    char cmd_line[256];
-    char temp_str[256];
+    char cmd_line[256],
+         temp_str[256];
 
     strncpy(cmd_line, this->prog_info->cmd_line, 0xFFu);
     cmd_line[255] = 0;
     CharUpperA(cmd_line);
 
-    if( strstr(cmd_line, aNostartup) ||
-        strstr(cmd_line, aNoStartup) ||
-        strstr(cmd_line, aNo_startup) )
+    if( strstr(cmd_line, "NOSTARTUP") ||
+        strstr(cmd_line, "NO STARTUP") ||
+        strstr(cmd_line, "NO_STARTUP") ){
+
         this->prog_info->skip_startup = 1;
+    }
 
     if( strstr(cmd_line, aSystemmemory) ||
         strstr(cmd_line, aSystemMemory) ||
-        strstr(cmd_line, aSystem_memory) )
-        this->prog_info->use_sys_mem = 1;
+        strstr(cmd_line, aSystem_memory) ){
 
-    if( strstr(cmd_line, aMidimusic) ||
-        strstr(cmd_line, aMidiMusic) ||
-        strstr(cmd_line, aMidi_music) )
-    {
-        this->prog_info->use_music = 1;
-        this->prog_info->use_cd_audio = 0;
-        this->prog_info->use_ima = 0;
-        this->prog_info->use_midi = 1;
-        this->prog_info->use_wave_music = 0;
+        this->prog_info->use_sys_mem = true;
     }
-    if( strstr(cmd_line, aMsync) )
-        this->mouse_blit_sync = 1;
 
-    DDSys_CanColorFill = strstr(cmd_line, aMfill) == 0;
+    if( strstr(cmd_line, "MIDIMUSIC") ||
+        strstr(cmd_line, "MIDI MUSIC") ||
+        strstr(cmd_line, "MIDI_MUSIC") ){
 
-    if( strstr(cmd_line, aNosound) ||
-        strstr(cmd_line, aNoSound) ||
-        strstr(cmd_line, aNo_sound) )
-        this->prog_info->use_sound = 0;
+        this->prog_info->use_music      = true;
+        this->prog_info->use_cd_audio   = false;
+        this->prog_info->use_ima        = false;
+        this->prog_info->use_midi       = true;
+        this->prog_info->use_wave_music = false;
+    }
 
-    if( strstr(cmd_line, a640) )
-    {
+    if( strstr(cmd_line, "MSYNC") ){
+
+        this->mouse_blit_sync = true;
+    }
+
+    if( strstr(cmd_line, "MFILL") ){
+
+        DDSys_CanColorFill = false;
+    }else{
+        DDSys_CanColorFill = true;
+    }
+
+    if( strstr(cmd_line, "NOSOUND") ||
+        strstr(cmd_line, "NO SOUND") ||
+        strstr(cmd_line, "NO_SOUND") ){
+
+        this->prog_info->use_sound = false;
+    }
+
+    if( strstr(cmd_line, "640") ){
+
         this->prog_info->main_wid = 640;
         this->prog_info->main_hgt = 480;
     }
-    if( strstr(cmd_line, a800) )
-    {
+    if( strstr(cmd_line, "800") ){
+
         this->prog_info->main_wid = 800;
         this->prog_info->main_hgt = 600;
     }
-    if( strstr(cmd_line, a1024) )
-    {
+    if( strstr(cmd_line, "1024") ){
+
         this->prog_info->main_wid = 1024;
         this->prog_info->main_hgt = 768;
     }
-    if( strstr(cmd_line, aAllcp) )
-    {
-        all_cp = 1;
-        do_run_log = 1;
+    if( strstr(cmd_line, "1280") ){
+
+        this->prog_info->main_wid = 1280;
+        this->prog_info->main_hgt = 720;
+    }
+    if( strstr(cmd_line, "1366") ){
+
+        this->prog_info->main_wid = 1366;
+        this->prog_info->main_hgt = 768;
+    }
+
+    if( strstr(cmd_line, "ALLCP") ){
+
+        all_cp = true;
+        do_run_log = true;
         this->comm_speed = 0;
-        do_debug_timeGetTime = 1;
+        do_debug_timeGetTime = true;
         debug_timeGetTime_interval = 10;
-        do_fixed_update = 1;
+        do_fixed_update = true;
         fixed_update_time = 20;
     }
+
     v2 = _mbsstr((const unsigned __int8 *)cmd_line, aResend1);
     if( v2 )
     {
@@ -1175,41 +1180,51 @@ int RGE_Base_Game::setup_cmd_options()
         }
         resend_adj2 = atol(temp_str);
     }
-    if( strstr(cmd_line, aNomouse) ||
-        strstr(cmd_line, aNoMouse) )
-        this->custom_mouse = 0;
 
-    if( strstr(cmd_line, aWing) )
-    {
-        this->prog_info->full_screen = 0;
-        this->prog_info->use_dir_draw = 0;
-    }
-    if( strstr(cmd_line, aDirectdraw) ||
-        strstr(cmd_line, aDirectDraw) )
-        this->prog_info->use_dir_draw = 1;
+    if( strstr(cmd_line, "NOMOUSE") ||
+        strstr(cmd_line, "NO MOUSE") ){
 
-    if( strstr(cmd_line, aFullscreen) ||
-        strstr(cmd_line, aFullScreen) ||
-        strstr(cmd_line, aFull_screen) )
-    {
-        this->prog_info->full_screen = 1;
-        this->prog_info->use_dir_draw = 1;
+        this->custom_mouse = false;
     }
-    if( strstr(cmd_line, aVideomemory) ||
-        strstr(cmd_line, aVideoMemory) ||
-        strstr(cmd_line, aVideo_memory) )
-        this->prog_info->use_sys_mem = 0;
 
-    if( strstr(cmd_line, aStreammusic) ||
-        strstr(cmd_line, aStreamMusic) ||
-        strstr(cmd_line, aStream_music) )
-    {
-        this->prog_info->use_music = 1;
-        this->prog_info->use_cd_audio = 0;
-        this->prog_info->use_ima = 0;
-        this->prog_info->use_midi = 0;
-        this->prog_info->use_wave_music = 1;
+    if( strstr(cmd_line, "WING") ){
+
+        this->prog_info->full_screen  = false;
+        this->prog_info->use_dir_draw = false;
     }
+
+    if( strstr(cmd_line, "DIRECTDRAW") ||
+        strstr(cmd_line, "DIRECT DRAW") ){
+
+        this->prog_info->use_dir_draw = true;
+    }
+
+    if( strstr(cmd_line, "FULLSCREEN") ||
+        strstr(cmd_line, "FULL SCREEN") ||
+        strstr(cmd_line, "FULL_SCREEN") ){
+
+        this->prog_info->full_screen  = true;
+        this->prog_info->use_dir_draw = true;
+    }
+
+    if( strstr(cmd_line, "VIDEOMEMORY") ||
+        strstr(cmd_line, "VIDEO MEMORY") ||
+        strstr(cmd_line, "VIDEO_MEMORY") ){
+
+        this->prog_info->use_sys_mem = false;
+    }
+
+    if( strstr(cmd_line, "STREAMMUSIC") ||
+        strstr(cmd_line, "STREAM MUSIC") ||
+        strstr(cmd_line, "STREAM_MUSIC") ){
+
+        this->prog_info->use_music      = true;
+        this->prog_info->use_cd_audio   = false;
+        this->prog_info->use_ima        = false;
+        this->prog_info->use_midi       = false;
+        this->prog_info->use_wave_music = true;
+    }
+
     if( strstr(cmd_line, aImamusic) ||
         strstr(cmd_line, aImaMusic) ||
         strstr(cmd_line, aIma_music) )
@@ -1283,29 +1298,37 @@ int RGE_Base_Game::setup_cmd_options()
         strstr(cmd_line, aCustom_mouse) )
         this->custom_mouse = 1;
 
-    if( strstr(cmd_line, aNocp) )
-        useComputerPlayers = 0;
+    if( strstr(cmd_line, aNocp) ){
 
-    if( strstr(cmd_line, aLogai) )
-        startLoggingAI = 1;
+        useComputerPlayers = false;
+    }
 
-    if( strstr(cmd_line, aNologstatus) )
-        logStatusOn = 0;
+    if( strstr(cmd_line, aLogai) ){
 
-    if( strstr(cmd_line, aDologstatus) )
-        logStatusOn = 1;
+        startLoggingAI = true;
+    }
+
+    if( strstr(cmd_line, aNologstatus) ){
+
+        logStatusOn = false;
+    }
+
+    if( strstr(cmd_line, aDologstatus) ){
+
+        logStatusOn = true;
+    }
 
     if( strstr(cmd_line, aNoaicheat) )
-        allowAIToCheat = 0;
+        allowAIToCheat = false;
 
     if( strstr(cmd_line, aNochatcheatcod) )
-        chatCheatCodes = 0;
+        chatCheatCodes = false;
 
     if( strstr(cmd_line, aLogupdatechang) )
-        logUpdateChanges = 1;
+        logUpdateChanges = true;
 
     if( strstr(cmd_line, aUip) )
-        useInfluencePlacement = 1;
+        useInfluencePlacement = true;
 
     if( strstr(cmd_line, aAllgrass) )
         all_grassland_on = 1;
@@ -1606,41 +1629,6 @@ int RGE_Base_Game::setup_cmd_options()
 
     return true;
 }
-// 57F9E4: using guessed type __int32 fixed_update_time;
-// 57F9E8: using guessed type int debug_timeGetTime_interval;
-// 57F9EC: using guessed type int useComputerPlayers;
-// 57F9F0: using guessed type int allowAIToCheat;
-// 57F9F4: using guessed type int numberPathingIterations;
-// 57F9F8: using guessed type int pathingCapValue;
-// 57F9FC: using guessed type int specificAIPlayerToLog;
-// 57FA00: using guessed type int logDebugID;
-// 57FA04: using guessed type int chatCheatCodes;
-// 58454C: using guessed type int DDSys_CanColorFill;
-// 584550: using guessed type int DDlogAutoFlush;
-// 592A5C: using guessed type int safe_draw_log;
-// 62C498: using guessed type int do_draw_log;
-// 62C4C8: using guessed type int debugActions;
-// 62C4D0: using guessed type int do_debug_random;
-// 62C4E0: using guessed type int do_fixed_update;
-// 62C4E4: using guessed type int do_debug_timeGetTime;
-// 62C4F4: using guessed type int do_run_log;
-// 62C50C: using guessed type int startLoggingAI;
-// 62C510: using guessed type int useInfluencePlacement;
-// 62C514: using guessed type int all_grassland_on;
-// 62C518: using guessed type int useNewPathing;
-// 62C51C: using guessed type int all_cp;
-// 62C520: using guessed type int force_cd;
-// 62C524: using guessed type int logStatusOn;
-// 62C528: using guessed type int logUpdateChanges;
-// 62C52C: using guessed type int do_fps_log;
-// 62C584: using guessed type unsigned __int8 do_color_log;
-// 62CF08: using guessed type int resend_adj1;
-// 62CF0C: using guessed type int resend_adj2;
-// 62E640: using guessed type int Sys_DDLOG_Enable;
-// 62E644: using guessed type int Sys_DDLOG_ErrorOn;
-// 62E648: using guessed type int debug_log_lock;
-// 86BBFC: using guessed type unsigned __int8 shape_file_first;
-// 86BC00: using guessed type unsigned __int8 sound_file_first;
 
 bool RGE_Base_Game::setup_class()
 {
@@ -1650,7 +1638,7 @@ bool RGE_Base_Game::setup_class()
 
     WNDCLASSA cls;
 
-    cls.hCursor       = 0;
+    cls.hCursor       = NULL;
     cls.lpszMenuName  = message_in;
     cls.hIcon         = LoadIcon(this->prog_info->instance, this->prog_info->icon_name);
     cls.lpszClassName = (char *)this->prog_info;
@@ -4100,27 +4088,25 @@ void RGE_Base_Game::calc_timings()
     {
         v1->fps = 1000;
     }
-    if( v6 && (v12 = v1->view_update_count) != 0 && (v7 = v6 % v12, (v13 = v6 / v12) != 0) )
-    {
+    if( v6 && (v12 = v1->view_update_count) != 0 && (v7 = v6 % v12, (v13 = v6 / v12) != 0) ){
         v7 = 0x3E8 % v13;
         v1->view_update_fps = 0x3E8 / v13;
+    }else{
+        this->view_update_fps = 0;
     }
-    else
-    {
-        v1->view_update_fps = 0;
-    }
-    if( v6 && (v14 = v1->world_update_count) != 0 && (v7 = v6 % v14, (v15 = v6 / v14) != 0) )
-    {
+
+    if( v6 && (v14 = this->world_update_count) != 0 && (v7 = v6 % this->world_update_count, (v15 = v6 / this->world_update_count) != 0) ){
         v7 = 0x3E8 % v15;
-        v1->world_update_fps = 0x3E8 / v15;
+        this->world_update_fps = 0x3E8 / v15;
+    }else{
+        this->world_update_fps = 0;
     }
-    else
-    {
-        v1->world_update_fps = 0;
-    }
-    ((void (__fastcall *)(RGE_Base_Game *, unsigned int))v1->vfptr->calc_timing_text)(v1, v7);
-    if( do_fps_log && v1->prog_mode == 4 )
-    {
+
+    this->calc_timing_text(v7);
+
+    if( do_fps_log &&
+        this->prog_mode == 4 ){
+
         v16 = v1->world;
         v17 = 0;
         v18 = 0;
@@ -4260,22 +4246,19 @@ void RGE_Base_Game::show_ai()
 
 void RGE_Base_Game::send_game_options()
 {
-    if( this->comm_handler )
+    if( this->comm_handler ){
         this->comm_handler->SetMyGameOptions((char *)&this->rge_game_options, 0xA8u);
+    }
 }
 
 void RGE_Base_Game::receive_game_options()
 {
-    unsigned int size;
-
-    if( this->comm_handler )
-    {
-        size = 0;
-
-        if( char *option = this->comm_handler->GetMyGameOptions(&size); )
-        {
-            if( size == 168 )
+    if( this->comm_handler ){
+        size_t size = 0;
+        if( char *option = this->comm_handler->GetMyGameOptions(&size); ){
+            if( size == 168 ){
                 this->set_game_options((RGE_Base_Game::RGE_Game_Options *)option);
+            }
         }
     }
 }
@@ -4334,101 +4317,6 @@ void RGE_Base_Game::get_game_options(RGE_Base_Game::RGE_Game_Options *options)
         options->playerTeamValue[i]         = this->playerTeam(i);
     }
     while( ++i < RGE_PLAYERS_COUNT );
-}
-
-double RGE_Base_Game::version()
-{
-    return this->rge_game_options.versionValue;
-}
-
-int RGE_Base_Game::scenarioGame()
-{
-    return this->rge_game_options.scenarioGameValue;
-}
-
-bool RGE_Base_Game::randomGame()
-{
-    return this->rge_game_options.scenarioGameValue == 0;
-}
-
-int RGE_Base_Game::campaignGame()
-{
-    return this->campaignGameValue;
-}
-
-int RGE_Base_Game::savedGame()
-{
-    return this->savedGameValue;
-}
-
-char *RGE_Base_Game::scenarioName()
-{
-    return this->rge_game_options.scenarioNameValue;
-}
-
-int RGE_Base_Game::singlePlayerGame()
-{
-    return this->rge_game_options.singlePlayerGameValue;
-}
-
-int RGE_Base_Game::multiplayerGame()
-{
-    return this->rge_game_options.multiplayerGameValue;
-}
-
-int RGE_Base_Game::mapXSize()
-{
-    return this->rge_game_options.mapXSizeValue;
-}
-
-int RGE_Base_Game::mapYSize()
-{
-    return this->rge_game_options.mapYSizeValue;
-}
-
-int RGE_Base_Game::mapZSize()
-{
-    return this->rge_game_options.mapZSizeValue;
-}
-
-int RGE_Base_Game::allowCheatCodes()
-{
-    return this->rge_game_options.allowCheatCodesValue;
-}
-
-int RGE_Base_Game::cheatNotification()
-{
-    return this->rge_game_options.cheatNotificationValue;
-}
-
-int RGE_Base_Game::fullVisibility()
-{
-    return this->rge_game_options.fullVisibilityValue;
-}
-
-int RGE_Base_Game::fogOfWar()
-{
-    return this->rge_game_options.fogOfWarValue;
-}
-
-int RGE_Base_Game::coloredChat()
-{
-    return this->rge_game_options.coloredChatValue;
-}
-
-int RGE_Base_Game::gameDeveloperMode()
-{
-    return this->rge_game_options.gameDeveloperModeValue;
-}
-
-int RGE_Base_Game::playerHasCD(int player_num)
-{
-    return this->rge_game_options.playerCDAndVersionValue[player_num] & 1;
-}
-
-unsigned int RGE_Base_Game::playerVersion(int player_num)
-{
-    return (unsigned int)this->rge_game_options.playerCDAndVersionValue[player_num] >> 1;
 }
 
 char *RGE_Base_Game::playerVersionString(int player_num)
@@ -4509,71 +4397,16 @@ char *RGE_Base_Game::playerVersionString(int player_num)
     }
 }
 
-char RGE_Base_Game::playerCDAndVersion(int player_num)
-{
-    return this->rge_game_options.playerCDAndVersionValue[player_num];
-}
-
-int RGE_Base_Game::difficulty()
-{
-    return this->rge_game_options.difficultyValue;
-}
-
-int RGE_Base_Game::numberPlayers()
-{
-    return this->rge_game_options.numberPlayersValue;
-}
-
-int RGE_Base_Game::playerTeam(int player_num)
-{
-    return this->rge_game_options.playerTeamValue[player_num];
-}
-
-char RGE_Base_Game::pathFinding()
-{
-    return this->pathFindingValue;
-}
-
-char RGE_Base_Game::mpPathFinding()
-{
-    return this->rge_game_options.mpPathFindingValue;
-}
-
 char *RGE_Base_Game::gameSummary()
 {
     temp[0] = 0;
     return temp;
 }
 
-void RGE_Base_Game::find_campaigns()
-{
-    RGE_Game_Info::find_campaigns(this->player_game_info);
-}
-
-void RGE_Base_Game::setScenarioGame(int v)
-{
-    this->rge_game_options.scenarioGameValue = v;
-}
-
-void RGE_Base_Game::setVersion(float val)
-{
-    this->rge_game_options.versionValue = val;
-}
-
 void RGE_Base_Game::setScenarioName(char *n)
 {
-    strncpy(this->rge_game_options.scenarioNameValue, n, 0x80u);
+    strncpy(this->rge_game_options.scenarioNameValue, n, 128);
     this->rge_game_options.scenarioNameValue[127] = 0;
-}
-
-void RGE_Base_Game::setCampaignGame(int v)
-{
-    this->campaignGameValue = v;
-}
-
-void RGE_Base_Game::setSavedGame(int v)
-{
-    this->savedGameValue = v;
 }
 
 void RGE_Base_Game::setSinglePlayerGame(int v)
@@ -4593,31 +4426,6 @@ void RGE_Base_Game::setMapSize(int x, int y, int z)
     this->rge_game_options.mapXSizeValue = x;
     this->rge_game_options.mapYSizeValue = y;
     this->rge_game_options.mapZSizeValue = z;
-}
-
-void RGE_Base_Game::setAllowCheatCodes(int v)
-{
-    this->rge_game_options.allowCheatCodesValue = v;
-}
-
-void RGE_Base_Game::setCheatNotification(int v)
-{
-    this->rge_game_options.cheatNotificationValue = v;
-}
-
-void RGE_Base_Game::setFullVisibility(int v)
-{
-    this->rge_game_options.fullVisibilityValue = v;
-}
-
-void RGE_Base_Game::setFogOfWar(int v)
-{
-    this->rge_game_options.fogOfWarValue = v;
-}
-
-void RGE_Base_Game::setColoredChat(int v)
-{
-    this->rge_game_options.coloredChatValue = v;
 }
 
 void RGE_Base_Game::setNumberPlayers(int v)
@@ -4942,86 +4750,44 @@ void RGE_Base_Game::get_countdown_timer(int out_countdown_player_id, int *out_co
     *out_countdown_timer = this->countdown_timer[out_countdown_player_id];
 }
 
-bool RGE_Base_Game::play_video(char *file_name)
+bool RGE_Base_Game::play_sound( int sound_id )
 {
-    return false;
-}
-
-bool RGE_Base_Game::play_sound(int sound_id)
-{
-    TDigital *digital;
-
     if( this->sounds &&
-        digital = this->sounds[sound_id] )
-    {
-        if( digital->is_playing() )
+        TDigital *digital = this->sounds[sound_id] ){
+
+        if( digital->is_playing() ){
             return true;
-        else
+        }else{
             return digital->play();
-    }
-    else
-    {
+        }
+    }else{
         return false;
     }
 }
 
 #if ENGINE_AOC
-bool play_sound(int sound_id, int volume_in, short loop_count);
+bool RGE_Base_Game::play_sound( int sound_id, int volume_in, short loop_count )
 {
-    TDigital *digital;
+    digital;
 
     if( this->sounds &&
-        digital = this->sounds[sound_id] )
-    {
-        digital->set_volume(volume_in);
+        TDigital *digital = this->sounds[sound_id] ){
 
+        digital->set_volume(volume_in);
         digital->set_loop(loop_count);
-    }
-    else
-    {
+    }else{
         return false;
     }
 }
 #endif
 
-double RGE_Base_Game::get_game_speed()
-{
-    return this->game_speed;
-}
-
-void RGE_Base_Game::set_game_speed(float val)
-{
-    this->game_speed = val;
-}
-
-int RGE_Base_Game::get_single_player_difficulty()
-{
-    return this->single_player_difficulty;
-}
-
-void RGE_Base_Game::set_single_player_difficulty(int val)
-{
-    this->single_player_difficulty = val;
-}
-
 void RGE_Base_Game::setup_map_save_area()
 {
-    RGE_Base_Game *v1; // esi@1
-    TDrawArea *v2; // eax@1
-    TDrawArea *v3; // eax@2
-    TDrawArea *v4; // edi@6
-
     this->map_save_area = new TDrawArea(SurfaceName, 0);
 
-    if( this->map_save_area && !this->map_save_area->Init(this->draw_system, 280, 140, 0, 0) )
-    {
-        v4 = v1->map_save_area;
-        if( v4 )
-        {
-            TDrawArea::~TDrawArea(v1->map_save_area);
-            operator delete(v4);
-        }
-        v1->map_save_area = 0;
+    if( this->map_save_area && !this->map_save_area->Init(this->draw_system, 280, 140, 0, 0) ){
+        delete this->map_save_area;
+        this->map_save_area = nullptr;
     }
 }
 
