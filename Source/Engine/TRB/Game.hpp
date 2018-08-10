@@ -2,7 +2,7 @@
 /**
  * @file    Engine\TRB\Game.hpp
  * @author  Yvan Burrie
- * @date    2018/06/28
+ * @date    2018/08/09
  * @version 1.0
  */
 
@@ -80,12 +80,12 @@ public:
 
     struct TRIBE_Game_Options
     {
-        TRIBE_Game::MapSize mapSizeValue,
-                            mapTypeValue;
+        MapSize mapSizeValue;
+        MapType mapTypeValue;
 
         int animalsValue;
         int predatorsValue;
-        TRIBE_Game::VictoryType victoryTypeValue;
+        VictoryType victoryTypeValue;
         int victoryAmountValue;
 
         char civilizationValue[RGE_PLAYERS_COUNT];
@@ -98,9 +98,9 @@ public:
         char randomizePositionsValue;
         char fullTechTreeValue;
 
-        TRIBE_Game::ResourceLevel resourceLevelValue;
+        ResourceLevel resourceLevelValue;
 
-        TRIBE_Game::Age startingAgeValue;
+        Age startingAgeValue;
 
         char startingUnitsValue;
         char deathMatchValue;
@@ -126,11 +126,11 @@ public:
     /**
      * Offset: 5189.
      */
-    TRIBE_Game::Type type;
+    Type type;
 
     HWND *video_window;
     int cur_video = -1;
-    WNDPROC (__stdcall *old_video_wnd_proc)();
+    WNDPROC (*old_video_wnd_proc)();
     int video_paused;
     unsigned int last_video_time;
     int video_setup;
@@ -142,11 +142,15 @@ public:
     void *video_save_palette;
     int started_menu_music;
     int show_object_id;
+
     class TRIBE_Screen_Game *game_screen;
-    int notification_loc_x[5],
-        notification_loc_y[5];
-    int current_notification_loc;
-    int current_notification_recalled;
+
+    int notification_loc_x[5] = { -1, -1, -1, -1, -1 },
+        notification_loc_y[5] = { -1, -1, -1, -1, -1 };
+
+    int current_notification_loc      = -1,
+        current_notification_recalled = -1;
+
     char startup_scenario[260];
     char startup_game[260];
     unsigned int auto_exit_time;
@@ -160,18 +164,22 @@ public:
     void *handleIdleLock;
     int inHandleIdle;
 
-    TRIBE_Game(RGE_Prog_Info *prog_info_in, int do_setup);
+    TRIBE_Game( RGE_Prog_Info *prog_info_in, bool do_setup );
 
     ~TRIBE_Game();
 
-    void close_game_screens(int close_main_game_screen);
-    void setup();
-    int setup_cmd_options();
-    int setup_palette();
+    bool close_game_screens( bool close_main_game_screen );
+
+    bool setup();
+
+    bool setup_cmd_options();
+
+    bool setup_palette();
+
     TDigital **setup_sounds();
     static void create_world();
     void set_game_mode(int new_mode, int new_sub_mode);
-    void set_player(__int16 new_player_id);
+    void set_player(short new_player_id);
     void set_save_game_name(char *file_name);
     void set_load_game_name(char *file_name);
     char *get_string(int string_id, char *str, int max_len);
@@ -212,69 +220,66 @@ public:
     void do_game_over();
     char *create_game(int not_used);
     int create_game_screen();
-    int processCheatCode(int playerID, char *text);
+    bool processCheatCode( int playerID, char *text );
     void let_game_begin();
     int start_scenario_editor(char *scenario_name_in, int is_multi_player_in);
     void send_game_options();
     void receive_game_options();
-    void set_tribe_options(TRIBE_Game::TRIBE_Game_Options *options);
-    void get_tribe_options(TRIBE_Game::TRIBE_Game_Options *options);
-    TRIBE_Game::MapSize mapSize();
-    void setMapSize(TRIBE_Game::MapSize v);
-    TRIBE_Game::MapType mapType();
-    void setMapType(TRIBE_Game::MapType v);
-    int animals();
-    void setAnimals(int v);
-    int predators();
-    void setPredators(int v);
-
-    TRIBE_Game::VictoryType victoryType();
-
-    int victoryAmount();
-    void setVictoryType(TRIBE_Game::VictoryType victory_type_in, int amount_in);
-    int civilization(int player_num);
-    void setCivilization(int player_num, int civilization);
-    int scenarioPlayer(int player_num);
-    void setScenarioPlayer(int player_num, int scenario_player);
-    int playerColor(int player_num);
-    void setPlayerColor(int player_num, int color);
-    int computerName(int player_num);
-    void setComputerName(int player_num, int val);
-    int allowTrading();
-    int longCombat();
-    int randomizePositions();
-    int fullTechTree();
-
-    TRIBE_Game::ResourceLevel resourceLevel();
-    TRIBE_Game::Age startingAge();
-
-    int startingUnits();
-    char deathMatch();
-    char popLimit();
-    char quickStartGame();
-    int randomStartValue();
-
-    void setAllowTrading(int val);
-    void setLongCombat(int val);
-    void setRandomizePositions(int val);
-    void setFullTechTree(int val);
-    void setResourceLevel(TRIBE_Game::ResourceLevel val);
-    void setStartingAge(TRIBE_Game::Age val);
-    void setStartingUnits(int val);
-    void setDeathMatch(char val);
-    void setPopLimit(char val);
-    void setQuickStartGame(char val);
-    void setRandomStartValue(int val);
+    void set_tribe_options(TRIBE_Game_Options *options);
+    void get_tribe_options(TRIBE_Game_Options *options);
+    MapSize mapSize(){ return this->tribe_game_options.mapSizeValue; };
+    void setMapSize( MapSize v );
+    MapType mapType(){ return this->tribe_game_options.mapTypeValue; };
+    void setMapType( MapType v ){ this->tribe_game_options.mapTypeValue = v; };
+    int animals(){ return this->tribe_game_options.animalsValue; };
+    void setAnimals( int v ){ this->tribe_game_options.animalsValue = v; };
+    int predators(){ return this->tribe_game_options.predatorsValue; };
+    void setPredators( int v ){ this->tribe_game_options.predatorsValue = v; };
+    VictoryType victoryType(){ return this->tribe_game_options.victoryTypeValue; };
+    int victoryAmount(){ return this->tribe_game_options.victoryAmountValue; };
+    void setVictoryType( VictoryType victory_type_in, int amount_in ){
+        this->tribe_game_options.victoryTypeValue = victory_type_in;
+        this->tribe_game_options.victoryAmountValue = amount_in; };
+    int civilization( int player_num ){ return this->tribe_game_options.civilizationValue[player_num]; };
+    void setCivilization( int player_num, int civilization ){ this->tribe_game_options.civilizationValue[player_num] = civilization; };
+    int scenarioPlayer( int player_num ){ return this->tribe_game_options.scenarioPlayerValue[player_num]; };
+    void setScenarioPlayer( int player_num, int scenario_player ){ this->tribe_game_options.scenarioPlayerValue[player_num] = scenario_player; };
+    int playerColor( int player_num ){ return this->tribe_game_options.playerColorValue[player_num]; };
+    void setPlayerColor( int player_num, int color ){ this->tribe_game_options.playerColorValue[player_num] = color; };
+    int computerName( int player_num ){ return this->tribe_game_options.computerNameValue[player_num]; };
+    void setComputerName( int player_num, int val ){ this->tribe_game_options.computerNameValue[player_num] = val; };
+    int allowTrading(){ return this->tribe_game_options.allowTradingValue; };
+    int longCombat(){ return this->tribe_game_options.longCombatValue; };
+    int randomizePositions(){ return this->tribe_game_options.randomizePositionsValue; };
+    int fullTechTree(){ return this->tribe_game_options.fullTechTreeValue; };
+    ResourceLevel resourceLevel(){ return this->tribe_game_options.resourceLevelValue; };
+    Age startingAge(){ return this->tribe_game_options.startingAgeValue; };
+    int startingUnits(){ return this->tribe_game_options.startingUnitsValue; };
+    char deathMatch(){ return this->tribe_game_options.deathMatchValue; };
+    char popLimit(){ return RGE_Base_Game::multiplayerGame() ? this->tribe_game_options.popLimitValue : 50; };
+    char quickStartGame(){ return this->quick_start_game; };
+    int randomStartValue(){ return this->random_start_value; };
+    void setAllowTrading( int val ){ this->tribe_game_options.allowTradingValue = val; };
+    void setLongCombat( int val ){ this->tribe_game_options.longCombatValue = val; };
+    void setRandomizePositions( int val ){ this->tribe_game_options.randomizePositionsValue = val; };
+    void setFullTechTree( int val ){ this->tribe_game_options.fullTechTreeValue = val; };
+    void setResourceLevel( ResourceLevel val ){ this->tribe_game_options.resourceLevelValue = val; };
+    void setStartingAge( Age val ){ this->tribe_game_options.startingAgeValue = val; };
+    void setStartingUnits( int val ){ this->tribe_game_options.startingUnitsValue = val; };
+    void setDeathMatch( char val ){ this->tribe_game_options.deathMatchValue = val; };
+    void setPopLimit( char val ){ this->tribe_game_options.popLimitValue = val; };
+    void setQuickStartGame( char val ){ this->quick_start_game = val; };
+    void setRandomStartValue( int val ){ this->random_start_value = val; };
 
     char *gameSummary();
 
-    static RGE_Base_Game *wnd_proc(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
+    static RGE_Base_Game *hWnd_proc(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
     int handle_idle();
-    int handle_query_new_palette(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
-    int handle_activate(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
-    int action_user_command(unsigned int val1, unsigned int val2);
-    int action_key_down(unsigned int key, int repeat_count, int ctrl_key, int alt_key, int shift_key);
-    int action_close();
+    int handle_query_new_palette(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    int handle_activate(HWND *hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+    bool action_user_command(unsigned int val1, unsigned int val2);
+    bool action_key_down(unsigned int key, int repeat_count, int ctrl_key, int alt_key, int shift_key);
+    bool action_close();
     char *game_over_msg();
     int get_achievement_info(char achievement, char **info);
     int randomComputerName(int civ);
@@ -289,7 +294,11 @@ public:
     void goto_notification_loc();
 };
 
-int video_sub_wnd_proc(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam);
+int video_sub_wnd_proc(
+    HWND *hWnd,
+    UINT msg,
+    WPARAM wParam,
+    LPARAM lParam);
 
 /*
 struct TRIBE_Game::receive_game_options::combined_options

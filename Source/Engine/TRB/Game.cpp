@@ -2,11 +2,46 @@
 /**
  * @file    Engine\TRB\Game.cpp
  * @author  Yvan Burrie
- * @date    2018/02/27
+ * @date    2018/08/08
  * @version 1.0
  */
 
-void TRIBE_Game::TRIBE_Game(RGE_Prog_Info *prog_info_in, int do_setup)
+/**
+ * Specifies the String-Table DLL file for standard usage.
+ */
+HMODULE StringTableX;
+
+/**
+ * Specifies the String-Table DLL file for Patch-1 usage.
+ */
+HMODULE StringTableXP1;
+
+/**
+ * Determines the command option for quick-start.
+ */
+bool quick_start_game_mode;
+
+bool SyncError;
+
+bool GameRunning;
+
+bool AlreadyDesynced;
+
+bool LastDesync;
+
+bool DesyncData;
+
+bool DiskOutOfSpace;
+
+/**
+ * Determines whether video compressors are installed on the device.
+ */
+bool video_codec_available;
+
+/**
+ *
+ */
+TRIBE_Game::TRIBE_Game( RGE_Prog_Info *prog_info_in, bool do_setup )
 {
     TRIBE_Game *v3; // esi@1
     int *v4; // eax@1
@@ -20,32 +55,32 @@ void TRIBE_Game::TRIBE_Game(RGE_Prog_Info *prog_info_in, int do_setup)
 
     RGE_Prog_Info *prog_info_ina;
 
-    v3 = this;
+    /* call parent constructor: */
     RGE_Base_Game::RGE_Base_Game(prog_info_in, 0);
 
-    v3->input_enabled = 1;
-    v3->input_disabled_window = 0;
-    v3->testing_scenario[0] = 0;
+    this->input_enabled = 1;
+    this->input_disabled_window = 0;
+    this->testing_scenario[0] = 0;
     StringTableX = 0;
-    v3->startup_scenario[0] = 0;
-    v3->startup_game[0] = 0;
-    v3->save_game_name[0] = 0;
-    v3->load_game_name[0] = 0;
-    v3->auto_exit_time = 0;
-    v3->timing_text2[0] = 0;
+    this->startup_scenario[0] = 0;
+    this->startup_game[0] = 0;
+    this->save_game_name[0] = 0;
+    this->load_game_name[0] = 0;
+    this->auto_exit_time = 0;
+    this->timing_text2[0] = 0;
     *(_DWORD *)&__S9__1__calc_timing_text_TRIBE_Game__UAEXXZ_4EA[4] = 0;
     out_of_sync = 0;
     out_of_sync2 = 0;
-    v3->MouseRightClickTable = 0;
-    v3->MouseRightClickTableSize = 0;
-    v3->MouseLeftClickTable = 0;
-    v3->MouseLeftClickTableSize = 0;
+    this->MouseRightClickTable = 0;
+    this->MouseRightClickTableSize = 0;
+    this->MouseLeftClickTable = 0;
+    this->MouseLeftClickTableSize = 0;
 
-    this->setMapSize(Medium);
-    this->setMapType(WaterAndLand);
+    this->setMapSize(MapSize::Medium);
+    this->setMapType(MapType::WaterAndLand);
     this->setAnimals(1);
     this->setPredators(1);
-    this->setVictoryType(VictoryConquest, 1);
+    this->setVictoryType(VictoryType::VictoryConquest, 1);
     this->setAllowTrading(1);
     this->setLongCombat(0);
     this->setRandomizePositions(0);
@@ -58,19 +93,7 @@ void TRIBE_Game::TRIBE_Game(RGE_Prog_Info *prog_info_in, int do_setup)
     this->setQuickStartGame(0);
     this->setRandomStartValue(-1);
 
-    v4 = v3->notification_loc_y;
-    v5 = 5;
-    do
-    {
-        *(v4 - 5) = -1;
-        *v4 = -1;
-        ++v4;
-        --v5;
-    }
-    while( v5 );
-
-    this->current_notification_loc = -1;
-    this->current_notification_recalled = -1;
+    // this->notification_loc_ set to -1
 
     prog_info_ina = (RGE_Prog_Info *)1;
     v6 = 0;
@@ -96,48 +119,89 @@ void TRIBE_Game::TRIBE_Game(RGE_Prog_Info *prog_info_in, int do_setup)
     }
     while( (signed int)v7 < (signed int)&PalSetRes );
 
-    memset(v3->save_humanity, 0, sizeof(v3->save_humanity));
+    memset(this->save_humanity, 0, sizeof(this->save_humanity));
 
     this->setNumberPlayers(4);
 
     this->resetRandomComputerName();
 
-    if( do_setup )
-    {
+    if( do_setup ){
+
         this->setup();
-        if( !v11 && !v3->error_code )
-            v3->error_code = 1;
+
+        if( v11 == 0 &&
+            this->error_code == ErrorCode::None ){
+            this->error_code = ErrorCode::SetupFailed;
+        }
     }
 }
 
-void TRIBE_Game::close_game_screens(int close_main_game_screen)
+void TRIBE_Game::close_game_screens( bool close_main_game_screen )
 {
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Full Map Print Dialog");
+    &panel_system->destroyPanel("Full Map Print Status Dialog");
+#endif
     &panel_system->destroyPanel("Object List Dialog");
-    &panel_system->destroyPanel(aOkdialog);
-    &panel_system->destroyPanel(aYesnodialog);
+    &panel_system->destroyPanel("OKDialog");
+    &panel_system->destroyPanel("YesNoDialog");
     &panel_system->destroyPanel("RestartDialog");
     &panel_system->destroyPanel("QuitGameDialog");
-    &panel_system->destroyPanel(aCloseprogramdi);
+    &panel_system->destroyPanel("CloseProgramDialog");
     &panel_system->destroyPanel("QuitAndLoadDialog");
     &panel_system->destroyPanel("ResignDialog");
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Quit Dialog");
+    &panel_system->destroyPanel("New Dialog");
+    &panel_system->destroyPanel("Open Dialog");
+    &panel_system->destroyPanel("Load Dialog");
+    &panel_system->destroyPanel("NewSaveDialog");
+    &panel_system->destroyPanel("OpenSaveDialog");
+    &panel_system->destroyPanel("QuitSaveDialog");
+    &panel_system->destroyPanel("RestartReplayDialog");
+    &panel_system->destroyPanel("SessionCancelledOKDialog");
+    &panel_system->destroyPanel("Cancel Dialog");
+#endif
     &panel_system->destroyPanel("Help Dialog");
     &panel_system->destroyPanel("About Dialog");
-    &panel_system->destroyPanel(aSendQuickMessa);
+    &panel_system->destroyPanel("Send Quick Message Dialog");
     &panel_system->destroyPanel("Mission Dialog");
     &panel_system->destroyPanel("Send Message Dialog");
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Vote System Dialog");
+#endif
     &panel_system->destroyPanel("Diplomacy Dialog");
     &panel_system->destroyPanel("Menu Dialog");
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Objective Dialog");
+#endif
     &panel_system->destroyPanel("Save Game Screen");
-    &panel_system->destroyPanel(aLoadSavedGameS);
-    &panel_system->destroyPanel(aEndScreen);
+    &panel_system->destroyPanel("Load Saved Game Screen");
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Load Multiplayer Saved Game Screen");
+#endif
+    &panel_system->destroyPanel("End Screen");
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Aftermath Screen");
+#endif
     &panel_system->destroyPanel("Achievements Screen");
-    &panel_system->destroyPanel(aMultiplayerWai);
-    &panel_system->destroyPanel(aMultiplayerDis);
+    &panel_system->destroyPanel("Multiplayer Wait Screen");
+    &panel_system->destroyPanel("Multiplayer Disconnect Screen");
+#if ENGINE_AOC
+    &panel_system->destroyPanel("Multiplayer Save Game Screen");
+    &panel_system->destroyPanel("One Button Tech Tree Screen");
+    &panel_system->destroyPanel("Chat Edit Dialog");
+    &panel_system->destroyPanel("Chat Edit Screen");
+#endif
 
-    if( close_main_game_screen )
-    {
-        this->game_screen = 0;
+    if( close_main_game_screen ){
+
+        this->game_screen = nullptr;
+
         &panel_system->destroyPanel("Game Screen");
+#if ENGINE_AOC
+        &panel_system->destroyPanel("Combat Comparison Run Screen");
+#endif
     }
 }
 
@@ -161,29 +225,29 @@ void TRIBE_Game::setup()
     TEasy_Panel *v16; // eax@50
     int v17; // eax@54
     _SYSTEMTIME file_time; // [sp+10h] [bp-918h]@33
-    tagPALETTEENTRY pal_entries[7]; // [sp+20h] [bp-908h]@15
+
     void *v20; // [sp+3Ch] [bp-8ECh]@16
-    char new_string_dll_name[100]; // [sp+40h] [bp-8E8h]@7
+     // [sp+40h] [bp-8E8h]@7
     _WIN32_FIND_DATAA file_data; // [sp+A4h] [bp-884h]@32
     char cmd_line[256]; // [sp+1E4h] [bp-744h]@7
     char str[1024]; // [sp+2E4h] [bp-644h]@33
-    ICINFO ici; // [sp+6E4h] [bp-244h]@15
+     // [sp+6E4h] [bp-244h]@15
     int v26; // [sp+924h] [bp-4h]@16
 
-    v1 = this;
-
-    if( !this->error_code )
+    if( this->error_code == 0 ){
         return;
+    }
 
     /* Allows RM (Resource-Manager) files to be written into DRS (Dynamic Resources): */
     if( strstr(this->prog_info->cmd_line, "MAKERES") ||
         strstr(this->prog_info->cmd_line, "Makeres") ||
-        strstr(this->prog_info->cmd_line, "makeres") )
-    {
+        strstr(this->prog_info->cmd_line, "makeres") ){
+
         RESFILE_build_res_file("graphics.rm", source_path, this->prog_info->resource_dir);
         RESFILE_build_res_file("sounds.rm",   source_path, this->prog_info->resource_dir);
         RESFILE_build_res_file("interfac.rm", source_path, this->prog_info->resource_dir);
     }
+
     /* Read DRS files: */
     RESFILE_open_new_resource_file("sounds.drs",   password, this->prog_info->resource_dir, 1);
     RESFILE_open_new_resource_file("graphics.drs", password, this->prog_info->resource_dir, 0);
@@ -194,227 +258,246 @@ void TRIBE_Game::setup()
     RESFILE_open_new_resource_file("Border.drs",   password, path, 0);
     RESFILE_open_new_resource_file("Interfac.drs", password, path, 0);
 
-    if( RGE_Base_Game::setup() )
+    if( RGE_Base_Game::setup() ){
+        return false;
+    }
+
+    strncpy(cmd_line, this->prog_info->cmd_line, 0xFFu);
+    cmd_line[255] = 0;
+    CharUpperA(cmd_line);
+    v2 = _mbsstr((const unsigned __int8 *)cmd_line, aString);
+    char new_string_dll_name[100];
+    strcpy(new_string_dll_name, "languagex.dll");
+    memset(&new_string_dll_name[14], 0, 0x54u);
+    *(_WORD *)&new_string_dll_name[98] = 0;
+    if( v2 )
     {
-        strncpy(cmd_line, this->prog_info->cmd_line, 0xFFu);
-        cmd_line[255] = 0;
-        CharUpperA(cmd_line);
-        v2 = _mbsstr((const unsigned __int8 *)cmd_line, aString);
-        strcpy(new_string_dll_name, "languagex.dll");
-        memset(&new_string_dll_name[14], 0, 0x54u);
-        *(_WORD *)&new_string_dll_name[98] = 0;
-        if( v2 )
+        for( ; *v2 != 61; v2 = _mbsninc(v2, 1u) )
+            ;
+        v3 = _mbsninc(v2, 1u);
+        for( new_string_dll_name[0] = 0; !_ismbcspace(*v3); v3 = _mbsninc(v3, 1u) )
         {
-            for( ; *v2 != 61; v2 = _mbsninc(v2, 1u) )
-                ;
-            v3 = _mbsninc(v2, 1u);
-            for( new_string_dll_name[0] = 0; !_ismbcspace(*v3); v3 = _mbsninc(v3, 1u) )
-            {
-                if( !*v3 )
-                    break;
-                _mbsncat((unsigned __int8 *)new_string_dll_name, v3, 1u);
-            }
+            if( !*v3 )
+                break;
+            _mbsncat((unsigned __int8 *)new_string_dll_name, v3, 1u);
         }
-        StringTableX = LoadLibraryA(new_string_dll_name);
-        if( !StringTableX )
-        {
-            v1->error_code = 1;
-            return;
-        }
-        v4 = v1->prog_palette;
+    }
+    StringTableX = LoadLibraryA(new_string_dll_name);
+    if( StringTableX == nullptr ){
+        this->error_code = 1;
+        return false;
+    }
 
-        pal_entries[3].peGreen = 123;
-        pal_entries[6].peBlue = 123;
-        pal_entries[1].peGreen = 63;
-        pal_entries[2].peRed = 63;
-        pal_entries[4].peRed = 63;
-        pal_entries[5].peGreen = 63;
-        pal_entries[0].peRed = 23;
-        pal_entries[0].peGreen = 39;
-        pal_entries[0].peBlue = 124;
-        pal_entries[0].peFlags = 0;
-        pal_entries[1].peRed = 39;
-        pal_entries[1].peBlue = -112;
-        pal_entries[1].peFlags = 0;
-        pal_entries[2].peGreen = 95;
-        pal_entries[2].peBlue = -97;
-        pal_entries[2].peFlags = 0;
-        pal_entries[3].peRed = 87;
-        pal_entries[3].peBlue = -76;
-        pal_entries[3].peFlags = 0;
-        pal_entries[4].peGreen = 95;
-        pal_entries[4].peBlue = -96;
-        pal_entries[4].peFlags = 0;
-        pal_entries[5].peRed = 39;
-        pal_entries[5].peBlue = -111;
-        pal_entries[5].peFlags = 0;
-        pal_entries[6].peRed = 23;
-        pal_entries[6].peGreen = 39;
-        pal_entries[6].peFlags = 0;
+    PALETTEENTRY pal_entries[7];
 
-        SetPaletteEntries(v4, 0xF8u, 7u, pal_entries);
-        v1->input_disabled_window = CreateWindowExA(
-            0,
-            aStatic,
-            aInputdisabledw,
-            0x40000000u,
-            0,
-            0,
-            1,
-            1,
-            v1->prog_window,
-            0,
-            v1->prog_info->instance,
-            0);
-        video_codec_available = ICInfo("cdiv", "14vi", &ici);
-        if( !RGE_Base_Game::check_prog_argument((RGE_Base_Game *)&v1->vfptr, aLobby) )
-        {
-            if( TCommunications_Handler::LaunchLobbyGame(v1->comm_handler) == (IDirectPlay3 *)1 )
-            {
-                RGE_Base_Game::setMultiplayerGame((RGE_Base_Game *)&v1->vfptr, 1);
-                v13 = (TribeMPSetupScreen *)operator new(0x890u);
-                v20 = v13;
-                v26 = 3;
-                if( v13 )
-                    TribeMPSetupScreen::TribeMPSetupScreen(v13);
-                v26 = -1;
-LABEL_43:
-                TPanelSystem::setCurrentPanel(&panel_system, aMpSetupScreen, 0);
-                &panel_system->destroyPanel(aStatusScreen);
-                goto LABEL_32;
-            }
-            if( v1->startup_scenario[0] )
-            {
-                v14 = TRIBE_Game::start_scenario(v1, 1, v1->startup_scenario);
-            }
-            else
-            {
-                if( !v1->startup_game[0] )
-                {
-                    if( v1->prog_info->skip_startup )
-                    {
-                        TRIBE_Game::start_menu(v1);
-                        if( !v17 )
-                            return;
-                    }
-                    else
-                    {
-                        TRIBE_Game::start_video(v1, 0, video_file);
-                    }
-                    goto LABEL_32;
-                }
-                v14 = TRIBE_Game::load_game(v1, v1->startup_game);
-            }
-            if( !v14 )
-            {
-                TRIBE_Game::start_menu(v1);
-                if( !v15 )
-                    return;
-                v16 = (TEasy_Panel *)@panel_system->panel(aMainMenu);
-                if( v16 )
-                    TEasy_Panel::popupOKDialog(v16, 2401, 0, 450, 100);
-            }
-LABEL_32:
-            v1->vfptr->set_interface_messages((RGE_Base_Game *)v1);
-            run_log(::str, 0);
-            run_log(message_in, 1);
-            v11 = FindFirstFileA(_pgmptr, &file_data);
-            if( v11 != (HANDLE)-1 )
-            {
-                *(_DWORD *)&file_time.wYear = 0;
-                *(_DWORD *)&file_time.wDayOfWeek = 0;
-                *(_DWORD *)&file_time.wHour = 0;
-                *(_DWORD *)&file_time.wSecond = 0;
-                FileTimeToSystemTime(&file_data.ftLastWriteTime, &file_time);
-                sprintf(
-                    str,
-                    aProgramSSizeDD,
-                    _pgmptr,
-                    file_data.nFileSizeLow,
-                    file_time.wMonth,
-                    file_time.wMonth,
-                    file_time.wYear,
-                    file_time.wHour,
-                    file_time.wMinute,
-                    file_time.wSecond);
-                run_log(str, 0);
-                FindClose(v11);
-            }
-            v12 = FindFirstFileA(v1->prog_info->game_data_file, &file_data);
-            if( v12 != (HANDLE)-1 )
-            {
-                *(_DWORD *)&file_time.wYear = 0;
-                *(_DWORD *)&file_time.wDayOfWeek = 0;
-                *(_DWORD *)&file_time.wHour = 0;
-                *(_DWORD *)&file_time.wSecond = 0;
-                FileTimeToSystemTime(&file_data.ftLastWriteTime, &file_time);
-                sprintf(
-                    str,
-                    aDataSSizeDDate,
-                    v1->prog_info->game_data_file,
-                    file_data.nFileSizeLow,
-                    file_time.wMonth,
-                    file_time.wMonth,
-                    file_time.wYear,
-                    file_time.wHour,
-                    file_time.wMinute,
-                    file_time.wSecond);
-                run_log(str, 0);
-                FindClose(v12);
-            }
-            sprintf(str, aOptionsS, v1->prog_info->cmd_line);
-            run_log(str, 0);
-            return;
-        }
-        v5 = (TRIBE_Screen_Status_Message *)operator new(0x47Cu);
-        v20 = v5;
-        v26 = 0;
-        if( v5 )
-            TRIBE_Screen_Status_Message::TRIBE_Screen_Status_Message(v5, aStatusScreen, 1215, aScr1, 50051);
-        v26 = -1;
-        TPanelSystem::setCurrentPanel(&panel_system, aStatusScreen, 0);
-        v6 = TCommunications_Handler::LaunchLobbyGame(v1->comm_handler);
-        if( v6 == (IDirectPlay3 *)1 )
-        {
-            RGE_Base_Game::setMultiplayerGame((RGE_Base_Game *)&v1->vfptr, 1);
-            v7 = (TribeMPSetupScreen *)operator new(0x890u);
-            v20 = v7;
-            v26 = 1;
-            if( v7 )
-                TribeMPSetupScreen::TribeMPSetupScreen(v7);
-            else
-                v8 = 0;
-            v26 = -1;
-            if( !v8 || *(_DWORD *)(v8 + 216) )
-                return;
-            goto LABEL_43;
-        }
-        if( v6 != (IDirectPlay3 *)-1 )
-        {
-            this->close();;
-            return;
-        }
-        v9 = (TRIBE_Screen_Main_Error *)operator new(0x484u);
-        v20 = v9;
-        v26 = 2;
-        if( v9 )
-            TRIBE_Screen_Main_Error::TRIBE_Screen_Main_Error(v9);
-        else
-            v10 = 0;
-        v26 = -1;
-        if( v10 && !v10->error_code )
-        {
-            v10->set_text(2410);
+    pal_entries[0].peRed   = 23;
+    pal_entries[0].peGreen = 39;
+    pal_entries[0].peBlue  = 124;
+    pal_entries[0].peFlags = 0;
+    pal_entries[1].peRed   = 39;
+    pal_entries[1].peGreen = 63;
+    pal_entries[1].peBlue  = -112;
+    pal_entries[1].peFlags = 0;
+    pal_entries[2].peRed   = 63;
+    pal_entries[2].peGreen = 95;
+    pal_entries[2].peBlue  = -97;
+    pal_entries[2].peFlags = 0;
+    pal_entries[3].peRed   = 87;
+    pal_entries[3].peGreen = 123;
+    pal_entries[3].peBlue  = -76;
+    pal_entries[3].peFlags = 0;
+    pal_entries[4].peRed   = 63;
+    pal_entries[4].peGreen = 95;
+    pal_entries[4].peBlue  = -96;
+    pal_entries[4].peFlags = 0;
+    pal_entries[5].peRed   = 39;
+    pal_entries[5].peGreen = 63;
+    pal_entries[5].peBlue  = -111;
+    pal_entries[5].peFlags = 0;
+    pal_entries[6].peRed   = 23;
+    pal_entries[6].peGreen = 39;
+    pal_entries[6].peBlue  = 123;
+    pal_entries[6].peFlags = 0;
 
-            &panel_system->setCurrentPanel(aMainErrorScree, 0);
+    SetPaletteEntries(this->prog_palette, 0xF8u, 7u, pal_entries);
+
+    this->input_disabled_window = CreateWindowExA(
+        0,
+        "Static",
+        "InputDisabledWindow",
+        WS_CHILD,
+        0,
+        0,
+        1,
+        1,
+        this->prog_window,
+        (HMENU)NULL,
+        this->prog_info->instance,
+        (LPVOID)NULL);
+
+    ICINFO ici;
+#if ENGINE_AOC
+    video_codec_available = ICInfo("cdiv", "05vi", &ici);
+#elif
+    video_codec_available = ICInfo("cdiv", "14vi", &ici);
+#endif
+
+    if( this->check_prog_argument("Lobby") != true ){
+
+        if( this->comm_handler->LaunchLobbyGame() == (IDirectPlay3 *)1 ){
+
+            this->setMultiplayerGame(1);
+
+            TribeMPSetupScreen *v13 = new TribeMPSetupScreen;
+
+            LABEL_43:
+            &panel_system->setCurrentPanel("MP Setup Screen", 0);
             &panel_system->destroyPanel("Status Screen");
 
             goto LABEL_32;
         }
+
+        int v14;
+
+        if( this->startup_scenario[0] != 0 ){
+
+            v14 = this->start_scenario(this->startup_scenario);
+
+        }else{
+
+            if( this->startup_game[0] == 0 ){
+
+                if( this->prog_info->skip_startup ){
+                    this->start_menu();
+                    if( !v17 ){
+                        return false;
+                    }
+                }else{
+                    this->start_video(0, video_file);
+                }
+
+                goto LABEL_32;
+            }
+
+            v14 = this->load_game(this->startup_game);
+        }
+
+        if( v14 == nullptr ){
+
+            this->start_menu();
+
+            if( !v15 )
+                return false;
+
+            if( v16 = panel_system->panel("Main Menu") ){
+                v16->popupOKDialog(2401, 0, 450, 100);
+            }
+        }
+
+        LABEL_32:
+        this->set_interface_messages();
+
+        run_log(::str, 0);
+        run_log(message_in, 1);
+
+        HANDLE v11 = FindFirstFileA(_pgmptr, &file_data);
+        if( v11 != (HANDLE)-1 ){
+
+            *(_DWORD *)&file_time.wYear      = 0;
+            *(_DWORD *)&file_time.wDayOfWeek = 0;
+            *(_DWORD *)&file_time.wHour      = 0;
+            *(_DWORD *)&file_time.wSecond    = 0;
+
+            FileTimeToSystemTime(&file_data.ftLastWriteTime, &file_time);
+
+            sprintf(
+                str,
+                "program=%s, size=%d, date=%d/%d/%d, time=%d:%d:%d",
+                _pgmptr,
+                file_data.nFileSizeLow,
+                file_time.wMonth,
+                file_time.wMonth,
+                file_time.wYear,
+                file_time.wHour,
+                file_time.wMinute,
+                file_time.wSecond);
+
+            run_log(str, 0);
+
+            FindClose(v11);
+        }
+
+        HANDLE v12 = FindFirstFileA(this->prog_info->game_data_file, &file_data);
+        if( v12 != (HANDLE)-1 ){
+
+            *(_DWORD *)&file_time.wYear = 0;
+            *(_DWORD *)&file_time.wDayOfWeek = 0;
+            *(_DWORD *)&file_time.wHour = 0;
+            *(_DWORD *)&file_time.wSecond = 0;
+
+            FileTimeToSystemTime(&file_data.ftLastWriteTime, &file_time);
+
+            sprintf(
+                str,
+                "data=%s, size=%d, date=%d/%d/%d, time=%d:%d:%d",
+                this->prog_info->game_data_file,
+                file_data.nFileSizeLow,
+                file_time.wMonth,
+                file_time.wMonth,
+                file_time.wYear,
+                file_time.wHour,
+                file_time.wMinute,
+                file_time.wSecond);
+
+            run_log(str, 0);
+            FindClose(v12);
+        }
+
+        sprintf(str, "options=%s", this->prog_info->cmd_line);
+        run_log(str, 0);
+
+        return false;
+    }
+
+    TRIBE_Screen_Status_Message *v5 = new TRIBE_Screen_Status_Message;
+    if( v5 ){
+        v5->TRIBE_Screen_Status_Message("Status Screen", 1215, aScr1, 50051);
+    }
+
+    &panel_system->setCurrentPanel("Status Screen", 0);
+
+    IDirectPlay3 *v6 = this->comm_handler->LaunchLobbyGame();
+    if( v6 == (IDirectPlay3 *)1 ){
+
+        this->setMultiplayerGame(1);
+
+        TribeMPSetupScreen *v8 = new TribeMPSetupScreen;
+        if( v8 == nullptr ||
+            v8->error_code != 0 ){
+            return false;
+        }
+        goto LABEL_43;
+    }
+
+    if( v6 != (IDirectPlay3 *)-1 ){
+        this->close();
+        return false;
+    }
+
+    TRIBE_Screen_Main_Error *v10 = new TRIBE_Screen_Main_Error;
+    if( v10 &&
+        v10->error_code == 0 ){
+
+        v10->set_text(2410);
+
+        &panel_system->setCurrentPanel(aMainErrorScree, 0);
+        &panel_system->destroyPanel("Status Screen");
+
+        goto LABEL_32;
     }
 }
 
-int TRIBE_Game::setup_cmd_options()
+bool TRIBE_Game::setup_cmd_options()
 {
     TRIBE_Game *v1; // ebp@1
     char *v2; // eax@3
@@ -447,11 +530,15 @@ int TRIBE_Game::setup_cmd_options()
     cmd_line[255] = 0;
     CharUpperA(cmd_line);
     encrypt_codes(cmd_line, encstr, 512);
-    if( strstr(cmd_line, aNoterrainsound) )
+
+    /*  */
+    if( strstr(cmd_line, "NOTERRAINSOUND") ){
         *(_DWORD *)&__S9__1__calc_timing_text_TRIBE_Game__UAEXXZ_4EA[4] = 1;
-    v2 = strstr(encstr, aLCL);
-    if( v2 )
-    {
+    }
+
+    /*  */
+    if( strstr(encstr, aLCL) ){
+
         if( *v2 != 61 )
         {
             do
@@ -481,11 +568,15 @@ int TRIBE_Game::setup_cmd_options()
         }
         this->setPopLimit(v7);
     }
-    if( strstr(cmd_line, aQuick1) )
+
+    /* Command-line check quick-start: */
+    if( strstr(cmd_line, TRB_CMD_QUICK_START_MODE) ){
         quick_start_game_mode = 1;
-    v8 = strstr(cmd_line, aScn);
-    if( v8 )
-    {
+    }
+
+#if DEBUG_RELEASE
+    /* Command-line check scenario: */
+    if( strstr(cmd_line, TRB_CMD_STARTING_SCENARIO) ){
         if( *v8 != 61 )
         {
             do
@@ -498,15 +589,17 @@ int TRIBE_Game::setup_cmd_options()
         {
             if( !v10 )
                 break;
-            v1->startup_scenario[j] = v10;
+            this->startup_scenario[j] = v10;
             v10 = *(_BYTE *)(v11 + 1);
             ++j;
         }
-        v1->startup_scenario[j] = 0;
+        this->startup_scenario[j] = 0;
     }
-    v13 = strstr(cmd_line, aExit);
-    if( v13 )
-    {
+#endif
+
+#if DEBUG_RELEASE
+    /* Command-line check exit: */
+    if( strstr(cmd_line, TRB_CMD_AUTO_EXIT) ){
         if( *v13 != 61 )
         {
             do
@@ -524,11 +617,13 @@ int TRIBE_Game::setup_cmd_options()
             ++k;
         }
         temp_str[k] = 0;
-        v1->auto_exit_time = atol(temp_str);
+        this->auto_exit_time = atol(temp_str);
     }
-    v18 = strstr(cmd_line, aGam);
-    if( v18 )
-    {
+#endif
+
+    /* Command-line, check for save-game by file-name: */
+    if( strstr(cmd_line, "GAM=") ){
+
         if( *v18 != 61 )
         {
             do
@@ -541,23 +636,26 @@ int TRIBE_Game::setup_cmd_options()
         {
             if( !v20 )
                 break;
-            v1->startup_game[l] = v20;
+            this->startup_game[l] = v20;
             v20 = *(_BYTE *)(v21 + 1);
             ++l;
         }
-        v1->startup_game[l] = 0;
-        if( !strchr(v1->startup_game, 46) )
-            strcpy(&v1->startup_game[strlen(v1->startup_game)], a_gmx);
+        this->startup_game[l] = 0;
+        if( !strchr(this->startup_game, 46) )
+            strcpy(&this->startup_game[strlen(this->startup_game)], a_gmx);
     }
-    return RGE_Base_Game::setup_cmd_options((RGE_Base_Game *)&v1->vfptr);
+
+    /* call parent method: */
+    return RGE_Base_Game::setup_cmd_options();
 }
 
 bool TRIBE_Game::setup_palette()
 {
     PALETTEENTRY pal_entries[7];
 
-    if( !this->setup_palette() )
+    if( !this->setup_palette() ){
         return false;
+    }
 
     pal_entries[0].peFlags = 0;
     pal_entries[1].peFlags = 0;
@@ -635,23 +733,33 @@ TDigital **TRIBE_Game::setup_sounds()
     signed int v38; // edi@55
     TDigital *v39; // ecx@56
 
-    v1 = this;
-    this->sound_num = 17;
-    result = (TDigital **)calloc(0x11u, 4u);
-    v1->sounds = result;
-    if( result )
+    struct SoundSetupInfo
     {
+        char *file_name;
+
+        unsigned int res_id;
+    }
+    sound_setups[] = {
+        { "button1.wav",  50300 },
+        { "button2.wav",  50301 },
+        { "chatrcvd.wav", 50302 },
+    };
+
+    if( this->sounds = new TDigital[this->sound_num = sizeof(sound_setups)] ){
+
         for( i = 0; i < v1->sound_num; v1->sounds[++i - 1] = 0 )
             ;
-        v4 = (TDigital *)operator new(0x3Cu);
+        v4 = new TDigital(
+            this->sound_system,
+            sound_setups[i]->);
         if( v4 )
-            TDigital::TDigital(v4, v1->sound_system, file_name, 50300);
+            TDigital::TDigital(v4, v1->sound_system, "button1.wav", 50300);
         else
             v5 = 0;
         *v1->sounds = v5;
         v6 = (TDigital *)operator new(0x3Cu);
         if( v6 )
-            TDigital::TDigital(v6, v1->sound_system, aButton2_wav, 50301);
+            TDigital::TDigital(v6, v1->sound_system, "button2.wav", 50301);
         else
             v7 = 0;
         *((_DWORD *)v1->sounds + 1) = v7;
@@ -822,10 +930,10 @@ char *TRIBE_Game::get_string2(int string_type, int id, int id2, char *str, int m
     char *result; // eax@3
 
     *str = 0;
-    switch ( string_type )
+    switch( string_type )
     {
         case 100:
-            switch ( id )
+            switch( id )
             {
                 case 0:
                 case 15:
@@ -850,7 +958,7 @@ char *TRIBE_Game::get_string2(int string_type, int id, int id2, char *str, int m
             }
             return result;
         case 101:
-            switch ( id )
+            switch( id )
             {
                 case 1:
                     result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(4201, str, max_len);
@@ -869,7 +977,7 @@ char *TRIBE_Game::get_string2(int string_type, int id, int id2, char *str, int m
             }
             return result;
         case 105:
-            switch ( id )
+            switch( id )
             {
                 case 1:
                     (*(void (__fastcall **)(TRIBE_Game *, int, signed int, char *, int))&this->vfptr->gap8[24])(
@@ -1002,7 +1110,7 @@ char *TRIBE_Game::get_string2(int string_type, int id, int id2, char *str, int m
             }
             return result;
         case 102:
-            switch ( id )
+            switch( id )
             {
                 default:
                     goto LABEL_15;
@@ -1105,7 +1213,7 @@ char *TRIBE_Game::get_string2(int string_type, int id, int id2, char *str, int m
             }
             return result;
         case 1:
-            switch ( id )
+            switch( id )
             {
                 case 100:
                 case 101:
@@ -1136,7 +1244,7 @@ char *TRIBE_Game::get_string2(int string_type, int id, int id2, char *str, int m
                     return (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(3006, str, max_len);
                 if( id == 1 )
                 {
-                    switch ( id2 )
+                    switch( id2 )
                     {
                         default:
                             goto LABEL_15;
@@ -1191,7 +1299,7 @@ LABEL_15:
             }
             else
             {
-                switch ( id )
+                switch( id )
                 {
                     case 104:
                         result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(
@@ -1229,7 +1337,7 @@ LABEL_15:
             }
             return result;
         case 104:
-            switch ( id )
+            switch( id )
             {
                 case 2:
                     result = (char *)(*(int (__stdcall **)(signed int, _DWORD, _DWORD))&this->vfptr->gap8[24])(4305, str, max_len);
@@ -1368,7 +1476,7 @@ void TRIBE_Game::show_error_message(int error_code_in)
 
 void TRIBE_Game::show_status_message(char *messageIn, char *info_file, int info_id)
 {
-    if( TRIBE_Screen_Status_Message *status_message = &panel_system->panel(aStatusScreen) )
+    if( TRIBE_Screen_Status_Message *status_message = &panel_system->panel("Status Screen") )
     {
         status_message->set_text(messageIn);
 
@@ -1377,9 +1485,9 @@ void TRIBE_Game::show_status_message(char *messageIn, char *info_file, int info_
     else
     {
         /* TODO */
-        status_message = new TRIBE_Screen_Status_Message(aStatusScreen, messageIn, info_file, info_id);
+        status_message = new TRIBE_Screen_Status_Message("Status Screen", messageIn, info_file, info_id);
     }
-    &panel_system->setCurrentPanel(aStatusScreen, 0);
+    &panel_system->setCurrentPanel("Status Screen", 0);
 }
 
 void TRIBE_Game::show_status_message(int string_id, char *info_file, int info_id)
@@ -1533,7 +1641,7 @@ void TRIBE_Game::stop_video(char goto_next_video)
         TDrawSystem::ClearPrimarySurface(v2->draw_system);
         v4 = save_vid_num;
     }
-    switch ( v4 )
+    switch( v4 )
     {
         case 0:
             if( !goto_next_video )
@@ -2032,7 +2140,7 @@ int TRIBE_Game::save_game(char *fileName)
                 RGE_Base_Game::set_paused((RGE_Base_Game *)&v2->vfptr, 0, 0);
             TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
             &panel_system->destroyPanel(aSaveGameScreen);
-            &panel_system->destroyPanel(aStatusScreen);
+            &panel_system->destroyPanel("Status Screen");
             RGE_Base_Game::enable_input((RGE_Base_Game *)&v2->vfptr);
             result = 1;
         }
@@ -2078,7 +2186,7 @@ int TRIBE_Game::save_scenario(char *fileName)
                 RGE_Base_Game::set_paused((RGE_Base_Game *)&v2->vfptr, 0, 0);
             TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
             &panel_system->destroyPanel(aSaveGameScreen);
-            &panel_system->destroyPanel(aStatusScreen);
+            &panel_system->destroyPanel("Status Screen");
             RGE_Base_Game::enable_input((RGE_Base_Game *)&v2->vfptr);
             result = 1;
         }
@@ -2306,7 +2414,7 @@ void TRIBE_Game::notification(int notify_type, int val1, int val2, int val3, int
     char temp_str[256]; // [sp+114h] [bp-100h]@43
 
     v6 = this;
-    switch ( notify_type )
+    switch( notify_type )
     {
         case 126:
             if( val1 == this->world->curr_player )
@@ -3234,7 +3342,7 @@ int TRIBE_Game::load_game(char *fileName)
 LABEL_23:
             v11 = TPanel::panelName(v4);
             TPanelSystem::setCurrentPanel(&panel_system, v11, v86);
-            &panel_system->destroyPanel(aStatusScreen);
+            &panel_system->destroyPanel("Status Screen");
             RGE_Base_Game::enable_input((RGE_Base_Game *)&v2->vfptr);
             return 0;
         }
@@ -3836,7 +3944,7 @@ char *TRIBE_Game::create_game(int not_used)
             v9 = debug_rand(aCMsdevWorkA_41, 3293) % 10;
             if( v9 >= 2 )
             {
-                switch ( v9 )
+                switch( v9 )
                 {
                     case 2:
                         v10 = 3;
@@ -4279,7 +4387,7 @@ LABEL_22:
     if( this->comm_handler->MultiplayerGameStart() )
     {
         &panel_system->setCurrentPanel(aGameScreen, 0);
-        &panel_system->destroyPanel(aStatusScreen);
+        &panel_system->destroyPanel("Status Screen");
         goto LABEL_16;
     }
     v5 = (TRIBE_Screen_Wait *)operator new(0x4D8u);
@@ -4299,7 +4407,7 @@ LABEL_22:
     }
     v6->set_text(1108);
     TPanelSystem::setCurrentPanel(&panel_system, aMultiplayerWai, 0);
-    &panel_system->destroyPanel(aStatusScreen);
+    &panel_system->destroyPanel("Status Screen");
     (*(void (**)(TRIBE_Game *, signed int))&v2->gap8[4])(v1, 3);
 LABEL_16:
     &panel_system->destroyPanel(aSinglePlayerMe);
@@ -4313,13 +4421,14 @@ LABEL_16:
     &panel_system->destroyPanel(aMainMenu);
     &panel_system->destroyPanel(aCampaignSelect);
 
-    if( this->prog_mode != 3 )
+    if( this->prog_mode != 3 ){
         this->let_game_begin();
+    }
 
     return true;
 }
 
-bool TRIBE_Game::processCheatCode(int playerID, char *text)
+bool TRIBE_Game::processCheatCode( int playerID, char *text )
 {
     TRIBE_Game *v3; // ebp@1
     RGE_Player *v4; // eax@66
@@ -4639,132 +4748,147 @@ void TRIBE_Game::let_game_begin()
     signed int v41; // [sp+8h] [bp-850h]@11
     char *v42; // [sp+Ch] [bp-84Ch]@2
     char *v43; // [sp+Ch] [bp-84Ch]@11
-    char int_str[10]; // [sp+24h] [bp-834h]@41
-    char map_type_str[20]; // [sp+30h] [bp-828h]@2
-    char map_size_str[20]; // [sp+44h] [bp-814h]@11
-    char age_str[256]; // [sp+58h] [bp-800h]@34
-    char res_str[256]; // [sp+158h] [bp-700h]@26
-    char vic_str[256]; // [sp+258h] [bp-600h]@19
-    char str[1024]; // [sp+358h] [bp-500h]@18
-    char diff_str[256]; // [sp+758h] [bp-100h]@40
 
-    v1 = this;
-    TPanelSystem::setCurrentPanel(&panel_system, aGameScreen, 0);
-    &panel_system->destroyPanel(aStatusScreen);
-    &panel_system->destroyPanel(aMultiplayer);
+    char int_str[10];
+
+    char age_str[256];
+    char res_str[256];
+    char vic_str[256];
+    char str[1024];
+
+    &panel_system->setCurrentPanel("Game Screen", 0);
+    &panel_system->destroyPanel("Status Screen");
+    &panel_system->destroyPanel("Multiplayer");
+
     run_log(aGameStarted, 1);
-    switch ( TRIBE_Game::mapType(v1) )
-    {
-        case 0:
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v42 = map_type_str;
-            v40 = 10602;
-            break;
-        case 1:
-            v42 = map_type_str;
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v40 = 10603;
-            break;
-        case 2:
-            v42 = map_type_str;
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v40 = 10604;
-            break;
-        case 3:
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v42 = map_type_str;
-            v40 = 10605;
-            break;
-        case 4:
-            v42 = map_type_str;
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v40 = 10606;
-            break;
-        case 5:
-            v42 = map_type_str;
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v40 = 10607;
-            break;
-        case 6:
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v42 = map_type_str;
-            v40 = 10608;
-            break;
-        default:
-            v42 = map_type_str;
-            v2 = *(void (**)(TRIBE_Game *, signed int, char *, signed int))&v1->vfptr->gap8[24];
-            v40 = 10244;
-            break;
+
+    switch( this->mapType() ){
+
+    case 0:
+        v40 = 10602;
+        break;
+
+    case 1:
+        v40 = 10603;
+        break;
+
+    case 2:
+        v40 = 10604;
+        break;
+
+    case 3:
+        v40 = 10605;
+        break;
+
+    case 4:
+        v40 = 10606;
+        break;
+
+    case 5:
+        v40 = 10607;
+        break;
+
+    case 6:
+        v40 = 10608;
+        break;
+
+    default:
+        v40 = 10244;
+        break;
     }
-    v2(v1, v40, v42, 20);
-    switch ( TRIBE_Game::mapSize(v1) )
-    {
-        case 0:
-            v43 = map_size_str;
-            v41 = 10611;
-            break;
-        case 1:
-            v43 = map_size_str;
-            v41 = 10612;
-            break;
-        case 2:
-            v43 = map_size_str;
-            v41 = 10613;
-            break;
-        case 3:
-            v43 = map_size_str;
-            v41 = 10614;
-            break;
-        case 4:
-            v43 = map_size_str;
-            v41 = 10615;
-            break;
-        case 5:
-            v43 = map_size_str;
-            v41 = 10616;
-            break;
-        default:
-            v43 = map_size_str;
-            v41 = 10244;
-            break;
+
+    char map_type_str[20];
+    this->get_string(v40, map_type_str, sizeof(map_type_str));
+
+    char map_size_str[20];
+
+    switch( this->mapSize() ){
+
+    case 0:
+        v43 = map_size_str;
+        v41 = 10611;
+        break;
+
+    case 1:
+        v43 = map_size_str;
+        v41 = 10612;
+        break;
+
+    case 2:
+        v43 = map_size_str;
+        v41 = 10613;
+        break;
+
+    case 3:
+        v43 = map_size_str;
+        v41 = 10614;
+        break;
+
+    case 4:
+        v43 = map_size_str;
+        v41 = 10615;
+        break;
+
+    case 5:
+        v43 = map_size_str;
+        v41 = 10616;
+        break;
+
+    default:
+        v43 = map_size_str;
+        v41 = 10244;
+        break;
     }
-    v2(v1, v41, v43, 20);
-    sprintf(str, aRandomgameDRan, v1->save_random_game_seed, v1->save_random_map_seed, map_size_str, map_type_str);
+
+    this->get_string(v41, v43, sizeof(map_size_str));
+
+    sprintf(
+        str,
+        "    randomgame=%d, randommap=%d, mapsize=%s, maptype=%s",
+        this->save_random_game_seed,
+        this->save_random_map_seed,
+        map_size_str,
+        map_type_str);
+
     run_log(str, 0);
-    switch ( TRIBE_Game::victoryType(v1) )
-    {
-        case 0:
-            v3 = vic_str;
-            v4 = aDefault;
-            break;
-        case 7:
-            v5 = TRIBE_Game::victoryAmount(v1);
-            sprintf(vic_str, aTimeD, v5);
-            goto LABEL_25;
-        case 8:
-            v6 = TRIBE_Game::victoryAmount(v1);
-            sprintf(vic_str, aScoreD, v6);
-            goto LABEL_25;
-        case 9:
-            v3 = vic_str;
-            v4 = aStandard;
-            break;
-        default:
-            v3 = vic_str;
-            v4 = aUnknown;
-            break;
+
+    switch( this->victoryType() ){
+
+    case 0:
+        v3 = vic_str;
+        v4 = "Default";
+        break;
+
+    case 7:
+        v5 = this->victoryAmount();
+        sprintf(vic_str, "Time(%d)", v5);
+        goto LABEL_25;
+
+    case 8:
+        v6 = this->victoryAmount();
+        sprintf(vic_str, "Score(%d)", v6);
+        goto LABEL_25;
+
+    case 9:
+        v3 = vic_str;
+        v4 = "Standard";
+        break;
+
+    default:
+        v3 = vic_str;
+        v4 = "Unknown";
+        break;
     }
+
     strcpy(v3, v4);
-LABEL_25:
-    if( TRIBE_Game::deathMatch(v1) )
-    {
+
+    LABEL_25:
+    if( this->deathMatch() ){
         v7 = res_str;
         v8 = aDeathmatch;
-    }
-    else
-    {
-        switch ( TRIBE_Game::resourceLevel(v1) )
-        {
+    }else{
+        switch( this->resourceLevel() ){
+
             case 0:
                 v7 = res_str;
                 v8 = aDefault;
@@ -4787,43 +4911,46 @@ LABEL_25:
                 break;
         }
     }
+
     strcpy(v7, v8);
-    switch ( TRIBE_Game::startingAge(v1) )
-    {
-        case 0:
-            v9 = age_str;
-            v10 = aDefault;
-            break;
-        case 2:
-            v9 = age_str;
-            v10 = aStone;
-            break;
-        case 3:
-            v9 = age_str;
-            v10 = aTool;
-            break;
-        case 4:
-            v9 = age_str;
-            v10 = aBronze;
-            break;
-        case 5:
-            v9 = age_str;
-            v10 = aIron;
-            break;
-        default:
-            v9 = age_str;
-            v10 = aUnknown;
-            break;
+
+    switch( this->startingAge() ){
+
+    case 0:
+        v9 = age_str;
+        v10 = aDefault;
+        break;
+    case 2:
+        v9 = age_str;
+        v10 = aStone;
+        break;
+    case 3:
+        v9 = age_str;
+        v10 = aTool;
+        break;
+    case 4:
+        v9 = age_str;
+        v10 = aBronze;
+        break;
+    case 5:
+        v9 = age_str;
+        v10 = aIron;
+        break;
+    default:
+        v9 = age_str;
+        v10 = aUnknown;
+        break;
     }
+
     strcpy(v9, v10);
-    strcpy(diff_str, aUnknown);
-    v11 = RGE_Base_Game::difficulty((RGE_Base_Game *)&v1->vfptr);
-    v2(v1, v11 + 11216, diff_str, 256);
-    sprintf(str, aResourcesSAgeS, res_str, age_str, vic_str, diff_str);
+    char diff_str[256];
+    strcpy(diff_str, "Unknown");
+
+    this->get_string(this->difficulty() + 11216, diff_str, sizeof(diff_str));
+    sprintf(str, "    resources=%s, age=%s, victory=%s, difficulty=%s", res_str, age_str, vic_str, diff_str);
     run_log(str, 0);
-    v12 = RGE_Base_Game::fullVisibility((RGE_Base_Game *)&v1->vfptr);
-    v13 = TRIBE_Game::fullTechTree(v1);
-    sprintf(str, aFulltechDRevea, v13, v12);
+
+    sprintf(str, aFulltechDRevea, this->fullTechTree(), this->fullVisibility());
     run_log(str, 0);
     sprintf(str, aNumplayersD, v1->world->player_num - 1);
     v14 = strlen(aPlayers) + 1;
@@ -4891,7 +5018,7 @@ LABEL_25:
     if( v38 )
     {
         v39 = v38->music_type;
-        switch ( v39 )
+        switch( v39 )
         {
             case 1:
                 TMusic_System::play_tracks(v38, 5, 14, 1, 0, 0);
@@ -4917,60 +5044,59 @@ LABEL_25:
     RGE_Base_Game::enable_input((RGE_Base_Game *)&v1->vfptr);
 }
 
-int TRIBE_Game::start_scenario_editor(char *scenario_name_in, int is_multi_player_in)
+int TRIBE_Game::start_scenario_editor( char *scenario_name_in, int is_multi_player_in )
 {
-    TRIBE_Game *v3; // esi@1
-    TRIBE_Screen_Sed *v4; // eax@1
-    int v5; // eax@2
-    TMusic_System *v6; // ecx@6
-    int result; // eax@8
-    char *v8; // [sp-8h] [bp-1Ch]@10
+    this->disable_input();
 
-    v3 = this;
-    RGE_Base_Game::disable_input((RGE_Base_Game *)&this->vfptr);
-    &panel_system->destroyPanel(aScenarioEdit_0);
-    v4 = (TRIBE_Screen_Sed *)operator new(0x948u);
-    if( v4 )
-        v4->TRIBE_Screen_Sed(scenario_name_in, is_multi_player_in);
-    else
-        v5 = 0;
-    if( !v5 || *(_DWORD *)(v5 + 216) )
-    {
-        if( &panel_system->panel(aScenarioEdit_2) )
-        {
-            v8 = aScenarioEdit_2;
+    &panel_system->destroyPanel("Scenario Editor Screen");
+
+    TRIBE_Screen_Sed *v5 = new TRIBE_Screen_Sed(scenario_name_in, is_multi_player_in);
+    if( v5 == nullptr ||
+        v5->error_code != ErrorCode::None ){
+
+        char *v8;
+
+        switch( true ){
+
+        case &panel_system->panel("Scenario Editor Open"):
+            v8 = "Scenario Editor Open";
+            break;
+
+        case &panel_system->panel("Scenario Editor Menu"):
+            v8 = "Scenario Editor Menu";
+            break;
+
+        default:
+            v8 = "Blank Screen";
+            break;
         }
-        else if( @panel_system->panel(aScenarioEditor) )
-        {
-            v8 = aScenarioEditor;
+
+        &panel_system->setCurrentPanel(v8, 0);
+
+        &panel_system->destroyPanel("Scenario Editor Screen");
+        &panel_system->destroyPanel("Status Screen");
+
+        this->enable_input();
+
+        return false;
+
+    }else{
+        if( this->music_system ){
+            this->music_system->stop_track();
+            this->started_menu_music = 0;
         }
-        else
-        {
-            v8 = name;
-        }
-        TPanelSystem::setCurrentPanel(&panel_system, v8, 0);
-        &panel_system->destroyPanel(aScenarioEdit_0);
-        &panel_system->destroyPanel(aStatusScreen);
-        RGE_Base_Game::enable_input((RGE_Base_Game *)&v3->vfptr);
-        result = 0;
+        &panel_system->setCurrentPanel("Scenario Editor Screen", 0);
+
+        &panel_system->destroyPanel("Scenario Editor Open");
+        &panel_system->destroyPanel("Scenario Editor Menu");
+        &panel_system->destroyPanel("Status Screen");
+
+        this->mouse_pointer->center();
+
+        this->enable_input();
+
+        return true;
     }
-    else
-    {
-        v6 = v3->music_system;
-        if( v6 )
-        {
-            TMusic_System::stop_track(v6);
-            v3->started_menu_music = 0;
-        }
-        TPanelSystem::setCurrentPanel(&panel_system, aScenarioEdit_0, 0);
-        &panel_system->destroyPanel(aScenarioEdit_2);
-        &panel_system->destroyPanel(aScenarioEditor);
-        &panel_system->destroyPanel(aStatusScreen);
-        TMousePointer::center(v3->mouse_pointer);
-        RGE_Base_Game::enable_input((RGE_Base_Game *)&v3->vfptr);
-        result = 1;
-    }
-    return result;
 }
 
 void TRIBE_Game::send_game_options()
@@ -4987,23 +5113,20 @@ void TRIBE_Game::send_game_options()
 
 void TRIBE_Game::receive_game_options()
 {
-    if( this->comm_handler )
-    {
+    if( this->comm_handler ){
         unsigned int size = 0;
         char *v3 = this->comm_handler->GetMyGameOptions(&size);
         char *v4 = v3;
-        if( v3 )
-        {
-            if( size == 276 )
-            {
-                this->set_game_options((RGE_Base_Game::RGE_Game_Options *)v3);
+        if( v3 ){
+            if( size == 276 ){
+                this->set_game_options(v3);
                 this->set_tribe_options((TRIBE_Game::TRIBE_Game_Options *)(v4 + 168));
             }
         }
     }
 }
 
-void TRIBE_Game::set_tribe_options(TRIBE_Game::TRIBE_Game_Options *options)
+void TRIBE_Game::set_tribe_options( TRIBE_Game::TRIBE_Game_Options *options )
 {
     this->setMapSize(           options->mapSizeValue);
     this->setMapType(           options->mapTypeValue);
@@ -5023,15 +5146,15 @@ void TRIBE_Game::set_tribe_options(TRIBE_Game::TRIBE_Game_Options *options)
     i = 0;
     do
     {
-        this->setCivilization(  i, options->civilizationValue[i]);
+        this->setCivilization(  i, options->civilizationValue  [i]);
         this->setScenarioPlayer(i, options->scenarioPlayerValue[i]);
-        this->setPlayerColor(   i, options->playerColorValue[i]);
-        this->setComputerName(  i, options->computerNameValue[i]);
+        this->setPlayerColor(   i, options->playerColorValue   [i]);
+        this->setComputerName(  i, options->computerNameValue  [i]);
     }
     while( ++i < RGE_PLAYERS_COUNT );
 }
 
-void TRIBE_Game::get_tribe_options(TRIBE_Game::TRIBE_Game_Options *options)
+void TRIBE_Game::get_tribe_options( TRIBE_Game::TRIBE_Game_Options *options )
 {
     options->mapSizeValue            = this->mapSize();
     options->mapTypeValue            = this->mapType();
@@ -5059,15 +5182,11 @@ void TRIBE_Game::get_tribe_options(TRIBE_Game::TRIBE_Game_Options *options)
     while( ++i < RGE_PLAYERS_COUNT );
 }
 
-TRIBE_Game::MapSize TRIBE_Game::mapSize()
-{
-    return this->tribe_game_options.mapSizeValue;
-}
-
-void TRIBE_Game::setMapSize(TRIBE_Game::MapSize v)
+void TRIBE_Game::setMapSize( MapSize v )
 {
     int s;
-    switch ( this->tribe_game_options.mapSizeValue = v )
+
+    switch( this->tribe_game_options.mapSizeValue = v )
     {
         case 0:
             s = 72;
@@ -5096,207 +5215,8 @@ void TRIBE_Game::setMapSize(TRIBE_Game::MapSize v)
         default:
             return;
     }
+
     RGE_Base_Game::setMapSize(s, s, 8);
-}
-
-TRIBE_Game::MapType TRIBE_Game::mapType()
-{
-    return this->tribe_game_options.mapTypeValue;
-}
-
-void TRIBE_Game::setMapType(TRIBE_Game::MapType v)
-{
-    this->tribe_game_options.mapTypeValue = v;
-}
-
-int TRIBE_Game::animals()
-{
-    return this->tribe_game_options.animalsValue;
-}
-
-void TRIBE_Game::setAnimals(int v)
-{
-    this->tribe_game_options.animalsValue = v;
-}
-
-int TRIBE_Game::predators()
-{
-    return this->tribe_game_options.predatorsValue;
-}
-
-void TRIBE_Game::setPredators(int v)
-{
-    this->tribe_game_options.predatorsValue = v;
-}
-
-TRIBE_Game::VictoryType TRIBE_Game::victoryType()
-{
-    return this->tribe_game_options.victoryTypeValue;
-}
-
-int TRIBE_Game::victoryAmount()
-{
-    return this->tribe_game_options.victoryAmountValue;
-}
-
-void TRIBE_Game::setVictoryType(TRIBE_Game::VictoryType victory_type_in, int amount_in)
-{
-    this->tribe_game_options.victoryTypeValue = victory_type_in;
-
-    this->tribe_game_options.victoryAmountValue = amount_in;
-}
-
-int TRIBE_Game::civilization(int player_num)
-{
-    return this->tribe_game_options.civilizationValue[player_num];
-}
-
-void TRIBE_Game::setCivilization(int player_num, int civilization)
-{
-    this->tribe_game_options.civilizationValue[player_num] = civilization;
-}
-
-int TRIBE_Game::scenarioPlayer(int player_num)
-{
-    return this->tribe_game_options.scenarioPlayerValue[player_num];
-}
-
-void TRIBE_Game::setScenarioPlayer(int player_num, int scenario_player)
-{
-    this->tribe_game_options.scenarioPlayerValue[player_num] = scenario_player;
-}
-
-int TRIBE_Game::playerColor(int player_num)
-{
-    return this->tribe_game_options.playerColorValue[player_num];
-}
-
-void TRIBE_Game::setPlayerColor(int player_num, int color)
-{
-    this->tribe_game_options.playerColorValue[player_num] = color;
-}
-
-int TRIBE_Game::computerName(int player_num)
-{
-    return this->tribe_game_options.computerNameValue[player_num];
-}
-
-void TRIBE_Game::setComputerName(int player_num, int val)
-{
-    this->tribe_game_options.computerNameValue[player_num] = val;
-}
-
-int TRIBE_Game::allowTrading()
-{
-    return this->tribe_game_options.allowTradingValue;
-}
-
-int TRIBE_Game::longCombat()
-{
-    return this->tribe_game_options.longCombatValue;
-}
-
-int TRIBE_Game::randomizePositions()
-{
-    return this->tribe_game_options.randomizePositionsValue;
-}
-
-int TRIBE_Game::fullTechTree()
-{
-    return this->tribe_game_options.fullTechTreeValue;
-}
-
-TRIBE_Game::ResourceLevel TRIBE_Game::resourceLevel()
-{
-    return this->tribe_game_options.resourceLevelValue;
-}
-
-TRIBE_Game::Age TRIBE_Game::startingAge()
-{
-    return this->tribe_game_options.startingAgeValue;
-}
-
-int TRIBE_Game::startingUnits()
-{
-    return this->tribe_game_options.startingUnitsValue;
-}
-
-char TRIBE_Game::deathMatch()
-{
-    return this->tribe_game_options.deathMatchValue;
-}
-
-char TRIBE_Game::popLimit()
-{
-    if( RGE_Base_Game::multiplayerGame() )
-        return this->tribe_game_options.popLimitValue;
-    else
-        return 50;
-}
-
-char TRIBE_Game::quickStartGame()
-{
-    return this->quick_start_game;
-}
-
-int TRIBE_Game::randomStartValue()
-{
-    return this->random_start_value;
-}
-
-void TRIBE_Game::setAllowTrading(int val)
-{
-    this->tribe_game_options.allowTradingValue = val;
-}
-
-void TRIBE_Game::setLongCombat(int val)
-{
-    this->tribe_game_options.longCombatValue = val;
-}
-
-void TRIBE_Game::setRandomizePositions(int val)
-{
-    this->tribe_game_options.randomizePositionsValue = val;
-}
-
-void TRIBE_Game::setFullTechTree(int val)
-{
-    this->tribe_game_options.fullTechTreeValue = val;
-}
-
-void TRIBE_Game::setResourceLevel(TRIBE_Game::ResourceLevel val)
-{
-    this->tribe_game_options.resourceLevelValue = val;
-}
-
-void TRIBE_Game::setStartingAge(TRIBE_Game::Age val)
-{
-    this->tribe_game_options.startingAgeValue = val;
-}
-
-void TRIBE_Game::setStartingUnits(int val)
-{
-    this->tribe_game_options.startingUnitsValue = val;
-}
-
-void TRIBE_Game::setDeathMatch(char val)
-{
-    this->tribe_game_options.deathMatchValue = val;
-}
-
-void TRIBE_Game::setPopLimit(char val)
-{
-    this->tribe_game_options.popLimitValue = val;
-}
-
-void TRIBE_Game::setQuickStartGame(char val)
-{
-    this->quick_start_game = val;
-}
-
-void TRIBE_Game::setRandomStartValue(int val)
-{
-    this->random_start_value = val;
 }
 
 char aTemp_0[4] = "TEMP";
@@ -5516,7 +5436,7 @@ int TRIBE_Game::action_user_command(unsigned int val1, unsigned int val2)
     v4 = this->prog_mode;
     if( v4 == 3 )
     {
-        switch ( val1 )
+        switch( val1 )
         {
             case 0x17A8u:
             case 0x17A9u:
@@ -5526,7 +5446,7 @@ int TRIBE_Game::action_user_command(unsigned int val1, unsigned int val2)
             case 0x17B6u:
                 TRIBE_Game::quit_game(this);
                 &panel_system->destroyPanel(aMultiplayerWai);
-                &panel_system->destroyPanel(aStatusScreen);
+                &panel_system->destroyPanel("Status Screen");
                 v5 = (TEasy_Panel *)TPanelSystem::currentPanel(&panel_system);
                 if( v5 )
                     goto LABEL_13;
@@ -5538,7 +5458,7 @@ int TRIBE_Game::action_user_command(unsigned int val1, unsigned int val2)
                 RGE_Base_Game::setSinglePlayerGame((RGE_Base_Game *)&v3->vfptr, 1);
                 TRIBE_Game::quit_game(v3);
                 &panel_system->destroyPanel(aMultiplayerWai);
-                &panel_system->destroyPanel(aStatusScreen);
+                &panel_system->destroyPanel("Status Screen");
                 v6 = (TEasy_Panel *)TPanelSystem::currentPanel(&panel_system);
                 if( v6 )
                     TEasy_Panel::popupOKDialog(v6, 9673, 0, 450, 100);
@@ -5550,7 +5470,7 @@ int TRIBE_Game::action_user_command(unsigned int val1, unsigned int val2)
     }
     else if( v4 == 4 || v4 == 6 || v4 == 5 )
     {
-        switch ( val1 )
+        switch( val1 )
         {
             case 0x17B2u:
                 if( this->game_screen )
@@ -5659,7 +5579,12 @@ LABEL_13:
     return 1;
 }
 
-int TRIBE_Game::action_key_down(unsigned int key, int repeat_count, int ctrl_key, int alt_key, int shift_key)
+int TRIBE_Game::action_key_down(
+    unsigned int key,
+    int repeat_count,
+    int ctrl_key,
+    int alt_key,
+    int shift_key )
 {
     if( this->prog_mode == 1 )
     {
@@ -5678,14 +5603,13 @@ int TRIBE_Game::action_key_down(unsigned int key, int repeat_count, int ctrl_key
 
         return false;
     }
-    if( key == VK_F1 )
-    {
+
+    if( key == VK_F1 ){
         if( this->multiplayerGame() == 0 ||
             this->prog_mode != 4 &&
             this->prog_mode != 6 &&
             this->prog_mode != 7 &&
-            this->prog_mode != 5 )
-        {
+            this->prog_mode != 5 ){
             WinHelp(this->prog_window, "empires.hlp", HELP_CONTENTS, NULL);
         }
         return false;
@@ -5695,8 +5619,7 @@ int TRIBE_Game::action_key_down(unsigned int key, int repeat_count, int ctrl_key
 
 bool TRIBE_Game::action_close()
 {
-    if( this->comm_handler )
-    {
+    if( this->comm_handler ){
         this->disconnect_multiplayer_game();
         this->prog_mode = 0;
     }
@@ -5707,31 +5630,25 @@ char __S9__1__calc_timing_text_TRIBE_Game__UAEXXZ_4EA[272];
 
 char *TRIBE_Game::game_over_msg()
 {
-    if( this->world->players[this->world->curr_player]->game_status == 1 )
-    {
+    if( this->world->players[this->world->curr_player]->game_status == 1 ){
         (*(void (__stdcall **)(signed int, signed int, signed int))&this->vfptr->gap8[24])(1150, 8830176, 256);
         return __S9__1__calc_timing_text_TRIBE_Game__UAEXXZ_4EA + 16;
-    }
-    else
-    {
+    }else{
         (*(void (__stdcall **)(signed int, signed int, signed int))&this->vfptr->gap8[24])(1151, 8830176, 256);
         return __S9__1__calc_timing_text_TRIBE_Game__UAEXXZ_4EA + 16;
     }
 }
 
-int TRIBE_Game::get_achievement_info(char achievement, char **info)
+int TRIBE_Game::get_achievement_info( char achievement, char **info )
 {
-    if( this->world )
-    {
+    if( this->world ){
         return this->world->get_achievement(achievement, info);
-    }
-    else
-    {
+    }else{
         return NULL;
     }
 }
 
-int TRIBE_Game::randomComputerName(int civ)
+int TRIBE_Game::randomComputerName( int civ )
 {
     int v2; // esi@1
     TRIBE_Game *v3; // ebp@1
@@ -5781,10 +5698,14 @@ void TRIBE_Game::resetRandomComputerName()
     memset(this->computerNameUsed, 0, sizeof(TRIBE_Game::computerNameUsed);
 }
 
-int TRIBE_Game::video_wnd_proc(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+int TRIBE_Game::video_wnd_proc(
+    HWND *hWnd,
+    UINT msg,
+    WPARAM wParam,
+    LPARAM lParam )
 {
-    switch( msg )
-    {
+    switch( msg ){
+
     case 512:
         SetCursor(0);
         return 0;
@@ -5795,11 +5716,20 @@ int TRIBE_Game::video_wnd_proc(HWND *hwnd, UINT msg, WPARAM wParam, LPARAM lPara
         return 0;
 
     default:
-        return CallWindowProcA(this->old_video_wnd_proc, hwnd, msg, wParam, lParam);
+        return CallWindowProcA(
+            this->old_video_wnd_proc,
+            hWnd,
+            msg,
+            wParam,
+            lParam);
     }
 }
 
-void TRIBE_Game::SetClickTables(MouseClickInfo *RC, int RCS, MouseClickInfo *LC, int LCS)
+void TRIBE_Game::SetClickTables(
+    MouseClickInfo *RC,
+    int RCS,
+    MouseClickInfo *LC,
+    int LCS )
 {
     this->MouseRightClickTable     = RC;
     this->MouseRightClickTableSize = RCS;
@@ -5809,16 +5739,13 @@ void TRIBE_Game::SetClickTables(MouseClickInfo *RC, int RCS, MouseClickInfo *LC,
 
 void TRIBE_Game::set_interface_messages()
 {
-    if( this->prog_info->interface_style == 1 )
-    {
+    if( this->prog_info->interface_style == 1 ){
         this->SetClickTables(
             &Tribe1btnMouseRightClickTable,
             Tribe1btnMouseRightClickTableSize,
             &Tribe1btnMouseLeftClickTable,
             Tribe1btnMouseLeftClickTableSize);
-    }
-    else
-    {
+    }else{
         this->SetClickTables(
             &Tribe2btnMouseRightClickTable,
             Tribe2btnMouseRightClickTableSize,
@@ -5829,8 +5756,9 @@ void TRIBE_Game::set_interface_messages()
 
 int TRIBE_Game::setup_video_system()
 {
-    if( this->video_setup )
+    if( this->video_setup ){
         return true;
+    }
 
     &panel_system->setCurrentPanel("Blank Screen", 0);
 
@@ -5840,8 +5768,8 @@ int TRIBE_Game::setup_video_system()
     this->video_hi_color = 0;
     this->video_save_palette = this->draw_system->Pal;
 
-    if( this->draw_system->ScreenMode == 2 )
-    {
+    if( this->draw_system->ScreenMode == 2 ){
+
         SetCursor((HCURSOR)NULL);
         SetClassLongA(this->prog_window, -12, 0);
 
@@ -5850,30 +5778,24 @@ int TRIBE_Game::setup_video_system()
         this->video_save_res_wid = this->draw_system->ScreenWidth;
         this->video_save_res_hgt = this->draw_system->ScreenHeight;
 
-        if( !this->check_prog_argument("8BITVIDEO") )
-        {
-            if( this->draw_system->IsModeAvail(640, 480, 16) )
-            {
+        if( this->check_prog_argument("8BITVIDEO") != true ){
+            if( this->draw_system->IsModeAvail(640, 480, 16) ){
+
                 L->Log("640x480 16bit success");
 
-                if( this->video_changed_res = this->draw_system->SetDisplaySize(640, 480, 16) )
-                {
+                if( this->video_changed_res = this->draw_system->SetDisplaySize(640, 480, 16) ){
                     this->video_double_size = 1;
                     this->video_hi_color = 1;
 
                     L->Log("640x480 16bit success");
                 }
             }
-            if( !this->video_changed_res )
-            {
-                if( this->draw_system->ScreenWidth != 640 )
-                {
-                    if( this->draw_system->IsModeAvail(640, 480, 8) )
-                    {
+            if( this->video_changed_res != true ){
+                if( this->draw_system->ScreenWidth != 640 ){
+                    if( this->draw_system->IsModeAvail(640, 480, 8) ){
                         L->Log("640x480 8bit success");
 
-                        if( this->video_changed_res = this->draw_system->SetDisplaySize(640, 480, 8) )
-                        {
+                        if( this->video_changed_res = this->draw_system->SetDisplaySize(640, 480, 8) ){
                             this->video_double_size = 1;
 
                             L->Log("640x480 8bit success");
@@ -5894,10 +5816,10 @@ int TRIBE_Game::setup_video_system()
 
 void TRIBE_Game::shutdown_video_system()
 {
-    if( this->video_setup )
-    {
-        if( this->video_changed_res )
-        {
+    if( this->video_setup ){
+
+        if( this->video_changed_res ){
+
             this->draw_system->SetDisplaySize(this->video_save_res_wid, this->video_save_res_hgt, 8);
             this->draw_system->ClearPrimarySurface();
             this->draw_system->SetPalette(this->video_save_palette);
@@ -5921,10 +5843,10 @@ void TRIBE_Game::shutdown_video_system()
 
 void TRIBE_Game::disconnect_multiplayer_game()
 {
-    if( this->multiplayerGame() )
-    {
-        switch( this->prog_mode )
-        {
+    if( this->multiplayerGame() ){
+
+        switch( this->prog_mode ){
+
         case 4:
         case 6:
         case 7:
@@ -5960,9 +5882,7 @@ void TRIBE_Game::disconnect_multiplayer_game()
 
             break;
         }
-    }
-    else
-    {
+    }else{
         this->comm_handler->GameOver();
     }
 }
@@ -5971,11 +5891,13 @@ void TRIBE_Game::add_notification_loc(int x, int y)
 {
     if( this->current_notification_loc < 0 ||
         this->notification_loc_x[this->current_notification_loc] != x ||
-        this->notification_loc_y[this->current_notification_loc] != y )
-    {
+        this->notification_loc_y[this->current_notification_loc] != y ){
+
         this->current_notification_loc++;
-        if( this->current_notification_loc >= 5 )
+
+        if( this->current_notification_loc >= 5 ){
             this->current_notification_loc = 0;
+        }
 
         this->notification_loc_x[this->current_notification_loc] = x;
         this->notification_loc_y[this->current_notification_loc] = y;
@@ -5985,26 +5907,31 @@ void TRIBE_Game::add_notification_loc(int x, int y)
 
 void TRIBE_Game::goto_notification_loc()
 {
-    if( this->current_notification_recalled != -1 )
-    {
+    if( this->current_notification_recalled != -1 ){
+
         int x = this->notification_loc_x[this->current_notification_recalled];
         int y = this->notification_loc_y[this->current_notification_recalled];
 
         this->current_notification_recalled--;
-        if( this->current_notification_recalled < 0 )
+
+        if( this->current_notification_recalled < 0 ){
             this->current_notification_recalled = 4;
+        }
 
         if( this->notification_loc_x[this->current_notification_recalled] == -1 ||
-            this->notification_loc_y[this->current_notification_recalled] == -1 )
+            this->notification_loc_y[this->current_notification_recalled] == -1 ){
             this->current_notification_recalled = this->current_notification_loc;
+        }
 
-        RGE_Player *player = this->get_player();
-
-        player->set_view_loc((double)x, (double)y);
+        this->get_player()->set_view_loc((double)x, (double)y);
     }
 }
 
-video_sub_wnd_proc(HWND *wnd, UINT msg, WPARAM wparam, LPARAM lparam)
+video_sub_wnd_proc(
+    HWND *hWnd,
+    UINT msg,
+    WPARAM wParam,
+    LPARAM lParam )
 {
-    return rge_base_game->video_wnd_proc(wnd, msg, wparam, lparam);
+    return rge_base_game->video_wnd_proc(hWnd, msg, wParam, lParam);
 }

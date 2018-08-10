@@ -1,8 +1,8 @@
 
 /**
- * @file    Engine\TRB\BuildingObject.hpp
+ * @file    Engine\TRB\Object_Building.hpp
  * @author  Yvan Burrie
- * @date    2018/02/22
+ * @date    2018/08/08
  * @version 1.0
  */
 
@@ -37,15 +37,18 @@ public:
         PriorTurn2,
         PriorTurn3;
 
-    TRIBE_Building_Object(TRIBE_Master_Building_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int uID, int do_setup);
-    TRIBE_Building_Object(TRIBE_Master_Building_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int do_setup);
-    TRIBE_Building_Object(int infile, RGE_Game_World *gworld, int do_setup);
+    TRIBE_Building_Object(TRIBE_Master_Building_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, int uID, bool do_setup);
+
+    TRIBE_Building_Object(TRIBE_Master_Building_Object *tobj, RGE_Player *obj_owner, float x, float y, float z, bool do_setup);
+
+    TRIBE_Building_Object(int infile, RGE_Game_World *gworld, bool do_setup);
 
     ~TRIBE_Building_Object();
 
     void recycle_out_of_game();
 
     int setup(TRIBE_Master_Building_Object *tobj, RGE_Player *obj_owner, float x, float y, float z);
+
     int setup(int infile, RGE_Game_World *gworld);
 
     void take_building_attribute_from_owner();
