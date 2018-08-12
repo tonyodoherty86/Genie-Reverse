@@ -2,7 +2,7 @@
 /**
  * @file    Engine\AsmDraw.h
  * @author  Yvan Burrie
- * @date    2018/08/05
+ * @date    2018/08/12
  * @version 1.0
  */
 
@@ -12,7 +12,6 @@
 
 /**************************************************************************************************\
  * @brief Assigns the shadow info.
- *
  * @return void
  */
 void ASMSet_Shadowing(
@@ -23,7 +22,6 @@ void ASMSet_Shadowing(
 
 /**************************************************************************************************\
  * @brief Initiates the draw system.
- *
  * @return void
  */
 void ASMSet_Surface_Info(
@@ -37,22 +35,31 @@ void ASMSet_Surface_Info(
 
 /**************************************************************************************************\
  * @brief Assigns the cross-form mask.
- *
  * @param unsigned int XformMask
  * @return void
  */
 void ASMSet_Color_Xform( unsigned int XformMask );
 
 /**************************************************************************************************\
- * @brief Retrieves the cross-form mask.
+ * @brief
+ * @return void
  *
+ * sub_6328A0 (AOC)
+ */
+void ASMSet_Color_XformEx( unsigned int a1, unsigned int a2 );
+
+/**************************************************************************************************\
+ * @brief Retrieves the cross-form mask.
  * @return int
  */
 int ASMGet_Color_Xform( void );
 
+int ASMGet_Color_Xform2( void );
+
+int ASMGet_Color_Xform3( void );
+
 /**************************************************************************************************\
  * @brief Assigns the cross-late table.
- *
  * @param int ColorTable
  * @return void
  */
@@ -60,14 +67,12 @@ void ASMSet_Xlate_Table( int ColorTable );
 
 /**************************************************************************************************\
  * @brief Retrieves the cross-late table.
- *
  * @return int
  */
 int ASMGet_Xlate_Table( void );
 
 /**************************************************************************************************\
  * @brief Draws a horizontal line.
- *
  * @param int x1 The start of X ordinate.
  * @param int x2 The end of X ordinate.
  * @param int y1 The Y ordinate.
@@ -77,7 +82,6 @@ void ASMDraw_HLine( int x1, int x2, int y1 );
 
 /**************************************************************************************************\
  * @brief Draws the sprite from a shape.
- *
  * @return void
  */
 void ASMDraw_Sprite(
@@ -88,4 +92,23 @@ void ASMDraw_Sprite(
     int DrawH,
     int ShapeDataOffsets,
     int ShapeLineOffsets,
-    int DrawFlag);
+    int DrawFlag );
+
+/**************************************************************************************************/
+unsigned int sub_634100( void *a1 );
+
+/**************************************************************************************************\
+ * sub_6341A0 (AOC)
+ */
+void **sub_6341A0( VSpan_Node *a1, int x, int y );
+
+/**************************************************************************************************/
+int sub_6341E0(
+    int ShapeBase,
+    int DrawX,
+    int DrawY,
+    int ShapeSizeX,
+    int ShapeSizeY,
+    int ShapeDataOffsets,
+    int ShapeOutlineOffset,
+    char Flag );
