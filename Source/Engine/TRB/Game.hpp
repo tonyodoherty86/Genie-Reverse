@@ -164,7 +164,7 @@ public:
     void *handleIdleLock;
     int inHandleIdle;
 
-    TRIBE_Game( RGE_Prog_Info *prog_info_in, bool do_setup );
+    TRIBE_Game( RGE_Prog_Info *prog_info_in, bool do_setup = true );
 
     ~TRIBE_Game();
 

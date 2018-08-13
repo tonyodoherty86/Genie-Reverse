@@ -18,7 +18,7 @@ public:
 
     ~TRIBE_Diamond_Map_View();
 
-    void set_redraw(TPanel::RedrawMode redraw_mode);
+    void set_redraw(RedrawMode redraw_mode);
 
     void draw_objects();
 
