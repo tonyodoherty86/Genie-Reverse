@@ -2,7 +2,7 @@
 /**
  * @file    Engine\CommServices.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/08/10
  * @version 1.0
  */
 
@@ -40,7 +40,7 @@ public:
     void SetServiceActive(int id, int state);
 };
 
-static int DPEnumCallback(
+int DPEnumCallback(
     GUID *pid,
     char *szName,
     unsigned int major_ver,

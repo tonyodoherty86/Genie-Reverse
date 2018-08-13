@@ -2,7 +2,7 @@
 /**
  * @file    Engine\DrawArea.cpp
  * @author  Yvan Burrie
- * @date    2018/06/23
+ * @date    2018/08/11
  * @version 1.0
  */
 
@@ -123,15 +123,16 @@ DrawAreaNode *TDrawArea::Init(
 
 char TDrawArea::CheckSurface()
 {
-    HRESULT ddres;
-
     if( this->DrawSystem == nullptr ||
         this->DrawSystem->DrawType != 2 ){
         return 0;
     }
+
     if( this->DrawSurface == nullptr ){
         return 3;
     }
+
+    HRESULT ddres;
     ddres = this->DrawSurface->IsLost();
     if( ddres == DD_OK ){
         return 0;
@@ -150,8 +151,6 @@ char TDrawArea::CheckSurface()
         ddres = this->DrawSurface->Restore();
         if( ddres ){
             if( (ddres == -2005532085 || ddres == -2147024882) && (this->DrawSurface->Release(),
-                this->Height,
-                this->Width,
                 this->DrawSurface = 0,
                 this->SetSize(this->Width, this->Height, 0),
                 this->DrawSurface) ){
@@ -174,7 +173,7 @@ char TDrawArea::CheckSurface()
                 DDBLT_COLORFILL|DDBLT_WAIT,
                 &ddbltfx);
 
-            this->Restored = 1;
+            this->Restored = true;
 
             return 2;
         }
@@ -183,7 +182,7 @@ char TDrawArea::CheckSurface()
     }
 }
 
-char *TDrawArea::Lock(char *caller_name, int wait)
+char *TDrawArea::Lock( const char *caller_name, int wait )
 {
     if( this->DrawSystem &&
         this->DrawSystem->DrawType == 1 ){
@@ -214,7 +213,7 @@ char *TDrawArea::Lock(char *caller_name, int wait)
     return this->Bits;
 }
 
-void TDrawArea::Unlock(char *caller_name)
+void TDrawArea::Unlock( const char *caller_name )
 {
     if( this->DrawSystem == NULL ||
         this->DrawSystem->DrawType != 1 &&
@@ -227,7 +226,7 @@ void TDrawArea::Unlock(char *caller_name)
     }
 }
 
-HDC *TDrawArea::GetDc(char *caller_name)
+HDC *TDrawArea::GetDc( const char *caller_name )
 {
     if( this->DrawSystem &&
         this->DrawSystem->DrawType == 1 ){
@@ -249,12 +248,12 @@ HDC *TDrawArea::GetDc(char *caller_name)
     }
 }
 
-void TDrawArea::ReleaseDc(char *caller_name)
+void TDrawArea::ReleaseDc( const char *caller_name )
 {
     if( this->DrawSystem == nullptr ||
         this->DrawSystem->DrawType != 1 &&
-        this->DrawSurface != nullptr &&
-        this->DrawDc != nullptr ){
+        this->DrawSurface &&
+        this->DrawDc ){
 
         this->DrawSurface->ReleaseDC(*this->DrawDc);
 
@@ -262,14 +261,13 @@ void TDrawArea::ReleaseDc(char *caller_name)
     }
 }
 
-void TDrawArea::SetSize(int wid_in, int hgt_in, int ExtendSurface)
+void TDrawArea::SetSize( int wid_in, int hgt_in, int ExtendSurface )
 {
     int v6;
     int v7;
     int v8;
     char *v12;
     int v14;
-    int *v16;
 
     HRESULT ddres;
     DDBLTFX ddbltfx;
@@ -334,7 +332,6 @@ void TDrawArea::SetSize(int wid_in, int hgt_in, int ExtendSurface)
                 nullptr);
             if( ddres == DD_OK ){
 
-                v16 = *(int **)v12;
                 this->SurfaceDesc.dwSize = sizeof(DDSURFACEDESC);
 
                 ddres = this->DrawSurface->GetSurfaceDesc(&this->SurfaceDesc);
@@ -374,7 +371,7 @@ void TDrawArea::SetSize(int wid_in, int hgt_in, int ExtendSurface)
     this->CurSpanList = this->SpanList;
 }
 
-void TDrawArea::Clear(RECT *rect, int color)
+void TDrawArea::Clear( RECT *rect, int color )
 {
     char *v13;
     int v14;
@@ -475,7 +472,7 @@ void TDrawArea::Clear(RECT *rect, int color)
     }
 }
 
-void TDrawArea::PtrClear(RECT *rect, int color)
+void TDrawArea::PtrClear( RECT *rect, int color )
 {
     void **SrcP;
 
@@ -677,12 +674,6 @@ void TDrawArea::SetClipRect(RECT *rect)
     int v7; // eax@12
     int v8; // edx@14
     int v9; // eax@16
-    int v10; // eax@18
-    int v11; // edx@18
-    int v12; // eax@20
-    int v13; // edx@20
-    int v14; // edx@22
-    int v15; // eax@22
 
     if( rect ){
         this->ClipRect = *rect;
@@ -808,7 +799,6 @@ void TDrawArea::Copy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rec
     int v35; // eax@40
     int v36; // eax@47
     int v37; // ecx@49
-    TDrawSystem *v38; // ecx@50
     RECT src_rect2; // [sp+10h] [bp-20h]@21
     RECT dest_rect2; // [sp+20h] [bp-10h]@23
 
@@ -1011,7 +1001,6 @@ void TDrawArea::Copy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rec
 
 void TDrawArea::PtrCopy(TDrawArea *dest_area, int dest_x, int dest_y, RECT *src_rect)
 {
-    int v11; // eax@7
     char *v15; // esi@21
     char *v16; // edi@21
     int v17; // ecx@21
@@ -1297,7 +1286,7 @@ void TDrawArea::PtrSurfaceCopy(TDrawArea *dest_area, int dest_x, int dest_y, REC
                                     {
                                         v17 = (char *)SrcP[YofS] + XofSa;
                                         v18 = (char *)DestP[YofD] + dest_x;
-                                        if( *v18 ^ *v17 & 3 )
+                                        if( (*v18 ^ *v17) & 3 )
                                         {
                                             memcpy(v18, v17, nWidth);
                                         }
@@ -1601,13 +1590,9 @@ void TDrawArea::DrawRect(int x1, int y1, int x2, int y2, char color)
     int v7; // edi@1
     int v8; // ebx@3
     int v9; // esi@3
-    int v10; // edi@5
-    int v11; // esi@6
-    TDrawArea *v12; // [sp+10h] [bp-4h]@1
 
     v6 = x1;
     v7 = x2;
-    v12 = this;
     if( x1 > x2 )
     {
         v6 = x2;
@@ -1622,10 +1607,10 @@ void TDrawArea::DrawRect(int x1, int y1, int x2, int y2, char color)
         y2 = y1;
         v9 = y1;
     }
-    v10 = v7 - v6 + 1;
+    int v10 = v7 - v6 + 1;
     if( v10 >= 1 )
     {
-        v11 = v9 - v8 + 1;
+        int v11 = v9 - v8 + 1;
         if( v11 >= 1 )
         {
             this->DrawHorzLine(v6, v8, v10, color);
@@ -1978,7 +1963,17 @@ void TDrawArea::DrawBevel21(int x1, int y1, int x2, int y2, char c1, char c2, ch
     }
 }
 
-void TDrawArea::DrawBevel32(int x1, int y1, int x2, int y2, char c1, char c2, char c3, char c4, char c5, char c6)
+void TDrawArea::DrawBevel32(
+    int x1,
+    int y1,
+    int x2,
+    int y2,
+    char c1,
+    char c2,
+    char c3,
+    char c4,
+    char c5,
+    char c6)
 {
     int v12 = x2;
     if( x1 > x2 )
@@ -2024,7 +2019,6 @@ void TDrawArea::SetShadowTable(RGE_Color_Table *color_table_in)
 void TDrawArea::DrawShadowBox(int x1, int y1, int x2, int y2)
 {
     char *v16;
-    int v17;
 
     if( this->shadow_color_table && this->Bits )
     {
@@ -2052,7 +2046,7 @@ void TDrawArea::DrawShadowBox(int x1, int y1, int x2, int y2)
             int v10 = this->Orien * this->AlignedWidth();
             int v11 = this->Orien >= 1 ? y1 * v10 : v10 * (y1 - this->Height + 1);
             int v12 = (int)(&this->Bits[x1] + v11);
-            unsigned int v13 = x2 + v12 - x1;
+            int v13 = x2 + v12 - x1;
             int v14 = (int)this->shadow_color_table->table;
             if( y1 <= v6 )
             {
@@ -2064,10 +2058,10 @@ void TDrawArea::DrawShadowBox(int x1, int y1, int x2, int y2)
                     {
                         do
                         {
-                            v17 = *v16++;
+                            int v17 = *v16++;
                             *(v16 - 1) = *(char *)(v14 + v17);
                         }
-                        while( (unsigned int)v16 <= v13 );
+                        while( (int)v16 <= v13 );
                     }
                     v12 += v10;
                     v13 += v10;

@@ -283,7 +283,14 @@ struct Shape_Load
 {
     char version[4];
 
-    int unk2;
+    int num_shapes;
 
     Shape_Offsets *offsets;
+
+    int gap1[4];
+
+    /**
+     * Offset: 32.
+     */
+    Shape_Info *info;
 };

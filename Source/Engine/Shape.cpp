@@ -2,31 +2,28 @@
 /**
  * @file    Engine\Shape.cpp
  * @author  Yvan Burrie
- * @date    2018/07/29
+ * @date    2018/08/12
  * @version 1.0
  */
+
+int Shape_Loads;
 
 int SDI_Object_ID;
 
 int SDI_Draw_Line;
 
-int ASM_Fast_Count;
-
-int Shape_Loads;
-
 int SDI_Draw_Level;
-
-int fog_next_shape;
 
 int SDI_Capture_Info;
 
 DClipInfo_List *SDI_List;
 
+int fog_next_shape;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 TShape::TShape( char *filename, int resource_file_id )
 {
-    TShape *v3; // ebp@1
     int v4; // ebx@2
     int v5; // eax@3
     int v6; // esi@3
@@ -50,19 +47,19 @@ TShape::TShape( char *filename, int resource_file_id )
 
         char NextFile[260];
 
-        color_log(84, 84, 1);
         strcpy(NextFile, filename);
         strcpy(&NextFile[strlen(NextFile) - 3], aSlp);
 
         Shape_Loads++;
 
-        v5 = open(NextFile, 0x8000);
-        v6 = v5;
-        if( v5 != -1 ){
-            lseek(v5, 0, 2);
-            v7 = _tell(v6);
-            this->FShape = (SLhape_File_Header *)malloc(v7);
-            lseek(v6, 0, 0);
+        int hFile = open(NextFile, 0x8000);
+        v6 = hFile;
+        if( hFile != -1 ){
+
+            lseek(hFile, 0, SEEK_END);
+            int v7 = tell(v6);
+            this->FShape = new SLhape_File_Header;
+            lseek(v6, 0, SEEK_SET);
             read(v6, this->FShape, v7);
             close(v6);
             v8 = this->FShape;
@@ -74,24 +71,23 @@ TShape::TShape( char *filename, int resource_file_id )
         if( this->FShape == nullptr ){
 
             strcpy(&NextFile[strlen(NextFile) - 3], aShp);
-            v9 = _open(NextFile, 0x8000);
+            v9 = open(NextFile, 0x8000);
             v10 = v9;
-            if( v9 != -1 )
-            {
-                lseek(v9, 0, 2);
-                v11 = _tell(v10);
-                this->shape = (char *)malloc(v11);
-                lseek(v10, 0, 0);
+            if( v9 != -1 ){
+
+                lseek(v9, 0, SEEK_END);
+                v11 = tell(v10);
+                this->shape = (Shape_Load *)malloc(v11);
+                lseek(v10, 0, SEEK_SET);
                 read(v10, this->shape, v11);
-                _close(v10);
-                v12 = this->shape;
+                close(v10);
+
                 this->head = (Shape_File_Header *)this->shape;
-                this->offsets = (Shape_Offsets *)(v12 + 8);
+                this->offsets = this->shape->offsets;
                 this->load_type = 1;
                 this->load_size = v11;
             }
         }
-        color_log(84, 95, 1);
     }
 
     if( this->FShape == nullptr &&
@@ -112,9 +108,10 @@ TShape::TShape( char *filename, int resource_file_id )
 
             if( this->shape->version == SHAPE_HEADER_VERSION ){
 
-                this->head = (Shape_File_Header *)this->shape;
+                this->head    = (Shape_File_Header *)this->shape;
                 this->offsets = this->shape->offsets;
             }
+
         }else{
 
             res_load = RESFILE_load(
@@ -125,9 +122,9 @@ TShape::TShape( char *filename, int resource_file_id )
 
             if( this->shape = resload ){
 
-                this->FShape = (SLhape_File_Header *)res_load;
-                this->shape = nullptr;
-                this->shape_info = (Shape_Info *)(res_load + 32);
+                this->FShape     = (SLhape_File_Header *)res_load;
+                this->shape      = nullptr;
+                this->shape_info = res_load->info;
             }
         }
     }
@@ -137,9 +134,7 @@ TShape::TShape( char *filename, int resource_file_id )
 
 TShape::~TShape()
 {
-    if( this->FShape ){
-
-        /* Destroy SLP */
+    if( this->FShape ){/* Destroy SLP */
 
         switch( this->load_type ){
 
@@ -148,14 +143,14 @@ TShape::~TShape()
             break;
 
         case 0:
-            RESFILE_Decommit_Mapped_Memory(this->FShape->Version, this->load_size);
+            RESFILE_Decommit_Mapped_Memory(
+                this->FShape->Version,
+                this->load_size);
             break;
         }
     }
 
-    if( this->shape ){
-
-        /* Destroy SHP */
+    if( this->shape ){/* Destroy SHP */
 
         switch( this->load_type ){
 
@@ -164,7 +159,9 @@ TShape::~TShape()
             break;
 
         case 0:
-            RESFILE_Decommit_Mapped_Memory(this->shape, this->load_size);
+            RESFILE_Decommit_Mapped_Memory(
+                this->shape,
+                this->load_size);
             break;
         }
     }
@@ -202,7 +199,7 @@ bool TShape::Check_shape( int shape_num )
     case this->FShape && shape_num >= 0 && shape_num >= this->FShape->Num_Shapes:
         return true;
 
-    /* SHP is valid */
+    /* SHP/SLP is valid */
     default:
         return false;
     }
@@ -212,7 +209,8 @@ bool TShape::Check_shape( int shape_num )
 
 bool TShape::is_loaded()
 {
-    return this->shape || this->FShape;
+    return this->shape ||
+           this->FShape;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,11 +244,9 @@ int TShape::shape_count()
         return 0;
     }
 
-    int *v3 = (int *)this->FShape->Version;
-    if( !v3 )
-        v3 = &this->head->version;
-
-    return v3[1];
+    if( this->FShape ){
+        return this->head->shape_num;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -697,6 +693,7 @@ bool TShape::shape_draw(
                 switch( flags ){
 
                 case 0:
+
                     return this->shape_draw_clipped(
                         v20,
                         v23,
@@ -707,6 +704,7 @@ bool TShape::shape_draw(
                         v25);
 
                 case 1:
+
                     if( color_table ){
                         return this->shape_color_trans_clipped(
                             v20,
@@ -722,6 +720,7 @@ bool TShape::shape_draw(
                     break;
 
                 case 2:
+
                     if( color_table ){
                         return this->shape_shadow_clipped(
                             v20,
@@ -2020,24 +2019,26 @@ bool TShape::shape_mirror(
     int clip_x1; // [sp+34h] [bp+8h]@13
     int clip_x0; // [sp+38h] [bp+Ch]@13
 
-    v7 = this;
-
     if( shape_num < 0 || this->Check_shape(shape_num) != false ){
         return false;
     }
 
-    v8 = v7->FShape;
+    v8 = this->FShape;
     if( this->FShape == nullptr ){
 
         v20 = drawarea;
+
         rect_l = drawarea->ClipRect.left;
         rect_t = drawarea->ClipRect.top;
         rect_r = drawarea->ClipRect.right;
         rect_b = drawarea->ClipRect.bottom;
-        if( v7->shape )
-        {
-            v21 = (int)&v7->shape[v7->offsets[shape_num].shape];
-            v7->shape_header = (Shape_Header *)v21;
+
+        if( this->shape ){
+
+            v21 = (int)&this->shape[this->offsets[shape_num].shape];
+
+            this->shape_header = (Shape_Header *)v21;
+
             v22 = x - *(_DWORD *)(v21 + 16);
             v23 = y + *(_DWORD *)(v21 + 12);
             v24 = x - *(_DWORD *)(v21 + 8);
@@ -2047,6 +2048,7 @@ bool TShape::shape_mirror(
             drawareaa = (TDrawArea *)v24;
             shape_y1 = v25;
             clip_x0 = v25;
+
             if( v22 < rect_l )
                 clip_x1 = rect_l;
             if( v23 < rect_t )
@@ -2059,14 +2061,16 @@ bool TShape::shape_mirror(
                 clip_x1 = 0;
             if( clip_y0 < 0 )
                 clip_y0 = 0;
+
             v26 = v20->Width;
             if( (signed int)drawareaa >= v26 )
                 drawareaa = (TDrawArea *)(v26 - 1);
             v27 = v20->Height;
             if( clip_x0 >= v27 )
                 clip_x0 = v27 - 1;
-            if( (signed int)drawareaa >= clip_x1 && clip_x0 >= clip_y0 )
-            {
+
+            if( (signed int)drawareaa >= clip_x1 && clip_x0 >= clip_y0 ){
+
                 if( clip_x1 != v22 || clip_y0 != v23 )
                 {
                     v28 = (int)drawareaa;
@@ -2074,27 +2078,52 @@ bool TShape::shape_mirror(
                 else
                 {
                     v28 = (int)drawareaa;
-                    if( drawareaa == (TDrawArea *)v24 && clip_x0 == shape_y1 )
-                    {
-                        if( !flags )
-                            return TShape::shape_mirror_unclipped(v7, v20, v24, v23);
-                        if( flags == 1 )
-                        {
-                            if( color_table )
-                                result = TShape::shape_mirror_color_trans_unclipped(v7, v20, v24, v23, shape_num, color_table);
-                            else
-                                result = TShape::shape_mirror_unclipped(v7, v20, v24, v23);
-                            return result;
+                    if( drawareaa == (TDrawArea *)v24 &&
+                        clip_x0 == shape_y1 ){
+
+                        switch( flags ){
+
+                        case 0:
+
+                            return this->shape_mirror_unclipped(
+                                v20,
+                                v24,
+                                v23);
+
+                        case 1:
+
+                            if( color_table ){
+                                return this->shape_mirror_color_trans_unclipped(
+                                    v20,
+                                    v24,
+                                    v23,
+                                    shape_num,
+                                    color_table);
+                            }else{
+                                return this->shape_mirror_unclipped(
+                                    v20,
+                                    v24,
+                                    v23);
+                            }
+
+                        case 2:
+
+                            if( color_table ){
+                                return this->shape_mirror_shadow_unclipped(
+                                    v20,
+                                    v24,
+                                    v23,
+                                    color_table);
+                            }else{
+                                return this->shape_mirror_unclipped(
+                                    v20,
+                                    v24,
+                                    v23);
+                            }
+
+                        default:
+                            return 0;
                         }
-                        if( flags == 2 )
-                        {
-                            if( color_table )
-                                result = TShape::shape_mirror_shadow_unclipped(v7, v20, v24, v23, color_table);
-                            else
-                                result = TShape::shape_mirror_unclipped(v7, v20, v24, v23);
-                            return result;
-                        }
-                        return 0;
                     }
                 }
                 if( flags )
@@ -2102,90 +2131,95 @@ bool TShape::shape_mirror(
                     if( flags == 1 )
                     {
                         if( color_table )
-                            return TShape::shape_mirror_color_trans_clipped(
-                                             v7,
-                                             v20,
-                                             v24,
-                                             v23,
-                                             shape_num,
-                                             clip_x1,
-                                             clip_y0,
-                                             v28,
-                                             clip_x0,
-                                             color_table);
+                            return this->shape_mirror_color_trans_clipped(
+                                v20,
+                                v24,
+                                v23,
+                                shape_num,
+                                clip_x1,
+                                clip_y0,
+                                v28,
+                                clip_x0,
+                                color_table);
                     }
                     else
                     {
                         if( flags != 2 )
                             return 0;
                         if( color_table )
-                            return TShape::shape_mirror_shadow_clipped(v7, v20, v24, v23, clip_x1, clip_y0, v28, clip_x0, color_table);
+                            return TShape::shape_mirror_shadow_clipped(this, v20, v24, v23, clip_x1, clip_y0, v28, clip_x0, color_table);
                     }
                 }
-                return TShape::shape_mirror_clipped(v7, v20, v24, v23, clip_x1, clip_y0, v28, clip_x0);
+                return this->shape_mirror_clipped(
+                    v20,
+                    v24,
+                    v23,
+                    clip_x1,
+                    clip_y0,
+                    v28,
+                    clip_x0);
             }
         }
-        return 0;
+        return false;
     }
 
     if( SDI_Capture_Info ){
 
-        v9 = (Shape_Info *)&v8[shape_num + 1];
-        v10 = SDI_Object_ID;
-        v11 = SDI_Draw_Level;
-        v12 = ASMGet_Color_Xform();
-        DClipInfo_List::AddDrawNode(
-            SDI_List,
-            v7->FShape,
+        Shape_Info *v9 = (Shape_Info *)&v8[shape_num + 1];
+
+        SDI_List->AddDrawNode(
+            this->FShape,
             v9,
             SDI_Draw_Line,
             x + v9->Hotspot_X - v9->Width,
             y - v9->Hotspot_Y,
             fog_next_shape + 2,
             color_table,
-            v12,
-            v11,
-            v10);
+            ASMGet_Color_Xform(),
+            SDI_Draw_Level,
+            SDI_Object_ID);
 
         return true;
-    }else{
-        v14 = drawarea->CurSpanList;
-        v15 = drawarea->SpanList->Num_Lines;
-        v16 = v14->Num_Lines;
-        if( v15 >= v16 )
-            v17 = v16 - 1;
-        else
-            v17 = v15 - 1;
-        ASMSet_Surface_Info(
-            (int)drawarea->CurDisplayOffsets,
-            (int)v14->Line_Head_Ptrs,
-            (int)v14->Line_Tail_Ptrs,
-            0,
-            0,
-            v14->Max_Span_Px,
-            v17);
 
-        if( color_table ){
-            ASMSet_Xlate_Table((int)color_table);
+    }else{
+
+        int max_line;
+        if( drawarea->SpanList->Num_Lines >= drawarea->CurSpanList->Num_Lines ){
+            max_line = drawarea->CurSpanList->Num_Lines - 1;
+        }else{
+            max_line = drawarea->SpanList->Num_Lines - 1;
         }
 
-        v18 = v7->FShape;
-        v19 = (int)&v18[shape_num + 1];
+        ASMSet_Surface_Info(
+            drawarea->CurDisplayOffsets,
+            drawarea->CurSpanList->Line_Head_Ptrs,
+            drawarea->CurSpanList->Line_Tail_Ptrs,
+            0,
+            0,
+            drawarea->CurSpanList->Max_Span_Px,
+            max_line);
+
+        if( color_table ){
+            ASMSet_Xlate_Table(color_table);
+        }
+
+        Shape_Info *v19 = (int)&this->FShape[shape_num + 1];
 
         ASMDraw_Sprite(
             this->FShape,
-            x + *(_DWORD *)(v19 + 24) - *(_DWORD *)(v19 + 16),
-            y - *(_DWORD *)(v19 + 28),
-            *(_DWORD *)(v19 + 16),
-            *(_DWORD *)(v19 + 20),
-            *(_DWORD *)v19,
-            *(_DWORD *)(v19 + 4),
+            x + v19->Hotspot_X - v19->Width,
+            y - v19->Hotspot_Y,
+            v19->Width,
+            v19->Height,
+            v19->Shape_Data_Offsets,
+            v19->Shape_Outline_Offset,
             fog_next_shape + 2);
 
         ASM_Fast_Count++;
 
         return true;
     }
+
     return result;
 }
 

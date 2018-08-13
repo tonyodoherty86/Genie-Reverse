@@ -2,7 +2,7 @@
 /**
  * @file    Engine\DrawArea.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/08/11
  * @version 1.0
  */
 
@@ -50,14 +50,13 @@ public:
 
     RGE_Color_Table *shadow_color_table;
 
-    TSpan_List_Manager *SpanList,
-                       *CurSpanList;
+    TSpan_List_Manager *SpanList, *CurSpanList;
 
     int Float_X_Delta,
         Float_Y_Delta;
 
-    int DisplayOffsetsSz,
-        FloatOffsetsSz;
+    size_t DisplayOffsetsSz,
+           FloatOffsetsSz;
 
     int SystemMemOnly;
     int UsingVidMem;
@@ -76,16 +75,16 @@ public:
 
     char CheckSurface();
 
-    char *Lock(char *caller_name, int wait);
-    void Unlock(char *caller_name);
+    char *Lock( const char *caller_name, int wait );
+    void Unlock( const char *caller_name );
 
-    HDC *GetDc(char *caller_name);
-    void ReleaseDc(char *caller_name);
+    HDC *GetDc( const char *caller_name );
+    void ReleaseDc( const char *caller_name );
 
-    void SetSize(int wid_in, int hgt_in, int ExtendSurface);
+    void SetSize( int wid_in, int hgt_in, int ExtendSurface );
 
-    void Clear(tagRECT *rect, int color);
-    void PtrClear(tagRECT *rect, int color);
+    void Clear( RECT *rect, int color );
+    void PtrClear( RECT *rect, int color );
 
     void SetAccessOffsets();
     void SetFloatOffsets(int X_Delta, int Y_Delta);

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\CommSessions.hpp
  * @author  Yvan Burrie
- * @date    2018/07/01
+ * @date    2018/08/10
  * @version 1.0
  */
 
@@ -15,8 +15,8 @@ struct SEs
     GUID AppGUID,
          SessGUID;
 
-    unsigned int CurrentPlayers;
-    unsigned int MaxPlayers;
+    unsigned int CurrentPlayers,
+                 MaxPlayers;
 
     unsigned int User1,
                  User2,
@@ -61,7 +61,7 @@ public:
     int Refresh();
 };
 
-static int EnumSessionCallback(
+int EnumSessionCallback(
     DPSESSIONDESC2 *lpDPSessionDesc,
     unsigned int *lpdwTimeOut,
     unsigned int dwFlags,
