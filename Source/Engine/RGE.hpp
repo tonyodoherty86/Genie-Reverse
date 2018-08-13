@@ -2,7 +2,7 @@
 /**
  * @file    RGE.hpp
  * @author  Yvan Burrie
- * @date    2018/08/05
+ * @date    2018/08/08
  * @version 1.0
  */
 
@@ -27,8 +27,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include game components: */
 
-#include "RGE\BaseGame.hpp"
 #include "RGE\GameInfo.hpp"
+#include "RGE\Game.hpp"
 #include "RGE\Campaign.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include world components: */
 
-#include "RGE\GameWorld.hpp"
+#include "RGE\World.hpp"
 #include "RGE\ColorTable.hpp"
 #include "RGE\Sound.hpp"
 #include "RGE\Sprite.hpp"
@@ -80,15 +80,17 @@ class RGE_Missile_Object;
 struct RGE_Object_Node;
 
 #include "RGE\MasterPlayer.hpp"
-#include "RGE\MasterStaticObject.hpp"
-#include "RGE\MasterAnimatedObject.hpp"
-#include "RGE\MasterDoppleObject.hpp"
-#include "RGE\MasterMovingObject.hpp"
-#include "RGE\MasterActionObject.hpp"
-#include "RGE\TaskList.hpp"
+
 #include "RGE\Task.hpp"
-#include "RGE\MasterCombatObject.hpp"
-#include "RGE\MasterMissileObject.hpp"
+#include "RGE\TaskList.hpp"
+
+#include "RGE\MasterObject_Static.hpp"
+#include "RGE\MasterObject_Animated.hpp"
+#include "RGE\MasterObject_Dopple.hpp"
+#include "RGE\MasterObject_Moving.hpp"
+#include "RGE\MasterObject_Action.hpp"
+#include "RGE\MasterObject_Combat.hpp"
+#include "RGE\MasterObject_Missile.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -131,16 +133,18 @@ struct RGE_Object_Node;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "RGE\ObjectList.hpp"
-#include "RGE\StaticObject.hpp"
-#include "RGE\ActiveSpriteList.hpp"
 #include "RGE\ActiveSprite.hpp"
-#include "RGE\AnimatedObject.hpp"
-#include "RGE\MovingObject.hpp"
-#include "RGE\DopplegangerObject.hpp"
-#include "RGE\DopplegangerCreator.hpp"
-#include "RGE\ActionObject.hpp"
-#include "RGE\ActionList.hpp"
+#include "RGE\ActiveSpriteList.hpp"
+
+#include "RGE\Object_Static.hpp"
+#include "RGE\Object_Animated.hpp"
+#include "RGE\Object_Moving.hpp"
+#include "RGE\Object_Doppleganger.hpp"
+#include "RGE\Object_Action.hpp"
+#include "RGE\Object_Combat.hpp"
+#include "RGE\Object_Missile.hpp"
+#include "RGE\ObjectList.hpp"
+
 #include "RGE\Action.hpp"
 #include "RGE\ActionMove.hpp"
 #include "RGE\ActionGather.hpp"
@@ -150,17 +154,20 @@ struct RGE_Object_Node;
 #include "RGE\ActionBird.hpp"
 #include "RGE\ActionMissile.hpp"
 #include "RGE\ActionTransport.hpp"
-#include "RGE\CombatObject.hpp"
-#include "RGE\MissileObject.hpp"
+#include "RGE\ActionList.hpp"
+
+#include "RGE\DopplegangerCreator.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Include Panels: */
 
-#include "RGE\View.hpp"
-#include "RGE\MainView.hpp"
-#include "RGE\DiamondMap.hpp"
-#include "RGE\DiamondMapView.hpp"
-#include "RGE\PanelToolBox.hpp"
+#include "RGE\Panel_View.hpp"
+#include "RGE\Panel_MainView.hpp"
+#include "RGE\Panel_DiamondMap.hpp"
+#include "RGE\Panel_DiamondMapView.hpp"
+#include "RGE\Panel_ToolBox.hpp"
+#include "RGE\Panel_ListDialog.hpp"
+#include "RGE\Panel_Time.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

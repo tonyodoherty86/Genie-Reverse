@@ -3746,6 +3746,7 @@ LABEL_254:
                     if( v110 = *(_DWORD *)(v108 + 28) & 0xFFC ) {
 
                         if( (v110 & 4) == 4 ){
+
                             ASMSet_Shadowing(
                                 0x00FFFFFF,
                                 0x00000000,
@@ -3754,6 +3755,7 @@ LABEL_254:
                         }
 
                         if( (v110 & 8) == 8 ){
+
                             ASMSet_Shadowing(
                                 0xFF00FF00,
                                 (v110 >> 4) & 0xFF | (((v110 >> 4) & 0xFF) << 16),
@@ -3790,6 +3792,7 @@ LABEL_254:
                     }
 #if ENGINE_AOC
                     if ( v108[1].Next ){
+
                         v126 = 0;
                         v112 = this->futur_objs[1].Zone_Size_Ptrs;
                         v113 = v108->Draw_Level;
@@ -3802,12 +3805,15 @@ LABEL_254:
                                 v114 = sub_4DBAB0(v108[1].Next, v108[1].NextOnLevel);
                                 sub_6341A0(v114, v108->Draw_X, v108->Draw_Y);
                                 v115 = *&this->futur_objs->Select_Box[2 * v126];
-                                if ( v115 )
-                                {
+
+                                if ( v115 ){
+
                                     v116 = v115->Shape;
-                                    if ( v115->Draw_Y + v116->Hotspot_Y <= v148 && v115->Draw_Level <= v147 )
-                                    {
+
+                                    if ( v115->Draw_Y + v116->Hotspot_Y <= v148 && v115->Draw_Level <= v147 ){
+
                                         sub_632940(v115[1].Object_ID, v115[1].Object_ID);
+
                                         sub_6341E0(
                                             v115->Shape_Base,
                                             v115->Draw_X,
@@ -3827,8 +3833,9 @@ LABEL_254:
 #endif // ENGINE_AOC
                 }
                 v108 = v108->NextOnLevel;
-            }
-            while( v108 );
+
+            }while( v108 );
+
             v107 = newFacet;
         }
         v107 += 4;
@@ -3880,9 +3887,10 @@ LABEL_254:
 
     this->render_area->Unlock("view::view_function_terrain");
     this->render_area->CurSpanList = this->render_area->SpanList;
-    v118 = this->futur_objs;
+
+    DClipInfo_List *temp_futur_objs = this->futur_objs;
     this->futur_objs = this->prior_objs;
-    this->prior_objs = v118;
+    this->prior_objs = temp_futur_objs;
 
     return 0;
 }
@@ -6043,6 +6051,7 @@ int RGE_View::do_paint(
     switch( rge_base_game->game_mode ){
 
     case 9:
+
         if( up_down &&
             rge_base_game->terrain_id != -1 ){
             this->map->do_terrain_brush_stroke(
@@ -6056,6 +6065,7 @@ int RGE_View::do_paint(
         break;
 
     case 0xA:
+
         if( up_down &&
             rge_base_game->elevation_height != -1 ){
             this->map->do_elevation_brush_stroke(
@@ -6069,6 +6079,7 @@ int RGE_View::do_paint(
         break;
 
     case 0x13:
+
         if( rge_base_game->sub_game_mode == 1 ){
             this->map->do_cliff_brush_stroke(
                 this->real_old_map_col,

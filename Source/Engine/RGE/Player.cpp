@@ -2427,7 +2427,7 @@ char RGE_Player::unit_level_selected()
 }
 
 //----- (00471290) --------------------------------------------------------
-int __usercall RGE_Player::get_select_level@<eax>(RGE_Player *this@<ecx>, RGE_Static_Object *a2@<eax>)
+int RGE_Player::get_select_level(RGE_Static_Object *a2)
 {
     unsigned __int8 v2; // bl@1
     short v3; // dx@1

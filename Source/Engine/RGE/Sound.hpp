@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Sound.hpp
  * @author  Yvan Burrie
- * @date    2018/07/03
+ * @date    2018/08/10
  * @version 1.0
  */
 
@@ -35,7 +35,7 @@ public:
 
     void update_play();
 
-    void play(bool add_to_play_list);
+    void play( bool add_to_play_list = false );
 
     char *get_file_name();
 

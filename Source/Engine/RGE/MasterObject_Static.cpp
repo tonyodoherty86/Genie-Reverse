@@ -13,7 +13,7 @@ RGE_Master_Static_Object::RGE_Master_Static_Object(
     int infile,
     RGE_Sprite **sprites,
     RGE_Sound **sounds,
-    bool do_setup)
+    bool do_setup = true)
 {
     if( do_setup ){
         this->setup(
@@ -324,7 +324,6 @@ RGE_Master_Static_Object::~RGE_Master_Static_Object()
 
     v1 = this;
     v2 = this->name;
-    this->vfptr = (RGE_Master_Static_ObjectVtbl *)&RGE_Master_Static_Object::`vftable';
     if( v2 )
     {
         free(v2);

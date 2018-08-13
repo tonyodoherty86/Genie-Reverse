@@ -2,7 +2,7 @@
 /**
  * @file    Engine\RGE\Game.hpp
  * @author  Yvan Burrie
- * @date    2018/08/08
+ * @date    2018/08/11
  * @version 1.0
  */
 
@@ -44,7 +44,7 @@ struct RGE_Prog_Info
     /**
      * Offset: 2196.
      */
-    int full_screen;
+    bool full_screen;
 
     /**
      * Offset: 2200.
@@ -245,16 +245,16 @@ public:
 
     char timing_text[256];
 
-    size_t frame_count             = 0,
-           world_update_count      = 0,
-           view_update_count       = 0,
-           last_frame_count        = 0,
-           last_world_update_count = 0,
-           last_view_update_count  = 0;
+    unsigned int frame_count             = 0,
+                 world_update_count      = 0,
+                 view_update_count       = 0,
+                 last_frame_count        = 0,
+                 last_world_update_count = 0,
+                 last_view_update_count  = 0;
 
-    size_t fps              = 0,
-           world_update_fps = 0,
-           view_update_fps  = 0;
+    unsigned int fps              = 0,
+                 world_update_fps = 0,
+                 view_update_fps  = 0;
 
     RGE_Timing_Info timings[RGE_GAME_TIMINGS_COUNTER];
 
