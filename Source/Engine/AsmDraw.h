@@ -25,9 +25,9 @@ void ASMSet_Shadowing(
  * @return void
  */
 void ASMSet_Surface_Info(
-    int RenderOffsets,
-    int LineHeadPtrs,
-    int LineTailPtrs,
+    void **RenderOffsets,
+    VSpan_Node **LineHeadPtrs,
+    VSpan_Node **LineTailPtrs,
     int MinSpanPx,
     int MinLine,
     int MaxSpanPx,
@@ -77,6 +77,8 @@ int ASMGet_Xlate_Table( void );
  * @param int x2 The end of X ordinate.
  * @param int y1 The Y ordinate.
  * @return void
+ *
+ * sub_56A210 (AOC)
  */
 void ASMDraw_HLine( int x1, int x2, int y1 );
 
@@ -95,20 +97,28 @@ void ASMDraw_Sprite(
     int DrawFlag );
 
 /**************************************************************************************************/
-unsigned int sub_634100( void *a1 );
+int sub_634100( int a1 );
 
 /**************************************************************************************************\
  * sub_6341A0 (AOC)
  */
-void **sub_6341A0( VSpan_Node *a1, int x, int y );
+int sub_6341A0( struct ASMDraw_Unk *Shape, int DrawX, int DrawY );
+
+struct ASMDraw_Unk
+{
+    int unk1;
+    int unk2;
+    int unk3;
+    int unk4;
+};
 
 /**************************************************************************************************/
 int sub_6341E0(
-    int ShapeBase,
+    void *ShapeBase,
     int DrawX,
     int DrawY,
     int ShapeSizeX,
     int ShapeSizeY,
     int ShapeDataOffsets,
     int ShapeOutlineOffset,
-    char Flag );
+    unsigned char DrawFlag );

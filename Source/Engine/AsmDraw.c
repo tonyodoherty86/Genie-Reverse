@@ -422,7 +422,15 @@ void ASMDraw_HLine( int x1, int x2, int y1 )
     }
 }
 
+static int dword_795034;
+static int dword_795048;
 static int dword_795054;
+
+static char byte_631300;
+static char byte_633B20;
+static char byte_6340C0;
+
+static int a_l_l_l_l_l_l_1;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -436,15 +444,6 @@ void ASMDraw_Sprite(
     int ShapeLineOffsets,
     int DrawFlag )
 {
-    asm("arg_0  = 8");
-    asm("arg_4  = 12");
-    asm("arg_8  = 16");
-    asm("arg_C  = 20");
-    asm("arg_10 = 24");
-    asm("arg_14 = 28");
-    asm("arg_18 = 32");
-    asm("arg_1C = 36");
-
     asm("push   ebp");
 
     asm("mov    ebp, esp");
@@ -453,8 +452,10 @@ void ASMDraw_Sprite(
     asm("push   esi");
     asm("push   edi");
 
-    asm("mov    eax, [ebp+arg_8]");
-    asm("mov    ecx, [ebp+arg_10]");
+	int temp_int;
+
+    asm("mov    eax, [ebp+0x08]");
+    asm("mov    ecx, [ebp+0x10]");
     asm("xor    edx, edx");
     asm("lea    ebx, [ecx+eax-1]");
     asm("cmp    ebx, ASMMinLine");
@@ -468,75 +469,57 @@ void ASMDraw_Sprite(
     asm("xor    eax, eax");
     asm("sub    ecx, edx");
     asm("shl    edx, 2");
-    asm("mov    [ebp+arg_8], eax");
+    asm("mov    [ebp+0x08], eax");
 
-    asm("loc_632C04:");
+    loc_632C04:
     asm("cmp    ebx, ASMMaxLine");
     asm("jle    short loc_632C14");
     asm("sub    ebx, ASMMaxLine");
     asm("sub    ecx, ebx");
 
-    asm("loc_632C14:");
-    asm("mov    [ebp+arg_10], ecx");
+    loc_632C14:
+    asm("mov    [ebp+0x10], ecx");
     asm("xor    ebx, ebx");
     asm("mov    ASMDrawYOffset, ebx");
-    asm("mov    eax, [ebp+arg_4]");
-    asm("mov    ASMDrawXStart, eax");
-    asm("cmp    eax, ASMMaxSpanPx");
-    asm("jg     loc_6336D4");
-    asm("add    eax, [ebp+arg_C]");
-    asm("dec    eax");
-    asm("mov    dword_795028, eax");
-    asm("cmp    eax, ASMMinSpanPx");
-    asm("jl     loc_6336D4");
-    asm("mov    eax, [ebp+arg_14]");
-    asm("add    eax, [ebp+arg_0]");
+    ASMDrawXStart = DrawX;// eax
+	if( ASMDrawXStart > ASMMaxSpanPx ){
+		goto loc_6336D4;
+	}
+	dword_795028 = ASMDrawXStart + DrawW - 1;// eax
+	if( dword_795028 < ASMMinSpanPx ){
+		goto loc_6336D4;
+	}
+    asm("mov    eax, [ebp+0x14]");// dword_79500C = [ebp+0x14] + [ebp+0x08] + edx;
+    asm("add    eax, [ebp+0x08]");
     asm("add    eax, edx");
     asm("mov    dword_79500C, eax");
-    asm("mov    eax, [ebp+arg_18]");
-    asm("add    eax, [ebp+arg_0]");
+    asm("mov    eax, [ebp+0x18]");// dword_795010 = [ebp+0x18] + [ebp+0x08] + edx;
+    asm("add    eax, [ebp+0x08]");
     asm("add    eax, edx");
     asm("mov    dword_795010, eax");
-    asm("mov    eax, [ebp+arg_1C]");
-    asm("xor    ecx, ecx");
+    asm("mov    eax, [ebp+0x1C]");
+    temp_int = 0;
     asm("test   eax, 1");
     asm("jz     short loc_632C75");
-    asm("mov    ecx, 0x80");
-    asm("jmp    short loc_632C91");
+    temp_int = 0x80;
+    goto loc_632C91;
 
-    asm("loc_632C75:");
+    loc_632C75:
     asm("mov    ebx, ASMColorXForm1");
-    asm("mov    dword_88C030, ecx");
-    asm("mov    dword_88C02C, 0xFFFFFFFF");
-    asm("mov    dword_795034, ebx");
+    dword_88C030 = temp_int;
+    dword_88C02C = -1;
+    dword_795034 = ASMColorXForm1;
 
-    asm("loc_632C91:");
-    asm("mov    dword_795048, ecx");
+    loc_632C91:
+    dword_795048 = temp_int;
     asm("test   eax, 2");
     asm("jnz    loc_6336E0");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
-//    asm("mov    eax, eax");
-//    asm("db    2Eh");
+
+	/* NOTE: some useless crap removed here. */
     asm("mov    eax, eax");
 
-    asm("loc_632CC0:");
-    asm("mov    eax, [ebp+arg_8]");
+    loc_632CC0:
+    asm("mov    eax, [ebp+0x08]");
     asm("mov    ebx, ASMDrawYOffset");
     asm("add    eax, ebx");
     asm("mov    esi, ASMLineHeadPtrs");
@@ -558,7 +541,7 @@ void ASMDraw_Sprite(
     asm("or     eax, edx");
     asm("mov    dword_795034, eax");
 
-    asm("loc_632D22:");
+    loc_632D22:
     asm("mov    esi, dword_795010");
     asm("xor    eax, eax");
     asm("mov    ax, [esi+ebx*4]");
@@ -570,7 +553,7 @@ void ASMDraw_Sprite(
     asm("mov    ecx, dword_795028");
     asm("sub    ecx, eax");
     asm("mov    esi, ASMRenderOffsets");
-    asm("mov    eax, [ebp+arg_8]");
+    asm("mov    eax, [ebp+0x08]");
     asm("add    eax, ebx");
     asm("mov    eax, [esi+eax*4]");
     asm("mov    ASMCurrentRenderYOffset, eax");
@@ -578,10 +561,10 @@ void ASMDraw_Sprite(
     asm("mov    ASMCurrentRenderXOffset, eax");
     asm("mov    esi, dword_79500C");
     asm("mov    eax, [esi+ebx*4]");
-    asm("add    eax, [ebp+arg_0]");
+    asm("add    eax, [ebp+0x08]");
     asm("mov    dword_795018, eax");
 
-    asm("loc_632D79:");
+    loc_632D79:
     asm("cmp    ecx, [edi+8]");
     asm("jl     loc_6336C0");
     asm("cmp    edx, [edi+12]");
@@ -589,36 +572,33 @@ void ASMDraw_Sprite(
     asm("mov    edi, [edi]");
     asm("or     edi, edi");
     asm("jnz    short loc_632D79");
-    asm("jmp    loc_6336C0");
+    goto loc_6336C0;
 
-    asm("loc_632D92:");
+    loc_632D92:
     asm("cmp    edx, [edi+8]");
     asm("jl     short loc_632DB7");
     asm("cmp    ecx, [edi+12]");
     asm("jg     short loc_632DB7");
-    asm("mov    eax, offset loc_6333C0");
-    asm("mov    ASMLocation,    eax");
+	ASMLocation = &&loc_6333C0;// eax
     asm("mov    edi, ASMCurrentRenderXOffset");
     asm("mov    esi, dword_795018");
-    asm("jmp    loc_6333C0");
+    goto loc_6333C0;
 
-    asm("loc_632DB7:");
-    asm("mov    eax, offset loc_632E40");
-    asm("mov    ASMLocation,    eax");
+    loc_632DB7:
+	ASMLocation = &&loc_632E40;// eax
     asm("mov    ASMCurrentLineHead, edi");
     asm("mov    edi, ASMCurrentRenderXOffset");
     asm("mov    esi, dword_795018");
-    asm("jmp    loc_632E40");
-//    asm("align 0x10");
+    goto loc_632E40;
 
-    asm("loc_632DE0:");
+    loc_632DE0:
     asm("mov    esi, dword_795050");
     asm("mov    edi, dword_795054");
     asm("mov    ebx, ASMCurrentLineHead");
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jz     loc_6336C0");
-    asm("mov    ASMLocation, offset loc_632E40");
+	ASMLocation = &&loc_632E40;
     asm("xor    eax, eax");
     asm("mov    al, [esi]");
     asm("sub    edi, ASMCurrentRenderYOffset");
@@ -627,14 +607,8 @@ void ASMDraw_Sprite(
     asm("and    eax, 0x0F");
     asm("mov    ASMCurrentLineHead, ebx");
     asm("jmp    off_631400[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_632E40:");
+    loc_632E40:
     asm("mov    dword_795050, esi");
     asm("xor    eax, eax");
     asm("mov    dword_795054, edi");
@@ -645,34 +619,27 @@ void ASMDraw_Sprite(
     asm("and    eax, 0x0F");
     asm("mov    ebx, ASMCurrentLineHead");
     asm("jmp    off_631400[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_632E80:");
+    loc_632E80:
     asm("mov    eax, ecx");
     asm("shr    eax, 4");
     asm("jmp    off_631480[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_632EA0:");
+    loc_632EA0:
     asm("shr    ecx, 2");
-    asm("jmp    short loc_632EAB");
+    goto loc_632EAB;
 
-    asm("loc_632EA5:");
+    loc_632EA5:
     asm("shl    ecx, 4");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_632EAB:");
+    loc_632EAB:
     asm("mov    edx, edi");
     asm("add    edx, ecx");
     asm("dec    edx");
 
-    asm("loc_632EB0:");
+    loc_632EB0:
     asm("cmp    edx, [ebx+8]");
     asm("jl     short loc_632F12");
     asm("cmp    edi, [ebx+12]");
@@ -685,16 +652,16 @@ void ASMDraw_Sprite(
     asm("add    esi, eax");
     asm("sub    ecx, eax");
 
-    asm("loc_632ECA:");
+    loc_632ECA:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+12]");
     asm("jle    short loc_632EE5");
     asm("mov    eax, edx");
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
-    asm("mov    ASMLocation,    offset loc_632DE0");
+    ASMLocation = &&loc_632DE0;
 
-    asm("loc_632EE5:");
+    loc_632EE5:
     asm("mov    edi, dword_795054");
     asm("xor    ebx, ebx");
     asm("add    edi, ASMCurrentLineHeadPx");
@@ -707,52 +674,44 @@ void ASMDraw_Sprite(
     asm("or     al, byte_631300[ebx]");
     asm("jmp    off_630300[eax*4]");
 
-    asm("loc_632F12:");
+    loc_632F12:
     asm("mov    edi, dword_795054");
     asm("add    esi, ecx");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
-    asm("loc_632F21:");
+    loc_632F21:
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jnz    short loc_632EB0");
-    asm("jmp    loc_6336C0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6336C0;
 
-    asm("loc_632F40:");
+    loc_632F40:
     asm("shr    ecx, 2");
     asm("mov    edi, dword_795054");
     asm("add    edi, ecx");
-    asm("jmp    ASMLocation");
+    goto ASMLocation;
 
-    asm("loc_632F51:");
+    loc_632F51:
     asm("shl    ecx, 4");
     asm("mov    edi, dword_795054");
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("add    edi, ecx");
-    asm("jmp    ASMLocation");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_632F80:");
+    loc_632F80:
     asm("shr    ecx, 4");
     asm("jnz    short loc_632F88");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_632F88:");
+    loc_632F88:
     asm("mov    edx, edi");
     asm("add    edx, ecx");
     asm("dec    edx");
 
-    asm("loc_632F8D:");
+    loc_632F8D:
     asm("cmp    edx, [ebx+8]");
     asm("jl     short loc_632FEC");
     asm("cmp    edi, [ebx+12]");
@@ -765,16 +724,16 @@ void ASMDraw_Sprite(
     asm("add    esi, eax");
     asm("sub    ecx, eax");
 
-    asm("loc_632FA7:");
+    loc_632FA7:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+12]");
     asm("jle    short loc_632FC2");
     asm("mov    eax, edx");
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
-    asm("mov    ASMLocation,    offset loc_632DE0");
+    ASMLocation = &&loc_632DE0;
 
-    asm("loc_632FC2:");
+    loc_632FC2:
     asm("mov    edi, dword_795054");
     asm("add    edi, ASMCurrentLineHeadPx");
     asm("mov    eax, edi");
@@ -784,35 +743,30 @@ void ASMDraw_Sprite(
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_630B00[eax*4]");
 
-    asm("loc_632FEC:");
+    loc_632FEC:
     asm("mov    edi, dword_795054");
     asm("add    esi, ecx");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
-    asm("loc_632FFB:");
+    loc_632FFB:
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jnz    short loc_632F8D");
-    asm("jmp    loc_6336C0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6336C0;
 
-    asm("loc_633020:");
+    loc_633020:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633028");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633028:");
+    loc_633028:
     asm("mov    edx, edi");
     asm("add    edx, ecx");
     asm("dec    edx");
 
-    asm("loc_63302D:");
+    loc_63302D:
     asm("cmp    edx, [ebx+8]");
     asm("jl     short loc_63309C");
     asm("cmp    edi, [ebx+12]");
@@ -824,16 +778,16 @@ void ASMDraw_Sprite(
     asm("sub    eax, edi");
     asm("sub    ecx, eax");
 
-    asm("loc_633045:");
+    loc_633045:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+12]");
     asm("jle    short loc_633060");
     asm("mov    eax, edx");
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
-    asm("mov    ASMLocation,    offset loc_632DE0");
+	ASMLocation = &&loc_632DE0;
 
-    asm("loc_633060:");
+    loc_633060:
     asm("mov    edi, dword_795054");
     asm("mov    al, [esi]");
     asm("add    edi, ASMCurrentLineHeadPx");
@@ -850,31 +804,30 @@ void ASMDraw_Sprite(
     asm("inc    esi");
     asm("jmp    off_630700[ebx*4]");
 
-    asm("loc_63309C:");
+    loc_63309C:
     asm("mov    edi, dword_795054");
     asm("inc    esi");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
-    asm("loc_6330AA:");
+    loc_6330AA:
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jnz    loc_63302D");
-    asm("jmp    loc_6336C0");
-//    asm("align 0x10");
+    goto loc_6336C0;
 
-    asm("loc_6330C0:");
+    loc_6330C0:
     asm("shr    ecx, 4");
     asm("jnz    short loc_6330C8");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_6330C8:");
+    loc_6330C8:
     asm("mov    edx, edi");
     asm("add    edx, ecx");
     asm("dec    edx");
 
-    asm("loc_6330CD:");
+    loc_6330CD:
     asm("cmp    edx, [ebx+8]");
     asm("jl     short loc_63313C");
     asm("cmp    edi, [ebx+12]");
@@ -886,7 +839,7 @@ void ASMDraw_Sprite(
     asm("sub    eax, edi");
     asm("sub    ecx, eax");
 
-    asm("loc_6330E5:");
+    loc_6330E5:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+12]");
     asm("jle    short loc_633100");
@@ -895,7 +848,7 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
     asm("mov    ASMLocation,    offset loc_632DE0");
 
-    asm("loc_633100:");
+    loc_633100:
     asm("mov    edi, dword_795054");
     asm("mov    al, [esi]");
     asm("add    edi, ASMCurrentLineHeadPx");
@@ -912,31 +865,30 @@ void ASMDraw_Sprite(
     asm("or     eax, dword_795034");
     asm("jmp    off_630700[ebx*4]");
 
-    asm("loc_63313C:");
+    loc_63313C:
     asm("mov    edi, dword_795054");
     asm("inc    esi");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
-    asm("loc_63314A:");
+    loc_63314A:
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jnz    loc_6330CD");
-    asm("jmp    loc_6336C0");
-//    asm("align 0x10");
+    goto loc_6336C0;
 
-    asm("loc_633160:");
+    loc_633160:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633168");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633168:");
+    loc_633168:
     asm("mov    edx, edi");
     asm("add    edx, ecx");
     asm("dec    edx");
 
-    asm("loc_63316D:");
+    loc_63316D:
     asm("cmp    edx, [ebx+8]");
     asm("jl     short loc_6331CC");
     asm("cmp    edi, [ebx+12]");
@@ -948,18 +900,18 @@ void ASMDraw_Sprite(
     asm("sub    eax, edi");
     asm("sub    ecx, eax");
 
-    asm("loc_633185:");
-    asm("mov    %0, eax" : "=r" (ASMCurrentLineHeadPx) : : );
+    loc_633185:
+    asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+12]");
     asm("jle    short loc_6331A0");
     asm("mov    eax, edx");
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
-    asm("mov    %0, offset loc_632DE0" : "=r" (ASMLocation) : : );
+    asm("mov    ASMLocation, offset loc_632DE0");
 
-    asm("loc_6331A0:");
+    loc_6331A0:
     asm("mov    edi, dword_795054");
-    asm("add    edi, %0" : "=r" (ASMCurrentLineHeadPx) : : );
+    asm("add    edi, ASMCurrentLineHeadPx");
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("xor    edx, edx");
@@ -968,65 +920,56 @@ void ASMDraw_Sprite(
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_630F00[eax*4]");
 
-    asm("loc_6331CC:");
+    loc_6331CC:
     asm("mov    edi, dword_795054");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
-    asm("loc_6331D9:");
+    loc_6331D9:
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jnz    short loc_63316D");
-    asm("jmp    loc_6336C0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6336C0;
 
-    asm("loc_633200:");
+    loc_633200:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795098");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 2");
-    asm("jmp    short loc_63326A");
+    goto loc_63326A;
 
-    asm("loc_633216:");
+    loc_633216:
     asm("mov    eax, dword_795098");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 2");
-    asm("jmp    short loc_63326A");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_63326A;
 
-    asm("loc_633240:");
+    loc_633240:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795094");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 1");
-    asm("jmp    short loc_63326A");
+    goto loc_63326A;
 
-    asm("loc_633256:");
+    loc_633256:
     asm("mov    eax, dword_795094");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 1");
 
-    asm("loc_63326A:");
+    loc_63326A:
     asm("test   dword_79509C, eax");
     asm("jz     short loc_6332DF");
     asm("mov    edx, edi");
     asm("add    edx, ecx");
     asm("dec    edx");
 
-    asm("loc_633277:");
+    loc_633277:
     asm("cmp    edx, [ebx+8]");
     asm("jl     short loc_6332DF");
     asm("cmp    edi, [ebx+12]");
@@ -1038,16 +981,16 @@ void ASMDraw_Sprite(
     asm("sub    eax, edi");
     asm("sub    ecx, eax");
 
-    asm("loc_63328F:");
+    loc_63328F:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+12]");
     asm("jle    short loc_6332AA");
     asm("mov    eax, edx");
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
-    asm("mov    ASMLocation,    offset loc_632DE0");
+    ASMLocation = &&loc_632DE0;
 
-    asm("loc_6332AA:");
+    loc_6332AA:
     asm("mov    edi, dword_795054");
     asm("mov    eax, dword_795090");
     asm("add    edi, ASMCurrentLineHeadPx");
@@ -1059,94 +1002,66 @@ void ASMDraw_Sprite(
     asm("or     bl, byte ptr dword_795048");
     asm("jmp    off_630700[ebx*4]");
 
-    asm("loc_6332DF:");
+    loc_6332DF:
     asm("mov    edi, dword_795054");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
-    asm("loc_6332EC:");
+    loc_6332EC:
     asm("mov    ebx, [ebx]");
     asm("or     ebx, ebx");
     asm("jnz    short loc_633277");
-    asm("jmp    loc_6336C0");
-//    asm("align 0x10");
+    goto loc_6336C0;
 
-    asm("loc_633300:");
+    loc_633300:
     asm("call   sub_634100");
     asm("add    edi, ecx");
-    asm("jmp    loc_632E40");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_632E40;
 
-    asm("loc_633320:");
+    loc_633320:
     asm("mov    eax, ASMColorXForm2");
     asm("mov    ASMColorXForm1, eax");
-    asm("int    3");// Trap to Debugger
+    asm("int    3");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
-    asm("jmp    loc_632E40");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_632E40;
 
-    asm("loc_633360:");
+    loc_633360:
     asm("mov    eax, ASMColorXForm3");
     asm("mov    ASMColorXForm1, eax");
-    asm("int    3");// Trap to Debugger
+    asm("int    3");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
-    asm("jmp    loc_632E40");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_632E40;
 
     /* TODO */
     asm("byte_6333A0    db 0xCC");
-    asm("jmp    loc_632E40");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_632E40;
 
-    asm("loc_6333C0:");
+    loc_6333C0:
     asm("xor    eax, eax");
     asm("mov    al, [esi]");
     asm("mov    ecx, eax");
     asm("and    eax, 0x0F");
     asm("inc    esi");
     asm("jmp    off_631440[eax*4]");
-//    asm("align 0x10");
 
-    asm("loc_6333E0:");
+    loc_6333E0:
     asm("mov    eax, ecx");
     asm("shr    eax, 4");
     asm("jmp    off_6314C0[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633400:");
+    loc_633400:
     asm("shr    ecx, 2");
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_630300[eax*4]");
-//    asm("align 0x10");
 
-    asm("loc_633420:");
+    loc_633420:
     asm("shl    ecx, 4");
     asm("xor    ebx, ebx");
     asm("mov    cl, [esi]");
@@ -1159,51 +1074,40 @@ void ASMDraw_Sprite(
     asm("or     al, byte_631300[ebx]");
     asm("inc    esi");
     asm("jmp    off_630300[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633460:");
+    loc_633460:
     asm("shr    ecx, 2");
     asm("add    edi, ecx");
-    asm("jmp    ASMLocation");
+    goto ASMLocation;
 
-    asm("loc_63346B:");
+    loc_63346B:
     asm("shl    ecx, 4");
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("add    edi, ecx");
-    asm("jmp    ASMLocation");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_633480:");
+    loc_633480:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633488");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633488:");
+    loc_633488:
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
     asm("mov    ebx, ASMColorXForm1");
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_630B00[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_6334C0:");
+    loc_6334C0:
     asm("shr    ecx, 4");
     asm("jnz    short loc_6334C8");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_6334C8:");
+    loc_6334C8:
     asm("mov    al, [esi]");
     asm("mov    ebx, edi");
     asm("mov    ah, al");
@@ -1217,15 +1121,14 @@ void ASMDraw_Sprite(
     asm("and    eax, dword_88C02C");
     asm("or     eax, dword_88C030");
     asm("jmp    off_630700[ebx*4]");
-//    asm("align 0x10");
 
-    asm("loc_633500:");
+    loc_633500:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633508");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633508:");
+    loc_633508:
     asm("mov    al, [esi]");
     asm("mov    ebx, edi");
     asm("mov    ah, al");
@@ -1239,15 +1142,14 @@ void ASMDraw_Sprite(
     asm("and    eax, dword_88C02C");
     asm("or     eax, dword_795034");
     asm("jmp    off_630700[ebx*4]");
-//    asm("align 0x10");
 
-    asm("loc_633540:");
+    loc_633540:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633548");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633548:");
+    loc_633548:
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
@@ -1255,46 +1157,39 @@ void ASMDraw_Sprite(
     asm("or     al, byte ptr dword_795048");
     asm("xor    edx, edx");
     asm("jmp    off_630F00[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633580:");
+    loc_633580:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795098");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 2");
-    asm("jmp    short loc_6335EA");
+    goto loc_6335EA;
 
-    asm("loc_633596:");
+    loc_633596:
     asm("mov    eax, dword_795098");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 2");
-    asm("jmp    short loc_6335EA");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6335EA;
 
-    asm("loc_6335C0:");
+    loc_6335C0:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795094");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 1");
-    asm("jmp    short loc_6335EA");
+    goto loc_6335EA;
 
-    asm("loc_6335D6:");
+    loc_6335D6:
     asm("mov    eax, dword_795094");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 1");
 
-    asm("loc_6335EA:");
+    loc_6335EA:
     asm("test   dword_79509C, eax");
     asm("jz     short loc_63361B");
     asm("mov    eax, dword_795090");
@@ -1306,59 +1201,47 @@ void ASMDraw_Sprite(
     asm("or     bl, byte ptr dword_795048");
     asm("jmp    off_630700[ebx*4]");
 
-    asm("loc_63361B:");
+    loc_63361B:
     asm("add    edi, ecx");
-    asm("jmp    ASMLocation");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_633640:");
+    loc_633640:
     asm("call   sub_634100");
     asm("add    edi, ecx");
-    asm("jmp    loc_6333C0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6333C0;
 
-    asm("loc_633660:");
+    loc_633660:
     asm("mov    eax, ASMColorXForm2");
     asm("mov    ASMColorXForm1, eax");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
-    asm("jmp    loc_6333C0");
+    goto loc_6333C0;
 
-    asm("loc_633680:");
+    loc_633680:
     asm("mov    eax, ASMColorXForm3");
     asm("mov    ASMColorXForm1, eax");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
-    asm("jmp    loc_6333C0");
+    goto loc_6333C0;
 
     /* TODO */
     asm("byte_6336A0    db 0xCC");
-    asm("jmp    loc_632E40");
+    goto loc_632E40;
 
     /* TODO */
     asm("byte_6336A6    db 0xCC");
-    asm("jmp    ASMLocation");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_6336C0:");
+    loc_6336C0:
     asm("mov    eax, ASMDrawYOffset");
     asm("inc    eax");
     asm("mov    ASMDrawYOffset, eax");
-    asm("cmp    eax, [ebp+arg_10]");
+    asm("cmp    eax, [ebp+0x10]");
     asm("jl     loc_632CC0");
 
-    asm("loc_6336D4:");
+    loc_6336D4:
     asm("pop    edi");
     asm("pop    esi");
     asm("pop    ebx");
@@ -1367,10 +1250,8 @@ void ASMDraw_Sprite(
     /* TODO */
     asm("ret");
 
-//    asm("align 0x10");
-
-    asm("loc_6336E0:");
-    asm("mov    eax, [ebp+arg_8]");
+    loc_6336E0:
+    asm("mov    eax, [ebp+0x08]");
     asm("mov    ebx, ASMDrawYOffset");
     asm("add    eax, ebx");
     asm("mov    esi, ASMLineTailPtrs");
@@ -1392,19 +1273,19 @@ void ASMDraw_Sprite(
     asm("or     eax, edx");
     asm("mov    dword_795034, eax");
 
-    asm("loc_633742:");
+    loc_633742:
     asm("mov    esi, dword_795010");
     asm("xor    eax, eax");
     asm("mov    ax, [esi+ebx*4+2]");
     asm("mov    edx, ASMDrawXStart");
-    asm("test    eax, 0x8000");
+    asm("test   eax, 0x8000");
     asm("jnz    loc_6340E0");
     asm("add    edx, eax");
     asm("mov    ax, [esi+ebx*4]");
     asm("mov    ecx, dword_795028");
     asm("sub    ecx, eax");
     asm("mov    esi, ASMRenderOffsets");
-    asm("mov    eax, [ebp+arg_8]");
+    asm("mov    eax, [ebp+0x08]");
     asm("add    eax, ebx");
     asm("mov    eax, [esi+eax*4]");
     asm("mov    ASMCurrentRenderYOffset, eax");
@@ -1412,10 +1293,10 @@ void ASMDraw_Sprite(
     asm("mov    ASMCurrentRenderXOffset, eax");
     asm("mov    esi, dword_79500C");
     asm("mov    eax, [esi+ebx*4]");
-    asm("add    eax, [ebp+arg_0]");
+    asm("add    eax, [ebp+0x08]");
     asm("mov    dword_795018, eax");
 
-    asm("loc_633799:");
+    loc_633799:
     asm("cmp    edx, [edi+12]");
     asm("jg     loc_6340E0");
     asm("cmp    ecx, [edi+8]");
@@ -1423,9 +1304,9 @@ void ASMDraw_Sprite(
     asm("mov    edi, [edi+4]");
     asm("or     edi, edi");
     asm("jnz    short loc_633799");
-    asm("jmp    loc_6340E0");
+    goto loc_6340E0;
 
-    asm("loc_6337B3:");
+    loc_6337B3:
     asm("cmp    edx, [edi+8]");
     asm("jl     short loc_6337D5");
     asm("cmp    ecx, [edi+12]");
@@ -1434,44 +1315,38 @@ void ASMDraw_Sprite(
     asm("mov    ASMLocation,    eax");
     asm("mov    edi, ASMCurrentRenderXOffset");
     asm("mov    esi, dword_795018");
-    asm("jmp    short loc_633800");
+    goto loc_633800;
 
-    asm("loc_6337D5:");
+    loc_6337D5:
     asm("mov    eax, offset loc_633BA0");
     asm("mov    ASMLocation,    eax");
     asm("mov    ASMCurrentLineHead, edi");
     asm("mov    edi, ASMCurrentRenderXOffset");
     asm("mov    esi, dword_795018");
-    asm("jmp    loc_633BA0");
-//    asm("align 0x10");
+    goto loc_633BA0;
 
-    asm("loc_633800:");
+    loc_633800:
     asm("xor    eax, eax");
     asm("mov    al, [esi]");
     asm("mov    ecx, eax");
     asm("and    eax, 0x0F");
     asm("inc    esi");
     asm("jmp    off_631540[eax*4]");
-//    asm("align 0x10");
 
-    asm("loc_633820:");
+    loc_633820:
     asm("mov    eax, ecx");
     asm("shr    eax, 4");
     asm("jmp    off_6315C0[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633840:");
+    loc_633840:
     asm("shr    ecx, 2");
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_631600[eax*4]");
-//    asm("align 0x10");
 
-    asm("loc_633860:");
+    loc_633860:
     asm("shl    ecx, 4");
     asm("xor    ebx, ebx");
     asm("mov    cl, [esi]");
@@ -1484,51 +1359,40 @@ void ASMDraw_Sprite(
     asm("or     al, byte_631300[ebx]");
     asm("inc    esi");
     asm("jmp    off_631600[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_6338A0:");
+    loc_6338A0:
     asm("shr    ecx, 2");
     asm("sub    edi, ecx");
-    asm("jmp    ASMLocation");
+    goto ASMLocation;
 
-    asm("loc_6338AB:");
+    loc_6338AB:
     asm("shl    ecx, 4");
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("sub    edi, ecx");
-    asm("jmp    ASMLocation");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_6338C0:");
+    loc_6338C0:
     asm("shr    ecx, 4");
     asm("jnz    short loc_6338C8");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_6338C8:");
+    loc_6338C8:
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
     asm("mov    ebx, ASMColorXForm1");
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_631E00[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633900:");
+    loc_633900:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633908");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633908:");
+    loc_633908:
     asm("mov    al, [esi]");
     asm("mov    ebx, edi");
     asm("mov    ah, al");
@@ -1542,15 +1406,14 @@ void ASMDraw_Sprite(
     asm("and    eax, dword_88C02C");
     asm("or     eax, dword_88C030");
     asm("jmp    off_631A00[ebx*4]");
-//    asm("align 0x10");
 
-    asm("loc_633940:");
+    loc_633940:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633948");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633948:");
+    loc_633948:
     asm("mov    al, [esi]");
     asm("mov    ebx, edi");
     asm("mov    ah, al");
@@ -1564,15 +1427,14 @@ void ASMDraw_Sprite(
     asm("and    eax, dword_88C02C");
     asm("or     eax, dword_795034");
     asm("jmp    off_631A00[ebx*4]");
-//    asm("align 0x10");
 
-    asm("loc_633980:");
+    loc_633980:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633988");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633988:");
+    loc_633988:
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
@@ -1580,46 +1442,39 @@ void ASMDraw_Sprite(
     asm("or     al, byte ptr dword_795048");
     asm("xor    edx, edx");
     asm("jmp    off_632200[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_6339C0:");
+    loc_6339C0:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795098");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 2");
-    asm("jmp    short loc_633A2A");
+    goto loc_633A2A;
 
-    asm("loc_6339D6:");
+    loc_6339D6:
     asm("mov    eax, dword_795098");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 2");
-    asm("jmp    short loc_633A2A");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_633A2A;
 
-    asm("loc_633A00:");
+    loc_633A00:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795094");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 1");
-    asm("jmp    short loc_633A2A");
+    goto loc_633A2A;
 
-    asm("loc_633A16:");
+    loc_633A16:
     asm("mov    eax, dword_795094");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 1");
 
-    asm("loc_633A2A:");
+    loc_633A2A:
     asm("test    dword_79509C, eax");
     asm("jz     short loc_633A5B");
     asm("mov    eax, dword_795090");
@@ -1631,69 +1486,46 @@ void ASMDraw_Sprite(
     asm("or     bl, byte ptr dword_795048");
     asm("jmp    off_631A00[ebx*4]");
 
-    asm("loc_633A5B:");
+    loc_633A5B:
     asm("sub    edi, ecx");
-    asm("jmp    ASMLocation");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_633A80:");
+    loc_633A80:
     asm("call   sub_634100");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633800");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_633800;
 
-    asm("loc_633AA0:");
+    loc_633AA0:
     asm("mov    eax, ASMColorXForm2");
     asm("mov    ASMColorXForm1, eax");
-    asm("int    3");// Trap to Debugger
+    asm("int    3");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
-    asm("jmp    loc_633800");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_633800;
 
-    asm("loc_633AE0:");
+    loc_633AE0:
     asm("mov    eax, ASMColorXForm3");
     asm("mov    ASMColorXForm1, eax");
-    asm("int    3");// Trap to Debugger
+    asm("int    3");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
-    asm("jmp    loc_633800");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_633800;
 
     /* TODO */
-    asm("byte_633B20    db 0xCC");
-    asm("jmp    loc_632E40");
+    byte_633B20 = 0xCC;
+    goto loc_632E40;
 
     /* TODO */
-    asm("a_l_l_l_l_l_l_1    db '.̀.̀.̀.̀.̀.̀.̀.̀̀˵PPy',0");
+    a_l_l_l_l_l_l_1 = '.̀.̀.̀.̀.̀.̀.̀.̀̀˵PPy';
 
     asm("mov    edi, dword_795054");
     asm("mov    ebx, ASMCurrentLineHead");
     asm("mov    ebx, [ebx+4]");
     asm("or     ebx, ebx");
     asm("jz     loc_6340E0");
-    asm("mov    ASMLocation, offset loc_633BA0");
+    ASMLocation = &&loc_633BA0;
     asm("xor    eax, eax");
     asm("mov    al, [esi]");
     asm("sub    edi, ASMCurrentRenderYOffset");
@@ -1702,14 +1534,8 @@ void ASMDraw_Sprite(
     asm("and    eax, 0x0F");
     asm("mov    ASMCurrentLineHead, ebx");
     asm("jmp    off_631500[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633BA0:");
+    loc_633BA0:
     asm("mov    dword_795050, esi");
     asm("xor    eax, eax");
     asm("mov    dword_795054, edi");
@@ -1720,34 +1546,27 @@ void ASMDraw_Sprite(
     asm("and    eax, 0x0F");
     asm("mov    ebx, ASMCurrentLineHead");
     asm("jmp    off_631500[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633BE0:");
+    loc_633BE0:
     asm("mov    eax, ecx");
     asm("shr    eax, 4");
     asm("jmp    off_631580[eax*4]");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
 
-    asm("loc_633C00:");
+    loc_633C00:
     asm("shr    ecx, 2");
-    asm("jmp    short loc_633C0B");
+    goto loc_633C0B;
 
-    asm("loc_633C05:");
+    loc_633C05:
     asm("shl    ecx, 4");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633C0B:");
+    loc_633C0B:
     asm("mov    edx, edi");
     asm("sub    edx, ecx");
     asm("inc    edx");
 
-    asm("loc_633C10:");
+    loc_633C10:
     asm("cmp    edx, [ebx+12]");
     asm("jg     short loc_633C72");
     asm("cmp    edi, [ebx+8]");
@@ -1760,7 +1579,7 @@ void ASMDraw_Sprite(
     asm("add    esi, eax");
     asm("sub    ecx, eax");
 
-    asm("loc_633C2A:");
+    loc_633C2A:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_633C45");
@@ -1769,7 +1588,7 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
     asm("mov    ASMLocation,    (offset    a_l_l_l_l_l_l_1+1Ah)");
 
-    asm("loc_633C45:");
+    loc_633C45:
     asm("mov    edi, dword_795054");
     asm("xor    ebx, ebx");
     asm("sub    edi, ASMCurrentLineHeadPx");
@@ -1782,52 +1601,44 @@ void ASMDraw_Sprite(
     asm("or     al, byte_631300[ebx]");
     asm("jmp    off_631600[eax*4]");
 
-    asm("loc_633C72:");
+    loc_633C72:
     asm("mov    edi, dword_795054");
     asm("add    esi, ecx");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
+    goto loc_633BA0;
 
-    asm("loc_633C81:");
+    loc_633C81:
     asm("mov    ebx, [ebx+4]");
     asm("or    ebx, ebx");
     asm("jnz    short loc_633C10");
-    asm("jmp    loc_6340E0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6340E0;
 
-    asm("loc_633CA0:");
+    loc_633CA0:
     asm("shr    ecx, 2");
     asm("mov    edi, dword_795054");
     asm("sub    edi, ecx");
-    asm("jmp    ASMLocation");
+    goto ASMLocation;
 
-    asm("loc_633CB1:");
+    loc_633CB1:
     asm("shl    ecx, 4");
     asm("mov    edi, dword_795054");
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("sub    edi, ecx");
-    asm("jmp    ASMLocation");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto ASMLocation;
 
-    asm("loc_633CE0:");
+    loc_633CE0:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633CE8");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633CE8:");
+    loc_633CE8:
     asm("mov    edx, edi");
     asm("sub    edx, ecx");
     asm("inc    edx");
 
-    asm("loc_633CED:");
+    loc_633CED:
     asm("cmp    edx, [ebx+12]");
     asm("jg    short loc_633D4C");
     asm("cmp    edi, [ebx+8]");
@@ -1840,7 +1651,7 @@ void ASMDraw_Sprite(
     asm("add    esi, eax");
     asm("sub    ecx, eax");
 
-    asm("loc_633D07:");
+    loc_633D07:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_633D22");
@@ -1849,7 +1660,7 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
     asm("mov    ASMLocation,    (offset    a_l_l_l_l_l_l_1+1Ah)");
 
-    asm("loc_633D22:");
+    loc_633D22:
     asm("mov    edi, dword_795054");
     asm("sub    edi, ASMCurrentLineHeadPx");
     asm("mov    eax, edi");
@@ -1859,35 +1670,30 @@ void ASMDraw_Sprite(
     asm("or    al, byte ptr dword_795048");
     asm("jmp    off_631E00[eax*4]");
 
-    asm("loc_633D4C:");
+    loc_633D4C:
     asm("mov    edi, dword_795054");
     asm("add    esi, ecx");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
+    goto loc_633BA0;
 
-    asm("loc_633D5B:");
+    loc_633D5B:
     asm("mov    ebx, [ebx+4]");
     asm("or    ebx, ebx");
     asm("jnz    short loc_633CED");
-    asm("jmp    loc_6340E0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6340E0;
 
-    asm("loc_633D80:");
+    loc_633D80:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633D88");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633D88:");
+    loc_633D88:
     asm("mov    edx, edi");
     asm("sub    edx, ecx");
     asm("inc    edx");
 
-    asm("loc_633D8D:");
+    loc_633D8D:
     asm("cmp    edx, [ebx+12]");
     asm("jg    short loc_633DFC");
     asm("cmp    edi, [ebx+8]");
@@ -1899,16 +1705,16 @@ void ASMDraw_Sprite(
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
 
-    asm("loc_633DA5:");
+    loc_633DA5:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_633DC0");
     asm("mov    eax, [ebx+8]");
     asm("sub    eax, edx");
     asm("sub    ecx, eax");
-    asm("mov    ASMLocation,    (offset    a_l_l_l_l_l_l_1+1Ah)");
+	ASMLocation = a_l_l_l_l_l_l_1 + 0x1A;
 
-    asm("loc_633DC0:");
+    loc_633DC0:
     asm("mov    edi, dword_795054");
     asm("mov    al, [esi]");
     asm("sub    edi, ASMCurrentLineHeadPx");
@@ -1917,43 +1723,42 @@ void ASMDraw_Sprite(
     asm("shl    eax, 0x10");
     asm("and    ebx, 3");
     asm("mov    al, [esi]");
-    asm("or    bl, byte_631300[ecx]");
+    asm("or     bl, byte_631300[ecx]");
     asm("mov    ah, al");
-    asm("or    bl, byte ptr dword_795048");
+    asm("or     bl, byte ptr dword_795048");
     asm("and    eax, dword_88C02C");
-    asm("or    eax, dword_88C030");
+    asm("or     eax, dword_88C030");
     asm("inc    esi");
     asm("jmp    off_631A00[ebx*4]");
 
-    asm("loc_633DFC:");
+    loc_633DFC:
     asm("mov    edi, dword_795054");
     asm("inc    esi");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
+    goto loc_633BA0;
 
-    asm("loc_633E0A:");
+    loc_633E0A:
     asm("mov    ebx, [ebx+4]");
-    asm("or    ebx, ebx");
+    asm("or     ebx, ebx");
     asm("jnz    loc_633D8D");
-    asm("jmp    loc_6340E0");
-//    asm("align 0x10");
+    goto loc_6340E0;
 
-    asm("loc_633E20:");
+    loc_633E20:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633E28");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633E28:");
+    loc_633E28:
     asm("mov    edx, edi");
     asm("sub    edx, ecx");
     asm("inc    edx");
 
-    asm("loc_633E2D:");
+    loc_633E2D:
     asm("cmp    edx, [ebx+12]");
-    asm("jg    short loc_633E9C");
+    asm("jg     short loc_633E9C");
     asm("cmp    edi, [ebx+8]");
-    asm("jl    short loc_633EAA");
+    asm("jl     short loc_633EAA");
     asm("xor    eax, eax");
     asm("cmp    edi, [ebx+12]");
     asm("jle    short loc_633E45");
@@ -1961,7 +1766,7 @@ void ASMDraw_Sprite(
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
 
-    asm("loc_633E45:");
+    loc_633E45:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_633E60");
@@ -1970,7 +1775,7 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
     asm("mov    ASMLocation,    (offset    a_l_l_l_l_l_l_1+1Ah)");
 
-    asm("loc_633E60:");
+    loc_633E60:
     asm("mov    edi, dword_795054");
     asm("mov    al, [esi]");
     asm("sub    edi, ASMCurrentLineHeadPx");
@@ -1979,43 +1784,42 @@ void ASMDraw_Sprite(
     asm("shl    eax, 0x10");
     asm("and    ebx, 3");
     asm("mov    al, [esi]");
-    asm("or        bl, byte_631300[ecx]");
+    asm("or     bl, byte_631300[ecx]");
     asm("mov    ah, al");
-    asm("or        bl, byte ptr dword_795048");
+    asm("or     bl, byte ptr dword_795048");
     asm("inc    esi");
     asm("and    eax, dword_88C02C");
-    asm("or        eax, dword_795034");
+    asm("or     eax, dword_795034");
     asm("jmp    off_631A00[ebx*4]");
 
-    asm("loc_633E9C:");
+    loc_633E9C:
     asm("mov    edi, dword_795054");
     asm("inc    esi");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
+    goto loc_633BA0;
 
-    asm("loc_633EAA:");
+    loc_633EAA:
     asm("mov    ebx, [ebx+4]");
-    asm("or        ebx, ebx");
+    asm("or     ebx, ebx");
     asm("jnz    loc_633E2D");
-    asm("jmp    loc_6340E0");
-//    asm("align 0x10");
+    goto loc_6340E0;
 
-    asm("loc_633EC0:");
+    loc_633EC0:
     asm("shr    ecx, 4");
     asm("jnz    short loc_633EC8");
     asm("mov    cl, [esi]");
     asm("inc    esi");
 
-    asm("loc_633EC8:");
+    loc_633EC8:
     asm("mov    edx, edi");
     asm("sub    edx, ecx");
     asm("inc    edx");
 
-    asm("loc_633ECD:");
+    loc_633ECD:
     asm("cmp    edx, [ebx+12]");
-    asm("jg        short loc_633F2C");
+    asm("jg     short loc_633F2C");
     asm("cmp    edi, [ebx+8]");
-    asm("jl        short loc_633F39");
+    asm("jl     short loc_633F39");
     asm("xor    eax, eax");
     asm("cmp    edi, [ebx+12]");
     asm("jle    short loc_633EE5");
@@ -2023,7 +1827,7 @@ void ASMDraw_Sprite(
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
 
-    asm("loc_633EE5:");
+    loc_633EE5:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_633F00");
@@ -2032,75 +1836,67 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
     asm("mov    ASMLocation,    (offset    a_l_l_l_l_l_l_1+1Ah)");
 
-    asm("loc_633F00:");
+    loc_633F00:
     asm("mov    edi, dword_795054");
     asm("sub    edi, ASMCurrentLineHeadPx");
     asm("mov    eax, edi");
     asm("and    eax, 3");
-    asm("or        al, byte_631300[ecx]");
+    asm("or     al, byte_631300[ecx]");
     asm("mov    ebx, ASMXlate");
-    asm("or        al, byte ptr dword_795048");
+    asm("or     al, byte ptr dword_795048");
     asm("xor    edx, edx");
     asm("jmp    off_632200[eax*4]");
 
-    asm("loc_633F2C:");
+    loc_633F2C:
     asm("mov    edi, dword_795054");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
+    goto loc_633BA0;
 
-    asm("loc_633F39:");
+    loc_633F39:
     asm("mov    ebx, [ebx+4]");
-    asm("or        ebx, ebx");
+    asm("or     ebx, ebx");
     asm("jnz    short loc_633ECD");
-    asm("jmp    loc_6340E0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_6340E0;
 
-    asm("loc_633F60:");
+    loc_633F60:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795098");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 2");
-    asm("jmp    short loc_633FCA");
+    goto loc_633FCA;
 
-    asm("loc_633F76:");
+    loc_633F76:
     asm("mov    eax, dword_795098");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 2");
-    asm("jmp    short loc_633FCA");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_633FCA;
 
-    asm("loc_633FA0:");
+    loc_633FA0:
     asm("xor    ecx, ecx");
     asm("mov    eax, dword_795094");
     asm("mov    cl, [esi]");
     asm("mov    dword_795090, eax");
     asm("inc    esi");
     asm("mov    eax, 1");
-    asm("jmp    short loc_633FCA");
+    goto loc_633FCA;
 
-    asm("loc_633FB6:");
+    loc_633FB6:
     asm("mov    eax, dword_795094");
     asm("mov    ecx, 1");
     asm("mov    dword_795090, eax");
     asm("mov    eax, 1");
 
-    asm("loc_633FCA:");
+    loc_633FCA:
     asm("test   dword_79509C, eax");
     asm("jz     short loc_63403F");
     asm("mov    edx, edi");
     asm("sub    edx, ecx");
     asm("inc    edx");
 
-    asm("loc_633FD7:");
+    loc_633FD7:
     asm("cmp    edx, [ebx+12]");
     asm("jg     short loc_63403F");
     asm("cmp    edi, [ebx+8]");
@@ -2112,7 +1908,7 @@ void ASMDraw_Sprite(
     asm("sub    eax, [ebx+12]");
     asm("sub    ecx, eax");
 
-    asm("loc_633FEF:");
+    loc_633FEF:
     asm("mov    ASMCurrentLineHeadPx, eax");
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_63400A");
@@ -2121,7 +1917,7 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
     asm("mov    ASMLocation,    (offset    a_l_l_l_l_l_l_1+1Ah)");
 
-    asm("loc_63400A:");
+    loc_63400A:
     asm("mov    edi, dword_795054");
     asm("mov    eax, dword_795090");
     asm("sub    edi, ASMCurrentLineHeadPx");
@@ -2133,58 +1929,45 @@ void ASMDraw_Sprite(
     asm("or     bl, byte ptr dword_795048");
     asm("jmp    off_631A00[ebx*4]");
 
-    asm("loc_63403F:");
+    loc_63403F:
     asm("mov    edi, dword_795054");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
+    goto loc_633BA0;
 
-    asm("loc_63404C:");
+    loc_63404C:
     asm("mov    ebx, [ebx+4]");
     asm("or     ebx, ebx");
     asm("jnz    short loc_633FD7");
-    asm("jmp    loc_6340E0");
-//    asm("align 0x10");
+    goto loc_6340E0;
 
-    asm("loc_634060:");
+    loc_634060:
     asm("call   sub_634100");
     asm("sub    edi, ecx");
-    asm("jmp    loc_633BA0");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_633BA0;
 
-    asm("loc_634080:");
-    asm("mov    eax, ASMColorXForm2");
-    asm("mov    ASMColorXForm1, eax");
+    loc_634080:
+	ASMColorXForm1 = ASMColorXForm2;// eax
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
-    asm("mov    dword_795034, eax");
-    asm("jmp    loc_633800");
+    dword_795034 = ASMColorXForm1;
+    goto loc_633800;
 
-    asm("loc_6340A0:");
-    asm("mov    eax, ASMColorXForm3");
-    asm("mov    ASMColorXForm1, eax");
+    loc_6340A0:
+	ASMColorXForm1 = ASMColorXForm3;// eax
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
-    asm("mov    dword_795034, eax");
-    asm("jmp    loc_633800");
+    dword_795034 = ASMColorXForm1;
+    goto loc_633800;
 
     /* TODO: wth is this? */
-    asm("byte_6340C0    db 0CCh");
+    byte_6340C0 = 0xCC;
 
-    asm("jmp    loc_632E40");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("db 2Eh,    8Bh, 0C0h");
-//    asm("align 0x10");
+    goto loc_632E40;
 
-    asm("loc_6340E0:");
-    asm("mov    eax, ASMDrawYOffset");
-    asm("inc    eax");
-    asm("mov    ASMDrawYOffset, eax");
-    asm("cmp    eax, [ebp+arg_10]");
-    asm("jl     loc_6336E0");
+    loc_6340E0:
+    if( ++ASMDrawYOffset < DrawX ){
+		goto loc_6336E0;
+	}
 
     asm("pop    edi");
     asm("pop    esi");
@@ -2196,80 +1979,26 @@ void ASMDraw_Sprite(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-unsigned int sub_634100( void *a1 )
+int sub_6341A0( ASMDraw_Unk *Shape, int DrawX, int DrawY )
 {
-    /*
-    unsigned int result; // eax@1
-    char *v2; // esi@1
-    char v3; // cl@3
-    char v4; // cl@4
-    int v5; // ecx@6
-    int v6; // ecx@9
-    int v7; // ecx@12
+    dword_7950A0 = Shape;
 
-    result = a1;
-    v2 = a1 + 1;
-    switch ( result )
-    {
-        case 1u:
-        case 5u:
-        case 9u:
-        case 0xDu:
-        case 0xFu:
-        case 0u:
-        case 4u:
-        case 8u:
-        case 0xCu:
-            return result;
-        case 2u:
-            v3 = *v2;
-            break;
-        case 3u:
-            v4 = *v2;
-            break;
-        case 6u:
-            if ( !(result >> 4) )
-                v5 = *v2;
-            break;
-        case 7u:
-        case 0xAu:
-            if ( !(result >> 4) )
-                v6 = *v2;
-            break;
-        case 0xBu:
-            if ( !(result >> 4) )
-                v7 = *v2;
-            break;
-        case 0xEu:
-            JUMPOUT(__CS__, off_632640[result >> 4]);
-            return result;
-    }
-    return result;
-    */
-}
+    ASMDrawXFinish = DrawX;
+    ASMDrawYFinish = DrawY;
 
-void **sub_6341A0( VSpan_Node *a1, int x, int y )
-{
-    dword_7950A0 = a1;
-
-    ASMDrawXFinish = x;
-    ASMDrawYFinish = y;
-
-    //dword_7950AC = *(a1 + 4) + y - 1;
-    //dword_7950B0 = *(a1 + 12);
-
-    return dword_7950B0;
+    dword_7950AC = Shape->unk2 + DrawY - 1;
+    dword_7950B0 = Shape->unk4;
 }
 
 int sub_6341E0(
-    int ShapeBase,
+    void *ShapeBase,
     int DrawX,
     int DrawY,
     int ShapeSizeX,
     int ShapeSizeY,
     int ShapeDataOffsets,
     int ShapeOutlineOffset,
-    char Flag )
+    unsigned char DrawFlag )
 {
     /*
     int result; // eax@1
@@ -2336,7 +2065,7 @@ int sub_6341E0(
             {
                 dword_79500C = v10 + ShapeBase + ShapeDataOffsets;
                 dword_795010 = v10 + ShapeBase + ShapeOutlineOffset;
-                if ( Flag & 2 )
+                if ( DrawFlag & 2 )
                 {
                     do
                     {
