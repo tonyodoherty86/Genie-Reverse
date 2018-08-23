@@ -2,7 +2,7 @@
 /**
  * @file    Engine\Shape.hpp
  * @author  Yvan Burrie
- * @date    2018/07/29
+ * @date    2018/08/13
  * @version 1.0
  */
 
@@ -37,22 +37,22 @@ public:
 
     struct Shape_Info *shape_info;
 
-    TShape( char *filename, int resource_file_id );
+    public: TShape( char *filename, int resource_file_id );
 
-    ~TShape();
+    public: ~TShape();
 
     /**
      * @brief Determines if a shape is valid
      * @param int shape_num
      * @return bool Returns TRUE if the shape is invalid, otherwise FALSE.
     */
-    bool Check_shape( int shape_num );
+    private: bool Check_shape( int shape_num );
 
     /**
      * @brief Determines whether the Shape was loaded.
      * @return bool
      */
-    bool is_loaded();
+    public: bool is_loaded();
 
     /**
      * @param int shape_num Determines the ID of the Shape.
@@ -60,29 +60,33 @@ public:
      * @param short *height Obtains the Y-dimension of the Shape.
      * @return bool
      */
-    bool shape_bounds( int shape_num, short *width, short *height );
+    public: bool shape_bounds(
+        int shape_num,
+        short *width,
+        short *height );
 
     /**
      * @brief Obtains the total number of shapes.
      * @return int
      */
-    int shape_count();
+    public: int shape_count();
 
     /**
      *
      */
-    bool shape_minmax(
+    public: bool shape_minmax(
         int *x_min,
         int *y_min,
         int *x_max,
         int *y_max,
         int shape_num );
 
-    bool shape_check( int check_x, int check_y, int shape_num );
+    public: bool shape_check(
+        int check_x,
+        int check_y,
+        int shape_num );
 
-public:
-
-    bool shape_draw(
+    public: bool shape_draw(
         TDrawArea *drawarea,
         int x,
         int y,
@@ -90,28 +94,26 @@ public:
         char flags,
         char *color_table );
 
-protected:
-
-    bool shape_draw_unclipped(
+    private: bool shape_draw_unclipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
         int shape_num );
 
-    bool shape_color_trans_unclipped(
+    private: bool shape_color_trans_unclipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
         int shape_num,
         char *color_table );
 
-    bool shape_shadow_unclipped(
+    private: bool shape_shadow_unclipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
         char *color_table );
 
-    bool shape_draw_clipped(
+    private: bool shape_draw_clipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
@@ -120,7 +122,7 @@ protected:
         int clip_x1,
         int clip_y1 );
 
-    bool shape_color_trans_clipped(
+    private: bool shape_color_trans_clipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
@@ -131,7 +133,7 @@ protected:
         int clip_y1,
         char *color_table );
 
-    bool shape_shadow_clipped(
+    private: bool shape_shadow_clipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
@@ -141,9 +143,7 @@ protected:
         int clip_y1,
         char *color_table );
 
-public:
-
-    bool shape_mirror(
+    public: bool shape_mirror(
         TDrawArea *drawarea,
         int x,
         int y,
@@ -151,27 +151,25 @@ public:
         char flags,
         char *color_table );
 
-protected:
-
-    bool shape_mirror_unclipped(
+    private: bool shape_mirror_unclipped(
         TDrawArea *drawarea,
         int shape_x1,
         int shape_y0 );
 
-    bool shape_mirror_color_trans_unclipped(
+    private: bool shape_mirror_color_trans_unclipped(
         TDrawArea *drawarea,
         int shape_x1,
         int shape_y0,
         int shape_num,
         char *color_table );
 
-    bool shape_mirror_shadow_unclipped(
+    private: bool shape_mirror_shadow_unclipped(
         TDrawArea *drawarea,
         int shape_x1,
         int shape_y0,
         char *color_table );
 
-    bool shape_mirror_clipped(
+    private: bool shape_mirror_clipped(
         TDrawArea *drawarea,
         int shape_x1,
         int shape_y0,
@@ -180,7 +178,7 @@ protected:
         int clip_x1,
         int clip_y1 );
 
-    bool shape_mirror_color_trans_clipped(
+    private: bool shape_mirror_color_trans_clipped(
         TDrawArea *drawarea,
         int shape_x1,
         int shape_y0,
@@ -191,7 +189,7 @@ protected:
         int clip_y1,
         char *color_table );
 
-    bool shape_mirror_shadow_clipped(
+    private: bool shape_mirror_shadow_clipped(
         TDrawArea *drawarea,
         int shape_x1,
         int shape_y0,
@@ -201,9 +199,7 @@ protected:
         int clip_y1,
         char *color_table );
 
-public:
-
-    bool shape_dither(
+    public: bool shape_dither(
         TDrawArea *drawarea,
         int x,
         int y,
@@ -211,16 +207,14 @@ public:
         int dx,
         int dy );
 
-protected:
-
-    bool shape_dithered_unclipped(
+    private: bool shape_dithered_unclipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
         int dx,
         int dy );
 
-    bool shape_dithered_clipped(
+    private: bool shape_dithered_clipped(
         TDrawArea *drawarea,
         int shape_x0,
         int shape_y0,
@@ -293,4 +287,11 @@ struct Shape_Load
      * Offset: 32.
      */
     Shape_Info *info;
+};
+
+struct Shape_Load2
+{
+    SLhape_File_Header FHeader;
+
+    Shape_Info **frames;
 };

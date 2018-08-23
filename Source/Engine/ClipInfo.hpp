@@ -2,7 +2,7 @@
 /**
  * @file    Engine\ClipInfo.hpp
  * @author  Yvan Burrie
- * @date    2018/02/19
+ * @date    2018/08/21
  * @version 1.0
  */
 
@@ -10,11 +10,14 @@ class DClipInfo_List
 {
 public:
 
-    struct DClipInfo_Node **Zone_Ptrs;
+    DClipInfo_Node **Zone_Ptrs;
+
     int *Zone_Size_Ptrs;
     int Used_Zones;
     int Max_Zones;
-    struct DClipInfo_Node *Free_Head;
+
+    DClipInfo_Node *Free_Head;
+
     int Free_Pool_Zone;
     int Free_Pool_Index;
     int Total_Blocks;
@@ -30,16 +33,26 @@ public:
     int SD_YMin;
     int SD_YMax;
     int Max_Draw_Levels;
-    int Accept_Min_Level;
-    int Accept_Max_Level;
-    struct DClipInfo_Node **Draw_Clip_Nodes;
-    struct DClipInfo_Node **Draw_Level_Head;
-    struct DClipInfo_Node **Draw_Level_Tail;
+
+    int Accept_Min_Level,
+        Accept_Max_Level;
+
+    DClipInfo_Node **Draw_Clip_Nodes,
+                   **Draw_Level_Head,
+                   **Draw_Level_Tail;
+
     int YLine_Offset;
     int YLine_Size;
+
     short *Select_Box;
 
-    DClipInfo_List(int InitialSize, int GrowSize, int szitem, int top_Yline, int bottom_Yline, int mxLevel);
+    DClipInfo_List(
+        int InitialSize,
+        int GrowSize,
+        int szitem,
+        int top_Yline,
+        int bottom_Yline,
+        int mxLevel );
 
     ~DClipInfo_List();
 
@@ -57,26 +70,28 @@ public:
     void ReclaimAllNodes();
     void ResetStats();
 };
+
 struct DClipInfo_Node
 {
-    DClipInfo_Node *Next;
-    DClipInfo_Node *NextOnLevel;
+    DClipInfo_Node *Next, *NextOnLevel;
+
     int Object_ID;
+
     Shape_Info *Shape;
+
     int Draw_Level;
-    int Draw_X;
-    int Draw_Y;
+
+    int Draw_X,
+        Draw_Y;
+
     int Draw_Flag;
+
     char *Shape_Base;
     char *Color_Table;
+
     int Xform_Mask;
+
     int Node_Type;
-    short x1;
-    short y1;
-    short x2;
-    short y2;
-    short x3;
-    short y3;
-    short x4;
-    short y4;
+
+    short x1, y1, x2, y2, x3, y3, x4, y4;
 };

@@ -2,7 +2,7 @@
 /**
  * @file    Engine\ResFile.h
  * @author  Yvan Burrie
- * @date    2018/07/29
+ * @date    2018/08/21
  * @version 1.0
  */
 
@@ -21,8 +21,8 @@ struct ResFileHdr
 {
     char *mapped_file;
     int handle;
-    struct resfile_header *header;
-    struct ResFileHdr *next;
+    resfile_header *header;
+    ResFileHdr *next;
     char res_name[260];
 };
 
