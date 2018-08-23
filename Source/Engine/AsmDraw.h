@@ -2,13 +2,18 @@
 /**
  * @file    Engine\AsmDraw.h
  * @author  Yvan Burrie
- * @date    2018/08/12
+ * @date    2018/08/19
  * @version 1.0
  */
 
 #ifndef ASM_DRAW_H
     #define ASM_DRAW_H
 #endif
+
+/**************************************************************************************************\
+ *
+ */
+int SHAPE_DRAW_PROCS( void );
 
 /**************************************************************************************************\
  * @brief Assigns the shadow info.
@@ -25,7 +30,7 @@ void ASMSet_Shadowing(
  * @return void
  */
 void ASMSet_Surface_Info(
-    void **RenderOffsets,
+    int **RenderOffsets,
     VSpan_Node **LineHeadPtrs,
     VSpan_Node **LineTailPtrs,
     int MinSpanPx,
@@ -92,33 +97,37 @@ void ASMDraw_Sprite(
     int DrawY,
     int DrawW,
     int DrawH,
-    int ShapeDataOffsets,
-    int ShapeLineOffsets,
-    int DrawFlag );
+    int DataOffsets,
+    int LineOffsets,
+    unsigned char DrawFlag );
 
 /**************************************************************************************************/
 int sub_634100( int a1 );
 
 /**************************************************************************************************\
  * sub_6341A0 (AOC)
+ * We do not yet know the structure of the first argument.
  */
-int sub_6341A0( struct ASMDraw_Unk *Shape, int DrawX, int DrawY );
+void sub_6341A0( struct ASMDraw_Unk *Shape, int DrawX, int DrawY );
 
+/**
+ *
+ */
 struct ASMDraw_Unk
 {
     int unk1;
     int unk2;
     int unk3;
-    int unk4;
+    VSpan_Node **unk4;
 };
 
 /**************************************************************************************************/
-int sub_6341E0(
-    void *ShapeBase,
+void sub_6341E0(
+    int *ShapeBase,
     int DrawX,
     int DrawY,
-    int ShapeSizeX,
-    int ShapeSizeY,
-    int ShapeDataOffsets,
-    int ShapeOutlineOffset,
+    int DrawW,
+    int DrawH,
+    int DataOffsets,
+    int LineOffsets,
     unsigned char DrawFlag );

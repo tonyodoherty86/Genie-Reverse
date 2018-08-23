@@ -2,7 +2,7 @@
 /**
  * @file    Engine\AsmDraw.c
  * @author  Yvan Burrie
- * @date    2018/08/12
+ * @date    2018/08/19
  * @version 1.0
  */
 
@@ -26,7 +26,7 @@ static int ASM_Fast_Count;
  *
  * AKA: DisplayOffsets
  */
-static void **ASMRenderOffsets;
+static int *ASMRenderOffsets;
 
 /**
  * dword_88C004 (ROR)
@@ -168,24 +168,24 @@ static int ASMDrawXFinish;
 static int ASMDrawYFinish;
 
 static int dword_7950AC;
-static void **dword_7950B0;
+static VSpan_Node **dword_7950B0;
 
 static int ASMDrawXStart;
 
 static int dword_795028;
-static int dword_79500C;
-static int dword_795010;
+static int **dword_79500C;
+static int **dword_795010;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define ASM_JUMP_TO_LOC asm("jmp %0" : "=r" (ASMLocation) : : ); // return ASMLocation();
 
-void SHAPE_DRAW_PROCS( void )
+int SHAPE_DRAW_PROCS( void )
 {
     ASM_JUMP_TO_LOC;
 };
 
-void sub_563006( char *a1, char *a2 )
+int sub_563006( BYTE *a1, BYTE *a2 )
 {
     *a1 = *a2;
 
@@ -213,7 +213,7 @@ void ASMSet_Shadowing(
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void ASMSet_Surface_Info(
-    void **DisplayOffsets,
+    int *DisplayOffsets,
     VSpan_Node **LineHeadPtrs,
     VSpan_Node **LineTailPtrs,
     int MinSpanPx,
@@ -397,14 +397,15 @@ void ASMDraw_HLine( int x1, int x2, int y1 )
                     }
                     int v11 = v9 & 127;
                     if( v9 >= 128 ){
-                        v11 |= 128;
+                        LOBYTE(v11) |= 128;
                     }
                     //JUMPOUT(__CS__, off_56A700[(byte_56B300[v11] | (ASMCurrentLineHeadPx + ASMCurrentRenderXOffset) & 3)]);
                 }
 
                 loc_56C8FA:
+
                 if( ASMCurrentLineHead->Next == NULL ){
-                    break;
+                    return;
                 }
                 ASMCurrentLineHead = ASMCurrentLineHead->Next;
 
@@ -415,16 +416,22 @@ void ASMDraw_HLine( int x1, int x2, int y1 )
 
         LineHead = LineHead->Next;
         if( LineHead == NULL ){
-            //EscapeDrawHLine:
             loc_56C99A:
             return;
         }
     }
 }
 
+static int dword_795018;
 static int dword_795034;
 static int dword_795048;
+static int dword_795050;
 static int dword_795054;
+static int dword_795090;
+static int dword_795094;
+static int dword_795098;
+static int dword_7950B4;
+static int dword_7950B8;
 
 static char byte_631300;
 static char byte_633B20;
@@ -453,18 +460,18 @@ void ASMDraw_Sprite(
     asm("push   edi");
 
 	int temp_int;
-
+/**/
     asm("mov    eax, [ebp+0x08]");
     asm("mov    ecx, [ebp+0x10]");
     asm("xor    edx, edx");
     asm("lea    ebx, [ecx+eax-1]");
-    asm("cmp    ebx, ASMMinLine");
+    asm("cmp    ebx, %0" : "=r" (ASMMinLine) : : );
     asm("jl     loc_6336D4");
-    asm("cmp    eax, ASMMaxLine");
+    asm("cmp    eax, %0" : "=r" (ASMMaxLine) : : );
     asm("jg     loc_6336D4");
-    asm("cmp    eax, ASMMinLine");
+    asm("cmp    eax, %0" : "=r" (ASMMinLine) : : );
     asm("jge    short loc_632C04");
-    asm("mov    edx, ASMMinLine");
+    asm("mov    edx, %0" : "=r" (ASMMinLine) : : );
     asm("sub    edx, eax");
     asm("xor    eax, eax");
     asm("sub    ecx, edx");
@@ -472,15 +479,15 @@ void ASMDraw_Sprite(
     asm("mov    [ebp+0x08], eax");
 
     loc_632C04:
-    asm("cmp    ebx, ASMMaxLine");
+    asm("cmp    ebx, %0" : "=r" (ASMMaxLine) : : );
     asm("jle    short loc_632C14");
-    asm("sub    ebx, ASMMaxLine");
+    asm("sub    ebx, %0" : "=r" (ASMMaxLine) : : );
     asm("sub    ecx, ebx");
 
     loc_632C14:
     asm("mov    [ebp+0x10], ecx");
     asm("xor    ebx, ebx");
-    asm("mov    ASMDrawYOffset, ebx");
+    asm("mov    %0, ebx" : "=r" (ASMDrawYOffset) : : );
     ASMDrawXStart = DrawX;// eax
 	if( ASMDrawXStart > ASMMaxSpanPx ){
 		goto loc_6336D4;
@@ -492,11 +499,11 @@ void ASMDraw_Sprite(
     asm("mov    eax, [ebp+0x14]");// dword_79500C = [ebp+0x14] + [ebp+0x08] + edx;
     asm("add    eax, [ebp+0x08]");
     asm("add    eax, edx");
-    asm("mov    dword_79500C, eax");
+    asm("mov    %0, eax" : "=r" (dword_79500C) : : );
     asm("mov    eax, [ebp+0x18]");// dword_795010 = [ebp+0x18] + [ebp+0x08] + edx;
     asm("add    eax, [ebp+0x08]");
     asm("add    eax, edx");
-    asm("mov    dword_795010, eax");
+    asm("mov    %0, eax" : "=r" (dword_795010) : : );
     asm("mov    eax, [ebp+0x1C]");
     temp_int = 0;
     asm("test   eax, 1");
@@ -505,7 +512,7 @@ void ASMDraw_Sprite(
     goto loc_632C91;
 
     loc_632C75:
-    asm("mov    ebx, ASMColorXForm1");
+    asm("mov    ebx, %0" : "=r" (ASMColorXForm1) : : );
     dword_88C030 = temp_int;
     dword_88C02C = -1;
     dword_795034 = ASMColorXForm1;
@@ -515,28 +522,28 @@ void ASMDraw_Sprite(
     asm("test   eax, 2");
     asm("jnz    loc_6336E0");
 
-	/* NOTE: some useless crap removed here. */
+	// NOTE: some useless crap removed here.
     asm("mov    eax, eax");
 
     loc_632CC0:
     asm("mov    eax, [ebp+0x08]");
-    asm("mov    ebx, ASMDrawYOffset");
+    asm("mov    ebx, %0" : "=r" (ASMDrawYOffset) : : );
     asm("add    eax, ebx");
-    asm("mov    esi, ASMLineHeadPtrs");
+    asm("mov    esi, %0" : "=r" (ASMLineHeadPtrs) : : );
     asm("mov    edi, [esi+eax*4]");
     asm("or     edi, edi");
     asm("jz     loc_6336C0");
-    asm("mov    ASMCurrentLineHead, edi");
-    asm("mov    ecx, ASMColorXForm2");
-    asm("mov    ASMColorXForm1, ecx");
-    asm("test   byte ptr dword_795048, 0x80");
+    asm("mov    %0, edi" : "=r" (ASMCurrentLineHead) : : );
+    asm("mov    ecx, %0" : "=r" (ASMColorXForm2) : : );
+    asm("mov    %0, ecx" : "=r" (ASMColorXForm1) : : );
+    asm("test   byte ptr %0, 0x80" : "=r" (dword_795048) : : );
     asm("jz     short loc_632D22");
     asm("and    eax, 3");
-    asm("mov    edx, ASMShadowing2A[eax*4]");
-    asm("mov    ecx, ASMShadowing1A[eax*4]");
-    asm("mov    eax, ASMColorXForm1");
-    asm("mov    dword_88C030, edx");
-    asm("mov    dword_88C02C, ecx");
+    asm("mov    edx, %0[eax*4]" : "=r" (ASMShadowing2A) : : );
+    asm("mov    ecx, %0[eax*4]" : "=r" (ASMShadowing1A) : : );
+    asm("mov    eax, %0" : "=r" (ASMColorXForm1) : : );
+    asm("mov    %0, edx" : "=r" (dword_88C030) : : );
+    asm("mov    %0, ecx" : "=r" (dword_88C02C) : : );
     asm("and    eax, ecx");
     asm("or     eax, edx");
     asm("mov    dword_795034, eax");
@@ -690,7 +697,7 @@ void ASMDraw_Sprite(
     asm("shr    ecx, 2");
     asm("mov    edi, dword_795054");
     asm("add    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_632F51:
     asm("shl    ecx, 4");
@@ -698,7 +705,7 @@ void ASMDraw_Sprite(
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("add    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_632F80:
     asm("shr    ecx, 4");
@@ -739,7 +746,7 @@ void ASMDraw_Sprite(
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
-    asm("mov    ebx, ASMColorXForm1");
+    asm("mov    ebx, %0" : "=r" (ASMColorXForm1) : : );
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_630B00[eax*4]");
 
@@ -1019,7 +1026,7 @@ void ASMDraw_Sprite(
     goto loc_632E40;
 
     loc_633320:
-    asm("mov    eax, ASMColorXForm2");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm2) : : );
     asm("mov    ASMColorXForm1, eax");
     asm("int    3");
     asm("and    eax, dword_88C02C");
@@ -1028,7 +1035,7 @@ void ASMDraw_Sprite(
     goto loc_632E40;
 
     loc_633360:
-    asm("mov    eax, ASMColorXForm3");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm3) : : );
     asm("mov    ASMColorXForm1, eax");
     asm("int    3");
     asm("and    eax, dword_88C02C");
@@ -1036,7 +1043,7 @@ void ASMDraw_Sprite(
     asm("mov    dword_795034, eax");
     goto loc_632E40;
 
-    /* TODO */
+    // TODO
     asm("byte_6333A0    db 0xCC");
     goto loc_632E40;
 
@@ -1078,14 +1085,14 @@ void ASMDraw_Sprite(
     loc_633460:
     asm("shr    ecx, 2");
     asm("add    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_63346B:
     asm("shl    ecx, 4");
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("add    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_633480:
     asm("shr    ecx, 4");
@@ -1097,7 +1104,7 @@ void ASMDraw_Sprite(
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
-    asm("mov    ebx, ASMColorXForm1");
+    asm("mov    ebx, %0" : "=r" (ASMColorXForm1) : : );
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_630B00[eax*4]");
 
@@ -1203,7 +1210,7 @@ void ASMDraw_Sprite(
 
     loc_63361B:
     asm("add    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_633640:
     asm("call   sub_634100");
@@ -1211,7 +1218,7 @@ void ASMDraw_Sprite(
     goto loc_6333C0;
 
     loc_633660:
-    asm("mov    eax, ASMColorXForm2");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm2) : : );
     asm("mov    ASMColorXForm1, eax");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
@@ -1219,25 +1226,25 @@ void ASMDraw_Sprite(
     goto loc_6333C0;
 
     loc_633680:
-    asm("mov    eax, ASMColorXForm3");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm3) : : );
     asm("mov    ASMColorXForm1, eax");
     asm("and    eax, dword_88C02C");
     asm("or     edx, dword_88C030");
     asm("mov    dword_795034, eax");
     goto loc_6333C0;
 
-    /* TODO */
+    // TODO
     asm("byte_6336A0    db 0xCC");
     goto loc_632E40;
 
-    /* TODO */
+    // TODO
     asm("byte_6336A6    db 0xCC");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_6336C0:
-    asm("mov    eax, ASMDrawYOffset");
+    asm("mov    eax, %0" : "=r" (ASMDrawYOffset) : : );
     asm("inc    eax");
-    asm("mov    ASMDrawYOffset, eax");
+    asm("mov    %0, eax" : "=r" (ASMDrawYOffset) : : );
     asm("cmp    eax, [ebp+0x10]");
     asm("jl     loc_632CC0");
 
@@ -1247,26 +1254,26 @@ void ASMDraw_Sprite(
     asm("pop    ebx");
     asm("pop    ebp");
 
-    /* TODO */
+    // TODO
     asm("ret");
 
     loc_6336E0:
     asm("mov    eax, [ebp+0x08]");
-    asm("mov    ebx, ASMDrawYOffset");
+    asm("mov    ebx, %0" : "=r" (ASMDrawYOffset) : : );
     asm("add    eax, ebx");
     asm("mov    esi, ASMLineTailPtrs");
     asm("mov    edi, [esi+eax*4]");
     asm("or     edi, edi");
     asm("jz     loc_6340E0");
     asm("mov    ASMCurrentLineHead, edi");
-    asm("mov    ecx, ASMColorXForm2");
+    asm("mov    ecx, %0" : "=r" (ASMColorXForm2) : : );
     asm("mov    ASMColorXForm1, ecx");
     asm("test   byte ptr dword_795048, 0x80");
     asm("jz     short loc_633742");
     asm("and    eax, 3");
     asm("mov    edx, ASMShadowing2A[eax*4]");
     asm("mov    ecx, ASMShadowing1A[eax*4]");
-    asm("mov    eax, ASMColorXForm1");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm1) : : );
     asm("mov    dword_88C030, edx");
     asm("mov    dword_88C02C, ecx");
     asm("and    eax, ecx");
@@ -1363,14 +1370,14 @@ void ASMDraw_Sprite(
     loc_6338A0:
     asm("shr    ecx, 2");
     asm("sub    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_6338AB:
     asm("shl    ecx, 4");
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("sub    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_6338C0:
     asm("shr    ecx, 4");
@@ -1382,7 +1389,7 @@ void ASMDraw_Sprite(
     asm("mov    eax, edi");
     asm("and    eax, 3");
     asm("or     al, byte_631300[ecx]");
-    asm("mov    ebx, ASMColorXForm1");
+    asm("mov    ebx, %0" : "=r" (ASMColorXForm1) : : );
     asm("or     al, byte ptr dword_795048");
     asm("jmp    off_631E00[eax*4]");
 
@@ -1488,7 +1495,7 @@ void ASMDraw_Sprite(
 
     loc_633A5B:
     asm("sub    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_633A80:
     asm("call   sub_634100");
@@ -1496,7 +1503,7 @@ void ASMDraw_Sprite(
     goto loc_633800;
 
     loc_633AA0:
-    asm("mov    eax, ASMColorXForm2");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm2) : : );
     asm("mov    ASMColorXForm1, eax");
     asm("int    3");
     asm("and    eax, dword_88C02C");
@@ -1505,7 +1512,7 @@ void ASMDraw_Sprite(
     goto loc_633800;
 
     loc_633AE0:
-    asm("mov    eax, ASMColorXForm3");
+    asm("mov    eax, %0" : "=r" (ASMColorXForm3) : : );
     asm("mov    ASMColorXForm1, eax");
     asm("int    3");
     asm("and    eax, dword_88C02C");
@@ -1513,11 +1520,11 @@ void ASMDraw_Sprite(
     asm("mov    dword_795034, eax");
     goto loc_633800;
 
-    /* TODO */
+    // TODO
     byte_633B20 = 0xCC;
     goto loc_632E40;
 
-    /* TODO */
+    // TODO
     a_l_l_l_l_l_l_1 = '.̀.̀.̀.̀.̀.̀.̀.̀̀˵PPy';
 
     asm("mov    edi, dword_795054");
@@ -1617,7 +1624,7 @@ void ASMDraw_Sprite(
     asm("shr    ecx, 2");
     asm("mov    edi, dword_795054");
     asm("sub    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_633CB1:
     asm("shl    ecx, 4");
@@ -1625,7 +1632,7 @@ void ASMDraw_Sprite(
     asm("mov    cl, [esi]");
     asm("inc    esi");
     asm("sub    edi, ecx");
-    goto ASMLocation;
+    ASM_JUMP_TO_LOC;
 
     loc_633CE0:
     asm("shr    ecx, 4");
@@ -1652,7 +1659,7 @@ void ASMDraw_Sprite(
     asm("sub    ecx, eax");
 
     loc_633D07:
-    asm("mov    ASMCurrentLineHeadPx, eax");
+    asm("mov    %0, eax" : "=r" (ASMCurrentLineHeadPx) : : );
     asm("cmp    edx, [ebx+8]");
     asm("jge    short loc_633D22");
     asm("mov    eax, [ebx+8]");
@@ -1662,12 +1669,12 @@ void ASMDraw_Sprite(
 
     loc_633D22:
     asm("mov    edi, dword_795054");
-    asm("sub    edi, ASMCurrentLineHeadPx");
+    asm("sub    edi, %0" : "=r" (ASMCurrentLineHeadPx) : : );
     asm("mov    eax, edi");
     asm("and    eax, 3");
-    asm("or    al, byte_631300[ecx]");
-    asm("mov    ebx, ASMColorXForm1");
-    asm("or    al, byte ptr dword_795048");
+    asm("or     al, byte_631300[ecx]");
+    asm("mov    ebx, %0" : "=r" (ASMColorXForm1) : : );
+    asm("or     al, byte ptr dword_795048");
     asm("jmp    off_631E00[eax*4]");
 
     loc_633D4C:
@@ -1712,7 +1719,7 @@ void ASMDraw_Sprite(
     asm("mov    eax, [ebx+8]");
     asm("sub    eax, edx");
     asm("sub    ecx, eax");
-	ASMLocation = a_l_l_l_l_l_l_1 + 0x1A;
+	//ASMLocation = (void)(a_l_l_l_l_l_l_1 + 0x1A);
 
     loc_633DC0:
     asm("mov    edi, dword_795054");
@@ -1965,7 +1972,7 @@ void ASMDraw_Sprite(
     goto loc_632E40;
 
     loc_6340E0:
-    if( ++ASMDrawYOffset < DrawX ){
+    if( ++ASMDrawYOffset < DrawH ){// eax
 		goto loc_6336E0;
 	}
 
@@ -1979,7 +1986,7 @@ void ASMDraw_Sprite(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int sub_6341A0( ASMDraw_Unk *Shape, int DrawX, int DrawY )
+void sub_6341A0( ASMDraw_Unk *Shape, int DrawX, int DrawY )
 {
     dword_7950A0 = Shape;
 
@@ -1990,17 +1997,23 @@ int sub_6341A0( ASMDraw_Unk *Shape, int DrawX, int DrawY )
     dword_7950B0 = Shape->unk4;
 }
 
-int sub_6341E0(
-    void *ShapeBase,
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void sub_6341E0(
+    int *ShapeBase,
     int DrawX,
     int DrawY,
-    int ShapeSizeX,
-    int ShapeSizeY,
-    int ShapeDataOffsets,
-    int ShapeOutlineOffset,
+    int DrawW,
+    int DrawH,
+    int DataOffsets,
+    int LineOffsets,
     unsigned char DrawFlag )
 {
-    /*
+    int ShapeSizeX = DrawW;
+    int ShapeSizeY = DrawH;
+    int ShapeDataOffsets = DataOffsets;
+    int ShapeOutlineOffset = LineOffsets;
+
     int result; // eax@1
     int v9; // ecx@1
     int v10; // edx@1
@@ -2011,7 +2024,7 @@ int sub_6341E0(
     int v15; // eax@17
     int v16; // ebx@19
     int v17; // edi@26
-    _BYTE *v18; // esi@26
+    int v18; // esi@26
     unsigned int v19; // ecx@27
     VSpan_Node *v20; // ebx@27
     int v21; // ecx@28
@@ -2027,7 +2040,6 @@ int sub_6341E0(
     int v31; // eax@59
     int v32; // ebx@61
     int v33; // edi@68
-    _BYTE *v34; // esi@68
     unsigned int v35; // ecx@69
     VSpan_Node *v36; // ebx@69
     int v37; // ecx@70
@@ -2043,351 +2055,369 @@ int sub_6341E0(
     v9 = ShapeSizeY;
     v10 = 0;
     v11 = ShapeSizeY + DrawY - 1;
-    if ( v11 >= ASMMinLine && DrawY <= ASMMaxLine && v11 >= ASMDrawYFinish && DrawY <= dword_7950AC )
-    {
-        if ( DrawY < ASMMinLine )
-        {
-            v9 = ShapeSizeY - (ASMMinLine - DrawY);
-            v10 = 4 * (ASMMinLine - DrawY);
-            DrawY = 0;
-        }
-        if ( v11 > ASMMaxLine )
-            v9 -= v11 - ASMMaxLine;
-        ShapeSizeYa = v9;
-        ASMDrawYOffset = 0;
-        result = DrawX;
-        ASMDrawXStart = DrawX;
-        if ( DrawX <= ASMMaxSpanPx )
-        {
-            result = ShapeSizeX + DrawX - 1;
-            dword_795028 = result;
-            if ( result >= ASMMinSpanPx )
-            {
-                dword_79500C = v10 + ShapeBase + ShapeDataOffsets;
-                dword_795010 = v10 + ShapeBase + ShapeOutlineOffset;
-                if ( DrawFlag & 2 )
-                {
-                    do
-                    {
-                        result = ASMDrawYOffset + DrawY;
-                        if ( ASMDrawYOffset + DrawY >= ASMDrawYFinish )
-                        {
-                            if ( result > dword_7950AC )
-                                return result;
-                            v28 = (dword_7950B0[result - ASMDrawYFinish + 1] - 8);
-                            ASMCurrentLineHead = (dword_7950B0[result - ASMDrawYFinish + 1] - 8);
-                            HIWORD(result) = 0;
-                            if ( !(dword_795010[ASMDrawYOffset] + 2) & 0x8000) )
-                            {
-                                LOWORD(result) = dword_795010[ASMDrawYOffset] + 2;
-                                v29 = result + ASMDrawXStart;
-                                LOWORD(result) = dword_795010[ASMDrawYOffset];
-                                v30 = dword_795028 - result;
-                                ASMCurrentRenderYOffset = ASMRenderOffsets[ASMDrawYOffset + DrawY];
-                                ASMCurrentRenderXOffset = dword_795028 - result + ASMCurrentRenderYOffset;
-                                dword_795018 = ShapeBase + *(dword_79500C + 4 * ASMDrawYOffset);
-                                while ( !(v28->Next & 0x80000000) )
-                                {
-                                    v31 = v28->Next + ASMDrawXFinish;
-                                    if ( v31 < ASMMinSpanPx )
-                                        v31 = ASMMinSpanPx;
-                                    v32 = v28->Prev + ASMDrawXFinish;
-                                    if ( v32 < ASMMinSpanPx )
-                                        break;
-                                    if ( v31 <= ASMMaxSpanPx )
-                                    {
-                                        if ( v32 > ASMMaxSpanPx )
-                                            v32 = ASMMaxSpanPx;
-                                        if ( v29 > v32 )
-                                            break;
-                                        if ( v30 >= v31 )
-                                        {
-                                            ASMLocation = &loc_6347A0;
-                                            ASMCurrentLineHead = v28;
-                                            v33 = ASMCurrentRenderXOffset;
-                                            v34 = dword_795018;
-LABEL_69:
-                                            while ( 2 )
-                                            {
-                                                dword_795050 = v34;
-                                                dword_795054 = v33;
-                                                v33 -= ASMCurrentRenderYOffset;
-                                                v35 = *v34++;
-                                                v36 = ASMCurrentLineHead;
-                                                switch ( v35 & 0xF )
-                                                {
-                                                    case 0u:
-                                                    case 1u:
-                                                    case 2u:
-                                                    case 3u:
-                                                    case 4u:
-                                                    case 5u:
-                                                    case 6u:
-                                                    case 7u:
-                                                    case 8u:
-                                                    case 9u:
-                                                    case 0xAu:
-                                                    case 0xBu:
-                                                    case 0xCu:
-                                                    case 0xDu:
-LABEL_70:
-                                                        sub_634100(--v34);
-                                                        v33 = dword_795054 - v37;
-                                                        continue;
-                                                    case 0xEu:
-                                                        switch ( v35 >> 4 )
-                                                        {
-                                                            case 0u:
-                                                                sub_634100(v34);
-                                                                v33 = dword_795054 - v38;
-                                                                continue;
-                                                            case 1u:
-                                                                continue;
-                                                            case 2u:
-                                                            case 3u:
-                                                            case 8u:
-                                                                goto LABEL_70;
-                                                            case 4u:
-                                                                v39 = 1;
-                                                                dword_795090 = dword_795094;
-                                                                break;
-                                                            case 5u:
-                                                                v39 = *v34;
-                                                                dword_795090 = dword_795094;
-                                                                ++v34;
-                                                                break;
-                                                            case 6u:
-                                                                v39 = 1;
-                                                                dword_795090 = dword_795098;
-                                                                break;
-                                                            case 7u:
-                                                                v39 = *v34;
-                                                                dword_795090 = dword_795098;
-                                                                ++v34;
-                                                                break;
-                                                        }
-                                                        v40 = v33 - v39 + 1;
-                                                        break;
-                                                    case 0xFu:
-                                                        goto LABEL_94;
-                                                }
-                                                break;
-                                            }
-                                            while ( !(v36->Next & 0x4C4B400) )
-                                            {
-                                                v41 = v36->Next + ASMDrawXFinish;
-                                                if ( v41 < ASMMinSpanPx )
-                                                    v41 = ASMMinSpanPx;
-                                                if ( v41 <= ASMMaxSpanPx )
-                                                {
-                                                    dword_7950B4 = v41;
-                                                    v42 = v36->Prev + ASMDrawXFinish;
-                                                    if ( v42 < ASMMinSpanPx )
-                                                        goto LABEL_94;
-                                                    if ( v42 > ASMMaxSpanPx )
-                                                        v42 = ASMMaxSpanPx;
-                                                    dword_7950B8 = v42;
-                                                    if ( v40 > v42 )
-                                                    {
-                                                        v33 = dword_795054 - v39;
-                                                        goto LABEL_69;
-                                                    }
-                                                    if ( v33 >= dword_7950B4 )
-                                                    {
-                                                        v43 = 0;
-                                                        if ( v33 > dword_7950B8 )
-                                                        {
-                                                            v43 = v33 - dword_7950B8;
-                                                            v39 -= v33 - dword_7950B8;
-                                                        }
-                                                        ASMCurrentLineHeadPx = v43;
-                                                        if ( v40 < dword_7950B4 )
-                                                        {
-                                                            v39 -= dword_7950B4 - v40;
-                                                            ASMLocation = "‹5PPy";
-                                                        }
-                                                        JUMPOUT(
-                                                            __CS__,
-                                                            *(&off_631A00 + (byte_631300[v39] | (dword_795054 - ASMCurrentLineHeadPx) & 3)));
-                                                    }
-                                                }
-                                                v36 = (v36 - 8);
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    v28 = (v28 - 8);
-                                }
-                            }
-                        }
-LABEL_94:
-                        result = ASMDrawYOffset + 1;
-                        ASMDrawYOffset = result;
-                    }
-                    while ( result < ShapeSizeYa );
+
+    if( v11 >= ASMMinLine &&
+        DrawY <= ASMMaxLine &&
+        v11 >= ASMDrawYFinish &&
+        DrawY <= dword_7950AC ){
+        goto COMPARE_DRAW_Y;
+    }
+    return;
+
+    COMPARE_DRAW_Y:
+    if( DrawY < ASMMinLine ){
+        v9 = ShapeSizeY - (ASMMinLine - DrawY);
+        v10 = 4 * (ASMMinLine - DrawY);
+        DrawY = 0;
+    }
+
+    if( v11 > ASMMaxLine ){
+        v9 -= v11 - ASMMaxLine;
+    }
+
+    ShapeSizeYa = v9;
+    ASMDrawYOffset = 0;
+    result = DrawX;
+    ASMDrawXStart = DrawX;
+
+    if( ASMMaxSpanPx > DrawX ){
+        return;
+    }
+
+    dword_795028 = ShapeSizeX + DrawX - 1;
+    if( dword_795028 < ASMMinSpanPx ){
+        return;
+    }
+
+    //dword_79500C = v10 + ShapeBase + ShapeDataOffsets;
+    //dword_795010 = v10 + ShapeBase + ShapeOutlineOffset;
+
+    if( DrawFlag & 2 ){
+        do{
+            result = ASMDrawYOffset + DrawY;
+            if( ASMDrawYOffset + DrawY >= ASMDrawYFinish ){
+                if( result > dword_7950AC ){
+                    return;
                 }
-                else
-                {
-                    do
-                    {
-                        result = ASMDrawYOffset + DrawY;
-                        if ( ASMDrawYOffset + DrawY >= ASMDrawYFinish )
-                        {
-                            if ( result > dword_7950AC )
-                                return result;
-                            v12 = (*(dword_7950B0[result - ASMDrawYFinish]) + 8);
-                            ASMCurrentLineHead = (*(dword_7950B0[result - ASMDrawYFinish]) + 8);
-                            HIWORD(result) = 0;
-                            if ( !(dword_795010[ASMDrawYOffset] & 0x8000) )
-                            {
-                                LOWORD(result) = dword_795010[ASMDrawYOffset];
-                                v13 = result + ASMDrawXStart;
-                                LOWORD(result) = dword_795010[ASMDrawYOffset] + 2;
-                                v14 = dword_795028 - result;
-                                ASMCurrentRenderYOffset = ASMRenderOffsets[ASMDrawYOffset + DrawY];
-                                ASMCurrentRenderXOffset = v13 + ASMCurrentRenderYOffset;
-                                dword_795018 = dword_79500C[ASMDrawYOffset] + ShapeBase;
-                                while ( !(v12->Next & 0x80000000) )
-                                {
-                                    v15 = v12->Next + ASMDrawXFinish;
-                                    if ( v15 < ASMMinSpanPx )
-                                        v15 = ASMMinSpanPx;
-                                    v16 = v12->Prev + ASMDrawXFinish;
-                                    if ( v16 >= ASMMinSpanPx )
-                                    {
-                                        if ( v15 > ASMMaxSpanPx )
+                v28 = (dword_7950B0[result - ASMDrawYFinish + 1] - 8);
+                ASMCurrentLineHead = (dword_7950B0[result - ASMDrawYFinish + 1] - 8);
+                //HIWORD(result) = 0;
+                if( !(*(dword_795010[ASMDrawYOffset] + 2) & 0x8000) ){
+
+                    //LOWORD(result) = dword_795010[ASMDrawYOffset] + 2;
+                    v29 = result + ASMDrawXStart;
+                    //LOWORD(result) = dword_795010[ASMDrawYOffset];
+                    v30 = dword_795028 - result;
+                    ASMCurrentRenderYOffset = ASMRenderOffsets[ASMDrawYOffset + DrawY];
+                    ASMCurrentRenderXOffset = dword_795028 - result + ASMCurrentRenderYOffset;
+                    //dword_795018 = ShapeBase + *(dword_79500C[ASMDrawYOffset]);
+
+                    //while( (*(v28 + 0) & 0x80000000) == 0 ){
+                    while( true ){
+
+                        //v31 = v28->Next + ASMDrawXFinish;
+                        if( v31 < ASMMinSpanPx ){
+                            v31 = ASMMinSpanPx;
+                        }
+                        //v32 = v28->Prev + ASMDrawXFinish;
+                        if( v32 < ASMMinSpanPx ){
+                            break;
+                        }
+                        if( v31 <= ASMMaxSpanPx ){
+                            if( v32 > ASMMaxSpanPx ){
+                                v32 = ASMMaxSpanPx;
+                            }
+                            if( v29 > v32 ){
+                                break;
+                            }
+                            if( v30 >= v31 ){
+                                ASMLocation = &&loc_6347A0;
+                                ASMCurrentLineHead = v28;
+                                v33 = ASMCurrentRenderXOffset;
+                                int v34 = dword_795018;
+                                LABEL_69:
+                                while( 2 ){
+
+                                    loc_6347A0:
+
+                                    dword_795050 = v34;
+                                    dword_795054 = v33;
+
+                                    v33 -= ASMCurrentRenderYOffset;
+                                    v35 = v34++;
+                                    v36 = ASMCurrentLineHead;
+
+                                    switch( v35 & 0x0F ){
+
+                                    case 0x00:
+                                    case 0x01:
+                                    case 0x02:
+                                    case 0x03:
+                                    case 0x04:
+                                    case 0x05:
+                                    case 0x06:
+                                    case 0x07:
+                                    case 0x08:
+                                    case 0x09:
+                                    case 0x0A:
+                                    case 0x0B:
+                                    case 0x0C:
+                                    case 0x0D:
+                                        LABEL_70:
+                                        sub_634100(--v34);
+                                        v33 = dword_795054 - v37;
+                                        continue;
+
+                                    case 0x0E:
+                                        switch( v35 >> 4 ){
+
+                                        case 0x00:
+                                            sub_634100(v34);
+                                            v33 = dword_795054 - v38;
+                                            continue;
+
+                                        case 0x01:
+                                            continue;
+
+                                        case 0x02:
+                                        case 0x03:
+                                        case 0x08:
+                                            goto LABEL_70;
+
+                                        case 0x04:
+                                            v39 = 1;
+                                            dword_795090 = dword_795094;
                                             break;
-                                        if ( v16 > ASMMaxSpanPx )
-                                            v16 = ASMMaxSpanPx;
-                                        if ( v14 < v15 )
+
+                                        case 0x05:
+                                            //v39 = *v34;
+                                            dword_795090 = dword_795094;
+                                            v34++;
                                             break;
-                                        if ( v13 <= v16 )
-                                        {
-                                            ASMLocation = &loc_634440;
-                                            ASMCurrentLineHead = v12;
-                                            v17 = ASMCurrentRenderXOffset;
-                                            v18 = dword_795018;
-LABEL_27:
-                                            while ( 2 )
-                                            {
-                                                dword_795050 = v18;
-                                                dword_795054 = v17;
-                                                v17 -= ASMCurrentRenderYOffset;
-                                                v19 = *v18++;
-                                                v20 = ASMCurrentLineHead;
-                                                switch ( v19 & 0xF )
-                                                {
-                                                    case 0u:
-                                                    case 1u:
-                                                    case 2u:
-                                                    case 3u:
-                                                    case 4u:
-                                                    case 5u:
-                                                    case 6u:
-                                                    case 7u:
-                                                    case 8u:
-                                                    case 9u:
-                                                    case 0xAu:
-                                                    case 0xBu:
-                                                    case 0xCu:
-                                                    case 0xDu:
-LABEL_28:
-                                                        sub_634100(--v18);
-                                                        v17 = v21 + dword_795054;
-                                                        continue;
-                                                    case 0xEu:
-                                                        switch ( v19 >> 4 )
-                                                        {
-                                                            case 0u:
-                                                                continue;
-                                                            case 1u:
-                                                                sub_634100(v18);
-                                                                v17 = v22 + dword_795054;
-                                                                continue;
-                                                            case 2u:
-                                                            case 3u:
-                                                            case 8u:
-                                                                goto LABEL_28;
-                                                            case 4u:
-                                                                v23 = 1;
-                                                                dword_795090 = dword_795094;
-                                                                break;
-                                                            case 5u:
-                                                                v23 = *v18;
-                                                                dword_795090 = dword_795094;
-                                                                ++v18;
-                                                                break;
-                                                            case 6u:
-                                                                v23 = 1;
-                                                                dword_795090 = dword_795098;
-                                                                break;
-                                                            case 7u:
-                                                                v23 = *v18;
-                                                                dword_795090 = dword_795098;
-                                                                ++v18;
-                                                                break;
-                                                        }
-                                                        v24 = v23 + v17 - 1;
-                                                        break;
-                                                    case 0xFu:
-                                                        goto LABEL_52;
-                                                }
-                                                break;
-                                            }
-                                            while ( !(v20->Next & 0x4C4B400) )
-                                            {
-                                                v25 = v20->Next + ASMDrawXFinish;
-                                                if ( v25 < ASMMinSpanPx )
-                                                    v25 = ASMMinSpanPx;
-                                                if ( v25 > ASMMaxSpanPx )
-                                                    break;
-                                                dword_7950B4 = v25;
-                                                v26 = v20->Prev + ASMDrawXFinish;
-                                                if ( v26 >= ASMMinSpanPx )
-                                                {
-                                                    if ( v26 > ASMMaxSpanPx )
-                                                        v26 = ASMMaxSpanPx;
-                                                    dword_7950B8 = v26;
-                                                    if ( v24 < dword_7950B4 )
-                                                    {
-                                                        v17 = v23 + dword_795054;
-                                                        goto LABEL_27;
-                                                    }
-                                                    if ( v17 <= dword_7950B8 )
-                                                    {
-                                                        v27 = 0;
-                                                        if ( v17 < dword_7950B4 )
-                                                        {
-                                                            v27 = dword_7950B4 - v17;
-                                                            v23 -= dword_7950B4 - v17;
-                                                        }
-                                                        ASMCurrentLineHeadPx = v27;
-                                                        if ( v24 > dword_7950B8 )
-                                                        {
-                                                            v23 -= v24 - dword_7950B8;
-                                                            ASMLocation = "‹5PPy";
-                                                        }
-                                                        JUMPOUT(__CS__, off_630700[(byte_631300[v23] | (ASMCurrentLineHeadPx + dword_795054) & 3)]);
-                                                    }
-                                                }
-                                                v20 = (v20 + 8);
-                                            }
+
+                                        case 0x06:
+                                            v39 = 1;
+                                            dword_795090 = dword_795098;
+                                            break;
+
+                                        case 0x07:
+                                            //v39 = *v34;
+                                            dword_795090 = dword_795098;
+                                            v34++;
                                             break;
                                         }
+                                        v40 = v33 - v39 + 1;
+                                        break;
+
+                                    case 0x0F:
+                                        goto LABEL_94;
                                     }
-                                    v12 = (v12 + 8);
+                                    break;
                                 }
+
+                                //while( !(v36->Next & 0x4C4B400) ){
+                                while( true ){
+
+                                    //v41 = v36->Next + ASMDrawXFinish;
+                                    if( v41 < ASMMinSpanPx ){
+                                        v41 = ASMMinSpanPx;
+                                    }
+                                    if( v41 <= ASMMaxSpanPx ){
+                                        dword_7950B4 = v41;
+                                        //v42 = v36->Prev + ASMDrawXFinish;
+                                        if( v42 < ASMMinSpanPx )
+                                            goto LABEL_94;
+                                        if( v42 > ASMMaxSpanPx )
+                                            v42 = ASMMaxSpanPx;
+                                        dword_7950B8 = v42;
+                                        if( v40 > v42 ){
+                                            v33 = dword_795054 - v39;
+                                            goto LABEL_69;
+                                        }
+                                        if( v33 >= dword_7950B4 ){
+                                            v43 = 0;
+                                            if( v33 > dword_7950B8 ){
+                                                v43 = v33 - dword_7950B8;
+                                                v39 -= v33 - dword_7950B8;
+                                            }
+                                            ASMCurrentLineHeadPx = v43;
+                                            if( v40 < dword_7950B4 ){
+                                                v39 -= dword_7950B4 - v40;
+                                                //ASMLocation = "‹5PPy";
+                                            }
+                                            //JUMPOUT(__CS__, *(&off_631A00 + (byte_631300[v39] | (dword_795054 - ASMCurrentLineHeadPx) & 3)));
+                                        }
+                                    }
+                                    v36 = (v36 - 8);
+                                }
+                                break;
                             }
                         }
-LABEL_52:
-                        result = ASMDrawYOffset + 1;
-                        ASMDrawYOffset = result;
+                        v28 = (v28 - 8);
                     }
-                    while ( result < ShapeSizeYa );
                 }
             }
-        }
+            LABEL_94:
+            result = ASMDrawYOffset + 1;
+            ASMDrawYOffset = result;
+
+        }while( result < ShapeSizeYa );
+    }else{
+        do{
+            result = ASMDrawYOffset + DrawY;
+            if( ASMDrawYOffset + DrawY >= ASMDrawYFinish ){
+                if( result > dword_7950AC ){
+                    return;
+                }
+                //v12 = (*(dword_7950B0[result - ASMDrawYFinish]) + 8);
+                //ASMCurrentLineHead = (*(dword_7950B0[result - ASMDrawYFinish]) + 8);
+                //HIWORD(result) = 0;
+                //if( !(dword_795010[ASMDrawYOffset] & 0x8000) ){
+                if( 1 ){
+                    //LOWORD(result) = dword_795010[ASMDrawYOffset];
+                    v13 = result + ASMDrawXStart;
+                    //LOWORD(result) = dword_795010[ASMDrawYOffset] + 2;
+                    v14 = dword_795028 - result;
+                    ASMCurrentRenderYOffset = ASMRenderOffsets[ASMDrawYOffset + DrawY];
+                    ASMCurrentRenderXOffset = v13 + ASMCurrentRenderYOffset;
+                    //dword_795018 = dword_79500C[ASMDrawYOffset] + ShapeBase;
+                    //while( !(v12->Next & 0x80000000) ){
+                    while( 1 ){
+                        loc_634440:
+                        //v15 = v12->Next + ASMDrawXFinish;
+                        if( v15 < ASMMinSpanPx ){
+                            v15 = ASMMinSpanPx;
+                        }
+                        //v16 = v12->Prev + ASMDrawXFinish;
+                        if( v16 >= ASMMinSpanPx ){
+                            if( v15 > ASMMaxSpanPx ){
+                                break;
+                            }
+                            if( v16 > ASMMaxSpanPx ){
+                                v16 = ASMMaxSpanPx;
+                            }
+                            if( v14 < v15 ){
+                                break;
+                            }
+                            if( v16 > v13 ){
+                                ASMLocation = &&loc_634440;
+                                ASMCurrentLineHead = v12;
+                                v17 = ASMCurrentRenderXOffset;
+                                v18 = dword_795018;
+                                LABEL_27:
+                                while( 2 ){
+                                    dword_795050 = v18;
+                                    dword_795054 = v17;
+                                    v17 -= ASMCurrentRenderYOffset;
+                                    v19 = v18++;
+                                    v20 = ASMCurrentLineHead;
+
+                                    switch( v19 & 0xF ){
+
+                                    case 0u:
+                                    case 1u:
+                                    case 2u:
+                                    case 3u:
+                                    case 4u:
+                                    case 5u:
+                                    case 6u:
+                                    case 7u:
+                                    case 8u:
+                                    case 9u:
+                                    case 0xAu:
+                                    case 0xBu:
+                                    case 0xCu:
+                                    case 0xDu:
+                                        LABEL_28:
+                                        sub_634100(--v18);
+                                        v17 = v21 + dword_795054;
+                                        continue;
+                                    case 0xEu:
+                                        switch( v19 >> 4 ){
+                                        case 0u:
+                                            continue;
+                                        case 1u:
+                                            sub_634100(v18);
+                                            v17 = v22 + dword_795054;
+                                            continue;
+                                        case 2u:
+                                        case 3u:
+                                        case 8u:
+                                            goto LABEL_28;
+                                        case 4u:
+                                            v23 = 1;
+                                            dword_795090 = dword_795094;
+                                            break;
+                                        case 5u:
+                                            v23 = v18;
+                                            dword_795090 = dword_795094;
+                                            v18++;
+                                            break;
+                                        case 6u:
+                                            v23 = 1;
+                                            dword_795090 = dword_795098;
+                                            break;
+                                        case 7u:
+                                            v23 = v18;
+                                            dword_795090 = dword_795098;
+                                            v18++;
+                                            break;
+                                        }
+                                        v24 = v23 + v17 - 1;
+                                        break;
+                                    case 0xFu:
+                                        goto LABEL_52;
+                                    }
+                                    break;
+                                }
+                                //while( !(v20->Next & 0x4C4B400) ){
+                                while( 1 ){
+                                    //v25 = v20->Next + ASMDrawXFinish;
+                                    if( v25 < ASMMinSpanPx ){
+                                        v25 = ASMMinSpanPx;
+                                    }
+                                    if( v25 > ASMMaxSpanPx ){
+                                        break;
+                                    }
+                                    dword_7950B4 = v25;
+                                    //v26 = v20->Prev + ASMDrawXFinish;
+                                    if( v26 >= ASMMinSpanPx ){
+                                        if( v26 > ASMMaxSpanPx ){
+                                            v26 = ASMMaxSpanPx;
+                                        }
+                                        dword_7950B8 = v26;
+                                        if( v24 < dword_7950B4 ){
+                                            v17 = v23 + dword_795054;
+                                            goto LABEL_27;
+                                        }
+                                        if( v17 <= dword_7950B8 ){
+                                            v27 = 0;
+                                            if( v17 < dword_7950B4 ){
+                                                v27 = dword_7950B4 - v17;
+                                                v23 -= dword_7950B4 - v17;
+                                            }
+                                            ASMCurrentLineHeadPx = v27;
+                                            if( v24 > dword_7950B8 ){
+                                                v23 -= v24 - dword_7950B8;
+                                                //ASMLocation = "‹5PPy";
+                                            }
+                                            //JUMPOUT(__CS__, off_630700[(byte_631300[v23] | (ASMCurrentLineHeadPx + dword_795054) & 3)]);
+                                        }
+                                    }
+                                    v20 = (v20 + 8);
+                                }
+                                break;
+                            }
+                        }
+                        v12 = (v12 + 8);
+                    }
+                }
+            }
+            LABEL_52:
+            result = ASMDrawYOffset + 1;
+            ASMDrawYOffset = result;
+
+        }while( result < ShapeSizeYa );
     }
-    return result;
-    */
+    return;
 }
