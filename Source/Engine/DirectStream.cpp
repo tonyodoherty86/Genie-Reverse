@@ -2,12 +2,9 @@
 /**
  * @file    Engine\DirectStream.cpp
  * @author  Yvan Burrie
- * @date    2018/08/19
+ * @date    2018/08/24
  * @version 1.0
  */
-
-int bTimerInstalled;
-int bFileOpen;
 
 /**
  *
@@ -82,9 +79,14 @@ BOOL DSGetWaveResource( HMODULE hModule, LPCTSTR lpName, WAVEFORMATEX **ppWaveHe
     }
 }
 
-BOOL DSFillSoundBuffer(IDirectSoundBuffer *pDSB, BYTE *pbWaveData, DWORD cbWaveSize)
+/**
+ *
+ */
+BOOL DSFillSoundBuffer( IDirectSoundBuffer *pDSB, BYTE *pbWaveData, DWORD cbWaveSize )
 {
-    if( pDSB && pbWaveData && cbWaveSize ){
+    if( pDSB &&
+        pbWaveData &&
+        cbWaveSize ){
 
         LPVOID pMem1, pMem2;
         DWORD dwSize1, dwSize2;
@@ -108,6 +110,9 @@ BOOL DSFillSoundBuffer(IDirectSoundBuffer *pDSB, BYTE *pbWaveData, DWORD cbWaveS
     return FALSE;
 }
 
+/**
+ *
+ */
 BOOL DSParseWaveResource( void *pvRes, WAVEFORMATEX **ppWaveHeader, BYTE **ppbWaveData,DWORD *pcbWaveSize )
 {
     if( ppWaveHeader ){
@@ -190,44 +195,79 @@ BOOL DSParseWaveResource( void *pvRes, WAVEFORMATEX **ppWaveHeader, BYTE **ppbWa
     return FALSE;
 }
 
-#include "SoundObject.c"
-#include "Wave.c"
+/**
+ *
+ */
+UINT uLastPercent;
 
-int ds_stream_init( HWND *hWnd, IDirectSound *lpd, IDirectSoundBuffer *lpb )
+/**
+ *
+ */
+void *lpDSBStreamBuffer;
+
+/**
+ *
+ */
+int bFileOpen;
+
+/**
+ *
+ */
+int bTimerInstalled;
+
+/**
+ *
+ */
+int uTimerID;
+
+/**
+ *
+ */
+HWND *main_wnd;
+
+/**
+ *
+ */
+BOOL ds_stream_init( HWND *hWnd, IDirectSound *lpd, IDirectSoundBuffer *lpb )
 {
-    int result; // eax@1
+    uLastPercent      = 100;
+    lpDSBStreamBuffer = NULL;
+    bFileOpen         = 0;
+    bPlaying          = 0;
+    bTimerInstalled   = 0;
+    uTimerID          = 0;
+    main_wnd          = hWnd;
+    lpBuffer          = (int)lpb;
+    lpDS              = (int)lpd;
+    ds_ready          = 1;
 
-    uLastPercent = 100;
-    lpDSBStreamBuffer = 0;
-    bFileOpen = 0;
-    bPlaying = 0;
-    bTimerInstalled = 0;
-    uTimerID = 0;
-    main_wnd = hWnd;
-    result = 1;
-    lpBuffer = (int)lpb;
-    lpDS = (int)lpd;
-    ds_ready = 1;
-    return result;
+    return TRUE;
 }
 
+/**
+ *
+ */
 int ds_stream_exit()
 {
     int result; // eax@1
 
     result = ds_ready;
-    if( ds_ready )
-    {
-        if( bFileOpen || bPlaying || (result = bTimerInstalled) != 0 )
+    if( ds_ready ){
+        if( bFileOpen ||
+            bPlaying ||
+            (result = bTimerInstalled) != 0 ){
             result = ds_stream_stop();
+        }
         ds_ready = 0;
     }
     return result;
 }
 
-int ds_stream_file( char *szName, char bLoop, int Volume )
+/**
+ *
+ */
+BOOL ds_stream_file( CHAR *szName, char bLoop, int Volume )
 {
-    int result; // eax@6
     unsigned int v4; // esi@15
     unsigned int v5; // ecx@16
     char *v6; // edi@18
@@ -238,80 +278,60 @@ int ds_stream_file( char *szName, char bLoop, int Volume )
     unsigned int dwLen2; // [sp+40h] [bp-18h]@13
     _DSBUFFERDESC dsbd; // [sp+44h] [bp-14h]@11
 
-    if( bFileOpen || bPlaying || bTimerInstalled )
+    if( bFileOpen ||
+        bPlaying ||
+        bTimerInstalled ){
+
         ds_stream_stop();
-    stream_paused = 0;
-    if( WaveOpenFile(szName, &hmmioIn, &wiWave, &pckInRIFF) )
-    {
-        result = 0;
     }
-    else if( wiWave->wFormatTag == 1 )
-    {
-        if( WaveStartDataRead(&hmmioIn, &pckIn, &pckInRIFF) )
-        {
+
+    stream_paused = 0;
+
+    if( WaveOpenFile(szName, &hmmioIn, &wiWave, &pckInRIFF) ){
+        return FALSE;
+    }else if( wiWave->wFormatTag == WAVE_FORMAT_PCM ){
+        if( WaveStartDataRead(&hmmioIn, &pckIn, &pckInRIFF) ){
             WaveCloseReadFile(&hmmioIn, &wiWave);
-            result = 0;
-        }
-        else
-        {
+            return FALSE;
+        }else{
+
             dword_888498 = 120 * wiWave->nAvgBytesPerSec / 0x64 / 6;
             dword_888494 = 6 * dword_888498;
+
             memset(&dsbd, 0, 0x14u);
-            dsbd.lpwfxFormat = wiWave;
-            dsbd.dwSize = 20;
-            dsbd.dwFlags = 224;
-            dsbd.dwBufferBytes = 6 * dword_888498;
-            if( (*(int (__stdcall **)(int, _DSBUFFERDESC *, int *, _DWORD))(*(_DWORD *)lpDS + 12))(
-                         lpDS,
-                         &dsbd,
-                         &lpDSBStreamBuffer,
-                         0) )
-            {
-                result = 0;
-            }
-            else
-            {
+            dsbd.lpwfxFormat   = wiWave;
+            dsbd.dwSize        = 20;
+            dsbd.dwFlags       = DSBCAPS_CTRLFREQUENCY|DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME;
+            dsbd.dwBufferBytes = 6 * dword_888494;
+
+            if( (*(int (__stdcall **)(int, _DSBUFFERDESC *, int *, _DWORD))(*(_DWORD *)lpDS + 12))(lpDS, &dsbd, &lpDSBStreamBuffer, 0) ){
+                return FALSE;
+            }else{
+
                 dword_888490 = lpDSBStreamBuffer;
                 dword_8884B0 = 0;
                 dword_8884B4 = 0;
-                if( (*(int (__stdcall **)(int, _DWORD, int, char **, unsigned int *, char **, unsigned int *, _DWORD))(*(_DWORD *)lpDSBStreamBuffer + 44))(
-                             lpDSBStreamBuffer,
-                             0,
-                             dword_888494,
-                             &lpWrite1,
-                             &dwLen1,
-                             &lpWrite2,
-                             &dwLen2,
-                             0) )
-                {
-                    result = 0;
-                }
-                else
-                {
+
+                if( (*(int (__stdcall **)(int, _DWORD, int, char **, unsigned int *, char **, unsigned int *, _DWORD))(*(_DWORD *)lpDSBStreamBuffer + 44))(lpDSBStreamBuffer, 0, dword_888494, &lpWrite1, &dwLen1, &lpWrite2, &dwLen2, 0) ){
+                    return FALSE;
+                }else{
                     v4 = dwLen1;
-                    if( dwLen1 )
-                    {
+                    if( dwLen1 ){
                         WaveReadFile(hmmioIn, dwLen1, lpWrite1, &pckIn, &uChkErr);
                         v5 = uChkErr;
                         v4 = dwLen1;
-                        if( uChkErr < dwLen1 )
-                        {
-                            if( dword_8884AC )
-                            {
+                        if( uChkErr < dwLen1 ){
+                            if( dword_8884AC ){
                                 v6 = lpWrite1;
-                                do
-                                {
+                                do{
                                     v6 += v5;
                                     dwLen1 = v4 - v5;
                                     WaveStartDataRead(&hmmioIn, &pckIn, &pckInRIFF);
                                     WaveReadFile(hmmioIn, dwLen1, v6, &pckIn, &uChkErr);
                                     v5 = uChkErr;
                                     v4 = dwLen1;
-                                }
-                                while( uChkErr < dwLen1 );
-                            }
-                            else
-                            {
+                                }while( uChkErr < dwLen1 );
+                            }else{
                                 dword_8884B0 = 1;
                                 dword_8884B4 = uChkErr / dword_888498;
                                 memset(&lpWrite1[uChkErr], wiWave->wBitsPerSample != 8 ? 0 : 0x80, dwLen1 - uChkErr);
@@ -319,85 +339,93 @@ int ds_stream_file( char *szName, char bLoop, int Volume )
                             }
                         }
                     }
-                    (*(void (__stdcall **)(int, char *, unsigned int, char *, _DWORD))(*(_DWORD *)lpDSBStreamBuffer + 76))(
-                        lpDSBStreamBuffer,
-                        lpWrite1,
-                        v4,
-                        lpWrite2,
-                        0);
+
+                    (*(void (__stdcall **)(int, char *, unsigned int, char *, _DWORD))(*(_DWORD *)lpDSBStreamBuffer + 76))(lpDSBStreamBuffer, lpWrite1, v4, lpWrite2, 0);
+
                     dword_8884A4 = 0;
                     dword_8884A0 = 0;
                     dword_88849C = 0;
                     dword_8884A8 = 0;
                     dword_8884AC = (unsigned __int8)bLoop;
                     bFileOpen = 1;
+
                     SendMessageA(main_wnd, 0x502u, 0, 0);
+
                     (*(void (__stdcall **)(int, _DWORD))(*(_DWORD *)lpDSBStreamBuffer + 52))(lpDSBStreamBuffer, 0);
                     (*(void (__stdcall **)(int, int))(*(_DWORD *)lpDSBStreamBuffer + 60))(lpDSBStreamBuffer, Volume);
-                    (*(void (__stdcall **)(int, _DWORD, _DWORD, signed int))(*(_DWORD *)lpDSBStreamBuffer + 48))(
-                        lpDSBStreamBuffer,
-                        0,
-                        0,
-                        1);
-                    if( timeBeginPeriod(0x32u) )
-                    {
+                    (*(void (__stdcall **)(int, _DWORD, _DWORD, signed int))(*(_DWORD *)lpDSBStreamBuffer + 48))(lpDSBStreamBuffer, 0, 0, 1);
+
+                    if( timeBeginPeriod(0x32u) ){
+
                         (*(void (__stdcall **)(int))(*(_DWORD *)lpDSBStreamBuffer + 72))(lpDSBStreamBuffer);
                         bTimerInstalled = 0;
                         bPlaying = 0;
-                        result = 0;
-                    }
-                    else
-                    {
-                        uTimerID = timeSetEvent(0x32u, 0xAu, ds_stream_time_func, 0, 1u);
-                        if( uTimerID )
+
+                        return FALSE;
+
+                    }else{
+
+                        if( uTimerID = timeSetEvent(0x32u, 0xAu, ds_stream_time_func, 0, 1u) ){
                             bTimerInstalled = 1;
+                        }
                         bPlaying = 1;
-                        result = 1;
+
+                        return TRUE;
                     }
                 }
             }
         }
-    }
-    else
-    {
+    }else{
         WaveCloseReadFile(&hmmioIn, &wiWave);
-        result = 0;
+        return FALSE;
     }
-    return result;
 }
 
+/**
+ *
+ */
 int ds_stream_volume( int val )
 {
-    int result; // eax@1
+    int result = lpDSBStreamBuffer;
 
-    result = lpDSBStreamBuffer;
-    if( lpDSBStreamBuffer )
+    if( lpDSBStreamBuffer ){
         result = (*(int (__stdcall **)(int, int))(*(_DWORD *)lpDSBStreamBuffer + 60))(lpDSBStreamBuffer, val) == 0;
+    }
+
     return result;
 }
 
+/**
+ *
+ */
 int ds_stream_pause()
 {
-    int result; // eax@1
-
-    result = 1;
     stream_paused = 1;
-    return result;
+
+    return stream_paused;
 }
 
+/**
+ *
+ */
 int ds_stream_resume()
 {
     stream_paused = 0;
+
     return 1;
 }
 
+/**
+ *
+ */
 int ds_stream_stop()
 {
     int v0; // eax@4
 
     dword_8884A8 = 1;
-    if( bTimerInstalled )
-    {
+
+    if( bTimerInstalled ){
+
         bTimerInstalled = 0;
         timeKillEvent(uTimerID);
         timeEndPeriod(0x32u);
@@ -411,7 +439,7 @@ int ds_stream_stop()
         (*(void (__stdcall **)(int))(*(_DWORD *)lpDSBStreamBuffer + 72))(lpDSBStreamBuffer);
     }
     v0 = lpDSBStreamBuffer;
-LABEL_7:
+    LABEL_7:
     if( bFileOpen )
     {
         if( wiWave )
@@ -431,30 +459,31 @@ LABEL_7:
     return 1;
 }
 
-unsigned int ds_stream_messages( HWND *hWnd, unsigned int wMsg )
+/**
+ *
+ */
+UINT ds_stream_messages( HWND *hWnd, UINT wMsg )
 {
-    unsigned int v2; // eax@3
-    signed __int64 v3; // rax@5
+    switch( wMsg ){
 
-    if( wMsg == 1280 )
-    {
+    case 1280:
         ds_stream_stop();
-    }
-    else if( wMsg == 1282 )
-    {
-        v2 = dword_8884A4;
-        if( dword_8884A4 > pckInRIFF.cksize )
-        {
+        break;
+
+    case 1282:
+        UINT v2 = dword_8884A4;
+        if( dword_8884A4 > pckInRIFF.cksize ){
             v2 = dword_8884A4 - pckInRIFF.cksize;
             dword_8884A4 -= pckInRIFF.cksize;
         }
-        v3 = (signed __int64)(double)(100 * v2 / pckInRIFF.cksize);
-        if( (_DWORD)v3 != uLastPercent )
-        {
+        double v3 = (100 * v2 / pckInRIFF.cksize);
+        if( (DWORD)v3 != uLastPercent ){
             uLastPercent = v3;
             return 0;
         }
+        break;
     }
+
     return 0;
 }
 
@@ -674,7 +703,7 @@ LABEL_61:
                 }
             }
         }
-LABEL_72:
+        LABEL_72:
         if( dword_888490 )
             (*(void (__stdcall **)(_DWORD, _DWORD, _DWORD, _DWORD, unsigned int))(*(_DWORD *)dword_888490 + 76))(
                 dword_888490,
@@ -687,9 +716,9 @@ LABEL_72:
         dword_88849C += dword_888498;
         if( dword_88849C < (unsigned int)dword_888494 )
             goto LABEL_76;
-LABEL_75:
+        LABEL_75:
         dword_88849C = v9 - v8;
-LABEL_76:
+        LABEL_76:
         bInTimer = 0;
     }
 }
