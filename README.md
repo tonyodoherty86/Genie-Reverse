@@ -3,7 +3,7 @@
 
 ![Decompile and recompile the Genie engine](Banner.png)
 
-Please help us cecompile and recompile the Genie engine!
+Please help us translate the entire Genie engine in pure C++!
 
 ## Introduction
 Reversing the Genie-Engine involves:
