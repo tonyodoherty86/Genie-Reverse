@@ -1,6 +1,10 @@
 # Genie-Reverse
 *The reverse engineering of the Genie-Engine.*
 
+![Decompile and recompile the Genie engine](Banner.png)
+
+Please help us cecompile and recompile the Genie engine!
+
 ## Introduction
 Reversing the Genie-Engine involves:
  * Daunting research with timely analysis, by observing huge amounts of pseudocode.
