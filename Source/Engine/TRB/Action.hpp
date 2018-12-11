@@ -22,8 +22,6 @@ public:
         RGE_Action_Object *obj_in,
         bool do_setup);
 
-    ~TRIBE_Action();
-
     bool setup(
         int infile,
         RGE_Action_Object *obj_in);

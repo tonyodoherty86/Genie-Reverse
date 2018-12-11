@@ -1,5 +1,6 @@
 #pragma once
 #include <RGE/ActionList.hpp>
+#include <cstdint>
 
 
 /**
@@ -15,7 +16,7 @@ public:
 
     TRIBE_Action_List(RGE_Action_Object *obj_in);
 
-    void create_action(int infile, short action_type);
+    void create_action(int infile, int16_t action_type);
     void create_task_action(RGE_Task *task, RGE_Static_Object *target_obj, float target_x, float target_y, float target_z);
 
     void get_action_name(char *action_name);

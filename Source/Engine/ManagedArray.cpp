@@ -1,6 +1,7 @@
+#include "ManagedArray.hpp"
 
 //----- (00408D20) --------------------------------------------------------
-void __thiscall ManagedArray<int>::~ManagedArray<int>(ManagedArray<int> *this)
+void ManagedArray<int>::~ManagedArray<int>(ManagedArray<int> *this)
 {
   ManagedArray<int> *v1; // esi@1
 

@@ -13,7 +13,7 @@
 #define FALSE 0
 #define TRUE 0
 
-#include <cstdint>
+#include <stdint.h>
 
 #if defined(__GNUC__)
   typedef          long long ll;

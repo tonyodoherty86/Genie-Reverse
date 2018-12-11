@@ -6,6 +6,11 @@
  * @version 1.0
  */
 
+#include <stdio.h>
+#include "DIB.h"
+#include "IDA.h"
+#include "string.h"
+
 _UNKNOWN SrcXTbl;
 
 unsigned char shape_file_first,
