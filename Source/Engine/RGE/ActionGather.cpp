@@ -107,12 +107,12 @@ void __thiscall RGE_Action_Gather::first_in_stack(RGE_Action_Gather *this, char 
         || (v7 = v6->master_obj, v8 = v5->master_obj->id, v8 != LOWORD(v7[1].radius_x)) && v8 != HIWORD(v7[1].radius_x)
         || v6->attribute_amount_held <= 0.0 )
       {
-        v2->vfptr->set_state((RGE_Action *)v2, 4);
+        set_state((RGE_Action *)v2, 4);
       }
       else
       {
         v9 = v2->vfptr;
-        v2->vfptr->set_target_obj2((RGE_Action *)v2, v2->target_obj);
+        set_target_obj2((RGE_Action *)v2, v2->target_obj);
         v9->set_target_obj((RGE_Action *)v2, 0);
         LODWORD(v2->target_x) = -1082130432;
         LODWORD(v2->target_y) = -1082130432;
@@ -122,12 +122,12 @@ void __thiscall RGE_Action_Gather::first_in_stack(RGE_Action_Gather *this, char 
     }
     else
     {
-      v2->vfptr->set_state((RGE_Action *)v2, 3);
+      set_state((RGE_Action *)v2, 3);
     }
   }
   else
   {
-    v2->vfptr->set_state((RGE_Action *)v2, 3);
+    set_state((RGE_Action *)v2, 3);
   }
 }
 
@@ -174,7 +174,7 @@ void __thiscall RGE_Action_Gather::set_state(RGE_Action_Gather *this, char new_s
   v3 = (unsigned __int8)new_state - 1;
   switch ( new_state )
   {
-    case 3:
+    case Search:
       ((void (__stdcall *)(int, int, signed int, signed int, int, _DWORD))v2->obj->vfptr->notify)(
         v2->obj->id,
         v2->obj->id,
@@ -184,21 +184,20 @@ void __thiscall RGE_Action_Gather::set_state(RGE_Action_Gather *this, char new_s
         0);
       LODWORD(v2->timer) = -1054867456;
       goto LABEL_40;
-    case 2:
+    case Wait:
       v4 = &v2->obj->vfptr;
       LODWORD(v2->timer) = 0;
       v5 = *v4;
       v6 = RGE_Action_Gather::get_wait_sprite(v2);
       (*(void (__thiscall **)(RGE_Action_Object *, RGE_Sprite *))&v5->gap4[52])(v2->obj, v6);
-      v7 = v2->vfptr;
-      v2->vfptr->set_target_obj((RGE_Action *)v2, 0);
-      v7->set_target_obj2((RGE_Action *)v2, 0);
+      set_target_obj((RGE_Action *)v2, 0);
+      set_target_obj2((RGE_Action *)v2, 0);
       LODWORD(v2->target_x) = -1082130432;
       LODWORD(v2->target_y) = -1082130432;
       LODWORD(v2->target_z) = -1082130432;
       return;
-    case 0xB:
-    case 0xF:
+    case Move:
+    case Attack:
       LODWORD(v2->timer) = 0;
       v8 = (RGE_Action_Move_To *)operator new(0x44u);
       if( v8 )
@@ -225,15 +224,15 @@ void __thiscall RGE_Action_Gather::set_state(RGE_Action_Gather *this, char new_s
       }
       else
       {
-        v2->vfptr->set_state((RGE_Action *)v2, 13);
+        set_state((RGE_Action *)v2, Failed);
       }
       return;
-    case 4:
+    case Goto:
       v12 = v2->target_obj;
       LODWORD(v2->timer) = 0;
       if( !v12 )
       {
-        v2->vfptr->set_state((RGE_Action *)v2, 13);
+        set_state((RGE_Action *)v2, Failed);
         return;
       }
       v2->target_x = v12->world_x;
@@ -246,13 +245,13 @@ void __thiscall RGE_Action_Gather::set_state(RGE_Action_Gather *this, char new_s
       RGE_Action_Move_To::RGE_Action_Move_To(v13, v2->obj, v2->target_obj, v2->task->work_range, v14);
       v16 = v15;
       goto LABEL_30;
-    case 6:
+    case Work:
       v17 = &v2->obj->vfptr;
       LODWORD(v2->timer) = 0;
       v18 = *v17;
       v19 = RGE_Action_Gather::get_move_sprite(v2);
       goto LABEL_41;
-    case 7:
+    case Work2:
       v20 = v2->task;
       LODWORD(v2->timer) = 0;
       LOWORD(v3) = v20->attribute_type;
@@ -264,7 +263,7 @@ void __thiscall RGE_Action_Gather::set_state(RGE_Action_Gather *this, char new_s
       if( v22 )
         RGE_Sound::play(v22, 1);
       return;
-    case 8:
+    case Return:
       v23 = v2->obj;
       if( v23->attribute_amount_held <= 0.0 )
       {
@@ -273,12 +272,12 @@ void __thiscall RGE_Action_Gather::set_state(RGE_Action_Gather *this, char new_s
           && v34->attribute_amount_held <= 0.0
           && !(unsigned __int8)((int (__stdcall *)(_DWORD))v23->vfptr->keepGatheringWhenObjectIsOut)(v34->master_obj->id) )
         {
-          v2->vfptr->set_target_obj((RGE_Action *)v2, 0);
+          set_target_obj((RGE_Action *)v2, 0);
         }
-        v2->vfptr->set_state((RGE_Action *)v2, 3);
+        set_state((RGE_Action *)v2, Search);
       }
       else if( v2->target_obj2
-             || (LOWORD(v23->master_obj[1].radius_x) == -1 ? v2->vfptr->set_target_obj2((RGE_Action *)v2, 0) : (v24 = ((int (*)(void))v23->vfptr->useSameZoneDropsite)(), v25 = v2->vfptr, v26 = v24 == 1, v27 = v2->obj, v28 = v27->master_obj, !v26) ? (v30 = RGE_Object_List::find_by_master_ids(v27->owner->objects, LOWORD(v28[1].radius_x), HIWORD(v28[1].radius_x), v27->world_x, v27->world_y, 1, 2, 0), v25->set_target_obj2((RGE_Action *)v2, v30)) : (v29 = RGE_Object_List::find_by_master_ids(v27->owner->objects, LOWORD(v28[1].radius_x), HIWORD(v28[1].radius_x), v27->world_x, v27->world_y, 1, 2, (RGE_Static_Object *)&v2->obj->vfptr), v25->set_target_obj2((RGE_Action *)v2, v29)),
+             || (LOWORD(v23->master_obj[1].radius_x) == -1 ? set_target_obj2((RGE_Action *)v2, 0) : (v24 = ((int (*)(void))v23->vfptr->useSameZoneDropsite)(), v25 = v2->vfptr, v26 = v24 == 1, v27 = v2->obj, v28 = v27->master_obj, !v26) ? (v30 = RGE_Object_List::find_by_master_ids(v27->owner->objects, LOWORD(v28[1].radius_x), HIWORD(v28[1].radius_x), v27->world_x, v27->world_y, 1, 2, 0), v25->set_target_obj2((RGE_Action *)v2, v30)) : (v29 = RGE_Object_List::find_by_master_ids(v27->owner->objects, LOWORD(v28[1].radius_x), HIWORD(v28[1].radius_x), v27->world_x, v27->world_y, 1, 2, (RGE_Static_Object *)&v2->obj->vfptr), v25->set_target_obj2((RGE_Action *)v2, v29)),
                  v2->target_obj2) )
       {
         v31 = (RGE_Action_Move_To *)operator new(0x44u);
@@ -301,7 +300,7 @@ LABEL_30:
         }
         else
         {
-          v2->vfptr->set_state((RGE_Action *)v2, 13);
+          set_state((RGE_Action *)v2, Failed);
         }
       }
       else
@@ -313,12 +312,12 @@ LABEL_30:
           609,
           0,
           0);
-        v2->vfptr->set_state((RGE_Action *)v2, 13);
+        set_state((RGE_Action *)v2, Failed);
       }
       return;
-    case 1:
-    case 0xD:
-    case 0xE:
+    case Done:
+    case Failed:
+    case Invalidated:
       LODWORD(v2->timer) = 0;
 LABEL_40:
       v18 = v2->obj->vfptr;
@@ -375,96 +374,93 @@ char __thiscall RGE_Action_Gather::update(RGE_Action_Gather *this)
 
   v1 = this;
   if( this->targetID != -1 && !RGE_Game_World::object(this->obj->owner->world, this->targetID) )
-    v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
+    set_target_obj((RGE_Action *)v1, 0);
   if( v1->target2ID != -1 && !RGE_Game_World::object(v1->obj->owner->world, v1->target2ID) )
-    v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
+    set_target_obj2((RGE_Action *)v1, 0);
   v2 = v1->target_obj;
   if( v2 && v2->object_state >= 7u )
-    v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
+    set_target_obj((RGE_Action *)v1, 0);
   v3 = v1->target_obj2;
   if( v3 && v3->object_state >= 7u )
-    v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
+    set_target_obj2((RGE_Action *)v1, 0);
   v4 = v1->target_obj;
   if( v4 && (v5 = v4->owner->id) != 0 && v5 != v1->obj->owner->id )
   {
-    v1->vfptr->set_state((RGE_Action *)v1, 1);
+    set_state((RGE_Action *)v1, Done);
     v1->obj->vfptr->notify((RGE_Static_Object *)v1->obj, v1->obj->id, v1->obj->id, 507, 609, 0, 0);
     result = 4;
   }
   else
   {
-    switch ( v1->state )
+    switch ( this->state )
     {
       case 3:
-        if( v1->timer >= 0.0 )
+        if( this->timer >= 0.0 )
           goto LABEL_84;
-        v7 = v1->obj;
-        v1->timer = v7->owner->world->world_time_delta_seconds + v1->timer;
+        this->timer = this->obj->owner->world->world_time_delta_seconds + this->timer;
         if( v9 | v10 )
           goto LABEL_84;
-        v11 = v7->vfptr;
-        LODWORD(v1->timer) = -1054867456;
-        ((void (__stdcall *)(int, int, signed int, signed int, int, _DWORD))v11->notify)(
-          v7->id,
-          v7->id,
+        LODWORD(this->timer) = -1054867456;
+        this->obj->notify(
+          this->obj->id,
+          this->obj->id,
           514,
           609,
-          v1->targetType,
+          this->targetType,
           0);
         return 0;
       case 0xB:
       case 0xF:
-        switch ( (unsigned __int8)((int (*)(void))v1->sub_actions->vfptr->update)() )
+        switch (sub_actions->update() )
         {
           case 4u:
             v12 = v1->vfptr;
-            v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
-            if( v1->state == 11 )
+            set_target_obj((RGE_Action *)v1, 0);
+            if( this->state == 11 )
             {
-              v12->set_state((RGE_Action *)v1, 11);
+              v12->set_state((RGE_Action *)this, Move);
               result = 0;
             }
             else
             {
-              v12->set_state((RGE_Action *)v1, 15);
+              v12->set_state((RGE_Action *)this, MoveNoSearch);
               result = 0;
             }
             return result;
           case 3u:
-            v13 = v1->obj->owner;
+            v13 = this->obj->owner;
             goto LABEL_31;
           case 1u:
           case 2u:
           case 5u:
-            if( v1->state != 11 )
+            if( this->state != 11 )
               goto LABEL_76;
-            v1->vfptr->set_state((RGE_Action *)v1, 3);
+            set_state((RGE_Action *)this, Search);
             return 0;
           default:
             goto LABEL_84;
         }
         goto LABEL_84;
       case 4:
-        switch ( (unsigned __int8)((int (*)(void))v1->sub_actions->vfptr->update)() )
+        switch (sub_actions->vfptr->update() )
         {
           case 4u:
           case 5u:
-            v14 = v1->vfptr;
-            v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
-            v14->set_state((RGE_Action *)v1, 11);
+            set_target_obj((RGE_Action *)this, 0);
+            set_state((RGE_Action *)this, Move);
             result = 0;
             break;
           case 3u:
-            v13 = v1->obj->owner;
+            v13 = this->obj->owner;
 LABEL_31:
             if( RGE_Player::computerPlayer(v13) != 1 )
               goto LABEL_44;
-            v1->vfptr->set_state((RGE_Action *)v1, 13);
+            set_state((RGE_Action *)this, Failed);
             result = 0;
             break;
           case 1u:
           case 2u:
-            v1->vfptr->set_state((RGE_Action *)v1, 6);
+            set_state((RGE_Action *)this, Work);
             result = 0;
             break;
           default:
@@ -474,42 +470,41 @@ LABEL_31:
       case 6:
         if( !v4 )
         {
-          v1->vfptr->set_state((RGE_Action *)v1, 3);
+          set_state((RGE_Action *)this, Search);
           return 0;
         }
         if( !(unsigned __int8)(*(int (__thiscall **)(RGE_Action_Object *, RGE_Static_Object *, _DWORD, _DWORD))&v1->obj->vfptr[1].gap4[4])(
-                                 v1->obj,
+                                 this->obj,
                                  v4,
                                  0,
                                  0) )
           goto LABEL_84;
-        v15 = v1->target_obj;
+        v15 = this->target_obj;
         if( v15->attribute_amount_held > 0.0
-          || (unsigned __int8)((int (__stdcall *)(_DWORD))v1->obj->vfptr->keepGatheringWhenObjectIsOut)(v15->master_obj->id) )
+          || (unsigned __int8)(obj->keepGatheringWhenObjectIsOut(target_obj->master_obj->id) )
         {
-          v1->vfptr->set_state((RGE_Action *)v1, 7);
+          set_state((RGE_Action *)this, Work2);
           result = 0;
         }
         else
         {
-          v16 = v1->vfptr;
-          v1->vfptr->set_target_obj((RGE_Action *)v1, 0);
-          v16->set_state((RGE_Action *)v1, 3);
+          set_target_obj((RGE_Action *)this, 0);
+          set_state((RGE_Action *)this, Search);
           result = 0;
         }
         return result;
       case 7:
         if( !v4 )
         {
-          if( v1->obj->attribute_amount_held <= 0.0 )
+          if( this->obj->attribute_amount_held <= 0.0 )
           {
 LABEL_44:
-            v1->vfptr->set_state((RGE_Action *)v1, 3);
+            set_state((RGE_Action *)this, Search);
             result = 0;
           }
           else
           {
-            v1->vfptr->set_state((RGE_Action *)v1, 8);
+            set_state((RGE_Action *)this, Return);
             result = 0;
           }
           return result;
@@ -517,22 +512,22 @@ LABEL_44:
         if( rge_base_game->quick_build )
           v17 = v4->attribute_amount_held;
         else
-          v17 = v1->task->work_val1
-              * *(float *)&v1->obj->master_obj[1].obj_max
-              * v1->obj->owner->world->world_time_delta_seconds;
+          v17 = this->task->work_val1
+              * (float)this->obj->master_obj[1].obj_max
+              * this->obj->owner->world->world_time_delta_seconds;
         if( v17 > v4->attribute_amount_held )
           v17 = v4->attribute_amount_held;
-        v18 = v1->task->attribute_type2;
+        v18 = this->task->attribute_type2;
         if( v18 == -1 )
           modifier = 1.0;
         else
           modifier = v1->obj->owner->attributes[v18];
-        v19 = v1->obj;
+        v19 = this->obj;
         v20 = modifier * v17;
         give_amount = v20;
         v21 = v20;
-        v22 = (double)v19->master_obj->attribute_max_amount * modifier;
-        v24 = v22 - v19->attribute_amount_held;
+        v22 = (double)obj->master_obj->attribute_max_amount * modifier;
+        v24 = v22 - obj->attribute_amount_held;
         if( v21 > v24 )
         {
           v25 = give_amount - v24;
@@ -541,95 +536,93 @@ LABEL_44:
         }
         v26 = -v17;
         ((void (__stdcall *)(_DWORD, signed int, signed int))v4->vfptr->set_attribute_amount)(LODWORD(v26), 1, 1);
-        ((void (__stdcall *)(float, signed int, _DWORD))v1->obj->vfptr->set_attribute_amount)(
+        (this->obj->set_attribute_amount(
           COERCE_FLOAT(LODWORD(give_amount)),
           1,
           0);
-        v27 = v1->obj;
+        v27 = this->obj;
         max_hold = v22;
         if( v27->attribute_amount_held >= (double)max_hold
-          || (v28 = v1->target_obj, v28->attribute_amount_held <= 0.0)
-          && !(unsigned __int8)((int (__stdcall *)(_DWORD))v27->vfptr->keepGatheringWhenObjectIsOut)(v28->master_obj->id) )
+          || (v28 = this->target_obj, v28->attribute_amount_held <= 0.0)
+          && !this->obj->keepGatheringWhenObjectIsOut(v28->master_obj->id) )
         {
-          v1->vfptr->set_state((RGE_Action *)v1, 8);
+          set_state((RGE_Action *)this, Return);
           return 0;
         }
         goto LABEL_84;
       case 8:
-        if( v1->timer >= 0.0 )
+        if( this->timer >= 0.0 )
         {
-          switch ( (unsigned __int8)((int (*)(void))v1->sub_actions->vfptr->update)() )
+          switch ( this->sub_actions->update() )
           {
             case 3u:
             case 4u:
             case 5u:
               v33 = v1->obj;
-              LODWORD(v1->timer) = -1069547520;
+              LODWORD(this->timer) = -1069547520;
               (*(void (**)(void))&v33->vfptr[1].gap4[0])();
               result = 0;
               break;
             case 1u:
             case 2u:
-              if( v1->target_obj2 )
+              if( this->target_obj2 )
               {
-                if( RGE_Static_Object::distance_to_object((RGE_Static_Object *)&v1->obj->vfptr, v1->target_obj2) <= 1.0 )
+                if( this->obj->distance_to_object(this->target_obj2) <= 1.0 )
                 {
-                  v35 = v1->task->work_sound2;
-                  if( v35 )
-                    RGE_Sound::play(v35, 1);
-                  v36 = v1->task;
+                  if( this->task->work_sound2 )
+                    RGE_Sound::play(this->task_work_sound2, 1);
+                  v36 = this->task;
                   LOWORD(v36) = v36->attribute_type3;
                   if( (_WORD)v36 == -1 )
-                    LOWORD(v36) = v1->obj->attribute_type_held;
+                    LOWORD(v36) = this->obj->attribute_type_held;
                   v37 = (signed __int16)v36;
-                  ((void (__stdcall *)(RGE_Task *, _DWORD, signed int))v1->obj->owner->vfptr->add_attribute_num)(
+                  this->obj->owner->add_attribute_num(
                     v36,
-                    LODWORD(v1->obj->attribute_amount_held),
+                    LODWORD(this->obj->attribute_amount_held),
                     1);
-                  v1->obj->owner->vfptr->trackUnitGather(
-                    v1->obj->owner,
-                    v1->obj->id,
+                  this->obj->owner->trackUnitGather(
+                    this->obj->owner,
+                    this->obj->id,
                     v37,
-                    (signed __int64)v1->obj->attribute_amount_held);
-                  ((void (__stdcall *)(signed int, _DWORD))v1->obj->vfptr->set_attribute)(-1, 0);
-                  if( v1->target_obj )
+                    this->obj->attribute_amount_held);
+                  this->obj->set_attribute(-1, 0);
+                  if( this->target_obj )
                   {
-                    v38 = v1->vfptr;
-                    v1->vfptr->set_target_obj2((RGE_Action *)v1, 0);
-                    v38->set_state((RGE_Action *)v1, 4);
+                    set_target_obj2((RGE_Action *)this, 0);
+                    this->set_state((RGE_Action *)this, Goto);
                     result = 0;
                   }
-                  else if( LODWORD(v1->target_x) == -1082130432 || LODWORD(v1->target_y) == -1082130432 )
+                  else if( LODWORD(this->target_x) == -1082130432 || LODWORD(this->target_y) == -1082130432 )
                   {
 LABEL_76:
-                    if( RGE_Player::computerPlayer(v1->obj->owner) == 1 )
+                    if( RGE_Player::computerPlayer(this->obj->owner) == 1 )
                     {
-                      v1->vfptr->set_state((RGE_Action *)v1, 1);
+                      set_state((RGE_Action *)this, Done);
                       result = 0;
                     }
                     else
                     {
-                      v1->vfptr->set_state((RGE_Action *)v1, 2);
+                      set_state((RGE_Action *)this, Wait);
                       result = 0;
                     }
                   }
                   else
                   {
-                    v1->vfptr->set_state((RGE_Action *)v1, 11);
+                    set_state((RGE_Action *)this, Move);
                     result = 0;
                   }
                 }
                 else
                 {
-                  v34 = v1->obj;
-                  LODWORD(v1->timer) = -1069547520;
+                  v34 = this->obj;
+                  LODWORD(this->timer) = -1069547520;
                   (*(void (**)(void))&v34->vfptr[1].gap4[0])();
                   result = 0;
                 }
               }
               else
               {
-                v1->vfptr->set_state((RGE_Action *)v1, 8);
+                set_state((RGE_Action *)this, Return);
                 result = 0;
               }
               break;
@@ -639,7 +632,7 @@ LABEL_76:
         }
         else
         {
-          v1->timer = v1->obj->owner->world->world_time_delta_seconds + v1->timer;
+          this->timer = this->obj->owner->world->world_time_delta_seconds + this->timer;
           if( v30 | v31 )
           {
 LABEL_84:
@@ -647,9 +640,8 @@ LABEL_84:
           }
           else
           {
-            v32 = v1->vfptr;
-            LODWORD(v1->timer) = 0;
-            v32->set_state((RGE_Action *)v1, 8);
+            LODWORD(this->timer) = 0;
+            this->set_state((RGE_Action *)this, Return);
             result = 0;
           }
         }
@@ -657,21 +649,21 @@ LABEL_84:
       case 1:
         return 1;
       case 0xD:
-        ((void (__stdcall *)(int, int, signed int, signed int, _DWORD, _DWORD))v1->obj->vfptr->notify)(
-          v1->obj->id,
-          v1->obj->id,
+        this->obj->notify(
+          this->obj->id,
+          this->obj->id,
           505,
           609,
           0,
           0);
-        if( RGE_Player::computerPlayer(v1->obj->owner) == 1 )
+        if( RGE_Player::computerPlayer(this->obj->owner) == 1 )
         {
-          v1->vfptr->set_state((RGE_Action *)v1, 1);
+          set_state((RGE_Action *)this, Done);
           result = 3;
         }
         else
         {
-          v1->vfptr->set_state((RGE_Action *)v1, 2);
+          set_state((RGE_Action *)this, Wait);
           result = 3;
         }
         return result;
@@ -690,14 +682,12 @@ RGE_Sprite *__thiscall RGE_Action_Gather::get_move_sprite(RGE_Action_Gather *thi
   RGE_Action_Object *v3; // ecx@2
   RGE_Sprite *result; // eax@4
 
-  v1 = this->task;
-  v2 = v1->attribute_type;
-  if( v2 == -1
-    || (v3 = this->obj, v3->attribute_type_held != v2)
+  if( task->attribute_type == -1
+    || (v3 = this->obj, v3->attribute_type_held != task->attribute_type)
     || (signed int)(signed __int64)v3->attribute_amount_held <= 0
-    || (result = v1->carry_sprite) == 0 )
+    || (result = this->task->carry_sprite) == 0 )
   {
-    result = v1->move_sprite;
+    result = this->task->move_sprite;
   }
   return result;
 }
@@ -711,7 +701,6 @@ RGE_Sprite *__thiscall RGE_Action_Gather::get_wait_sprite(RGE_Action_Gather *thi
   RGE_Action_Object *v4; // ecx@2
   RGE_Sprite *result; // eax@4
 
-  v1 = this;
   v2 = this->task;
   v3 = v2->attribute_type;
   if( v3 == -1
@@ -719,7 +708,7 @@ RGE_Sprite *__thiscall RGE_Action_Gather::get_wait_sprite(RGE_Action_Gather *thi
     || (signed int)(signed __int64)v4->attribute_amount_held <= 0
     || (result = v2->carry_sprite) == 0 )
   {
-    result = v1->obj->master_obj->sprite;
+    result = this->obj->master_obj->sprite;
   }
   return result;
 }
@@ -737,36 +726,34 @@ int __thiscall RGE_Action_Gather::move_to(RGE_Action_Gather *this, RGE_Static_Ob
   RGE_Action_Gather *v5; // esi@1
   RGE_Action_Object *v6; // edx@2
   RGE_Master_Static_Object *v7; // eax@3
-  __int16 v8; // cx@3
   RGE_ActionVtbl *v9; // edi@8
   RGE_ActionVtbl *v11; // edi@9
 
   v5 = this;
-  if( obj_in
-    && (v6 = this->obj, obj_in->owner == v6->owner)
-    && ((v7 = v6->master_obj, v8 = obj_in->master_obj->id, v8 == LOWORD(v7[1].radius_x)) || v8 == HIWORD(v7[1].radius_x))
-    && v6->attribute_amount_held > 0.0 )
+  int16_t obj_in_id = obj_in->master_obj_id;
+  if( obj_in &&
+    && (obj_in->owner == this->obj->owner)
+    && ((obj_in_id == LOWORD(this->obj_master_obj[1].radius_x)) || obj_in_id == HIWORD(this->obj_master_obj[1].radius_x))
+    && this->obj->attribute_amount_held > 0.0 )
   {
-    if( obj_in != v5->target_obj2 || v5->state != 8 )
+    if( obj_in != this->target_obj2 || this->state != Return )
     {
-      v9 = v5->vfptr;
-      v5->vfptr->set_target_obj((RGE_Action *)v5, 0);
-      LODWORD(v5->target_x) = -1082130432;
-      LODWORD(v5->target_y) = -1082130432;
-      LODWORD(v5->target_z) = -1082130432;
-      v9->set_target_obj2((RGE_Action *)v5, obj_in);
-      v9->set_state((RGE_Action *)v5, 8);
+      this->set_target_obj((RGE_Action *)this, nullptr);
+      LODWORD(this->target_x) = -1082130432;
+      LODWORD(this->target_y) = -1082130432;
+      LODWORD(this->target_z) = -1082130432;
+      this->set_target_obj2((RGE_Action *)this, obj_in);
+      this->set_state((RGE_Action *)this, Return);
       return 1;
     }
   }
   else
   {
-    v11 = v5->vfptr;
     v5->target_z = z;
     v5->target_x = x;
     v5->target_y = y;
-    v11->set_target_obj((RGE_Action *)v5, 0);
-    v11->set_state((RGE_Action *)v5, 15);
+    this->set_target_obj((RGE_Action *)this, 0);
+    this->set_state((RGE_Action *)this, 15);
   }
   return 1;
 }
@@ -774,17 +761,12 @@ int __thiscall RGE_Action_Gather::move_to(RGE_Action_Gather *this, RGE_Static_Ob
 //----- (00403D90) --------------------------------------------------------
 int __thiscall RGE_Action_Gather::work(RGE_Action_Gather *this, RGE_Static_Object *obj_in, float x, float y, float z)
 {
-  RGE_Action_Gather *v5; // esi@1
-  char v6; // al@3
-  RGE_Action_Object *v7; // edx@6
   RGE_Master_Static_Object *v8; // eax@7
   __int16 v9; // cx@7
-  RGE_ActionVtbl *v10; // ebx@10
   int result; // eax@10
   RGE_ActionVtbl *v12; // ebx@11
   RGE_ActionVtbl *v13; // edi@12
 
-  v5 = this;
   if( !obj_in )
   {
     v13 = this->vfptr;
@@ -792,39 +774,36 @@ int __thiscall RGE_Action_Gather::work(RGE_Action_Gather *this, RGE_Static_Objec
     this->target_x = x;
     this->target_y = y;
     ((void (__stdcall *)(_DWORD))v13->set_target_obj)(0);
-    v13->set_state((RGE_Action *)v5, 15);
+    v13->set_state((RGE_Action *)this, 15);
     return 1;
   }
   if( obj_in == this->target_obj )
   {
-    v6 = this->state;
+    char v6 = this->state;
     if( v6 == 4 || v6 == 6 || v6 == 7 )
       return 1;
   }
-  v7 = this->obj;
-  if( obj_in->owner != v7->owner
-    || (v8 = v7->master_obj, v9 = obj_in->master_obj->id, v9 != LOWORD(v8[1].radius_x)) && v9 != HIWORD(v8[1].radius_x)
-    || v7->attribute_amount_held <= 0.0 )
+  if( obj_in->owner != this->obj->owner
+    || (v8 = this->obj->master_obj, v9 = obj_in->master_obj->id, v9 != LOWORD(v8[1].radius_x)) && v9 != HIWORD(v8[1].radius_x)
+    || this->obj->attribute_amount_held <= 0.0 )
   {
-    v12 = v5->vfptr;
-    v5->vfptr->set_target_obj((RGE_Action *)v5, obj_in);
-    v5->target_x = obj_in->world_x;
-    v5->target_y = obj_in->world_y;
-    v5->target_z = obj_in->world_z;
-    v12->set_target_obj2((RGE_Action *)v5, 0);
-    v12->set_state((RGE_Action *)v5, 4);
+    this->set_target_obj((RGE_Action *)this, obj_in);
+    this->target_x = obj_in->world_x;
+    this->target_y = obj_in->world_y;
+    this->target_z = obj_in->world_z;
+    this->set_target_obj2((RGE_Action *)this, 0);
+    this->set_state((RGE_Action *)this, 4);
     result = 1;
   }
   else
   {
-    v10 = v5->vfptr;
-    LODWORD(v5->timer) = 0;
-    v10->set_target_obj((RGE_Action *)v5, 0);
-    LODWORD(v5->target_x) = -1082130432;
-    LODWORD(v5->target_y) = -1082130432;
-    LODWORD(v5->target_z) = -1082130432;
-    v10->set_target_obj2((RGE_Action *)v5, obj_in);
-    v10->set_state((RGE_Action *)v5, 8);
+    LODWORD(this->timer) = 0;
+    this->set_target_obj((RGE_Action *)this, 0);
+    LODWORD(this->target_x) = -1082130432;
+    LODWORD(this->target_y) = -1082130432;
+    LODWORD(this->target_z) = -1082130432;
+    this->set_target_obj2((RGE_Action *)this, obj_in);
+    this->set_state((RGE_Action *)this, 8);
     result = 1;
   }
   return result;

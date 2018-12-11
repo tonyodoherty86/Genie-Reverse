@@ -167,7 +167,7 @@ void __thiscall TRIBE_Action_Trade::set_state(TRIBE_Action_Trade *this, char new
       LODWORD(v2->target_y) = -1082130432;
       LODWORD(v2->target_z) = -1082130432;
       break;
-    case 0xB:
+    case 11:
       v8 = (RGE_Action_Move_To *)operator new(0x44u);
       if ( v8 )
       {
