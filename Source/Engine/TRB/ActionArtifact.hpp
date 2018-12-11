@@ -30,8 +30,6 @@ public:
         float y,
         float z);
 
-    ~TRIBE_Action_Artifact();
-
     void first_in_stack(char first_time);
 
     void set_state(char new_state);

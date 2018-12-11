@@ -32,13 +32,11 @@ bool TRIBE_Action::setup(RGE_Action_Object *obj_in)
 }
 
 //----- (004D3A10) --------------------------------------------------------
-void __thiscall TRIBE_Action::create_action_list(TRIBE_Action *this, RGE_Action_Object *obj_in)
+void TRIBE_Action::create_action_list(RGE_Action_Object *obj_in)
 {
   TRIBE_Action *v2; // esi@1
   TRIBE_Action_List *v3; // eax@1
 
   v2 = this;
-  v3 = (TRIBE_Action_List *)operator new(0xCu);
-  if ( v3 )
-    TRIBE_Action_List::TRIBE_Action_List(v3, v2->obj);
+  v3 = new TRIBE_Action_List(v2->obj);
 }

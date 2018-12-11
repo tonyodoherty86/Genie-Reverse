@@ -5,6 +5,7 @@
 class TShape;
 class RGE_Sound;
 class RGE_Player;
+class RGE_Object_List;
 
 /**
  * @file    Engine\RGE\Map.hpp
@@ -51,7 +52,7 @@ struct RGE_Tile
     char draw_attribute;
     char last_drawn_shape2;
 
-    int objects;
+    RGE_Object_List *objects;
 };
 
 struct RGE_Tile_Size
