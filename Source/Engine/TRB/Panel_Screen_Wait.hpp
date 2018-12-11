@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_Screen_Wait.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+#include <Panel_Screen.hpp>
 
 class TRIBE_Screen_Wait : public TScreenPanel
 {

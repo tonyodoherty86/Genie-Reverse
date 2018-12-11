@@ -1,3 +1,6 @@
+#pragma once
+
+#include "IDA.h"
 
 /**
  * @file    Engine\SoundObject.h

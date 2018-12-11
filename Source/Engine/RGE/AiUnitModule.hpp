@@ -1,3 +1,8 @@
+#pragma once
+
+#include "Path.hpp"
+
+#include <ManagedArray.hpp>
 
 /**
  * @file    Engine\RGE\AiUnitModule.hpp
@@ -6,6 +11,10 @@
  * @version 1.0
  */
 
+class RGE_Static_Object;
+class AIPlayStatus;
+class RGE_Player;
+class RGE_Visible_Map;
 struct OrderEvent;
 struct NotifyEvent;
 

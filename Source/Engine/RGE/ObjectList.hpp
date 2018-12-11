@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ObjectList.hpp
@@ -5,6 +6,20 @@
  * @date    2018/07/02
  * @version 1.0
  */
+
+class RGE_Static_Object;
+class RGE_Game_World;
+class TDrawArea;
+
+struct RGE_Object_Node
+{
+    RGE_Static_Object *node;
+
+    RGE_Object_Node *next,
+                    *prev;
+
+    char centered;
+};
 
 class RGE_Object_List
 {
@@ -66,14 +81,4 @@ public:
     RGE_Static_Object *load(char object_type, int infile, RGE_Game_World *world);
 
     void rehook_list();
-};
-
-struct RGE_Object_Node
-{
-    RGE_Static_Object *node;
-
-    RGE_Object_Node *next,
-                    *prev;
-
-    char centered;
 };

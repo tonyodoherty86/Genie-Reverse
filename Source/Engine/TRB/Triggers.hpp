@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Triggers.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/06
  * @version 1.0
  */
+
+class RGE_Game_World;
 
 class TRIBE_Triggers
 {

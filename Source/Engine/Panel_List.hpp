@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\ListPanel.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+#include "Panel_Text.hpp"
 
 class TListPanel : public TTextPanel
 {

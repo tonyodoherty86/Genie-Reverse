@@ -1,3 +1,7 @@
+#pragma once
+
+#include "Panel_Easy.hpp"
+
 
 /**
  * @file    Engine\Panel_Screen.hpp

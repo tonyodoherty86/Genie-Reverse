@@ -1,3 +1,16 @@
+#pragma once
+
+#include "AiBuildModule.hpp"
+#include "AiConstructionModule.hpp"
+#include "AiInformationModule.hpp"
+#include "AiResourceModule.hpp"
+#include "AiStrategyModule.hpp"
+#include "AiTacticalModule.hpp"
+
+#include <RGE/AiDiplomacyModule.hpp>
+#include <RGE/AiEmotionalModule.hpp>
+#include <RGE/AiMainDecisionModule.hpp>
+#include <RGE/AiTradeModule.hpp>
 
 /**
  * @file    Engine\TRB\AiMainDecisionModule.hpp

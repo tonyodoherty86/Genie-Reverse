@@ -1,3 +1,6 @@
+#pragma once
+
+#include "SoundDriver.hpp"
 
 /**
  * @file    Engine\Music.hpp
@@ -5,6 +8,8 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+typedef int MCI_PLAY_PARMS;
 
 class TMusic_System
 {

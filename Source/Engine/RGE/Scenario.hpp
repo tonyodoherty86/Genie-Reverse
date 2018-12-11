@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Scenario.hpp
@@ -6,6 +7,10 @@
  * @version 1.0
  */
 
+
+class RGE_Timeline;
+class RGE_Game_World;
+class RGE_Static_Object;
 #define RGE_SCN_PROFILE_COUNT 16
 #define RGE_SCN_TEXT_LENGTH 224
 

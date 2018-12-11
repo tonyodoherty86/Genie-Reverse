@@ -1,3 +1,6 @@
+#pragma once
+
+#include "Shape.hpp"
 
 /**
  * @file    Engine\ClipInfo.hpp
@@ -5,6 +8,31 @@
  * @date    2018/08/21
  * @version 1.0
  */
+
+struct DClipInfo_Node
+{
+    DClipInfo_Node *Next, *NextOnLevel;
+
+    int Object_ID;
+
+    Shape_Info *Shape;
+
+    int Draw_Level;
+
+    int Draw_X,
+        Draw_Y;
+
+    int Draw_Flag;
+
+    char *Shape_Base;
+    char *Color_Table;
+
+    int Xform_Mask;
+
+    int Node_Type;
+
+    short x1, y1, x2, y2, x3, y3, x4, y4;
+};
 
 class DClipInfo_List
 {
@@ -69,29 +97,4 @@ public:
     int FreeThread(DClipInfo_Node *HeadNode, DClipInfo_Node *TailNode);
     void ReclaimAllNodes();
     void ResetStats();
-};
-
-struct DClipInfo_Node
-{
-    DClipInfo_Node *Next, *NextOnLevel;
-
-    int Object_ID;
-
-    Shape_Info *Shape;
-
-    int Draw_Level;
-
-    int Draw_X,
-        Draw_Y;
-
-    int Draw_Flag;
-
-    char *Shape_Base;
-    char *Color_Table;
-
-    int Xform_Mask;
-
-    int Node_Type;
-
-    short x1, y1, x2, y2, x3, y3, x4, y4;
 };

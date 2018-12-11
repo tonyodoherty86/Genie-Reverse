@@ -1,3 +1,6 @@
+#pragma once
+
+#include <RGE/ObjectList.hpp>
 
 /**
  * @file    Engine\TRB\ObjectList.hpp

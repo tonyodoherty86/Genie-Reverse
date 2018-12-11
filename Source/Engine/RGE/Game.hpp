@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Game.hpp
@@ -5,6 +6,24 @@
  * @date    2018/08/11
  * @version 1.0
  */
+
+#include <ctime>
+#include "IDA.h"
+
+class TCommunications_Handler;
+class RGE_Game_Info;
+class RGE_Scenario_File_Info;
+class TDrawSystem;
+class TDrawArea;
+class TShape;
+class MSG;
+class TSound_Driver;
+class TMusic_System;
+class TRegistry;
+class TDigital;
+class TPanel;
+class TMousePointer;
+class TDebuggingLog;
 
 struct RGE_Prog_Info
 {
@@ -334,11 +353,11 @@ public:
 
     ~RGE_Base_Game();
 
-    virtual bool processCheatCode( int playerID, char *text ){ return false; };
+    virtual bool processCheatCode( int playerID, char *text ){ return false; }
 
-    virtual bool handle_message( MSG *msg ){ return true; };
+    virtual bool handle_message( MSG *msg ){ return true; }
 
-    virtual bool action_update(){ return true; };
+    virtual bool action_update(){ return true; }
     virtual bool action_mouse_move(
         int x,
         int y,
@@ -492,50 +511,50 @@ public:
     void receive_game_options();
     void set_game_options( RGE_Game_Options *options );
     void get_game_options( RGE_Game_Options *options );
-    double version(){ return this->rge_game_options.versionValue; };
-    int scenarioGame(){ return this->rge_game_options.scenarioGameValue; };
-    bool randomGame(){ return this->rge_game_options.scenarioGameValue == 0; };
-    int campaignGame(){ return this->campaignGameValue; };
-    int savedGame(){ return this->savedGameValue; };
-    char *scenarioName(){ return this->rge_game_options.scenarioNameValue; };
-    int singlePlayerGame(){ return this->rge_game_options.singlePlayerGameValue; };
-    int multiplayerGame(){ return this->rge_game_options.multiplayerGameValue; };
-    int mapXSize(){ return this->rge_game_options.mapXSizeValue; };
-    int mapYSize(){ return this->rge_game_options.mapYSizeValue; };
-    int mapZSize(){ return this->rge_game_options.mapZSizeValue; };
-    int allowCheatCodes(){ return this->rge_game_options.allowCheatCodesValue; };
-    int cheatNotification(){ return this->rge_game_options.cheatNotificationValue; };
-    int fullVisibility(){ return this->rge_game_options.fullVisibilityValue; };
-    int fogOfWar(){ return this->rge_game_options.fogOfWarValue; };
-    int coloredChat(){ return this->rge_game_options.coloredChatValue; };
-    int gameDeveloperMode(){ return this->rge_game_options.gameDeveloperModeValue; };
-    int playerHasCD( int player_num ){ return this->rge_game_options.playerCDAndVersionValue[player_num] & 1; };
-    int playerVersion( int player_num ){ return this->rge_game_options.playerCDAndVersionValue[player_num] >> 1; };
+    double version(){ return this->rge_game_options.versionValue; }
+    int scenarioGame(){ return this->rge_game_options.scenarioGameValue; }
+    bool randomGame(){ return this->rge_game_options.scenarioGameValue == 0; }
+    int campaignGame(){ return this->campaignGameValue; }
+    int savedGame(){ return this->savedGameValue; }
+    char *scenarioName(){ return this->rge_game_options.scenarioNameValue; }
+    int singlePlayerGame(){ return this->rge_game_options.singlePlayerGameValue; }
+    int multiplayerGame(){ return this->rge_game_options.multiplayerGameValue; }
+    int mapXSize(){ return this->rge_game_options.mapXSizeValue; }
+    int mapYSize(){ return this->rge_game_options.mapYSizeValue; }
+    int mapZSize(){ return this->rge_game_options.mapZSizeValue; }
+    int allowCheatCodes(){ return this->rge_game_options.allowCheatCodesValue; }
+    int cheatNotification(){ return this->rge_game_options.cheatNotificationValue; }
+    int fullVisibility(){ return this->rge_game_options.fullVisibilityValue; }
+    int fogOfWar(){ return this->rge_game_options.fogOfWarValue; }
+    int coloredChat(){ return this->rge_game_options.coloredChatValue; }
+    int gameDeveloperMode(){ return this->rge_game_options.gameDeveloperModeValue; }
+    int playerHasCD( int player_num ){ return this->rge_game_options.playerCDAndVersionValue[player_num] & 1; }
+    int playerVersion( int player_num ){ return this->rge_game_options.playerCDAndVersionValue[player_num] >> 1; }
     char *playerVersionString( int player_num );
-    char playerCDAndVersion( int player_num ){ return this->rge_game_options.playerCDAndVersionValue[player_num]; };
-    int difficulty(){ return this->rge_game_options.difficultyValue; };
-    int numberPlayers(){ return this->rge_game_options.numberPlayersValue; };
-    int playerTeam( int player_num ){ return this->rge_game_options.playerTeamValue[player_num]; };
-    char pathFinding(){ return this->pathFindingValue; };
-    char mpPathFinding(){ return this->rge_game_options.mpPathFindingValue; };
+    char playerCDAndVersion( int player_num ){ return this->rge_game_options.playerCDAndVersionValue[player_num]; }
+    int difficulty(){ return this->rge_game_options.difficultyValue; }
+    int numberPlayers(){ return this->rge_game_options.numberPlayersValue; }
+    int playerTeam( int player_num ){ return this->rge_game_options.playerTeamValue[player_num]; }
+    char pathFinding(){ return this->pathFindingValue; }
+    char mpPathFinding(){ return this->rge_game_options.mpPathFindingValue; }
 
     static char *gameSummary();
 
-    void find_campaigns(){ this->player_game_info->find_campaigns(); };
+    void find_campaigns();
 
-    void setScenarioGame( int v ){ this->rge_game_options.scenarioGameValue = v; };
-    void setVersion( float val ){ this->rge_game_options.versionValue = val; };
+    void setScenarioGame( int v ){ this->rge_game_options.scenarioGameValue = v; }
+    void setVersion( float val ){ this->rge_game_options.versionValue = val; }
     void setScenarioName( char *n );
-    void setCampaignGame( int v ){ this->campaignGameValue = v; };
-    void setSavedGame( int v ){ this->savedGameValue = v; };
+    void setCampaignGame( int v ){ this->campaignGameValue = v; }
+    void setSavedGame( int v ){ this->savedGameValue = v; }
     void setSinglePlayerGame( int v );
     void setMultiplayerGame( int v );
     void setMapSize( int x, int y, int z );
-    void setAllowCheatCodes( int v ){ this->rge_game_options.allowCheatCodesValue = v; };
-    void setCheatNotification( int v ){ this->rge_game_options.cheatNotificationValue = v; };
-    void setFullVisibility( int v ){ this->rge_game_options.fullVisibilityValue = v; };
-    void setFogOfWar( int v ){ this->rge_game_options.fogOfWarValue = v; };
-    void setColoredChat( int v ){ this->rge_game_options.coloredChatValue = v; };
+    void setAllowCheatCodes( int v ){ this->rge_game_options.allowCheatCodesValue = v; }
+    void setCheatNotification( int v ){ this->rge_game_options.cheatNotificationValue = v; }
+    void setFullVisibility( int v ){ this->rge_game_options.fullVisibilityValue = v; }
+    void setFogOfWar( int v ){ this->rge_game_options.fogOfWarValue = v; }
+    void setColoredChat( int v ){ this->rge_game_options.coloredChatValue = v; }
     void setNumberPlayers( int v );
     void setGameDeveloperMode( int v );
     void setPlayerHasCD( int player_num, int has_cd );
@@ -581,16 +600,16 @@ public:
     void set_countdown_timer(int in_countdown_player_id, int in_countdown_timer);
     void get_countdown_timer(int out_countdown_player_id, int *out_countdown_timer);
 
-    virtual bool play_video( char *file_name ){ return false; };
+    virtual bool play_video( char *file_name ){ return false; }
     bool play_sound( int sound_id );
 #if ENGINE_AOC
     bool play_sound( int sound_id, int sound_in, short loop_count );
 #endif
 
-    double get_game_speed(){ return this->game_speed; };
-    void set_game_speed( float val ){ this->game_speed = val; };
-    int get_single_player_difficulty(){ return this->single_player_difficulty; };
-    void set_single_player_difficulty(int val){ this->single_player_difficulty = val; };
+    double get_game_speed(){ return this->game_speed; }
+    void set_game_speed( float val ){ this->game_speed = val; }
+    int get_single_player_difficulty(){ return this->single_player_difficulty; }
+    void set_single_player_difficulty(int val){ this->single_player_difficulty = val; }
 
     void setup_map_save_area();
     void reload_scenarios_info();

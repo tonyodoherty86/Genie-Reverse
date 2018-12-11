@@ -1,3 +1,6 @@
+#include <RGE/Effects.hpp>
+
+#pragma once
 
 /**
  * @file    Engine\TRB\Effects.hpp

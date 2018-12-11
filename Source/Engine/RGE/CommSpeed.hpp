@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\CommSpeed.hpp
@@ -5,6 +6,12 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+
+#include <cstdint>
+
+class RGE_TimeSinceLastCall;
+class TCommunications_Handler;
 
 class RGE_Communications_Speed
 {
@@ -33,7 +40,7 @@ public:
     unsigned int AverageTSLC[10];
     char PlayerOptimalFrames[10];
     char PlayerOptimalGranularity[10];
-    unsigned __int16 RequestFasterOrSlower[10];
+    uint16_t RequestFasterOrSlower[10];
     unsigned int PlayerAvgFramesMsec[10];
     unsigned int PlayerHighLatencyMsec[10];
     unsigned int HighestLatencyMsec;

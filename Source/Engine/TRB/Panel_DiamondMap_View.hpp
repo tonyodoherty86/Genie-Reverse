@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_DiamondMap_View.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+#include <RGE/Panel_DiamondMapView.hpp>
 
 class TRIBE_Diamond_Map_View : public RGE_Diamond_Map_View
 {

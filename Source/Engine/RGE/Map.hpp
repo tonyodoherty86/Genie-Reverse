@@ -1,3 +1,10 @@
+#pragma once
+
+#include "IDA.h"
+
+class TShape;
+class RGE_Sound;
+class RGE_Player;
 
 /**
  * @file    Engine\RGE\Map.hpp

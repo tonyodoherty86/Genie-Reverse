@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\World.hpp
@@ -5,6 +6,9 @@
  * @date    2018/02/28
  * @version 1.0
  */
+
+#include "RGE.hpp"
+#include "RGE/World.hpp"
 
 class TRIBE_World;
 

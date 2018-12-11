@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\FileIO.h
@@ -8,6 +9,8 @@
  * This is the input-output file system used by the RGE components for serializing data.
  * Most of the serialized data is compressed by ZLib technology.
  */
+
+#include <cstddef>
 
 int rge_fake_open(int file_handle, size_t fake_size);
 

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\RmmDbController.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/24
  * @version 1.0
  */
+
+#include <RGE/RmmDbController.hpp>
 
 class TRIBE_RMM_Database_Controller : public RGE_RMM_Database_Controller
 {

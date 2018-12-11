@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\CommError.hpp
@@ -5,6 +6,9 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+#include "IDA.h"
+#include "CommHandler.hpp"
 
 class RGE_Comm_Error
 {

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\RmmController.hpp
@@ -5,6 +6,10 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+#include "RmmBase.hpp"
+
+class RGE_Game_World;
 
 class RGE_RMM_Controller : public RGE_Random_Map_Module
 {

@@ -1,3 +1,6 @@
+#pragma once
+
+#include <RGE/Object_Static.hpp>
 
 /**
  * @file    Engine\TRB\TreeObject.hpp
@@ -5,6 +8,9 @@
  * @date    2018/02/22
  * @version 1.0
  */
+
+
+class TRIBE_Master_Tree_Object;
 
 class TRIBE_Tree_Object : public RGE_Static_Object
 {

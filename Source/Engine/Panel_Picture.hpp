@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\PicturePanel.hpp
@@ -5,6 +6,10 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+#include "Panel.hpp"
+
+class TPicture;
 
 class TPicturePanel : public TPanel
 {

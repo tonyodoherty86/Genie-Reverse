@@ -1,3 +1,12 @@
+#pragma once
+
+#include "AiConstructionModule.hpp"
+
+#include <RGE/AiResourceItem.hpp>
+#include <RGE/AiTacticalModule.hpp>
+#include <RGE/Path.hpp>
+#include <ManagedArray.hpp>
+#include <ctime>
 
 /**
  * @file    Engine\TRB\AiTacticalModule.hpp
@@ -7,6 +16,8 @@
  */
 
 class TribeTacticalAIModule;
+class TribeMainDecisionAIModule;
+class InfluenceMap;
 
 class TacticalAIGroup
 {

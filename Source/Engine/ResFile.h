@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\ResFile.h
@@ -6,6 +7,8 @@
  * @version 1.0
  */
 
+
+#include <stdio.h>
 /**
  * Determines whether the current stream will have compression.
  */
@@ -17,15 +20,6 @@ int ENABLE_COMPRESSION = 0;
     #define RESFILE_HEADER_BANNER_LEN 40
 #endif
 
-struct ResFileHdr
-{
-    char *mapped_file;
-    int handle;
-    resfile_header *header;
-    ResFileHdr *next;
-    char res_name[260];
-};
-
 struct resfile_header
 {
     char banner_msg[RESFILE_HEADER_BANNER_LEN];
@@ -33,6 +27,15 @@ struct resfile_header
     char password[12];
     int num_res_types;
     int directory_size;
+};
+
+struct ResFileHdr
+{
+    char *mapped_file;
+    int handle;
+    resfile_header *header;
+    ResFileHdr *next;
+    char res_name[260];
 };
 
 void RESFILE_open_new_resource_file(

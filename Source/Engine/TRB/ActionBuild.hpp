@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\ActionBuild.hpp
@@ -5,6 +6,8 @@
  * @date    2018/07/03
  * @version 1.0
  */
+
+#include <RGE/Action.hpp>
 
 class TRIBE_Action_Build : public RGE_Action
 {

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\MessagePanel.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+#include "Panel.hpp"
 
 class TMessagePanel : public TPanel
 {

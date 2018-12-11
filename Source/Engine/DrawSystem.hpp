@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\DrawSystem.hpp
@@ -8,6 +9,8 @@
 
 #ifndef DRAW_SYSTEM_HPP
 #define DRAW_SYSTEM_HPP
+
+#include "IDA.h"
 
 class TDrawSystem
 {

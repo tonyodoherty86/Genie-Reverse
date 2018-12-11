@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\AiPlay.hpp
@@ -5,6 +6,10 @@
  * @date    2018/06/24
  * @version 1.0
  */
+
+
+class RGE_Game_World;
+class RGE_Static_Object;
 
 class AIPlayGroup
 {

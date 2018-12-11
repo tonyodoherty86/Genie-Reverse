@@ -1,3 +1,6 @@
+#pragma once
+
+class MouseClickInfo;
 
 /**
  * @file    Engine\TRB\Game.hpp
@@ -9,6 +12,9 @@
 /**
  * AOC off_636C50
  */
+
+#include <RGE/Game.hpp>
+
 class TRIBE_Game: public RGE_Base_Game
 {
 public:

@@ -1,3 +1,6 @@
+#pragma once
+
+#include "AiModule.hpp"
 
 /**
  * @file    Engine\RGE\AiStrategyModule.hpp

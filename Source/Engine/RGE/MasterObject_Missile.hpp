@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MasterMissileObject.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+#include "MasterObject_Combat.hpp"
 
 class RGE_Master_Missile_Object : public RGE_Master_Combat_Object
 {

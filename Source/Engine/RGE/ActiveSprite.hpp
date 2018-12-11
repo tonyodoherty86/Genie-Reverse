@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ActiveSprite.hpp
@@ -7,6 +8,10 @@
  */
 
 #define RGE_ACTIVE_SPRITE_TYPE 1
+
+class RGE_Sprite;
+class RGE_Color_Table;
+class TDrawArea;
 
 class RGE_Active_Sprite
 {

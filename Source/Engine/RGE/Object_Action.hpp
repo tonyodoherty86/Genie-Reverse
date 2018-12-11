@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ActionObject.hpp
@@ -10,7 +11,11 @@
     #define RGE_ACTION_OBJECT_TYPE 40
 #endif
 
+#include "Object_Moving.hpp"
+
+class RGE_Task;
 class RGE_Action;
+class RGE_Master_Action_Object;
 
 class RGE_Action_Object : public RGE_Moving_Object
 {

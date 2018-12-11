@@ -1,3 +1,12 @@
+#pragma once
+
+#include "AiModule.hpp"
+#include "AiBuildItem.hpp"
+
+#include <ManagedArray.hpp>
+
+class RGE_Player;
+
 
 /**
  * @file    Engine\RGE\AiBuildModule.hpp

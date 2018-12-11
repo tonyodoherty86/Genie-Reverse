@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\PanelSlider.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/04
  * @version 1.0
  */
+
+#include "Panel_ScrollBar.hpp"
 
 class TVerticalSliderPanel : public TScrollBarPanel
 {

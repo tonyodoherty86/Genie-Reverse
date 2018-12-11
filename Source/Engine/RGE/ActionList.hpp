@@ -1,3 +1,10 @@
+#pragma once
+
+class RGE_Master_Action_Object;
+class RGE_Action_Object;
+class RGE_Task;
+class RGE_Action;
+class RGE_Static_Object;
 
 /**
  * @file    Engine\RGE\ActionList.hpp

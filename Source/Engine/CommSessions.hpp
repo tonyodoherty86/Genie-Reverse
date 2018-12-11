@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\CommSessions.hpp
@@ -5,6 +6,9 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+#include "CommHandler.hpp"
+class TCommunications_Handler;
 
 struct SEs
 {

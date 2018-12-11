@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_Button.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/08
  * @version 1.0
  */
+
+#include <Panel_Button.hpp>
 
 class TRIBE_Panel_Button : public TButtonPanel
 {

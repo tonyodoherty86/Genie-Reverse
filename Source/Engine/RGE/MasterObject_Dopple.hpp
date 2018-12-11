@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MasterDoppleObject.hpp
@@ -5,6 +6,10 @@
  * @date    2018/07/04
  * @version 1.0
  */
+
+#include "MasterObject_Animated.hpp"
+
+class RGE_Static_Object;
 
 class RGE_Master_Doppleganger_Object : public RGE_Master_Animated_Object
 {

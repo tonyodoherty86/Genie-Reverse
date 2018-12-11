@@ -1,3 +1,6 @@
+#include <RGE/VictoryConditions.hpp>
+
+#pragma once
 
 /**
  * @file    Engine\TRB\VictoryConditions.hpp

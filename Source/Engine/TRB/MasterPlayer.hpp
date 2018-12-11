@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\MasterPlayer.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+#include <RGE/MasterPlayer.hpp>
 
 class TRIBE_Master_Player : public RGE_Master_Player
 {

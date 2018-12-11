@@ -1,3 +1,10 @@
+#pragma once
+
+class RGE_Game_World;
+class RGE_Map;
+class RGE_Player;
+class RGE_Tile_List;
+
 
 /**
  * @file    Engine\RGE\VisibleMap.hpp

@@ -1,3 +1,7 @@
+#pragma once
+
+class RGE_Sprite;
+class RGE_Sound;
 
 /**
  * @file    Engine\RGE\Task.hpp

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\PanelToolBox.hpp
@@ -5,6 +6,11 @@
  * @date    2018/06/28
  * @version 1.0
  */
+
+#include <Panel.hpp>
+
+class RGE_View;
+class RGE_Diamond_Map;
 
 class RGE_Panel_Tool_Box : public TPanel
 {

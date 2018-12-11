@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Command.hpp
@@ -5,6 +6,12 @@
  * @date    2018/02/22
  * @version 1.0
  */
+
+#include <RGE/Command.hpp>
+
+class TRIBE_World;
+class TCommunications_Handler;
+class RGE_Static_Object;
 
 class TRIBE_Command : public RGE_Command
 {

@@ -8,6 +8,13 @@
 
 */
 
+#pragma once
+
+#define FALSE 0
+#define TRUE 0
+
+#include <cstdint>
+
 #if defined(__GNUC__)
   typedef          long long ll;
   typedef unsigned long long ull;
@@ -295,3 +302,89 @@ template<class T, class U> int8 __CFADD__(T x, U y)
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
 #endif
+
+typedef int HWND;
+typedef long LRESULT;
+typedef uint UINT;
+typedef int WPARAM;
+typedef long LPARAM;
+typedef void HINSTANCE;
+typedef int HPALETTE;
+typedef int RGBQUAD;
+typedef void VOID;
+typedef void HBITMAP;
+typedef void HDC;
+typedef void HGDIOBJ;
+
+typedef bool BOOL;
+
+typedef char TCHAR;
+
+typedef int HFILE;
+typedef void _iobuf;
+
+#define FAR
+
+typedef void IDirectSound;
+typedef void IDirectSoundBuffer;
+
+typedef void IDirectDraw;
+typedef void IDirectDrawSurface;
+typedef void IDirectDrawClipper;
+typedef void IDirectDrawPalette;
+
+typedef int DDSURFACEDESC;
+
+typedef char PALETTEENTRY;
+
+typedef int RECT;
+
+typedef int MIXERLINEA;
+typedef int MIXERLINECONTROLSA;
+typedef int MIXERCONTROLA;
+typedef int MIXERCONTROLDETAILS;
+typedef unsigned MIXERCONTROLDETAILS_UNSIGNED;
+
+typedef unsigned long GUID;
+typedef void IDirectPlay3;
+typedef void DPSESSIONDESC2;
+typedef void IDirectPlay2;
+typedef void IDirectPlayLobby2;
+typedef void IDirectPlayLobby;
+typedef void DPLCONNECTION;
+typedef void DPNAME;
+
+typedef int POINT;
+typedef int WNDPROC;
+typedef GUID _GUID;
+typedef int WSAData;
+typedef char* LPCTSTR;
+typedef int HMODULE;
+typedef void WAVEFORMATEX;
+typedef int TIMECALLBACK;
+typedef char CHAR;
+
+typedef struct tagBITMAPINFOHEADER {
+  DWORD biSize;
+  LONG  biWidth;
+  LONG  biHeight;
+  WORD  biPlanes;
+  WORD  biBitCount;
+  DWORD biCompression;
+  DWORD biSizeImage;
+  LONG  biXPelsPerMeter;
+  LONG  biYPelsPerMeter;
+  DWORD biClrUsed;
+  DWORD biClrImportant;
+} BITMAPINFOHEADER, *PBITMAPINFOHEADER;
+
+
+#define PLAYERS_ITERATIONS 9
+
+/**
+ * This defines the hard-coded number of players.
+ * Many people have been enthusiastic on having more than 9 players.
+ * Modders claim it would be very difficult to do so because the number is hard-coded frequently throughout the build.
+ * Finally, this definition will override the traditional 9 player limit!
+ */
+#define RGE_PLAYERS_COUNT PLAYERS_ITERATIONS

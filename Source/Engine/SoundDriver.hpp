@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\SoundDriver.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/26
  * @version 1.0
  */
+
+#include "IDA.h"
 
 class TSound_Driver
 {

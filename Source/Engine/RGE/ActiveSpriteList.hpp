@@ -1,3 +1,9 @@
+#pragma once
+
+class RGE_Static_Object;
+class RGE_Sprite;
+class RGE_Color_Table;
+class TDrawArea;
 
 /**
  * @file    Engine\RGE\ActiveSpriteList.hpp

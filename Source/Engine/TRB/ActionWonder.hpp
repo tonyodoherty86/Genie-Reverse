@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\ActionWonder.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/28
  * @version 1.0
  */
+
+#include <RGE/Action.hpp>
 
 class TRIBE_Action_Wonder : public RGE_Action
 {

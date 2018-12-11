@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MissileObject.hpp
@@ -5,6 +6,8 @@
  * @date    2018/07/01
  * @version 1.0
  */
+
+#include "Object_Combat.hpp"
 
 #ifndef RGE_MISSILE_OBJECT_TYPE
     #define RGE_MISSILE_OBJECT_TYPE 60

@@ -1,3 +1,11 @@
+#pragma once
+
+#include <ctime>
+
+#include "Game.hpp"
+
+class TSound_Driver;
+class RGE_Player_Info;
 
 /**
  * @file    Engine\RGE\GameWorld.hpp
@@ -5,9 +13,6 @@
  * @date    2018/07/30
  * @version 1.0
  */
-
-#ifndef RGE_WORLD_HPP
-#define RGE_WORLD_HPP
 
 #ifndef RGE_WORLD_DIFFICULTY_LEVEL_EXISTS
     #define RGE_WORLD_DIFFICULTY_LEVEL_EXISTS TRUE
@@ -380,5 +385,3 @@ public:
     RGE_Static_Object *recycle_object_in_to_game(char object_type);
     void update_mutual_allies();
 };
-
-#endif // RGE_WORLD_HPP

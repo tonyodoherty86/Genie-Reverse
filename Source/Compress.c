@@ -1,3 +1,4 @@
+#include "IDA.h"
 
 int dword_886C60;
 int dword_886C64[0];

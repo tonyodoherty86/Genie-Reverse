@@ -1,3 +1,7 @@
+#pragma once
+
+#include <RGE/AiUnitModule.hpp>
+#include <ctime>
 
 /**
  * @file    Engine\TRB\AiUnitModule.hpp

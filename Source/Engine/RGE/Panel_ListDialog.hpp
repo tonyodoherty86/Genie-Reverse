@@ -1,3 +1,9 @@
+#pragma once
+
+#include <Panel_ListDialog.hpp>
+
+class RGE_Player;
+class TScreenPanel;
 
 /**
  * @file    Engine\RGE\DialogList.hpp

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Sprite.hpp
@@ -10,6 +11,10 @@
 #define RGE_SPRITE_NAME_LENGTH 21
 #define RGE_SPRITE_HIGHEST_DRAW_LEVEL 20
 #define RGE_SPRITE_EDITOR_FLAG_EXISTS TRUE
+
+#include "ColorTable.hpp"
+#include "Shape.hpp"
+#include "Sound.hpp"
 
 class RGE_Sprite
 {

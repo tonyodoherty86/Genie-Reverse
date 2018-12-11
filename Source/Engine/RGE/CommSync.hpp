@@ -1,3 +1,6 @@
+#pragma once
+
+class TCommunications_Handler;
 
 /**
  * @file    Engine\RGE\CommSync.hpp

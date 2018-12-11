@@ -1,3 +1,15 @@
+#pragma once
+
+#include <Panel_Message.hpp>
+#include <Panel_Screen.hpp>
+
+class TRIBE_Player;
+class TRIBE_Building_Object;
+class TRIBE_World;
+class RGE_Static_Object;
+class Item_Avail;
+class Trade_Avail;
+class RGE_Sound;
 
 /**
  * @file    Engine\TRB\PanelScreenGame.hpp

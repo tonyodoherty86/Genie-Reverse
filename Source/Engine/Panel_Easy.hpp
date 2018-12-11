@@ -1,3 +1,9 @@
+#pragma once
+
+#include "Panel.hpp"
+#include "Panel_Edit.hpp"
+#include "Panel_Input.hpp"
+
 
 /**
  * @file    Engine\EasyPanel.hpp

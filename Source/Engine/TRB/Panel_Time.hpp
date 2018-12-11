@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\PanelTime.hpp
@@ -5,6 +6,11 @@
  * @date    2018/08/06
  * @version 1.0
  */
+
+#include <Panel.hpp>
+
+class TRIBE_World;
+class TRIBE_Player;
 
 class TRIBE_Panel_Time : public TPanel
 {

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\InfluenceMap.hpp
@@ -6,6 +7,7 @@
  * @version 1.0
  */
 
+class XYPoint;
 class InfluenceMap
 {
 public:

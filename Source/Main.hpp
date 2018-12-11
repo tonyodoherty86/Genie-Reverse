@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Main.hpp
@@ -8,6 +9,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#ifdef WINDOWS
 #include <io.h>
 
 /* Include Windows components: */
@@ -18,6 +20,7 @@
 #include <directx.h>
 #include <dplay.h>
 #include <dplobby.h>
+#endif
 
 #include "Compress.h"
 

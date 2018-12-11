@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\AiConstructionModule.hpp
@@ -6,7 +7,14 @@
  * @version 1.0
  */
 
+#include <RGE/AiConstructionModule.hpp>
+#include <RGE/Path.hpp>
+
 struct PlacementState;
+class TribeMainDecisionAIModule;
+class BuildItem;
+class RGE_Static_Object;
+class ConstructionItem;
 
 class TribeConstructionAIModule : public ConstructionAIModule
 {

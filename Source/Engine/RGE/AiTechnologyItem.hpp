@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\AiTechnologyItem.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+class ResourceItem;
 
 class TechnologyItem
 {

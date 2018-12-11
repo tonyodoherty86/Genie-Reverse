@@ -1,3 +1,6 @@
+#pragma once
+
+#include <Panel_Screen.hpp>
 
 /**
  * @file    Engine\TRB\Panel_Screen_ScenarioEditor.hpp
@@ -5,6 +8,12 @@
  * @date    2018/08/09
  * @version 1.0
  */
+
+class RGE_Static_Object;
+class RGE_Diamond_Map_View;
+class TRIBE_Main_View;
+class TRIBE_Scenario_Editor_Panel_Object;
+class TRIBE_World;
 
 class TRIBE_Screen_Sed : public TScreenPanel
 {

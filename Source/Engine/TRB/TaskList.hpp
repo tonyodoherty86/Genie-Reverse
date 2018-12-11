@@ -1,3 +1,8 @@
+#pragma once
+#include <RGE/TaskList.hpp>
+
+class RGE_Action_Object;
+class RGE_Static_Object;
 
 /**
  * @file    Engine\TRB\TaskList.hpp

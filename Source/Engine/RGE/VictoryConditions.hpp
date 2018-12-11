@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\VictoryConditions.hpp
@@ -5,6 +6,10 @@
  * @date    2018/06/26
  * @version 1.0
  */
+
+struct RGE_Victory_Entry;
+class RGE_Player;
+class RGE_Static_Object;
 
 class RGE_Victory_Conditions
 {

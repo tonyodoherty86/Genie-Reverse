@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\MasterBuildingObject.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/27
  * @version 1.0
  */
+
+#include "MasterObject_Combat.hpp"
 
 class TRIBE_Master_Building_Object;
 

@@ -1,3 +1,6 @@
+#pragma once
+
+#include <Panel_Screen.hpp>
 
 /**
  * @file    Engine\TRB\ScreenAchievements.hpp
@@ -14,14 +17,14 @@ class TribeAchievementsScreen : public TScreenPanel
 
     int size;
 
-    TTextPanel *title;
-               *summary_text;
-               *instruction;
-               *win_loss_text;
-               *time;
-               *title_bar[7];
-               *achievement_choice[5];
-               *statistics[RGE_PLAYERS_COUNT - 1][7];
+    TTextPanel *title,
+               *summary_text,
+               *instruction,
+               *win_loss_text,
+               *time,
+               *title_bar[7],
+               *achievement_choice[5],
+               *statistics[RGE_PLAYERS_COUNT - 1][7],
                *player_names[RGE_PLAYERS_COUNT - 1];
 
     TScrollBarPanel *summary_text_bar,

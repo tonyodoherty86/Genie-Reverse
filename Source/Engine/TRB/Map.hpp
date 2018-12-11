@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Map.hpp
@@ -6,7 +7,13 @@
  * @version 1.0
  */
 
+#include "RGE/Map.hpp"
+
 class TRIBE_Map;
+class RGE_Player_Info;
+class TRIBE_Game;
+class RGE_Map_Gen_Info;
+class RGE_Static_Object;
 
 struct TRIBE_Cliff_Info
 {

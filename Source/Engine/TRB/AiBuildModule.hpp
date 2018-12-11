@@ -1,3 +1,12 @@
+#pragma once
+
+#include <RGE/AiBuildModule.hpp>
+class TribeMainDecisionAIModule;
+class BuildItem;
+class RGE_Player;
+class ResourceItem;
+class RGE_Static_Object;
+
 
 /**
  * @file    Engine\TRB\AiBuildModule.hpp

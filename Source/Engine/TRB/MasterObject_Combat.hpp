@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\MasterCombatObject.hpp
@@ -6,7 +7,7 @@
  * @version 1.0
  */
 
-class TRIBE_Master_Combat_Object;
+#include <RGE/MasterObject_Combat.hpp>
 
 struct Attribute_Cost
 {

@@ -1,3 +1,6 @@
+#pragma once
+
+#include "IDA.h"
 
 /**
  * @file    Engine\RGE\Player.hpp
@@ -14,6 +17,14 @@
 #define RGE_PLAYER_MASTER_GROUPS_COUNTER 100
 
 #define RGE_PLAYER_ESCROWS_COUNT 4
+
+class RGE_Object_Node;
+class RGE_Color_Table;
+class RGE_Master_Player;
+struct XYFloatPoint;
+class XYZBYTEPoint;
+class RGE_Sprite;
+class RGE_Sound;
 
 class RGE_Tile_List
 {

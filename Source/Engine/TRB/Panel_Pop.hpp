@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_Pop.hpp
@@ -5,6 +6,11 @@
  * @date    2018/08/08
  * @version 1.0
  */
+
+#include <Panel.hpp>
+
+class TRIBE_World;
+class TRIBE_Player;
 
 class TRIBE_Panel_Pop : public TPanel
 {

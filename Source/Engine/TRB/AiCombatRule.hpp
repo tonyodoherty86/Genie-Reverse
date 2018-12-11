@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\AiCombatRule.hpp

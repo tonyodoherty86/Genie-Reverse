@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Technology.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+class RGE_Player;
 
 class TRIBE_Tech
 {

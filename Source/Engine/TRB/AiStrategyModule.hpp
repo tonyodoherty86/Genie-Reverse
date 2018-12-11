@@ -1,3 +1,11 @@
+#pragma once
+
+#include <RGE/AiStrategyModule.hpp>
+#include <RGE/Path.hpp>
+
+#include <ManagedArray.hpp>
+
+class TRIBE_Player;
 
 /**
  * @file    Engine\TRB\AiStrategyModule.hpp

@@ -1,3 +1,7 @@
+#pragma once
+
+#include "Panel_Text.hpp"
+
 
 /**
  * @file    Engine\InputPanel.hpp

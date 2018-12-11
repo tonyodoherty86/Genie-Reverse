@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\ActionMakeObj.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/28
  * @version 1.0
  */
+
+#include <RGE/Action.hpp>
 
 class TRIBE_Action_Make_Obj : public RGE_Action
 {

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\View.hpp
@@ -5,6 +6,18 @@
  * @date    2018/07/29
  * @version 1.0
  */
+
+
+#include <Panel.hpp>
+
+class RGE_Game_World;
+class RGE_Map;
+class TShape;
+class RGE_Player;
+class RGE_Static_Object;
+class DClipInfo_List;
+class TMessagePanel;
+class VSpanMiniList;
 
 class RGE_View : public TPanel
 {

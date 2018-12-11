@@ -6,6 +6,8 @@
  * @version 1.0
  */
 
+#include "ActionMake.hpp"
+
 //----- (004049B0) --------------------------------------------------------
 void __userpurge RGE_Action_Make::RGE_Action_Make(RGE_Action_Make *this@<ecx>, int a2@<ebp>, int infile, RGE_Action_Object *obj_in)
 {

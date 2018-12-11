@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Command.hpp
@@ -5,6 +6,12 @@
  * @date    2018/03/09
  * @version 1.0
  */
+
+#include "Path.hpp"
+
+class RGE_Game_World;
+class TCommunications_Handler;
+class RGE_Static_Object;;
 
 class RGE_Command
 {

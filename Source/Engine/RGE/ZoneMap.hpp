@@ -1,3 +1,8 @@
+#pragma once
+
+#include "Path.hpp"
+
+class RGE_Map;
 
 /**
  * @file    Engine\RGE\ZoneMap.hpp

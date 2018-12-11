@@ -1,3 +1,7 @@
+#pragma once
+
+#include <RGE/AiPlay.hpp>
+class RGE_Static_Object;
 
 /**
  * @file    Engine\TRB\AiPlay.hpp

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\GameInfo.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/09
  * @version 1.0
  */
+
+#include "IDA.h"
 
 class RGE_Person_Info;
 class RGE_Campaign;

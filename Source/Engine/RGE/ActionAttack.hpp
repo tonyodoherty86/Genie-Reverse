@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ActionAttack.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/30
  * @version 1.0
  */
+
+#include "Action.hpp"
 
 #ifndef RGE_ACTION_ATTACK_TYPE
     #define RGE_ACTION_ATTACK_TYPE 9

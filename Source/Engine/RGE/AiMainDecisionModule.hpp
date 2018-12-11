@@ -1,3 +1,11 @@
+#pragma once
+
+class RGE_Player;
+class RGE_Static_Object;
+
+#include "AiModule.hpp"
+
+#include <ManagedArray.hpp>
 
 /**
  * @file    Engine\RGE\AiMainDecisionModule.hpp

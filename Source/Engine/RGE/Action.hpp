@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Action.hpp
@@ -5,6 +6,13 @@
  * @date    2018/06/30
  * @version 1.0
  */
+
+class RGE_Action_Object;
+class RGE_Static_Object;
+class RGE_Task;
+class RGE_Sprite;
+class RGE_Action_List;
+class RGE_Master_Action_Object;
 
 #ifndef RGE_ACTION_TYPE
     #define RGE_ACTION_TYPE 0

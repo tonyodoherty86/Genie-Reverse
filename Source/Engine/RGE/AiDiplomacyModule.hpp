@@ -1,3 +1,6 @@
+#pragma once
+
+#include "AiModule.hpp"
 
 /**
  * @file    Engine\RGE\AiDiplomacyModule.hpp
@@ -5,6 +8,8 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+class MainDecisionAIModule;
 
 class DiplomacyAIModule : public AIModule
 {

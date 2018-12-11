@@ -1,3 +1,8 @@
+#pragma once
+
+#include <Panel.hpp>
+class TRIBE_Player;
+class TShape;
 
 /**
  * @file    Engine\TRB\Panel_Inventory.hpp
@@ -28,7 +33,7 @@ public:
 
     TRIBE_Panel_Inven(TDrawArea *render_area_in, TPanel *parent_panel_in, void *font_in, TRIBE_Player *player_in);
 
-    set_text_color(unsigned int font_color_in, unsigned int back_color_in);
+    void set_text_color(unsigned int font_color_in, unsigned int back_color_in);
 
     ~TRIBE_Panel_Inven();
 

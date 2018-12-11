@@ -1,3 +1,11 @@
+#include "Panel_View.hpp"
+
+#pragma once
+
+class RGE_Static_Object;
+class RGE_Tile;
+class RGE_Player;
+class TPanel;
 
 /**
  * @file    Engine\RGE\MainView.hpp

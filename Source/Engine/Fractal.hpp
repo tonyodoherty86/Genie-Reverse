@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\Fractal.hpp

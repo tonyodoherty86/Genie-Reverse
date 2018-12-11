@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\Shape.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/13
  * @version 1.0
  */
+
+#include "DrawArea.hpp"
 
 #ifndef SHAPE_SLP_AVAILABLE
     #define SHAPE_SLP_AVAILABLE TRUE

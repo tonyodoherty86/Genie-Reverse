@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\ActionMakeTech.cpp
@@ -5,6 +6,8 @@
  * @date    2018/06/27
  * @version 1.0
  */
+
+#include <RGE/Action.hpp>
 
 class TRIBE_Action_Make_Tech : public RGE_Action
 {

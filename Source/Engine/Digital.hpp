@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\Digital.hpp
@@ -5,6 +6,10 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+#include "SoundDriver.hpp"
+
+typedef void WAVEFORMATEX;
 
 class TDigital
 {

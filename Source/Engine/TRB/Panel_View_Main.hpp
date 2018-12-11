@@ -1,3 +1,6 @@
+#pragma once
+
+#include <RGE/Panel_MainView.hpp>
 
 /**
  * @file    Engine\TRB\Panel_View_Main.hpp
@@ -5,6 +8,9 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+class TRIBE_Master_Building_Object;
+class TRIBE_Player;
 
 class TRIBE_Main_View : public RGE_Main_View
 {

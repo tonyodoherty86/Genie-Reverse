@@ -1,3 +1,8 @@
+#pragma once
+
+#include "DIB.h"
+
+class TDrawArea;
 
 /**
  * @file    Engine\RGE\Picture.hpp

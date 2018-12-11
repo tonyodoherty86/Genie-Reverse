@@ -1,3 +1,6 @@
+#pragma once
+#include <RGE/ActionList.hpp>
+
 
 /**
  * @file    Engine\TRB\ActionList.hpp

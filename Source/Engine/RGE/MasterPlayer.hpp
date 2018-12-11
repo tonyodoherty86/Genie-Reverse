@@ -1,4 +1,11 @@
+#pragma once
 
+
+#include "IDA.h"
+
+
+class RGE_Sound;
+class RGE_Sprite;
 /**
  * @file    Engine\RGE\MasterPlayer.hpp
  * @author  Yvan Burrie

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\AsmDraw.h
@@ -5,6 +6,8 @@
  * @date    2018/08/19
  * @version 1.0
  */
+
+#include "SpanList.hpp"
 
 #ifndef ASM_DRAW_H
     #define ASM_DRAW_H

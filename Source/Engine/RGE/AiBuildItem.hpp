@@ -1,3 +1,6 @@
+#pragma once
+
+#include "AiBaseItem.hpp"
 
 /**
  * @file    Engine\RGE\AiBuildItem.hpp

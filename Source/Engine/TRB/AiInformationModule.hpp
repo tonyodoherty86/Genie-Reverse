@@ -1,3 +1,17 @@
+#pragma once
+
+#include <RGE/AiInformationModule.hpp>
+#include <RGE/InfluenceMap.hpp>
+#include <RGE/Path.hpp>
+#include <ManagedArray.hpp>
+
+class TribeMainDecisionAIModule;
+class RGE_Static_Object;
+class BuildItem;
+class RGE_Zone_Map;
+class PlacementState;
+class TacticalAIGroup;
+class AttackState;
 
 /**
  * @file    Engine\TRB\AiInformationModule.hpp
@@ -132,7 +146,7 @@ public:
     void setupInfluenceMap(int placementType, int buildingType, XYPoint *centerPoint, XYPoint *minArea, XYPoint *maxArea);
     int mapBound(XYPoint *p);
     int groupInfluenceDimension(int num);
-    ObjectMemory *findObjectMemoryLimits(ObjectMemory *result, int __$ReturnUdt, int ownerID, int *unitID, int *numberNonSiegeTargets);
+    ObjectMemory *findObjectMemoryLimits(ObjectMemory *result, int __ReturnUdt, int ownerID, int *unitID, int *numberNonSiegeTargets);
     int isNextTo(XYPoint *one, XYPoint *two, int countDiagonal);
     int facetTo(XYPoint *one, XYPoint *two);
     int placementCode(int typeID);

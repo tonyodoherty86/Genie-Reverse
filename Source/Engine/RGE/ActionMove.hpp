@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ActionMove.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/27
  * @version 1.0
  */
+
+#include "Action.hpp"
 
 class RGE_Action_Move_To : public RGE_Action
 {

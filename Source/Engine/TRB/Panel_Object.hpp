@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_Object.hpp
@@ -5,6 +6,15 @@
  * @date    2018/08/08
  * @version 1.0
  */
+
+#include <Panel.hpp>
+
+class TRIBE_Player;
+class RGE_Static_Object;
+class RGE_Master_Static_Object;
+class RGE_Sprite;
+class RGE_Object_Node;
+class RGE_Player;
 
 class TRIBE_Panel_Object : public TPanel
 {

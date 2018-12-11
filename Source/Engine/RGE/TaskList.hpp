@@ -1,3 +1,9 @@
+#pragma once
+
+class RGE_Sprite;
+class RGE_Sound;
+class RGE_Action_Object;
+class RGE_Static_Object;
 
 /**
  * @file    Engine\RGE\TaskList.hpp

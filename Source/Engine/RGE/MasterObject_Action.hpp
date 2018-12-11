@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MasterActionObject.hpp
@@ -5,6 +6,8 @@
  * @date    2018/07/07
  * @version 1.0
  */
+
+#include "MasterObject_Moving.hpp"
 
 #ifndef RGE_MASTER_ACTION_OBJECT_TYPE
     #define RGE_MASTER_ACTION_OBJECT_TYPE 40

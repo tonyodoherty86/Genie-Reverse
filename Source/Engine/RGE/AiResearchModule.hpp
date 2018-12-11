@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\AiResearchModule.hpp
@@ -5,6 +6,11 @@
  * @date    2018/06/24
  * @version 1.0
  */
+
+#include "AiModule.hpp"
+#include "AiTechnologyItem.hpp"
+
+class BuildItem;
 
 class ResearchAIModule : public AIModule
 {

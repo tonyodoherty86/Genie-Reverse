@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MasterMovingObject.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+#include "MasterObject_Animated.hpp"
 
 class RGE_Master_Moving_Object : public RGE_Master_Animated_Object
 {

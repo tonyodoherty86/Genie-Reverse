@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\RmmTerrain.hpp
@@ -5,6 +6,10 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+#include "RmmBase.hpp"
+
+class RGE_Zone_Map;
 
 class RGE_RMM_Terrain_Generator : public RGE_Random_Map_Module
 {

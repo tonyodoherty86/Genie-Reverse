@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Sound.hpp
@@ -5,6 +6,10 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+#include <time.h>
+
+#include "SoundDriver.hpp"
 
 class RGE_Sound
 {

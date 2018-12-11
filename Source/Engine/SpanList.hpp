@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\SpanList.hpp
@@ -5,6 +6,70 @@
  * @date    2018/08/19
  * @version 1.0
  */
+
+#include "Shape.hpp"
+#include <cstddef>
+
+struct VSpan_Node
+{
+    VSpan_Node *Next, *Prev;
+
+    int StartPx, EndPx;
+};
+
+
+class TSpan_Node_List
+{
+    public:
+
+    VSpan_Node **Zone_Ptrs;
+
+    int *Zone_Size_Ptrs;
+
+    unsigned int Used_Zones,
+                 Max_Zones = 8;
+
+    VSpan_Node *Free_Head;
+
+    int Free_Pool_Zone  = -1,
+        Free_Pool_Index = -1;
+
+    int Total_Blocks,
+        Free_Blocks;
+
+    int Default_Grow_Size,
+        Element_Size;
+
+    int Alloc_Count,
+        Dealloc_Count,
+        NewZone_Count,
+        Reset_Count;
+
+    public: TSpan_Node_List( unsigned int InitialSize, unsigned int GrowSize, size_t szitem );
+
+    public: ~TSpan_Node_List();
+
+    private: void InitNewZone( unsigned int Zone_Size );
+
+    private: void SetNumZones( size_t New_Size );
+
+    public: VSpan_Node *GetNode();
+
+    public: void FreeNode( VSpan_Node *theNode );
+
+    public: int FreeThread( VSpan_Node *HeadNode, VSpan_Node *TailNode );
+
+    public: void ReclaimAllNodes();
+
+    public: void ResetStats();
+};
+
+struct VSpanMiniList
+{
+    char Y_delta,
+         X_start,
+         X_end;
+};
 
 class TSpan_List_Manager
 {
@@ -66,64 +131,4 @@ public:
         TSpan_List_Manager **SpanArray,
         int *colorArray,
         int ArraySize );
-};
-
-struct VSpanMiniList
-{
-    char Y_delta,
-         X_start,
-         X_end;
-};
-
-class TSpan_Node_List
-{
-    public:
-
-    VSpan_Node **Zone_Ptrs;
-
-    int *Zone_Size_Ptrs;
-
-    unsigned int Used_Zones,
-                 Max_Zones = 8;
-
-    VSpan_Node *Free_Head;
-
-    int Free_Pool_Zone  = -1,
-        Free_Pool_Index = -1;
-
-    int Total_Blocks,
-        Free_Blocks;
-
-    int Default_Grow_Size,
-        Element_Size;
-
-    int Alloc_Count,
-        Dealloc_Count,
-        NewZone_Count,
-        Reset_Count;
-
-    public: TSpan_Node_List( unsigned int InitialSize, unsigned int GrowSize, size_t szitem );
-
-    public: ~TSpan_Node_List();
-
-    private: void InitNewZone( unsigned int Zone_Size );
-
-    private: void SetNumZones( size_t New_Size );
-
-    public: VSpan_Node *GetNode();
-
-    public: void FreeNode( VSpan_Node *theNode );
-
-    public: int FreeThread( VSpan_Node *HeadNode, VSpan_Node *TailNode );
-
-    public: void ReclaimAllNodes();
-
-    public: void ResetStats();
-};
-
-struct VSpan_Node
-{
-    VSpan_Node *Next, *Prev;
-
-    int StartPx, EndPx;
 };

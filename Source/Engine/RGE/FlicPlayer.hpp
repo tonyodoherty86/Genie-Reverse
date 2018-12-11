@@ -1,3 +1,7 @@
+#pragma once
+
+class TDrawArea;
+class RGBQUAD;
 
 /**
  * @file    Engine\RGE\FlicPlayer.hpp

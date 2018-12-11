@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\RmmObject.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+#include "RmmBase.hpp"
 
 class RGE_RMM_Object_Generator : public RGE_Random_Map_Module
 {

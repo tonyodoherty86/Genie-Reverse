@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Effects.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/22
  * @version 1.0
  */
+
+class RGE_Player;
 
 class RGE_Effects
 {

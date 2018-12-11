@@ -1,3 +1,6 @@
+#pragma once
+
+#include <RGE/Action.hpp>
 
 /**
  * @file    Engine\TRB\ActionArtifact.hpp
@@ -6,6 +9,7 @@
  * @version 1.0
  */
 
+class RGE_Player;
 class TRIBE_Action_Artifact : public RGE_Action
 {
 public:

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\MousePointer.hpp
@@ -5,6 +6,13 @@
  * @date    2018/02/22
  * @version 1.0
  */
+
+
+#include "IDA.h"
+
+class TDrawArea;
+class TShape;
+class DrawAreaNode;
 
 class TMousePointer
 {

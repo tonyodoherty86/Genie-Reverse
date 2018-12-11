@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\PathSystem.hpp
@@ -5,6 +6,9 @@
  * @date    2018/06/26
  * @version 1.0
  */
+
+#include "Path.hpp"
+#include <ManagedArray.hpp>
 
 class PathingSystem
 {

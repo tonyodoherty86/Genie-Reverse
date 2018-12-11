@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\DIB.h
@@ -5,6 +6,8 @@
  * @date    2018/08/21
  * @version 1.0
  */
+
+#include "IDA.h"
 
 /**
  *

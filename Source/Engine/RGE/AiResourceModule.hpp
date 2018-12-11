@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\AiResourceModule.hpp
@@ -5,6 +6,9 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+#include "AiModule.hpp"
+class ResourceItem;
 
 class ResourceAIModule : public AIModule
 {

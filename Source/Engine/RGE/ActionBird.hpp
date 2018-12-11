@@ -1,3 +1,6 @@
+#pragma once
+
+#include "Action.hpp"
 
 /**
  * @file    Engine\RGE\ActionBird.hpp

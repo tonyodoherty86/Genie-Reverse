@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\AiModule.hpp
@@ -5,6 +6,12 @@
  * @date    2018/06/25
  * @version 1.0
  */
+
+#include "IDA.h"
+#include "stdio.h"
+
+class TribeMainDecisionAIModule;
+class MainDecisionAIModule;
 
 class AIModuleID
 {

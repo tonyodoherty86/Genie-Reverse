@@ -1,3 +1,7 @@
+#pragma once
+
+#include "Panel_ListDialog.hpp"
+
 void __thiscall TListDialog::TListDialog(TListDialog *this, char *name); // idb
 TListDialog *__thiscall TListDialog::`scalar deleting destructor'(TListDialog *this, unsigned int __flags);
 void __thiscall TListDialog::~TListDialog(TListDialog *this); // idb

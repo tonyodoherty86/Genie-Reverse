@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\DrawArea.hpp
@@ -5,6 +6,14 @@
  * @date    2018/08/11
  * @version 1.0
  */
+
+
+#include "DrawSystem.hpp"
+#include "DIB.h"
+
+#include <cstddef>
+
+class TSpan_List_Manager;
 
 /* TODO: color-table should be independent of RGE namespace in this module */
 class RGE_Color_Table;

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Panel_Time.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/07
  * @version 1.0
  */
+
+#include <Panel.hpp>
 
 class RGE_Panel_Time : public TPanel
 {

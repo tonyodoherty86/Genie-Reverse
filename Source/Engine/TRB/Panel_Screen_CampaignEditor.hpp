@@ -1,3 +1,6 @@
+#pragma once
+
+#include <Panel_Screen.hpp>
 
 /**
  * @file    Engine\TRB\ScreenCampaignEditor.hpp
@@ -5,6 +8,7 @@
  * @date    2018/08/06
  * @version 1.0
  */
+class RGE_Campaign;;
 
 class TRIBE_Campaign_Editor_Screen : public TScreenPanel
 {

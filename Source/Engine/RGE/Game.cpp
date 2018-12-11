@@ -4802,3 +4802,5 @@ void RGE_Base_Game::set_render_all()
 
     &panel_system->set_restore();
 }
+
+void RGE_Base_Game::find_campaigns(){ this->player_game_info->find_campaigns(); }

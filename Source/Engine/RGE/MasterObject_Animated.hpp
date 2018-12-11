@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MasterAnimatedObject.hpp
@@ -5,6 +6,10 @@
  * @date    2018/02/19
  * @version 1.0
  */
+
+#include "IDA.h"
+
+#include "MasterObject_Static.hpp"
 
 class RGE_Master_Animated_Object : public RGE_Master_Static_Object
 {

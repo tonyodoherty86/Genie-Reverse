@@ -1,3 +1,7 @@
+#pragma once
+
+class RGE_Game_World;
+class RGE_Static_Object;
 
 /**
  * @file    Engine\RGE\Timeline.hpp

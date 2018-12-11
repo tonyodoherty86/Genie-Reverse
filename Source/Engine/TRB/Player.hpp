@@ -1,3 +1,6 @@
+#include <RGE/Player.hpp>
+
+#pragma once
 
 /**
  * @file    Engine\TRB\Player.hpp
@@ -7,6 +10,9 @@
  */
 
 class TRIBE_Player;
+class TRIBE_World;
+class TRIBE_Building_Object;
+class ResourceItem;
 
 #define TRIBE_FEALTY_OFFER_MESSAGE_LENGTH 100
 

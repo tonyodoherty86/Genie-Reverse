@@ -1,3 +1,6 @@
+#pragma once
+
+#include "MasterObject_Action.hpp"
 
 /**
  * @file    Engine\RGE\MasterCombatObject.hpp

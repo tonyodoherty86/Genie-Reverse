@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ColorTable.hpp
@@ -29,6 +30,8 @@
 #ifndef RGE_COLOR_TABLE_TEXT_EXIST
     #define RGE_COLOR_TABLE_TEXT_EXIST FALSE
 #endif
+
+#include "DrawArea.hpp"
 
 class RGE_Color_Table
 {
@@ -101,7 +104,7 @@ public:
 
     int get_id();
 
-    save(
+    void save(
         int outfile);
 };
 

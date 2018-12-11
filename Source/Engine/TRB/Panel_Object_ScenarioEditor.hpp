@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_Object_ScenarioEditor.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+#include "Panel_Object.hpp"
 
 class TRIBE_Scenario_Editor_Panel_Object : public TRIBE_Panel_Object
 {

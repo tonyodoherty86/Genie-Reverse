@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\DopplegangerObject.hpp
@@ -6,9 +7,13 @@
  * @version 1.0
  */
 
+#include "Object_Animated.hpp"
+
 #ifndef RGE_DOPPLEGANGER_OBJECT_TYPE
     #define RGE_DOPPLEGANGER_OBJECT_TYPE 25
 #endif
+
+class RGE_Master_Doppleganger_Object;
 
 class RGE_Doppleganger_Object : public RGE_Animated_Object
 {

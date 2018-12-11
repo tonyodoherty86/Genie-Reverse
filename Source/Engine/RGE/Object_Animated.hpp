@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\AnimatedObject.hpp
@@ -9,6 +10,8 @@
 #ifndef RGE_ANIMATED_OBJECT_TYPE
     #define RGE_ANIMATED_OBJECT_TYPE 20
 #endif
+
+#include "Object_Static.hpp"
 
 class RGE_Animated_Object : public RGE_Static_Object
 {

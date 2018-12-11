@@ -1,3 +1,7 @@
+#pragma once
+
+#include "Panel_HelpDialog.hpp"
+
 void __thiscall THelpDialog::THelpDialog(THelpDialog *this, TEasy_Panel *parentPanel, char *in_parent_panel, int help_string_id, int in_help_page_id, int x, int y); // idb
 THelpDialog *__thiscall THelpDialog::`vector deleting destructor'(THelpDialog *this, unsigned int __flags);
 void __thiscall THelpDialog::THelpDialog(THelpDialog *this, TEasy_Panel *parentPanel, char *in_parent_panel, char *in_help_string, int in_help_page_id, int x, int y); // idb

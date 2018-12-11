@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\CommAddresses.hpp
@@ -5,6 +6,10 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+#include "IDA.h"
+
+class TCommunications_Handler;
 
 class RGE_Communications_Addresses
 {

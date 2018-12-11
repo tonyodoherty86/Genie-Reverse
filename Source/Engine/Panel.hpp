@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\Panel.hpp
@@ -5,6 +6,36 @@
  * @date    2018/08/06
  * @version 1.0
  */
+
+
+#include "DrawArea.hpp"
+
+#include <ctime>
+
+class TTextPanel;
+class TListPanel;
+class TScrollBarPanel;
+class TEditPanel;
+class TButtonPanel;
+class TDropDownPanel;
+class TPanel;
+class TDrawArea;
+class TShape;
+class TInputPanel;
+class TDigital;
+class TVerticalSliderPanel;
+class THorizontalSliderPanel;
+class TMessagePanel;
+class TScreenPanel;
+class TPicturePanel;
+class TScrollTextPanel;
+class Time_Line_Panel;
+class TRIBE_Panel_Inven;
+class TRIBE_Panel_Object;
+class TRIBE_Panel_Button;
+class TRIBE_Panel_Time;
+class TRIBE_Panel_Pop;
+class RGE_Panel_Tool_Box;
 
 class TPanel
 {

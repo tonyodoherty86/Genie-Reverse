@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\ScreenCredits.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/06
  * @version 1.0
  */
+
+#include <Panel_Screen.hpp>
 
 //typedef TDropDownPanel::DropdownMode TRIBE_Credits_Screen::ScreenMode;
 

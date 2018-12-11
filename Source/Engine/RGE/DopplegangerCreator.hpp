@@ -1,3 +1,7 @@
+#pragma once
+
+class RGE_Player;
+class RGE_Static_Object;
 
 /**
  * @file    Engine\RGE\DopplegangerCreator.hpp

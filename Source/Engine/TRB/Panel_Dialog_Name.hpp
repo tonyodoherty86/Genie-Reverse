@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Panel_Dialog_Name.hpp
@@ -5,6 +6,8 @@
  * @date    2018/08/10
  * @version 1.0
  */
+
+#include <Panel_Dialog.hpp>
 
 class TRIBE_Dialog_Name : public TDialogPanel
 {

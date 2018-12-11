@@ -1,3 +1,6 @@
+#pragma once
+
+#include "Panel.hpp"
 
 /**
  * @file    Engine\EditPanel.hpp

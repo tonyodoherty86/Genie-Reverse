@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\ActionRepair.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/27
  * @version 1.0
  */
+
+#include <RGE/Action.hpp>
 
 class TRIBE_Action_Repair : public RGE_Action
 {

@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\TRB\Scenario.hpp
@@ -6,7 +7,12 @@
  * @version 1.0
  */
 
+#include <RGE/Scenario.hpp>
+
 class T_Scenario;
+class RGE_Static_Object;
+class RGE_Game_World;
+class TRIBE_Player;
 
 #define TRIBE_SCENARIO_SP_VICTORY_COUNT 12
 

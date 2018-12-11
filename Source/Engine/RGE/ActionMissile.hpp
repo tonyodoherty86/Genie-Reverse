@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\ActionMissile.hpp
@@ -5,6 +6,8 @@
  * @date    2018/06/30
  * @version 1.0
  */
+
+#include "Action.hpp"
 
 class RGE_Action_Missile : public RGE_Action
 {

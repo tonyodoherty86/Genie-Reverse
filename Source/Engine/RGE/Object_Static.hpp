@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\Object_Static.hpp
@@ -5,6 +6,10 @@
  * @date    2018/08/07
  * @version 1.0
  */
+
+#include "Path.hpp"
+
+#include <ManagedArray.hpp>
 
 #ifndef RGE_STATIC_OBJECT_TYPE
     #define RGE_STATIC_OBJECT_TYPE 10
@@ -22,7 +27,23 @@
     #define RGE_STATIC_OBJECT_ALREADY_COLLIDED_EXISTS FALSE
 #endif
 
+
 class RGE_Check_List;
+class RGE_Active_Sprite_List;
+class RGE_Tile;
+class RGE_Object_List;
+class RGE_Object_Node;
+class UnitAIModule;
+class RGE_Master_Static_Object;
+class RGE_Player;
+class RGE_Sprite;
+class RGE_Game_World;
+class TDrawArea;
+class RGE_Color_Table;
+class LOSTBL;
+class RGE_Armor_Weapon_Info;
+class RGE_Action_Object;
+class InfluenceMap;
 
 class RGE_Static_Object
 {

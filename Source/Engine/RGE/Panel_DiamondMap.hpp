@@ -1,3 +1,6 @@
+#pragma once
+
+#include <Panel.hpp>
 
 /**
  * @file    Engine\RGE\DiamondMap.hpp
@@ -5,6 +8,13 @@
  * @date    2018/06/26
  * @version 1.0
  */
+
+class RGE_Game_World;
+class RGE_Player;
+class RGE_Map;
+class RGE_View;
+class RGE_Tile;
+class RGE_Static_Object;
 
 class RGE_Diamond_Map : public TPanel
 {

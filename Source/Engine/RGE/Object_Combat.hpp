@@ -1,3 +1,11 @@
+#pragma once
+
+#include "Object_Action.hpp"
+#include "IDA.h"
+
+class RGE_Master_Combat_Object;
+class VISIBLE_UNIT_REC;
+
 
 /**
  * @file    Engine\RGE\CombatObject.hpp

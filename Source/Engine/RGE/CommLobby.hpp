@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\CommLobby.hpp
@@ -5,6 +6,10 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+#include "IDA.h"
+
+class RGE_Comm_Error;
 
 class RGE_Lobby
 {

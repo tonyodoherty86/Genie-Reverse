@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MasterStaticObject.hpp
@@ -5,6 +6,11 @@
  * @date    2018/06/30
  * @version 1.0
  */
+
+#include "Sprite.hpp"
+
+class RGE_Player;
+class RGE_Game_World;
 
 #ifndef RGE_MASTER_STATIC_OBJECT_TYPE
     #define RGE_MASTER_STATIC_OBJECT_TYPE 10

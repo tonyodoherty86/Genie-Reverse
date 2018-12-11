@@ -1,3 +1,7 @@
+#pragma once
+
+#include "IDA.h"
+class TSound_Driver;
 
 /**
  * @file    Engine\Chat.hpp

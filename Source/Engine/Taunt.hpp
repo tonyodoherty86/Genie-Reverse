@@ -1,3 +1,10 @@
+#pragma once
+
+
+#include "IDA.h"
+
+class TDigital;
+class TSound_Driver;
 
 /**
  * @file    Engine\Taunt.hpp

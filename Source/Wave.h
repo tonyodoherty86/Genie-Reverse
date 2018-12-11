@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\Wave.h
@@ -6,9 +7,18 @@
  * @version 1.0
  */
 
-#ifndef __WAVE_INCLUDED__
-#define __WAVE_INCLUDED__
+
+#include "IDA.h"
+
+#ifdef WINDOWS
 #include <windows.h>
+#else
+typedef int MMRESULT;
+typedef int MMCKINFO;
+typedef int MMIOINFO;
+typedef long LPMMCKINFO;
+typedef int HMMIO;
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -247,5 +257,3 @@ MMRESULT WaveSaveFile(
 #ifdef __cplusplus
 }
 #endif
-
-#endif // __WAVE_INCLUDED__

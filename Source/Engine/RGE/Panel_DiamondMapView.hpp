@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\DiamondMapView.hpp
@@ -5,6 +6,8 @@
  * @date    2018/02/21
  * @version 1.0
  */
+
+#include "Panel_DiamondMap.hpp"
 
 class RGE_Diamond_Map_View : public RGE_Diamond_Map
 {

@@ -1,3 +1,8 @@
+#pragma once
+
+#include <RGE/AiModule.hpp>
+
+class ResourceItem;
 
 /**
  * @file    Engine\TRB\AiResourceModule.hpp

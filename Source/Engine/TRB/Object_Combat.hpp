@@ -1,3 +1,9 @@
+#pragma once
+
+#include <RGE/Object_Combat.hpp>
+
+class TRIBE_Master_Combat_Object;
+class RGE_Map;
 
 /**
  * @file    Engine\TRB\CombatObject.hpp

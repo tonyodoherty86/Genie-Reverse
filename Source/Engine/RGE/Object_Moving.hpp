@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @file    Engine\RGE\MovingObject.hpp
@@ -9,6 +10,12 @@
 #ifndef RGE_MOVING_OBJECT_TYPE
     #define RGE_MOVING_OBJECT_TYPE 30
 #endif
+
+#include <cstdint>
+#include "Object_Animated.hpp"
+
+class RGE_Master_Moving_Object;
+class RGE_Zone_Map;
 
 class RGE_Moving_Object : public RGE_Animated_Object
 {
@@ -153,7 +160,7 @@ public:
     void copy_obj(RGE_Master_Static_Object *source2);
     static void boundAngle(float *x, int numFacets);
     void rotate(int amount);
-    signed __int64 get_waypoint_checksum();
+    int64_t get_waypoint_checksum();
     //int __thiscall  __thiscall `vcall'{456,{flat}}(); // TODO: what the hell is this ?
     double getAngle();
     int numberUserDefinedWaypoints();
