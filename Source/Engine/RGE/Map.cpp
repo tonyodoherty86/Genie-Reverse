@@ -590,7 +590,7 @@ void RGE_Map::set_map_screen_pos(int x1, int y1, int x2, int y2)
     int v10; // edx@21
     int y1a; // [sp+18h] [bp+8h]@19
 
-    v5 = x1;
+    x1 = x1;
     if( x1 >= 0 )
     {
         if( x1 <= this->map_width - 1 )
@@ -601,27 +601,27 @@ void RGE_Map::set_map_screen_pos(int x1, int y1, int x2, int y2)
     {
         x1 = 0;
     }
-    v5 = x1;
+    x1 = x1;
 LABEL_6:
-    v6 = y1;
+    y1 = y1;
     if( y1 >= 0 )
     {
         if( y1 > this->map_height - 1 )
-            v6 = this->map_height - 1;
+            y1 = this->map_height - 1;
     }
     else
     {
-        v6 = 0;
+        y1 = 0;
     }
-    v7 = x2;
+    x2 = x2;
     if( x2 >= 0 )
     {
         if( x2 > this->map_width - 1 )
-            v7 = this->map_width - 1;
+            x2 = this->map_width - 1;
     }
     else
     {
-        v7 = 0;
+        x2 = 0;
     }
     if( y2 >= 0 )
     {
@@ -632,44 +632,31 @@ LABEL_6:
     {
         y2 = 0;
     }
-    if( v6 <= y2 )
-    {
-        v8 = 24 * v5;
-        y1a = 24 * v5;
-        do
-        {
-            v9 = (char *)this->map_row_offset[v6] + v8;
-            if( v5 <= v7 )
+    //if( y1 <= y2 )
+    //y1a = 24 * x1;
+    //xOffset = 24 * x1;
+    for (int y=y1; y<= y2; y++) {
+        for(int x=x1; x<=x2; x++) {
+            RGE_Tile *tile = &this->map_row_offset[y][x];
+            tile->screen_xpos = this->tile_half_width * (y + x);
+            tile->screen_ypos = this->tile_half_height * (y - x) - this->elev_height * (tile->height >> 5);
+            switch ( 0 )
             {
-                do
-                {
-                    *(_WORD *)v9 = this->tile_half_width * (v6 + v5);
-                    v10 = (unsigned __int8)v9[4];
-                    *((_WORD *)v9 + 1) = this->tile_half_height * (v6 - v5) - this->elev_height * ((unsigned __int8)v9[5] >> 5);
-                    switch ( 0 )
-                    {
-                        case 2:
-                        case 6:
-                        case 8:
-                        case 10:
-                        case 14:
-                        case 15:
-                        case 16:
-                            *((_WORD *)v9 + 1) -= this->elev_height;
-                            break;
-                        default:
-                            break;
-                    }
-                    v9 += 24;
-                    ++v5;
-                }
-                while( v5 <= v7 );
-                v5 = x1;
-                v8 = y1a;
+                case 2:
+                case 6:
+                case 8:
+                case 10:
+                case 14:
+                case 15:
+                case 16:
+                    *((_WORD *)v9 + 1) -= this->elev_height;
+                    break;
+                default:
+                    break;
             }
-            ++v6;
+            ++x1;
+            //xOffset = y1a;
         }
-        while( v6 <= y2 );
     }
 }
 
@@ -3186,63 +3173,63 @@ void RGE_Map::tile_map_coords(short x, short y, RGE_Tile *tile, float *offset_x,
     double v18; // [sp+8h] [bp-8h]@1
 
     z = 0.0;
-    v6 = (double)x / (double)this->tile_width;
+    x = (double)x / (double)this->tile_width;
     v18 = (double)y;
-    v7 = v18 / (double)this->tile_height;
+    y = v18 / (double)this->tile_height;
     switch ( tile->tile_type )
     {
         case 1:
-            if( v6 <= 0.5 )
-                v8 = v7 + v7 - (0.5 - v6 + 0.5 - v6);
+            if( x <= 0.5 )
+                v8 = y + y - (0.5 - x + 0.5 - x);
             else
-                v8 = v7 + v7 - (v6 - 0.5 + v6 - 0.5);
+                v8 = y + y - (x - 0.5 + x - 0.5);
             goto LABEL_32;
         case 2:
-            if( v6 <= 0.5 )
+            if( x <= 0.5 )
                 goto LABEL_26;
-            v8 = v6 * -0.5 - (v7 - 0.5);
+            v8 = x * -0.5 - (y - 0.5);
             goto LABEL_32;
         case 3:
-            v9 = 1.0 - v6;
+            v9 = 1.0 - x;
             if( v11 )
             {
-                v8 = v9 * 0.5 - (v7 - 0.5);
+                v8 = v9 * 0.5 - (y - 0.5);
             }
             else
             {
                 v12 = v9;
-                v13 = v7 + v7;
+                v13 = y + y;
                 v14 = v12 + v12 - 1.0;
 LABEL_31:
                 v8 = v13 + v14;
             }
             goto LABEL_32;
         case 4:
-            if( (1.0 - v6) * 0.5 >= v18 )
+            if( (1.0 - x) * 0.5 >= v18 )
                 goto LABEL_27;
-            v8 = v6 * 0.5 - (v7 - 0.5);
+            v8 = x * 0.5 - (y - 0.5);
             goto LABEL_32;
         case 0xA:
-            if( v7 >= 1.0 )
+            if( y >= 1.0 )
             {
                 z = -1.0;
             }
             else
             {
-                v8 = -v7;
+                v8 = -y;
 LABEL_32:
                 z = v8;
             }
             break;
         case 0xB:
-            if( v6 > 0.5 )
+            if( x > 0.5 )
                 goto LABEL_19;
-            v8 = 0.5 - v6 + 0.5 - v6;
+            v8 = 0.5 - x + 0.5 - x;
             goto LABEL_32;
         case 0xC:
-            if( v6 <= 0.5 )
+            if( x <= 0.5 )
                 goto LABEL_19;
-            v8 = v6 - 0.5 + v6 - 0.5;
+            v8 = x - 0.5 + x - 0.5;
             goto LABEL_32;
         case 0:
         case 9:
@@ -3250,48 +3237,48 @@ LABEL_19:
             z = 0.0;
             break;
         case 0xD:
-            if( v6 <= 0.5 )
-                v8 = 0.5 - v6 + v7 + 0.5 - v6 + v7;
+            if( x <= 0.5 )
+                v8 = 0.5 - x + y + 0.5 - x + y;
             else
-                v8 = v6 - 0.5 + v7 + v6 - 0.5 + v7;
+                v8 = x - 0.5 + y + x - 0.5 + y;
             goto LABEL_32;
         case 0xE:
-            if( v6 > 0.5 )
+            if( x > 0.5 )
                 goto LABEL_26;
             goto LABEL_29;
         case 0xF:
-            if( v18 > 1.0 - v6 * 0.5 )
+            if( v18 > 1.0 - x * 0.5 )
                 goto LABEL_26;
             goto LABEL_27;
         case 8:
 LABEL_26:
-            v8 = (1.0 - v6) * -0.5 - (v7 - 0.5);
+            v8 = (1.0 - x) * -0.5 - (y - 0.5);
             goto LABEL_32;
         case 7:
 LABEL_27:
-            v13 = v7 + v7;
-            v14 = v6 + v6 - 1.0;
+            v13 = y + y;
+            v14 = x + x - 1.0;
             goto LABEL_31;
         case 0x10:
-            if( v18 > 1.0 - (1.0 - v6) * 0.5 )
+            if( v18 > 1.0 - (1.0 - x) * 0.5 )
                 goto LABEL_29;
             goto LABEL_30;
         case 6:
 LABEL_29:
-            v8 = v6 * -0.5 - (v7 - 0.5);
+            v8 = x * -0.5 - (y - 0.5);
             goto LABEL_32;
         case 5:
 LABEL_30:
-            v14 = v7 + v7;
-            v13 = 1.0 - (v6 + v6);
+            v14 = y + y;
+            v13 = 1.0 - (x + x);
             goto LABEL_31;
         default:
             break;
     }
-    v15 = v6 + v6;
-    v16 = (v15 - (1.0 - (v7 + v7)) + z) * 0.5;
+    v15 = 2. * x;
+    *offset_y = (v15 - (1.0 - 2 * y) + z) / 2.;
+    *offset_x = v15 - *offset_y;
     *offset_y = v16;
-    *offset_x = v15 - v16;
 }
 
 //----- (004593A0) --------------------------------------------------------
